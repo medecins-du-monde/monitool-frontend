@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MDM-monitool-Frontend": {
+    "mdm-monitool-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -123,6 +123,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "MDM-monitool-Frontend"
 }
