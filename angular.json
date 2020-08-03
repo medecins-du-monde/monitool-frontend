@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/MDM-monitool-Frontend",
+            "outputPath": "dist/mdm-monitool-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "MDM-monitool-Frontend:build"
+            "browserTarget": "mdm-monitool-frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "MDM-monitool-Frontend:build:production"
+              "browserTarget": "mdm-monitool-frontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MDM-monitool-Frontend:build"
+            "browserTarget": "mdm-monitool-frontend:build"
           }
         },
         "test": {
@@ -114,16 +114,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "MDM-monitool-Frontend:serve"
+            "devServerTarget": "mdm-monitool-frontend:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "MDM-monitool-Frontend:serve:production"
+              "devServerTarget": "mdm-monitool-frontend:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "MDM-monitool-Frontend"
+  "defaultProject": "mdm-monitool-frontend"
 }
