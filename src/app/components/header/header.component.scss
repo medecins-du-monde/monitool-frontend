@@ -10,20 +10,14 @@
     padding-right: 4vw;
     padding-left: 4vw;
 
-    @media only screen and (min-width: $break-point-basic) {
-        /* padding-right: calc(50vw - #{$max-content-width} / 2);
-        padding-left: calc(50vw - #{$max-content-width} / 2);*/
-    }
-
-    @media only screen and (min-width: $break-point-four-to-three) {
-        //   width: auto;
-    }
-
     .header-image {
         z-index: 2;
         margin-top: 20px;
         img {
             max-height: 42px;
+        }
+        @media only screen and (max-width: $break-point-basic) {
+            margin: 0;
         }
     }
 
@@ -94,6 +88,7 @@
             height: 44px;
             width: 44px;
             z-index: 11;
+            color: white;
 
             .inner {
                 display: block;
@@ -113,7 +108,6 @@
             .inner:before,
             .inner:after {
                 content: "";
-                background: #212240;
                 border-radius: 1px;
                 display: block;
                 position: absolute;
@@ -123,10 +117,12 @@
 
             .inner:after {
                 bottom: 0;
+                background-color: var(--header-background);
             }
 
             .inner:before {
                 top: 0;
+                background-color: white;
             }
         }
     }
@@ -187,15 +183,34 @@
                         width: 100%;
                         text-align: left;
                         font-size: 8vh;
-                    }
+                        color: var(--header-background);
 
-                    .button {
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        width: auto;
-                        margin: 5vw;
-                        font-size: 6vh;
+                        &.active-link {
+                            border: 0;
+                            text-decoration: underline;
+                        }
+
+                        &:hover {
+                            border: 0;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width: $break-point-two-to-one) {
+        #menu-links {
+            &.open {
+                .header-href {
+                    padding-left: 0;
+
+                    #account {
+                        margin-top: 20%;
+                        margin-left: 42%;
+                    }
+                    a {
+                        font-size: 5vh;
                     }
                 }
             }
