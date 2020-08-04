@@ -1,1 +1,203 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./stylesheets/variables.scss";
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    font-family: $main-font;
+    font-size: 18px;
+    color: var(--main);
+    box-sizing: border-box;
+}
+
+input,
+select,
+textarea,
+button {
+    font-family: inherit;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 0 20px;
+    height: 40px;
+    font-size: 16px;
+    box-shadow: 0 2px 8px 3px rgba(51, 194, 147, 0.25);
+    margin-top: 20px;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--primary);
+        background-color: white;
+        border: solid 1px #bbe0d1;
+    }
+}
+
+// Colors
+:root {
+    // to be deprecated
+    --title-color: #645c83;
+    --filters-header: #efeff4;
+
+    // ### MAIN PALETTE
+    --action: #645c83;
+    --primary: #33c293;
+    --submit: #21ba46;
+    --danger: #d43f3a;
+    --light: #f8f7f8;
+    --default: #e0e1e2;
+    --main: #656565;
+    --dark: #202123;
+    --text: rgba(255, 255, 255, 0.77);
+
+    // ### BORDERS
+    --light-border: #dfe2e6;
+    --main-border: #e1e1e1;
+
+    // ### FOCUS
+    --main-focus: #f9fafa;
+
+    // ### LOGIN
+    --login-overlay: #3cc194;
+
+    // ### HEADER
+    --header-background: #005ec5;
+    --header-color: #6e6e6e;
+    --header-focus: #1f1f1f;
+
+    // ### NEWSLETTER
+    --background-gradient: #31d6a0;
+    --newsletter-input-background: #248766;
+
+    // ### FOOTER
+    --footer-background: #f8f8f8;
+
+    // ### SIDEBAR
+    --sidebar-background: #fcfcfc;
+    --sidebar-overlay: rgb(0, 0, 0, 0.5);
+    --route-active-color: #645c83;
+
+    --route-active-background: #f1f0f1;
+
+    // ### BUTTONS
+    --action-btn-active: #645c83;
+
+    --action-btn-color: white;
+    --submit-btn-active: #22c34a;
+    --submit-btn-color: white;
+    --danger-btn-active: #d9534f;
+    --danger-btn-color: white;
+    --light-btn-active: #d3d1d3;
+    --light-btn-color: var(--main);
+    --default-btn-active: #bcbcbc;
+    --default-btn-color: var(--main);
+
+    // ### PAGE
+    --page-background: white;
+    --main-background: white;
+    --preguntas: #32ce9b;
+    --disabled: #e7e7e7;
+
+    // ### FORMS
+    --main-placeholder: #b7b7b7;
+    --input-focus: rgba(23, 144, 229, 0.6);
+    --input-focus-inset: rgba(23, 158, 229, 0.075);
+
+    // ### DRAWERS
+    --drawer-background: white;
+    --drawer-focus: var(--main-focus);
+
+    // ### CONTACT
+    --contact-info: #777777;
+    --card-border: #dcdcdc;
+    --form-required: #32c091;
+    --input-background: #fafafa;
+
+    // ### HOMEPAGE
+    --contact-text: #959595;
+    --card-text: #636876;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.border-top {
+    border-top: 1px solid var(--main-border);
+}
+
+.flex-1-3 {
+    flex: calc(1 / 3) !important;
+}
+
+.flex-2-3 {
+    flex: calc(2 / 3) !important;
+}
+
+.right {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+.link-img {
+    cursor: pointer;
+}
+
+:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
+// --- Template structure containers ---
+section {
+    position: relative;
+}
+
+.section-title {
+    color: black;
+    font-size: 32px;
+    font-weight: 500;
+
+    @media only screen and (max-width: $break-point-three-to-two) {
+        font-size: 24px;
+    }
+
+    @media only screen and (max-width: $break-point-two-to-one) {
+        font-size: 20px;
+    }
+}
+
+// fit content page section
+.page-section {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.last-section {
+    margin-bottom: 0 !important;
+}
+
+// horizontal break at section's bottom
+.section-separator {
+    border-bottom: 1px grey solid;
+}
+
+/**
+ * Responsivity
+ */
+@media only screen and (max-width: $break-point-three-to-two) {
+    header {
+        height: $header-mobile-height !important;
+    }
+}
+
+@media only screen and (max-width: $break-point-two-to-one) {
+    .page-section {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

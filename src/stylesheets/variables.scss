@@ -1,0 +1,49 @@
+/**
+ * Template style variables
+ */
+
+// Screen sizes
+$max-content-width: 864px;
+$break-point-basic: 1025px;
+$break-large: 1200px;
+
+$break-point-four-to-three: 992px;
+$break-point-three-to-two: 768px;
+$break-point-two-to-one: 575px;
+$break-point-one-to-none: 359px;
+
+$header-height: 80px;
+$header-mobile-height: 65px;
+
+// Fonts
+@font-face {
+    font-family: "Roboto-Light";
+    src: url("/assets/fonts/Roboto-Light.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("/assets/fonts/Roboto-Regular.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Roboto-Medium";
+    src: url("/assets/fonts/Roboto-Medium.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Roboto-Bold";
+    src: url("/assets/fonts/Roboto-Bold.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Inter-Regular";
+    src: url("/assets/fonts/Inter-Regular.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Inter-Medium";
+    src: url("/assets/fonts/Inter-Medium.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+@font-face {
+    font-family: "Inter-Bold";
+    src: url("/assets/fonts/Inter-Bold.otf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}
+
+$main-font: "Inter-Medium", "Inter", sans-serif;
+$regular-font: "Inter-Regular", "Inter", sans-serif;

@@ -1,0 +1,26 @@
+<div class="header-container container">
+
+    <div class="header-image">
+        <img class="link-img" [routerLink]="['home']" fragment="top" src="assets/images/MDM-LOGO-BLANC.png" />
+    </div>
+
+    <div class="menu" id="menu-links">
+        <div (click)="navBurgerClose()" class="header-href">
+            <a [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
+            <a routerLinkActive="active-link"> Projets </a>
+            <a routerLinkActive="active-link"> Indicateurs traversaux </a>
+            <a id="account"> Mon compte</a>
+            <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+    </div>
+
+    <!-- Right -->
+    <ul class="nav-burger">
+        <div class="toggle" (click)="navBurgerToggle()">
+            <div class="inner"></div>
+        </div>
+    </ul>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu-bg"></div>
+</div>

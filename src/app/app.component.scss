@@ -1,0 +1,28 @@
+@import "src/styles.scss";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.header {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    display: flex;
+    position: relative;
+    height: $header-height;
+    z-index: 20;
+    background-color: var(--header-background);
+
+    @media only screen and (max-width: $break-point-three-to-two) {
+        height: $header-mobile-height;
+    }
+}
+
+.page-container {
+    flex-grow: 1;
+}
