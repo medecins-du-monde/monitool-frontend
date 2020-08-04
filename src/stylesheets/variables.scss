@@ -17,33 +17,19 @@ $header-mobile-height: 65px;
 
 // Fonts
 @font-face {
-    font-family: "Roboto-Light";
-    src: url("/assets/fonts/Roboto-Light.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+    font-family: "Neutra-Text";
+    src: url("/assets/fonts/Neutra-Text_32171.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 @font-face {
-    font-family: "Roboto-Regular";
-    src: url("/assets/fonts/Roboto-Regular.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+    font-family: "Neutra-Text-Bold";
+    src: url("/assets/fonts/Neutra-Text-Bold_32106.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 @font-face {
-    font-family: "Roboto-Medium";
-    src: url("/assets/fonts/Roboto-Medium.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+    font-family: "Neutra-Text-Light";
+    src: url("/assets/fonts/Neutra-Text-Light_32131.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 @font-face {
-    font-family: "Roboto-Bold";
-    src: url("/assets/fonts/Roboto-Bold.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+    font-family: "Neutra-Text-Light-Demi";
+    src: url("/assets/fonts/Neutra-Text-Light-Demi_32117.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
-@font-face {
-    font-family: "Inter-Regular";
-    src: url("/assets/fonts/Inter-Regular.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-}
-@font-face {
-    font-family: "Inter-Medium";
-    src: url("/assets/fonts/Inter-Medium.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-}
-@font-face {
-    font-family: "Inter-Bold";
-    src: url("/assets/fonts/Inter-Bold.otf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-}
-
-$main-font: "Inter-Medium", "Inter", sans-serif;
-$regular-font: "Inter-Regular", "Inter", sans-serif;
+$main-font: "Neutra-Text", "Neutra", sans-serif;
