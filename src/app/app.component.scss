@@ -25,4 +25,7 @@
 
 .page-container {
     flex-grow: 1;
+    background: var(--page-background);
+    padding-left: 80px;
+    padding-right: 80px;
 }

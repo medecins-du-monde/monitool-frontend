@@ -43,6 +43,7 @@ button {
     --filters-header: #efeff4;
 
     // ### MAIN PALETTE
+    --main-text: #151515;
     --action: #645c83;
     --primary: #33c293;
     --submit: #21ba46;
@@ -68,57 +69,15 @@ button {
     --header-color: #6e6e6e;
     --header-focus: #1f1f1f;
 
-    // ### NEWSLETTER
-    --background-gradient: #31d6a0;
-    --newsletter-input-background: #248766;
-
-    // ### FOOTER
-    --footer-background: #f8f8f8;
-
-    // ### SIDEBAR
-    --sidebar-background: #fcfcfc;
-    --sidebar-overlay: rgb(0, 0, 0, 0.5);
-    --route-active-color: #645c83;
-
-    --route-active-background: #f1f0f1;
-
-    // ### BUTTONS
-    --action-btn-active: #645c83;
-
-    --action-btn-color: white;
-    --submit-btn-active: #22c34a;
-    --submit-btn-color: white;
-    --danger-btn-active: #d9534f;
-    --danger-btn-color: white;
-    --light-btn-active: #d3d1d3;
-    --light-btn-color: var(--main);
-    --default-btn-active: #bcbcbc;
-    --default-btn-color: var(--main);
-
     // ### PAGE
-    --page-background: white;
+    --page-background: #f7f7f7;
     --main-background: white;
     --preguntas: #32ce9b;
     --disabled: #e7e7e7;
 
-    // ### FORMS
-    --main-placeholder: #b7b7b7;
-    --input-focus: rgba(23, 144, 229, 0.6);
-    --input-focus-inset: rgba(23, 158, 229, 0.075);
-
     // ### DRAWERS
     --drawer-background: white;
     --drawer-focus: var(--main-focus);
-
-    // ### CONTACT
-    --contact-info: #777777;
-    --card-border: #dcdcdc;
-    --form-required: #32c091;
-    --input-background: #fafafa;
-
-    // ### HOMEPAGE
-    --contact-text: #959595;
-    --card-text: #636876;
 }
 
 .no-padding {
@@ -185,6 +144,7 @@ section {
 .section-separator {
     border-bottom: 1px grey solid;
 }
+
 
 /**
  * Responsivity
