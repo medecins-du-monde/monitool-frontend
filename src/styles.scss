@@ -44,7 +44,7 @@ button {
 
     // ### MAIN PALETTE
     --main-text: #151515;
-    --action: #645c83;
+    --action: #5d9cd1;
     --primary: #33c293;
     --submit: #21ba46;
     --danger: #d43f3a;
@@ -53,6 +53,7 @@ button {
     --main: #656565;
     --dark: #202123;
     --text: rgba(255, 255, 255, 0.77);
+    --small-text: #777777;
 
     // ### BORDERS
     --light-border: #dfe2e6;
@@ -116,18 +117,8 @@ section {
 }
 
 .section-title {
-    color: black;
-    font-size: 32px;
-    font-weight: 500;
-
-    @media only screen and (max-width: $break-point-three-to-two) {
-        font-size: 24px;
-    }
-
-    @media only screen and (max-width: $break-point-two-to-one) {
-        font-size: 20px;
-    }
-}
+    color: var(--main-text);
+    font-size: 20px;}
 
 // fit content page section
 .page-section {

@@ -1,5 +1,9 @@
 @import "src/styles.scss";
 
+.small-title{
+    margin-left: 20px;
+    color: var(--small-text);
+}
 .card {
     box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
     transition: 0.3s;
@@ -18,6 +22,7 @@
     }
     p, ul{
         color: var(--main-text);
+        font-size: 16px;
         
     }
     .icon{
@@ -31,5 +36,40 @@
         margin-left: 25px;
         margin-top: -5px;
 
+    }
+  }
+  .second-section-cards{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .illustration-card{
+        width: 208px;
+        min-height: 276px;
+        box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
+        transition: 0.3s;
+        padding: 12px 24px;
+        border-radius: 5px;
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        border: solid 2px transparent;
+      }
+      p{
+        color: var(--small-text);
+        font-size: 16px;
+        margin-top: -5px;
+        b{
+            color: var(--main-text);
+        }
+    }
+    i{
+        color: var(--action);
+        text-align: center;
+        cursor: pointer;
+    }
+    @media screen and (max-width: $break-point-three-to-two) {
+        flex-direction: column;
     }
   }
