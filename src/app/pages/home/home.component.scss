@@ -35,6 +35,18 @@
         list-style-type: circle;
         margin-left: 25px;
         margin-top: -5px;
+    }
+    .third-section-text{
+        margin-left: 50px;
+    }
+    @media screen and (max-width: $break-point-three-to-two) {
+        text-align: center;
+        .icon{
+            margin-right: 5px;
+        }
+        .third-section-text,ul{
+           margin-left: 0;
+        }
 
     }
   }
