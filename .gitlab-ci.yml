@@ -30,6 +30,6 @@ deploy:
     - npm i
   script:
     - npm run build -- --prod
-    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/public-website-v2/* medical@92.243.18.201:/var/www/html/front/public-website
+    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* tester@217.70.189.97:/var/www/html/mdm-monitool-frontend
   only:
     - dev
