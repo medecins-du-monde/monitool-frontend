@@ -18,23 +18,54 @@ button {
 }
 
 button {
-    background-color: var(--primary);
-    color: white;
     border: none;
     border-radius: 3px;
     padding: 0 20px;
     height: 40px;
     font-size: 16px;
-    box-shadow: 0 2px 8px 3px rgba(51, 194, 147, 0.25);
+    // box-shadow: 0 2px 8px 3px rgba(51, 194, 147, 0.25);
     margin-top: 20px;
     cursor: pointer;
-
-    &:hover {
-        color: var(--primary);
-        background-color: white;
-        border: solid 1px #bbe0d1;
-    }
 }
+.icon-btn{
+    width: 200px;
+    height: 40px;
+    border-radius: 4px;
+    background-color: #005ec5;
+    text-align: center;
+    color: white;
+    border: none;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    padding: 0 20px;
+}
+.btn-group button {
+    border: solid 1px #c8c9cc;
+  background-color: #ffffff;
+  color: #171d29;
+  border-radius: 4px;
+  height: 40px;
+    padding: 10px 24px; /* Some padding */
+    float: left; /* Float the buttons side by side */
+  }
+  
+  .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+  
+  /* Clear floats (clearfix hack) */
+  .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  /* Add a background color on hover */
+  .btn-group button:hover, .btn-group-active {
+    background-color: #ededee !important;
+  }
+
 
 // Colors
 :root {

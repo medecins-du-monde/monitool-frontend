@@ -7,7 +7,7 @@
     <div class="menu" id="menu-links">
         <div (click)="navBurgerClose()" class="header-href">
             <a [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
-            <a routerLinkActive="active-link"> Projets </a>
+            <a [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
             <a routerLinkActive="active-link"> Indicateurs traversaux </a>
             <a id="account"> Mon compte</a>
             <i class="material-icons">keyboard_arrow_down</i>

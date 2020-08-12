@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="country-info">
+        <div>
+            <img class="icon flag" src={{project.countryImage}} />
+            <p>{{project.country}}
+            </p>
+        </div>
+        <img class="icon" src="assets/icons/012.svg" />
+    </div>
+    <div class="separator"></div>
+    <div class="state">
+        <p>{{project.state}}</p>
+    </div>
+    <div class="project-info-row">
+        <div class="info">Nom</div>
+        <div class="value">{{project.projectName}}</div>
+    </div>
+    <div class="project-info-row">
+        <div class="info">Date</div>
+        <div class="value">{{project.startingDate}} - {{project.endingDate}}</div>
+    </div>
+    <div class="project-info-row">
+        <div class="info">Thématique</div>
+        <div class="value">{{project.thematic}}</div>
+    </div>
+    <div class="project-info-row">
+        <div class="info">Dernière saisie</div>
+        <div class="value">{{project.lastInput}}</div>
+    </div>
+    <div class="btn-group">
+        <button>Ouvrir</button>
+        <button><img class="icon" src="assets/icons/016.svg" /></button>
+    </div>
+</div>
