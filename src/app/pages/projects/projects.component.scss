@@ -1,7 +1,9 @@
+@import "src/styles.scss";
+
 .section-row{
     display: flex;
     align-items: center;
-
+   
 
   .wrapper{
     display: flex;
@@ -50,11 +52,6 @@
       color: #81858b;
     }
   
-  @media screen and (max-width: 425px){
-    .search_box{
-      width: 95%;
-    }
-  }
   select{
     margin-left: 8vw;
     width: 200px;
@@ -66,12 +63,29 @@
     padding: 10px;
     cursor: pointer;
   }
+ 
   .icon-btn{
     margin-left: 6vw;
     img{
-      transform: translateY(1%);
+      transform: translateY(30%);
     }
   }
+  @media screen and (max-width: $break-point-four-to-three) {
+    flex-direction: column;
+    margin-left: -10%;
+
+    .search_box{
+      width: 50%;
+      margin-right: 50%;
+    }
+   
+}
+  @media screen and (max-width: $break-point-two-to-one) {
+    .btn-group{
+      width: 120%;
+      margin-left: 20%;
+    }
+}
 }
 
 .projects{
@@ -82,4 +96,7 @@
   app-project{
     margin-right: 9vw;
   }
+  @media screen and (max-width: $break-point-four-to-three) {
+    flex-direction: column;
+}
 }

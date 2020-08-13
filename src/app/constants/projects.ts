@@ -100,6 +100,26 @@ export let projectsList: Project[] = [{
     lastInput: 'Aucune'
 },
 {
+    state: 'En cours',
+    country: 'Italie',
+    countryImage: 'assets/images/italy-flag.png',
+    projectName: 'Atelier centre paris',
+    thematic: 'SSR',
+    startingDate: '1 feb. 2015',
+    endingDate: '30 jun. 2016',
+    lastInput: 'Aucune'
+},
+{
+    state: 'En cours',
+    country: 'Italie',
+    countryImage: 'assets/images/italy-flag.png',
+    projectName: 'Atelier centre paris',
+    thematic: 'SSR',
+    startingDate: '1 feb. 2015',
+    endingDate: '30 jun. 2016',
+    lastInput: 'Aucune'
+},
+{
     state: 'Terminé',
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',

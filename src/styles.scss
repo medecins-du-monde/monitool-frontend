@@ -42,12 +42,12 @@ button {
 }
 .btn-group button {
     border: solid 1px #c8c9cc;
-  background-color: #ffffff;
-  color: #171d29;
-  border-radius: 4px;
-  height: 40px;
-    padding: 10px 24px; /* Some padding */
-    float: left; /* Float the buttons side by side */
+    background-color: #ffffff;
+    color: #171d29;
+    border-radius: 4px;
+    height: 40px;
+    padding: 10px 24px; 
+    float: left; 
   }
   
   .btn-group button:not(:last-child) {

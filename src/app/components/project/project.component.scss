@@ -36,7 +36,6 @@
     .icon{
         height: 30px;
         width: 30px;
-        //margin-right: 20px;
     }
     .separator{
         background-color: rgba(144, 144, 144, 0.24);
@@ -80,5 +79,8 @@
         font-size: 16px;
         color: #171d29;
         font-weight: bold;
+    }
+    @media screen and (max-width: $break-point-three-to-two) {
+        width: 250px;
     }
 }

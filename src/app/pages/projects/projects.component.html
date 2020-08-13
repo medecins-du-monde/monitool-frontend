@@ -15,12 +15,12 @@
         </div>
         <div class="wrapper">
             <div class="search_box">
-                <input type="text" placeholder="Chercher">
+                <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()" placeholder="Chercher">
                 <img id="search-icon" src="assets/icons/014.svg" />
             </div>
         </div>
         <div [formGroup]="countryForm">
-            <select formControlName="countries" [(ngModel)]="selectedCountry">
+            <select formControlName="countries" (change)="onSelectMenuChanged($event)" [(ngModel)]="selectedCountry">
                 <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
                     [value]="country.value">
                     {{country.option}}</option>
