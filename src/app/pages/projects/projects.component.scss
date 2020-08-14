@@ -3,12 +3,14 @@
 .section-row{
     display: flex;
     align-items: center;
-   
-
+    justify-content: space-between;
+.row-wrapper{
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
   .wrapper{
     display: flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 18px;
   }
   
@@ -63,28 +65,42 @@
     padding: 10px;
     cursor: pointer;
   }
- 
+
   .icon-btn{
     margin-left: 6vw;
     img{
       transform: translateY(30%);
     }
   }
+}
   @media screen and (max-width: $break-point-four-to-three) {
-    flex-direction: column;
-    margin-left: -10%;
-
+    .row-wrapper{
+      flex-wrap: wrap;
+      justify-content: center;
+      select, .icon-btn{
+        margin-left: 2vw;
+      }
     .search_box{
       width: 50%;
       margin-right: 50%;
     }
-   
+  } 
 }
   @media screen and (max-width: $break-point-two-to-one) {
     .btn-group{
       width: 120%;
-      margin-left: 20%;
+      margin-left: 30%;
     }
+}
+@media screen and (max-width: $break-large) {
+  flex-direction: column;
+}
+@media screen and (max-width: $break-small) {
+  justify-content: center;
+  .btn-group{
+    height: auto;
+    margin-left: 20%;
+  }
 }
 }
 
@@ -92,11 +108,26 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
+  
 
   app-project{
-    margin-right: 9vw;
+  width: 30%;
   }
   @media screen and (max-width: $break-point-four-to-three) {
-    flex-direction: column;
+    app-project{
+      width: 40%;
+      }
+}
+@media screen and (max-width: $break-point-three-to-two) {
+  justify-content: center;
+  app-project{
+    width: 60%;
+    }
+}
+@media screen and (max-width: $break-point-two-to-one) {
+  app-project{
+    width: 100%;
+    }
 }
 }

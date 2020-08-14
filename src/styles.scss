@@ -23,9 +23,11 @@ button {
     padding: 0 20px;
     height: 40px;
     font-size: 16px;
-    // box-shadow: 0 2px 8px 3px rgba(51, 194, 147, 0.25);
     margin-top: 20px;
     cursor: pointer;
+    @media screen and (max-width: $break-small) {
+        font-size: 12px;
+    }
 }
 .icon-btn{
     width: 200px;
@@ -48,6 +50,9 @@ button {
     height: 40px;
     padding: 10px 24px; 
     float: left; 
+    @media screen and (max-width: $break-small) {
+        height: auto;
+    }
   }
   
   .btn-group button:not(:last-child) {

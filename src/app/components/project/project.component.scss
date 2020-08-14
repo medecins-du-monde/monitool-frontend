@@ -5,7 +5,6 @@
     transition: 0.3s;
     padding: 12px 3%;
     border-radius: 5px;
-    width: 306px;
     margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
@@ -79,8 +78,5 @@
         font-size: 16px;
         color: #171d29;
         font-weight: bold;
-    }
-    @media screen and (max-width: $break-point-three-to-two) {
-        width: 250px;
     }
 }

@@ -13,20 +13,24 @@
                 'btn-group-active': btn3Clicked
               }" (click)="onBtnClick('btn-3')">Supprimés</button>
         </div>
-        <div class="wrapper">
-            <div class="search_box">
-                <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()" placeholder="Chercher">
-                <img id="search-icon" src="assets/icons/014.svg" />
+        <div class="row-wrapper">
+            <div class="wrapper">
+                <div class="search_box">
+                    <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()"
+                        placeholder="Chercher">
+                    <img id="search-icon" src="assets/icons/014.svg" />
+                </div>
             </div>
+            <div [formGroup]="countryForm">
+                <select formControlName="countries" (change)="onSelectMenuChanged($event)"
+                    [(ngModel)]="selectedCountry">
+                    <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
+                        [value]="country.value">
+                        {{country.option}}</option>
+                </select>
+            </div>
+            <button class="icon-btn"><img src="assets/icons/015.svg" /> Créer un projet</button>
         </div>
-        <div [formGroup]="countryForm">
-            <select formControlName="countries" (change)="onSelectMenuChanged($event)" [(ngModel)]="selectedCountry">
-                <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
-                    [value]="country.value">
-                    {{country.option}}</option>
-            </select>
-        </div>
-        <button class="icon-btn"><img src="assets/icons/015.svg" /> Créer un projet</button>
     </div>
     <div class="projects">
         <app-project *ngFor="let project of projects" [project]="project"></app-project>
