@@ -69,7 +69,7 @@
   .icon-btn{
     margin-left: 6vw;
     img{
-      transform: translateY(30%);
+      transform: translateY(-10%);
     }
   }
 }
@@ -98,7 +98,6 @@
 @media screen and (max-width: $break-small) {
   justify-content: center;
   .btn-group{
-    height: auto;
     margin-left: 20%;
   }
 }
