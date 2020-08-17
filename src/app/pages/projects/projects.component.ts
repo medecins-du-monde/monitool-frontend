@@ -60,6 +60,9 @@ export class ProjectsComponent implements OnInit {
       this.currentProjectList = this.projects;
       this.initiateSelectMenu();
     }
+    if (this.search !== '') {
+      this.onSearchbarChanged();
+    }
     this.selectedButton = id;
   }
 
