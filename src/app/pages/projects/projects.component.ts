@@ -24,21 +24,13 @@ export class ProjectsComponent implements OnInit {
   search: string;
   selectedButton = 'btn-1';
 
-
   constructor(private fb: FormBuilder) {
     this.countryForm = this.fb.group({
       countries: [null, Validators.required]
     });
     this.selectedCountry = this.countries[0].value;
     this.projects = projectsList.filter(project => project.state === 'En cours');
-    this.projects.forEach(project => {
-      if (this.countries.findIndex(x => x.option === project.country) === -1) {
-        this.countries.push({ option: project.country, value: project.country });
-      }
-    });
-    this.countries[0].option += ' (' + (this.countries.length - 1) + ')';
-
-
+    this.initiateSelectMenu();
   }
 
   ngOnInit(): void {
