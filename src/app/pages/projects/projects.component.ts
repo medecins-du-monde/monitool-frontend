@@ -21,6 +21,7 @@ export class ProjectsComponent implements OnInit {
   countryForm: FormGroup;
   selectedCountry: string;
   projects: Project[];
+  currentProjectList: Project[];
   search: string;
   selectedButton = 'btn-1';
 
@@ -30,6 +31,7 @@ export class ProjectsComponent implements OnInit {
     });
     this.selectedCountry = this.countries[0].value;
     this.projects = projectsList.filter(project => project.state === 'En cours');
+    this.currentProjectList = this.projects;
     this.initiateSelectMenu();
   }
 
@@ -38,37 +40,37 @@ export class ProjectsComponent implements OnInit {
 
   onBtnClick(id) {
     if (id === 'btn-1') {
-      this.btn1Clicked = true;
-      this.btn2Clicked = false;
-      this.btn3Clicked = false;
-      this.projects = projectsList.filter(project => project.state === 'En cours');
+      this.btn1Clicked ? this.projects = this.projects.filter(p => p.state !== 'En cours')
+        : this.projects.push(...projectsList.filter(project => project.state === 'En cours'));
+      this.btn1Clicked = !this.btn1Clicked;
+      this.currentProjectList = this.projects;
       this.initiateSelectMenu();
-
     }
     else if (id === 'btn-2') {
-      this.btn2Clicked = true;
-      this.btn1Clicked = false;
-      this.btn3Clicked = false;
-      this.projects = projectsList.filter(project => project.state === 'Terminé');
+      this.btn2Clicked ? this.projects = this.projects.filter(p => p.state !== 'Terminé')
+        : this.projects.push(...projectsList.filter(project => project.state === 'Terminé'));
+      this.btn2Clicked = !this.btn2Clicked;
+      this.currentProjectList = this.projects;
       this.initiateSelectMenu();
     }
     else if (id === 'btn-3') {
-      this.btn3Clicked = true;
-      this.btn2Clicked = false;
-      this.btn1Clicked = false;
-      this.projects = projectsList.filter(project => project.state === 'Supprimé');
+      this.btn3Clicked ? this.projects = this.projects.filter(p => p.state !== 'Supprimé')
+        : this.projects.push(...projectsList.filter(project => project.state === 'Supprimé'));
+      this.btn3Clicked = !this.btn3Clicked;
+      this.currentProjectList = this.projects;
       this.initiateSelectMenu();
     }
     this.selectedButton = id;
   }
 
   onSearchbarChanged() {
-    this.projects = projectsList.filter(project => project.projectName.startsWith(this.search));
+    this.projects = this.currentProjectList.filter(project => project.projectName.startsWith(this.search));
   }
   onSelectMenuChanged(e) {
     this.onBtnClick(this.selectedButton);
     if (this.selectedCountry !== 'tous') {
       this.projects = this.projects.filter(project => project.country === this.selectedCountry);
+      this.currentProjectList = this.projects;
     }
   }
   initiateSelectMenu() {
