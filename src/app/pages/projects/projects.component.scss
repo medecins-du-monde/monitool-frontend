@@ -107,21 +107,27 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   
+  margin-right: -1.9%;
+  margin-left: -1.6%;
 
   app-project{
   width: 30%;
+  margin: 1.6%;
   }
   @media screen and (max-width: $break-point-four-to-three) {
+    justify-content: space-between;
     app-project{
       width: 40%;
       }
 }
 @media screen and (max-width: $break-point-three-to-two) {
+  margin-right: 0;
+  margin-left: 0;
   justify-content: center;
   app-project{
     width: 60%;
+    margin: 0;
     }
 }
 @media screen and (max-width: $break-point-two-to-one) {
