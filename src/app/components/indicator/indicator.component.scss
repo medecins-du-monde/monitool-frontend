@@ -1,6 +1,10 @@
 @import "src/styles.scss";
 
+.multi-thematics-card{
+    height: 390px !important;
+}
 .card {
+    height: 270px;
     box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
     transition: 0.3s;
     padding: 12px 3%;

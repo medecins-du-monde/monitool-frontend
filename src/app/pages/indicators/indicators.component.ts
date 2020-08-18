@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Indicator } from 'src/app/models/indicator';
+import { IndicatorsGroup } from 'src/app/models/indicators-group';
 import { indicatorsList } from 'src/app/constants/indicators';
 
 @Component({
@@ -8,17 +8,10 @@ import { indicatorsList } from 'src/app/constants/indicators';
   styleUrls: ['./indicators.component.scss']
 })
 export class IndicatorsComponent implements OnInit {
-  indicatorsCrCo: Indicator[];
-  indicatorsMGR: Indicator[];
-  indicatorsRdR: Indicator[];
-  indicatorsSSR: Indicator[];
-  indicatorsMT: Indicator[];
+  indicators: IndicatorsGroup[];
+
   constructor() {
-    this.indicatorsCrCo = indicatorsList.filter(indicator => indicator.thematic.startsWith('CrCo'));
-    this.indicatorsMGR = indicatorsList.filter(indicator => indicator.thematic.startsWith('MGR'));
-    this.indicatorsRdR = indicatorsList.filter(indicator => indicator.thematic.startsWith('RdR'));
-    this.indicatorsSSR = indicatorsList.filter(indicator => indicator.thematic.startsWith('SSR'));
-    this.indicatorsMT = indicatorsList.filter(indicator => indicator.thematic.startsWith('Multi'));
+    this.indicators = indicatorsList;
   }
 
   ngOnInit(): void {

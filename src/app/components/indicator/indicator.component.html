@@ -1,4 +1,6 @@
-<div class="card">
+<div class="card" [ngClass]="{
+    'multi-thematics-card':indicator.thematics
+  }">
     <div class="indicator-name">
         <p>{{indicator.indicatorName}}</p>
     </div>
