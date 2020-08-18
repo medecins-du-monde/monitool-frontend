@@ -1,0 +1,27 @@
+<section class="page-section">
+    <p class="section-title">CrCo: Crises et conflits
+    </p>
+    <div class="indicators">
+        <app-indicator *ngFor="let indicator of indicatorsCrCo" [indicator]="indicator"></app-indicator>
+    </div>
+    <p class="section-title">MGR: Migrants
+    </p>
+    <div class="indicators">
+        <app-indicator *ngFor="let indicator of indicatorsMGR" [indicator]="indicator"></app-indicator>
+    </div>
+    <p class="section-title">RdR: Réduction des risques
+    </p>
+    <div class="indicators">
+        <app-indicator *ngFor="let indicator of indicatorsRdR" [indicator]="indicator"></app-indicator>
+    </div>
+    <p class="section-title">SSR: Santé sexuelle et reproductive
+    </p>
+    <div class="indicators">
+        <app-indicator *ngFor="let indicator of indicatorsSSR" [indicator]="indicator"></app-indicator>
+    </div>
+    <p class="section-title">Multi-thématique
+    </p>
+    <div class="indicators">
+        <app-indicator *ngFor="let indicator of indicatorsMT" [indicator]="indicator"></app-indicator>
+    </div>
+</section>
