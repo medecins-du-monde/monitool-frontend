@@ -2,9 +2,12 @@
 
 .multi-thematics-card{
     height: 390px !important;
+        .indicator-content {
+            height: 60% !important;
+        }
 }
 .card {
-    height: 270px;
+    height: 240px;
     box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
     transition: 0.3s;
     padding: 12px 3%;
@@ -13,7 +16,9 @@
     flex-wrap: wrap;
     flex-direction: column;
     border: solid 2px transparent;
-    
+    .indicator-content {
+        height: 40%;
+    }
    
     .indicator-name{
         display: flex;
@@ -34,7 +39,7 @@
         margin-bottom: 10px;
     }
     .indicator-info{
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         .info{
             color: #909090;
             font-size: 16px;

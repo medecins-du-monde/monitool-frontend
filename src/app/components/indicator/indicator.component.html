@@ -5,15 +5,18 @@
         <p>{{indicator.indicatorName}}</p>
     </div>
     <div class="separator"></div>
-    <div *ngIf="indicator.thematics" class="indicator-info">
-        <div class="info">Thématiques</div>
-        <div class="value">{{indicator.thematics}}</div>
-    </div>
-    <div class="indicator-info">
-        <div class="info">Description</div>
-        <div class="value">{{indicator.description}}</div>
+    <div class="indicator-content">
+        <div *ngIf="indicator.thematics" class="indicator-info">
+            <div class="info">Thématiques</div>
+            <div class="value">{{indicator.thematics}}</div>
+        </div>
+        <div class="indicator-info">
+            <div class="info">Description</div>
+            <div class="value">{{indicator.description}}</div>
+        </div>
     </div>
     <div class="btn-group">
         <button>Voir le rapport</button>
     </div>
+    
 </div>
