@@ -1,0 +1,12 @@
+<section class="page-section">
+    <p class="section-title">Cette page contient la liste de tous les utilisateurs qui se sont connectés au moins une
+        fois sur Monitool
+        <br><br>
+        Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins
+        du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il
+        est possible de créer des comptes partenaires depuis l'interface de gestion des projets.
+    </p>
+    <div class="users">
+        <app-user *ngFor="let user of users" [user]="user"></app-user>
+    </div>
+</section>

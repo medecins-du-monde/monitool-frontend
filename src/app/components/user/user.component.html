@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="user-name">
+        <p>{{user.name}}</p>
+    </div>
+    <div class="separator"></div>
+    <div class="user-info">
+        <div class="info">Login</div>
+        <div class="value">{{login}}</div>
+    </div>
+    <div class="user-info">
+        <div class="info">Role</div>
+        <div class="value role" [ngClass]="{
+            'admin': user.role === 'admin',
+            'user': user.role === 'common'
+          }">
+            <p>{{role}}</p>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button>Modifier</button>
+    </div>
+</div>
