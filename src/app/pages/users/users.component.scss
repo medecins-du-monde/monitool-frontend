@@ -1,13 +1,18 @@
 @import "src/styles.scss";
 
+.section-title{
+  padding: 2%;
+  background-color: #d9edf7;
+  color: #31708f;
+}
+
 .users{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    
     margin-right: -1.9%;
     margin-left: -1.6%;
-  
+
     app-user{
     width: 30%;
     margin: 1.6%;

@@ -32,6 +32,13 @@ export class HeaderComponent implements OnInit {
       this.navBurgerClose();
     }
   }
+  // @HostListener('window:click')
+  // clickout() {
+  //   const accountDropdown = document.getElementById('accountDropdown');
+  //   if (accountDropdown.classList.contains('show')) {
+  //     this.closeDropdown();
+  //   }
+  // }
 
   /**
    * Private functions
@@ -64,5 +71,18 @@ export class HeaderComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  dropdownHandler() {
+    const accountDropdown = document.getElementById('accountDropdown');
+    if (accountDropdown.classList.contains('show')) {
+      this.closeDropdown();
+    }
+    else {
+      accountDropdown.classList.toggle('show');
+    }
+  }
+  closeDropdown() {
+    const accountDropdown = document.getElementById('accountDropdown');
+    accountDropdown.classList.remove('show');
   }
 }
