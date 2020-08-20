@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
   selectedCountry: string;
   projects: Project[];
   currentProjectList: Project[];
-  search: string;
+  search = '';
   selectedButton = 'btn-1';
 
   constructor(private fb: FormBuilder) {
