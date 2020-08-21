@@ -1,6 +1,6 @@
 <section class="page-section">
     <div class="indicators-group" *ngFor="let indicatorGroup of indicators">
-        <p class="section-title">{{indicatorGroup.thematic}}
+        <p class="section-title">{{indicatorGroup.thematic.fr}}
         </p>
         <div class="indicators">
             <app-indicator *ngFor="let indicator of indicatorGroup.indicators" [indicator]="indicator"></app-indicator>

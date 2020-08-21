@@ -1,5 +1,10 @@
+import { MultiLanguages } from './multiLanguages';
+
 export interface Indicator {
-    indicatorName: string;
-    description: string;
-    thematics?: string;
+    name: MultiLanguages;
+    description?: MultiLanguages;
+    themes: string[];
+    type?: string;
+    _id?: string;
+    _rev?: string;
 }

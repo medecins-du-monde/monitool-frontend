@@ -69,6 +69,12 @@
             font-size: 18px;
             color: #151515;
         }
+        .thematics{
+            display: flex;
+            .value{
+                margin-left: 5px;
+            }
+        }
     }
     .btn-group{
         align-self: flex-end;

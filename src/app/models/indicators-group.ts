@@ -1,6 +1,7 @@
 import { Indicator } from './indicator';
+import { MultiLanguages } from './multiLanguages';
 
 export interface IndicatorsGroup {
-    thematic: string;
+    thematic: MultiLanguages;
     indicators: Indicator[];
 }

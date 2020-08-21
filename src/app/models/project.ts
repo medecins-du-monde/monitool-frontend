@@ -1,10 +1,11 @@
 export interface Project {
-    state: string;
+    active: boolean;
     country: string;
-    countryImage: string;
-    projectName: string;
-    thematic: string;
-    startingDate: string;
-    endingDate: string;
-    lastInput: string;
+    countryImage?: string;
+    name: string;
+    themes: string[];
+    start: Date;
+    end: Date;
+    inputDate?: Date;
+    _id?: string;
 }
