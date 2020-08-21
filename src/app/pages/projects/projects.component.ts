@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
   selectedCountry: string;
   projects: Project[];
   currentProjectList: Project[];
-  search: string;
+  search = '';
   selectedButton = 'btn-1';
 
   constructor(private fb: FormBuilder) {
@@ -30,7 +30,7 @@ export class ProjectsComponent implements OnInit {
       countries: [null, Validators.required]
     });
     this.selectedCountry = this.countries[0].value;
-    this.projects = projectsList.filter(project => project.state === 'En cours');
+    this.projects = projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end);
     this.currentProjectList = this.projects;
     this.initiateSelectMenu();
   }
@@ -40,22 +40,22 @@ export class ProjectsComponent implements OnInit {
 
   onBtnClick(id) {
     if (id === 'btn-1') {
-      this.btn1Clicked ? this.projects = this.projects.filter(p => p.state !== 'En cours')
-        : this.projects.push(...projectsList.filter(project => project.state === 'En cours'));
+      this.btn1Clicked ? this.projects = this.projects.filter(p => p.active === false || new Date(Date.now()) > p.end)
+        : this.projects.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end));
       this.btn1Clicked = !this.btn1Clicked;
       this.currentProjectList = this.projects;
       this.initiateSelectMenu();
     }
     else if (id === 'btn-2') {
-      this.btn2Clicked ? this.projects = this.projects.filter(p => p.state !== 'Terminé')
-        : this.projects.push(...projectsList.filter(project => project.state === 'Terminé'));
+      this.btn2Clicked ? this.projects = this.projects.filter(p => p.active === false || new Date(Date.now()) < p.end)
+        : this.projects.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) > project.end));
       this.btn2Clicked = !this.btn2Clicked;
       this.currentProjectList = this.projects;
       this.initiateSelectMenu();
     }
     else if (id === 'btn-3') {
-      this.btn3Clicked ? this.projects = this.projects.filter(p => p.state !== 'Supprimé')
-        : this.projects.push(...projectsList.filter(project => project.state === 'Supprimé'));
+      this.btn3Clicked ? this.projects = this.projects.filter(p => p.active === true)
+        : this.projects.push(...projectsList.filter(project => project.active === false));
       this.btn3Clicked = !this.btn3Clicked;
       this.currentProjectList = this.projects;
       this.initiateSelectMenu();
@@ -67,7 +67,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   onSearchbarChanged() {
-    this.projects = this.currentProjectList.filter(project => project.projectName.startsWith(this.search));
+    this.projects = this.currentProjectList.filter(project => project.name.startsWith(this.search));
   }
   onSelectMenuChanged(e) {
     this.onBtnClick(this.selectedButton);
