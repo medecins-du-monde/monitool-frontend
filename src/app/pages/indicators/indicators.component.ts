@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Indicator } from 'src/app/models/indicator';
+import { Theme } from 'src/app/models/theme';
 import { indicatorsList } from 'src/app/constants/indicators';
 import { themes } from 'src/app/constants/themes';
 import { IndicatorsGroup } from 'src/app/models/indicators-group';
@@ -11,41 +11,49 @@ import { IndicatorsGroup } from 'src/app/models/indicators-group';
 })
 export class IndicatorsComponent implements OnInit {
   indicators: IndicatorsGroup[] = [];
+  crco: Theme;
+  mgr: Theme;
+  rdr: Theme;
+  ssr: Theme;
 
   constructor() {
+    this.crco = themes.find(t => t.shortName.fr === 'CrCo');
+    this.mgr = themes.find(t => t.shortName.fr === 'MGR');
+    this.rdr = themes.find(t => t.shortName.fr === 'RdR');
+    this.ssr = themes.find(t => t.shortName.fr === 'SSR');
     this.indicators.push({
       thematic: {
-        en: themes.find(t => t.shortName.fr === 'CrCo').shortName.en + ': ' +
-          themes.find(t => t.shortName.fr === 'CrCo').name.en, fr: themes.find(t => t.shortName.fr === 'CrCo').shortName.fr + ': ' +
-            themes.find(t => t.shortName.fr === 'CrCo').name.fr, es: themes.find(t => t.shortName.fr === 'CrCo').shortName.es + ': ' +
-              themes.find(t => t.shortName.fr === 'CrCo').name.es
+        en: this.crco.shortName.en + ': ' +
+          this.crco.name.en, fr: this.crco.shortName.fr + ': ' +
+            this.crco.name.fr, es: this.crco.shortName.es + ': ' +
+              this.crco.name.es
       }, indicators: indicatorsList.filter(indicator => indicator.themes.length === 1 &&
         themes.find(t => t._id === indicator.themes[0]).shortName.fr.startsWith('CrCo'))
     });
     this.indicators.push({
       thematic: {
-        en: themes.find(t => t.shortName.fr === 'MGR').shortName.en + ': ' +
-          themes.find(t => t.shortName.fr === 'MGR').name.en, fr: themes.find(t => t.shortName.fr === 'MGR').shortName.fr + ': ' +
-            themes.find(t => t.shortName.fr === 'MGR').name.fr, es: themes.find(t => t.shortName.fr === 'MGR').shortName.es + ': ' +
-              themes.find(t => t.shortName.fr === 'MGR').name.es
+        en: this.mgr.shortName.en + ': ' +
+          this.mgr.name.en, fr: this.mgr.shortName.fr + ': ' +
+            this.mgr.name.fr, es: this.mgr.shortName.es + ': ' +
+              this.mgr.name.es
       }, indicators: indicatorsList.filter(indicator => indicator.themes.length === 1 &&
         themes.find(t => t._id === indicator.themes[0]).shortName.fr.startsWith('MGR'))
     });
     this.indicators.push({
       thematic: {
-        en: themes.find(t => t.shortName.fr === 'RdR').shortName.en + ': ' +
-          themes.find(t => t.shortName.fr === 'RdR').name.en, fr: themes.find(t => t.shortName.fr === 'RdR').shortName.fr + ': ' +
-            themes.find(t => t.shortName.fr === 'RdR').name.fr, es: themes.find(t => t.shortName.fr === 'RdR').shortName.es + ': ' +
-              themes.find(t => t.shortName.fr === 'RdR').name.es
+        en: this.rdr.shortName.en + ': ' +
+          this.rdr.name.en, fr: this.rdr.shortName.fr + ': ' +
+            this.rdr.name.fr, es: this.rdr.shortName.es + ': ' +
+              this.rdr.name.es
       }, indicators: indicatorsList.filter(indicator => indicator.themes.length === 1 &&
         themes.find(t => t._id === indicator.themes[0]).shortName.fr.startsWith('RdR'))
     });
     this.indicators.push({
       thematic: {
-        en: themes.find(t => t.shortName.fr === 'SSR').shortName.en + ': ' +
-          themes.find(t => t.shortName.fr === 'SSR').name.en, fr: themes.find(t => t.shortName.fr === 'SSR').shortName.fr + ': ' +
-            themes.find(t => t.shortName.fr === 'SSR').name.fr, es: themes.find(t => t.shortName.fr === 'SSR').shortName.es + ': ' +
-              themes.find(t => t.shortName.fr === 'SSR').name.es
+        en: this.ssr.shortName.en + ': ' +
+          this.ssr.name.en, fr: this.ssr.shortName.fr + ': ' +
+            this.ssr.name.fr, es: this.ssr.shortName.es + ': ' +
+              this.ssr.name.es
       }, indicators: indicatorsList.filter(indicator => indicator.themes.length === 1 &&
         themes.find(t => t._id === indicator.themes[0]).shortName.fr.startsWith('SSR'))
     });
