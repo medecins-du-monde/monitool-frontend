@@ -1,69 +1,52 @@
 @import "src/styles.scss";
 
+.multi-thematics-card{
+    height: 390px !important;
+        .indicator-content {
+            height: 60% !important;
+        }
+}
 .card {
+    @media (max-width: $break-medium) {
+        height: 250px;
+    }
+    height: 240px;
     box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
     transition: 0.3s;
     padding: 12px 3%;
     border-radius: 5px;
-    margin-top: 38px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     border: solid 2px transparent;
-    
+    .indicator-content {
+        height: 33%;
+    }
    
-    .country-info{
+    .indicator-name{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        div{ 
-            display: flex;
-            align-items: center;
+       
         p{
             font-size: 18px;
-            
         }
-        .flag{
-            margin-right: 10px;
-        }
-    }
     }
     p{
         color: var(--main-text);
         font-size: 16px;
-    }
-    .icon{
-        height: 30px;
-        width: 30px;
     }
     .separator{
         background-color: rgba(144, 144, 144, 0.24);
         height: 1px;
         margin-bottom: 10px;
     }
-    .state{
-        width: 65px;
-        height: 16px;
-        border-radius: 12px;
-        background-color: #fe5e00;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 10px;
-        p{
-            font-size: 12px;
-            color: white;
-        }
-    }
-    .project-info-row{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
+    .indicator-info{
+        margin-bottom: 20px;
         .info{
             color: #909090;
             font-size: 16px;
+            margin-bottom: 5px;
         }
         .value{
             font-size: 18px;
@@ -72,7 +55,7 @@
         .thematics{
             display: flex;
             .value{
-                margin-left: 5px;
+                margin-right: 5px;
             }
         }
     }
@@ -85,4 +68,10 @@
         color: #171d29;
         font-weight: bold;
     }
+
+    @media (max-width: 1000px) {
+        .card {
+            height: 260px;
+        }
+      }
 }

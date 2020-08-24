@@ -9,6 +9,8 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectComponent } from './components/project/project.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UserComponent } from './components/user/user.component';
+import { IndicatorComponent } from './components/indicator/indicator.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { UserComponent } from './components/user/user.component';
     ProjectsComponent,
     ProjectComponent,
     UsersComponent,
-    UserComponent
+    UserComponent,
+    IndicatorComponent,
+    IndicatorsComponent,
   ],
   imports: [
     BrowserModule,

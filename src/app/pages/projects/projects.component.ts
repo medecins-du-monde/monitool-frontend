@@ -22,68 +22,75 @@ export class ProjectsComponent implements OnInit {
   selectedCountry: string;
   projects: Project[];
   currentProjectList: Project[];
-  search: string;
-  selectedButton = 'btn-1';
+  search = '';
+  searchedProjects: Project[];
+  filteredCountryProjects: Project[];
 
   constructor(private fb: FormBuilder) {
+  }
+
+  ngOnInit(): void {
     this.countryForm = this.fb.group({
       countries: [null, Validators.required]
     });
     this.selectedCountry = this.countries[0].value;
-    this.projects = projectsList.filter(project => project.state === 'En cours');
+    this.projects = projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end);
     this.currentProjectList = this.projects;
+    this.searchedProjects = this.projects;
     this.initiateSelectMenu();
-  }
-
-  ngOnInit(): void {
   }
 
   onBtnClick(id) {
     if (id === 'btn-1') {
-      this.btn1Clicked ? this.projects = this.projects.filter(p => p.state !== 'En cours')
-        : this.projects.push(...projectsList.filter(project => project.state === 'En cours'));
+      this.btn1Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) > p.end)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end));
       this.btn1Clicked = !this.btn1Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
     else if (id === 'btn-2') {
-      this.btn2Clicked ? this.projects = this.projects.filter(p => p.state !== 'Terminé')
-        : this.projects.push(...projectsList.filter(project => project.state === 'Terminé'));
+      this.btn2Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) < p.end)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) > project.end));
       this.btn2Clicked = !this.btn2Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
     else if (id === 'btn-3') {
-      this.btn3Clicked ? this.projects = this.projects.filter(p => p.state !== 'Supprimé')
-        : this.projects.push(...projectsList.filter(project => project.state === 'Supprimé'));
+      this.btn3Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === true)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === false));
       this.btn3Clicked = !this.btn3Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
+    this.projects = this.currentProjectList;
+    this.onSelectMenuChanged();
     if (this.search !== '') {
       this.onSearchbarChanged();
     }
-    this.selectedButton = id;
   }
 
   onSearchbarChanged() {
-    this.projects = this.currentProjectList.filter(project => project.projectName.startsWith(this.search));
-  }
-  onSelectMenuChanged(e) {
-    this.onBtnClick(this.selectedButton);
+    this.projects = this.currentProjectList.filter(project => project.name.startsWith(this.search));
+    this.searchedProjects = this.projects;
     if (this.selectedCountry !== 'tous') {
-      this.projects = this.projects.filter(project => project.country === this.selectedCountry);
-      this.currentProjectList = this.projects;
+      this.projects = this.filteredCountryProjects.filter(project => project.name.startsWith(this.search));
     }
   }
-  initiateSelectMenu() {
-    this.countries = [
-      {
-        option: 'Tous les pays',
-        value: 'tous'
+
+  onSelectMenuChanged() {
+    if (this.selectedCountry !== 'tous') {
+      this.projects = this.currentProjectList.filter(project => project.country === this.selectedCountry);
+      this.filteredCountryProjects = this.projects;
+    }
+    else {
+      this.projects = this.currentProjectList;
+    }
+    if (this.search !== '') {
+      if (this.selectedCountry !== 'tous') {
+        this.projects = this.searchedProjects.filter(project => project.country === this.selectedCountry);
       }
-    ];
-    this.projects.forEach(project => {
+      else {
+        this.projects = this.searchedProjects;
+      }
+    }
+  }
+
+  initiateSelectMenu() {
+    projectsList.forEach(project => {
       if (this.countries.findIndex(x => x.option === project.country) === -1) {
         this.countries.push({ option: project.country, value: project.country });
       }

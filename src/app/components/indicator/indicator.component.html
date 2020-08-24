@@ -1,0 +1,26 @@
+<div class="card" [ngClass]="{
+    'multi-thematics-card':indicator.themes.length > 1
+  }">
+    <div class="indicator-name">
+        <p>{{indicator.name.fr}}</p>
+    </div>
+    <div class="separator"></div>
+    <div class="indicator-content">
+        <div *ngIf="indicator.themes.length > 1" class="indicator-info">
+            <div class="info">Thématiques</div>
+            <div class="thematics">
+                <div *ngFor="let theme of themesNames" class="value">{{theme}}</div>
+            </div>
+        </div>
+        <div class="indicator-info">
+            <div class="info">Description</div>
+            <div *ngIf="indicator.description != null" class="value">{{indicator.description.fr}}</div>
+            <div *ngIf="indicator.description == null" class="value">La description de cet indicateur n'a pas été
+                renseignée</div>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button>Voir le rapport</button>
+    </div>
+
+</div>

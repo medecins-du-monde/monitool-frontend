@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { UsersComponent } from './pages/users/users.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
+
 
 const routes: Routes = [{
   path: '',
@@ -20,6 +22,10 @@ const routes: Routes = [{
 {
   path: 'users',
   component: UsersComponent
+},
+{
+  path: 'indicators',
+  component: IndicatorsComponent
 },
 {
   path: '**',

@@ -9,23 +9,30 @@
     </div>
     <div class="separator"></div>
     <div class="state">
-        <p>{{project.state}}</p>
+        <p>{{state}}</p>
     </div>
     <div class="project-info-row">
         <div class="info">Nom</div>
-        <div class="value">{{project.projectName}}</div>
+        <div class="value">{{project.name}}</div>
     </div>
     <div class="project-info-row">
         <div class="info">Date</div>
-        <div class="value">{{project.startingDate}} - {{project.endingDate}}</div>
+        <div class="value">{{project.start.getDate()}}
+            {{project.start.toLocaleString('default', { month: 'long' })}} {{project.start.getFullYear()}} -
+            {{project.end.getDate()}}
+            {{project.end.toLocaleString('default', { month: 'long' })}} {{project.end.getFullYear()}}</div>
     </div>
     <div class="project-info-row">
-        <div class="info">Thématique</div>
-        <div class="value">{{project.thematic}}</div>
+        <div class="info">Thématiques</div>
+        <div class="thematics">
+            <div *ngFor="let theme of themesNames" class="value">{{theme}}</div>
+        </div>
     </div>
     <div class="project-info-row">
         <div class="info">Dernière saisie</div>
-        <div class="value">{{project.lastInput}}</div>
+        <div *ngIf="project.inputDate == null" class="value">Aucune</div>
+        <div *ngIf="project.inputDate != null" class="value">{{project.inputDate.getDate()}}
+            {{project.inputDate.toLocaleString('default', { month: 'long' })}} {{project.inputDate.getFullYear()}}</div>
     </div>
     <div class="btn-group">
         <button>Ouvrir</button>
