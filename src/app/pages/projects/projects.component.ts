@@ -27,6 +27,9 @@ export class ProjectsComponent implements OnInit {
   filteredCountryProjects: Project[];
 
   constructor(private fb: FormBuilder) {
+  }
+
+  ngOnInit(): void {
     this.countryForm = this.fb.group({
       countries: [null, Validators.required]
     });
@@ -35,9 +38,6 @@ export class ProjectsComponent implements OnInit {
     this.currentProjectList = this.projects;
     this.searchedProjects = this.projects;
     this.initiateSelectMenu();
-  }
-
-  ngOnInit(): void {
   }
 
   onBtnClick(id) {
@@ -63,8 +63,6 @@ export class ProjectsComponent implements OnInit {
     }
   }
 
-
-
   onSearchbarChanged() {
     this.projects = this.currentProjectList.filter(project => project.name.startsWith(this.search));
     this.searchedProjects = this.projects;
@@ -72,6 +70,7 @@ export class ProjectsComponent implements OnInit {
       this.projects = this.filteredCountryProjects.filter(project => project.name.startsWith(this.search));
     }
   }
+
   onSelectMenuChanged() {
     if (this.selectedCountry !== 'tous') {
       this.projects = this.currentProjectList.filter(project => project.country === this.selectedCountry);
@@ -89,13 +88,8 @@ export class ProjectsComponent implements OnInit {
       }
     }
   }
+
   initiateSelectMenu() {
-    this.countries = [
-      {
-        option: 'Tous les pays',
-        value: 'tous'
-      }
-    ];
     projectsList.forEach(project => {
       if (this.countries.findIndex(x => x.option === project.country) === -1) {
         this.countries.push({ option: project.country, value: project.country });

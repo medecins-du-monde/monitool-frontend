@@ -17,6 +17,9 @@ export class IndicatorsComponent implements OnInit {
   ssr: Theme;
 
   constructor() {
+  }
+
+  ngOnInit(): void {
     this.crco = themes.find(t => t.shortName.fr === 'CrCo');
     this.mgr  = themes.find(t => t.shortName.fr === 'MGR');
     this.rdr  = themes.find(t => t.shortName.fr === 'RdR');
@@ -65,10 +68,6 @@ export class IndicatorsComponent implements OnInit {
       },
       indicators: indicatorsList.filter(indicator => indicator.themes.length > 1)
     });
-  }
-
-
-  ngOnInit(): void {
   }
 
 }
