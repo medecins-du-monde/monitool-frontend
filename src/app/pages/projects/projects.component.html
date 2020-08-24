@@ -22,8 +22,7 @@
                 </div>
             </div>
             <div [formGroup]="countryForm">
-                <select formControlName="countries" (change)="onSelectMenuChanged($event)"
-                    [(ngModel)]="selectedCountry">
+                <select formControlName="countries" (change)="onSelectMenuChanged()" [(ngModel)]="selectedCountry">
                     <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
                         [value]="country.value">
                         {{country.option}}</option>

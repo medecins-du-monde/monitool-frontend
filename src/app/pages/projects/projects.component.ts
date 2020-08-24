@@ -23,7 +23,8 @@ export class ProjectsComponent implements OnInit {
   projects: Project[];
   currentProjectList: Project[];
   search = '';
-  selectedButton = 'btn-1';
+  searchedProjects: Project[];
+  filteredCountryProjects: Project[];
 
   constructor(private fb: FormBuilder) {
     this.countryForm = this.fb.group({
@@ -32,6 +33,7 @@ export class ProjectsComponent implements OnInit {
     this.selectedCountry = this.countries[0].value;
     this.projects = projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end);
     this.currentProjectList = this.projects;
+    this.searchedProjects = this.projects;
     this.initiateSelectMenu();
   }
 
@@ -40,40 +42,51 @@ export class ProjectsComponent implements OnInit {
 
   onBtnClick(id) {
     if (id === 'btn-1') {
-      this.btn1Clicked ? this.projects = this.projects.filter(p => p.active === false || new Date(Date.now()) > p.end)
-        : this.projects.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end));
+      this.btn1Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) > p.end)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end));
       this.btn1Clicked = !this.btn1Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
     else if (id === 'btn-2') {
-      this.btn2Clicked ? this.projects = this.projects.filter(p => p.active === false || new Date(Date.now()) < p.end)
-        : this.projects.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) > project.end));
+      this.btn2Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) < p.end)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) > project.end));
       this.btn2Clicked = !this.btn2Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
     else if (id === 'btn-3') {
-      this.btn3Clicked ? this.projects = this.projects.filter(p => p.active === true)
-        : this.projects.push(...projectsList.filter(project => project.active === false));
+      this.btn3Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === true)
+        : this.currentProjectList.push(...projectsList.filter(project => project.active === false));
       this.btn3Clicked = !this.btn3Clicked;
-      this.currentProjectList = this.projects;
-      this.initiateSelectMenu();
     }
+    this.projects = this.currentProjectList;
+    this.onSelectMenuChanged();
     if (this.search !== '') {
       this.onSearchbarChanged();
     }
-    this.selectedButton = id;
   }
+
+
 
   onSearchbarChanged() {
     this.projects = this.currentProjectList.filter(project => project.name.startsWith(this.search));
-  }
-  onSelectMenuChanged(e) {
-    this.onBtnClick(this.selectedButton);
+    this.searchedProjects = this.projects;
     if (this.selectedCountry !== 'tous') {
-      this.projects = this.projects.filter(project => project.country === this.selectedCountry);
-      this.currentProjectList = this.projects;
+      this.projects = this.filteredCountryProjects.filter(project => project.name.startsWith(this.search));
+    }
+  }
+  onSelectMenuChanged() {
+    if (this.selectedCountry !== 'tous') {
+      this.projects = this.currentProjectList.filter(project => project.country === this.selectedCountry);
+      this.filteredCountryProjects = this.projects;
+    }
+    else {
+      this.projects = this.currentProjectList;
+    }
+    if (this.search !== '') {
+      if (this.selectedCountry !== 'tous') {
+        this.projects = this.searchedProjects.filter(project => project.country === this.selectedCountry);
+      }
+      else {
+        this.projects = this.searchedProjects;
+      }
     }
   }
   initiateSelectMenu() {
@@ -83,7 +96,7 @@ export class ProjectsComponent implements OnInit {
         value: 'tous'
       }
     ];
-    this.projects.forEach(project => {
+    projectsList.forEach(project => {
       if (this.countries.findIndex(x => x.option === project.country) === -1) {
         this.countries.push({ option: project.country, value: project.country });
       }
