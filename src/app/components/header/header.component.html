@@ -8,7 +8,8 @@
         <div (click)="navBurgerClose()" class="header-href">
             <a class="link" [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
             <a class="link" [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
-            <a class="link" routerLinkActive="active-link"> Indicateurs traversaux </a>
+            <a class="link" [routerLink]="['indicators']" routerLinkActive="active-link"> Indicateurs traversaux </a>
+            
             <div class="dropdown">
                 <a id="account" class="dropbtn" (click)="dropdownHandler()"> Mon compte</a>
                 <div class="dropdown-content" id="accountDropdown">
@@ -18,11 +19,6 @@
                 </div>
             </div>
             <i class="material-icons">keyboard_arrow_down</i>
-            
-            <!-- <a [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
-            <a [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
-            <a [routerLink]="['indicators']" routerLinkActive="active-link"> Indicateurs traversaux </a>
-            <a id="account"> Mon compte</a> -->
             
         </div>
     </div>
