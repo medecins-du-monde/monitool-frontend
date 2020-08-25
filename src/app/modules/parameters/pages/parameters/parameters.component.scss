@@ -1,0 +1,19 @@
+@import "src/styles.scss";
+
+.module{
+    display: flex;
+    justify-items: space-between;
+    app-sidenav{
+        width: 25%;
+        margin-left: -6%;
+        margin-right: 3%;
+    }
+    @media screen and (max-width: $break-point-four-to-three) {
+        flex-direction: column;
+        app-sidenav{
+            
+            width: auto;
+            margin-bottom: 5px;
+        }
+    }
+  }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { UsersComponent } from './pages/users/users.component';
+
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 
 
@@ -20,8 +20,9 @@ const routes: Routes = [{
   component: ProjectsComponent
 },
 {
-  path: 'users',
-  component: UsersComponent
+  path: 'parameters',
+  loadChildren: () => import('./modules/parameters/parameters.module')
+    .then(m => m.ParametersModule)
 },
 {
   path: 'indicators',

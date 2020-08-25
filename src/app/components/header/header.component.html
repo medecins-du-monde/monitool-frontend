@@ -9,17 +9,15 @@
             <a class="link" [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
             <a class="link" [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
             <a class="link" [routerLink]="['indicators']" routerLinkActive="active-link"> Indicateurs traversaux </a>
-            
+
             <div class="dropdown">
-                <a id="account" class="dropbtn" (click)="dropdownHandler()"> Mon compte</a>
+                <a id="account" class="link dropbtn" (click)="dropdownHandler()"> Mon compte</a>
                 <div class="dropdown-content" id="accountDropdown">
-                    <a [routerLink]="['users']">Utilisateurs</a>
-                    <a>Thématiques</a>
-                    <a>Indicateurs traversaux</a>
+                    <a [routerLink]="['parameters']">Parametres</a>
                 </div>
             </div>
             <i class="material-icons">keyboard_arrow_down</i>
-            
+
         </div>
     </div>
 
