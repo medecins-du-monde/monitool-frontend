@@ -1,6 +1,13 @@
 @import "src/styles.scss";
 
 
+.breadcrumb{
+  font-size: 20px;
+  color:#7f869b;
+  .page-name{
+    color: #151515;
+  }
+}
 .section-title{
   padding: 2%;
   background-color: #d9edf7;
