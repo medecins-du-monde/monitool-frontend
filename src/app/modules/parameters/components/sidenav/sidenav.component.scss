@@ -48,11 +48,6 @@
         svg .svg-icon{
           fill: #0266b3;
         }
-        // &.link{
-        // border-bottom: 3px solid white;
-        // margin-top: 20px;
-        // padding-bottom: 25px;
-        // }
     }  
 }
 
@@ -69,17 +64,31 @@
   display: flex;
   justify-items: center;
   align-items: center;
-  height: 100px;
-  .sidebar-element{
-    margin-bottom: 0;
+  
+  flex-wrap: wrap;
+  height: 150px;
+  .sidebar-title{
+    justify-self: center;
+  
+  }
+  .sidebar-options{
+    display: flex;
+    justify-content: center;
+    .sidebar-element{
+      margin-bottom: 0;
+    }
   }
 }
 @media screen and (max-width: $break-point-three-to-two) {
   flex-direction: column;
   height: 300px;
   align-content: center;
+  .sidebar-options{
+    flex-direction: column;
+    
   .sidebar-element{
     margin-bottom: 5%;
   }
+}
 }
   }

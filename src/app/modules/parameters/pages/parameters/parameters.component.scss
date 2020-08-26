@@ -4,16 +4,19 @@
     display: flex;
     justify-items: space-between;
     app-sidenav{
-        width: 25%;
-        margin-left: -6%;
-        margin-right: 3%;
+        width: 300px;
+        margin-left: -80px;
+        margin-right: 40px;
     }
     @media screen and (max-width: $break-point-four-to-three) {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         app-sidenav{
             
             width: auto;
-            margin-bottom: 5px;
+            margin: 0;
+            
         }
     }
   }
