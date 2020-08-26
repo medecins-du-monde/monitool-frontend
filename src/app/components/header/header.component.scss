@@ -4,15 +4,12 @@
     $transDuration: 250ms;
 
     display: flex;
-    width: 100%;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin: auto;
-    padding-right: 4vw;
-    padding-left: 4vw;
+    width: 100%;
 
     .header-image {
-        z-index: 2;
-        margin-top: 20px;
         img {
             max-height: 42px;
         }
@@ -22,25 +19,20 @@
     }
 
     .menu {
-        justify-content: space-between;
-        margin: auto;
+        margin-right: 40px;
         display: flex;
-        margin-left: 50%;
+        width: 50%;
 
         .header-href {
             display: flex;
             align-items: center;
+            width: 100%;
+            justify-content: space-between;
 
             i,
             #account {
                 color: white;
                 cursor: pointer;
-            }
-            #account {
-                margin-left: 50%;
-            }
-            i{
-                margin-left: 10%;
             }
             a {
                 color: var(--text);
@@ -72,31 +64,33 @@
                 }
             }
             .dropdown {
+                display: flex;
+                align-items: center;
                   .dropdown-content {
                     display: none;
                     position: absolute;
                     justify-items: center;
                     background-color: #f9f9f9;
-                    min-width: 160px;
+                    width: 160px;
                     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                     z-index: 1;
     
                     a {
                         float: none;
                         color: black;
-                       // padding: 12px 16px;
                         text-decoration: none;
                         display: block;
                         text-align: left;
+                        margin-right: 0;
+                        border-radius: 0%;
                       }
                       a:hover {
                         background-color: #e4eefa;
-                    //      margin-top: 20px;
-                    // padding-bottom: 25px;
                       }
                   }
                   .show {
                     display: block;
+                    margin-top: 125px;
                   }
               }
              
