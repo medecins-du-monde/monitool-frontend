@@ -1,0 +1,29 @@
+<div class="module">
+    <app-sidenav></app-sidenav>
+    <div class="router-page">
+        <p class="breadcrumb">Paramètres > <span class="page-name">Themes</span>
+        </p>
+        <section class="page-section">
+            <p class="section-title">Cette page contient la liste des thématiques traitées par l'ONG.
+                <br><br>
+                Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal.
+            </p>
+            <div class="themes">
+                <div *ngFor="let theme of themes" class="card">
+                    <div class="theme-name">
+                        <p>{{theme.shortName.fr}}</p>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="theme-info">
+                        <div class="info">Nom</div>
+                        <div class="value">{{theme.name.fr}}</div>
+                    </div>
+                    <div class="btn-group">
+                        <button>Modifier</button>
+                        <button><img class="icon" src="assets/icons/016.svg" /></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

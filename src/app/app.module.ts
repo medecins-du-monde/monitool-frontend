@@ -7,7 +7,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectComponent } from './components/project/project.component';
-
 import { IndicatorComponent } from './components/indicator/indicator.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 

@@ -71,7 +71,26 @@ button {
     background-color: #ededee !important;
   }
 
-
+  .module{
+    display: flex;
+    justify-items: space-between;
+    app-sidenav{
+        width: 300px;
+        margin-left: -80px;
+        margin-right: 40px;
+    }
+    @media screen and (max-width: $break-point-four-to-three) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        app-sidenav{
+            
+            width: auto;
+            margin: 0;
+            
+        }
+    }
+  }
 // Colors
 :root {
     // to be deprecated

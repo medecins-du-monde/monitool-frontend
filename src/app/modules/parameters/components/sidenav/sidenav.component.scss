@@ -17,6 +17,8 @@
        color: #1c1c1c;
      }
 
+     
+
      .sidebar-element{
        display: flex;
        align-items: center;
@@ -37,11 +39,8 @@
         -webkit-transition-duration: 0.4s;
         transition-duration: 0.4s;
         cursor: pointer;
-
-        &.active-link {
-            color: #0266b3;
-        }
-      }  
+       }  
+       
       &:hover {
         a{
         color: #0266b3;}
@@ -50,15 +49,12 @@
         }
     }  
 }
-
-#users{
-  svg .svg-icon{
-    fill: #0266b3;
-  }
-    a{
-        color: #0266b3;
+.active-link {
+  a{
+    color: #0266b3;}
+    svg .svg-icon{
+      fill: #0266b3;
     }
-   
 }
 @media screen and (max-width: $break-point-four-to-three) {
   display: flex;

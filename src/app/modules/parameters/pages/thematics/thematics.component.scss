@@ -1,0 +1,102 @@
+@import "src/styles.scss";
+
+.breadcrumb{
+    font-size: 20px;
+    color:#7f869b;
+    .page-name{
+      color: #151515;
+    }
+  }
+  .section-title{
+    padding: 2%;
+    background-color: #d9edf7;
+    color: #31708f;
+  }
+.router-page{
+    width: 100%;  
+.themes{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: -1.9%;
+    margin-left: -1.6%;
+    
+.card {
+    box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+    padding: 12px 3%;
+    border-radius: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: solid 2px transparent;
+    height: 200px;
+    width: 20%;
+    margin: 1.6%;
+
+    .theme-name{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+       
+        p{
+            font-size: 18px;
+        }
+    }
+    p{
+        color: var(--main-text);
+        font-size: 16px;
+    }
+    .separator{
+        background-color: rgba(144, 144, 144, 0.24);
+        height: 1px;
+        margin-bottom: 10px;
+    }
+    .theme-info{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        .info{
+            color: #909090;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .value{
+            font-size: 18px;
+            color: #151515;
+        }
+    }
+    .btn-group{
+        align-self: flex-end;
+    }
+    .btn-group button{
+        padding: 5px;
+        font-size: 16px;
+        color: #171d29;
+        font-weight: bold;
+    }
+}
+@media screen and (max-width: $break-point-four-to-three) {
+    justify-content: space-between;
+    .card{
+      width: 40%;
+      }
+}
+@media screen and (max-width: $break-point-three-to-two) {
+  margin-right: 0;
+  margin-left: 0;
+  justify-content: center;
+  .card{
+    width: 60%;
+    margin: 0;
+    margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: $break-point-two-to-one) {
+    .card{
+    width: 100%;
+    }
+}
+}
+}

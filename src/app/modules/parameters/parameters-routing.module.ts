@@ -1,19 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ParametersComponent } from './pages/parameters/parameters.component';
 import { UsersComponent } from './pages/users/users.component';
+import { ThematicsComponent } from './pages/thematics/thematics.component';
 
 const routes: Routes = [
   {
     path: 'users',
-    //  component: UsersComponent
-    component: ParametersComponent
+    component: UsersComponent
+  },
+  {
+    path: 'themes',
+    component: ThematicsComponent
   },
   {
     path: '',
     redirectTo: 'users',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
+  // {
+  //   path: '**',
+  //   redirectTo: 'users',
+  //   pathMatch: 'full',
+  // },
 ];
 
 @NgModule({
