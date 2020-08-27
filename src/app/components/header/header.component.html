@@ -1,4 +1,4 @@
-<div class="header-container container">
+<div class="header-container">
 
     <div class="header-image">
         <img class="link-img" [routerLink]="['home']" fragment="top" src="assets/images/MDM-LOGO-BLANC.png" />
@@ -6,17 +6,19 @@
 
     <div class="menu" id="menu-links">
         <div (click)="navBurgerClose()" class="header-href">
+            <div class="link-section">
             <a class="link" [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
             <a class="link" [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
             <a class="link" [routerLink]="['indicators']" routerLinkActive="active-link"> Indicateurs traversaux </a>
-
-            <div class="dropdown">
-                <a id="account" class="link dropbtn" (click)="dropdownHandler()"> Mon compte</a>
+            </div>
+            <div class="dropdown" (click)="dropdownHandler()">
+                <a id="account" class="link dropbtn" > Mon compte</a>
                 <div class="dropdown-content" id="accountDropdown">
                     <a [routerLink]="['parameters']">Parametres</a>
                 </div>
+                <i class="material-icons">keyboard_arrow_down</i>
             </div>
-            <i class="material-icons">keyboard_arrow_down</i>
+            
 
         </div>
     </div>
