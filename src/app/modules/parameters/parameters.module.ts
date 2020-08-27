@@ -5,12 +5,14 @@ import { ParametersRoutingModule } from './parameters-routing.module';
 import { UsersComponent } from './pages/users/users.component';
 import { UserComponent } from './components/user/user.component';
 import { ThematicsComponent } from './pages/thematics/thematics.component';
+import { ThemeComponent } from './components/theme/theme.component';
 
 @NgModule({
   declarations: [SidenavComponent,
     UsersComponent,
     UserComponent,
-    ThematicsComponent
+    ThematicsComponent,
+    ThemeComponent
   ],
   imports: [
     CommonModule,

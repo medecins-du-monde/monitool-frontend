@@ -14,6 +14,7 @@
   }
 .router-page{
     width: 100%;  
+    .page-section{
 .themes{
     display: flex;
     flex-wrap: wrap;
@@ -21,65 +22,13 @@
     margin-right: -1.9%;
     margin-left: -1.6%;
     
-.card {
-    box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
-    transition: 0.3s;
-    padding: 12px 3%;
-    border-radius: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    border: solid 2px transparent;
-    height: 200px;
-    width: 20%;
-    margin: 1.6%;
-
-    .theme-name{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-       
-        p{
-            font-size: 18px;
+    app-theme{
+        width: 30%;
+        margin: 1.6%;
         }
-    }
-    p{
-        color: var(--main-text);
-        font-size: 16px;
-    }
-    .separator{
-        background-color: rgba(144, 144, 144, 0.24);
-        height: 1px;
-        margin-bottom: 10px;
-    }
-    .theme-info{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-        .info{
-            color: #909090;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-        .value{
-            font-size: 18px;
-            color: #151515;
-        }
-    }
-    .btn-group{
-        align-self: flex-end;
-    }
-    .btn-group button{
-        padding: 5px;
-        font-size: 16px;
-        color: #171d29;
-        font-weight: bold;
-    }
-}
 @media screen and (max-width: $break-point-four-to-three) {
     justify-content: space-between;
-    .card{
+    app-theme{
       width: 40%;
       }
 }
@@ -87,16 +36,39 @@
   margin-right: 0;
   margin-left: 0;
   justify-content: center;
-  .card{
+  app-theme{
     width: 60%;
     margin: 0;
     margin-bottom: 20px;
     }
 }
 @media screen and (max-width: $break-point-two-to-one) {
-    .card{
+    app-theme{
     width: 100%;
     }
 }
 }
+button{
+  width: 300px;
+  i{
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $break-point-four-to-three) {
+    justify-self: center;
+    width: 50%;
+}
+@media screen and (max-width: $break-point-three-to-two) {
+  width: 60%;
+}
+@media screen and (max-width: $break-point-two-to-one) {
+    width: 80%;
+}
+}
+@media screen and (max-width: $break-point-four-to-three) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+    }
 }
