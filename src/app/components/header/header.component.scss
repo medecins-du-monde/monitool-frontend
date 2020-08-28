@@ -10,11 +10,9 @@
     width: 100%;
 
     .header-image {
+        margin-left: 20px;
         img {
             max-height: 42px;
-        }
-        @media only screen and (max-width: $break-point-basic) {
-            margin: 0;
         }
     }
 
