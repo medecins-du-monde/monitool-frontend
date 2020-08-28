@@ -1,0 +1,74 @@
+@import "src/styles.scss";
+
+.breadcrumb{
+    font-size: 20px;
+    color:#7f869b;
+    .page-name{
+      color: #151515;
+    }
+  }
+  .section-title{
+    padding: 2%;
+    background-color: #d9edf7;
+    color: #31708f;
+  }
+.router-page{
+    width: 100%;  
+    .page-section{
+.indicators{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: -1.9%;
+    margin-left: -1.6%;
+    
+    app-indicator{
+        width: 30%;
+        margin: 1.6%;
+        }
+@media screen and (max-width: $break-point-four-to-three) {
+    justify-content: space-between;
+    app-indicator{
+      width: 40%;
+      }
+}
+@media screen and (max-width: $break-point-three-to-two) {
+  margin-right: 0;
+  margin-left: 0;
+  justify-content: center;
+  app-indicator{
+    width: 60%;
+    margin: 0;
+    margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: $break-point-two-to-one) {
+    app-indicator{
+    width: 100%;
+    }
+}
+}
+button{
+  width: 300px;
+  i{
+    margin-right: 10px;
+  }
+  @media screen and (max-width: $break-point-four-to-three) {
+    justify-self: center;
+    width: 50%;
+}
+@media screen and (max-width: $break-point-three-to-two) {
+  width: 60%;
+}
+@media screen and (max-width: $break-point-two-to-one) {
+    width: 80%;
+}
+}
+@media screen and (max-width: $break-point-four-to-three) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+    }
+}

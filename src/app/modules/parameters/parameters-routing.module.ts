@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from './pages/users/users.component';
 import { ThematicsComponent } from './pages/thematics/thematics.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'themes',
     component: ThematicsComponent
+  },
+  {
+    path: 'indicators',
+    component: IndicatorsComponent
   },
   {
     path: '',

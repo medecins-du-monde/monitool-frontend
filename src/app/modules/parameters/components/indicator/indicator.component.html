@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="indicator-name">
+        <p>{{indicator.name.fr}}</p>
+    </div>
+    <div class="separator"></div>
+    <div class="indicator-content">
+        <div class="indicator-info">
+            <div class="info">Thématiques</div>
+            <div class="thematics">
+                <div *ngFor="let theme of themesNames" class="value">{{theme}}</div>
+            </div>
+        </div>
+        <div class="indicator-info">
+            <div class="info">Description</div>
+            <div *ngIf="indicator.description != null" class="value">{{indicator.description.fr}}</div>
+            <div *ngIf="indicator.description == null" class="value">La description de cet indicateur n'a pas été
+                renseignée</div>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button>Modifier</button>
+        <button><img class="icon" src="assets/icons/016.svg" /></button>
+    </div>
+
+</div>
