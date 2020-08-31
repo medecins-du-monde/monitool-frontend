@@ -3,7 +3,7 @@
 :host {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -26,6 +26,7 @@
     background: var(--page-background);
     padding-left: 80px;
     padding-right: 80px;
+    overflow: auto;
     @media screen and (max-width: $break-point-three-to-two) {
         padding-left: 10%;
         padding-right: 10%;
