@@ -1,31 +1,9 @@
-<div class="card">
-    <p class="sidebar-title">Paramètres</p>
-    <div class="sidebar-options">
-        <div id="users" class="sidebar-element" [routerLink]="['/parameters/users']" routerLinkActive="active-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" d="M0 0h24v24H0V0z" />
-                <path class="svg-icon"
-                    d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V18c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-1.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05.02.01.03.03.04.04 1.14.83 1.93 1.94 1.93 3.41V18c0 .35-.07.69-.18 1H22c.55 0 1-.45 1-1v-1.5c0-2.33-4.67-3.5-7-3.5z" />
-            </svg>
-            <a class="link"> Utilisateurs </a>
-        </div>
-        <div id="themes" class="sidebar-element" [routerLink]="['/parameters/themes']" routerLinkActive="active-link">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-                id="Layer_1" width="24" height="24" viewBox="0 0 24 24" xml:space="preserve" fill="#000">
-                <path class="svg-icon"
-                    d="M26 2h-6a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2H6a2 2 0 0 0-2 2v26a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm0 26H6V4h4a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2h4v24zM8 11a1 1 0 0 0 1 1h14a1 1 0 0 0 0-2H9a1 1 0 0 0-1 1zm15 5H9a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2zm0 6H9a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2z" />
-
-            </svg>
-            <a class="link"> Thématiques </a>
-        </div>
-        <div id="indicators" class="sidebar-element" [routerLink]="['/parameters/indicators']"
-            routerLinkActive="active-link">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Gauge"
-                x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24" xml:space="preserve">
-                <path class="svg-icon"
-                    d="M8.127 13.6c-.689 1.197-.225 2.18.732 2.732.956.553 2.041.465 2.732-.732.689-1.195 5.047-11.865 4.668-12.084-.379-.219-7.442 8.888-8.132 10.084zM10 6c.438 0 .864.037 1.281.109.438-.549.928-1.154 1.405-1.728A9.664 9.664 0 0 0 10 4C4.393 4 0 8.729 0 14.766c0 .371.016.742.049 1.103.049.551.54.955 1.084.908.551-.051.957-.535.908-1.086A10.462 10.462 0 0 1 2 14.766C2 9.85 5.514 6 10 6zm7.219 1.25c-.279.75-.574 1.514-.834 2.174C17.4 10.894 18 12.738 18 14.766c0 .316-.015.635-.043.943a1.001 1.001 0 0 0 1.992.182c.033-.37.051-.748.051-1.125 0-2.954-1.053-5.59-2.781-7.516z" />
-            </svg>
-            <a class="link"> Indicateurs traversaux </a>
+<div class="sidenav-group" *ngFor="let group of sidenav.groups">
+    <p class="sidenav-title">{{group.title}}</p>
+    <div class="sidenav-items">
+        <div class="sidenav-item" *ngFor="let item of group.items" [routerLink]="item.routerLink" routerLinkActive="active-link">
+            <span class="sidenav-icon" [style.background]="'url('+item.icon+')'"></span>
+            <div class="sidenav-name"> {{item.name}} </div>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ import { ThematicsComponent } from './pages/thematics/thematics.component';
 import { ThemeComponent } from './components/theme/theme.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
+import { ParametersComponent } from './parameters.component';
 
 @NgModule({
   declarations: [SidenavComponent,
@@ -16,7 +17,8 @@ import { IndicatorComponent } from './components/indicator/indicator.component';
     ThematicsComponent,
     ThemeComponent,
     IndicatorsComponent,
-    IndicatorComponent
+    IndicatorComponent,
+    ParametersComponent
   ],
   imports: [
     CommonModule,

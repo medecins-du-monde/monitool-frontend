@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Sidenav } from 'src/app/models/sidenav.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  @Input() selectedOption: string;
+  @Input() sidenav: Sidenav;
 
   constructor() { }
 

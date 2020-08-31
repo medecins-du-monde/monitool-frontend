@@ -1,5 +1,15 @@
 @import "src/styles.scss";
 
+:host {
+  display: block;
+  padding-left: 80px;
+  padding-right: 80px;
+  @media screen and (max-width: $break-point-three-to-two) {
+      padding-left: 10%;
+      padding-right: 10%;
+  }
+}
+
 .indicators{
     display: flex;
     flex-wrap: wrap;

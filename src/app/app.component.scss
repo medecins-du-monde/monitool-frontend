@@ -24,11 +24,5 @@
 .page-container {
     flex-grow: 1;
     background: var(--page-background);
-    padding-left: 80px;
-    padding-right: 80px;
     overflow: auto;
-    @media screen and (max-width: $break-point-three-to-two) {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
 }
