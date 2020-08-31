@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../../models/project';
 import { themes } from 'src/app/constants/themes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project',
@@ -12,7 +13,9 @@ export class ProjectComponent implements OnInit {
   state: string;
   themesNames: string[] = [];
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     if (this.project.active === true) {

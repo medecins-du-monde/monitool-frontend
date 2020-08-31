@@ -16,6 +16,11 @@ const routes: Routes = [{
   component: HomeComponent
 },
 {
+  path: 'project/:id',
+  loadChildren: () => import('./modules/project/project.module')
+    .then(m => m.ProjectModule)
+},
+{
   path: 'projects',
   component: ProjectsComponent
 },
