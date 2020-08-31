@@ -17,17 +17,17 @@ export class ParametersComponent implements OnInit {
           {
             name: 'Utilisateurs',
             routerLink: '/parameters/users',
-            icon: 'assets/icons/people.svg'
+            icon: 'people'
           },
           {
             name: 'Thématiques',
             routerLink: '/parameters/themes',
-            icon: 'assets/icons/clipboard.svg'
+            icon: 'clipboard'
           },
           {
             name: 'Indicateurs traversaux',
             routerLink: '/parameters/indicators',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           }
         ]
       }

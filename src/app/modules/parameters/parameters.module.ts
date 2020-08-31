@@ -9,6 +9,7 @@ import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
 import { ParametersComponent } from './parameters.component';
 import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
+import { SvgIconsModule } from '@ngneat/svg-icon';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
   imports: [
     CommonModule,
     ParametersRoutingModule,
-    SidenavModule
+    SidenavModule,
+    SvgIconsModule
   ]
 })
 export class ParametersModule { }

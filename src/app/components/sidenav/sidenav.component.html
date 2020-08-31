@@ -2,9 +2,9 @@
     <div class="sidenav-title" (click)="openGroup(group.title)">
         <span>{{group.title}}</span>
     </div>
-    <div class="sidenav-items" *ngIf="group.collapsible && activeGroup === group.title">
+    <div class="sidenav-items" *ngIf="!group.collapsible || activeGroup === group.title">
         <div class="sidenav-item" *ngFor="let item of group.items" [routerLink]="item.routerLink" routerLinkActive="active-link">
-            <span class="sidenav-icon" [style.background]="'url('+item.icon+')'"></span>
+            <svg-icon class="sidenav-icon" size="lg" [key]="item.icon"></svg-icon>
             <div class="sidenav-name"> {{item.name}} </div>
         </div>
     </div>

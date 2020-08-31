@@ -17,47 +17,47 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'assets/icons/people.svg'
+            icon: 'people'
           },
           {
             name: 'Données de base',
             routerLink: '',
-            icon: 'assets/icons/clipboard.svg'
+            icon: 'clipboard'
           },
           {
             name: 'Lieux de collecte',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Lieux de collecte',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Cadres logiques',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Indicateurs transversaux',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Indicateurs annexés',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Utilisateurs',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           },
           {
             name: 'Historique',
             routerLink: '',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'gauge'
           }
         ]
       },
@@ -68,7 +68,7 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'assets/icons/people.svg'
+            icon: 'people'
           }
         ]
       },
@@ -79,17 +79,17 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'assets/icons/people.svg'
+            icon: 'people'
           },
           {
             name: 'Rapport général',
             routerLink: '',
-            icon: 'assets/icons/people.svg'
+            icon: 'people'
           },
           {
             name: 'Tableau croisé dynamique',
             routerLink: '',
-            icon: 'assets/icons/grid.svg'
+            icon: 'grid'
           }
         ]
       }

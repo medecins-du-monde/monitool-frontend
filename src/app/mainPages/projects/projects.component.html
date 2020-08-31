@@ -18,7 +18,7 @@
                 <div class="search_box">
                     <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()"
                         placeholder="Chercher">
-                    <img id="search-icon" src="assets/icons/search.svg" />
+                    <svg-icon id="search-icon" key="search"></svg-icon>
                 </div>
             </div>
             <div [formGroup]="countryForm">
@@ -28,7 +28,7 @@
                         {{country.option}}</option>
                 </select>
             </div>
-            <button class="icon-btn"><img src="assets/icons/add-folder.svg" /> Créer un projet</button>
+            <button class="icon-btn"><svg-icon key="addFolder"></svg-icon> Créer un projet</button>
         </div>
     </div>
     <div class="projects">

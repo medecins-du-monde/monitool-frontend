@@ -5,7 +5,7 @@
             <p>{{project.country}}
             </p>
         </div>
-        <img class="icon" src="assets/icons/person.svg" />
+        <svg-icon key="person"></svg-icon>
     </div>
     <div class="separator"></div>
     <div class="state">
@@ -36,6 +36,6 @@
     </div>
     <div class="btn-group">
         <button [routerLink]="['/project', project._id]">Ouvrir</button>
-        <button><img class="icon" src="assets/icons/check-grey.svg" /></button>
+        <button><svg-icon key="checkGrey"></svg-icon></button>
     </div>
 </div>
