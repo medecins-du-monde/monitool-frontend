@@ -16,47 +16,47 @@ export class ProjectComponent implements OnInit {
         items: [
           {
             name: 'Accueil',
-            routerLink: '',
+            routerLink: '../structure/home',
             icon: 'home'
           },
           {
             name: 'Données de base',
-            routerLink: '',
+            routerLink: '../structure/basics',
             icon: 'database'
           },
           {
             name: 'Lieux de collecte',
-            routerLink: '',
+            routerLink: '../structure/sites',
             icon: 'location'
           },
           {
             name: 'Sources de données',
-            routerLink: '',
+            routerLink: '../structure/data-source',
             icon: 'folder'
           },
           {
             name: 'Cadres logiques',
-            routerLink: '',
+            routerLink: '../structure/logical-frame',
             icon: 'clipboard'
           },
           {
             name: 'Indicateurs transversaux',
-            routerLink: '',
+            routerLink: '../structure/cross-cutting',
             icon: 'gauge'
           },
           {
             name: 'Indicateurs annexés',
-            routerLink: '',
+            routerLink: '../structure/extra-indicators',
             icon: 'gauge'
           },
           {
             name: 'Utilisateurs',
-            routerLink: '',
+            routerLink: '../structure/users',
             icon: 'people'
           },
           {
             name: 'Historique',
-            routerLink: '',
+            routerLink: '../structure/history',
             icon: 'history'
           }
         ]
@@ -67,7 +67,7 @@ export class ProjectComponent implements OnInit {
         items: [
           {
             name: 'Accueil',
-            routerLink: '',
+            routerLink: '../input/home',
             icon: 'home'
           }
         ]
@@ -78,17 +78,17 @@ export class ProjectComponent implements OnInit {
         items: [
           {
             name: 'Accueil',
-            routerLink: '',
+            routerLink: '../reporting/home',
             icon: 'home'
           },
           {
             name: 'Rapport général',
-            routerLink: '',
+            routerLink: '../reporting/general',
             icon: 'clipboard'
           },
           {
             name: 'Tableau croisé dynamique',
-            routerLink: '',
+            routerLink: '../reporting/pivot-table',
             icon: 'grid'
           }
         ]
