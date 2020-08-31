@@ -18,7 +18,7 @@ import { IndicatorsComponent } from './mainPages/indicators/indicators.component
     ProjectsComponent,
     ProjectComponent,
     IndicatorComponent,
-    IndicatorsComponent,
+    IndicatorsComponent
   ],
   imports: [
     BrowserModule,

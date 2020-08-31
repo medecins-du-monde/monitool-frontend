@@ -22,7 +22,7 @@ export class ParametersComponent implements OnInit {
           {
             name: 'Thématiques',
             routerLink: '/parameters/themes',
-            icon: 'assets/icons/gauge.svg'
+            icon: 'assets/icons/clipboard.svg'
           },
           {
             name: 'Indicateurs traversaux',
