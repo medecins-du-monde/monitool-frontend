@@ -17,27 +17,27 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'people'
+            icon: 'home'
           },
           {
             name: 'Données de base',
             routerLink: '',
-            icon: 'clipboard'
+            icon: 'database'
           },
           {
             name: 'Lieux de collecte',
             routerLink: '',
-            icon: 'gauge'
+            icon: 'location'
           },
           {
-            name: 'Lieux de collecte',
+            name: 'Sources de données',
             routerLink: '',
-            icon: 'gauge'
+            icon: 'folder'
           },
           {
             name: 'Cadres logiques',
             routerLink: '',
-            icon: 'gauge'
+            icon: 'clipboard'
           },
           {
             name: 'Indicateurs transversaux',
@@ -52,12 +52,12 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Utilisateurs',
             routerLink: '',
-            icon: 'gauge'
+            icon: 'people'
           },
           {
             name: 'Historique',
             routerLink: '',
-            icon: 'gauge'
+            icon: 'history'
           }
         ]
       },
@@ -68,7 +68,7 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'people'
+            icon: 'home'
           }
         ]
       },
@@ -79,12 +79,12 @@ export class ProjectComponent implements OnInit {
           {
             name: 'Accueil',
             routerLink: '',
-            icon: 'people'
+            icon: 'home'
           },
           {
             name: 'Rapport général',
             routerLink: '',
-            icon: 'people'
+            icon: 'clipboard'
           },
           {
             name: 'Tableau croisé dynamique',
