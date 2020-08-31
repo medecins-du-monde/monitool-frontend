@@ -9,9 +9,17 @@ import { Sidenav } from 'src/app/models/sidenav.model';
 export class SidenavComponent implements OnInit {
   @Input() sidenav: Sidenav;
 
+  public activeGroup: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.
+    activeGroup = this.sidenav.groups.length > 0 ? this.sidenav.groups[0].title : '';
+  }
+
+  public openGroup(title: string): void {
+    this.activeGroup = title;
   }
 
 }
