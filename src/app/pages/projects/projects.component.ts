@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
   themes = ['Theme 1', 'Theme 2'];
   filtersForm: FormGroup;
   // selectedCountry: string;
-  // projects: Project[];
+  projects: Project[];
   // currentProjectList: Project[];
   // search = '';
   // searchedProjects: Project[];
@@ -37,7 +37,7 @@ export class ProjectsComponent implements OnInit {
       themes: [[], Validators.required]
     });
     // this.selectedCountry = this.countries[0].value;
-    // this.projects = projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end);
+    this.projects = projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end);
     // this.currentProjectList = this.projects;
     // this.searchedProjects = this.projects;
     // this.initiateSelectMenu();

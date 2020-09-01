@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectComponent implements OnInit {
   @Input() project: Project;
-  state: string;
+  status: string;
   themesNames: string[] = [];
 
   constructor(
@@ -20,14 +20,14 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
     if (this.project.active === true) {
       if (new Date(Date.now()) < this.project.end) {
-        this.state = 'En cours';
+        this.status = 'En cours';
       }
       else {
-        this.state = 'Terminé';
+        this.status = 'Terminé';
       }
     }
     else {
-      this.state = 'Supprimé';
+      this.status = 'Supprimé';
     }
     this.project.themes.forEach(theme => {
       this.themesNames.push(themes.find(t => t._id === theme).shortName.fr);

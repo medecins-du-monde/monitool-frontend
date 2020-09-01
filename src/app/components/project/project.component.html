@@ -1,41 +1,47 @@
-<div class="card">
-    <div class="country-info">
-        <div>
-            <img class="icon flag" src={{project.countryImage}} />
-            <p>{{project.country}}
-            </p>
+<mat-card>
+    <mat-card-header class="project-header">
+        <div mat-card-avatar>
+            <img [src]="project.countryImage" class="project-country">
         </div>
-        <svg-icon key="person"></svg-icon>
-    </div>
-    <div class="separator"></div>
-    <div class="state">
-        <p>{{state}}</p>
-    </div>
-    <div class="project-info-row">
-        <div class="info">Nom</div>
-        <div class="value">{{project.name}}</div>
-    </div>
-    <div class="project-info-row">
-        <div class="info">Date</div>
-        <div class="value">{{project.start.getDate()}}
-            {{project.start.toLocaleString('default', { month: 'long' })}} {{project.start.getFullYear()}} -
-            {{project.end.getDate()}}
-            {{project.end.toLocaleString('default', { month: 'long' })}} {{project.end.getFullYear()}}</div>
-    </div>
-    <div class="project-info-row">
-        <div class="info">Thématiques</div>
-        <div class="thematics">
-            <div *ngFor="let theme of themesNames" class="value">{{theme}}</div>
+        <mat-card-title>{{project.country}}</mat-card-title>
+        <mat-icon svgIcon="person" class="project-header-icon"></mat-icon>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-chip-list>
+            <mat-chip>{{status}}</mat-chip>
+        </mat-chip-list>
+        <div class="project-info">
+            <div class="project-info-title">Nom</div>
+            <div class="project-info-value">{{project.name}}</div>
         </div>
-    </div>
-    <div class="project-info-row">
-        <div class="info">Dernière saisie</div>
-        <div *ngIf="project.inputDate == null" class="value">Aucune</div>
-        <div *ngIf="project.inputDate != null" class="value">{{project.inputDate.getDate()}}
-            {{project.inputDate.toLocaleString('default', { month: 'long' })}} {{project.inputDate.getFullYear()}}</div>
-    </div>
-    <div class="btn-group">
-        <button [routerLink]="['/project', project._id]">Ouvrir</button>
-        <button><svg-icon key="checkGrey"></svg-icon></button>
-    </div>
-</div>
+        <div class="project-info">
+            <div class="project-info-title">Date</div>
+            <div class="project-info-value">{{project.start  | date: 'mediumDate'}} - {{project.end  | date: 'mediumDate'}}</div>
+        </div>
+        <div class="project-info">
+            <div class="project-info-title">Thématiques</div>
+            <div class="project-info-value">
+                <div *ngFor="let theme of themesNames">{{theme}}</div>
+            </div>
+        </div>
+        <div class="project-info">
+            <div class="project-info-title">Dernière saisie</div>
+            <div class="project-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : 'Aucune'}}</div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-stroked-button [routerLink]="['/project', project._id]">Ouvrir</button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>content_copy</mat-icon>
+        <span>Clone</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu>

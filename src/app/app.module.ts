@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { ProjectComponent } from './components/project/project.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { SvgIconsModule } from '@ngneat/svg-icon';
@@ -19,13 +18,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchbarModule } from './components/searchbar/searchbar.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ProjectModule } from './components/project/project.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProjectsComponent,
-    ProjectComponent,
     IndicatorComponent,
     IndicatorsComponent
   ],
@@ -51,7 +51,9 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
-    SearchbarModule
+    MatGridListModule,
+    SearchbarModule,
+    ProjectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
