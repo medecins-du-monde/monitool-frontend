@@ -12,11 +12,11 @@ import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { SvgIconsModule } from '@ngneat/svg-icon';
 import icons from '../assets/svg/svg-icons';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     HomeComponent,
     ProjectsComponent,
     ProjectComponent,
@@ -26,6 +26,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HeaderModule,
     FormsModule,
     ReactiveFormsModule,
     SvgIconsModule.forRoot({
