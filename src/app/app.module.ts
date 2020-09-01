@@ -11,6 +11,7 @@ import { IndicatorComponent } from './components/indicator/indicator.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { SvgIconsModule } from '@ngneat/svg-icon';
 import icons from '../assets/svg/svg-icons';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import icons from '../assets/svg/svg-icons';
         lg: '20px'
       },
       icons
-    })
+    }),
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
