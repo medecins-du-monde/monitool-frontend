@@ -37,27 +37,36 @@
 </section> -->
 <div>
     <h2>Projects</h2>
+    <app-searchbar></app-searchbar>
     <div class="actions" [formGroup]="filtersForm">
-        <mat-button-toggle-group>
-            <mat-button-toggle>En cours</mat-button-toggle>
-            <mat-button-toggle>Terminés</mat-button-toggle>
-            <mat-button-toggle>Supprimés</mat-button-toggle>
-        </mat-button-toggle-group>
-        <mat-form-field appearance="fill">
-            <mat-label>Tous les pays ({{countries.length}})</mat-label>
-            <mat-select formControlName="countries" multiple>
-                <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Thématiques ({{themes.length}})</mat-label>
-            <mat-select formControlName="themes" multiple>
-                <mat-option *ngFor="let theme of themes" [value]="theme">{{theme}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button mat-raised-button color="primary">
-            <svg-icon key="addFolder"></svg-icon>
-            Créer un project
-        </button>
+        <div>
+            <mat-button-toggle-group>
+                <mat-button-toggle>En cours</mat-button-toggle>
+                <mat-button-toggle>Terminés</mat-button-toggle>
+                <mat-button-toggle>Supprimés</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Tous les pays ({{countries.length}})</mat-label>
+                <mat-select formControlName="countries" multiple>
+                    <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Thématiques ({{themes.length}})</mat-label>
+                <mat-select formControlName="themes" multiple>
+                    <mat-option *ngFor="let theme of themes" [value]="theme">{{theme}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button color="primary">
+                <mat-icon svgIcon="add-folder"></mat-icon>
+                Créer un project
+            </button>
+        </div>
     </div>
 </div>

@@ -16,6 +16,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { SearchbarModule } from './components/searchbar/searchbar.module';
+import { HttpClientModule } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
     AppRoutingModule,
     HeaderModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     SvgIconsModule.forRoot({
       sizes: {
@@ -45,7 +49,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonToggleModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    SearchbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
