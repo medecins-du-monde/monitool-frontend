@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './mainPages/home/home.component';
-import { ProjectsComponent } from './mainPages/projects/projects.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 
-import { IndicatorsComponent } from './mainPages/indicators/indicators.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
 
 
 const routes: Routes = [{
@@ -14,6 +14,11 @@ const routes: Routes = [{
 {
   path: 'home',
   component: HomeComponent
+},
+{
+  path: 'project/:id',
+  loadChildren: () => import('./modules/project/project.module')
+    .then(m => m.ProjectModule)
 },
 {
   path: 'projects',

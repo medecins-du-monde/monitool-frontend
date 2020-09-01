@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { HomeComponent } from './mainPages/home/home.component';
-import { ProjectsComponent } from './mainPages/projects/projects.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectComponent } from './components/project/project.component';
 import { IndicatorComponent } from './components/indicator/indicator.component';
-import { IndicatorsComponent } from './mainPages/indicators/indicators.component';
+import { IndicatorsComponent } from './pages/indicators/indicators.component';
+import { SvgIconsModule } from '@ngneat/svg-icon';
+import icons from '../assets/svg/svg-icons';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,22 @@ import { IndicatorsComponent } from './mainPages/indicators/indicators.component
     ProjectsComponent,
     ProjectComponent,
     IndicatorComponent,
-    IndicatorsComponent,
+    IndicatorsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SvgIconsModule.forRoot({
+      sizes: {
+        xs: '10px',
+        sm: '12px',
+        md: '16px',
+        lg: '20px'
+      },
+      icons
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

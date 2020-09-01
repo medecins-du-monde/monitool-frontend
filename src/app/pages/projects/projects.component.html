@@ -1,0 +1,37 @@
+<section class="page-section">
+    <p class="section-title">Projets
+    </p>
+    <div class="section-row">
+        <div class="btn-group">
+            <button id="btn-1" [ngClass]="{
+                'btn-group-active': btn1Clicked
+              }" (click)="onBtnClick('btn-1')">En cours</button>
+            <button id="btn-2" [ngClass]="{
+                'btn-group-active': btn2Clicked
+              }" (click)="onBtnClick('btn-2')">Terminés</button>
+            <button id="btn-3" [ngClass]="{
+                'btn-group-active': btn3Clicked
+              }" (click)="onBtnClick('btn-3')">Supprimés</button>
+        </div>
+        <div class="row-wrapper">
+            <div class="wrapper">
+                <div class="search_box">
+                    <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()"
+                        placeholder="Chercher">
+                    <svg-icon id="search-icon" key="search"></svg-icon>
+                </div>
+            </div>
+            <div [formGroup]="countryForm">
+                <select formControlName="countries" (change)="onSelectMenuChanged()" [(ngModel)]="selectedCountry">
+                    <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
+                        [value]="country.value">
+                        {{country.option}}</option>
+                </select>
+            </div>
+            <button class="icon-btn"><svg-icon key="addFolder"></svg-icon> Créer un projet</button>
+        </div>
+    </div>
+    <div class="projects">
+        <app-project *ngFor="let project of projects" [project]="project"></app-project>
+    </div>
+</section>
