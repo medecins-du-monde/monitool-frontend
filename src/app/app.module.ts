@@ -20,13 +20,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ProjectModule } from './components/project/project.module';
+import { IndicatorModule } from './components/indicator/indicator.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProjectsComponent,
-    IndicatorComponent,
     IndicatorsComponent
   ],
   imports: [
@@ -53,7 +53,8 @@ import { ProjectModule } from './components/project/project.module';
     MatIconModule,
     MatGridListModule,
     SearchbarModule,
-    ProjectModule
+    ProjectModule,
+    IndicatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
