@@ -9,10 +9,43 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+$mdm-primary-colors: (
+    50 : #e0ecf8,
+    100 : #b3cfee,
+    200 : #80afe2,
+    300 : #4d8ed6,
+    400 : #2676ce,
+    500 : #005ec5,
+    600 : #0056bf,
+    700 : #004cb8,
+    800 : #0042b0,
+    900 : #0031a3,
+    A100 : #ced9ff,
+    A200 : #9bb1ff,
+    A400 : #688aff,
+    A700 : #4e76ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$mdm-monitool-frontend-primary: mat-palette($mat-indigo);
+$mdm-monitool-frontend-primary: mat-palette($mdm-primary-colors);
 $mdm-monitool-frontend-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
