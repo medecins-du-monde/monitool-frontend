@@ -8,7 +8,7 @@
     </div>
 </section> -->
 <!-- <app-grid [items]="indicators[0]"></app-grid> -->
-<div>
+<div class="full-page">
     <div *ngFor="let group of indicators">
         <h2>{{group.thematic.fr}}</h2>
         <app-grid [items]="group.indicators"></app-grid>
