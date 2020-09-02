@@ -1,14 +1,22 @@
-<div class="card">
-    <div class="theme-name">
-        <p>{{theme.shortName.fr}}</p>
-    </div>
-    <div class="separator"></div>
-    <div class="theme-info">
-        <div class="info">Nom</div>
-        <div class="value">{{theme.name.fr}}</div>
-    </div>
-    <div class="btn-group">
-        <button>Modifier</button>
-        <button><svg-icon key="checkGrey"></svg-icon></button>
-    </div>
-</div>
+<mat-card>
+    <mat-card-header class="theme-header">
+        <mat-card-title>{{theme.name.fr}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="theme-info">
+            <div class="theme-info-title">Nom</div>
+            <div class="theme-info-value">{{theme.name.fr}}</div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-stroked-button>Modifier</button>
+    <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu>

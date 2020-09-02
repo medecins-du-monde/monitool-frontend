@@ -1,4 +1,4 @@
-<section class="page-section">
+<!-- <section class="page-section">
     <div class="indicators-group" *ngFor="let indicatorGroup of indicators">
         <p class="section-title">{{indicatorGroup.thematic.fr}}
         </p>
@@ -6,4 +6,13 @@
             <app-indicator *ngFor="let indicator of indicatorGroup.indicators" [indicator]="indicator"></app-indicator>
         </div>
     </div>
-</section>
+</section> -->
+<!-- <app-grid [items]="indicators[0]"></app-grid> -->
+<div class="full-page">
+    <div *ngFor="let group of indicators" class="mdm-section">
+        <div class="mdm-title">{{group.thematic.fr}}</div>
+        <div class="mdm-cards">
+            <app-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator"></app-indicator>
+        </div>
+    </div>
+</div>

@@ -1,88 +1,25 @@
-@import "src/styles.scss";
+.project-header {
+    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
 
-.card {
-    box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
-    transition: 0.3s;
-    padding: 12px 3%;
-    border-radius: 5px;
-    margin-top: 38px;
+    .project-country {
+        height: 100%;
+    }
+
+    .project-header-icon {
+        margin-left: auto;
+    }
+}
+
+.project-info {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    border: solid 2px transparent;
-    
-   
-    .country-info{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        div{ 
-            display: flex;
-            align-items: center;
-        p{
-            font-size: 18px;
-            
-        }
-        .flag{
-            margin-right: 10px;
-        }
+    font-size: 14px;
+    margin-bottom: 8px;
+
+    .project-info-title {
+        flex: 1;
+        color: #909090;
     }
-    }
-    p{
-        color: var(--main-text);
-        font-size: 16px;
-    }
-    .icon{
-        height: 30px;
-        width: 30px;
-    }
-    .separator{
-        background-color: rgba(144, 144, 144, 0.24);
-        height: 1px;
-        margin-bottom: 10px;
-    }
-    .state{
-        width: 65px;
-        height: 16px;
-        border-radius: 12px;
-        background-color: #fe5e00;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 10px;
-        p{
-            font-size: 12px;
-            color: white;
-        }
-    }
-    .project-info-row{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        .info{
-            color: #909090;
-            font-size: 16px;
-        }
-        .value{
-            font-size: 18px;
-            color: #151515;
-        }
-        .thematics{
-            display: flex;
-            .value{
-                margin-left: 5px;
-            }
-        }
-    }
-    .btn-group{
-        align-self: flex-end;
-    }
-    .btn-group button{
-        padding: 5px;
-        font-size: 16px;
-        color: #171d29;
-        font-weight: bold;
+    .project-info-value {
+        flex: 1;
     }
 }

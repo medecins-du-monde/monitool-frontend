@@ -1,35 +1,44 @@
-<div class="header-container">
-
-    <div class="header-image">
-        <img class="link-img" [routerLink]="['home']" fragment="top" src="assets/images/MDM-LOGO-BLANC.png" />
-    </div>
-
-    <div class="menu" id="menu-links">
-        <div (click)="navBurgerClose()" class="header-href">
-            <div class="link-section">
-            <a class="link" [routerLink]="['home']" routerLinkActive="active-link"> Accueil </a>
-            <a class="link" [routerLink]="['projects']" routerLinkActive="active-link"> Projets </a>
-            <a class="link" [routerLink]="['indicators']" routerLinkActive="active-link"> Indicateurs traversaux </a>
-            </div>
-            <div class="dropdown" (click)="dropdownHandler()">
-                <a id="account" class="link dropbtn" > Mon compte</a>
-                <div class="dropdown-content" id="accountDropdown">
-                    <a [routerLink]="['parameters']">Parametres</a>
-                </div>
-                <i class="material-icons">keyboard_arrow_down</i>
-            </div>
-            
-
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <div class="toolbar-logo">
+            <img [routerLink]="['home']" fragment="top" src="assets/images/MDM-LOGO-BLANC.png" />
         </div>
-    </div>
+        <nav class="toolbar-nav" *ngIf="!isMobile">
+            <ul class="toolbar-nav-list">
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">Accueil</a>
+                </li>
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">Projects</a>
+                </li>
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">Indicateurs traversaux</a>
+                </li>
+            </ul>
+        </nav>
+    
+        <button mat-button [matMenuTriggerFor]="menu">
+            Mon compte
+            <mat-icon>expand_more</mat-icon>
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isMobile">
+        <nav class="toolbar-nav">
+            <ul class="toolbar-nav-list">
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">Accueil</a>
+                </li>
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">Projects</a>
+                </li>
+                <li class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">Indicateurs traversaux</a>
+                </li>
+            </ul>
+        </nav>
+    </mat-toolbar-row>
+</mat-toolbar>
 
-    <!-- Right -->
-    <ul class="nav-burger">
-        <div class="toggle" (click)="navBurgerToggle()">
-            <div class="inner"></div>
-        </div>
-    </ul>
-
-    <!-- Mobile menu -->
-    <div id="mobile-menu-bg"></div>
-</div>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['parameters']">Parametres</button>
+</mat-menu>
