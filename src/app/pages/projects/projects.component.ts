@@ -45,13 +45,21 @@ export class ProjectsComponent implements OnInit {
 
   // onBtnClick(id) {
   //   if (id === 'btn-1') {
-  //     this.btn1Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) > p.end)
-  //       : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) < project.end));
+  //     this.btn1Clicked ? this.currentProjectList
+  // = this.currentProjectList.filter(p => p.active ===
+  // false || new Date(Date.now()) > p.end)
+  //       : this.currentProjectList.push(...projectsList.filter
+  // (project => project.active === true &&
+  // new Date(Date.now()) < project.end));
   //     this.btn1Clicked = !this.btn1Clicked;
   //   }
   //   else if (id === 'btn-2') {
-  //     this.btn2Clicked ? this.currentProjectList = this.currentProjectList.filter(p => p.active === false || new Date(Date.now()) < p.end)
-  //       : this.currentProjectList.push(...projectsList.filter(project => project.active === true && new Date(Date.now()) > project.end));
+  //     this.btn2Clicked ? this.currentProjectList =
+  // this.currentProjectList.filter(p => p.active === false ||
+  // new Date(Date.now()) < p.end)
+  //       : this.currentProjectList.
+  // push(...projectsList.filter(project =>
+  // project.active === true && new Date(Date.now()) > project.end));
   //     this.btn2Clicked = !this.btn2Clicked;
   //   }
   //   else if (id === 'btn-3') {
