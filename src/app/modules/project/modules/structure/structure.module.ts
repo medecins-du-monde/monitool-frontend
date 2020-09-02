@@ -10,14 +10,28 @@ import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.compo
 import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
 import { UsersComponent } from './pages/users/users.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, BasicsComponent, SitesComponent, DataSourceComponent, LogicalFrameComponent, CrossCuttingComponent, ExtraIndicatorsComponent, UsersComponent, HistoryComponent],
+  declarations: [
+    HomeComponent,
+    BasicsComponent,
+    SitesComponent,
+    DataSourceComponent,
+    LogicalFrameComponent,
+    CrossCuttingComponent,
+    ExtraIndicatorsComponent,
+    UsersComponent,
+    HistoryComponent
+  ],
   imports: [
     CommonModule,
-    StructureRoutingModule
+    StructureRoutingModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class StructureModule { }
