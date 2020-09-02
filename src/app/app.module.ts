@@ -22,15 +22,18 @@ import { ProjectModule } from './components/project/project.module';
 import { IndicatorModule } from './components/indicator/indicator.module';
 import { HomeIllustrationModule } from './components/home-illustration/home-illustration.module';
 import { HomeCardModule } from './components/home-card/home-card.module';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProjectsComponent,
-    IndicatorsComponent
+    IndicatorsComponent,
+    LoginComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     HeaderModule,
