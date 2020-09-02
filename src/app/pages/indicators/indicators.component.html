@@ -9,13 +9,10 @@
 </section> -->
 <!-- <app-grid [items]="indicators[0]"></app-grid> -->
 <div class="full-page">
-    <div *ngFor="let group of indicators">
-        <h2>{{group.thematic.fr}}</h2>
-        <app-grid [items]="group.indicators"></app-grid>
-        <!-- <mat-grid-list cols="3">
-            <mat-grid-tile *ngFor="let indicator of group.indicators">
-                <app-indicator [indicator]="indicator"></app-indicator>
-            </mat-grid-tile>
-        </mat-grid-list> -->
+    <div *ngFor="let group of indicators" class="mdm-section">
+        <div class="mdm-title">{{group.thematic.fr}}</div>
+        <div class="mdm-cards">
+            <app-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator"></app-indicator>
+        </div>
     </div>
 </div>

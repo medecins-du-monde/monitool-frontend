@@ -5,11 +5,9 @@
     <p>Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette
         liste.</p>
 </div>
-<mat-grid-list cols="3">
-    <mat-grid-tile *ngFor="let indicator of indicators">
-        <app-indicator [indicator]="indicator"></app-indicator>
-    </mat-grid-tile>
-</mat-grid-list>
+<div class="mdm-cards">
+    <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator"></app-indicator>
+</div>
 <button mat-stroked-button>
     <mat-icon>add</mat-icon>
     Créer un nouvel indicateur

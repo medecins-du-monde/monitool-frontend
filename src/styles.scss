@@ -148,6 +148,25 @@ body {
     }
 }
 
+.mdm-section {
+    margin-bottom: 68px;
+}
+
+// === MDM CARDS ===
+.mdm-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 24px -24px 0 0;
+
+    .mat-card {
+        width: 300px;
+        margin-bottom: 24px;
+        margin-right: 24px;
+    }
+}
+
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
@@ -244,50 +263,6 @@ body {
 //         }
 //     }
 //   }
-// Colors
-:root {
-    // to be deprecated
-    --title-color: #645c83;
-    --filters-header: #efeff4;
-
-    // ### MAIN PALETTE
-    --main-text: #151515;
-    --action: #5d9cd1;
-    --primary: #33c293;
-    --submit: #21ba46;
-    --danger: #d43f3a;
-    --light: #f8f7f8;
-    --default: #e0e1e2;
-    --main: #656565;
-    --dark: #202123;
-    --text: rgba(255, 255, 255, 0.77);
-    --small-text: #777777;
-
-    // ### BORDERS
-    --light-border: #dfe2e6;
-    --main-border: #e1e1e1;
-
-    // ### FOCUS
-    --main-focus: #f9fafa;
-
-    // ### LOGIN
-    --login-overlay: #3cc194;
-
-    // ### HEADER
-    --header-background: #005ec5;
-    --header-color: #6e6e6e;
-    --header-focus: #1f1f1f;
-
-    // ### PAGE
-    --page-background: #f7f7f7;
-    --main-background: white;
-    --preguntas: #32ce9b;
-    --disabled: #e7e7e7;
-
-    // ### DRAWERS
-    --drawer-background: white;
-    --drawer-focus: var(--main-focus);
-}
 
 // .no-padding {
 //     padding: 0 !important;

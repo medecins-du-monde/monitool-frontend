@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
-import { IndicatorComponent } from './components/indicator/indicator.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { SvgIconsModule } from '@ngneat/svg-icon';
 import icons from '../assets/svg/svg-icons';
@@ -21,7 +20,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ProjectModule } from './components/project/project.module';
 import { IndicatorModule } from './components/indicator/indicator.module';
-import { GridModule } from './components/grid/grid.module';
 import { HomeIllustrationModule } from './components/home-illustration/home-illustration.module';
 import { HomeCardModule } from './components/home-card/home-card.module';
 
@@ -58,7 +56,6 @@ import { HomeCardModule } from './components/home-card/home-card.module';
     SearchbarModule,
     ProjectModule,
     IndicatorModule,
-    GridModule,
     HomeIllustrationModule,
     HomeCardModule
   ],

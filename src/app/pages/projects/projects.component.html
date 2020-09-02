@@ -36,8 +36,10 @@
     </div>
 </section> -->
 <div class="full-page">
-    <h2>Projects</h2>
-    <app-searchbar></app-searchbar>
+    <div class="mdm-title">Projects</div>
+    <div class="projects-searchbar">
+        <app-searchbar></app-searchbar>
+    </div>
     <div class="actions" [formGroup]="filtersForm">
         <div>
             <mat-button-toggle-group>
@@ -69,9 +71,9 @@
             </button>
         </div>
     </div>
-    <mat-grid-list cols="3">
-        <mat-grid-tile *ngFor="let project of projects">
-            <app-project [project]="project"></app-project>
-        </mat-grid-tile>
-    </mat-grid-list>
+    <div class="mdm-cards">
+        <app-project *ngFor="let project of projects"
+            [project]="project"
+        ></app-project>
+    </div>
 </div>
