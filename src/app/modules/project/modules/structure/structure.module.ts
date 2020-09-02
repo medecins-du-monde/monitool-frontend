@@ -14,7 +14,17 @@ import { HistoryComponent } from './pages/history/history.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, BasicsComponent, SitesComponent, DataSourceComponent, LogicalFrameComponent, CrossCuttingComponent, ExtraIndicatorsComponent, UsersComponent, HistoryComponent],
+  declarations: [
+    HomeComponent,
+    BasicsComponent,
+    SitesComponent,
+    DataSourceComponent,
+    LogicalFrameComponent,
+    CrossCuttingComponent,
+    ExtraIndicatorsComponent,
+    UsersComponent,
+    HistoryComponent
+  ],
   imports: [
     CommonModule,
     StructureRoutingModule
