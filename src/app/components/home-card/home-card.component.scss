@@ -1,4 +1,4 @@
-.mat-card-content {
+.home-card {
     display: flex;
 }
 
@@ -6,8 +6,10 @@
     margin-right: 16px;
 }
 
-ul {
-    margin: 0;
-    padding: 0 16px;
-    list-style-type: circle;
+.home-card-content {
+    ul {
+        margin: 0;
+        padding: 0 16px;
+        list-style-type: circle;
+    }
 }
