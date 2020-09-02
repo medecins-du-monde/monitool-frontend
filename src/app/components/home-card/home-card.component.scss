@@ -1,0 +1,15 @@
+.home-card {
+    display: flex;
+}
+
+.home-card-icon {
+    margin-right: 16px;
+}
+
+.home-card-content {
+    ul {
+        margin: 0;
+        padding: 0 16px;
+        list-style-type: circle;
+    }
+}

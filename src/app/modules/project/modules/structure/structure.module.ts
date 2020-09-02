@@ -10,6 +10,8 @@ import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.compo
 import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
 import { UsersComponent } from './pages/users/users.component';
 import { HistoryComponent } from './pages/history/history.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -27,7 +29,9 @@ import { HistoryComponent } from './pages/history/history.component';
   ],
   imports: [
     CommonModule,
-    StructureRoutingModule
+    StructureRoutingModule,
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class StructureModule { }
