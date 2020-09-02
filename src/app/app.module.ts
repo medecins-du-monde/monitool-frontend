@@ -23,6 +23,7 @@ import { ProjectModule } from './components/project/project.module';
 import { IndicatorModule } from './components/indicator/indicator.module';
 import { GridModule } from './components/grid/grid.module';
 import { HomeIllustrationModule } from './components/home-illustration/home-illustration.module';
+import { HomeCardModule } from './components/home-card/home-card.module';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { HomeIllustrationModule } from './components/home-illustration/home-illu
     ProjectModule,
     IndicatorModule,
     GridModule,
-    HomeIllustrationModule
+    HomeIllustrationModule,
+    HomeCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,8 +3,26 @@
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 24px 0 68px;
-} 
+    margin: 24px 0 0;
+}
+
+.home-cards {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+
+    app-home-card {
+        margin-bottom: 12px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.home-section {
+    margin-bottom: 68px;
+}
 
 // @import "src/styles.scss";
 
@@ -12,18 +30,11 @@
 //     display: block;
 //     padding-left: 80px;
 //     padding-right: 80px;
-//     @media screen and (max-width: $break-point-three-to-two) {
-//         padding-left: 10%;
-//         padding-right: 10%;
-//     }
 // }
 
 // .small-title{
 //     margin-left: 20px;
 //     color: var(--small-text);
-//     @media screen and (max-width: $break-point-three-to-two) {
-//         margin-left: 5px;
-//     }
 // }
 // .card {
 //     box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
@@ -62,24 +73,6 @@
 //     .third-section-text{
 //         margin-left: 50px;
 //     }
-//     @media screen and (max-width: $break-point-three-to-two) {
-//         text-align: center;
-//         align-items: center;
-//         .icon{
-//             margin-right: 5px;
-//         }
-//         .third-section-text,ul{
-//            margin-left: 0;
-//         }
-//         p, ul{
-//             color: var(--main-text);
-//             font-size: 13px; 
-//         }
-//         .ul-with-margin{
-//             margin-left: 0;
-//             margin-top: 2px;
-//             margin-right: 5px;}
-//     }
 //   }
 //   .second-section-cards{
 //       display: flex;
@@ -112,19 +105,14 @@
 //         text-align: center;
 //         cursor: pointer;
 //     }
-//     @media screen and (max-width: $break-point-three-to-two) {
-//         flex-direction: column;
-//     }
+
 //     }
 
 //     .fifth-section-cards{
 //         p{
 //             margin-left: 41px;
 //             margin-top: -2px;
-//             @media screen and (max-width: $break-point-three-to-two) {
-//                margin-left: 0;
-//                text-align: center;
-//             }
+
 //         }
         
 //     }

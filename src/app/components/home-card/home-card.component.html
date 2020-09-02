@@ -1,1 +1,6 @@
-<p>home-card works!</p>
+<mat-card>
+    <mat-card-content>
+        <div class="home-card-icon" *ngIf="icon"><mat-icon [svgIcon]="icon"></mat-icon></div>
+        <div [innerHTML]="content"></div>
+    </mat-card-content>
+</mat-card>

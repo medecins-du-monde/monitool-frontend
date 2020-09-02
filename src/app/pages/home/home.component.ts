@@ -6,21 +6,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  iconClicked = false;
+
+  onlinePlatformCards = [
+    {
+      icon: 'organigram',
+      content: '<b>Structurer</b> le système de monitoring des projects'
+    },
+    {
+      icon: 'quality',
+      content: '<div><b>Augmenter la fiabilité</b></div>' +
+      '<ul><li>Disposer de contrôles de cohérence afin de limiter les erreurs de saisie</li>' +
+      '<li>Limiter les fautes de calcul</li></ul>'
+    }
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  changeText() {
-    if (this.iconClicked) {
-      document.getElementById('changing-text').innerHTML = 'de monitoring (indicateurs et données), accompagné des baselines, cibles et collectes passées pour chacun d`eux.';
-      document.getElementById('arrow-icon').innerHTML = 'keyboard_arrow_up';
-    }
-    else {
-      document.getElementById('changing-text').innerHTML = 'Avec la mise à disposition des cadres logiques des autres projets et du plan..';
-      document.getElementById('arrow-icon').innerHTML = 'keyboard_arrow_down';
-    }
-    this.iconClicked = !this.iconClicked;
   }
 }
