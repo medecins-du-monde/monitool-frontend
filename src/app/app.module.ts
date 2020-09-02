@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { ProjectModule } from './components/project/project.module';
 import { IndicatorModule } from './components/indicator/indicator.module';
 import { GridModule } from './components/grid/grid.module';
+import { HomeIllustrationModule } from './components/home-illustration/home-illustration.module';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { GridModule } from './components/grid/grid.module';
     SearchbarModule,
     ProjectModule,
     IndicatorModule,
-    GridModule
+    GridModule,
+    HomeIllustrationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
