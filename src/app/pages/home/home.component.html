@@ -220,15 +220,39 @@
     </div>
     <div class="home-section">
         <div class="mdm-title">À garder en tête</div>
+        <div class="home-cards">
+            <app-home-card *ngFor="let card of keepInMindCards"
+                [icon]="card.icon"
+                [content]="card.content"
+            ></app-home-card>
+        </div>
     </div>
     <div class="home-section">
         <div class="mdm-title">Quelles sont les premières étapes pour commencer?</div>
         <div class="mdm-sub-title">Avant de configurer un projet dans Monitool il est nécessaire de</div>
+        <div class="home-cards">
+            <app-home-card *ngFor="let card of firstStepsCards"
+                [icon]="card.icon"
+                [content]="card.content"
+            ></app-home-card>
+        </div>
     </div>
     <div class="home-section">
         <div class="mdm-title">Guides & Documents supports</div>
+        <div class="home-cards">
+            <app-home-card *ngFor="let card of guidesCards"
+                [icon]="card.icon"
+                [content]="card.content"
+            ></app-home-card>
+        </div>
     </div>
     <div class="home-section">
         <div class="mdm-title">Autres outils</div>
+        <div class="home-cards">
+            <app-home-card *ngFor="let card of othersToolsCards"
+                [icon]="card.icon"
+                [content]="card.content"
+            ></app-home-card>
+        </div>
     </div>
 </div>
