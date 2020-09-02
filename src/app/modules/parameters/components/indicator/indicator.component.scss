@@ -1,63 +1,22 @@
-@import "src/styles.scss";
+:host {
+    width: 300px;
+}
 
+.indicator-header {
+    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
+}
 
-.card {
-    height: 380px;
-    box-shadow: 0 4px 13px 1px rgba(0, 0, 0, 0.15);
-    transition: 0.3s;
-    padding: 12px 3%;
-    border-radius: 5px;
+.indicator-info {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    border: solid 2px transparent;
-    .indicator-content {
-        height: 60%;
+    font-size: 14px;
+    margin-bottom: 8px;
+
+    .indicator-info-title {
+        flex: 1;
+        color: #909090;
     }
-   
-    .indicator-name{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-       
-        p{
-            font-size: 18px;
-        }
-    }
-    p{
-        color: var(--main-text);
-        font-size: 16px;
-    }
-    .separator{
-        background-color: rgba(144, 144, 144, 0.24);
-        height: 1px;
-        margin-bottom: 10px;
-    }
-    .indicator-info{
-        margin-bottom: 20px;
-        .info{
-            color: #909090;
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-        .value{
-            font-size: 18px;
-            color: #151515;
-        }
-        .thematics{
-            display: flex;
-            .value{
-                margin-right: 5px;
-            }
-        }
-    }
-    .btn-group{
-        align-self: flex-end;
-    }
-    .btn-group button{
-        padding: 5px;
-        font-size: 16px;
-        color: #171d29;
-        font-weight: bold;
+    .indicator-info-value {
+        flex: 1;
     }
 }

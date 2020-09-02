@@ -1,25 +1,29 @@
-<div class="card">
-    <div class="indicator-name">
-        <p>{{indicator.name.fr}}</p>
-    </div>
-    <div class="separator"></div>
-    <div class="indicator-content">
-        <div class="indicator-info">
-            <div class="info">Thématiques</div>
-            <div class="thematics">
-                <div *ngFor="let theme of themesNames" class="value">{{theme}}</div>
+<mat-card>
+    <mat-card-header class="indicator-header">
+        <mat-card-title>{{indicator.name.fr}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngIf="indicator.themes.length > 1" class="indicator-info">
+            <div class="indicator-info-title">Thématiques</div>
+            <div class="indicator-info-value">
+                <div *ngFor="let theme of themesNames">{{theme}}</div>
             </div>
         </div>
         <div class="indicator-info">
-            <div class="info">Description</div>
-            <div *ngIf="indicator.description != null" class="value">{{indicator.description.fr}}</div>
-            <div *ngIf="indicator.description == null" class="value">La description de cet indicateur n'a pas été
-                renseignée</div>
+            <div class="indicator-info-title">Description</div>
+            <div class="indicator-info-value">{{indicator.description ? indicator.description.fr : "La description de cet indicateur n'a pas été
+                renseignée"}}</div>
         </div>
-    </div>
-    <div class="btn-group">
-        <button>Modifier</button>
-        <button><svg-icon key="checkGrey"></svg-icon></button>
-    </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-stroked-button>Modifier</button>
+    <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
 
-</div>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+    </button>
+</mat-menu>

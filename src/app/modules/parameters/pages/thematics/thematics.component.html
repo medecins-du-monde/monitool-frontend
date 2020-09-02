@@ -1,19 +1,13 @@
-<div class="module">
-    <!-- <app-sidenav></app-sidenav> -->
-    <div class="router-page">
-        <p class="breadcrumb">Paramètres > <span class="page-name">Themes</span>
-        </p>
-        <section class="page-section">
-            <p class="section-title">Cette page contient la liste des thématiques traitées par l'ONG.
-                <br><br>
-                Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal.
-            </p>
-            <div class="themes">
-                <app-theme *ngFor="let theme of themes" [theme]="theme">
-                </app-theme>
-            </div>
-            <button class="icon-btn"><i class="material-icons">add</i> Créer une nouvelle thématique</button>
-        </section>
-
-    </div>
+<div class="info-section blue">
+    <p>Cette page contient la liste des thématiques traitées par l'ONG.</p>
+    <p>Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal.</p>
 </div>
+<mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let theme of themes">
+        <app-theme [theme]="theme"></app-theme>
+    </mat-grid-tile>
+</mat-grid-list>
+<button mat-stroked-button>
+    <mat-icon>add</mat-icon>
+    Créer une nouvelle thématique
+</button>

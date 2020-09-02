@@ -1,22 +1,16 @@
-<div class="module">
-    <!-- <app-sidenav></app-sidenav> -->
-    <div class="router-page">
-        <p class="breadcrumb">Paramètres > <span class="page-name">Indicators</span>
-        </p>
-        <section class="page-section">
-            <p class="section-title">Cette page contient la liste de tous les indicateurs transversaux de l'ONG.
-                <br> La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique
-                en commun celui-ci.
-                <br><br>
-                Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette
-                liste.
-            </p>
-            <div class="indicators">
-                <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator">
-                </app-indicator>
-            </div>
-            <button class="icon-btn"><i class="material-icons">add</i> Créer un nouvel indicateur</button>
-        </section>
-
-    </div>
+<div class="info-section blue">
+    <p>Cette page contient la liste de tous les indicateurs transversaux de l'ONG.</p>
+    <p>La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique
+        en commun celui-ci.</p>
+    <p>Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette
+        liste.</p>
 </div>
+<mat-grid-list cols="3">
+    <mat-grid-tile *ngFor="let indicator of indicators">
+        <app-indicator [indicator]="indicator"></app-indicator>
+    </mat-grid-tile>
+</mat-grid-list>
+<button mat-stroked-button>
+    <mat-icon>add</mat-icon>
+    Créer un nouvel indicateur
+</button>

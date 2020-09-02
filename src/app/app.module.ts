@@ -21,6 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ProjectModule } from './components/project/project.module';
 import { IndicatorModule } from './components/indicator/indicator.module';
+import { GridModule } from './components/grid/grid.module';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { IndicatorModule } from './components/indicator/indicator.module';
     MatGridListModule,
     SearchbarModule,
     ProjectModule,
-    IndicatorModule
+    IndicatorModule,
+    GridModule
   ],
   providers: [],
   bootstrap: [AppComponent]

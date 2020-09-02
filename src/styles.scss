@@ -125,6 +125,18 @@ body {
     box-sizing: border-box;
 }
 
+.info-section {
+    background-color: #ececec;
+    font-size: 12px;
+    padding: 12px 16px;
+    color: #777b7e;
+
+    &.blue {
+        background-color: #d9edf7;
+        color: #31708f;
+    }
+}
+
 // html,
 // body {
 //     margin: 0;

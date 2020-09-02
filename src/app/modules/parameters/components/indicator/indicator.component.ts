@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Indicator } from '../../../../models/indicator';
 import { themes } from 'src/app/constants/themes';
+import { Indicator } from 'src/app/models/indicator';
+
 @Component({
   selector: 'app-indicator',
   templateUrl: './indicator.component.html',
