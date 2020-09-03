@@ -201,6 +201,42 @@ body {
     line-height: 40px !important;
 }
 
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+    &:last-child {
+        margin-left: 0;
+    }
+}
+
+// === BUTTONS ===
+.mdm-button {
+    background-color: white;
+    border: 1px solid #c8c9cc !important;
+    height: 32px;
+    padding: 0 12px !important;
+    font-size: 14px;
+
+    &.mat-icon-button {
+        padding: 0 !important;
+        height: 32px;
+        width: 32px;
+        line-height: 32px;
+        border-radius: 4px;
+    }
+
+    &:not(:only-child) {
+        &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right-style: none !important;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+}
+
 // html,
 // body {
 //     margin: 0;
