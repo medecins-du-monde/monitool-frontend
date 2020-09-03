@@ -189,6 +189,9 @@ body {
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+    .mat-card-actions:last-child {
+        margin-bottom: 0 !important;
+    }
 }
 
 .mat-button-toggle-appearance-standard {
