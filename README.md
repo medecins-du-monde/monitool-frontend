@@ -4,7 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 First run the backend available here : https://github.com/medecins-du-monde/monitool. The documentation to start it properly is in th e README.
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. This will activate the proxy and allow you to use the backend. Navigate to `http://localhost:4200/`. You will be redirected to the login page. Click on the button 'Use training account' to sign in. Then you will be redirected to the home page. 
+The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
