@@ -51,7 +51,9 @@ $mdm-monitool-frontend-theme: mat-light-theme((
 @include angular-material-theme($mdm-monitool-frontend-theme);
 
 $mdm-monitool-frontend-typography: mat-typography-config(
-    $font-family: $main-font
+    $font-family: $main-font,
+    $body-1: mat-typography-level(16px, 20px, 400),
+    $button: mat-typography-level(16px, 16px, 500)
 );
 
 @include angular-material-typography($mdm-monitool-frontend-typography);
@@ -187,6 +189,16 @@ body {
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.mat-button-toggle-appearance-standard {
+    .mat-button-toggle-label-content {
+        line-height: 38px;
+    }
+}
+
+.mat-raised-button {
+    line-height: 40px !important;
 }
 
 // html,
