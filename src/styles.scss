@@ -51,7 +51,9 @@ $mdm-monitool-frontend-theme: mat-light-theme((
 @include angular-material-theme($mdm-monitool-frontend-theme);
 
 $mdm-monitool-frontend-typography: mat-typography-config(
-    $font-family: $main-font
+    $font-family: $main-font,
+    $body-1: mat-typography-level(16px, 20px, 400),
+    $button: mat-typography-level(16px, 16px, 500)
 );
 
 @include angular-material-typography($mdm-monitool-frontend-typography);
@@ -159,18 +161,83 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin: 24px -24px 0 0;
+    margin: 24px -12px 0;
 
-    .mat-card {
-        width: 300px;
-        margin-bottom: 24px;
-        margin-right: 24px;
+    @media screen and (max-width: $breakpoint-xs) {
+        margin: 24px 0 0;
+    }
+
+    .mdm-card {
+        width: calc(25% - 24px);
+        margin: 0 12px 24px;
+
+        @media screen and (max-width: $breakpoint-md) {
+            width: calc(1 / 3 * 100% - 24px);
+        }
+
+        @media screen and (max-width: $breakpoint-sm) {
+            width: calc(50% - 24px);
+        }
+
+        @media screen and (max-width: $breakpoint-xs) {
+            width: 100%;
+            margin: 0 0 16px;
+        }
     }
 }
 
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+    .mat-card-actions:last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+.mat-button-toggle-appearance-standard {
+    .mat-button-toggle-label-content {
+        line-height: 38px;
+    }
+}
+
+.mat-raised-button {
+    line-height: 40px !important;
+}
+
+.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+    &:last-child {
+        margin-left: 0;
+    }
+}
+
+// === BUTTONS ===
+.mdm-button {
+    background-color: white;
+    border: 1px solid #c8c9cc !important;
+    height: 32px;
+    padding: 0 12px !important;
+    font-size: 14px;
+
+    &.mat-icon-button {
+        padding: 0 !important;
+        height: 32px;
+        width: 32px;
+        line-height: 32px;
+        border-radius: 4px;
+    }
+
+    &:not(:only-child) {
+        &:first-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right-style: none !important;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
 }
 
 // html,

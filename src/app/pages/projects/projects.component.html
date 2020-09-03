@@ -37,17 +37,7 @@
 </section> -->
 <div class="full-page">
     <div class="mdm-title">Projects</div>
-    <div class="projects-searchbar">
-        <app-searchbar></app-searchbar>
-    </div>
     <div class="actions" [formGroup]="filtersForm">
-        <div>
-            <mat-button-toggle-group>
-                <mat-button-toggle>En cours</mat-button-toggle>
-                <mat-button-toggle>Terminés</mat-button-toggle>
-                <mat-button-toggle>Supprimés</mat-button-toggle>
-            </mat-button-toggle-group>
-        </div>
         <div>
             <mat-form-field appearance="fill">
                 <mat-label>Tous les pays ({{countries.length}})</mat-label>
@@ -57,13 +47,23 @@
             </mat-form-field>
         </div>
         <div>
+            <mat-button-toggle-group multiple>
+                <mat-button-toggle>En cours</mat-button-toggle>
+                <mat-button-toggle>Terminés</mat-button-toggle>
+                <mat-button-toggle>Supprimés</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div>
+            <app-searchbar></app-searchbar>
+        </div>
+        <!-- <div>
             <mat-form-field appearance="fill">
                 <mat-label>Thématiques ({{themes.length}})</mat-label>
                 <mat-select formControlName="themes" multiple>
                     <mat-option *ngFor="let theme of themes" [value]="theme">{{theme}}</mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
         <div>
             <button mat-raised-button color="primary">
                 <mat-icon svgIcon="add-folder"></mat-icon>
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="mdm-cards">
-        <app-project *ngFor="let project of projects"
+        <app-project *ngFor="let project of projects" class="mdm-card"
             [project]="project"
         ></app-project>
     </div>
