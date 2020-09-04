@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.login = this.user._id.split(':')[1];
-    this.user.role === 'admin' ? this.role = 'Administrateur' : this.role = 'Standard';
+    this.user.role === 'admin' ? this.role = 'Admin' : this.role = 'Common';
   }
 
 }

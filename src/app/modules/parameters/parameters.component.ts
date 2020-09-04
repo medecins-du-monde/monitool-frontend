@@ -11,21 +11,21 @@ export class ParametersComponent implements OnInit {
   public sidenav: Sidenav = {
     groups: [
       {
-        title: 'Paramètres',
+        title: 'Settings',
         collapsible: false,
         items: [
           {
-            name: 'Utilisateurs',
+            name: 'Users',
             routerLink: '../parameters/users',
             icon: 'people'
           },
           {
-            name: 'Thématiques',
+            name: 'Thematics',
             routerLink: '../parameters/themes',
             icon: 'clipboard'
           },
           {
-            name: 'Indicateurs traversaux',
+            name: 'CrossCuttingIndicators',
             routerLink: '../parameters/indicators',
             icon: 'gauge'
           }
