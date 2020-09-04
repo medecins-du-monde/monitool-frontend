@@ -24,6 +24,67 @@
     "GeneralReporting": "General reporting",
     "History": "History",
     "Home": "Home",
+    "HomeSections": {
+        "OnlinePlatform": {
+            "Title": "Why an online platform",
+            "Cards": [
+                "<p><b>Structure</b> the project's monitoring system</p>",
+                "<p><b>Increase reliability</b></p><ul><li>Have consistency checks on data to limit entry errors</li><li>Limit mistakes in calculation</li></ul>",
+                "<p><b>Step back</b></p><ul><li>Encourage geographically remote projects to use the same indicators when measuring comparable events</li><li>Have mechanisms to compare the value of an indicator on a project, with the same value for all other that collected it</li></ul>",
+                "<p><b>Ease communication</b></p><ul><li>Provide direct access to project's data to all departments in the NGO (management, communication, ...)</li><li>Have single source of truth between headquarters and field project</li></ul>",
+                "<p><b>Standardize</b></p><ul><li>Ease turn-over by limiting the number of different tools used across projects</li><li>Reduce the learning curve required to consult data on a new project</li></ul>"
+            ]
+        },
+        "When": {
+            "Title": "When should you use Monitool",
+            "SubTitle": "Monitool plays a role during four stages of a project",
+            "Cards": [
+                {
+                    "Title": "Design of the logical frame",
+                    "Text": "Monitool provides all others projets logframes, with the list of used indicators and targets for each one of them"
+                },
+                {
+                    "Title": "Deployment of monitoring tools",
+                    "Text": "Explicitely write down the path followed by your data and attach deadlines on data collection"
+                },
+                {
+                    "Title": "Periodic follow-up",
+                    "Text": "Reporting graphs and tables of your choice are available and built with the most up-to-date data"
+                },
+                {
+                    "Title": "After closing",
+                    "Text": "Your project will be archived and available for future references"
+                }
+            ]
+        },
+        "KeepInMind": {
+            "Title": "Keep in mind",
+            "Cards": [
+                "<p>Monitool is all about monitoring.</p><p>It contributes to the ongoing, continuous and systematic monitoring of the situation and its evolution throughout the life of a project.</p><p>Its goal is to help taking decisions, thanks to the continuous follow-up of indicators that provide information on the progress of activities, and their contribution to the expected outputs and outcomes decided for your project.</p><p>Even if it can contribute to it, it's primary goal is not to do epidemiologic monitoring, or centralize morbidity sheets which are time-consuming and have little value in project management, specially for projects that support health structure (in opposition with providing direct care).</p>"
+            ]
+        },
+        "GettingStarted": {
+            "Title": "Getting started",
+            "SubTitle": "Before setting your project up in Monitool, some preliminary steps can help you",
+            "Cards": [
+                "<p>Design your reference project: logical framework with output and outcomes indicators, process indicators can be added if necessary</p>",
+                "<p>Use the Indicators summary tool to document all indicators from your reference project, and possibly donor's projects (if they are different)</p><ul><li>Why: How is each indicator going to help measuring the output or outcome that is expected from your activities? How do you plan on analysing it (graphs, tables, with which periodicity: you need to plan in advance how your data will be used for decision making)</li><li>How: identify all data and disagregations that will be needed to compute each one of your indicators</li><li>When, where, by and for whom?</li></ul>",
+                "<p>Build a dataflow chart from the indicator's summary to draw how data will flow in your project</p><ul><li>The data sources organized according to the project's structure</li><li>Detail collected data and precise disagregations</li><li>Organize your indicators by logical framework</li></ul>"
+            ]
+        },
+        "Guides": {
+            "Title": "Guides & Documents supports",
+            "Cards": [
+                "<ul><li><p><b>Healthcare project planning (2015)</b></p><p>The Healthcare project planning  offers MdM project players a method of planning that is in line with the values reaffirmed and specified in that statement – to provide care and cure, to bear witness and advocate, and to support communities seeking social change.</p></li><li><p><b>Toolbox for healthcare project planning</b></p><p>This toolbox  contains multiple tools, mostly Excel-based in order to help you formalizing your project's planning.</p></li><li><p><b>DSP's Monitoring library</b></p><p>This library  contains fact sheets, training documents and position papers connected with monitoring and maintained by the DSP department.</p></li></ul>"
+            ]
+        },
+        "OtherTools": {
+            "Title": "Other tools",
+            "Cards": [
+                "<ul><li><p><b>Indicator's summary</b></p><p>Available in the <a href=\"https://mdm1.sharepoint.com/:u:/r/directions/dsp/Documents%20partages/MdM_essential%20document%20MONITORING_EN.7z\">essentials documents for monitoring archive</a> , this tool centralize for all of your indicators the \"when\", \"how\", \"where\", \"by whom\" and \"for whom\" the data that you handle should be collected and analized.</p></li><li><p><b>Dataflow chart</b></p><p>In the same archive, this tool schematize the path that your data follows, from the form that was used to collect it, to the report or decision making that it enabled.</p></li></ul>"
+            ]
+        }
+    },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
     "Language": "Language",
