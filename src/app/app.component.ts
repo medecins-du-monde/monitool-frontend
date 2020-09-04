@@ -18,7 +18,7 @@ export class AppComponent {
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en']);
-    this.translateService.setDefaultLang('en');
+    this.translateService.setDefaultLang('fr');
 
     // === Icons ===
     this.matIconRegistry.addSvgIcon(
