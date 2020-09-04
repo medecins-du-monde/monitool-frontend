@@ -17,14 +17,14 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
     if (this.project.active === true) {
       if (new Date(Date.now()) < this.project.end) {
-        this.status = 'En cours';
+        this.status = 'Ongoing';
       }
       else {
-        this.status = 'Terminé';
+        this.status = 'Finished';
       }
     }
     else {
-      this.status = 'Supprimé';
+      this.status = 'Deleted';
     }
     this.project.themes.forEach(theme => {
       this.themesNames.push(themes.find(t => t._id === theme).shortName.fr);
