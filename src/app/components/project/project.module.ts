@@ -7,11 +7,13 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [ProjectComponent],
   imports: [
     CommonModule,
+    TranslateModule,
     MatCardModule,
     MatButtonModule,
     MatChipsModule,

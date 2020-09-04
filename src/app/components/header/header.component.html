@@ -6,19 +6,24 @@
         <nav class="toolbar-nav" *ngIf="!isMobile">
             <ul class="toolbar-nav-list">
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">Accueil</a>
+                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">Projects</a>
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">Indicateurs traversaux</a>
+                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
                 </li>
             </ul>
         </nav>
+
+        <button mat-button [matMenuTriggerFor]="langMenu">
+            {{ 'Language' | translate }}
+            <mat-icon>expand_more</mat-icon>
+        </button>
     
         <button mat-button [matMenuTriggerFor]="menu">
-            Mon compte
+            {{ 'MyAccount' | translate }}
             <mat-icon>expand_more</mat-icon>
         </button>
     </mat-toolbar-row>
@@ -26,13 +31,13 @@
         <nav class="toolbar-nav">
             <ul class="toolbar-nav-list">
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">Accueil</a>
+                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">Projects</a>
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">Indicateurs traversaux</a>
+                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
                 </li>
             </ul>
         </nav>
@@ -40,5 +45,9 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['parameters']">Parametres</button>
+    <button mat-menu-item [routerLink]="['parameters']">{{ 'Settings' | translate }}</button>
+</mat-menu>
+
+<mat-menu #langMenu="matMenu">
+    <button mat-menu-item *ngFor="let lang of getLangs()" (click)="switchLang(lang)">{{ lang | translate }}</button>
 </mat-menu>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,14 @@ export class AppComponent {
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private translateService: TranslateService
   ) {
+    // === Translations ===
+    this.translateService.addLangs(['fr', 'en']);
+    this.translateService.setDefaultLang('fr');
+
+    // === Icons ===
     this.matIconRegistry.addSvgIcon(
       'add-folder',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/add-folder.svg')

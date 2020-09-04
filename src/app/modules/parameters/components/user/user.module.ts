@@ -6,11 +6,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [UserComponent],
   imports: [
     CommonModule,
+    TranslateModule,
     MatCardModule,
     MatChipsModule,
     MatButtonModule,

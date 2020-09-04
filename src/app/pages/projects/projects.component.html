@@ -36,11 +36,11 @@
     </div>
 </section> -->
 <div class="full-page">
-    <div class="mdm-title">Projects</div>
+    <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions" [formGroup]="filtersForm">
         <div>
             <mat-form-field appearance="fill">
-                <mat-label>Tous les pays ({{countries.length}})</mat-label>
+                <mat-label>{{ 'AllCountries' | translate }} ({{countries.length}})</mat-label>
                 <mat-select formControlName="countries" multiple>
                     <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
                 </mat-select>
@@ -48,9 +48,9 @@
         </div>
         <div>
             <mat-button-toggle-group multiple>
-                <mat-button-toggle>En cours</mat-button-toggle>
-                <mat-button-toggle>Terminés</mat-button-toggle>
-                <mat-button-toggle>Supprimés</mat-button-toggle>
+                <mat-button-toggle>{{ 'OngoingPlural' | translate }}</mat-button-toggle>
+                <mat-button-toggle>{{ 'FinishedPlural' | translate }}</mat-button-toggle>
+                <mat-button-toggle>{{ 'DeletedPlural' | translate }}</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <div>
@@ -67,7 +67,7 @@
         <div>
             <button mat-raised-button color="primary">
                 <mat-icon svgIcon="add-folder"></mat-icon>
-                Créer un project
+                {{ 'CreateNewProject' | translate }}
             </button>
         </div>
     </div>

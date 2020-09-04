@@ -23,79 +23,79 @@ export class ProjectComponent implements OnInit {
             collapsible: true,
             items: [
               {
-                name: 'Accueil',
+                name: 'Home',
                 routerLink: `../${projectId}/structure/home`,
                 icon: 'home'
               },
               {
-                name: 'Données de base',
+                name: 'Basics',
                 routerLink: `../${projectId}/structure/basics`,
                 icon: 'database'
               },
               {
-                name: 'Lieux de collecte',
+                name: 'CollectionSites',
                 routerLink: `../${projectId}/structure/site`,
                 icon: 'location'
               },
               {
-                name: 'Sources de données',
+                name: 'DataSources',
                 routerLink: `../${projectId}/structure/data-source`,
                 icon: 'folder'
               },
               {
-                name: 'Cadres logiques',
+                name: 'LogicalFrameworks',
                 routerLink: `../${projectId}/structure/logical-frame`,
                 icon: 'clipboard'
               },
               {
-                name: 'Indicateurs transversaux',
+                name: 'CrossCuttingIndicators',
                 routerLink: `../${projectId}/structure/cross-cutting`,
                 icon: 'gauge'
               },
               {
-                name: 'Indicateurs annexés',
+                name: 'ExtraIndicators',
                 routerLink: `../${projectId}/structure/extra-indicators`,
                 icon: 'gauge'
               },
               {
-                name: 'Utilisateurs',
+                name: 'Users',
                 routerLink: `../${projectId}/structure/users`,
                 icon: 'people'
               },
               {
-                name: 'Historique',
+                name: 'History',
                 routerLink: `../${projectId}/structure/history`,
                 icon: 'history'
               }
             ]
           },
           {
-            title: 'Saisir',
+            title: 'Input',
             collapsible: true,
             items: [
               {
-                name: 'Accueil',
+                name: 'Home',
                 routerLink: `../${projectId}/input/home`,
                 icon: 'home'
               }
             ]
           },
           {
-            title: 'Rapport',
+            title: 'Reporting',
             collapsible: true,
             items: [
               {
-                name: 'Accueil',
+                name: 'Home',
                 routerLink: `../${projectId}/reporting/home`,
                 icon: 'home'
               },
               {
-                name: 'Rapport général',
+                name: 'GeneralReporting',
                 routerLink: `../${projectId}/reporting/general`,
                 icon: 'clipboard'
               },
               {
-                name: 'Tableau croisé dynamique',
+                name: 'PivotTable',
                 routerLink: `../${projectId}/reporting/pivot-table`,
                 icon: 'grid'
               }
