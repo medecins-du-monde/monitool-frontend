@@ -17,7 +17,7 @@ export class AppComponent {
     private translateService: TranslateService
   ) {
     // === Translations ===
-    this.translateService.addLangs(['fr', 'en']);
+    this.translateService.addLangs(['fr', 'en', 'es']);
     this.translateService.setDefaultLang('fr');
 
     // === Icons ===
