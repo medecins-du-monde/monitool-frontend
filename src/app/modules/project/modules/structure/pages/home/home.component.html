@@ -17,3 +17,72 @@
 <div class="info-section blue">
     <p>Si vous sauvegardez une erreur: rendez-vous dans sur la page <button mat-stroked-button  class="mdm-button"><mat-icon svgIcon="history"></mat-icon>Historique</button> et restaurez une version antérieure du projet.</p>
 </div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Task Column -->
+    <ng-container matColumnDef="task">
+        <th mat-header-cell *matHeaderCellDef> Task </th>
+        <td mat-cell *matCellDef="let element" id="task"> 
+            {{ element.taskText1 }}
+            <button mat-stroked-button><mat-icon class="icon" svgIcon="{{ element.buttonIcon1 }}"></mat-icon>{{ element.buttonText1 }}</button>
+            {{ element.taskText2 }}
+            <button *ngIf="element.buttonText2 !== ''" mat-stroked-button><mat-icon class="icon" svgIcon="{{ element.buttonIcon2 }}"></mat-icon>{{ element.buttonText2 }}</button>
+        </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status" id="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> 
+            <div>
+                {{ element.status }}%
+                <mat-progress-bar mode="determinate" [color]="color" value="{{element.status}}"></mat-progress-bar>
+            </div>
+        </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  <!-- <br>
+  <br>
+  <table class="mat-elevation-z8">
+      <tr>
+          <th>Tasks</th>
+          <th>Status</th>
+      </tr>
+      <tr>
+          <td>Remplissez les <button mat-stroked-button><mat-icon svgIcon="database"></mat-icon>Données de base</button> de votre projet (pays, nom, thématiques, ...).</td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Renseignez les <button mat-stroked-button><mat-icon svgIcon="location"></mat-icon>Lieux de collecte</button> sur lesquels votre projet va travailler.</td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Renseignez le cadre logique de référence de votre projet dans <button mat-stroked-button><mat-icon svgIcon="clipboard"></mat-icon>Cadres Logiques</button></td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Si vous disposez de fonds institutionnels et que d\'autres <button mat-stroked-button><mat-icon svgIcon="clipboard"></mat-icon>Cadres Logiques</button> vont être utilisés sur le même projet, renseignez les également.</td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Si vous disposez d\'autres indicateurs que vous désirez suivre en dehors de votre (vos) cadre(s) logique(s), ajoutez les dans <button mat-stroked-button><mat-icon svgIcon="gauge"></mat-icon>Indicateurs annexés</button></td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Renseignez les <button mat-stroked-button><mat-icon svgIcon="folder"></mat-icon>Sources de données</button> dont vous allez extraire les données nécessaires au calculs des indicateurs de tous vos cadres logiques. À mesure de votre avancement, mettez à jour les formules de calcul de vos indicateurs dans <button mat-stroked-button><mat-icon svgIcon="clipboard"></mat-icon>Cadres logiques</button></td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Réalisez la même tâche pour les <button mat-stroked-button><mat-icon svgIcon="gauge"></mat-icon>Indicateurs transversaux</button></td>
+          <td>progression: 100%</td>
+      </tr>
+      <tr>
+          <td>Réalisez la même tâche pour les <button mat-stroked-button><mat-icon svgIcon="gauge"></mat-icon>Indicateurs annexés</button></td>
+          <td>progression: 100%</td>
+      </tr>
+  </table> -->

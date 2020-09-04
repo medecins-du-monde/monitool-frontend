@@ -12,6 +12,9 @@ import { UsersComponent } from './pages/users/users.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 
@@ -25,13 +28,15 @@ import { MatIconModule } from '@angular/material/icon';
     CrossCuttingComponent,
     ExtraIndicatorsComponent,
     UsersComponent,
-    HistoryComponent
+    HistoryComponent,
   ],
   imports: [
     CommonModule,
     StructureRoutingModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatProgressBarModule
   ]
 })
 export class StructureModule { }
