@@ -226,6 +226,17 @@ body {
         border-radius: 4px;
     }
 
+    &.sm {
+        padding: 0 3px !important;
+    }
+    &.mat-icon-button-sm {
+        padding: 0 !important;
+        height: 16px;
+        width: 12px;
+        border: 0 !important;
+        vertical-align: sub !important;
+    }
+
     &:not(:only-child) {
         &:first-child {
             border-top-right-radius: 0;
@@ -239,6 +250,13 @@ body {
         }
     }
 }
+
+// .mat-icon {
+//     &.mat-icon-button-sm {
+//         height: 10px;
+//         width: 10px;
+//     }
+// }
 
 // html,
 // body {
