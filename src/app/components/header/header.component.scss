@@ -2,16 +2,20 @@
     height: 100%;
     box-sizing: border-box;
     padding: 8px 0;
-    margin-right: auto;
+    margin-right: 32px;
     img {
         height: 100%;
         width: auto;
+    }
+
+    @media screen and (max-width: 599px) {
+        margin-right: auto;
     }
 }
 
 .toolbar-nav {
     display: block;
-    margin: 0 auto;
+    margin-right: auto;
 
     .toolbar-nav-list {
         list-style: none;
