@@ -19,7 +19,7 @@ const routes: Routes = [{
 {
   path: 'home',
   component: HomeComponent,
-  canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: 'project/:id',
@@ -29,18 +29,18 @@ const routes: Routes = [{
 {
   path: 'projects',
   component: ProjectsComponent,
-  canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: 'parameters',
   loadChildren: () => import('./modules/parameters/parameters.module')
     .then(m => m.ParametersModule),
-  canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: 'indicators',
   component: IndicatorsComponent,
-  canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: '**',
