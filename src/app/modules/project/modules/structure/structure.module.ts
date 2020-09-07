@@ -13,8 +13,8 @@ import { HistoryComponent } from './pages/history/history.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatProgressBarModule
+    ProgressBarModule
   ]
 })
 export class StructureModule { }
