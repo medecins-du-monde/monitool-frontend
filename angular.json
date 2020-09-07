@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "mdm-monitool-frontend"
+  "defaultProject": "mdm-monitool-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
