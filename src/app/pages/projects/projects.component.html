@@ -10,10 +10,8 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-button-toggle-group multiple>
-                <mat-button-toggle>{{ 'OngoingPlural' | translate }}</mat-button-toggle>
-                <mat-button-toggle>{{ 'FinishedPlural' | translate }}</mat-button-toggle>
-                <mat-button-toggle>{{ 'DeletedPlural' | translate }}</mat-button-toggle>
+            <mat-button-toggle-group formControlName="statuses" multiple>
+                <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">{{ status.text | translate }}</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <div>
