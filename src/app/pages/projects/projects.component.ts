@@ -43,6 +43,10 @@ export class ProjectsComponent implements OnInit {
     // this.initiateSelectMenu();
   }
 
+  onSearch(e: any): void {
+    this.projects = projectsList.filter(project => project.name.toLowerCase().includes(e.toLowerCase()));
+  }
+
   // onBtnClick(id) {
   //   if (id === 'btn-1') {
   //     this.btn1Clicked ? this.currentProjectList
