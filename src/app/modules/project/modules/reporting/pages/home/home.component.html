@@ -1,6 +1,6 @@
 <div class="info-section">
     <p>This section allows you to track your project progress.</p>
-    <p>The interfaces _______________ and ___________ both allow you to access all of your data, in different ways.</p>
+    <p>The interfaces <span><button mat-stroked-button class="mdm-button small-button" routerLink="../general"><mat-icon svgIcon="clipboard"></mat-icon>General Reporting</button></span> and <span><button mat-stroked-button class="mdm-button small-button" routerLink="../pivot-table"><mat-icon svgIcon="grid"></mat-icon>Pivot Table</button></span> both allow you to access all of your data, in different ways.</p>
 
     <h3>General reporting</h3>
     <p>The first allows you to explore your data hierarchically: starting from a general vision of your project.</p>
@@ -11,11 +11,16 @@
     <p>The second one allows you to build tables that will take the form you want, and download them in Excel format, to include them in reports or to create visualizations outside of Monitool.</p>
 </div>
 <div class="info-section blue">
-    <p>Utilisez des noms courts pour nommer lieux de collecte, sources de données, variables et indicateurs. En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs de Médecins du Monde.</p>
+    <p>Use <button mat-stroked-button class="mdm-button mat-icon-button-small"><mat-icon svgIcon="clipboard"></mat-icon></button> in order to display a graph that contains the data of the current row.</p>
 </div>
 <div class="info-section blue">
-    <p>En cas d'erreur, cliquez sur <button mat-stroked-button class="mdm-button"><mat-icon>undo</mat-icon>Anuler les modifications</button> pour revenir à la dernière version sauvegardée.</p>
+    <p>Use <button mat-stroked-button class="mdm-button mat-icon-button-small"><mat-icon svgIcon="clipboard"></mat-icon></button> in order to disaggregate the data of the current row.</p>
 </div>
 <div class="info-section blue">
-    <p>Si vous sauvegardez une erreur: rendez-vous dans sur la page <button mat-stroked-button  class="mdm-button"><mat-icon svgIcon="history"></mat-icon>Historique</button> et restaurez une version antérieure du projet.</p>
+    <p>The <button mat-stroked-button class="mdm-button mat-icon-button-small"><mat-icon svgIcon="clipboard"></mat-icon></button> symbol means that one of the steps taken to compute your indicador failed.</p>
+    <p>The most likely is that you have divided by zero, that all the data was not entered, or that you have explicitly indicated that it was not possible to aggregate this data when setting up your data source.</p>
+    <p>Disaggregate your line by clicking <span><button mat-stroked-button class="mdm-button mat-icon-button-small"><mat-icon svgIcon="clipboard"></mat-icon></button></span> and then on <span><button mat-stroked-button class="mdm-button small-button">Computation</button></span> to identify the issue.</p>
+</div>
+<div class="info-section blue">
+    <p>The <button mat-stroked-button class="mdm-button small-button"><mat-icon svgIcon="add-folder"></mat-icon>Filters</button> allow you to restrict the data that you consult on certain dates, collection sites, or according to the disaggregations specified during the creation of your project (age groups, sex, ...).</p>
 </div>

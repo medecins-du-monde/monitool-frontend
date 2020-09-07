@@ -176,6 +176,9 @@ body {
     color: #777b7e;
     margin-bottom: 12px;
 
+    h3{
+        font-weight: bold;
+    }
     &.blue {
         background-color: #d9edf7;
         color: #31708f;
@@ -257,6 +260,23 @@ body {
         border-radius: 4px;
     }
 
+    &.mat-icon-button-small{
+        padding: 0 !important;
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        border-radius: 4px;
+        min-width: 0px;
+        .mat-icon {
+            height: 14px;
+            width: 14px;
+            line-height: 14px;
+            svg{
+                fill: currentColor !important;
+            }
+        }
+    }
+
     &.small-button {
         padding: 0 8px !important;
         height: 24px;
@@ -265,6 +285,7 @@ body {
         .mat-icon {
             height: 14px;
             width: 14px;
+            line-height: 14px;
             margin-right: 8px;
         }
     }
