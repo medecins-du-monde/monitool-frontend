@@ -21,7 +21,6 @@ export interface Task {
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['task', 'status'];
   dataSource: Task[];
-  // dataSource = ELEMENT_DATA;
 
   constructor(private route: ActivatedRoute) { }
 

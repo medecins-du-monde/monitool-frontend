@@ -14,9 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-
-
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -32,6 +30,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   ],
   imports: [
     CommonModule,
+    TranslateModule,
     StructureRoutingModule,
     MatButtonModule,
     MatIconModule,
