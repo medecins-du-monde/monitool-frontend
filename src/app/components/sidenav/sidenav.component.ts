@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit {
   }
 
   public openGroup(title: string): void {
-    this.activeGroup = title;
+    this.activeGroup = (this.activeGroup === title) ? null : title;
   }
 
 }
