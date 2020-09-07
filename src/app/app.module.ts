@@ -32,7 +32,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     HomeComponent,
     ProjectsComponent,
     IndicatorsComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     HttpClientModule,
