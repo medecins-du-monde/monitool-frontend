@@ -17,10 +17,10 @@
             </ul>
         </nav>
 
-        <button mat-button [matMenuTriggerFor]="langMenu">
+        <!-- <button mat-button [matMenuTriggerFor]="langMenu">
             {{ 'Language' | translate }}
             <mat-icon>expand_more</mat-icon>
-        </button>
+        </button> -->
     
         <button mat-button [matMenuTriggerFor]="menu">
             {{ 'MyAccount' | translate }}
@@ -46,6 +46,7 @@
 
 <mat-menu #menu="matMenu">
     <button mat-menu-item [routerLink]="['parameters']">{{ 'Settings' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
 </mat-menu>
 
 <mat-menu #langMenu="matMenu">

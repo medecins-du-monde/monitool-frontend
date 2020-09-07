@@ -15,8 +15,9 @@ $breakpoint-xl: 1920px;
     src: url("/assets/fonts/Neutra-Text_32171.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
 @font-face {
-    font-family: "Neutra-Text-Bold";
+    font-family: "Neutra-Text";
     src: url("/assets/fonts/Neutra-Text-Bold_32106.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+    font-weight: bold;
 }
 @font-face {
     font-family: "Neutra-Text-Light";

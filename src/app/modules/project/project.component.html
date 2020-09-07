@@ -1,4 +1,6 @@
-<app-sidenav [sidenav]="sidenav"></app-sidenav>
-<div class="page-content">
-    <router-outlet></router-outlet>
+<div class="drawer">
+    <app-sidenav [sidenav]="sidenav"></app-sidenav>
+    <div class="drawer-page">
+        <router-outlet></router-outlet>
+    </div>
 </div>

@@ -123,6 +123,37 @@ body {
     }
 }
 
+.drawer {
+    display: flex;
+    min-height: 100%;
+
+    @media screen and (min-width: $breakpoint-sm + 1px) {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    @media screen and (max-width: $breakpoint-sm) {
+        flex-direction: column;
+        padding: 24px;
+    }
+
+    @media screen and (max-width: $breakpoint-xs) {
+        padding: 24px 16px;
+    }
+}
+
+.drawer-page {
+    overflow: auto;
+    padding: 24px;
+    flex: 1;
+
+    @media screen and (max-width: $breakpoint-sm) {
+        margin-top: 32px;
+        overflow: auto;
+        padding: 0;
+    }
+}
+
 // === TEXT ===
 .mdm-title {
     font-size: 18px;
@@ -171,9 +202,9 @@ body {
         width: calc(25% - 24px);
         margin: 0 12px 24px;
 
-        @media screen and (max-width: $breakpoint-md) {
-            width: calc(1 / 3 * 100% - 24px);
-        }
+        // @media screen and (max-width: $breakpoint-md) {
+        //     width: calc(1 / 4 * 100% - 24px);
+        // }
 
         @media screen and (max-width: $breakpoint-sm) {
             width: calc(50% - 24px);
