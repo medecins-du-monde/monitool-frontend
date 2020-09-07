@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
           status: 30,
           buttonIcon2: '',
           buttonText2: '',
-          routerLink1: `../site`,
+          routerLink1: `../sites`,
           routerLink2: '',
         },
         {
