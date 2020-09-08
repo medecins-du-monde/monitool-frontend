@@ -34,7 +34,7 @@ export class ProjectComponent implements OnInit {
               },
               {
                 name: 'CollectionSites',
-                routerLink: `../${projectId}/structure/site`,
+                routerLink: `../${projectId}/structure/sites`,
                 icon: 'location'
               },
               {

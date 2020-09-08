@@ -1,0 +1,33 @@
+.progress-bar {
+    display: flex;
+    align-items: center;
+
+    .progress-percentage {
+        width: 33px;
+        margin-right: 8px;
+    }
+
+    .progress-container {
+        flex: 1;
+        height: 6px;
+        background-color: #d8d8d8;
+        border-radius: 3px;
+
+        .progress {
+            height: 100%;
+            border-radius: 3px;
+        }
+    }
+
+    &.progress-bar-grey {
+        color: #d8d8d8;
+    }
+
+    &.progress-bar-green {
+        color: #5cb85b;
+
+        .progress {
+            background-color: #5cb85b;
+        }
+    }
+}
