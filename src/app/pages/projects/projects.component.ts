@@ -58,8 +58,12 @@ export class ProjectsComponent implements OnInit {
   }
 
   private filterByText(projects: Project[]): Project[] {
-    const search = this.filtersForm.value.search;
-    return projects.filter(project => project.name.toLowerCase().includes(search.toLowerCase()));
+    const search = this.filtersForm.value.search.toLowerCase();
+    return projects.filter(project =>
+      project.name.toLowerCase().includes(search) ||
+      project.country.toLowerCase().includes(search) ||
+      project.themes.find(theme => theme.toLowerCase().includes(search))
+    );
   }
 
   private filterByCountries(projects: Project[]): Project[] {

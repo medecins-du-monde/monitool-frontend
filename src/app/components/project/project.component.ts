@@ -10,7 +10,6 @@ import { themes } from 'src/app/constants/themes';
 export class ProjectComponent implements OnInit {
   @Input() project: Project;
   status: string;
-  themesNames: string[] = [];
 
   constructor() { }
 
@@ -26,8 +25,5 @@ export class ProjectComponent implements OnInit {
     else {
       this.status = 'Deleted';
     }
-    this.project.themes.forEach(theme => {
-      this.themesNames.push(themes.find(t => t._id === theme).shortName.fr);
-    });
   }
 }
