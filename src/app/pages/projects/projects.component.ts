@@ -10,7 +10,6 @@ import { projectsList } from 'src/app/constants/projects';
 })
 export class ProjectsComponent implements OnInit {
 
-  searchText: string;
   countries = ['Burkina Faso', 'Italie', 'Inde'];
   themes = ['Theme 1', 'Theme 2'];
   statuses = [
@@ -36,43 +35,54 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.filtersForm = this.fb.group({
+      search: '',
       countries: [[]],
       themes: [[]],
       statuses: [['Ongoing']]
     });
-    this.projects = projectsList.filter(project => project.active === true);
-    this.filtersForm.controls.countries.valueChanges.subscribe(e => {
-      this.onSelectCountries(e);
-    });
-    this.filtersForm.controls.statuses.valueChanges.subscribe(e => {
-      this.onSelectStatuses(e);
+    this.projects = this.filterByStatuses(projectsList);
+    this.filtersForm.valueChanges.subscribe(() => {
+      this.onFilterChange();
     });
   }
 
   onSearch(e: any): void {
-    this.searchText = e;
-    this.projects = projectsList.filter(project => project.name.toLowerCase().includes(e.toLowerCase()));
+    this.filtersForm.controls.search.setValue(e);
   }
 
-  private onSelectCountries(countries: string[]): void {
+  onFilterChange(): void {
+    let filteredProjects = this.filterByText(projectsList);
+    filteredProjects = this.filterByCountries(filteredProjects);
+    filteredProjects = this.filterByStatuses(filteredProjects);
+    this.projects = filteredProjects;
+  }
+
+  private filterByText(projects: Project[]): Project[] {
+    const search = this.filtersForm.value.search;
+    return projects.filter(project => project.name.toLowerCase().includes(search.toLowerCase()));
+  }
+
+  private filterByCountries(projects: Project[]): Project[] {
+    const countries = this.filtersForm.value.countries;
     if (countries.length > 0) {
-      this.projects = projectsList.filter(project => countries.includes(project.country));
+      return projects.filter(project => countries.includes(project.country));
     } else {
-      this.projects = projectsList;
+      return projects;
     }
   }
 
-  private onSelectStatuses(statuses: string[]): void {
+  private filterByStatuses(projects: Project[]): Project[] {
     let filteredProjects = [];
+    const statuses = this.filtersForm.value.statuses;
     if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projectsList.filter(project => project.active));
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.active && project.end > new Date()));
     }
     if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projectsList.filter(project => !project.active && project.end < new Date()));
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.active && project.end <= new Date()));
     }
     if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projectsList.filter(project => !project.active && project.end > new Date()));
+      filteredProjects = filteredProjects.concat(projects.filter(project => !project.active));
     }
-    this.projects = filteredProjects;
+    return filteredProjects;
   }
 }
