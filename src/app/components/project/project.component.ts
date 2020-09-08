@@ -16,7 +16,7 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.project.active === true) {
-      if (new Date(Date.now()) < this.project.end) {
+      if (new Date() < this.project.end) {
         this.status = 'Ongoing';
       }
       else {

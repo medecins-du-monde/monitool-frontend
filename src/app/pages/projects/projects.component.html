@@ -1,40 +1,3 @@
-<!-- <section class="page-section">
-    <p class="section-title">Projets
-    </p>
-    <div class="section-row">
-        <div class="btn-group">
-            <button id="btn-1" [ngClass]="{
-                'btn-group-active': btn1Clicked
-              }" (click)="onBtnClick('btn-1')">En cours</button>
-            <button id="btn-2" [ngClass]="{
-                'btn-group-active': btn2Clicked
-              }" (click)="onBtnClick('btn-2')">Terminés</button>
-            <button id="btn-3" [ngClass]="{
-                'btn-group-active': btn3Clicked
-              }" (click)="onBtnClick('btn-3')">Supprimés</button>
-        </div>
-        <div class="row-wrapper">
-            <div class="wrapper">
-                <div class="search_box">
-                    <input type="text" [(ngModel)]="search" (ngModelChange)="onSearchbarChanged()"
-                        placeholder="Chercher">
-                    <svg-icon id="search-icon" key="search"></svg-icon>
-                </div>
-            </div>
-            <div [formGroup]="countryForm">
-                <select formControlName="countries" (change)="onSelectMenuChanged()" [(ngModel)]="selectedCountry">
-                    <option class='option' *ngFor='let country of countries' [disabled]="country.value==''"
-                        [value]="country.value">
-                        {{country.option}}</option>
-                </select>
-            </div>
-            <button class="icon-btn"><svg-icon key="addFolder"></svg-icon> Créer un projet</button>
-        </div>
-    </div>
-    <div class="projects">
-        <app-project *ngFor="let project of projects" [project]="project"></app-project>
-    </div>
-</section> -->
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions" [formGroup]="filtersForm">
@@ -47,14 +10,12 @@
             </mat-form-field>
         </div>
         <div>
-            <mat-button-toggle-group multiple>
-                <mat-button-toggle>{{ 'OngoingPlural' | translate }}</mat-button-toggle>
-                <mat-button-toggle>{{ 'FinishedPlural' | translate }}</mat-button-toggle>
-                <mat-button-toggle>{{ 'DeletedPlural' | translate }}</mat-button-toggle>
+            <mat-button-toggle-group formControlName="statuses" multiple>
+                <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">{{ status.text | translate }}</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <div>
-            <app-searchbar></app-searchbar>
+            <app-searchbar (search)="onSearch($event)"></app-searchbar>
         </div>
         <!-- <div>
             <mat-form-field appearance="fill">
