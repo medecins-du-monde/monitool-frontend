@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Project } from 'src/app/models/project';
 import { projectsList } from 'src/app/constants/projects';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-projects',
@@ -30,20 +31,42 @@ export class ProjectsComponent implements OnInit {
   filtersForm: FormGroup;
   projects: Project[];
 
+  @ViewChild('allSelected') private allSelected: MatOption;
+
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.filtersForm = this.fb.group({
       search: '',
-      countries: [[]],
+      countries: [this.countries.concat(['0'])],
       themes: [[]],
       statuses: [['Ongoing']]
     });
     this.projects = this.filterByStatuses(projectsList);
     this.filtersForm.valueChanges.subscribe(() => {
+      console.log('filter');
       this.onFilterChange();
     });
+  }
+
+  onToggleCountry() {
+    if (this.allSelected.selected) {
+      this.allSelected.deselect();
+      return;
+    }
+    if (this.filtersForm.value.countries.length === this.countries.length) {
+      this.allSelected.select();
+    }
+  }
+
+  onToggleAllCountries() {
+    if (this.allSelected.selected) {
+      this.filtersForm.controls.countries
+        .setValue([...this.countries, '0']);
+    } else {
+      this.filtersForm.controls.countries.setValue([]);
+    }
   }
 
   onSearch(e: any): void {
@@ -71,7 +94,7 @@ export class ProjectsComponent implements OnInit {
     if (countries.length > 0) {
       return projects.filter(project => countries.includes(project.country));
     } else {
-      return projects;
+      return [];
     }
   }
 

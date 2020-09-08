@@ -4,9 +4,10 @@
         <div class="actions-group">
             <div class="action">
                 <mat-form-field appearance="fill">
-                    <mat-label>{{ 'AllCountries' | translate }} ({{countries.length}})</mat-label>
+                    <mat-label>{{ 'Countries' | translate }}</mat-label>
                     <mat-select formControlName="countries" multiple>
-                        <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
+                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
+                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country">{{country}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
