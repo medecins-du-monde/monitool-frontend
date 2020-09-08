@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
+import { ProgressBarTripleModule } from 'src/app/components/progress-bar-triple/progress-bar-triple.module';
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    ProgressBarModule
+    ProgressBarTripleModule
   ]
 })
 export class InputModule { }
