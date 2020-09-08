@@ -1,1 +1,11 @@
-<p>users works!</p>
+<div class="info-section blue">
+    <p>Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ...</p>
+    <p>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet.</p>
+</div>
+<div class="mdm-cards">
+    <app-user *ngFor="let user of users" [user]="user" class="mdm-card"></app-user>
+</div>
+<button mat-stroked-button (click)="openDialog()" class="mdm-button">
+    <mat-icon>add</mat-icon>
+    {{ 'AddUser' | translate }}
+</button>

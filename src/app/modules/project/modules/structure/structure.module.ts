@@ -15,6 +15,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
+import { UserModule } from './components/user/user.module';
+import { UserModalModule } from './components/user-modal/user-modal.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    ProgressBarModule
+    MatDialogModule,
+    ProgressBarModule,
+    UserModule,
+    UserModalModule
   ]
 })
 export class StructureModule { }

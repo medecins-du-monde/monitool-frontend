@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-header class="user-header">
+        <mat-card-title>{{user.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="user-info">
+            <div class="user-info-title">{{ 'Login' | translate }}</div>
+            <div class="user-info-value">{{login}}</div>
+        </div>
+        <div class="user-info">
+            <div class="user-info-title">{{ 'Role' | translate }}</div>
+            <div class="user-info-value">
+                <mat-chip-list>
+                    <mat-chip>{{ user.role | translate }}</mat-chip>
+                </mat-chip-list>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end" class="mdm-button-group">
+        <button mat-stroked-button (click)="openDialog()" class="mdm-button">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'Delete' | translate }}</span>
+    </button>
+</mat-menu>
