@@ -1,0 +1,30 @@
+.progress-bar-triple {
+    .progress-container {
+        flex: 1;
+        height: 12px;
+        display: flex;
+        border-radius: 6px;
+        overflow: hidden;
+
+        .progress {
+            height: 100%;
+            text-transform: lowercase;
+            display: block;
+            font-size: 12px;
+            line-height: 12px;
+            text-align: center;
+            color: white;
+            padding: 0 4px;
+        }
+
+        .done{
+            background-color: #5cb85b;
+        }
+        .incomplete{
+            background-color: #f0ad4e;
+        }
+        .missing{
+            background-color: #d9534f;
+        }
+    }
+}
