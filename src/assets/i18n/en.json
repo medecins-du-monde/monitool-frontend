@@ -5,6 +5,7 @@
     "Clone": "Clone",
     "CollectionSites": "Collection sites",
     "Common": "Common",
+    "Countries": "Countries",
     "CreateNewIndicator": "Create a new indicator",
     "CreateNewProject": "Create a new project",
     "CreateNewThematic": "Create a new thematic",
@@ -76,13 +77,13 @@
         "Guides": {
             "Title": "Guides & Documents supports",
             "Cards": [
-                "<ul><li><p><b>Healthcare project planning (2015)</b></p><p>The Healthcare project planning  offers MdM project players a method of planning that is in line with the values reaffirmed and specified in that statement – to provide care and cure, to bear witness and advocate, and to support communities seeking social change.</p></li><li><p><b>Toolbox for healthcare project planning</b></p><p>This toolbox  contains multiple tools, mostly Excel-based in order to help you formalizing your project's planning.</p></li><li><p><b>DSP's Monitoring library</b></p><p>This library  contains fact sheets, training documents and position papers connected with monitoring and maintained by the DSP department.</p></li></ul>"
+                "<ul><li><p><b>Healthcare project planning (2015)</b></p><p><a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Guides.aspx\">Healthcare project planning </a>  offers MdM project players a method of planning that is in line with the values reaffirmed and specified in that statement – to provide care and cure, to bear witness and advocate, and to support communities seeking social change.</p></li><li><p><b>Toolbox for healthcare project planning</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/doi/s2ap/biblio/Pages/Toolkit.aspx\">toolbox</a> contains multiple tools, mostly Excel-based in order to help you formalizing your project's planning.</p></li><li><p><b>DSP's Monitoring library</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Monitoring.aspx\">library</a>  contains fact sheets, training documents and position papers connected with monitoring and maintained by the DSP department.</p></li></ul>"
             ]
         },
         "OtherTools": {
             "Title": "Other tools",
             "Cards": [
-                "<ul><li><p><b>Indicator's summary</b></p><p>Available in the <a href=\"https://mdm1.sharepoint.com/:u:/r/directions/dsp/Documents%20partages/MdM_essential%20document%20MONITORING_EN.7z\">essentials documents for monitoring archive</a> , this tool centralize for all of your indicators the \"when\", \"how\", \"where\", \"by whom\" and \"for whom\" the data that you handle should be collected and analized.</p></li><li><p><b>Dataflow chart</b></p><p>In the same archive, this tool schematize the path that your data follows, from the form that was used to collect it, to the report or decision making that it enabled.</p></li></ul>"
+                "<ul><li><p><b>Indicator's summary</b></p><p>Available in the <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/:u:/r/directions/dsp/Documents%20partages/MdM_essential%20document%20MONITORING_EN.7z\">essentials documents for monitoring archive</a> , this tool centralize for all of your indicators the \"when\", \"how\", \"where\", \"by whom\" and \"for whom\" the data that you handle should be collected and analized.</p></li><li><p><b>Dataflow chart</b></p><p>In the same archive, this tool schematize the path that your data follows, from the form that was used to collect it, to the report or decision making that it enabled.</p></li></ul>"
             ]
         }
     },

@@ -2,10 +2,10 @@ import { Project } from '../models/project';
 export let projectsList: Project[] = [{
     _id: '0',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
-    name: 'Test in BurkinaFaso',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    name: 'Test in Burkina Faso',
+    themes: ['SSR'],
     start: new Date('2019-08-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -13,10 +13,10 @@ export let projectsList: Project[] = [{
 {
     _id: '1',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
-    name: 'Test in BurkinaFaso',
-    themes: ['theme:b1ad346a-37cb-493a-b0c5-d76c7ccf70e9', 'theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    name: 'Test in Burkina Faso',
+    themes: ['CrCo', 'SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -24,10 +24,10 @@ export let projectsList: Project[] = [{
 {
     _id: '2',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -35,10 +35,10 @@ export let projectsList: Project[] = [{
 {
     _id: '3',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -46,10 +46,10 @@ export let projectsList: Project[] = [{
 {
     _id: '4',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -57,10 +57,10 @@ export let projectsList: Project[] = [{
 {
     _id: '5',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -68,10 +68,10 @@ export let projectsList: Project[] = [{
 {
     _id: '6',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -79,10 +79,10 @@ export let projectsList: Project[] = [{
 {
     _id: '7',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -90,10 +90,10 @@ export let projectsList: Project[] = [{
 {
     _id: '8',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -101,10 +101,10 @@ export let projectsList: Project[] = [{
 {
     _id: '9',
     active: true,
-    country: 'BurkinaFaso',
+    country: 'Burkina Faso',
     countryImage: 'assets/images/burkina-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2020-05-31'),
     inputDate: null
@@ -115,7 +115,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2020-05-31'),
     inputDate: null
@@ -126,7 +126,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2020-05-31'),
     inputDate: null
@@ -137,7 +137,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2020-05-31'),
     inputDate: null
@@ -148,7 +148,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2020-05-31'),
     inputDate: null
@@ -159,7 +159,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -170,7 +170,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -181,7 +181,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -192,7 +192,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -203,7 +203,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: new Date('2019-05-20T11:05:51.710Z')
@@ -214,7 +214,7 @@ export let projectsList: Project[] = [{
     country: 'Italie',
     countryImage: 'assets/images/italy-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -225,7 +225,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -236,7 +236,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -247,7 +247,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -258,7 +258,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -269,7 +269,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -280,7 +280,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -291,7 +291,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -302,7 +302,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -313,7 +313,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null
@@ -324,7 +324,7 @@ export let projectsList: Project[] = [{
     country: 'Inde',
     countryImage: 'assets/images/india-flag.png',
     name: 'Atelier centre paris',
-    themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
+    themes: ['SSR'],
     start: new Date('2019-05-01'),
     end: new Date('2022-05-31'),
     inputDate: null

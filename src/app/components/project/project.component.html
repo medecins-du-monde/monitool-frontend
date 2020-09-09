@@ -1,15 +1,16 @@
 <mat-card>
     <mat-card-header class="project-header">
-        <div mat-card-avatar>
-            <img [src]="project.countryImage" class="project-country">
+        <div mat-card-avatar class="project-country">
+            <img [src]="project.countryImage">
         </div>
-        <mat-card-title>{{project.country}}</mat-card-title>
-        <mat-icon svgIcon="person" class="project-header-icon"></mat-icon>
+        <mat-card-title>
+            {{project.country}}
+        </mat-card-title>
+        <mat-chip-list class="project-status">
+            <mat-chip color="accent" selected>{{ status | translate }}</mat-chip>
+        </mat-chip-list>
     </mat-card-header>
     <mat-card-content>
-        <mat-chip-list>
-            <mat-chip>{{ status | translate }}</mat-chip>
-        </mat-chip-list>
         <div class="project-info">
             <div class="project-info-title">{{ 'Name' | translate }}</div>
             <div class="project-info-value">{{project.name}}</div>
@@ -21,7 +22,7 @@
         <div class="project-info">
             <div class="project-info-title">{{ 'Thematics' | translate }}</div>
             <div class="project-info-value">
-                <div *ngFor="let theme of themesNames">{{theme}}</div>
+                <div *ngFor="let theme of project.themes">{{theme}}</div>
             </div>
         </div>
         <div class="project-info">

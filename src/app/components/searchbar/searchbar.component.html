@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill" class="searchbar">
     <mat-label>{{ 'Search' | translate }}</mat-label>
     <mat-icon svgIcon="search" matPrefix></mat-icon>
-    <input type="text" matInput placeholder="{{ 'Search' | translate }}">
+    <input type="text" matInput placeholder="{{ 'Search' | translate }}" [(ngModel)]="searchText" (ngModelChange)="onSearch($event)">
 </mat-form-field>
