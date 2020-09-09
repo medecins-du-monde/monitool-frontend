@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
+import { CrossCuttingIndicatorModule } from 'src/app/components/cross-cutting-indicator/cross-cutting-indicator.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    ProgressBarModule
+    ProgressBarModule,
+    CrossCuttingIndicatorModule,
   ]
 })
 export class StructureModule { }
