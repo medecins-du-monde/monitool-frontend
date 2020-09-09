@@ -346,23 +346,6 @@ body {
         }
     }
 
-    // &.mat-icon-button-small{
-    //     padding: 0 !important;
-    //     height: 24px;
-    //     width: 24px;
-    //     line-height: 24px;
-    //     border-radius: 4px;
-    //     min-width: 0px;
-    //     .mat-icon {
-    //         height: 14px;
-    //         width: 14px;
-    //         line-height: 14px;
-    //         svg{
-    //             fill: currentColor !important;
-    //         }
-    //     }
-    // }
-
     &:not(:only-child) {
         &:first-child {
             border-top-right-radius: 0;

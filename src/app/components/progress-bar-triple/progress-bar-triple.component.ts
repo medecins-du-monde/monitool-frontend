@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProgressBarTripleComponent implements OnInit {
   @Input() done: number;
-  @Input() incomplete: number;
+  @Input() ongoing: number;
   @Input() missing: number;
 
   @Input() total = 100;
@@ -16,7 +16,7 @@ export class ProgressBarTripleComponent implements OnInit {
 
   ngOnInit(): void {
     this.done = (this.done / this.total) * 100;
-    this.incomplete = (this.incomplete / this.total) * 100;
+    this.ongoing = (this.ongoing / this.total) * 100;
     this.missing = (this.missing / this.total) * 100;
   }
 

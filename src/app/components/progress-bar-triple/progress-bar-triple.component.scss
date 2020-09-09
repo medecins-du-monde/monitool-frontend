@@ -1,30 +1,20 @@
 .progress-bar-triple {
-    // display: flex;
-    align-items: center;
-
-    .progress-percentage {
-        // width: 33px;
-        margin-right: 8px;
-        
-        .done{
-            color: #5cb85b;
-        }
-        .incomplete{
-            color: #f0ad4e;
-        }
-        .missing{
-            color: #d9534f;
-        }
-    }
-
     .progress-container {
         flex: 1;
-        height: 6px;
-        margin-bottom: 10px;
+        height: 12px;
+        display: flex;
+        border-radius: 6px;
+        overflow: hidden;
+
         .progress {
             height: 100%;
-            // border-radius: 3px;
-            display: inline-block;
+            text-transform: lowercase;
+            display: block;
+            font-size: 12px;
+            line-height: 12px;
+            text-align: center;
+            color: white;
+            padding: 0 4px;
         }
 
         .done{

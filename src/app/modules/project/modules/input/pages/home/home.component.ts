@@ -6,6 +6,9 @@ export interface Task {
   buttonIcon1: string;
   status: number;
   routerLink1: string;
+  done: number;
+  ongoing: number;
+  missing: number;
 }
 
 @Component({
@@ -27,6 +30,10 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Extraction du SNIS (CSP)',
         status: 100,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
+
       },
       {
         taskText1: 'Remplir les 119 saisies de ',
@@ -34,6 +41,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Registre pharmacie (CSP)',
         status: 30,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 42 saisies de ',
@@ -41,6 +51,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Rapport de supervision trimestriel (CSP)',
         status: 45,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 144 saisies de ',
@@ -48,6 +61,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Registre des VLG (CSP & Unité mobile)',
         status: 0,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 36 saisies de ',
@@ -55,6 +71,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Extraction du SNIS (Hôpital de référence)',
         status: 0,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 36 saisies de ',
@@ -62,6 +81,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Registre des VLG (Hôpital de référence)',
         status: 0,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 126 saisies de ',
@@ -69,6 +91,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Recensement',
         status: 0,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
       {
         taskText1: 'Remplir les 6 saisies de ',
@@ -76,6 +101,9 @@ export class HomeComponent implements OnInit {
         buttonText1: 'Coordination',
         status: 0,
         routerLink1: `.`,
+        done: 40,
+        ongoing: 40,
+        missing: 20,
       },
     ];
   }
