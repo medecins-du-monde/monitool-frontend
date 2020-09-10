@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Indicator } from 'src/app/models/indicator';
+
 
 @Component({
   selector: 'app-cross-cutting-indicator',
@@ -7,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CrossCuttingIndicatorComponent implements OnInit {
   @Input() computation = false;
+  @Input() indicator: Indicator;
   constructor() { }
 
   ngOnInit(): void {

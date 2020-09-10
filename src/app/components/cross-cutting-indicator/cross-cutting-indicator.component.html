@@ -1,14 +1,14 @@
 <mat-card>
-    <mat-card-header class="indicator-header">Training Volume</mat-card-header>
+    <mat-card-header class="indicator-header">{{ indicator.name.fr }}</mat-card-header>
     <mat-card-content>
         <div class="indicator-info">
             <div class="indicator-info-title">{{ 'Description' | translate }}</div>
-            <div class="indicator-info-value">We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.</div>
+            <div class="indicator-info-value">{{ indicator.description.fr }}</div>
             <div class="indicator-info-value"><span>{{ 'Baseline' | translate }}: </span>?</div>
             <div class="indicator-info-value"><span>{{ 'Target' | translate }}: </span>?</div>
             <div class="indicator-info-value"><span>{{ 'Computation' | translate }}: </span>
-                <span *ngIf="computation; else elseBlock" class="valid">{{ 'Valid' | translate }}</span>
-                <ng-template #elseBlock><span class="invalid">{{ 'Invalid' | translate }}</span></ng-template>
+                <span *ngIf="computation; else elseBlock" class="valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
+                <ng-template #elseBlock><span class="invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>
             </div>
         </div>
     </mat-card-content>

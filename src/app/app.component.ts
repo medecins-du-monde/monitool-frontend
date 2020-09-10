@@ -117,5 +117,13 @@ export class AppComponent {
       'edit',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/edit.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'link',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/link.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'link_off',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/link_off.svg')
+    );
   }
 }
