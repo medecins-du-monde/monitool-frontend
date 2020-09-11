@@ -10,7 +10,7 @@ export class CrossCuttingIndicatorComponent implements OnInit {
 
   @Input() computation = false;
   @Input() indicator: Indicator;
-  
+
   constructor() { }
 
   ngOnInit(): void {
