@@ -1,26 +1,35 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 <h2 mat-dialog-title>{{ 'UserEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="userForm" class="mdm-dialog">
-    <mat-form-field appearance="outline">
-        <mat-label>{{ 'Type' | translate }}</mat-label>
-        <mat-select formControlName="type">
-            <mat-option *ngFor="let type of types" [value]="type">{{ type | translate }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>{{ 'User' | translate }}</mat-label>
-        <mat-select formControlName="user">
-            <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>{{ 'Role' | translate }}</mat-label>
-        <mat-select formControlName="role">
-            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Type' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="type" placeholder="{{ 'Type' | translate }}">
+                <mat-option *ngFor="let type of types" [value]="type">{{ type | translate }}</mat-option>
+            </mat-select>
+            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'User' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="user" placeholder="{{ 'User' | translate }}">
+                <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }}</mat-option>
+            </mat-select>
+            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Role' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
+                <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+            </mat-select>
+            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+        </mat-form-field>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button">{{ 'UpdateUser' | translate }}</button>
+    <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'UpdateUser' | translate }}</button>
     <button mat-stroked-button class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
 </mat-dialog-actions>
