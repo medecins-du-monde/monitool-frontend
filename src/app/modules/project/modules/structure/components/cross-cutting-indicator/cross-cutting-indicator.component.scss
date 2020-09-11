@@ -16,24 +16,21 @@
         flex: 1;
     }
     
-    span{
-        font-weight: bold;
-    }
+    .computation {
+        &.valid {
+            color: #3c763d;
+        }
 
-    .valid{
-        font-weight: normal;
-        color: #3c763d;
-    }
-    .invalid{
-        font-weight: normal;
-        color: #a94442;
-    }
+        &.invalid {
+            color: #a94442;
+        }
 
-    mat-icon{
-        height: 14px;
-        width: 14px;
-        font-size: 14px;
-        line-height: 14px;
-        vertical-align: middle;
+        mat-icon{
+            height: 14px;
+            width: 14px;
+            font-size: 14px;
+            line-height: 14px;
+            vertical-align: middle;
+        }
     }
 }
