@@ -18,6 +18,7 @@ import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.
 import { UserModule } from './components/user/user.module';
 import { UserModalModule } from './components/user-modal/user-modal.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CrossCuttingIndicatorModule } from 'src/app/modules/project/modules/structure/components/cross-cutting-indicator/cross-cutting-indicator.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
     ProgressBarModule,
     UserModule,
-    UserModalModule
+    UserModalModule,
+    CrossCuttingIndicatorModule
   ]
 })
 export class StructureModule { }

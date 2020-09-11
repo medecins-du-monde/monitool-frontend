@@ -349,21 +349,24 @@ body {
 
 .mdm-button-group {
     .mdm-button {
-        &:first-child {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-right-style: none !important;
-        }
+        &:not(:only-child) {
+            &:first-child {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-right-style: none !important;
+            }
 
-        &:last-child {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
+            &:last-child {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }
 
 // === TABLE ===
 .mdm-table {
+    width: 100%;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #dddddd;
 
@@ -418,5 +421,78 @@ body {
 
     @media screen and (max-width: $breakpoint-xs) {
         width: 300px;
+    }
+}
+
+// === FORMS ===
+.mdm-form-field {
+    .mat-focused:not(.mat-form-field-invalid) {
+        .mat-form-field-prefix {
+            color: white;
+        }
+    }
+        
+    .mat-form-field-invalid {
+        .mat-form-field-prefix {
+            color: blue;
+        }
+    }
+        
+    .mat-form-field-wrapper {
+        margin: 0 !important;
+    }
+    
+    &:not(.searchbar) {
+        &.mat-form-field:not(.mat-focused) {
+            .mat-form-field-outline {
+                border-radius: 4px;
+                background: white;
+            }
+        }
+    }
+    &.searchbar {
+        &.mat-form-field:not(.mat-focused) {
+            .mat-form-field-outline {
+                border-radius: 4px;
+                background: #e9e9e9;
+            }
+        }
+    }
+    
+    input {
+        height: 23px !important;
+    }
+    
+    .mat-form-field-flex>.mat-form-field-infix {
+        border-top: 10px solid transparent;
+        padding: 7px 0 7px 0;
+    }
+
+    .mat-form-field-label-wrapper {
+        top: -10px;
+        padding-top: 10px;
+    }
+    
+    .mat-form-field-label {
+        top: 20px !important;
+    }
+    
+    &.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+        transform: translateY(-1em) scale(.75) !important;
+    }
+        
+    &.mat-form-field-appearance-outline {
+        .mat-form-field-suffix {
+            right: -0.6em;
+        
+            .mat-icon-button {
+                line-height: 35px;
+                top: -2px;
+            }
+        }
+    
+        .mat-select-arrow-wrapper {
+            transform: none !important;
+        }
     }
 }
