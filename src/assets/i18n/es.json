@@ -1,15 +1,21 @@
 {
     "Admin": "Administrador",
     "AllCountries": "Todos los países",
+    "Baseline": "Valor de base",
     "Basics": "Datos de base",
     "Clone": "Clonar",
     "CollectionSites": "Lugares de colecta",
     "Common": "Normal",
+    "Computation": "Cálculo",
     "Countries": "Países",
     "CreateNewIndicator": "Crear un nuevo indicador",
     "CreateNewProject": "Crear un nuevo proyecto",
     "CreateNewThematic": "Create una temática",
     "CrossCuttingIndicators": "Indicadores transversales",
+    "CrossCuttingInfo": [
+        "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
+        "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
+    ],
     "DataSources": "Fuente de datos",
     "Date": "Fecha",
     "Delete": "Suprimir",
@@ -110,7 +116,10 @@
     "Settings": "Configuración",
     "State": "Estado",
     "Structure": "Estructura",
+    "Target": "Objectivo",
     "Task": "Tarea",
     "Thematics": "Temáticas",
-    "Users": "Usuarios"
+    "Users": "Usuarios",
+    "Valid": "Valido",
+    "Invalid": "Invalido"
 }
