@@ -1,4 +1,7 @@
 {
+    "AccountMDM": "Cuenta MDM",
+    "AccountPartner": "Cuenta socio",
+    "AddNewUser": "Añadir un usario",
     "Admin": "Administrador",
     "AllCountries": "Todos los países",
     "Baseline": "Valor de base",
@@ -16,6 +19,7 @@
         "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
         "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
     ],
+    "DataEntryUser": "Entrada de datos",
     "DataSources": "Fuente de datos",
     "Date": "Fecha",
     "Delete": "Suprimir",
@@ -107,9 +111,12 @@
     "Ongoing": "En curso",
     "OngoingPlural": "En curso",
     "Open": "Abrir",
+    "Owner": "Proprietario",
     "PivotTable": "Tabla dinámica",
     "Projects": "Proyectos",
+    "ReadOnlyUser": "Consulta unicamente",
     "Reporting": "Informe",
+    "ResetChanges": "Cancelar los cambios",
     "Role": "Tipo",
     "Search": "Buscar",
     "SeeReport": "Ver el informe",
@@ -118,7 +125,17 @@
     "Structure": "Estructura",
     "Target": "Objectivo",
     "Task": "Tarea",
+    "Tooltip": {
+        "UserEdition": {
+            "Role": "Este campo determina que podra hacer este usuario: los proprietarios pueden cambiar la estructura de los proyectos, los operadores de entrada solo entrar datos.",
+            "Type": "Elija \"Cuenta MDM\" si el usuario tiene una dirección email xxx@medecinsdumonde.net. Elija \"Cuenta partnerio\" sino.",
+            "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool."
+        }
+    },
+    "Type": "Tipo",
     "Thematics": "Temáticas",
+    "UpdateUser": "Actualizar el usario",
+    "User": "Usario",
     "Users": "Usuarios",
     "Valid": "Valido",
     "Invalid": "Invalido"

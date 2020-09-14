@@ -7,7 +7,7 @@
             <mat-select formControlName="type" placeholder="{{ 'Type' | translate }}">
                 <mat-option *ngFor="let type of types" [value]="type">{{ type | translate }}</mat-option>
             </mat-select>
-            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+            <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Type' | translate }}</mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
@@ -16,16 +16,16 @@
             <mat-select formControlName="user" placeholder="{{ 'User' | translate }}">
                 <mat-option *ngFor="let user of users" [value]="user._id">{{ user.name }}</mat-option>
             </mat-select>
-            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+            <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Role' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
-                <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+                <mat-option *ngFor="let role of roles" [value]="role">{{ role | translate }}</mat-option>
             </mat-select>
-            <mat-hint><mat-icon>info</mat-icon>Choisissez "Compte MDM" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.</mat-hint>
+            <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}</mat-hint>
         </mat-form-field>
     </div>
 </mat-dialog-content>
