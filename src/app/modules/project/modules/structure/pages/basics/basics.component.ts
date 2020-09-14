@@ -30,16 +30,7 @@ export class BasicsComponent implements OnInit {
   }
 
   onThematicRemoved(thematic: string) {
-    const thematics = this.basicsForm.controls.thematics.value as string[];
-    this.removeFirst(thematics, thematic);
-    this.basicsForm.controls.thematics.setValue(thematics);
+    const thematics = this.basicsForm.controls.thematics.value;
+    this.basicsForm.controls.thematics.setValue(thematics.filter(t => t !== thematic));
   }
-
-  private removeFirst<T>(array: T[], toRemove: T): void {
-    const index = array.indexOf(toRemove);
-    if (index !== -1) {
-      array.splice(index, 1);
-    }
-  }
-
 }
