@@ -1,1 +1,82 @@
-<p>basics works!</p>
+<div class="info-section blue">
+    <p>Basics allow to file your project among the others of the NGO.</p>
+</div>
+<div [formGroup]="basicsForm" class="mdm-form">
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Country' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="country" placeholder="{{ 'Country' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="thematics" placeholder="{{ 'Thematics' | translate }}" multiple>
+                <mat-select-trigger>
+                    <mat-chip-list>
+                        <mat-chip *ngFor="let thematic of basicsForm.controls.thematics.value" [removable]="true"
+                            (removed)="onThematicRemoved(thematic)">
+                            {{ thematic }}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-select-trigger>
+                <mat-option *ngFor="let thematic of thematics" [value]="thematic">{{ thematic | translate }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Thematics' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput [matDatepicker]="startPicker" formControlName="startDate"
+                placeholder="{{ 'StartDate' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.StartDate' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput [matDatepicker]="endPicker" formControlName="endDate"
+                placeholder="{{ 'EndDate' | translate }}">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.EndDate' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Visibility' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="private" placeholder="{{ 'Visibility' | translate }}">
+                <mat-option [value]="true">{{ 'VisibilityPrivate' | translate }}
+                </mat-option>
+                <mat-option [value]="false">{{ 'VisibilityPublic' | translate }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Visibility' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+</div>
