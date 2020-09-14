@@ -1,4 +1,7 @@
 {
+    "AccountMDM": "MDM account",
+    "AccountPartner": "Partner account",
+    "AddNewUser": "Add new user",
     "Admin": "Administrator",
     "AllCountries": "All countries",
     "Baseline": "Baseline",
@@ -16,6 +19,7 @@
         "Cross-cutting indicators are determined from the list of thematics in \"Basics\".",
         "This list contains all cross-cutting indicators that your project need to collect"
     ],
+    "DataEntryUser": "Data entry",
     "DataSources": "Data sources",
     "Date": "Date",
     "Delete": "Delete",
@@ -107,9 +111,12 @@
     "Ongoing": "Ongoing",
     "OngoingPlural": "Ongoing",
     "Open": "Open",
+    "Owner": "Owner",
     "PivotTable": "Pivot table",
     "Projects": "Projects",
+    "ReadOnlyUser": "Read only",
     "Reporting": "Reporting",
+    "ResetChanges": "Reset changes",
     "Role": "Role",
     "Search": "Search",
     "SeeReport": "See report",
@@ -118,7 +125,17 @@
     "Structure": "Structure",
     "Target": "Target",
     "Task": "Task",
+    "Tooltip": {
+        "UserEdition": {
+            "Role": "This field determines what will this user be allowed to do: owners can change the project's structure, data entry officers can only do data input.",
+            "Type": "Choose \"MDM Account\" if the user has a xxx@medecinsdumonde.net email address. Choose \"Partner account\" otherwise.",
+            "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time."
+        }
+    },
+    "Type": "Type",
     "Thematics": "Thematics",
+    "UpdateUser": "Update the user",
+    "User": "User",
     "Users": "Users",
     "Valid": "Valid",
     "Invalid": "Invalid"
