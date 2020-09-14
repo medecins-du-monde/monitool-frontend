@@ -10,3 +10,21 @@
         margin-right: 5px;
     }
 }
+
+.mdm-table {
+    tr {
+        th {
+            font-size: 14px;
+        }
+
+        td{
+            text-align: center;
+        }
+    }
+}
+
+.create-button{
+    color: white;
+    background-color: rgb(49, 112, 143);
+    border-color: rgb(49, 112, 143) !important;
+}

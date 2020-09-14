@@ -386,6 +386,10 @@ body {
         }
     }
 
+    th.mat-header-cell{
+        padding: 8px;
+    }
+
     th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
         padding: 8px 8px 8px 16px;
     }

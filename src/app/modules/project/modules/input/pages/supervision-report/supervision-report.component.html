@@ -9,4 +9,23 @@
         <p>If not attainable, a PDF version of the form is provided.</p>
     </span>
 </div>
+<table mat-table [dataSource]="dataSource" class="mdm-table">
+    <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
+        <th mat-header-cell *matHeaderCellDef>{{ column | translate }}</th>
+        <td mat-cell *matCellDef="let element" id="{{column}}"> 
+            <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
+            <ng-template #elseBlock>
+                <div *ngIf="element[column] === 0; else elseBlock2">
+                    <button mat-stroked-button class="mdm-button small-button create-button">Create</button>
+                </div>
+                <ng-template #elseBlock2>
+                    <button mat-stroked-button class="mdm-button small-button">Edit ({{ element[column] }}%)</button>
+                </ng-template>
+            </ng-template>
+        </td>
+    </ng-container>
 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
