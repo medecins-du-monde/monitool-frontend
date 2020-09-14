@@ -11,6 +11,7 @@
     "Common": "Normal",
     "Computation": "Cálculo",
     "Countries": "Países",
+    "Country": "País",
     "CreateNewIndicator": "Crear un nuevo indicador",
     "CreateNewProject": "Crear un nuevo proyecto",
     "CreateNewThematic": "Create una temática",
@@ -29,6 +30,7 @@
     "Done": "Realizado",
     "Edit": "Editar",
     "en": "Inglés",
+    "EndDate": "Fecha de fin",
     "es": "Español",
     "ExtraIndicators": "Indicadores adicionales",
     "Finished": "Terminado",
@@ -121,11 +123,20 @@
     "Search": "Buscar",
     "SeeReport": "Ver el informe",
     "Settings": "Configuración",
+    "StartDate": "Fecha de inicio",
     "State": "Estado",
     "Structure": "Estructura",
     "Target": "Objectivo",
     "Task": "Tarea",
     "Tooltip": {
+        "BasicsEdition": {
+            "Country": "En que país tiene lugar su proyecto? Si es un proyecto regional, entre el nombre de la región.",
+            "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
+            "Name": "El nombre del proyecto le permite encontrarlo en Monitool. Elija algo que sea suficientemente informativo, o copie el objectivo general.",
+            "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",
+            "Thematics": "Las temáticas que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
+            "Visibility": "Fuera de casos particulares todos los proyectos deben dejarse visibles para todos los usuarios."
+        },
         "UserEdition": {
             "Role": "Este campo determina que podra hacer este usuario: los proprietarios pueden cambiar la estructura de los proyectos, los operadores de entrada solo entrar datos.",
             "Type": "Elija \"Cuenta MDM\" si el usuario tiene una dirección email xxx@medecinsdumonde.net. Elija \"Cuenta partnerio\" sino.",
@@ -138,5 +149,8 @@
     "User": "Usario",
     "Users": "Usuarios",
     "Valid": "Valido",
+    "Visibility": "Visibilidad",
+    "VisibilityPublic": "Visible  para todos los usarios",
+    "VisibilityPrivate": "Visible solo para miembros de este proyecto",
     "Invalid": "Invalido"
 }

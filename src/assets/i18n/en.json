@@ -11,6 +11,7 @@
     "Common": "Common",
     "Computation": "Computation",
     "Countries": "Countries",
+    "Country": "Country",
     "CreateNewIndicator": "Create a new indicator",
     "CreateNewProject": "Create a new project",
     "CreateNewThematic": "Create a new thematic",
@@ -29,6 +30,7 @@
     "Done": "Done",
     "Edit": "Edit",
     "en": "English",
+    "EndDate": "End date",
     "es": "Spanish",
     "ExtraIndicators": "Extra indicators",
     "Finished": "Finished",
@@ -121,11 +123,20 @@
     "Search": "Search",
     "SeeReport": "See report",
     "Settings": "Settings",
+    "StartDate": "Begin date",
     "State": "State",
     "Structure": "Structure",
     "Target": "Target",
     "Task": "Task",
     "Tooltip": {
+        "BasicsEdition": {
+            "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",
+            "EndDate": "The end date is the moment when your project closes its data collection. If unknown, enter a date far into the future.",
+            "Name": "The project's name allow finding your project in Monitool. Choose something that is informative enought, or copy the general objective.",
+            "StartDate": "The begin date is the moment when your projects starts collecting data (usually, with the first activities).",
+            "Thematics": "The thematics that you choose will determine which cross-cutting indicators your project will need to collect.",
+            "Visibility": "Outside of specific cases, all projects should be visible for all users."
+        },
         "UserEdition": {
             "Role": "This field determines what will this user be allowed to do: owners can change the project's structure, data entry officers can only do data input.",
             "Type": "Choose \"MDM Account\" if the user has a xxx@medecinsdumonde.net email address. Choose \"Partner account\" otherwise.",
@@ -138,5 +149,8 @@
     "User": "User",
     "Users": "Users",
     "Valid": "Valid",
+    "Visibility": "Visibility",
+    "VisibilityPublic": "Visible for all users (besides partners)",
+    "VisibilityPrivate": "Visible only to members of this project",
     "Invalid": "Invalid"
 }
