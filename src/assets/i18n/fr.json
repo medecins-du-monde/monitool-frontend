@@ -11,6 +11,7 @@
     "Common": "Standard",
     "Computation": "Calcul",
     "Countries": "Pays",
+    "Country": "Pays",
     "CreateNewIndicator": "Créer un nouvel indicateur",
     "CreateNewProject": "Créer un project",
     "CreateNewThematic": "Créer une nouvelle thématique",
@@ -29,6 +30,7 @@
     "Done": "Réalisé",
     "Edit": "Modifier",
     "en": "Anglais",
+    "EndDate": "Date de fin",
     "es": "Espagnol",
     "ExtraIndicators": "Indicateurs annexés",
     "Finished": "Terminé",
@@ -121,11 +123,20 @@
     "Search": "Chercher",
     "SeeReport": "Voir le rapport",
     "Settings": "Paramètres",
+    "StartDate": "Date de lancement",
     "State": "État",
     "Structure": "Structure",
     "Target": "Valeur cible",
     "Task": "Tâche",
     "Tooltip": {
+        "BasicsEdition": {
+            "Country": "Dans quel pays le projet se déroule-t'il? S'il s'agit d'un projet régional, entrez le nom de la région.",
+            "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
+            "Name": "Le nom permet de retrouver le projet dans Monitool. Choisissez un nom suffisament informatif, ou copiez l'objectif général du projet.",
+            "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
+            "Thematics": "Le choix des thématiques conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
+            "Visibility": "Sauf besoin particulier, tous les projets doivent être laissé visibles par tous les utilisateurs."
+        },
         "UserEdition": {
             "Role": "Ce champs determine les modifications que pourra réaliser cet utilisateur sur le projet: les propriétaires peuvent changer la structure du projet, les saisisseurs, uniquement rentrer des données.",
             "Type": "Choisissez \"Compte MDM\" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.",
@@ -138,5 +149,8 @@
     "User": "Utilisateur",
     "Users": "Utilisateurs",
     "Valid": "Valide",
+    "Visibility": "Visibilité",
+    "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
+    "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide"
 }
