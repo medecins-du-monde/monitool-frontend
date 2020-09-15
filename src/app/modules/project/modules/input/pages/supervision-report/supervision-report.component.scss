@@ -15,10 +15,13 @@
     tr {
         th {
             font-size: 14px;
+            text-align: center;
         }
-
         td{
             text-align: center;
+            button{
+                width: 85px;
+            }
         }
     }
 }
