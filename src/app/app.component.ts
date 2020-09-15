@@ -10,6 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'MDM-monitool-Frontend';
+  preferredLanguage: string;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -18,7 +19,12 @@ export class AppComponent {
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
-    this.translateService.setDefaultLang('fr');
+
+    this.preferredLanguage = localStorage.getItem('language');
+    if (this.preferredLanguage === null){
+      this.preferredLanguage = 'fr';
+    }
+    this.translateService.setDefaultLang(this.preferredLanguage);
 
     // === Icons ===
     this.matIconRegistry.addSvgIcon(
