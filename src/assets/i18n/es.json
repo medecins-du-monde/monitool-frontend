@@ -38,6 +38,7 @@
     "fr": "Francés",
     "GeneralReporting": "Informe general",
     "History": "Historial",
+    "HistoryChanges": "Cambios",
     "Home": "Inicio",
     "HomeSections": {
         "OnlinePlatform": {
@@ -119,6 +120,7 @@
     "ReadOnlyUser": "Consulta unicamente",
     "Reporting": "Informe",
     "ResetChanges": "Cancelar los cambios",
+    "RevertToVersion": "Volver a este punto",
     "Role": "Tipo",
     "Search": "Buscar",
     "SeeReport": "Ver el informe",
