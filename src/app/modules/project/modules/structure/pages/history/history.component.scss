@@ -2,8 +2,10 @@
     width: 20%;
 }
 
-.history-table{
-    margin-top: 24px;
+#changes {
+    ul {
+        margin: 0;
+    }
 }
 
 tr.example-detail-row {
@@ -29,3 +31,7 @@ tr.example-element-row:not(.example-expanded-row):active {
     justify-content: center;
 }
 
+.mat-column-expandedDetail{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}

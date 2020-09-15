@@ -14,7 +14,7 @@
     
     <!-- Status Column -->
     <ng-container matColumnDef="changes">
-        <th mat-header-cell *matHeaderCellDef>{{ 'Changes' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'HistoryChanges' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="changes"> 
             <ul>
                 <li *ngFor="let change of element.changes" [innerHTML]="change"></li>
@@ -27,7 +27,7 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
             <div class="example-element-detail" 
               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <button mat-stroked-button class="mdm-button small-button">Revert to this version</button>
+                <button mat-stroked-button class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
             </div>
         </td>
     </ng-container>

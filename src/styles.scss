@@ -367,6 +367,7 @@ body {
 // === TABLE ===
 .mdm-table {
     width: 100%;
+    margin-top: 24px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #dddddd;
 
@@ -392,11 +393,6 @@ body {
 
     th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
         padding: 8px 16px 8px 8px;
-    }
-    
-    .mat-column-expandedDetail{
-        padding-top: 0px !important;
-        padding-bottom: 0px !important;
     }
 
     code{
