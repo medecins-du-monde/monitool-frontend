@@ -15,6 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
+import { UserModule } from './components/user/user.module';
+import { UserModalModule } from './components/user-modal/user-modal.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CrossCuttingIndicatorModule } from 'src/app/modules/project/modules/structure/components/cross-cutting-indicator/cross-cutting-indicator.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -30,12 +41,28 @@ import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     TranslateModule,
     StructureRoutingModule,
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    ProgressBarModule
+    MatChipsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    ProgressBarModule,
+    UserModule,
+    UserModalModule,
+    CrossCuttingIndicatorModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class StructureModule { }

@@ -4,14 +4,12 @@ import { ProgressBarTripleComponent } from './progress-bar-triple.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
-
 @NgModule({
   declarations: [ProgressBarTripleComponent],
   imports: [
     CommonModule,
-    MatTooltipModule,
     TranslateModule,
+    MatTooltipModule
   ],
   exports: [ProgressBarTripleComponent]
 })
