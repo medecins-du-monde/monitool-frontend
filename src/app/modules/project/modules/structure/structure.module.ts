@@ -26,6 +26,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -58,7 +61,9 @@ import { MatChipsModule } from '@angular/material/chips';
     ProgressBarModule,
     UserModule,
     UserModalModule,
-    CrossCuttingIndicatorModule
+    CrossCuttingIndicatorModule,
+    MatCardModule,
+    MatMenuModule
   ],
   providers: [
     MatDatepickerModule,
