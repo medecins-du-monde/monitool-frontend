@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { SupervisionReportComponent } from './pages/supervision-report/supervision-report.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 const routes: Routes = [
   {
@@ -9,8 +9,8 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'supervision-report',
-    component: SupervisionReportComponent
+    path: 'calendar',
+    component: CalendarComponent
   },
   {
     path: '**',

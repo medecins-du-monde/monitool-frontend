@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-supervision-report',
-  templateUrl: './supervision-report.component.html',
-  styleUrls: ['./supervision-report.component.scss']
+  selector: 'app-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.scss']
 })
-export class SupervisionReportComponent implements OnInit {
+export class CalendarComponent implements OnInit {
 
   displayedColumns: string[] = [
     'Date',

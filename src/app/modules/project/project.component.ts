@@ -79,8 +79,8 @@ export class ProjectComponent implements OnInit {
                 icon: 'home'
               },
               {
-                name: 'Rapport de supervision',
-                routerLink: `../${projectId}/input/supervision-report`,
+                name: 'Calendar',
+                routerLink: `../${projectId}/input/calendar`,
                 icon: 'edit'
               }
             ]

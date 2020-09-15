@@ -216,6 +216,18 @@ body {
         background-color: #d9edf7;
         color: #31708f;
     }
+
+    .info-buttons {
+        float: right;
+        margin-left: 4px;
+        display: flex;
+        flex-direction: column;
+
+        button {
+            width: auto;
+            margin-bottom: 4px;
+        }
+    }
 }
 
 .mdm-section {
@@ -384,10 +396,6 @@ body {
             font-weight: bold;
             color: black;
         }
-    }
-
-    th.mat-header-cell{
-        padding: 5px;
     }
 
     th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
