@@ -1,1 +1,42 @@
-<p>history works!</p>
+<div class="info-section blue">The changelog allows to consult all modifications that were made to the structure of your project, and revert to previous revisions if needed.</div>
+
+<div class="mdm-title">{{ 'History' | translate }}</div>
+<table mat-table multiTemplateDataRows class="mdm-table history-table"
+    [dataSource]="dataSource" (mouseleave)='mouseLeave()'>
+    <!-- Task Column -->
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>{{ 'Date'| translate}} & {{ 'User' | translate }}</th>
+        <td mat-cell *matCellDef="let element" id="date"> 
+            <p>{{ element.date }}</p>
+            <p>{{ element.username }}</p>
+        </td>
+    </ng-container>
+    
+    <!-- Status Column -->
+    <ng-container matColumnDef="changes">
+        <th mat-header-cell *matHeaderCellDef>{{ 'HistoryChanges' | translate }}</th>
+        <td mat-cell *matCellDef="let element" id="changes"> 
+            <ul>
+                <li *ngFor="let change of element.changes" [innerHTML]="change"></li>
+            </ul>
+        </td>
+    </ng-container>
+    
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail" 
+              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <button mat-stroked-button class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
+            </div>
+        </td>
+    </ng-container>
+   
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" (mouseover)="mouseLeave()"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (mouseover)='mouseOver(element)'>
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>

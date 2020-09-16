@@ -39,6 +39,7 @@
     "fr": "French",
     "GeneralReporting": "General reporting",
     "History": "History",
+    "HistoryChanges": "Changes",
     "Home": "Home",
     "HomeSections": {
         "OnlinePlatform": {
@@ -120,6 +121,7 @@
     "ReadOnlyUser": "Read only",
     "Reporting": "Reporting",
     "ResetChanges": "Reset changes",
+    "RevertToVersion": "Revert to this version",
     "Role": "Role",
     "Search": "Search",
     "SeeReport": "See report",

@@ -39,6 +39,7 @@
     "fr": "Français",
     "GeneralReporting": "Rapport général",
     "History": "Historique",
+    "HistoryChanges": "Modifications apportées au projet",
     "Home": "Accueil",
     "HomeSections": {
         "OnlinePlatform": {
@@ -120,6 +121,7 @@
     "ReadOnlyUser": "Consultation uniquement",
     "Reporting": "Rapport",
     "ResetChanges": "Annuler les modifications",
+    "RevertToVersion": "Revenir à ce point",
     "Role": "Role",
     "Search": "Chercher",
     "SeeReport": "Voir le rapport",
