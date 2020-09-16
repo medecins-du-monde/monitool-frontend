@@ -25,7 +25,13 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="expandedDates">
+        <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
+            <button mat-stroked-button class="mdm-button small-button">{{ 'SeeOlderDates' | translate }}</button>
+        </td>
+    </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="['expandedDates']"></tr>
 </table>

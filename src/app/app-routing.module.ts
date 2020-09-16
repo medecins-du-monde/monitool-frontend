@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { LoginComponent } from './components/login/login.component';
-// import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 
 
 const routes: Routes = [{
@@ -19,29 +19,29 @@ const routes: Routes = [{
 {
   path: 'home',
   component: HomeComponent,
-  // canActivate : [AuthGuard]
+  canActivate : [AuthGuard]
 },
 {
   path: 'project/:id',
   loadChildren: () => import('./modules/project/project.module')
     .then(m => m.ProjectModule),
-  // canActivate : [AuthGuard],
+  canActivate : [AuthGuard],
 },
 {
   path: 'projects',
   component: ProjectsComponent,
-  // canActivate : [AuthGuard]
+  canActivate : [AuthGuard]
 },
 {
   path: 'parameters',
   loadChildren: () => import('./modules/parameters/parameters.module')
     .then(m => m.ParametersModule),
-  // canActivate : [AuthGuard]
+  canActivate : [AuthGuard]
 },
 {
   path: 'indicators',
   component: IndicatorsComponent,
-  // canActivate : [AuthGuard]
+  canActivate : [AuthGuard]
 },
 {
   path: '**',
