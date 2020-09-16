@@ -6,13 +6,41 @@
 
 <div class="mdm-section">
     <div class="mdm-cards">
-        <mat-card>
+        <mat-card class="mdm-card">
             <mat-card-header class="card-header"> Extraction du SNIS (CSP)</mat-card-header>
             <mat-card-content>
                 <div class="card-info">
-                    <div class="date"><span class="key">Date</span> <span class="value">Feb 1, 2015 - Jun 30, 2016</span></div>
-                    <div class="periodicity"><span class="key">Periodicity</span> <span class="value">Every month</span></div>
-                    <div class="collection"><span class="key">Collection sites</span> <span class="value">CSP</span></div>
+                    <div class="date"><span class="key">{{ 'Date' | translate }}</span> <span class="value">Feb 1, 2015 - Jun 30, 2016</span></div>
+                    <div class="periodicity"><span class="key">{{ 'Periodicity' | translate }}</span> <span class="value">Every month</span></div>
+                    <div class="collection"><span class="key">{{ 'CollectionSites' | translate }}</span> <span class="value">CSP</span></div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions align="end" class="mdm-button-group">
+                <button mat-stroked-button class="mdm-button small-button"><mat-icon>edit</mat-icon>{{ 'Edit' | translate }}</button>
+                <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card class="mdm-card">
+            <mat-card-header class="card-header"> Extraction du SNIS (CSP)</mat-card-header>
+            <mat-card-content>
+                <div class="card-info">
+                    <div class="date"><span class="key">{{ 'Date' | translate }}</span> <span class="value">Feb 1, 2015 - Jun 30, 2016</span></div>
+                    <div class="periodicity"><span class="key">{{ 'Periodicity' | translate }}</span> <span class="value">Every month</span></div>
+                    <div class="collection"><span class="key">{{ 'CollectionSites' | translate }}</span> <span class="value">CSP</span></div>
+                </div>
+            </mat-card-content>
+            <mat-card-actions align="end" class="mdm-button-group">
+                <button mat-stroked-button class="mdm-button small-button"><mat-icon>edit</mat-icon>{{ 'Edit' | translate }}</button>
+                <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card class="mdm-card">
+            <mat-card-header class="card-header"> Extraction du SNIS (CSP)</mat-card-header>
+            <mat-card-content>
+                <div class="card-info">
+                    <div class="date"><span class="key">{{ 'Date' | translate }}</span> <span class="value">Feb 1, 2015 - Jun 30, 2016</span></div>
+                    <div class="periodicity"><span class="key">{{ 'Periodicity' | translate }}</span> <span class="value">Every month</span></div>
+                    <div class="collection"><span class="key">{{ 'CollectionSites' | translate }}</span> <span class="value">CSP</span></div>
                 </div>
             </mat-card-content>
             <mat-card-actions align="end" class="mdm-button-group">
@@ -21,6 +49,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
+    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'Create a new data source' | translate }}</button>
 </div>
 
 <mat-menu #menu="matMenu">

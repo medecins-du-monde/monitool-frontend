@@ -220,6 +220,11 @@ body {
 
 .mdm-section {
     margin-bottom: 68px;
+    color: black;
+    
+    .mat-icon{
+        line-height: 20px;
+    }
 }
 
 // === MDM CARDS ===
@@ -229,6 +234,7 @@ body {
     justify-content: flex-start;
     flex-wrap: wrap;
     margin: 24px -12px 0;
+
 
     @media screen and (max-width: $breakpoint-xs) {
         margin: 24px 0 0;
