@@ -7,3 +7,9 @@
     <app-logical-card cdkDrag  class="mdm-card"  *ngFor="let logicalFramework of logicalFrameworksList" [logicalFramework]='logicalFramework'  ></app-logical-card>
     
 </div>
+
+
+<button mat-raised-button color="primary">
+    <mat-icon svgIcon="add-folder"></mat-icon>
+    {{ 'CreateLogicalFramework' | translate }}
+</button>
