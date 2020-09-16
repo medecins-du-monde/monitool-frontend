@@ -1,0 +1,20 @@
+.logical-card-content{
+ 
+}
+
+.logical-card-title{
+    
+}
+
+.logical-card-info {
+    display: flex;
+    font-size: 14px;
+
+    .logical-card-info-title {
+        flex: 1;
+        font-weight:bold;       
+    }
+    .logical-card-info-value {
+        flex: 1;
+    }
+}

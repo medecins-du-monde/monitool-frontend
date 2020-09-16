@@ -1,1 +1,5 @@
-<p>logical-frame works!</p>
+<div cdkDropList class="mdm-cards" (cdkDropListDropped)="drop($event)">
+    
+    <app-logical-card cdkDrag  class="mdm-card"  *ngFor="let logicalFramework of logicalFrameworksList" [logicalFramework]='logicalFramework'  ></app-logical-card>
+    
+</div>
