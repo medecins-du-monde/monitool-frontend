@@ -16,10 +16,10 @@
             <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
             <ng-template #elseBlock>
                 <div *ngIf="element[column] === 0; else elseBlock2">
-                    <button mat-stroked-button class="mdm-button small-button create-button">Create</button>
+                    <button mat-stroked-button class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                 </div>
                 <ng-template #elseBlock2>
-                    <button mat-stroked-button class="mdm-button small-button">Edit ({{ element[column] }}%)</button>
+                    <button mat-stroked-button class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column] }}%)</button>
                 </ng-template>
             </ng-template>
         </td>

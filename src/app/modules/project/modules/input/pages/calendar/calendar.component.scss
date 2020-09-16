@@ -1,13 +1,14 @@
 .mdm-table {
     tr {
         th {
-            font-size: 14px;
             text-align: center;
         }
         td{
+            height: 100%;
+            padding: 4px;
             text-align: center;
             button{
-                width: 85px;
+                width: 100%;
             }
         }
     }
