@@ -1,3 +1,7 @@
+<div class="info-section blue">
+    <p>Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l'avancement de chaque élément Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données</p>
+</div>
+
 <div cdkDropList class="mdm-cards" (cdkDropListDropped)="drop($event)">
     
     <app-logical-card cdkDrag  class="mdm-card"  *ngFor="let logicalFramework of logicalFrameworksList" [logicalFramework]='logicalFramework'  ></app-logical-card>
