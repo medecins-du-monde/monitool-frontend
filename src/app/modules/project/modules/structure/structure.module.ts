@@ -16,7 +16,6 @@ import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
 import { LogicalCardModule } from './components/logical-card/logical-card.module';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTableModule,
     ProgressBarModule,
     LogicalCardModule,
-    DragDropModule
   ]
 })
 export class StructureModule { }

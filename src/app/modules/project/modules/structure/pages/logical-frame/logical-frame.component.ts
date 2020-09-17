@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {LogicalFramework} from 'src/app/models/logicalFramework';
-import{CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-logical-frame',
@@ -38,10 +37,6 @@ export class LogicalFrameComponent implements OnInit {
         collectionSites:["AAA","BBB"]
       }
     ];
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.logicalFrameworksList, event.previousIndex, event.currentIndex);
   }
 
 }
