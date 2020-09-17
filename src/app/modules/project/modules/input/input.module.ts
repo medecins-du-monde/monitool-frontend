@@ -7,10 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarTripleModule } from 'src/app/components/progress-bar-triple/progress-bar-triple.module';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, CalendarComponent],
   imports: [
     CommonModule,
     TranslateModule,

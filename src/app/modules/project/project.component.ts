@@ -77,6 +77,11 @@ export class ProjectComponent implements OnInit {
                 name: 'Home',
                 routerLink: `../${projectId}/input/home`,
                 icon: 'home'
+              },
+              {
+                name: 'Calendar',
+                routerLink: `../${projectId}/input/calendar`,
+                icon: 'edit'
               }
             ]
           },
