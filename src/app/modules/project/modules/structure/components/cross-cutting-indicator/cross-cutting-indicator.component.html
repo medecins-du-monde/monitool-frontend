@@ -4,8 +4,14 @@
         <div class="card-info">
             <div class="card-info-title">{{ 'Description' | translate }}</div>
             <div class="card-info-value">{{ indicator.description.fr }}</div>
+        </div>
+        <div class="card-info">
             <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>?</div>
+        </div>
+        <div class="card-info">
             <div class="card-info-value"><b>{{ 'Target' | translate }}: </b>?</div>
+        </div>
+        <div class="card-info">
             <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
                 <span *ngIf="computation; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
                 <ng-template #elseBlock><span class="computation invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>

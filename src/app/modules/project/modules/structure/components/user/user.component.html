@@ -1,15 +1,15 @@
 <mat-card>
-    <mat-card-header class="user-header">
+    <mat-card-header class="card-header">
         <mat-card-title>{{user.name}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div class="user-info">
-            <div class="user-info-title">{{ 'Login' | translate }}</div>
-            <div class="user-info-value">{{login}}</div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Login' | translate }}</div>
+            <div class="card-info-value">{{login}}</div>
         </div>
-        <div class="user-info">
-            <div class="user-info-title">{{ 'Role' | translate }}</div>
-            <div class="user-info-value">
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Role' | translate }}</div>
+            <div class="card-info-value">
                 <mat-chip-list>
                     <mat-chip>{{ user.role | translate }}</mat-chip>
                 </mat-chip-list>
