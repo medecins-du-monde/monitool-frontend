@@ -19,18 +19,18 @@ const routes: Routes = [{
 {
   path: 'home',
   component: HomeComponent,
-  //canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: 'project/:id',
   loadChildren: () => import('./modules/project/project.module')
     .then(m => m.ProjectModule),
-  //canActivate : [AuthGuard],
+  // canActivate : [AuthGuard],
 },
 {
   path: 'projects',
   component: ProjectsComponent,
-  //canActivate : [AuthGuard]
+  // canActivate : [AuthGuard]
 },
 {
   path: 'parameters',

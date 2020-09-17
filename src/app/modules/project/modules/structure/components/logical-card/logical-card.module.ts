@@ -15,7 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     MatMenuModule,
     MatIconModule,
-    
   ],
   exports: [LogicalCardComponent]
 })

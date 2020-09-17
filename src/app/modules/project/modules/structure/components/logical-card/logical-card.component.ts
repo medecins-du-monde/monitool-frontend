@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { LogicalFramework } from 'src/app/models/logicalFramework';
 
 @Component({
@@ -7,8 +7,8 @@ import { LogicalFramework } from 'src/app/models/logicalFramework';
   styleUrls: ['./logical-card.component.scss']
 })
 export class LogicalCardComponent implements OnInit {
-  @Input() logicalFramework:LogicalFramework;
-  
+  @Input() logicalFramework: LogicalFramework;
+
   constructor() { }
 
   ngOnInit(): void {
