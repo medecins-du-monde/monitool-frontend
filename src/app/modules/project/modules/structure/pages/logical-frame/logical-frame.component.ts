@@ -23,33 +23,33 @@ export class LogicalFrameComponent implements OnInit {
         start: new Date('2015-01-01'),
         end: new Date('2016-06-30'),
         collectionSites: ['AAA', 'BBB'],
-        entities:null,
-        goal:null,
-        id:null,
-        indicators:null,
-        purposes:null
+        entities: null,
+        goal: null,
+        id: null,
+        indicators: null,
+        purposes: null
       },
       {
         name: 'Bailleur DFID (1 janvier 2015 au 31 mai 2016)',
         start: new Date('2015-01-01'),
         end: new Date('2016-05-31'),
         collectionSites: ['AAA', 'BBB'],
-        entities:null,
-        goal:null,
-        id:null,
-        indicators:null,
-        purposes:null
+        entities: null,
+        goal: null,
+        id: null,
+        indicators: null,
+        purposes: null
       },
       {
         name: 'Bailleur ECHO (1er janvier au 31 décembre 2015) - District de Bimbo & clinique mobile seulement',
         start: new Date('2015-01-01'),
         end: new Date('2015-12-31'),
         collectionSites: ['AAA', 'BBB'],
-        entities:null,
-        goal:null,
-        id:null,
-        indicators:null,
-        purposes:null
+        entities: null,
+        goal: null,
+        id: null,
+        indicators: null,
+        purposes: null
       }
     ];
   }
