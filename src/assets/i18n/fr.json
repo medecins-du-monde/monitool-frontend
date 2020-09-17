@@ -90,6 +90,10 @@
         }
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
+    "LogicalFrameworksPageDescription":{
+        "Line1":"Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l'avancement de chaque élément",
+        "Line2": "Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données"
+    },
     "Input": "Saisir",
     "Language": "Langue",
     "LastEntry": "Dernière saisie",

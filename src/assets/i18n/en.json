@@ -90,6 +90,10 @@
         }
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
+    "LogicalFrameworksPageDescription":{
+        "Line1":"A logical framework is a document that describe objectives, expected results, and actities to achieve them, as well as indicators to monitor the advancement of each of those elements",
+        "Line2": "All indicators have to be computable from the data described in data sources"
+    },
     "Input": "Input",
     "Language": "Language",
     "LastEntry": "Last entry",
