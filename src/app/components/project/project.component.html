@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-header class="project-header">
+    <mat-card-header class="card-header">
         <div mat-card-avatar class="project-country">
             <img [src]="project.countryImage">
         </div>
@@ -11,26 +11,26 @@
         </mat-chip-list>
     </mat-card-header>
     <mat-card-content>
-        <div class="project-info">
-            <div class="project-info-title">{{ 'Name' | translate }}</div>
-            <div class="project-info-value">{{project.name}}</div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Name' | translate }}</div>
+            <div class="card-info-value">{{project.name}}</div>
         </div>
-        <div class="project-info">
-            <div class="project-info-title">{{ 'Date' | translate }}</div>
-            <div class="project-info-value">{{project.start  | date: 'mediumDate'}} - {{project.end  | date: 'mediumDate'}}</div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Date' | translate }}</div>
+            <div class="card-info-value">{{project.start  | date: 'mediumDate'}} - {{project.end  | date: 'mediumDate'}}</div>
         </div>
-        <div class="project-info">
-            <div class="project-info-title">{{ 'Thematics' | translate }}</div>
-            <div class="project-info-value">
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Thematics' | translate }}</div>
+            <div class="card-info-value">
                 <div *ngFor="let theme of project.themes">{{theme}}</div>
             </div>
         </div>
-        <div class="project-info">
-            <div class="project-info-title">{{ 'LastEntry' | translate }}</div>
-            <div class="project-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : ( 'None' | translate )}}</div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
+            <div class="card-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : ( 'None' | translate )}}</div>
         </div>
     </mat-card-content>
-    <mat-card-actions align="end">
+    <mat-card-actions align="end"  class="mdm-button-group">
         <button mat-stroked-button [routerLink]="['/project', project._id]" class="mdm-button">{{ 'Open' | translate }}</button>
         <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
     </mat-card-actions>

@@ -39,7 +39,7 @@ export class ProjectComponent implements OnInit {
               },
               {
                 name: 'DataSources',
-                routerLink: `../${projectId}/structure/data-source`,
+                routerLink: `../${projectId}/structure/data-sources`,
                 icon: 'folder'
               },
               {
@@ -77,6 +77,11 @@ export class ProjectComponent implements OnInit {
                 name: 'Home',
                 routerLink: `../${projectId}/input/home`,
                 icon: 'home'
+              },
+              {
+                name: 'Calendar',
+                routerLink: `../${projectId}/input/calendar`,
+                icon: 'edit'
               }
             ]
           },

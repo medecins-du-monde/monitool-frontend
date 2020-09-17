@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
-import { SvgIconsModule } from '@ngneat/svg-icon';
-import icons from '../assets/svg/svg-icons';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -49,15 +47,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SvgIconsModule.forRoot({
-      sizes: {
-        xs: '10px',
-        sm: '12px',
-        md: '16px',
-        lg: '20px'
-      },
-      icons
-    }),
     NoopAnimationsModule,
     MatButtonToggleModule,
     MatSelectModule,

@@ -3,7 +3,7 @@
     <div class="actions" [formGroup]="filtersForm">
         <div class="actions-group">
             <div class="action">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
                     <mat-select formControlName="countries" multiple>
                         <mat-option #allSelected (click)="onToggleAllCountries()" value="0">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
@@ -28,14 +28,6 @@
                 </button>
             </div>
         </div>
-        <!-- <div>
-            <mat-form-field appearance="fill">
-                <mat-label>Thématiques ({{themes.length}})</mat-label>
-                <mat-select formControlName="themes" multiple>
-                    <mat-option *ngFor="let theme of themes" [value]="theme">{{theme}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card"

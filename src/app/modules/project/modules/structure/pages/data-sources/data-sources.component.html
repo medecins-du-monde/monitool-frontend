@@ -1,0 +1,12 @@
+<div class="info-section blue">
+    <p>The data sources are the different supports where the data needed for monitoring are available (tally sheets, medical records, excel files, ...).</p>
+    <p>In Monitool, all the data avaiable on the data sources does not need to be entered, but only what is relevat to the project's monitorings</p>
+    <p>To ease the data collection planning, data sources should correspond to real tools used on the field.</p>
+</div>
+
+<div class="mdm-section">
+    <div class="mdm-cards">
+        <app-data-source *ngFor="let datasource of datasources" class="mdm-card" [form]="datasource"></app-data-source>
+    </div>
+    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'Create a new data source' | translate }}</button>
+</div>
