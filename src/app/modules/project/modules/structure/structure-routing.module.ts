@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { BasicsComponent } from './pages/basics/basics.component';
 import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.component';
-import { DataSourceComponent } from './pages/data-source/data-source.component';
+import { DataSourcesComponent } from './pages/data-sources/data-sources.component';
 import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
 import { HistoryComponent } from './pages/history/history.component';
 import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
@@ -24,8 +24,8 @@ const routes: Routes = [
     component: CrossCuttingComponent
   },
   {
-    path: 'data-source',
-    component: DataSourceComponent
+    path: 'data-sources',
+    component: DataSourcesComponent
   },
   {
     path: 'extra-indicators',

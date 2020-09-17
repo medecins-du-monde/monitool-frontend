@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Form } from 'src/app/models/form';
 
 @Component({
   selector: 'app-data-source',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataSourceComponent implements OnInit {
 
+  @Input() form: Form;
+
+  periodicity: string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.periodicity = 'EveryMonth';
   }
 
 }

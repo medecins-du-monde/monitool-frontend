@@ -270,7 +270,10 @@ body {
     
         .card-info-title {
             flex: 1;
-            color: #909090;
+
+            &:not(b) {
+                color: #909090;
+            }
         }
         .card-info-value {
             flex: 1;

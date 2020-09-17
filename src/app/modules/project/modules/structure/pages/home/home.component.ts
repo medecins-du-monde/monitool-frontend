@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
           status: 0,
           buttonIcon2: 'clipboard',
           buttonText2: 'Cadres Logiques',
-          routerLink1: `../data-source`,
+          routerLink1: `../data-sources`,
           routerLink2: '../extra-indicators',
         },
         {
