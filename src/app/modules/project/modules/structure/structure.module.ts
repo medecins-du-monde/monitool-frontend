@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { StructureRoutingModule } from './structure-routing.module';
 import { BasicsComponent } from './pages/basics/basics.component';
 import { SitesComponent } from './pages/sites/sites.component';
-import { DataSourceComponent } from './pages/data-source/data-source.component';
+import { DataSourcesComponent } from './pages/data-sources/data-sources.component';
 import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
 import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.component';
 import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
@@ -26,13 +26,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { DataSourceModule } from './components/data-source/data-source.module';
+
 
 @NgModule({
   declarations: [
     HomeComponent,
     BasicsComponent,
     SitesComponent,
-    DataSourceComponent,
+    DataSourcesComponent,
     LogicalFrameComponent,
     CrossCuttingComponent,
     ExtraIndicatorsComponent,
@@ -58,6 +62,7 @@ import { MatChipsModule } from '@angular/material/chips';
     ProgressBarModule,
     UserModule,
     UserModalModule,
+    DataSourceModule,
     CrossCuttingIndicatorModule
   ],
   providers: [

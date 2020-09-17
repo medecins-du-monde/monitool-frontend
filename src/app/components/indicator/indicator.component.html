@@ -1,17 +1,17 @@
 <mat-card>
-    <mat-card-header class="indicator-header">
+    <mat-card-header class="card-header">
         <mat-card-title>{{indicator.name.fr}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <div *ngIf="indicator.themes.length > 1" class="indicator-info">
-            <div class="indicator-info-title">{{ 'Thematics' | translate }}</div>
-            <div class="indicator-info-value">
+        <div *ngIf="indicator.themes.length > 1" class="card-info">
+            <div class="card-info-title">{{ 'Thematics' | translate }}</div>
+            <div class="card-info-value">
                 <div *ngFor="let theme of themesNames">{{theme}}</div>
             </div>
         </div>
-        <div class="indicator-info">
-            <div class="indicator-info-title">{{ 'Description' | translate }}</div>
-            <div class="indicator-info-value">{{indicator.description ? indicator.description.fr : ('IndicatorMissingDescription' | translate )}}</div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Description' | translate }}</div>
+            <div class="card-info-value">{{indicator.description ? indicator.description.fr : ('IndicatorMissingDescription' | translate )}}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end">

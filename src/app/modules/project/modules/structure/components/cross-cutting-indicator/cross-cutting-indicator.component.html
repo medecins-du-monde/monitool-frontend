@@ -1,12 +1,18 @@
 <mat-card>
-    <mat-card-header class="indicator-header">{{ indicator.name.fr }}</mat-card-header>
+    <mat-card-header class="card-header">{{ indicator.name.fr }}</mat-card-header>
     <mat-card-content>
-        <div class="indicator-info">
-            <div class="indicator-info-title">{{ 'Description' | translate }}</div>
-            <div class="indicator-info-value">{{ indicator.description.fr }}</div>
-            <div class="indicator-info-value"><b>{{ 'Baseline' | translate }}: </b>?</div>
-            <div class="indicator-info-value"><b>{{ 'Target' | translate }}: </b>?</div>
-            <div class="indicator-info-value"><b>{{ 'Computation' | translate }}: </b>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Description' | translate }}</div>
+            <div class="card-info-value">{{ indicator.description.fr }}</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>?</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Target' | translate }}: </b>?</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
                 <span *ngIf="computation; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
                 <ng-template #elseBlock><span class="computation invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>
             </div>
