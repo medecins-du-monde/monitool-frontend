@@ -1,1 +1,21 @@
-<p>extra-indicators works!</p>
+<div class="info-section blue">
+    <p>Extra indicators are indicators that are not in any logical framework.</p>
+    <p>Those allow to monitor specific elements of the project (medical data, logistics, ...)</p>
+</div>
+
+<!-- <div *ngIf="indicators.length !== 0; else elseBlock" > -->
+<div>
+    <div class="mdm-section">
+        <div class="mdm-cards">
+            <app-cross-cutting-indicator *ngFor="let indicator of indicators" class="mdm-card" [indicator]="indicator" [computation]="false"></app-cross-cutting-indicator>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <p>No extra indicator has been created yet. Click on "Add indicator" to create one!</p>
+</ng-template>
+
+<div class="mdm-section">
+    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+</div>
