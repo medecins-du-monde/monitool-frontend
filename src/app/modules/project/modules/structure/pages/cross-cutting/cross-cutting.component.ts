@@ -7,7 +7,7 @@ import { IndicatorsGroup } from 'src/app/models/indicators-group';
   styleUrls: ['./cross-cutting.component.scss']
 })
 export class CrossCuttingComponent implements OnInit {
-  // data mocked just  test purposes
+  // data mocked just for test purposes
   indicators: IndicatorsGroup[] = [
     { // IndicatorGroup
       thematic: { // multilingual

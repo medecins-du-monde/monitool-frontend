@@ -29,6 +29,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { DataSourceModule } from './components/data-source/data-source.module';
+import { ExtraIndicatorModule } from './components/extra-indicator/extra-indicator.module';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { DataSourceModule } from './components/data-source/data-source.module';
     UserModule,
     UserModalModule,
     DataSourceModule,
-    CrossCuttingIndicatorModule
+    CrossCuttingIndicatorModule,
+    ExtraIndicatorModule
   ],
   providers: [
     MatDatepickerModule,

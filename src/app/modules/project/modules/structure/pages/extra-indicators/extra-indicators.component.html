@@ -1,1 +1,20 @@
-<p>extra-indicators works!</p>
+<div class="info-section blue">
+    <p>{{ "ExtraIndicatorsInfo.0" | translate }}</p>
+    <p>{{ "ExtraIndicatorsInfo.1" | translate }}</p>
+</div>
+
+<div *ngIf="indicators.length !== 0; else elseBlock" >
+    <div class="mdm-section">
+        <div class="mdm-cards">
+            <app-extra-indicator *ngFor="let indicator of indicators" class="mdm-card" [indicator]="indicator" [computation]="false"></app-extra-indicator>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <p>{{ 'NoExtraIndicator' | translate }} </p>
+</ng-template>
+
+<div class="mdm-section">
+    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+</div>

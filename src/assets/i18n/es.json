@@ -1,6 +1,7 @@
 {
     "AccountMDM": "Cuenta MDM",
     "AccountPartner": "Cuenta socio",
+    "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "Admin": "Administrador",
     "AllCountries": "Todos los países",
@@ -36,6 +37,10 @@
     "es": "Español",
     "EveryMonth": "Cada mes",
     "ExtraIndicators": "Indicadores adicionales",
+    "ExtraIndicatorsInfo": [
+        "Los indicadores adicionales son indicadores que no estan en ningún marco lógico.",
+        "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
+    ],
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
     "fr": "Francés",
@@ -113,6 +118,7 @@
     "Missing": "Por hacer",
     "MyAccount": "Mi cuenta",
     "Name": "Nombre",
+    "NoExtraIndicator": "Ningún indicador adicional ha sido creado. ¡Haga click en \"Añadir un indicador\" para agregar uno!",
     "None": "Ninguna",
     "Ongoing": "En curso",
     "OngoingPlural": "En curso",
