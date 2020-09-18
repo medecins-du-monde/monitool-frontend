@@ -6,7 +6,7 @@
 <div *ngIf="indicators.length !== 0; else elseBlock" >
     <div class="mdm-section">
         <div class="mdm-cards">
-            <app-cross-cutting-indicator *ngFor="let indicator of indicators" class="mdm-card" [indicator]="indicator" [computation]="false"></app-cross-cutting-indicator>
+            <app-extra-indicator *ngFor="let indicator of indicators" class="mdm-card" [indicator]="indicator" [computation]="false"></app-extra-indicator>
         </div>
     </div>
 </div>
