@@ -37,6 +37,10 @@
     "es": "Espagnol",
     "EveryMonth": "Tous les mois",
     "ExtraIndicators": "Indicateurs annexés",
+    "ExtraIndicatorsInfo": [
+        "Les indicateurs annexés sont des indicateurs complémentaires qui ne figurent dans aucun cadre logique.",
+        "Ils permettent de suivre des éléments spécifiques du projet (données médicales, logistiques, ...)"
+    ],
     "Finished": "Terminé",
     "FinishedPlural": "Terminés",
     "fr": "Français",
@@ -114,6 +118,7 @@
     "Missing": "Manquant",
     "MyAccount": "Mon compte",
     "Name": "Nom",
+    "NoExtraIndicator": "Aucune indicateur annexé n'a été créé. Cliquez sur \"Ajouter un indicateur\" pour en créer un!",
     "None": "Aucune",
     "Ongoing": "En cours",
     "OngoingPlural": "En cours",

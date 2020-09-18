@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Indicator } from 'src/app/models/indicator';
 
 @Component({
   selector: 'app-extra-indicators',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExtraIndicatorsComponent implements OnInit {
 
-  indicators = [ // Indicator
+  indicators: Indicator[] = [ // Indicator
     {
       name: {
         en: 'Training volume',

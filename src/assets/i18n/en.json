@@ -37,6 +37,10 @@
     "es": "Spanish",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
+    "ExtraIndicatorsInfo": [
+        "Extra indicators are indicators that are not in any logical framework.",
+        "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
+    ],
     "Finished": "Finished",
     "FinishedPlural": "Finished",
     "fr": "French",
@@ -114,6 +118,7 @@
     "Missing": "Missing",
     "MyAccount": "My account",
     "Name": "Name",
+    "NoExtraIndicator": "No extra indicator has been created yet. Click on \"Add indicator\" to create one!",
     "None": "None",
     "Ongoing": "Ongoing",
     "OngoingPlural": "Ongoing",
