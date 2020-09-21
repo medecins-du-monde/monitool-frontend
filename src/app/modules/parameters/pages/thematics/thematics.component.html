@@ -5,7 +5,7 @@
 <div class="mdm-cards">
     <app-theme *ngFor="let theme of themes" [theme]="theme" (delete)="onDelete($event)" class="mdm-card"></app-theme>
 </div>
-<button mat-stroked-button  class="mdm-button">
+<button mat-stroked-button (click)="openDialog()" class="mdm-button">
     <mat-icon>add</mat-icon>
     {{ 'CreateNewThematic' | translate }}
 </button>

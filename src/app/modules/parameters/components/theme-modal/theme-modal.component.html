@@ -1,0 +1,10 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{ 'ThematicEdition' | translate }}</h2>
+<mat-dialog-content [formGroup]="themeForm" class="mdm-dialog">
+    <div class="info-section blue">
+        <p>Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.</p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'SaveThematic' | translate }}</button>
+</mat-dialog-actions>

@@ -15,6 +15,8 @@ import { IndicatorModule } from './components/indicator/indicator.module';
 import { ThemeModule } from './components/theme/theme.module';
 import { UserModule } from './components/user/user.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ThemeModalModule } from './components/theme-modal/theme-modal.module';
 
 @NgModule({
   declarations: [
@@ -32,10 +34,12 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSidenavModule,
     MatGridListModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     IndicatorModule,
     ThemeModule,
-    UserModule
+    UserModule,
+    ThemeModalModule
   ]
 })
 export class ParametersModule { }
