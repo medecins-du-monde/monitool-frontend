@@ -27,6 +27,15 @@ export class ApiService {
     return this.http.post(url, body, options).toPromise();
   }
 
+  delete(path: string, options?: any): Promise<ArrayBuffer> {
+    const url = this.getRequestUrl(path);
+    const headers = this.getHeaders();
+    if (headers) {
+      options ? options.headers = headers : options = headers;
+    }
+    return this.http.delete(url, options).toPromise();
+  }
+
   put(path: string, body?: any, options?: any): Promise<ArrayBuffer> {
     const url = this.getRequestUrl(path);
     const headers = this.getHeaders();

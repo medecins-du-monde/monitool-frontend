@@ -3,7 +3,7 @@
     <p>Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal.</p>
 </div>
 <div class="mdm-cards">
-    <app-theme *ngFor="let theme of themes" [theme]="theme" class="mdm-card"></app-theme>
+    <app-theme *ngFor="let theme of themes" [theme]="theme" (delete)="onDelete($event)" class="mdm-card"></app-theme>
 </div>
 <button mat-stroked-button  class="mdm-button">
     <mat-icon>add</mat-icon>

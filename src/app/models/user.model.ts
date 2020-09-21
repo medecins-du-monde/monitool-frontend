@@ -15,4 +15,8 @@ export class User implements Deserializable {
         Object.assign(this, input);
         return this;
     }
+
+    serialize() {
+        return null;
+    }
 }

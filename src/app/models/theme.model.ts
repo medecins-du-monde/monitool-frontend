@@ -9,13 +9,23 @@ export class Theme implements Deserializable {
     shortName: MultiLanguage;
 
     constructor(input?: any) {
-        this.id = `theme:${(input && input._id) ? input._id : uuid()}`;
+        this.deserialize(input);
     }
 
-    deserialize(input: any): this {
+    deserialize(input?: any): this {
         Object.assign(this, input);
-        this.name = new MultiLanguage().deserialize(input.name);
-        this.shortName = new MultiLanguage().deserialize(input.shortName);
+        this.id = (input && input._id) ? input._id : `theme:${uuid()}`;
+        this.name = ( input && input.name ) ? new MultiLanguage(input.name) : new MultiLanguage();
+        this.shortName = ( input && input.shortName ) ? new MultiLanguage(input.shortName) : new MultiLanguage();
         return this;
+    }
+
+    serialize() {
+        return {
+            _id: this.id,
+            type: this.type,
+            name: this.name,
+            shortName: this.shortName
+        };
     }
 }

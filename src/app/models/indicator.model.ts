@@ -11,12 +11,16 @@ export class Indicator implements Deserializable {
 
     constructor(input?: any) {
         this.id = `indicator:${(input && input._id) ? input._id : uuid()}`;
+        this.name = ( input && input.name ) ? new MultiLanguage().deserialize(input.name) : new MultiLanguage();
+        this.description = ( input && input.description ) ? new MultiLanguage().deserialize(input.description) : new MultiLanguage();
     }
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.name = new MultiLanguage().deserialize(input.name);
-        this.description = new MultiLanguage().deserialize(input.description);
         return this;
+    }
+
+    serialize() {
+        return null;
     }
 }

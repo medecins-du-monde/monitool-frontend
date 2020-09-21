@@ -26,4 +26,8 @@ export class Project implements Deserializable {
         Object.assign(this, input);
         return this;
     }
+
+    serialize() {
+        return null;
+    }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Theme } from 'src/app/models/theme';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Theme } from 'src/app/models/theme.model';
 
 @Component({
   selector: 'app-theme',
@@ -7,10 +7,16 @@ import { Theme } from 'src/app/models/theme';
   styleUrls: ['./theme.component.scss']
 })
 export class ThemeComponent implements OnInit {
+
   @Input() theme: Theme;
+
+  @Output() delete = new EventEmitter();
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  onDelete(): void {
+    this.delete.emit(this.theme.id);
+  }
 }

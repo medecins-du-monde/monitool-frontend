@@ -10,8 +10,8 @@ export class ThemeService {
   constructor(private apiService: ApiService) { }
 
   public async list() {
-    const response = await this.apiService.get('/resources/theme');
-    // return response.map(x => new Theme().deserialize(x));
+    const response: any = await this.apiService.get('/resources/theme');
+    return response.map(x => new Theme(x));
   }
 
   public async get(id: string) {
@@ -19,10 +19,10 @@ export class ThemeService {
   }
 
   public async save(theme: Theme) {
-    const response = await this.apiService.put(`/resources/theme/${theme.id}`, theme);
+    const response = await this.apiService.put(`/resources/theme/${theme.id}`, theme.serialize());
   }
 
   public async delete(id: string) {
-    const response = await this.apiService.post(`/resources/theme/${id}`);
+    const response = await this.apiService.delete(`/resources/theme/${id}`);
   }
 }
