@@ -32,14 +32,18 @@ export class ThematicsComponent implements OnInit {
     this.themeService.delete(id).then(() => this.getThemes());
   }
 
+  onEdit(theme: Theme) {
+    console.log(theme);
+    this.themeService.save(theme).then(() => this.getThemes());
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(ThemeModalComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      const theme = new Theme();
-      theme.name = new MultiLanguage({ en: 'test', es: 'test', fr: 'test' });
-      theme.shortName = new MultiLanguage({ en: 'TE', es: 'TE', fr: 'TE' });
-      this.themeService.save(theme);
+      if (res && res.data) {
+        this.themeService.save(res.data).then(() => this.getThemes());
+      }
     });
   }
 }

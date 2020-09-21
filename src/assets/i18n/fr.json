@@ -1,6 +1,7 @@
 {
     "AccountMDM": "Compte MDM",
     "AccountPartner": "Compte Partenaire",
+    "Acronym": "Sigle",
     "AddIndicator": "Ajouter un indicateur",
     "AddNewUser": "Ajouter un utilisateur",
     "Admin": "Administrateur",
@@ -132,6 +133,7 @@
     "ResetChanges": "Annuler les modifications",
     "RevertToVersion": "Revenir à ce point",
     "Role": "Role",
+    "SaveThematic": "Sauvegarder la thématique",
     "Search": "Chercher",
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
@@ -157,6 +159,7 @@
         }
     },
     "Type": "Type",
+    "ThematicEdition": "Édition thématique",
     "Thematics": "Thématiques",
     "UpdateUser": "Mettre à jour l'utilisateur",
     "User": "Utilisateur",

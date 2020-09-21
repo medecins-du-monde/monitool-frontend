@@ -14,6 +14,8 @@ export class ThemeComponent implements OnInit {
 
   @Output() delete = new EventEmitter();
 
+  @Output() edit = new EventEmitter();
+
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {}
@@ -23,10 +25,12 @@ export class ThemeComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(ThemeModalComponent);
+    const dialogRef = this.dialog.open(ThemeModalComponent, { data: this.theme });
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log('dialog closed.');
+      if (res && res.data) {
+        this.edit.emit(res.data);
+      }
     });
   }
 }

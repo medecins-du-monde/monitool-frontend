@@ -1,6 +1,7 @@
 {
     "AccountMDM": "Cuenta MDM",
     "AccountPartner": "Cuenta socio",
+    "Acronym": "Sigla",
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "Admin": "Administrador",
@@ -132,6 +133,7 @@
     "ResetChanges": "Cancelar los cambios",
     "RevertToVersion": "Volver a este punto",
     "Role": "Tipo",
+    "SaveThematic": "Guardar la temática",
     "Search": "Buscar",
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
@@ -157,6 +159,7 @@
         }
     },
     "Type": "Tipo",
+    "ThematicEdition": "Editar temática",
     "Thematics": "Temáticas",
     "UpdateUser": "Actualizar el usario",
     "User": "Usario",

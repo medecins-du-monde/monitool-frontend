@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [ThemeModalComponent],
@@ -17,8 +19,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    MatTableModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [ThemeModalComponent]
 })

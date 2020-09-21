@@ -1,6 +1,7 @@
 {
     "AccountMDM": "MDM account",
     "AccountPartner": "Partner account",
+    "Acronym": "Acronym",
     "AddIndicator": "Add indicator",
     "AddNewUser": "Add new user",
     "Admin": "Administrator",
@@ -132,6 +133,7 @@
     "ResetChanges": "Reset changes",
     "RevertToVersion": "Revert to this version",
     "Role": "Role",
+    "SaveThematic": "Save the thematic",
     "Search": "Search",
     "SeeReport": "See report",
     "SeeOlderDates": "See older dates",
@@ -157,6 +159,7 @@
         }
     },
     "Type": "Type",
+    "ThematicEdition": "Thematic edition",
     "Thematics": "Thematics",
     "UpdateUser": "Update the user",
     "User": "User",
