@@ -10,7 +10,8 @@ export class IndicatorService {
   constructor(private apiService: ApiService) { }
 
   public async list() {
-    const response = await this.apiService.get('/resources/indicator');
+    const response: any = await this.apiService.get('/resources/indicator');
+    return response.map(x => new Indicator(x));
   }
 
   public async get(id: string) {
@@ -18,7 +19,7 @@ export class IndicatorService {
   }
 
   public async save(indicator: Indicator) {
-    const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator);
+    const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
 
   public async delete(id: string) {

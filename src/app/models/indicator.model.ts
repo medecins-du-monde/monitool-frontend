@@ -10,17 +10,24 @@ export class Indicator implements Deserializable {
     themes: any[];
 
     constructor(input?: any) {
-        this.id = `indicator:${(input && input._id) ? input._id : uuid()}`;
-        this.name = ( input && input.name ) ? new MultiLanguage().deserialize(input.name) : new MultiLanguage();
-        this.description = ( input && input.description ) ? new MultiLanguage().deserialize(input.description) : new MultiLanguage();
+        this.deserialize(input);
     }
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.id = (input && input._id) ? input._id : `indicator:${uuid()}`;
+        this.name = ( input && input.name ) ? new MultiLanguage().deserialize(input.name) : new MultiLanguage();
+        this.description = ( input && input.description ) ? new MultiLanguage().deserialize(input.description) : new MultiLanguage();
         return this;
     }
 
     serialize() {
-        return null;
+        return {
+            _id: this.id,
+            type: this.type,
+            name: this.name,
+            description: this.description,
+            themes: []
+        };
     }
 }
