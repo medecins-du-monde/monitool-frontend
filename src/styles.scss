@@ -491,6 +491,10 @@ body {
     flex-direction: column;
     width: 900px;
 
+    .mdm-table {
+        margin-bottom: 24px;
+    }
+
     @media screen and (max-width: $breakpoint-md) {
         width: 600px;
     }

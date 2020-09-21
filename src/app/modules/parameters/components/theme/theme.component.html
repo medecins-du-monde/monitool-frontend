@@ -1,11 +1,11 @@
 <mat-card>
     <mat-card-header class="card-header">
-        <mat-card-title>{{theme.shortName.fr}}</mat-card-title>
+        <mat-card-title>{{ theme.shortName[currentLang] }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Name' | translate }}</div>
-            <div class="card-info-value">{{theme.name.fr}}</div>
+            <div class="card-info-value">{{ theme.name[currentLang] }}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
