@@ -4,7 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { AuthGuardService as AuthGuard } from './guards/auth-guard.service';
 
 
 const routes: Routes = [{

@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -23,7 +21,7 @@ export class AuthService {
     return response;
   }
 
-  public validate(email, password) {
-    return this.http.post(`${environment.API_URL}/authentication/login-training/`, {username : email, password}, {responseType: 'text'});
+  public validate(email: string, password: string): Promise<ArrayBuffer> {
+    return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
   }
 }
