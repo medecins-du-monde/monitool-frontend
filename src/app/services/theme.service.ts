@@ -15,14 +15,14 @@ export class ThemeService {
   }
 
   public async get(id: string) {
-    const response = await this.apiService.get(`/resource/theme/${id}`);
+    const response = await this.apiService.get(`/resources/theme/${id}`);
   }
 
   public async save(theme: Theme) {
-    const response = await this.apiService.put(`/resource/theme/${theme.id}`, theme);
+    const response = await this.apiService.put(`/resources/theme/${theme.id}`, theme);
   }
 
   public async delete(id: string) {
-    const response = await this.apiService.post(`/resource/theme/${id}`);
+    const response = await this.apiService.post(`/resources/theme/${id}`);
   }
 }
