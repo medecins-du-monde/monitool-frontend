@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Project } from 'src/app/models/project';
 import { projectsList } from 'src/app/constants/projects';
 import { MatOption } from '@angular/material/core';
+import { ThemeService } from 'src/app/services/theme.service';
+import { Theme } from 'src/app/models/theme.model';
 
 @Component({
   selector: 'app-projects',
@@ -33,8 +35,7 @@ export class ProjectsComponent implements OnInit {
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.filtersForm = this.fb.group({

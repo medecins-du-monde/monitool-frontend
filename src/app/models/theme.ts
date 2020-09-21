@@ -1,6 +1,6 @@
 import { MultiLanguages } from './multiLanguages';
 
-export interface Theme {
+export class Theme {
     _id: string;
     _rev: string;
     name: MultiLanguages;
