@@ -6,9 +6,10 @@
         liste.</p>
 </div>
 <div class="mdm-cards">
-    <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator" class="mdm-card"></app-indicator>
+    <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator" (delete)="onDelete($event)"
+        (edit)="onEdit($event)" class="mdm-card"></app-indicator>
 </div>
-<button mat-stroked-button  class="mdm-button">
+<button mat-stroked-button (click)="openDialog()" class="mdm-button">
     <mat-icon>add</mat-icon>
     {{ 'CreateNewIndicator' | translate }}
 </button>

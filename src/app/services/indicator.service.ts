@@ -23,6 +23,6 @@ export class IndicatorService {
   }
 
   public async delete(id: string) {
-    const response = await this.apiService.post(`/resources/theme/${id}`);
+    const response = await this.apiService.post(`/resources/indicator/${id}`);
   }
 }

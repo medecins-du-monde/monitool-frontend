@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { themes } from 'src/app/constants/themes';
 import { Indicator } from 'src/app/models/indicator.model';
+import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 
 @Component({
   selector: 'app-indicator',
@@ -13,7 +14,15 @@ export class IndicatorComponent implements OnInit {
 
   @Input() indicator: Indicator;
 
+  @Output() delete = new EventEmitter();
+
+  @Output() edit = new EventEmitter();
+
   themesNames: string[] = [];
+
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   constructor(
     private dialog: MatDialog,
@@ -21,5 +30,19 @@ export class IndicatorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {}
+
+  onDelete(): void {
+    this.delete.emit(this.indicator.id);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: this.indicator });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.data) {
+        this.edit.emit(res.data);
+      }
+    });
+  }
 
 }
