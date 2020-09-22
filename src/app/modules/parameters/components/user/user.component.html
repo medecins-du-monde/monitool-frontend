@@ -17,6 +17,6 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="end">
-        <button mat-stroked-button  class="mdm-button">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button (click)="openDialog()" class="mdm-button">{{ 'Edit' | translate }}</button>
     </mat-card-actions>
 </mat-card>

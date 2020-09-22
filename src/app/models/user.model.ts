@@ -12,7 +12,11 @@ export class User implements Deserializable {
     }
 
     get roleDisplay() {
-        return this.role === 'admin' ? 'Admin' : 'Common';
+        return this.role.charAt(0).toUpperCase() + this.role.slice(1) + 'Role';
+    }
+
+    get email() {
+        return `${this.login}@medecinsdumonde.net`;
     }
 
     constructor(input?: any) {

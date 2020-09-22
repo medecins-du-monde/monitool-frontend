@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { themes } from 'src/app/constants/themes';
 import { Indicator } from 'src/app/models/indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 

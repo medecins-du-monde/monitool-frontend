@@ -13,8 +13,7 @@ export class UsersComponent implements OnInit {
   users: User[];
 
   constructor(
-    private userService: UserService,
-    private dialog: MatDialog
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -25,5 +24,9 @@ export class UsersComponent implements OnInit {
     this.userService.list().then((res: User[]) => {
       this.users = res;
     });
+  }
+
+  onEdit(user: User) {
+    this.userService.save(user).then(() => this.getUsers());
   }
 }
