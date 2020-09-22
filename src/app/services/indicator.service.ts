@@ -20,7 +20,7 @@ export class IndicatorService {
     const mocked = Indicators;
     return mocked.map(x => {
       const indicator = new Indicator(x);
-      indicator.themes = themes.filter(t => t.id in x.themes);
+      indicator.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       return indicator;
     });
   }

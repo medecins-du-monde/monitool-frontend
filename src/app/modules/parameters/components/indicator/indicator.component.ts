@@ -17,8 +17,6 @@ export class IndicatorComponent implements OnInit {
 
   @Output() edit = new EventEmitter();
 
-  themesNames: string[] = [];
-
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
