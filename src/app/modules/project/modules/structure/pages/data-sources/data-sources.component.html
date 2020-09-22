@@ -6,7 +6,7 @@
 
 <div class="mdm-section">
     <div class="mdm-cards">
-        <app-data-source *ngFor="let datasource of datasources" class="mdm-card" [form]="datasource"></app-data-source>
+        <app-data-source *ngFor="let form of forms" class="mdm-card" [form]="form"></app-data-source>
     </div>
     <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}</button>
 </div>

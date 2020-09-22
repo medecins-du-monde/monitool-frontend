@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Form } from 'src/app/models/form';
+import { Form } from 'src/app/models/form.model';
 
 @Component({
   selector: 'app-data-source',

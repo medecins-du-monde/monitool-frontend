@@ -1,6 +1,7 @@
 import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { Theme } from './theme.model';
+import { Form } from './form.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -17,7 +18,7 @@ export class Project implements Deserializable {
     logicalFrames: any[];
     entities: any[];
     groups: any[];
-    forms: any[];
+    forms: Form[];
     users: any[];
     visibility: string;
 
@@ -64,6 +65,7 @@ export class Project implements Deserializable {
         this.entities = [];
         this.logicalFrames = [];
         this.extraIndicators = [];
+        this.forms = ( input && input.forms ) ? input.forms.map(x => new Form(x)) : [];
         return this;
     }
 

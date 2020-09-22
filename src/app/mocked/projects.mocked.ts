@@ -9,7 +9,18 @@ export const Projects: any[] = [
         themes: ['theme:99b31a68-9cd8-4b63-bc0a-088f43c1d037'],
         users: [{type: 'internal', id: 'user:training', role: 'owner'}],
         visibility: 'public',
-        _id: 'project:012ad563-e830-411e-98fe-ccd6527593f4'
+        _id: 'project:012ad563-e830-411e-98fe-ccd6527593f4',
+        forms: [
+            {
+                elements: [],
+                end: null,
+                entities: [],
+                id: '1530c174-475b-466e-9428-af89571587bc',
+                name: 'Rapport Référencement',
+                periodicity: 'month',
+                start: null
+            }
+        ]
     },
     {
         active: true,
