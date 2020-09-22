@@ -3,11 +3,18 @@ import { ApiService } from './api.service';
 import { Project } from '../models/project.model';
 import { ThemeService } from './theme.service';
 import { Projects } from '../mocked/projects.mocked';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
+
+  project: BehaviorSubject<Project> = new BehaviorSubject(null);
+
+  get openedProject(): Observable<Project> {
+    return this.project.asObservable();
+  }
 
   constructor(
     private apiService: ApiService,
@@ -26,7 +33,12 @@ export class ProjectService {
   }
 
   public async get(id: string) {
-    const response = await this.apiService.get(`/resources/project/${id}`);
+    const themes = await this.themeService.list();
+    // const response = await this.apiService.get(`/resources/project/${id}`);
+    const mocked = Projects[0];
+    const project = new Project(mocked);
+    project.themes = themes.filter(t => mocked.themes.indexOf(t.id) >= 0);
+    return project;
   }
 
   public async save(project: Project) {

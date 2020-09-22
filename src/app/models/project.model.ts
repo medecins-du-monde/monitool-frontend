@@ -28,6 +28,22 @@ export class Project implements Deserializable {
         return 'Deleted';
     }
 
+    get percentages() {
+        return {
+            basics: ( this.name && this.country && this.themes.length > 0 ) ? 100 : 0,
+            sites: ( this.entities.length > 0 ) ? 100 : 0,
+            logicalFrames: ( this.logicalFrames.length > 0 ) ? 100 : 0,
+            logicalFramesOther: ( this.logicalFrames.length > 1 ) ? 100 : 0,
+            extraIndicators: ( this.extraIndicators.length > 0 ) ? 100 : 0,
+            logicalFramesUpdate: 0,
+            crossCuttingUpdate: 0,
+            extraIndicatorsUpdate: 0
+            // lfIndicatorsDone: lfIndicators.filter(i => !!i.computation).length / lfIndicators.length,
+            // ccIndicatorsDone: ccIndicators.filter(i => !!this.project.crossCutting[i._id]).length / ccIndicators.length,
+            // extraIndicatorsDone: this.project.extraIndicators.filter(i => !!i.computation).length / this.project.extraIndicators.length
+        };
+    }
+
     get countryImage() {
         if ( this.country === 'Burkina Faso' ) {
             return 'assets/images/burkina-flag.png';
@@ -45,6 +61,9 @@ export class Project implements Deserializable {
         this.id = `project:${(input && input._id) ? input._id : uuid()}`;
         this.start = input ? new Date(input.start) : new Date();
         this.end = input ? new Date(input.end) : new Date();
+        this.entities = [];
+        this.logicalFrames = [];
+        this.extraIndicators = [];
         return this;
     }
 

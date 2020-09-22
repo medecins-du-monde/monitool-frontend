@@ -25,7 +25,7 @@ export const Projects: any[] = [
     },
     {
         active: true,
-        country: 'Myanmar',
+        country: 'Burkina Faso',
         end: '2017-12-31',
         inputDate: null,
         name: 'Harm Reduction',
@@ -37,7 +37,7 @@ export const Projects: any[] = [
     },
     {
         active: true,
-        country: 'GEORGIA',
+        country: 'Burkina Faso',
         end: '2019-12-31',
         inputDate: null,
         name: 'HR-based and peer-supported HCV program for PWIDs',

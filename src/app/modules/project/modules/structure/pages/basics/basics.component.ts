@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { themes } from 'src/app/constants/themes';
+import { TranslateService } from '@ngx-translate/core';
+import { Project } from 'src/app/models/project.model';
+import { Theme } from 'src/app/models/theme.model';
+import { ProjectService } from 'src/app/services/project.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-basics',
@@ -11,26 +15,37 @@ export class BasicsComponent implements OnInit {
 
   basicsForm: FormGroup;
 
-  thematics: string[] = [];
+  themes: Theme[] = [];
 
-  constructor(private fb: FormBuilder) { }
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private projectService: ProjectService,
+    private themeService: ThemeService,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
-    this.basicsForm = this.fb.group({
-      country: ['', Validators.required],
-      name: ['', Validators.required],
-      thematics: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      private: [false, Validators.required]
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.basicsForm = this.fb.group({
+        country: [project.country, Validators.required],
+        name: [project.name, Validators.required],
+        themes: [project.themes, Validators.required],
+        start: [project.start, Validators.required],
+        end: [project.end, Validators.required],
+        visibility: [project.visibility, Validators.required]
+      });
     });
-    themes.forEach(theme => {
-      this.thematics.push(theme.shortName.fr + ': ' + theme.name.fr);
+    this.themeService.list().then((res: Theme[]) => {
+      this.themes = res;
     });
   }
 
-  onThematicRemoved(thematic: string) {
-    const thematics = this.basicsForm.controls.thematics.value;
-    this.basicsForm.controls.thematics.setValue(thematics.filter(t => t !== thematic));
+  onThemeRemoved(theme: Theme) {
+    const themes = this.basicsForm.controls.themes.value;
+    this.basicsForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
   }
 }
