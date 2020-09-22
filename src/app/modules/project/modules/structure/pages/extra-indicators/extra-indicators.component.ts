@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ExtraIndicator } from 'src/app/models/extra-indicator.model';
-import { Indicator } from 'src/app/models/indicator';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
