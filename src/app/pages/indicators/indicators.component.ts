@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/indicator.model';
-import { Project } from 'src/app/models/project.model';
 import { Theme } from 'src/app/models/theme.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 

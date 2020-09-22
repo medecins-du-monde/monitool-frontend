@@ -36,7 +36,8 @@ export const Projects: any[] = [
                 display: 'test 2',
                 target: null
             }
-        ]
+        ],
+        crossCutting: {}
     },
     {
         active: true,

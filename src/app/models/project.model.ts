@@ -14,7 +14,7 @@ export class Project implements Deserializable {
     inputDate: Date;
     country: string;
     themes: Theme[];
-    crossCutting: any[];
+    crossCutting: any;
     extraIndicators: ExtraIndicator[];
     logicalFrames: any[];
     entities: any[];
@@ -67,6 +67,21 @@ export class Project implements Deserializable {
         this.logicalFrames = [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ExtraIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => new Form(x)) : [];
+        this.crossCutting = {};
+        this.crossCutting['indicator:fe1635fc-b381-4cfe-9353-177fce63cd50'] = {
+            baseline: 12,
+            colorize: true,
+            computation: {formula: '12', parameters: {}},
+            display: 'test',
+            target: 100
+        };
+        this.crossCutting['indicator:09a7d8cd-441d-478a-b750-19fd8bd5faef'] = {
+            baseline: null,
+            colorize: true,
+            computation: null,
+            display: 'test 2',
+            target: null
+        };
         return this;
     }
 

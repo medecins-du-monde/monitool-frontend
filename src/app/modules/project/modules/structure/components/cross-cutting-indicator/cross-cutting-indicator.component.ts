@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Indicator } from 'src/app/models/indicator';
+import { TranslateService } from '@ngx-translate/core';
+import { Indicator } from 'src/app/models/indicator.model';
 
 @Component({
   selector: 'app-cross-cutting-indicator',
@@ -8,10 +9,15 @@ import { Indicator } from 'src/app/models/indicator';
 })
 export class CrossCuttingIndicatorComponent implements OnInit {
 
-  @Input() computation = false;
+  @Input() crossCutting: any;
+
   @Input() indicator: Indicator;
 
-  constructor() { }
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
   }

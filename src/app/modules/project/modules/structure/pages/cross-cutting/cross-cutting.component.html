@@ -3,9 +3,15 @@
     <p>{{ "CrossCuttingInfo.1" | translate }}</p>
 </div>
 
-<div class="mdm-section" *ngFor="let group of indicators">
-    <div class="mdm-title">{{ group.thematic.fr }}</div>
+<div *ngFor="let group of groups" class="mdm-section">
+    <div class="mdm-title">{{group.theme.name[currentLang]}}</div>
     <div class="mdm-cards">
-        <app-cross-cutting-indicator *ngFor="let indicator of group.indicators" class="mdm-card" [indicator]="indicator" [computation]="true"></app-cross-cutting-indicator>
+        <app-cross-cutting-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator" [crossCutting]="crossCutting[indicator.id]" class="mdm-card"></app-cross-cutting-indicator>
+    </div>
+</div>
+<div class="mdm-section">
+    <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
+    <div class="mdm-cards">
+        <app-cross-cutting-indicator *ngFor="let indicator of multiThemesIndicators" [indicator]="indicator" [crossCutting]="crossCutting[indicator.id]" class="mdm-card"></app-cross-cutting-indicator>
     </div>
 </div>
