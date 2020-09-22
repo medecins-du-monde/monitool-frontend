@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Project } from 'src/app/models/project';
-import { projectsList } from 'src/app/constants/projects';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-projects',
@@ -13,7 +13,6 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectsComponent implements OnInit {
 
   countries = ['Burkina Faso', 'Italie', 'Inde'];
-  themes = ['Theme 1', 'Theme 2'];
   statuses = [
     {
       text: 'OngoingPlural',
@@ -31,22 +30,32 @@ export class ProjectsComponent implements OnInit {
 
   filtersForm: FormGroup;
   projects: Project[];
+  allProjects: Project[];
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
-  constructor(private fb: FormBuilder, private projectService: ProjectService) {}
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(
+    private fb: FormBuilder,
+    private projectService: ProjectService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
-    this.projectService.list();
     this.filtersForm = this.fb.group({
       search: '',
       countries: [this.countries.concat(['0'])],
       themes: [[]],
       statuses: [['Ongoing']]
     });
-    this.projects = this.filterByStatuses(projectsList);
+    this.projectService.list().then(res => {
+      this.allProjects = res;
+      this.projects = this.filterByStatuses(this.allProjects);
+    });
     this.filtersForm.valueChanges.subscribe(() => {
-      console.log('filter');
       this.onFilterChange();
     });
   }
@@ -75,7 +84,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   onFilterChange(): void {
-    let filteredProjects = this.filterByText(projectsList);
+    let filteredProjects = this.filterByText(this.allProjects);
     filteredProjects = this.filterByCountries(filteredProjects);
     filteredProjects = this.filterByStatuses(filteredProjects);
     this.projects = filteredProjects;
@@ -86,7 +95,7 @@ export class ProjectsComponent implements OnInit {
     return projects.filter(project =>
       project.name.toLowerCase().includes(search) ||
       project.country.toLowerCase().includes(search) ||
-      project.themes.find(theme => theme.toLowerCase().includes(search))
+      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
     );
   }
 
@@ -103,13 +112,13 @@ export class ProjectsComponent implements OnInit {
     let filteredProjects = [];
     const statuses = this.filtersForm.value.statuses;
     if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.active && project.end > new Date()));
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
     }
     if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.active && project.end <= new Date()));
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
     }
     if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => !project.active));
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
     }
     return filteredProjects;
   }

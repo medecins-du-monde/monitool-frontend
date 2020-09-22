@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Project } from '../../models/project';
-import { themes } from 'src/app/constants/themes';
+import { TranslateService } from '@ngx-translate/core';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-project',
@@ -8,22 +8,14 @@ import { themes } from 'src/app/constants/themes';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
+
   @Input() project: Project;
-  status: string;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    if (this.project.active === true) {
-      if (new Date() < this.project.end) {
-        this.status = 'Ongoing';
-      }
-      else {
-        this.status = 'Finished';
-      }
-    }
-    else {
-      this.status = 'Deleted';
-    }
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
+
+  constructor(private translateService: TranslateService) { }
+
+  ngOnInit(): void {}
 }
