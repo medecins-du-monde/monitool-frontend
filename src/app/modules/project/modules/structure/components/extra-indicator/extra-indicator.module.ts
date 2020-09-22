@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [ExtraIndicatorComponent],
@@ -14,6 +15,7 @@ import { RouterModule } from '@angular/router';
     TranslateModule,
     MatCardModule,
     MatButtonModule,
+    MatMenuModule,
     RouterModule,
     MatIconModule,
   ],

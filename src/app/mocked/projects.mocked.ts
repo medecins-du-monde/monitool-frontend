@@ -20,6 +20,22 @@ export const Projects: any[] = [
                 periodicity: 'month',
                 start: null
             }
+        ],
+        extraIndicators: [
+            {
+                baseline: 12,
+                colorize: true,
+                computation: {formula: '12', parameters: {}},
+                display: 'test',
+                target: 100
+            },
+            {
+                baseline: null,
+                colorize: true,
+                computation: null,
+                display: 'test 2',
+                target: null
+            }
         ]
     },
     {

@@ -10,6 +10,10 @@ export class Indicator implements Deserializable {
     description: MultiLanguage;
     themes: Theme[];
 
+    get multiThemes() {
+        return this.themes.length > 1;
+    }
+
     constructor(input?: any) {
         this.deserialize(input);
     }

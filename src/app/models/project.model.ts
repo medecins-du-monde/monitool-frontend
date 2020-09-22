@@ -2,6 +2,7 @@ import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { Theme } from './theme.model';
 import { Form } from './form.model';
+import { ExtraIndicator } from './extra-indicator.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -14,7 +15,7 @@ export class Project implements Deserializable {
     country: string;
     themes: Theme[];
     crossCutting: any[];
-    extraIndicators: any[];
+    extraIndicators: ExtraIndicator[];
     logicalFrames: any[];
     entities: any[];
     groups: any[];
@@ -64,7 +65,7 @@ export class Project implements Deserializable {
         this.end = input ? new Date(input.end) : new Date();
         this.entities = [];
         this.logicalFrames = [];
-        this.extraIndicators = [];
+        this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ExtraIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => new Form(x)) : [];
         return this;
     }
