@@ -1,13 +1,14 @@
 import { Deserializable } from './deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 import { v4 as uuid } from 'uuid';
+import { Theme } from './theme.model';
 
 export class Indicator implements Deserializable {
     id: string;
     type = 'indicator';
     name: MultiLanguage;
     description: MultiLanguage;
-    themes: any[];
+    themes: Theme[];
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -27,7 +28,7 @@ export class Indicator implements Deserializable {
             type: this.type,
             name: this.name,
             description: this.description,
-            themes: []
+            themes: this.themes.map(x => x.id)
         };
     }
 }

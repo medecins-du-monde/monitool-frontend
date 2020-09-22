@@ -110,6 +110,11 @@
             ]
         }
     },
+    "IndicatorEdition": "Édition indicateur",
+    "IndicatorEditionPlaceholder": {
+        "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
+        "Name": "Volume de formation"
+    },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
     "Language": "Langue",
@@ -133,6 +138,7 @@
     "ResetChanges": "Annuler les modifications",
     "RevertToVersion": "Revenir à ce point",
     "Role": "Role",
+    "SaveIndicator": "Sauvegarder l'indicateur",
     "SaveThematic": "Sauvegarder la thématique",
     "Search": "Chercher",
     "SeeReport": "Voir le rapport",

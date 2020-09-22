@@ -110,6 +110,11 @@
             ]
         }
     },
+    "IndicatorEdition": "Edición indicador",
+    "IndicatorEditionPlaceholder": {
+        "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
+        "Name": "Volumen de formación"
+    },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
     "Language": "Idiomas",
@@ -133,6 +138,7 @@
     "ResetChanges": "Cancelar los cambios",
     "RevertToVersion": "Volver a este punto",
     "Role": "Tipo",
+    "SaveIndicator": "Guardar indicador",
     "SaveThematic": "Guardar la temática",
     "Search": "Buscar",
     "SeeReport": "Ver el informe",

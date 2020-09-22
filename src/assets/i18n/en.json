@@ -110,6 +110,11 @@
             ]
         }
     },
+    "IndicatorEdition": "Indicator edition",
+    "IndicatorEditionPlaceholder": {
+        "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
+        "Name": "Training volume"
+    },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
     "Language": "Language",
@@ -133,6 +138,7 @@
     "ResetChanges": "Reset changes",
     "RevertToVersion": "Revert to this version",
     "Role": "Role",
+    "SaveIndicator": "Save indicator",
     "SaveThematic": "Save the thematic",
     "Search": "Search",
     "SeeReport": "See report",

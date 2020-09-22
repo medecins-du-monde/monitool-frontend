@@ -7,7 +7,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="themes" placeholder="{{ 'themes' | translate }}" multiple>
+            <mat-select formControlName="themes" placeholder="{{ 'Thematics' | translate }}" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
                         <mat-chip *ngFor="let theme of themes" [removable]="true"
@@ -26,7 +26,7 @@
         <div class="mdm-form-group" *ngFor="let language of languages">
             <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ 'test' | translate }}">
+                <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Name' | translate }}">
             </mat-form-field>
         </div>
     </ng-container>
@@ -34,7 +34,7 @@
         <div class="mdm-form-group" *ngFor="let language of languages">
             <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ 'test' | translate }}">
+                <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Description' | translate }}">
             </mat-form-field>
         </div>
     </ng-container>
