@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Themes } from '../mocked/themes.mocked';
 import { Theme } from '../models/theme.model';
 import { ApiService } from './api.service';
 
@@ -11,7 +12,9 @@ export class ThemeService {
 
   public async list() {
     const response: any = await this.apiService.get('/resources/theme');
-    return response.map(x => new Theme(x));
+    const mocked = Themes;
+    return mocked.map(x => new Theme(x));
+    // return response.map(x => new Theme(x));
   }
 
   public async get(id: string) {
