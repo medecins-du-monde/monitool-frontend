@@ -33,7 +33,6 @@ export class ThematicsComponent implements OnInit {
   }
 
   onEdit(theme: Theme) {
-    console.log(theme);
     this.themeService.save(theme).then(() => this.getThemes());
   }
 

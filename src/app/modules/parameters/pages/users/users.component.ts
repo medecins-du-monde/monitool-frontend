@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { usersList } from 'src/app/modules/parameters/constants/users';
-import { User } from 'src/app/modules/parameters/models/user';
+import { MatDialog } from '@angular/material/dialog';
+import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,13 +9,21 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+
   users: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.userService.list();
-    this.users = usersList;
+    this.getUsers();
   }
 
+  private getUsers() {
+    this.userService.list().then((res: User[]) => {
+      this.users = res;
+    });
+  }
 }
