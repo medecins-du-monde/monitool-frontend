@@ -58,11 +58,18 @@ export class Project implements Deserializable {
         this.deserialize(input);
     }
 
+    private setDefaultEnd() {
+        return new Date().setFullYear(new Date().getFullYear() + 1);
+    }
+
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = `project:${(input && input._id) ? input._id : uuid()}`;
+        this.id = (input && input._id) ? input._id : `project:${uuid()}`;
+        this.name = input ? input.name : null;
+        this.active = input ? input.active : true;
         this.start = input ? new Date(input.start) : new Date();
-        this.end = input ? new Date(input.end) : new Date();
+        this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
+        this.visibility = input ? input.visibility : 'public';
         this.entities = [];
         this.logicalFrames = [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ExtraIndicator(x)) : [];
@@ -86,6 +93,23 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-        return null;
+        return {
+            active: this.active,
+            country: this.country,
+            crossCutting: {},
+            end: this.end.toISOString().slice(0, 10),
+            entities: [],
+            extraIndicators: [],
+            forms: [],
+            groups: [],
+            logicalFrames: [],
+            name: this.name,
+            start: this.start.toISOString().slice(0, 10),
+            themes: [],
+            type: this.type,
+            users: [],
+            visibility: this.visibility,
+            _id: this.id
+        };
     }
 }

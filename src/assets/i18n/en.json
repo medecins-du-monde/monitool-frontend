@@ -133,6 +133,11 @@
     "OngoingPlural": "Ongoing",
     "Open": "Open",
     "Owner": "Owner",
+    "Patch": {
+        "Add": {
+            "Thematic": "Add a new thematic to the project"
+        }
+    },
     "Periodicity": "Periodicity",
     "PivotTable": "Pivot table",
     "ProjectRole": "Project creation",

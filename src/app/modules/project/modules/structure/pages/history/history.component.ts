@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
+import { Revision } from 'src/app/models/revision.model';
 
 @Component({
   selector: 'app-history',
@@ -15,41 +18,19 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class HistoryComponent implements OnInit {
   displayedColumns: string[] = ['date', 'changes'];
-  dataSource = [
-    {
-      date: 'Nov 13, 2019 4:24:16 PM',
-      username: 'training',
-      changes: [
-        'Create logical framework <code>UE</code>',
-        'Add the new site <code>MDM</code>',
-        'Add the new site <code>CENTRE SOCIAL SOUBRE</code>',
-        'Add the new site <code>CENTRE SOCIAL MEAGUI</code>',
-      ]
-    },
-    {
-      date: 'Nov 13, 2019 4:24:16 PM',
-      username: 'training',
-      changes: [
-        'Create logical framework <code>UE</code>',
-        'Add the new site <code>MDM</code>',
-        'Add the new site <code>CENTRE SOCIAL SOUBRE</code>',
-        'Add the new site <code>CENTRE SOCIAL MEAGUI</code>',
-      ]
-    },
-    {
-      date: 'Nov 13, 2019 4:24:16 PM',
-      username: 'training',
-      changes: [
-        'Add the variable <code># de jeunes sensibilisés VBG</code> to <code>Rapport Référencement</code>'
-      ]
-    },
-  ];
+  dataSource: Revision[];
+
   expandedElement: null;
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.projectService.listRevisions(project.id, 0, 10).then((revisions: Revision[]) => {
+        this.dataSource = revisions;
+        console.log(revisions);
+      });
+    });
   }
 
   mouseOver(element){

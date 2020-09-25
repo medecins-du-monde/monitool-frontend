@@ -39,7 +39,6 @@ export class CrossCuttingComponent implements OnInit {
         this.groups = [];
         this.multiThemesIndicators = [];
         this.indicators.forEach(x => {
-          console.log(this.crossCutting[x.id]);
           if (x.multiThemes) {
             this.multiThemesIndicators.push(x);
           } else {
