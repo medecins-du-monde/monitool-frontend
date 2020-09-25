@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ProjectService {
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(null);
+  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
@@ -23,9 +23,9 @@ export class ProjectService {
 
   public async list() {
     const themes = await this.themeService.list();
-    const response = await this.apiService.get('/resources/project', { mode: 'short' });
-    const mocked = Projects;
-    return mocked.map(x => {
+    // const response = await this.apiService.get('/resources/project', { mode: 'short' });
+    const response = Projects;
+    return response.map(x => {
       const project = new Project(x);
       project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       return project;
@@ -35,17 +35,17 @@ export class ProjectService {
   public async get(id: string) {
     const themes = await this.themeService.list();
     // const response = await this.apiService.get(`/resources/project/${id}`);
-    const mocked = Projects[0];
-    const project = new Project(mocked);
-    project.themes = themes.filter(t => mocked.themes.indexOf(t.id) >= 0);
+    const response = Projects[0];
+    const project = new Project(response);
+    project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     return project;
   }
 
   public async save(project: Project) {
-    const response = await this.apiService.put(`/resources/project/${project.id}`, project);
+    // const response = await this.apiService.put(`/resources/project/${project.id}`, project);
   }
 
   public async delete(id: string) {
-    const response = await this.apiService.post(`/resources/project/${id}`);
+    // const response = await this.apiService.post(`/resources/project/${id}`);
   }
 }

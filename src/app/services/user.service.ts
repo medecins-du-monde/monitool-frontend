@@ -11,13 +11,12 @@ export class UserService {
   constructor(private apiService: ApiService) { }
 
   public async list() {
-    const response: any = await this.apiService.get('/resources/user');
-    const mocked = Users;
-    // return response.map(x => new User(x));
-    return mocked.map(x => new User(x));
+    // const response: any = await this.apiService.get('/resources/user');
+    const response = Users;
+    return response.map(x => new User(x));
   }
 
   public async save(user: User) {
-    const response = await this.apiService.put(`/resources/user/${user.id}`, user);
+    // const response = await this.apiService.put(`/resources/user/${user.id}`, user);
   }
 }
