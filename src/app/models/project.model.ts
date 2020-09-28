@@ -112,4 +112,12 @@ export class Project implements Deserializable {
             _id: this.id
         };
     }
+
+    copy(): Project {
+        return new Project(JSON.parse(JSON.stringify(this)));
+    }
+
+    equals(project: Project): boolean {
+        return JSON.stringify(this) === JSON.stringify(project);
+    }
 }

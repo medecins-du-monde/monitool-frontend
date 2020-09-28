@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { Theme } from 'src/app/models/theme.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -11,11 +12,13 @@ import { ThemeService } from 'src/app/services/theme.service';
   templateUrl: './basics.component.html',
   styleUrls: ['./basics.component.scss']
 })
-export class BasicsComponent implements OnInit {
+export class BasicsComponent implements OnInit, OnDestroy {
 
   basicsForm: FormGroup;
 
   themes: Theme[] = [];
+
+  private subscription: Subscription = new Subscription();
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -29,19 +32,29 @@ export class BasicsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.basicsForm = this.fb.group({
-        country: [project.country, Validators.required],
-        name: [project.name, Validators.required],
-        themes: [project.themes, Validators.required],
-        start: [project.start, Validators.required],
-        end: [project.end, Validators.required],
-        visibility: [project.visibility, Validators.required]
-      });
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        console.log('loop');
+        this.basicsForm = this.fb.group({
+          country: [project.country, Validators.required],
+          name: [project.name, Validators.required],
+          themes: [project.themes, Validators.required],
+          start: [project.start, Validators.required],
+          end: [project.end, Validators.required],
+          visibility: [project.visibility, Validators.required]
+        });
+        this.basicsForm.valueChanges.subscribe((value: any) => {
+          this.projectService.project.next(Object.assign(project, value));
+        });
+      })
+    );
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onThemeRemoved(theme: Theme) {
