@@ -4,6 +4,7 @@ import { MatOption } from '@angular/material/core';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projects',
@@ -41,7 +42,8 @@ export class ProjectsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +60,12 @@ export class ProjectsComponent implements OnInit {
     this.filtersForm.valueChanges.subscribe(() => {
       this.onFilterChange();
     });
+  }
+
+  onCreate(): void {
+    const project = new Project();
+    this.projectService.project.next(project);
+    this.router.navigate(['/project', project.id]);
   }
 
   onToggleCountry() {
