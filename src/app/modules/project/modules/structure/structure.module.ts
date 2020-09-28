@@ -26,10 +26,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
 import { DataSourceModule } from './components/data-source/data-source.module';
 import { ExtraIndicatorModule } from './components/extra-indicator/extra-indicator.module';
+import { StructureComponent } from './structure.component';
+import { ProjectSaveModule } from './components/project-save/project-save.module';
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import { ExtraIndicatorModule } from './components/extra-indicator/extra-indicat
     ExtraIndicatorsComponent,
     UsersComponent,
     HistoryComponent,
+    StructureComponent,
   ],
   imports: [
     CommonModule,
@@ -65,7 +66,8 @@ import { ExtraIndicatorModule } from './components/extra-indicator/extra-indicat
     UserModalModule,
     DataSourceModule,
     CrossCuttingIndicatorModule,
-    ExtraIndicatorModule
+    ExtraIndicatorModule,
+    ProjectSaveModule
   ],
   providers: [
     MatDatepickerModule,

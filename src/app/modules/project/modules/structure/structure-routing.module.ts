@@ -9,49 +9,56 @@ import { HistoryComponent } from './pages/history/history.component';
 import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
 import { SitesComponent } from './pages/sites/sites.component';
 import { UsersComponent } from './pages/users/users.component';
+import { StructureComponent } from './structure.component';
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'basics',
-    component: BasicsComponent
-  },
-  {
-    path: 'cross-cutting',
-    component: CrossCuttingComponent
-  },
-  {
-    path: 'data-sources',
-    component: DataSourcesComponent
-  },
-  {
-    path: 'extra-indicators',
-    component: ExtraIndicatorsComponent
-  },
-  {
-    path: 'history',
-    component: HistoryComponent
-  },
-  {
-    path: 'logical-frame',
-    component: LogicalFrameComponent
-  },
-  {
-    path: 'sites',
-    component: SitesComponent
-  },
-  {
-    path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+    path: '',
+    component: StructureComponent,
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent
+      },
+      {
+        path: 'basics',
+        component: BasicsComponent
+      },
+      {
+        path: 'cross-cutting',
+        component: CrossCuttingComponent
+      },
+      {
+        path: 'data-sources',
+        component: DataSourcesComponent
+      },
+      {
+        path: 'extra-indicators',
+        component: ExtraIndicatorsComponent
+      },
+      {
+        path: 'history',
+        component: HistoryComponent
+      },
+      {
+        path: 'logical-frame',
+        component: LogicalFrameComponent
+      },
+      {
+        path: 'sites',
+        component: SitesComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      }
+    ]
+  }
 ];
 
 @NgModule({

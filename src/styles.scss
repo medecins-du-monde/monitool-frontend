@@ -179,6 +179,7 @@ body {
     overflow: auto;
     padding: 24px;
     flex: 1;
+    margin-bottom: 56px;
 
     @media screen and (max-width: $breakpoint-sm) {
         margin-top: 32px;
