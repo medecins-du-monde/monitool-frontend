@@ -14,7 +14,7 @@ export class Project implements Deserializable {
     end: Date;
     inputDate: Date;
     country: string;
-    themes: Theme[];
+    themes: Theme[] = [];
     crossCutting: any;
     extraIndicators: ExtraIndicator[];
     logicalFrames: any[];
@@ -107,7 +107,7 @@ export class Project implements Deserializable {
             logicalFrames: [],
             name: this.name,
             start: this.start.toISOString().slice(0, 10),
-            themes: [],
+            themes: this.themes.map(x => x.id),
             type: this.type,
             users: [],
             visibility: this.visibility,

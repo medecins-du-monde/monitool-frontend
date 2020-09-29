@@ -24,6 +24,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
+  get selectedThemes() {
+    return this.basicsForm ? this.themes.filter(x => this.basicsForm.controls.themes.value.includes(x.id)) : [];
+  }
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
@@ -37,12 +41,14 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.basicsForm = this.fb.group({
           country: [project.country, Validators.required],
           name: [project.name, Validators.required],
-          themes: [project.themes, Validators.required],
+          themes: [project.themes.map(x => x.id), Validators.required],
           start: [project.start, Validators.required],
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
         });
         this.basicsForm.valueChanges.subscribe((value: any) => {
+          const selectedThemes = value.themes;
+          value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
           this.projectService.project.next(Object.assign(project, value));
         });
       })
@@ -58,6 +64,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   onThemeRemoved(theme: Theme) {
     const themes = this.basicsForm.controls.themes.value;
-    this.basicsForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
+    this.basicsForm.controls.themes.setValue(themes.filter(t => t !== theme.id));
   }
 }

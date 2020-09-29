@@ -26,14 +26,14 @@
             <mat-select formControlName="themes" placeholder="{{ 'Thematics' | translate }}" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
-                        <mat-chip *ngFor="let theme of basicsForm.controls.themes.value" [removable]="true"
+                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"
                             (removed)="onThemeRemoved(theme)">
                             {{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                     </mat-chip-list>
                 </mat-select-trigger>
-                <mat-option *ngFor="let theme of themes" [value]="theme">{{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
+                <mat-option *ngFor="let theme of themes" [value]="theme.id">{{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
                 </mat-option>
             </mat-select>
             <mat-hint>

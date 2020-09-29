@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Themes } from '../mocked/themes.mocked';
 import { Theme } from '../models/theme.model';
 import { ApiService } from './api.service';
 
@@ -11,8 +10,7 @@ export class ThemeService {
   constructor(private apiService: ApiService) { }
 
   public async list() {
-    // const response: any = await this.apiService.get('/resources/theme');
-    const response = Themes;
+    const response: any = await this.apiService.get('/resources/theme');
     return response.map(x => new Theme(x));
   }
 
@@ -21,7 +19,7 @@ export class ThemeService {
   }
 
   public async save(theme: Theme) {
-    // const response = await this.apiService.put(`/resources/theme/${theme.id}`, theme.serialize());
+    await this.apiService.put(`/resources/theme/${theme.id}`, theme.serialize());
   }
 
   public async delete(id: string) {
