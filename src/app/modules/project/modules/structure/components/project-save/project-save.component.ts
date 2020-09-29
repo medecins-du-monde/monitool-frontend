@@ -43,7 +43,10 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    this.projectService.save(this.currentProject);
+    this.projectService.save(this.currentProject).then((project: Project) => {
+      this.savedProject = project.copy();
+      this.projectService.project.next(project);
+    });
   }
 
 }

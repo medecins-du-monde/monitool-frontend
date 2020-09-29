@@ -31,7 +31,7 @@
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card"
-            [project]="project"
+            [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)"
         ></app-project>
     </div>
 </div>

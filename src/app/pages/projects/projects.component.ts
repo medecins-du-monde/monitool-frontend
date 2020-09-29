@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ProjectsComponent implements OnInit {
 
-  countries = ['Burkina Faso', 'Italie', 'Inde'];
+  countries = [];
   statuses = [
     {
       text: 'OngoingPlural',
@@ -49,16 +49,22 @@ export class ProjectsComponent implements OnInit {
   ngOnInit(): void {
     this.filtersForm = this.fb.group({
       search: '',
-      countries: [this.countries.concat(['0'])],
+      countries: [[]],
       themes: [[]],
       statuses: [['Ongoing']]
     });
-    this.projectService.list().then(res => {
-      this.allProjects = res;
-      this.projects = this.filterByStatuses(this.allProjects);
-    });
+    this.getProjects();
     this.filtersForm.valueChanges.subscribe(() => {
       this.onFilterChange();
+    });
+  }
+
+  private getProjects() {
+    this.projectService.list().then((res: Project[]) => {
+      this.allProjects = res;
+      this.countries = [... new Set(res.map(x => x.country))];
+      this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
+      // this.projects = this.filterByStatuses(this.allProjects);
     });
   }
 
@@ -66,6 +72,24 @@ export class ProjectsComponent implements OnInit {
     const project = new Project();
     this.projectService.project.next(project);
     this.router.navigate(['/project', project.id]);
+  }
+
+  onDelete(project: Project): void {
+    this.projectService.delete(project.id).then(() => {
+      this.getProjects();
+    });
+  }
+
+  onRestore(project: Project): void {
+    this.projectService.restore(project.id).then(() => {
+      this.getProjects();
+    });
+  }
+
+  onClone(project: Project): void {
+    this.projectService.clone(project.id).then(() => {
+      this.getProjects();
+    });
   }
 
   onToggleCountry() {

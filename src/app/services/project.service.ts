@@ -43,11 +43,28 @@ export class ProjectService {
   }
 
   public async save(project: Project) {
-    const response = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
+    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
+    const themes = await this.themeService.list();
+    const savedProject = new Project(response);
+    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+    return savedProject;
   }
 
   public async delete(id: string) {
-    // const response = await this.apiService.post(`/resources/project/${id}`);
+    const project: any = await this.apiService.get(`/resources/project/${id}`);
+    project.active = false;
+    await this.apiService.put(`/resources/project/${id}`, project);
+  }
+
+  public async restore(id: string) {
+    const project: any = await this.apiService.get(`/resources/project/${id}`);
+    project.active = true;
+    await this.apiService.put(`/resources/project/${id}`, project);
+  }
+
+  public async clone(id: string) {
+    const project = new Project();
+    await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 
   public async listRevisions(id: string, offset: number, limit: number) {

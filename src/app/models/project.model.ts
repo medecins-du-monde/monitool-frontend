@@ -6,6 +6,7 @@ import { ExtraIndicator } from './extra-indicator.model';
 
 export class Project implements Deserializable {
     id: string;
+    rev: string;
     type = 'project';
     name: string;
     active: boolean;
@@ -65,6 +66,7 @@ export class Project implements Deserializable {
     deserialize(input: any): this {
         Object.assign(this, input);
         this.id = (input && input._id) ? input._id : `project:${uuid()}`;
+        this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
         this.start = input ? new Date(input.start) : new Date();
@@ -109,7 +111,8 @@ export class Project implements Deserializable {
             type: this.type,
             users: [],
             visibility: this.visibility,
-            _id: this.id
+            _id: this.id,
+            _rev: this.rev
         };
     }
 

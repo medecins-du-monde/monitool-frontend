@@ -34,7 +34,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        console.log('loop');
         this.basicsForm = this.fb.group({
           country: [project.country, Validators.required],
           name: [project.name, Validators.required],

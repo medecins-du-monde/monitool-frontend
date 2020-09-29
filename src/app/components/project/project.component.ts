@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/project.model';
@@ -12,6 +12,9 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectComponent implements OnInit {
 
   @Input() project: Project;
+  @Output() delete = new EventEmitter();
+  @Output() restore = new EventEmitter();
+  @Output() clone = new EventEmitter();
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -30,5 +33,17 @@ export class ProjectComponent implements OnInit {
       this.projectService.project.next(res);
       this.router.navigate(['/project', this.project.id]);
     });
+  }
+
+  onDelete() {
+    this.delete.emit(this.project);
+  }
+
+  onRestore() {
+    this.restore.emit(this.project);
+  }
+
+  onClone() {
+    this.clone.emit(this.project);
   }
 }
