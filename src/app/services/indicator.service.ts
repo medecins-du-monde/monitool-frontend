@@ -16,9 +16,8 @@ export class IndicatorService {
 
   public async list() {
     const themes = await this.themeService.list();
-    // const response: any = await this.apiService.get('/resources/indicator');
-    const mocked = Indicators;
-    return mocked.map(x => {
+    const response: any = await this.apiService.get('/resources/indicator');
+    return response.map(x => {
       const indicator = new Indicator(x);
       indicator.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       return indicator;

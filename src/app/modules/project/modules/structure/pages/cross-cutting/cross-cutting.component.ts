@@ -35,6 +35,8 @@ export class CrossCuttingComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.crossCutting = project.crossCutting;
       this.indicatorService.list().then((indicators: Indicator[]) => {
+        console.log(indicators);
+        console.log(this.crossCutting);
         this.indicators = indicators;
         this.groups = [];
         this.multiThemesIndicators = [];

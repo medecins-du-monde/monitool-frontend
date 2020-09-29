@@ -85,14 +85,14 @@ export class Project implements Deserializable {
             logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
         }) : [];
         this.crossCutting = {};
-        this.crossCutting['indicator:fe1635fc-b381-4cfe-9353-177fce63cd50'] = {
+        this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
             baseline: 12,
             colorize: true,
             computation: {formula: '12', parameters: {}},
             display: 'test',
             target: 100
         };
-        this.crossCutting['indicator:09a7d8cd-441d-478a-b750-19fd8bd5faef'] = {
+        this.crossCutting['indicator:7d4599d1-7a54-425c-a8e9-4d1bc594b82b'] = {
             baseline: null,
             colorize: true,
             computation: null,
