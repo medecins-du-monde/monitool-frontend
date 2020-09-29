@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { CalendarComponent } from './pages/calendar/calendar.component';
 
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    loadChildren: () => import('./pages/home/home.module')
+        .then(m => m.HomeModule)
   },
   {
     path: 'calendar',
-    component: CalendarComponent
+    loadChildren: () => import('./pages/calendar/calendar.module')
+        .then(m => m.CalendarModule)
   },
   {
     path: '**',

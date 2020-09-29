@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
@@ -25,6 +27,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatButtonModule,
+    MatExpansionModule
   ],
   exports: [DataSourceEditComponent]
 })

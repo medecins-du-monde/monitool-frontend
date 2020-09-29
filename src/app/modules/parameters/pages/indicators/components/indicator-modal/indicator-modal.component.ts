@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/indicator.model';
 import { Theme } from 'src/app/models/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
-import { ThemeModalComponent } from '../theme-modal/theme-modal.component';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -28,7 +27,7 @@ export class IndicatorModalComponent implements OnInit {
     private fb: FormBuilder,
     private translateService: TranslateService,
     private themeService: ThemeService,
-    public dialogRef: MatDialogRef<ThemeModalComponent>,
+    public dialogRef: MatDialogRef<IndicatorModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Indicator
   ) { }
 

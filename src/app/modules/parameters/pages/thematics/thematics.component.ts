@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Theme } from 'src/app/models/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
-import { ThemeModalComponent } from '../../components/theme-modal/theme-modal.component';
+import { ThemeModalComponent } from './components/theme-modal/theme-modal.component';
 
 @Component({
   selector: 'app-thematics',

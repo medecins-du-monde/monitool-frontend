@@ -37,6 +37,7 @@ export class ParametersComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log('init');
   }
 
 }
