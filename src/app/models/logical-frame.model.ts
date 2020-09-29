@@ -38,7 +38,7 @@ export class LogicalFrame implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input._id) ? input._id : uuid();
+        this.id = (input && input.id) ? input.id : uuid();
         return this;
     }
 
