@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Form } from 'src/app/models/form.model';
 
 @Component({
@@ -9,6 +9,7 @@ import { Form } from 'src/app/models/form.model';
 export class DataSourceComponent implements OnInit {
 
   @Input() form: Form;
+  @Output() edit = new EventEmitter();
 
   periodicity: string;
 
@@ -16,6 +17,10 @@ export class DataSourceComponent implements OnInit {
 
   ngOnInit(): void {
     this.periodicity = 'EveryMonth';
+  }
+
+  onEdit() {
+    this.edit.emit(this.form);
   }
 
 }

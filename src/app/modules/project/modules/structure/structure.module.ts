@@ -30,6 +30,7 @@ import { DataSourceModule } from './components/data-source/data-source.module';
 import { ExtraIndicatorModule } from './components/extra-indicator/extra-indicator.module';
 import { StructureComponent } from './structure.component';
 import { ProjectSaveModule } from './components/project-save/project-save.module';
+import { DataSourceEditModule } from './components/data-source-edit/data-source-edit.module';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { ProjectSaveModule } from './components/project-save/project-save.module
     DataSourceModule,
     CrossCuttingIndicatorModule,
     ExtraIndicatorModule,
-    ProjectSaveModule
+    ProjectSaveModule,
+    DataSourceEditModule
   ],
   providers: [
     MatDatepickerModule,

@@ -4,9 +4,13 @@
     <p>To ease the data collection planning, data sources should correspond to real tools used on the field.</p>
 </div>
 
-<div class="mdm-section">
+<div class="mdm-section" *ngIf="!edition">
     <div class="mdm-cards">
-        <app-data-source *ngFor="let form of forms" class="mdm-card" [form]="form"></app-data-source>
+        <app-data-source *ngFor="let form of forms" class="mdm-card" [form]="form" (edit)='onEdit($event)'></app-data-source>
     </div>
-    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}</button>
+    <button mat-stroked-button class="mdm-button" (click)="onCreate()"><mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}</button>
+</div>
+
+<div class="mdm-section" *ngIf="edition">
+    <app-data-source-edit [form]="currentForm" [entities]="entities" (edit)="onEdit($event)"></app-data-source-edit>
 </div>
