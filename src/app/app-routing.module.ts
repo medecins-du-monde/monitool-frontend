@@ -18,18 +18,18 @@ const routes: Routes = [{
     .then(m => m.HomeModule),
   canActivate : [AuthGuard]
 },
-// {
-//   path: 'project/:id',
-//   loadChildren: () => import('./modules/project/project.module')
-//     .then(m => m.ProjectModule),
-//   canActivate : [AuthGuard],
-// },
-// {
-//   path: 'projects',
-//   loadChildren: () => import('./pages/projects/projects.module')
-//     .then(m => m.ProjectsModule),
-//   canActivate : [AuthGuard]
-// },
+{
+  path: 'project/:id',
+  loadChildren: () => import('./modules/project/project.module')
+    .then(m => m.ProjectModule),
+  canActivate : [AuthGuard],
+},
+{
+  path: 'projects',
+  loadChildren: () => import('./pages/projects/projects.module')
+    .then(m => m.ProjectsModule),
+  canActivate : [AuthGuard]
+},
 {
   path: 'parameters',
   loadChildren: () => import('./modules/parameters/parameters.module')

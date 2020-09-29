@@ -11,6 +11,7 @@ import { ProjectModule } from './components/project/project.module';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [ProjectsComponent],
@@ -23,6 +24,7 @@ import { ProjectsComponent } from './projects.component';
         MatSelectModule,
         MatInputModule,
         MatFormFieldModule,
+        MatIconModule,
         MatButtonModule,
         MatButtonToggleModule,
         SearchbarModule,

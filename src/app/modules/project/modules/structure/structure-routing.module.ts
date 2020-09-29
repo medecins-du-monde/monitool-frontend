@@ -27,11 +27,11 @@ const routes: Routes = [
         loadChildren: () => import('./pages/data-sources/data-sources.module')
         .then(m => m.DataSourcesModule)
       },
-      {
-        path: 'extra-indicators',
-        loadChildren: () => import('./pages/extra-indicators/extra-indicators.module')
-        .then(m => m.ExtraIndicatorsModule)
-      },
+      // {
+      //   path: 'extra-indicators',
+      //   loadChildren: () => import('./pages/extra-indicators/extra-indicators.module')
+      //   .then(m => m.ExtraIndicatorsModule)
+      // },
       {
         path: 'history',
         loadChildren: () => import('./pages/history/history.module')

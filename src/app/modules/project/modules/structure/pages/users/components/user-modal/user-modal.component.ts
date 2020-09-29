@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/modules/parameters/models/user';
-import { usersList } from '../../constants/user';
-import { typesList } from '../../constants/type';
 import { rolesList } from '../../constants/role';
+import { typesList } from '../../constants/type';
+import { usersList } from '../../constants/user';
 
 @Component({
   selector: 'app-user-modal',

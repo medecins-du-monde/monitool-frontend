@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { GeneralComponent } from './pages/general/general.component';
-import { PivotTableComponent } from './pages/pivot-table/pivot-table.component';
 
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent
+    loadChildren: () => import('./pages/home/home.module')
+      .then(m => m.HomeModule)
   },
   {
     path: 'general',
-    component: GeneralComponent
+    loadChildren: () => import('./pages/general/general.module')
+      .then(m => m.GeneralModule)
   },
   {
     path: 'pivot-table',
-    component: PivotTableComponent
+    loadChildren: () => import('./pages/pivot-table/pivot-table.module')
+      .then(m => m.PivotTableModule)
   },
   {
     path: '**',

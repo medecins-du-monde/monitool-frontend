@@ -5,9 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserModule } from './components/user/user.module';
 import { UsersRoutingModule } from './users-routing.module';
+import { UsersComponent } from './users.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [UsersComponent],
     imports: [
         CommonModule,
         TranslateModule,

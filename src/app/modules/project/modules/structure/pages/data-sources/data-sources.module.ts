@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { DataSourceEditModule } from './components/data-source-edit/data-source-edit.module';
 import { DataSourceModule } from './components/data-source/data-source.module';
+import { DataSourcesRoutingModule } from './data-sources-routing.module';
 import { DataSourcesComponent } from './data-sources.component';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { DataSourcesComponent } from './data-sources.component';
     imports: [
         CommonModule,
         TranslateModule,
+        DataSourcesRoutingModule,
         DataSourceModule,
         DataSourceEditModule,
         MatButtonModule,

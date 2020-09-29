@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
@@ -15,7 +16,8 @@ import { HomeComponent } from './home.component';
         HomeRoutingModule,
         MatTableModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        ProgressBarModule
     ]
 })
 export class HomeModule { }
