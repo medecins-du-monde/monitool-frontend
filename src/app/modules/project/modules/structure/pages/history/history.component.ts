@@ -22,13 +22,24 @@ export class HistoryComponent implements OnInit {
 
   expandedElement: null;
 
+  private projectId: string;
+
+  private offset: number;
+  private limit: number;
+
+  public showLoadMore: boolean;
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
-      this.projectService.listRevisions(project.id, 0, 10).then((revisions: Revision[]) => {
+      this.showLoadMore = true;
+      this.projectId = project.id;
+      this.offset = 0;
+      this.limit = 10;
+      this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
         this.dataSource = revisions;
-        console.log(revisions);
+        this.showLoadMore = revisions.length < 10 ? false : true;
       });
     });
   }
@@ -39,6 +50,15 @@ export class HistoryComponent implements OnInit {
 
   mouseLeave(){
     this.expandedElement = null;
+  }
+
+  onLoadMore() {
+    this.offset += 10;
+    this.limit += 10;
+    this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
+      this.dataSource = revisions;
+      this.showLoadMore = revisions.length < 10 ? false : true;
+    });
   }
 
 }

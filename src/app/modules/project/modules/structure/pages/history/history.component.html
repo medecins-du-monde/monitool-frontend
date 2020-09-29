@@ -31,6 +31,12 @@
             </div>
         </td>
     </ng-container>
+
+    <ng-container matColumnDef="expandedRevisions">
+        <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
+            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'SeeOlderRevisions' | translate }}</button>
+        </td>
+    </ng-container>
    
     <tr mat-header-row *matHeaderRowDef="displayedColumns" (mouseover)="mouseLeave()"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
@@ -39,4 +45,5 @@
       (mouseover)='mouseOver(element)'>
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <tr mat-footer-row *matFooterRowDef="['expandedRevisions']" [ngClass]="{'hidden-row': !showLoadMore }"></tr>
 </table>

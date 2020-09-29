@@ -68,8 +68,7 @@ export class ProjectService {
   }
 
   public async listRevisions(id: string, offset: number, limit: number) {
-    // const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { offset, limit });
-    const response = Revisions;
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset, limit } });
     return response.map(x => new Revision(x));
   }
 }
