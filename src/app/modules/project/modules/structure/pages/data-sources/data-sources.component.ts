@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from 'src/app/models/form';
+import { Form } from 'src/app/models/form.model';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-data-sources',
@@ -8,21 +10,14 @@ import { Form } from 'src/app/models/form';
 })
 export class DataSourcesComponent implements OnInit {
 
-  public datasources: Form[] = [
-    {
-      id: 'ee005f45-e3da-4f7d-bde4-f44837cd224b',
-      name: 'RAPPORT PSYCHOSOCIAUX',
-      elements: [],
-      start: new Date('2019-01-01'),
-      end: new Date('2020-12-31'),
-      entities: [],
-      periodicity: 'month',
-    }
-  ];
+  forms: Form[] = [];
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.forms = project.forms;
+    });
   }
 
 }

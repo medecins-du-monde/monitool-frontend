@@ -1,18 +1,14 @@
-<!-- <section class="page-section">
-    <div class="indicators-group" *ngFor="let indicatorGroup of indicators">
-        <p class="section-title">{{indicatorGroup.thematic.fr}}
-        </p>
-        <div class="indicators">
-            <app-indicator *ngFor="let indicator of indicatorGroup.indicators" [indicator]="indicator"></app-indicator>
-        </div>
-    </div>
-</section> -->
-<!-- <app-grid [items]="indicators[0]"></app-grid> -->
 <div class="full-page">
-    <div *ngFor="let group of indicators" class="mdm-section">
-        <div class="mdm-title">{{group.thematic.fr}}</div>
+    <div *ngFor="let group of groups" class="mdm-section">
+        <div class="mdm-title">{{group.theme.name[currentLang]}}</div>
         <div class="mdm-cards">
             <app-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator" class="mdm-card"></app-indicator>
+        </div>
+    </div>
+    <div class="mdm-section">
+        <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
+        <div class="mdm-cards">
+            <app-indicator *ngFor="let indicator of multiThemesIndicators" [indicator]="indicator" class="mdm-card"></app-indicator>
         </div>
     </div>
 </div>

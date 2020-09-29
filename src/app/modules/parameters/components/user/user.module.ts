@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserModalModule } from '../user-modal/user-modal.module';
 
 @NgModule({
   declarations: [UserComponent],
@@ -17,7 +18,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatChipsModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    UserModalModule
   ],
   exports: [UserComponent]
 })

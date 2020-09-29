@@ -5,18 +5,18 @@
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Login' | translate }}</div>
-            <div class="card-info-value">{{login}}</div>
+            <div class="card-info-value">{{ user.login }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'Role' | translate }}</div>
             <div class="card-info-value">
                 <mat-chip-list>
-                    <mat-chip>{{ role | translate }}</mat-chip>
+                    <mat-chip>{{ user.roleDisplay | translate }}</mat-chip>
                 </mat-chip-list>
             </div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end">
-        <button mat-stroked-button  class="mdm-button">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button (click)="openDialog()" class="mdm-button">{{ 'Edit' | translate }}</button>
     </mat-card-actions>
 </mat-card>

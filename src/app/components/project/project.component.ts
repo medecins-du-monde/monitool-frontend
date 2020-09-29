@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Project } from '../../models/project';
-import { themes } from 'src/app/constants/themes';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-project',
@@ -8,22 +10,40 @@ import { themes } from 'src/app/constants/themes';
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
+
   @Input() project: Project;
-  status: string;
+  @Output() delete = new EventEmitter();
+  @Output() restore = new EventEmitter();
+  @Output() clone = new EventEmitter();
 
-  constructor() { }
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
-  ngOnInit(): void {
-    if (this.project.active === true) {
-      if (new Date() < this.project.end) {
-        this.status = 'Ongoing';
-      }
-      else {
-        this.status = 'Finished';
-      }
-    }
-    else {
-      this.status = 'Deleted';
-    }
+  constructor(
+    private translateService: TranslateService,
+    private projectService: ProjectService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {}
+
+  async onOpen(): Promise<void> {
+    this.projectService.get(this.project.id).then(res => {
+      this.projectService.project.next(res);
+      this.router.navigate(['/project', this.project.id]);
+    });
+  }
+
+  onDelete() {
+    this.delete.emit(this.project);
+  }
+
+  onRestore() {
+    this.restore.emit(this.project);
+  }
+
+  onClone() {
+    this.clone.emit(this.project);
   }
 }

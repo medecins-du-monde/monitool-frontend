@@ -3,10 +3,10 @@
     <p>{{ "ExtraIndicatorsInfo.1" | translate }}</p>
 </div>
 
-<div *ngIf="indicators.length !== 0; else elseBlock" >
+<div *ngIf="extraIndicators.length !== 0; else elseBlock" >
     <div class="mdm-section">
         <div class="mdm-cards">
-            <app-extra-indicator *ngFor="let indicator of indicators" class="mdm-card" [indicator]="indicator" [computation]="false"></app-extra-indicator>
+            <app-extra-indicator *ngFor="let extraIndicator of extraIndicators" class="mdm-card" [extraIndicator]="extraIndicator"></app-extra-indicator>
         </div>
     </div>
 </div>

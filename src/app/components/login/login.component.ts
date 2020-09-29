@@ -15,10 +15,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.authService.validate('value', 'value')
-    .subscribe((response: any) => {
+    this.authService.validate('value', 'value').then((response: any) => {
       this.router.navigate(['home']);
     });
   }
-
 }

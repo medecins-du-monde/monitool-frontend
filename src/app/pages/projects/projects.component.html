@@ -22,7 +22,7 @@
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
             <div class="action">
-                <button mat-raised-button color="primary">
+                <button mat-raised-button color="primary" (click)="onCreate()">
                     <mat-icon svgIcon="add-folder"></mat-icon>
                     {{ 'CreateNewProject' | translate }}
                 </button>
@@ -31,7 +31,7 @@
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card"
-            [project]="project"
+            [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)"
         ></app-project>
     </div>
 </div>

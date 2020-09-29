@@ -1,21 +1,21 @@
 <mat-card>
     <mat-card-header class="card-header">
-        <mat-card-title>{{theme.name.fr}}</mat-card-title>
+        <mat-card-title>{{ theme.shortName[currentLang] }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Name' | translate }}</div>
-            <div class="card-info-value">{{theme.name.fr}}</div>
+            <div class="card-info-value">{{ theme.name[currentLang] }}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
-        <button mat-stroked-button  class="mdm-button">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button (click)="openDialog()" class="mdm-button">{{ 'Edit' | translate }}</button>
         <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu"  class="mdm-button"><mat-icon>expand_more</mat-icon></button>
     </mat-card-actions>
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="onDelete()">
         <mat-icon>delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
