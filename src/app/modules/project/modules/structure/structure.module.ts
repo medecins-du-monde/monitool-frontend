@@ -10,10 +10,6 @@ import { StructureRoutingModule } from './structure-routing.module';
     CommonModule,
     StructureRoutingModule,
     ProjectSaveModule
-  ],
-  providers: [
-    // MatDatepickerModule,
-    // MatNativeDateModule
   ]
 })
 export class StructureModule { }

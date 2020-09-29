@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { ExtraIndicatorModule } from '../../components/extra-indicator/extra-indicator.module';
 import { ExtraIndicatorsRoutingModule } from './extra-indicators-routing.module';
 import { ExtraIndicatorsComponent } from './extra-indicators.component';
 
@@ -12,7 +13,7 @@ import { ExtraIndicatorsComponent } from './extra-indicators.component';
         CommonModule,
         TranslateModule,
         ExtraIndicatorsRoutingModule,
-        ExtraIndicatorsModule,
+        ExtraIndicatorModule,
         MatButtonModule,
         MatIconModule
     ]
