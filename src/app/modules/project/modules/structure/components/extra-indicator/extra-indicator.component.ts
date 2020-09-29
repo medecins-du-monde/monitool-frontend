@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ExtraIndicator } from 'src/app/models/extra-indicator.model';
+import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 
 @Component({
   selector: 'app-extra-indicator',
@@ -9,7 +9,7 @@ import { ExtraIndicator } from 'src/app/models/extra-indicator.model';
 })
 export class ExtraIndicatorComponent implements OnInit {
 
-  @Input() extraIndicator: ExtraIndicator;
+  @Input() extraIndicator: ProjectIndicator;
 
   constructor() { }
 

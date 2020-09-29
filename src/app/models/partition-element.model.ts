@@ -1,12 +1,9 @@
 import { Deserializable } from './deserializable.model';
+import { v4 as uuid } from 'uuid';
 
-export class ExtraIndicator implements Deserializable {
-
-    display: string;
-    baseline: number;
-    target: number;
-    colorize: boolean;
-    computation: any;
+export class PartitionElement implements Deserializable {
+    id: string;
+    name: string;
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -14,10 +11,11 @@ export class ExtraIndicator implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.id = (input && input.id) ? input.id : uuid();
         return this;
     }
 
     serialize() {
-        return null;
+        return this;
     }
 }

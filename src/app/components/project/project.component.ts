@@ -29,8 +29,7 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {}
 
   async onOpen(): Promise<void> {
-    this.projectService.get(this.project.id).then(res => {
-      this.projectService.project.next(res);
+    this.projectService.get(this.project.id).then(() => {
       this.router.navigate(['/project', this.project.id]);
     });
   }

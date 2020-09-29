@@ -2,8 +2,9 @@ import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { Theme } from './theme.model';
 import { Form } from './form.model';
-import { ExtraIndicator } from './extra-indicator.model';
+import { ProjectIndicator } from './project-indicator.model';
 import { Entity } from './entity.model';
+import { LogicalFrame } from './logical-frame.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -17,11 +18,11 @@ export class Project implements Deserializable {
     country: string;
     themes: Theme[] = [];
     crossCutting: any;
-    extraIndicators: ExtraIndicator[];
-    logicalFrames: any[];
+    extraIndicators: ProjectIndicator[] = [];
+    logicalFrames: LogicalFrame[] = [];
     entities: Entity[] = [];
     groups: any[];
-    forms: Form[];
+    forms: Form[] = [];
     users: any[];
     visibility: string;
 
@@ -74,9 +75,15 @@ export class Project implements Deserializable {
         this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
         this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
-        this.logicalFrames = [];
-        this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ExtraIndicator(x)) : [];
-        this.forms = ( input && input.forms ) ? input.forms.map(x => new Form(x)) : [];
+        this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
+        this.forms = ( input && input.forms ) ? input.forms.map(x => {
+            const form = new Form(x);
+            form.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+        }) : [];
+        this.logicalFrames = ( input && input.logicalFrames ) ? input.logicalFrames.map(x => {
+            const logicalFrame = new LogicalFrame(x);
+            logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+        }) : [];
         this.crossCutting = {};
         this.crossCutting['indicator:fe1635fc-b381-4cfe-9353-177fce63cd50'] = {
             baseline: 12,
@@ -103,7 +110,7 @@ export class Project implements Deserializable {
             end: this.end.toISOString().slice(0, 10),
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: [],
-            forms: [],
+            forms: this.forms.map(x => x.serialize()),
             groups: [],
             logicalFrames: [],
             name: this.name,
