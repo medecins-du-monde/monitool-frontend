@@ -29,12 +29,12 @@ export class Form implements Deserializable {
     serialize() {
         return {
             elements: [],
-            end: this.end.toISOString().slice(0, 10),
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.id),
             id: this.id,
             name: this.name,
             periodicity: this.periodicity,
-            start: this.start.toISOString().slice(0, 10)
+            start: this.start ? this.start.toISOString().slice(0, 10) : null
         };
     }
 }

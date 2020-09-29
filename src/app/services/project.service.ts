@@ -36,7 +36,6 @@ export class ProjectService {
   public async get(id: string) {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
-    // const response = Projects[0];
     const project = new Project(response);
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     return project;

@@ -79,10 +79,12 @@ export class Project implements Deserializable {
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
             form.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+            return form;
         }) : [];
         this.logicalFrames = ( input && input.logicalFrames ) ? input.logicalFrames.map(x => {
             const logicalFrame = new LogicalFrame(x);
             logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+            return logicalFrame;
         }) : [];
         this.crossCutting = {};
         this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
@@ -107,14 +109,14 @@ export class Project implements Deserializable {
             active: this.active,
             country: this.country,
             crossCutting: {},
-            end: this.end.toISOString().slice(0, 10),
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: [],
             forms: this.forms.map(x => x.serialize()),
             groups: [],
             logicalFrames: [],
             name: this.name,
-            start: this.start.toISOString().slice(0, 10),
+            start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
             users: [],

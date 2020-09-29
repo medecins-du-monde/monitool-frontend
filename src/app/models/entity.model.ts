@@ -23,9 +23,9 @@ export class Entity implements Deserializable {
 
     serialize() {
         return {
-            end: this.end.toISOString().slice(0, 10),
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
             name: this.name,
-            start: this.start.toISOString().slice(0, 10),
+            start: this.start ? this.start.toISOString().slice(0, 10) : null,
             id: this.id
         };
     }
