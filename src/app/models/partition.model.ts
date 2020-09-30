@@ -6,7 +6,7 @@ import { PartitionGroup } from './partition-group.model';
 export class Partition implements Deserializable {
     id: string;
     name: string;
-    aggreagation: string;
+    aggregation = 'sum';
     elements: PartitionElement[] = [];
     groups: PartitionGroup[] = [];
 

@@ -128,7 +128,7 @@ export class DataSourceEditComponent implements OnInit {
     return this.fb.group({
       id: [partition.id],
       name: [partition.name, Validators.required],
-      aggregation: [partition.aggreagation],
+      aggregation: [partition.aggregation],
       elements: this.fb.array([]),
       groups: this.fb.array([])
     });

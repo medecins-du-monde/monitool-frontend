@@ -1,0 +1,109 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{ 'PartitionEdition' | translate }}</h2>
+<mat-dialog-content [formGroup]="data" class="mdm-dialog">
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Elements' | translate }}</div>
+        <table mat-table [dataSource]="elements.controls" class="mdm-table" formArrayName="elements">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" id="position">
+                    <mat-icon>unfold_more</mat-icon>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
+                <td mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">
+                    <mat-form-field appearance="outline" class="mdm-form-field">
+                        <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element; let i=index" id="delete">
+                    <button mat-icon-button color="warn" (click)="onRemoveElement(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="add">
+                <td mat-footer-cell *matFooterCellDef [attr.colspan]="elementsDisplayedColumns.length" class="add-row">
+                    <button mat-stroked-button class="mdm-button small-button" (click)="onAddNewElement()">
+                        <mat-icon>add</mat-icon>{{ 'Add' | translate }}
+                    </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="elementsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="['add']"></tr>
+        </table>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}">
+                <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Groups' | translate }}</div>
+        <mat-checkbox formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
+    </div>
+    <div class="mdm-form-group" *ngIf="data.value.useGroups">
+        <div class="mdm-form-label"></div>
+        <table mat-table [dataSource]="groups.controls" class="mdm-table" formArrayName="groups">
+            <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" id="position">
+                    <mat-icon>unfold_more</mat-icon>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
+                <td mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">
+                    <mat-form-field appearance="outline" class="mdm-form-field">
+                        <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="members">
+                <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
+                <td mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element; let i=index" id="delete">
+                    <button mat-icon-button color="warn" (click)="onRemoveGroup(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="add">
+                <td mat-footer-cell *matFooterCellDef [attr.colspan]="groupsDisplayedColumns.length" class="add-row">
+                    <button mat-stroked-button class="mdm-button small-button" (click)="onAddNewGroup()">
+                        <mat-icon>add</mat-icon>{{ 'Add' | translate }}
+                    </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="groupsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: groupsDisplayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="['add']"></tr>
+        </table>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close class="mdm-button"><mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}</button>
+    <button mat-stroked-button class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
+    <button mat-stroked-button class="mdm-button"><mat-icon>delete</mat-icon>{{ 'Delete' | translate }}</button>
+</mat-dialog-actions>

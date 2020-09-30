@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { PartitionModalModule } from '../partition-modal/partition-modal.module';
 
 @NgModule({
   declarations: [FormElementEditComponent],
@@ -21,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatSelectModule,
     MatFormFieldModule,
+    PartitionModalModule
   ],
   exports: [FormElementEditComponent]
 })

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Partition } from 'src/app/models/partition.model';
+import { PartitionModalComponent } from '../partition-modal/partition-modal.component';
 
 @Component({
   selector: 'app-form-element-edit',
@@ -14,23 +16,23 @@ export class FormElementEditComponent implements OnInit {
   public aggregations = [
     {
       value: 'sum',
-      display: 'Enum.Aggragation.sum'
+      display: 'Enum.Aggregation.sum'
     },
     {
       value: 'average',
-      display: 'Enum.Aggragation.average'
+      display: 'Enum.Aggregation.average'
     },
     {
       value: 'highest',
-      display: 'Enum.Aggragation.highest'
+      display: 'Enum.Aggregation.highest'
     },
     {
       value: 'lowest',
-      display: 'Enum.Aggragation.lowest'
+      display: 'Enum.Aggregation.lowest'
     },
     {
       value: 'none',
-      display: 'Enum.Aggragation.none'
+      display: 'Enum.Aggregation.none'
     }
   ];
 
@@ -38,14 +40,16 @@ export class FormElementEditComponent implements OnInit {
     return this.elementForm.controls.partitions as FormArray;
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder
+  ) { }
 
-  ngOnInit(): void {
-    console.log(this.elementForm);
-  }
+  ngOnInit(): void {}
 
   onAddNewPartition() {
-    this.partitions.push(this.newPartition());
+    const partition: FormGroup = this.newPartition();
+    this.openDialog(partition);
   }
 
   onRemovePartition(i: number) {
@@ -57,9 +61,19 @@ export class FormElementEditComponent implements OnInit {
     return this.fb.group({
       id: [partition.id],
       name: [partition.name, Validators.required],
-      aggregation: [partition.aggreagation],
+      aggregation: [partition.aggregation, Validators.required],
       elements: this.fb.array([]),
+      useGroups: [partition.groups.length > 0],
       groups: this.fb.array([])
+    });
+  }
+
+  openDialog(partition: FormGroup) {
+    const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });
+
+    dialogRef.afterClosed().subscribe(res => {
+      console.log(res);
+      // this.partitions.push(partition);
     });
   }
 

@@ -28,7 +28,7 @@
         <div class="partitions-list" formArrayName="partitions">
             <ng-container *ngFor="let partition of partitions.controls; let i=index">
                 
-                <button mat-stroked-button class="mdm-button"><mat-icon>create</mat-icon>{{partition.name}}</button>
+                <button mat-stroked-button class="mdm-button" (click)="openDialog(partition)"><mat-icon>create</mat-icon>{{partition.name}}</button>
             </ng-container>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
         </div>
