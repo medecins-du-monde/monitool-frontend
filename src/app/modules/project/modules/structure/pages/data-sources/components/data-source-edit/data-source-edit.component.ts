@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/entity.model';
+import { FormElement } from 'src/app/models/form-element.model';
 import { Form } from 'src/app/models/form.model';
+import { Partition } from 'src/app/models/partition.model';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -71,6 +73,10 @@ export class DataSourceEditComponent implements OnInit {
     return this.dataSourceForm ? this.entities.filter(x => this.dataSourceForm.controls.entities.value.includes(x.id)) : [];
   }
 
+  get elements(): FormArray {
+    return this.dataSourceForm.controls.elements as FormArray;
+  }
+
   constructor(
     private fb: FormBuilder
   ) { }
@@ -81,7 +87,8 @@ export class DataSourceEditComponent implements OnInit {
       entities: [this.form.entities.map(x => x.id), Validators.required],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start],
-      end: [this.form.end]
+      end: [this.form.end],
+      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
       const selectedEntities = value.entities;
@@ -93,6 +100,38 @@ export class DataSourceEditComponent implements OnInit {
   onEntityRemoved(entity: Entity) {
     const entities = this.dataSourceForm.controls.themes.value;
     this.dataSourceForm.controls.entities.setValue(entities.filter(t => t !== entity.id));
+  }
+
+  onAddNewElement() {
+    this.elements.push(this.newElement());
+  }
+
+  onRemoveElement(i: number) {
+    this.elements.removeAt(i);
+  }
+
+  private newElement(element?: FormElement): FormGroup {
+    if (!element) {
+      element = new FormElement();
+    }
+    return this.fb.group({
+      id: [element.id],
+      name: [element.name, Validators.required],
+      partitions: this.fb.array(element.partitions.map(x => this.newPartition(x))),
+      distribution: [element.distribution],
+      geoAgg: [element.geoAgg],
+      timeAgg: [element.timeAgg]
+    });
+  }
+
+  private newPartition(partition: Partition): FormGroup {
+    return this.fb.group({
+      id: [partition.id],
+      name: [partition.name, Validators.required],
+      aggregation: [partition.aggreagation],
+      elements: this.fb.array([]),
+      groups: this.fb.array([])
+    });
   }
 
 }

@@ -9,7 +9,7 @@ export class Form implements Deserializable {
     start: Date;
     end: Date;
     periodicity: string;
-    elements: FormElement[];
+    elements: FormElement[] = [];
     entities: Entity[] = [];
 
     constructor(input?: any) {

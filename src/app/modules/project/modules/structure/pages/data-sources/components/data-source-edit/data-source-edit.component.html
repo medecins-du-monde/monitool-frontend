@@ -53,14 +53,19 @@
     </div>
 </div>
 <div class="mdm-title">Structure</div>
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>Variable 1</mat-panel-title>
-            <mat-panel-description>
-                <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddVariable' | translate }}</button>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-    </mat-expansion-panel>
-</mat-accordion>
-<button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddVariable' | translate }}</button>
+<div [formGroup]="dataSourceForm">
+    <mat-accordion formArrayName="elements">
+        <ng-container *ngFor="let element of elements.controls; let i=index">
+            <mat-expansion-panel [formGroupName]="i">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Variable {{i + 1}}: {{element.value.name}}</mat-panel-title>
+                    <mat-panel-description>
+                        <button mat-stroked-button class="mdm-button" (click)="onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-form-element-edit [elementForm]="element"></app-form-element-edit>
+            </mat-expansion-panel>
+        </ng-container>
+    </mat-accordion>
+</div>
+<button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddVariable' | translate }}</button>

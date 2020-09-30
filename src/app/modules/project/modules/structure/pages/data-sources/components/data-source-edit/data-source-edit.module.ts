@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FormElementEditModule } from '../form-element-edit/form-element-edit.module';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
@@ -28,7 +29,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FormElementEditModule
   ],
   exports: [DataSourceEditComponent]
 })

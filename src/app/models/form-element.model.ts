@@ -5,9 +5,9 @@ import { Partition } from './partition.model';
 export class FormElement implements Deserializable {
     id: string;
     name: string;
-    geoAgg: string;
-    timeAgg: string;
-    distribution: number;
+    geoAgg = 'sum';
+    timeAgg = 'sum';
+    distribution = 0;
     partitions: Partition[] = [];
 
     constructor(input?: any) {
