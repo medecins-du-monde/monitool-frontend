@@ -72,8 +72,18 @@ export class FormElementEditComponent implements OnInit {
     const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
-      // this.partitions.push(partition);
+      if (res) {
+        const existingPartitions = this.partitions.value.map(x => x.id);
+        const index = existingPartitions.indexOf(res.data.value.id);
+
+        if (res.save) {
+          index > -1 ? this.partitions.setControl(index, res.data) : this.partitions.push(res.data);
+        } else {
+          if ( index > -1 ) {
+            this.onRemovePartition(index);
+          }
+        }
+      }
     });
   }
 

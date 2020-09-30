@@ -490,22 +490,23 @@ body {
 .mdm-dialog {
     display: flex !important;
     flex-direction: column;
-    width: 900px;
+    min-width: 900px;
+    width: auto;
 
     .mdm-table {
         margin-bottom: 24px;
     }
 
     @media screen and (max-width: $breakpoint-md) {
-        width: 600px;
+        min-width: 600px;
     }
 
     @media screen and (max-width: $breakpoint-sm) {
-        width: 400px;
+        min-width: 400px;
     }
 
     @media screen and (max-width: $breakpoint-xs) {
-        width: 300px;
+        min-width: 300px;
     }
 }
 

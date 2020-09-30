@@ -37,6 +37,14 @@
     "en": "English",
     "EndDate": "End date",
     "Enum": {
+        "Aggregation": {
+            "sum": "Sum",
+			"average": "Average",
+			"highest": "Take highest value",
+			"lowest": "Take lowest value",
+			"last": "Take last value",
+			"none": "It's not possible to compute this"
+        },
         "Periodicity": {
             "day": "Every day",
             "month_week_sat": "Every weeks (saturday to friday / split by month)",

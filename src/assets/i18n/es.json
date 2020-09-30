@@ -37,6 +37,14 @@
     "en": "Inglés",
     "EndDate": "Fecha de fin",
     "Enum": {
+        "Aggregation": {
+            "sum": "Suma",
+			"average": "Promedio",
+			"highest": "Número mayor",
+			"lowest": "Número menor",
+			"last": "Último valor",
+			"none": "No es posible compilar"
+        },
         "Periodicity": {
             "day": "Diario",
 			"month_week_sat": "Cada semana (sábado a viernes / cortado por mes)",

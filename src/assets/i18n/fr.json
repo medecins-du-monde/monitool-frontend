@@ -37,6 +37,14 @@
     "en": "Anglais",
     "EndDate": "Date de fin",
     "Enum": {
+        "Aggregation": {
+            "sum": "Faire une somme",
+			"average": "Faire une moyenne",
+			"highest": "Prendre la plus grande valeure",
+			"lowest": "Prendre la plus petite valeure",
+			"last": "Prendre la dernière valeur",
+			"none": "Il n'est pas possible de faire ce calcul"
+        },
         "Periodicity": {
             "day": "Tous les jours",
 			"month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
