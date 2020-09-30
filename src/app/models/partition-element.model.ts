@@ -16,6 +16,9 @@ export class PartitionElement implements Deserializable {
     }
 
     serialize() {
-        return this;
+        return {
+            id: this.id,
+            name: this.name
+        };
     }
 }

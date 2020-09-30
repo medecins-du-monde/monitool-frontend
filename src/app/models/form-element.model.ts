@@ -22,6 +22,13 @@ export class FormElement implements Deserializable {
     }
 
     serialize() {
-        return this;
+        return {
+            id: this.id,
+            name: this.name,
+            geoAgg: this.geoAgg,
+            timeAgg: this.timeAgg,
+            distribution: this.distribution,
+            partitions: this.partitions.map(x => x.serialize())
+        };
     }
 }

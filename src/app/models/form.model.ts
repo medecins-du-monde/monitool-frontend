@@ -28,7 +28,7 @@ export class Form implements Deserializable {
 
     serialize() {
         return {
-            elements: [],
+            elements: this.elements.map(x => x.serialize()),
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.id),
             id: this.id,

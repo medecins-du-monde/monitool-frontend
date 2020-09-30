@@ -18,6 +18,10 @@ export class PartitionGroup implements Deserializable {
     }
 
     serialize() {
-        return this;
+        return {
+            id: this.id,
+            name: this.name,
+            members: this.members.map(x => x.id)
+        };
     }
 }
