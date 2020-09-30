@@ -130,7 +130,8 @@ export class DataSourceEditComponent implements OnInit {
       name: [partition.name, Validators.required],
       aggregation: [partition.aggregation],
       elements: this.fb.array([]),
-      groups: this.fb.array([])
+      groups: this.fb.array([]),
+      useGroups: [partition.useGroups]
     });
   }
 

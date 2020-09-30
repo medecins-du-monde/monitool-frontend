@@ -63,7 +63,7 @@ export class FormElementEditComponent implements OnInit {
       name: [partition.name, Validators.required],
       aggregation: [partition.aggregation, Validators.required],
       elements: this.fb.array([]),
-      useGroups: [partition.groups.length > 0],
+      useGroups: [partition.useGroups],
       groups: this.fb.array([])
     });
   }

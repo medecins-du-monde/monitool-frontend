@@ -9,7 +9,7 @@ export class Partition implements Deserializable {
     aggregation = 'sum';
     elements: PartitionElement[] = [];
     groups: PartitionGroup[] = [];
-    useGroups: boolean;
+    useGroups = false;
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -22,6 +22,7 @@ export class Partition implements Deserializable {
         this.groups = (input && input.groups) ? input.groups.map(x => {
             const group = new PartitionGroup(x);
             group.members = this.elements.filter(e => x.members.indexOf(e.id) >= 0);
+            return group;
         }) : [];
         this.useGroups = this.groups.length > 0;
         return this;
@@ -32,8 +33,8 @@ export class Partition implements Deserializable {
             id: this.id,
             name: this.name,
             aggregation: this.aggregation,
-            elements: this.elements.map(x => x.serialize),
-            groups: this.useGroups ? this.groups.map(x => x.serialize) : []
+            elements: this.elements.map(x => x.serialize()),
+            groups: this.useGroups ? this.groups.map(x => x.serialize()) : []
         };
     }
 }
