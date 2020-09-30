@@ -36,6 +36,22 @@
     "Email": "Email",
     "en": "English",
     "EndDate": "End date",
+    "Enum": {
+        "Periodicity": {
+            "day": "Every day",
+            "month_week_sat": "Every weeks (saturday to friday / split by month)",
+            "month_week_sun": "Every weeks (sunday to saturday / split by month)",
+            "month_week_mon": "Every weeks (monday to sunday / split by month)",
+            "week_sat": "Every week (saturday to friday)",
+            "week_sun": "Every week (sunday to saturday)",
+            "week_mon": "Every week (monday to sunday)",
+            "month": "Every month",
+            "quarter": "Every quarter",
+            "semester": "Every semester",
+            "year": "Every year",
+            "free": "Free"
+        }
+    },
     "es": "Spanish",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",

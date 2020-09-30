@@ -19,51 +19,51 @@ export class DataSourceEditComponent implements OnInit {
   public periodicities = [
     {
       value: 'day',
-      display: 'Periodicity.day'
+      display: 'Enum.Periodicity.day'
     },
     {
       value: 'month_week_sat',
-      display: 'Periodicity.month_week_sat'
+      display: 'Enum.Periodicity.month_week_sat'
     },
     {
       value: 'month_week_sun',
-      display: 'Periodicity.month_week_sun'
+      display: 'Enum.Periodicity.month_week_sun'
     },
     {
       value: 'month_week_mon',
-      display: 'Periodicity.month_week_mon'
+      display: 'Enum.Periodicity.month_week_mon'
     },
     {
       value: 'week_sat',
-      display: 'Periodicity.week_sat'
+      display: 'Enum.Periodicity.week_sat'
     },
     {
       value: 'week_sun',
-      display: 'Periodicity.week_sun'
+      display: 'Enum.Periodicity.week_sun'
     },
     {
       value: 'week_mon',
-      display: 'Periodicity.week_mon'
+      display: 'Enum.Periodicity.week_mon'
     },
     {
       value: 'month',
-      display: 'Periodicity.month'
+      display: 'Enum.Periodicity.month'
     },
     {
       value: 'quarter',
-      display: 'Periodicity.quarter'
+      display: 'Enum.Periodicity.quarter'
     },
     {
       value: 'semester',
-      display: 'Periodicity.semester'
+      display: 'Enum.Periodicity.semester'
     },
     {
       value: 'year',
-      display: 'Periodicity.year'
+      display: 'Enum.Periodicity.year'
     },
     {
       value: 'free',
-      display: 'Periodicity.free'
+      display: 'Enum.Periodicity.free'
     }
   ];
 
