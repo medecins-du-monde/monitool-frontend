@@ -3,6 +3,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/entity.model';
 import { FormElement } from 'src/app/models/form-element.model';
 import { Form } from 'src/app/models/form.model';
+import { PartitionElement } from 'src/app/models/partition-element.model';
+import { PartitionGroup } from 'src/app/models/partition-group.model';
 import { Partition } from 'src/app/models/partition.model';
 
 @Component({
@@ -125,13 +127,31 @@ export class DataSourceEditComponent implements OnInit {
   }
 
   private newPartition(partition: Partition): FormGroup {
-    return this.fb.group({
+    const partitionForm = this.fb.group({
       id: [partition.id],
       name: [partition.name, Validators.required],
       aggregation: [partition.aggregation],
-      elements: this.fb.array([]),
-      groups: this.fb.array([]),
+      elements: this.fb.array(partition.elements.map(x => this.newPartitionElement(x))),
       useGroups: [partition.useGroups]
+    });
+    const elements = partitionForm.controls.elements as FormArray;
+    partitionForm.addControl('groups', this.fb.array(
+      partition.useGroups ? partition.groups.map(x => this.newPartitionGroup(x, elements)) : []));
+    return partitionForm;
+  }
+
+  private newPartitionElement(partitionElement: PartitionElement): FormGroup {
+    return this.fb.group({
+      id: [partitionElement.id],
+      name: [partitionElement.name, Validators.required]
+    });
+  }
+
+  private newPartitionGroup(partitionGroup: PartitionGroup, elements: FormArray): FormGroup {
+    return this.fb.group({
+      id: [partitionGroup.id],
+      name: [partitionGroup.name, Validators.required],
+      members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
   }
 

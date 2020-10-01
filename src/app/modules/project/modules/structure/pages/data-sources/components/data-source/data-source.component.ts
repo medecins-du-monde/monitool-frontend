@@ -10,6 +10,7 @@ export class DataSourceComponent implements OnInit {
 
   @Input() form: Form;
   @Output() edit = new EventEmitter();
+  @Output() delete = new EventEmitter();
 
   periodicity: string;
 
@@ -21,6 +22,10 @@ export class DataSourceComponent implements OnInit {
 
   onEdit() {
     this.edit.emit(this.form);
+  }
+
+  onDelete() {
+    this.delete.emit(this.form);
   }
 
 }

@@ -40,4 +40,9 @@ export class DataSourcesComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
+  onDelete(form: Form) {
+    this.project.forms = this.project.forms.filter(x => x.id !== form.id);
+    this.projectService.project.next(this.project);
+  }
+
 }

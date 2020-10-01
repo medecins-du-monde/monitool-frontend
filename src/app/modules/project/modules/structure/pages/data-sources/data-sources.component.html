@@ -6,7 +6,7 @@
 
 <div class="mdm-section" *ngIf="!edition">
     <div class="mdm-cards">
-        <app-data-source *ngFor="let form of forms" class="mdm-card" [form]="form" (edit)='onEdit($event)'></app-data-source>
+        <app-data-source *ngFor="let form of forms" class="mdm-card" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)"></app-data-source>
     </div>
     <button mat-stroked-button class="mdm-button" (click)="onCreate()"><mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}</button>
 </div>
