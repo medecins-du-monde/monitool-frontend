@@ -7,11 +7,13 @@
         </div>
         <div class="card-info">
             <b class="card-info-title">{{ 'Periodicity' | translate }}</b>
-            <div class="card-info-value">{{ periodicity | translate }}</div>
+            <div class="card-info-value">{{ form.periodicityDisplay | translate }}</div>
         </div>
         <div class="card-info">
             <b class="card-info-title">{{ 'CollectionSites' | translate }}</b>
-            <div class="card-info-value">CSP</div>
+            <div class="card-info-value">
+                <div *ngFor="let entity of form.entities">{{ entity.name }}</div>
+            </div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
