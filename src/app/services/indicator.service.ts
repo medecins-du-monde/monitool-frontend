@@ -28,7 +28,7 @@ export class IndicatorService {
   }
 
   public async save(indicator: Indicator) {
-    // const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
+    const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
 
   public async delete(id: string) {

@@ -10,7 +10,7 @@
             <mat-select formControlName="themes" placeholder="{{ 'Thematics' | translate }}" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
-                        <mat-chip *ngFor="let theme of themes" [removable]="true"
+                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"
                             (removed)="onThemeRemoved(theme)">
                             {{ theme.name[currentLang] + '-' + theme.shortName[currentLang] }}
                             <mat-icon matChipRemove>cancel</mat-icon>

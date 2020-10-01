@@ -23,6 +23,10 @@ export class IndicatorModalComponent implements OnInit {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
+  get selectedThemes() {
+    return this.indicatorForm.controls.themes.value;
+  }
+
   constructor(
     private fb: FormBuilder,
     private translateService: TranslateService,
@@ -32,9 +36,6 @@ export class IndicatorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.themeService.list().then((res: Theme[]) => {
-      this.themes = res;
-    });
     this.indicatorForm = this.fb.group({
       _id: this.data ? this.data.id : null,
       themes: [[], [Validators.required, Validators.minLength(1)]],
@@ -48,6 +49,12 @@ export class IndicatorModalComponent implements OnInit {
         es: [this.data ? this.data.description.es : '', Validators.required],
         fr: [this.data ? this.data.description.fr : '', Validators.required]
       }),
+    });
+    this.themeService.list().then((res: Theme[]) => {
+      this.themes = res;
+      if (this.data) {
+        this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
+      }
     });
   }
 
