@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Indicators } from '../mocked/indicators.mocked';
 import { Indicator } from '../models/indicator.model';
 import { ApiService } from './api.service';
 import { ThemeService } from './theme.service';

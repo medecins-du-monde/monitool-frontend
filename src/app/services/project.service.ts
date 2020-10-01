@@ -3,7 +3,6 @@ import { ApiService } from './api.service';
 import { Project } from '../models/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Revisions } from '../mocked/revisions.mocked';
 import { Revision } from '../models/revision.model';
 
 @Injectable({
