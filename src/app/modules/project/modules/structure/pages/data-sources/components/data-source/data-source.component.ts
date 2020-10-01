@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Form } from 'src/app/models/form.model';
+import { Project } from 'src/app/models/project.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-data-source',
@@ -9,12 +12,25 @@ import { Form } from 'src/app/models/form.model';
 export class DataSourceComponent implements OnInit {
 
   @Input() form: Form;
+  @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 
   periodicity: string;
 
-  constructor() { }
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  get landscapePdfUrl() {
+    return `${environment.API_URL}/resources/project/${this.project.id}/data-source/${this.form.id}.pdf?orientation=landscape&language=${this.currentLang}`;
+  }
+
+  get portraitPdfUrl() {
+    return `${environment.API_URL}/resources/project/${this.project.id}/data-source/${this.form.id}.pdf?orientation=portrait&language=${this.currentLang}`;
+  }
+
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.periodicity = 'EveryMonth';

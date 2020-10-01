@@ -21,14 +21,14 @@
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <a mat-menu-item [href]="portraitPdfUrl" target="_blank">
         <mat-icon>insert_drive_file</mat-icon>
         <span>Download PDF (portrait)</span>
-    </button>
-    <button mat-menu-item>
+    </a>
+    <a mat-menu-item [href]="landscapePdfUrl" target="_blank">
         <mat-icon>note</mat-icon>
         <span>Download PDF (landscape)</span>
-    </button>
+    </a>
     <button mat-menu-item (click)="onDelete()">
         <mat-icon>delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
