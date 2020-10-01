@@ -72,7 +72,7 @@ export class DataSourceEditComponent implements OnInit {
   ];
 
   get selectedEntities() {
-    return this.dataSourceForm ? this.entities.filter(x => this.dataSourceForm.controls.entities.value.includes(x.id)) : [];
+    return this.dataSourceForm.controls.entities.value;
   }
 
   get elements(): FormArray {
@@ -85,23 +85,22 @@ export class DataSourceEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSourceForm = this.fb.group({
+      id: [this.form.id],
       name: [this.form.name, Validators.required],
-      entities: [this.form.entities.map(x => x.id), Validators.required],
+      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id)), Validators.required],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start],
       end: [this.form.end],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
-      const selectedEntities = value.entities;
-      value.entities = this.entities.filter(x => selectedEntities.includes(x.id));
-      this.edit.emit(Object.assign(this.form, value));
+      this.edit.emit(this.form.deserialize(value));
     });
   }
 
   onEntityRemoved(entity: Entity) {
-    const entities = this.dataSourceForm.controls.themes.value;
-    this.dataSourceForm.controls.entities.setValue(entities.filter(t => t !== entity.id));
+    const entities = this.dataSourceForm.controls.entities.value;
+    this.dataSourceForm.controls.entities.setValue(entities.filter(x => x.id !== entity.id));
   }
 
   onAddNewElement() {

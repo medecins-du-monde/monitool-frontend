@@ -21,7 +21,8 @@ export class Partition implements Deserializable {
         this.elements = (input && input.elements) ? input.elements.map(x => new PartitionElement(x)) : [];
         this.groups = (input && input.groups) ? input.groups.map(x => {
             const group = new PartitionGroup(x);
-            group.members = this.elements.filter(e => x.members.indexOf(e.id) >= 0);
+            const members = x.members.map(x => x.id ? x.id : x);
+            group.members = this.elements.filter(e => members.indexOf(e.id) >= 0);
             return group;
         }) : [];
         this.useGroups = this.groups.length > 0;

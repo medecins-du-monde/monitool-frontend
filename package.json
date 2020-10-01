@@ -25,6 +25,7 @@
     "@ngneat/svg-icon": "^1.0.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "lodash": "^4.17.20",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^8.3.0",
@@ -37,6 +38,7 @@
     "@angular/language-service": "~10.0.14",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/lodash": "^4.14.161",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
@@ -47,10 +49,10 @@
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
+    "svg-to-ts": "^5.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "^3.9.5",
-    "svg-to-ts": "^5.0.0"
+    "typescript": "^3.9.5"
   },
   "svg-to-ts": {
     "conversionType": "object",

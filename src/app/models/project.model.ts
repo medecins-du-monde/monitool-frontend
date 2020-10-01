@@ -5,6 +5,7 @@ import { Form } from './form.model';
 import { ProjectIndicator } from './project-indicator.model';
 import { Entity } from './entity.model';
 import { LogicalFrame } from './logical-frame.model';
+import * as _ from 'lodash';
 
 export class Project implements Deserializable {
     id: string;
@@ -127,7 +128,13 @@ export class Project implements Deserializable {
     }
 
     copy(): Project {
-        return new Project(JSON.parse(JSON.stringify(this)));
+        return _.cloneDeep(this);
+        // const obj = this.serialize();
+        // const themes = this.themes;
+        // const project = new Project(obj);
+        // project.themes = themes;
+        // return project;
+        // return new Project(JSON.parse(JSON.stringify(this)));
     }
 
     equals(project: Project): boolean {
