@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/entity.model';
 import { FormElement } from 'src/app/models/form-element.model';
@@ -12,7 +12,7 @@ import { Partition } from 'src/app/models/partition.model';
   templateUrl: './data-source-edit.component.html',
   styleUrls: ['./data-source-edit.component.scss']
 })
-export class DataSourceEditComponent implements OnInit {
+export class DataSourceEditComponent implements OnInit, OnChanges {
 
   dataSourceForm: FormGroup;
 
@@ -84,6 +84,14 @@ export class DataSourceEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.setForm();
+  }
+
+  ngOnChanges(): void {
+    this.setForm();
+  }
+
+  private setForm(): void {
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
