@@ -1,14 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { BasicsComponent } from './pages/basics/basics.component';
-import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.component';
-import { DataSourcesComponent } from './pages/data-sources/data-sources.component';
-import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
-import { SitesComponent } from './pages/sites/sites.component';
-import { UsersComponent } from './pages/users/users.component';
 import { StructureComponent } from './structure.component';
 
 const routes: Routes = [
@@ -18,39 +9,48 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        component: HomeComponent
+        loadChildren: () => import('./pages/home/home.module')
+        .then(m => m.HomeModule)
       },
       {
         path: 'basics',
-        component: BasicsComponent
+        loadChildren: () => import('./pages/basics/basics.module')
+        .then(m => m.BasicsModule)
       },
       {
         path: 'cross-cutting',
-        component: CrossCuttingComponent
+        loadChildren: () => import('./pages/cross-cutting/cross-cutting.module')
+        .then(m => m.CrossCuttingModule)
       },
       {
         path: 'data-sources',
-        component: DataSourcesComponent
+        loadChildren: () => import('./pages/data-sources/data-sources.module')
+        .then(m => m.DataSourcesModule)
       },
       {
         path: 'extra-indicators',
-        component: ExtraIndicatorsComponent
+        loadChildren: () => import('./pages/extra-indicators/extra-indicators.module')
+        .then(m => m.ExtraIndicatorsModule)
       },
       {
         path: 'history',
-        component: HistoryComponent
+        loadChildren: () => import('./pages/history/history.module')
+        .then(m => m.HistoryModule)
       },
       {
         path: 'logical-frame',
-        component: LogicalFrameComponent
+        loadChildren: () => import('./pages/logical-frame/logical-frame.module')
+        .then(m => m.LogicalFrameModule)
       },
       {
         path: 'sites',
-        component: SitesComponent
+        loadChildren: () => import('./pages/sites/sites.module')
+        .then(m => m.SitesModule)
       },
       {
         path: 'users',
-        component: UsersComponent
+        loadChildren: () => import('./pages/users/users.module')
+        .then(m => m.UsersModule)
       },
       {
         path: '**',

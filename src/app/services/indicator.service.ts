@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Indicators } from '../mocked/indicators.mocked';
 import { Indicator } from '../models/indicator.model';
 import { ApiService } from './api.service';
 import { ThemeService } from './theme.service';
@@ -16,9 +15,8 @@ export class IndicatorService {
 
   public async list() {
     const themes = await this.themeService.list();
-    // const response: any = await this.apiService.get('/resources/indicator');
-    const mocked = Indicators;
-    return mocked.map(x => {
+    const response: any = await this.apiService.get('/resources/indicator');
+    return response.map(x => {
       const indicator = new Indicator(x);
       indicator.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       return indicator;
@@ -30,7 +28,7 @@ export class IndicatorService {
   }
 
   public async save(indicator: Indicator) {
-    // const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
+    const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
 
   public async delete(id: string) {

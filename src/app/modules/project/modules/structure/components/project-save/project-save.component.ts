@@ -49,4 +49,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     });
   }
 
+  onRevert() {
+    this.projectService.project.next(this.savedProject.copy());
+  }
+
 }

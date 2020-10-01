@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { ProjectsComponent } from './pages/projects/projects.component';
-import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService as AuthGuard } from './guards/auth-guard.service';
-
 
 const routes: Routes = [{
   path: '',
@@ -18,7 +14,8 @@ const routes: Routes = [{
 },
 {
   path: 'home',
-  component: HomeComponent,
+  loadChildren: () => import('./pages/home/home.module')
+    .then(m => m.HomeModule),
   canActivate : [AuthGuard]
 },
 {
@@ -29,7 +26,8 @@ const routes: Routes = [{
 },
 {
   path: 'projects',
-  component: ProjectsComponent,
+  loadChildren: () => import('./pages/projects/projects.module')
+    .then(m => m.ProjectsModule),
   canActivate : [AuthGuard]
 },
 {
@@ -40,7 +38,8 @@ const routes: Routes = [{
 },
 {
   path: 'indicators',
-  component: IndicatorsComponent,
+  loadChildren: () => import('./pages/indicators/indicators.module')
+    .then(m => m.IndicatorsModule),
   canActivate : [AuthGuard]
 },
 {

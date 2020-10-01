@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/modules/parameters/models/user';
-import { usersList } from '../../constants/user';
 import { MatDialog } from '@angular/material/dialog';
-import { UserModalComponent } from '../../components/user-modal/user-modal.component';
+import { UserModalComponent } from './components/user-modal/user-modal.component';
+import { usersList } from './constants/user';
 
 @Component({
   selector: 'app-users',

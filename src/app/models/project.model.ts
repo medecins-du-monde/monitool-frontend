@@ -2,7 +2,10 @@ import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { Theme } from './theme.model';
 import { Form } from './form.model';
-import { ExtraIndicator } from './extra-indicator.model';
+import { ProjectIndicator } from './project-indicator.model';
+import { Entity } from './entity.model';
+import { LogicalFrame } from './logical-frame.model';
+import * as _ from 'lodash';
 
 export class Project implements Deserializable {
     id: string;
@@ -16,11 +19,11 @@ export class Project implements Deserializable {
     country: string;
     themes: Theme[] = [];
     crossCutting: any;
-    extraIndicators: ExtraIndicator[];
-    logicalFrames: any[];
-    entities: any[];
+    extraIndicators: ProjectIndicator[] = [];
+    logicalFrames: LogicalFrame[] = [];
+    entities: Entity[] = [];
     groups: any[];
-    forms: Form[];
+    forms: Form[] = [];
     users: any[];
     visibility: string;
 
@@ -72,25 +75,33 @@ export class Project implements Deserializable {
         this.start = input ? new Date(input.start) : new Date();
         this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
-        this.entities = [];
-        this.logicalFrames = [];
-        this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ExtraIndicator(x)) : [];
-        this.forms = ( input && input.forms ) ? input.forms.map(x => new Form(x)) : [];
+        this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
+        this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
+        this.forms = ( input && input.forms ) ? input.forms.map(x => {
+            const form = new Form(x);
+            form.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+            return form;
+        }) : [];
+        this.logicalFrames = ( input && input.logicalFrames ) ? input.logicalFrames.map(x => {
+            const logicalFrame = new LogicalFrame(x);
+            logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
+            return logicalFrame;
+        }) : [];
         this.crossCutting = {};
-        this.crossCutting['indicator:fe1635fc-b381-4cfe-9353-177fce63cd50'] = {
-            baseline: 12,
-            colorize: true,
-            computation: {formula: '12', parameters: {}},
-            display: 'test',
-            target: 100
-        };
-        this.crossCutting['indicator:09a7d8cd-441d-478a-b750-19fd8bd5faef'] = {
-            baseline: null,
-            colorize: true,
-            computation: null,
-            display: 'test 2',
-            target: null
-        };
+        // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
+        //     baseline: 12,
+        //     colorize: true,
+        //     computation: {formula: '12', parameters: {}},
+        //     display: 'test',
+        //     target: 100
+        // };
+        // this.crossCutting['indicator:7d4599d1-7a54-425c-a8e9-4d1bc594b82b'] = {
+        //     baseline: null,
+        //     colorize: true,
+        //     computation: null,
+        //     display: 'test 2',
+        //     target: null
+        // };
         return this;
     }
 
@@ -99,14 +110,14 @@ export class Project implements Deserializable {
             active: this.active,
             country: this.country,
             crossCutting: {},
-            end: this.end.toISOString().slice(0, 10),
-            entities: [],
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
+            entities: this.entities.map(x => x.serialize()),
             extraIndicators: [],
-            forms: [],
+            forms: this.forms.map(x => x.serialize()),
             groups: [],
             logicalFrames: [],
             name: this.name,
-            start: this.start.toISOString().slice(0, 10),
+            start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
             users: [],
@@ -117,7 +128,13 @@ export class Project implements Deserializable {
     }
 
     copy(): Project {
-        return new Project(JSON.parse(JSON.stringify(this)));
+        return _.cloneDeep(this);
+        // const obj = this.serialize();
+        // const themes = this.themes;
+        // const project = new Project(obj);
+        // project.themes = themes;
+        // return project;
+        // return new Project(JSON.parse(JSON.stringify(this)));
     }
 
     equals(project: Project): boolean {

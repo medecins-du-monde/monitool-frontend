@@ -36,6 +36,30 @@
     "Email": "Email",
     "en": "Anglais",
     "EndDate": "Date de fin",
+    "Enum": {
+        "Aggregation": {
+            "sum": "Faire une somme",
+			"average": "Faire une moyenne",
+			"highest": "Prendre la plus grande valeure",
+			"lowest": "Prendre la plus petite valeure",
+			"last": "Prendre la dernière valeur",
+			"none": "Il n'est pas possible de faire ce calcul"
+        },
+        "Periodicity": {
+            "day": "Tous les jours",
+			"month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
+			"month_week_sun": "Toutes les semaines (dimanche à lundi / coupées par mois)",
+			"month_week_mon": "Toutes les semaines (lundi à dimanche / coupées par mois)",
+			"week_sat": "Toutes les semaines (samedi à vendredi)",
+			"week_sun": "Toutes les semaines (dimanche à lundi)",
+			"week_mon": "Toutes les semaines (lundi à dimanche)",
+			"month": "Tous les mois",
+			"quarter": "Tous les trimestres",
+			"semester": "Tous les semestres",
+			"year": "Tous les ans",
+			"free": "Libre"
+        }
+    },
     "es": "Espagnol",
     "EveryMonth": "Tous les mois",
     "ExtraIndicators": "Indicateurs annexés",

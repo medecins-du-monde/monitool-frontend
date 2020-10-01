@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExtraIndicator } from 'src/app/models/extra-indicator.model';
+import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class ExtraIndicatorsComponent implements OnInit {
 
-  extraIndicators: ExtraIndicator[] = [];
+  extraIndicators: ProjectIndicator[] = [];
 
   constructor(private projectService: ProjectService) { }
 
