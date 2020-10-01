@@ -24,6 +24,9 @@ export class DataSourcesComponent implements OnInit {
       this.project = project;
       this.forms = project.forms;
       this.entities = project.entities;
+      if ( this.currentForm ) {
+        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
+      }
     });
   }
 
