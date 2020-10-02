@@ -106,7 +106,7 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-        return {
+        const serialized = {
             active: this.active,
             country: this.country,
             crossCutting: {},
@@ -122,9 +122,10 @@ export class Project implements Deserializable {
             type: this.type,
             users: [],
             visibility: this.visibility,
-            _id: this.id,
-            _rev: this.rev
+            _id: this.id
         };
+        Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
+        return serialized;
     }
 
     copy(): Project {
