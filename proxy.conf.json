@@ -4,4 +4,4 @@
     "secure": false,
     "pathRewrite": {"^/api" : ""}
   }
-  }
+}

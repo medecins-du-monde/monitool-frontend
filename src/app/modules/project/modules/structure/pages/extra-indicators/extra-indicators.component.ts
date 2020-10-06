@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-extra-indicators',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExtraIndicatorsComponent implements OnInit {
 
-  constructor() { }
+  extraIndicators: ProjectIndicator[] = [];
+
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.extraIndicators = project.extraIndicators;
+    });
   }
 
 }

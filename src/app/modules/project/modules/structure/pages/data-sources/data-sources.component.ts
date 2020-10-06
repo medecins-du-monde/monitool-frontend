@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from 'src/app/models/form';
+import { Entity } from 'src/app/models/entity.model';
+import { Form } from 'src/app/models/form.model';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-data-sources',
@@ -8,21 +11,41 @@ import { Form } from 'src/app/models/form';
 })
 export class DataSourcesComponent implements OnInit {
 
-  public datasources: Form[] = [
-    {
-      id: 'ee005f45-e3da-4f7d-bde4-f44837cd224b',
-      name: 'RAPPORT PSYCHOSOCIAUX',
-      elements: [],
-      start: new Date('2019-01-01'),
-      end: new Date('2020-12-31'),
-      entities: [],
-      periodicity: 'month',
-    }
-  ];
+  project: Project;
+  forms: Form[] = [];
+  currentForm: Form;
+  entities: Entity[];
+  edition = false;
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
+      this.forms = project.forms;
+      this.entities = project.entities;
+      if ( this.currentForm ) {
+        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
+      }
+    });
+  }
+
+  onCreate(): void {
+    this.currentForm = new Form();
+    this.project.forms.push(this.currentForm);
+    this.projectService.project.next(this.project);
+    this.edition = true;
+  }
+
+  onEdit(form: Form) {
+    this.edition = true;
+    this.currentForm = form;
+    this.projectService.project.next(this.project);
+  }
+
+  onDelete(form: Form) {
+    this.project.forms = this.project.forms.filter(x => x.id !== form.id);
+    this.projectService.project.next(this.project);
   }
 
 }

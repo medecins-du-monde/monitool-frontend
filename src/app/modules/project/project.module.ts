@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ProjectComponent } from './project.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
-import { SvgIconsModule } from '@ngneat/svg-icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     ProjectRoutingModule,
     SidenavModule,
-    SvgIconsModule
+    MatSidenavModule
   ]
 })
 export class ProjectModule { }

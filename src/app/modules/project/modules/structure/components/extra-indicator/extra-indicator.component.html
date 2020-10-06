@@ -1,0 +1,28 @@
+<mat-card>
+    <mat-card-header class="card-header">{{ extraIndicator.display }}</mat-card-header>
+    <mat-card-content>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>{{ extraIndicator.baseline ? extraIndicator.baseline : '?' }}</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Target' | translate }}: </b>{{ extraIndicator.target ? extraIndicator.target : '?' }}</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
+                <span *ngIf="extraIndicator.computation; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
+                <ng-template #elseBlock><span class="computation invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end" class="mdm-button-group">
+        <button mat-stroked-button class="mdm-button small-button"><mat-icon svgIcon="edit"></mat-icon>{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'Delete' | translate }}</span>
+    </button>
+</mat-menu>

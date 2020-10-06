@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { indicatorsList } from 'src/app/constants/indicators';
-import { Indicator } from '../../../../models/indicator';
+import { MatDialog } from '@angular/material/dialog';
+import { Indicator } from 'src/app/models/indicator.model';
+import { IndicatorService } from 'src/app/services/indicator.service';
+import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
 
 
 @Component({
@@ -9,11 +11,40 @@ import { Indicator } from '../../../../models/indicator';
   styleUrls: ['./indicators.component.scss']
 })
 export class IndicatorsComponent implements OnInit {
+
   indicators: Indicator[];
-  constructor() { }
+
+  constructor(
+    private indicatorService: IndicatorService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
-    this.indicators = indicatorsList;
+    this.getIndicators();
+  }
+
+  private getIndicators() {
+    this.indicatorService.list().then((res: Indicator[]) => {
+      this.indicators = res;
+    });
+  }
+
+  onDelete(id: string) {
+    this.indicatorService.delete(id).then(() => this.getIndicators());
+  }
+
+  onEdit(indicator: Indicator) {
+    this.indicatorService.save(indicator).then(() => this.getIndicators());
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(IndicatorModalComponent);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.data) {
+        this.indicatorService.save(res.data).then(() => this.getIndicators());
+      }
+    });
   }
 
 }

@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent } from './pages/users/users.component';
-import { ThematicsComponent } from './pages/thematics/thematics.component';
-import { IndicatorsComponent } from './pages/indicators/indicators.component';
 import { ParametersComponent } from './parameters.component';
 
 const routes: Routes = [
@@ -17,23 +14,18 @@ const routes: Routes = [
       },
       {
         path: 'themes',
-        component: ThematicsComponent
+        loadChildren: () => import('./pages/thematics/thematics.module')
+          .then(m => m.ThematicsModule),
       },
       {
         path: 'indicators',
-        component: IndicatorsComponent
+        loadChildren: () => import('./pages/indicators/indicators.module')
+          .then(m => m.IndicatorsModule),
       },
       {
         path: 'users',
-        component: UsersComponent
-      },
-      {
-        path: 'themes',
-        component: ThematicsComponent
-      },
-      {
-        path: 'indicators',
-        component: IndicatorsComponent
+        loadChildren: () => import('./pages/users/users.module')
+          .then(m => m.UsersModule),
       }
     ]
   },

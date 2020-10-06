@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 export interface Task {
   taskText1: string;
@@ -19,21 +21,26 @@ export interface Task {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   displayedColumns: string[] = ['task', 'status'];
+
   dataSource: Task[];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const projectId = params.id;
+    this.projectService.openedProject.subscribe((project: Project) => {
+      const percentages = project.percentages;
       this.dataSource = [
         {
           taskText1: 'Remplissez les ',
           buttonIcon1: 'database',
           buttonText1: 'Données de base',
           taskText2: ' de votre projet (pays, nom, thématiques, ...).',
-          status: 100,
+          status: percentages.basics,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../basics`,
@@ -44,7 +51,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'location',
           buttonText1: 'Lieux de collecte',
           taskText2: ' sur lesquels votre projet va travailler.',
-          status: 30,
+          status: percentages.sites,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../sites`,
@@ -55,7 +62,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'clipboard',
           buttonText1: 'Cadres Logiques',
           taskText2: '',
-          status: 45,
+          status: percentages.logicalFrames,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../logical-frame`,
@@ -66,7 +73,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'clipboard',
           buttonText1: 'Cadres Logiques',
           taskText2: ' vont être utilisés sur le même projet, renseignez les également.',
-          status: 0,
+          status: percentages.logicalFramesOther,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../logical-frame`,
@@ -77,7 +84,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'gauge',
           buttonText1: 'Indicateurs annexés',
           taskText2: '',
-          status: 0,
+          status: percentages.extraIndicators,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../extra-indicators`,
@@ -88,7 +95,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'folder',
           buttonText1: 'Sources de données',
           taskText2: ' dont vous allez extraire les données nécessaires au calculs des indicateurs de tous vos cadres logiques. À mesure de votre avancement, mettez à jour les formules de calcul de vos indicateurs dans ',
-          status: 0,
+          status: percentages.logicalFramesUpdate,
           buttonIcon2: 'clipboard',
           buttonText2: 'Cadres Logiques',
           routerLink1: `../data-sources`,
@@ -99,7 +106,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'gauge',
           buttonText1: 'Indicateurs transversaux',
           taskText2: '',
-          status: 0,
+          status: percentages.crossCuttingUpdate,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../cross-cutting`,
@@ -110,7 +117,7 @@ export class HomeComponent implements OnInit {
           buttonIcon1: 'gauge',
           buttonText1: 'Indicateurs annexés',
           taskText2: '',
-          status: 0,
+          status: percentages.extraIndicatorsUpdate,
           buttonIcon2: '',
           buttonText2: '',
           routerLink1: `../extra-indicators`,

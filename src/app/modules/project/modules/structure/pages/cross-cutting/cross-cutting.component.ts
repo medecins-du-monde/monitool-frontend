@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { IndicatorsGroup } from 'src/app/models/indicators-group';
+import { TranslateService } from '@ngx-translate/core';
+import { Indicator } from 'src/app/models/indicator.model';
+import { Project } from 'src/app/models/project.model';
+import { Theme } from 'src/app/models/theme.model';
+import { IndicatorService } from 'src/app/services/indicator.service';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-cross-cutting',
@@ -7,83 +12,46 @@ import { IndicatorsGroup } from 'src/app/models/indicators-group';
   styleUrls: ['./cross-cutting.component.scss']
 })
 export class CrossCuttingComponent implements OnInit {
-  // data mocked just  test purposes
-  indicators: IndicatorsGroup[] = [
-    { // IndicatorGroup
-      thematic: { // multilingual
-        en: 'Multiple thematics',
-        es: 'Varias temáticas',
-        fr: 'Multi-thématique',
-       },
-       indicators: [ // Indicator
-         {
-           name: {
-            en: 'Training volume',
-            es: 'Volumen de formación',
-            fr: 'Volume de formation'
-          },
-          description: {
-            en: 'We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.',
-            es: 'No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.',
-            fr: 'On ne parle pas d\'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces forma...'
-          },
-          themes: [], // string[]
-         }
-       ]
-    },
-    { // IndicatorGroup
-      thematic: { // multilingual
-        en: 'Multiple thematics',
-        es: 'Varias temáticas',
-        fr: 'Multi-thématique',
-       },
-       indicators: [ // Indicator
-         {
-           name: {
-            en: 'Training volume',
-            es: 'Volumen de formación',
-            fr: 'Volume de formation'
-          },
-          description: {
-            en: 'We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.',
-            es: 'No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.',
-            fr: 'On ne parle pas d\'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces forma...'
-          },
-          themes: [], // string[]
-         },
-         {
-          name: {
-           en: 'Training volume',
-           es: 'Volumen de formación',
-           fr: 'Volume de formation'
-         },
-         description: {
-           en: 'We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.',
-           es: 'No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.',
-           fr: 'On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces forma...'
-         },
-         themes: [], // string[]
-        },
-        {
-          name: {
-           en: 'Training volume',
-           es: 'Volumen de formación',
-           fr: 'Volume de formation'
-         },
-         description: {
-           en: 'We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.',
-           es: 'No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.',
-           fr: 'On ne parle pas d\'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces forma...'
-         },
-         themes: [], // string[]
-        }
-       ]
-    }
-  ];
 
-  constructor() { }
+  indicators: Indicator[] = [];
+
+  groups: { theme: Theme, indicators: Indicator[]}[] = [];
+
+  multiThemesIndicators: Indicator[] = [];
+
+  crossCutting: any = {};
+
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(
+    private translateService: TranslateService,
+    private indicatorService: IndicatorService,
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.crossCutting = project.crossCutting;
+      this.indicatorService.list().then((indicators: Indicator[]) => {
+        this.indicators = indicators;
+        this.groups = [];
+        this.multiThemesIndicators = [];
+        this.indicators.forEach(x => {
+          if (x.multiThemes) {
+            this.multiThemesIndicators.push(x);
+          } else {
+            const group = this.groups.find(g => g.theme.id === x.themes[0].id );
+            if ( group ) {
+              group.indicators.push(x);
+            } else {
+              this.groups.push({ theme: x.themes[0], indicators: [x] });
+            }
+          }
+        });
+      });
+    });
   }
 
 }

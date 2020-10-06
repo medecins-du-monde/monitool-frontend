@@ -1,0 +1,40 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{ 'ThematicEdition' | translate }}</h2>
+<mat-dialog-content [formGroup]="themeForm" class="mdm-dialog">
+    <div class="info-section blue">
+        <p>Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.</p>
+    </div>
+    <table mat-table [dataSource]="languages" class="mdm-table">
+
+        <ng-container matColumnDef="language">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" id="language"> 
+                {{ element | translate }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="shortName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'Acronym' | translate }}</th>
+            <td mat-cell *matCellDef="let element" id="shortName" formGroupName="shortName"> 
+                <mat-form-field appearance="outline" class="mdm-form-field">
+                    <input matInput [formControlName]="element" placeholder="{{ 'Acronym' | translate }}">
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
+            <td mat-cell *matCellDef="let element" id="name" formGroupName="name"> 
+                <mat-form-field appearance="outline" class="mdm-form-field">
+                    <input matInput [formControlName]="element" placeholder="{{ 'Name' | translate }}">
+                </mat-form-field>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onSubmit()" class="mdm-button" [disabled]="themeForm.invalid">{{ 'SaveThematic' | translate }}</button>
+</mat-dialog-actions>

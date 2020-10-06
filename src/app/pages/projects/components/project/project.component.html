@@ -1,0 +1,53 @@
+<mat-card>
+    <mat-card-header class="card-header">
+        <div mat-card-avatar class="project-country">
+            <img [src]="project.countryImage">
+        </div>
+        <mat-card-title>
+            {{project.country}}
+        </mat-card-title>
+        <mat-chip-list class="project-status">
+            <mat-chip color="accent" selected>{{ project.status | translate }}</mat-chip>
+        </mat-chip-list>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Name' | translate }}</div>
+            <div class="card-info-value">{{ project.name }}</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Date' | translate }}</div>
+            <div class="card-info-value">{{project.start  | date: 'mediumDate'}} - {{project.end  | date: 'mediumDate'}}</div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Thematics' | translate }}</div>
+            <div class="card-info-value">
+                <div *ngFor="let theme of project.themes">{{theme.shortName[currentLang]}}</div>
+            </div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
+            <div class="card-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : ( 'None' | translate )}}</div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions align="end" class="mdm-button-group">
+        <ng-container *ngIf="project.active">
+            <button mat-stroked-button (click)="onOpen()" class="mdm-button">{{ 'Open' | translate }}</button>
+            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
+        </ng-container>
+        <ng-container *ngIf="!project.active">
+            <button mat-stroked-button (click)="onRestore()" class="mdm-button"><mat-icon>restore</mat-icon>{{ 'Restore' | translate }}</button>
+        </ng-container>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onClone()" *ngIf="project.active">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'Clone' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="onDelete()" *ngIf="project.active">
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'Delete' | translate }}</span>
+    </button>
+</mat-menu>

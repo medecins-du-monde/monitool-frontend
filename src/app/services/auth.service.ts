@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { API_URL } from '../../environments/environment';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiService: ApiService) { }
 
   public async isAuthenticated(): Promise<boolean> {
     let response = false;
 
-    await this.http.get(`${API_URL}/resources/myself`).toPromise().then(result => {
-       response = true;
-      }).catch((err) => {
+    await this.apiService.get('/resources/myself')
+      .then(() => {
+        response = true;
+      })
+      .catch(() => {
         response = false;
       });
-
     return response;
   }
 
-  public validate(email, password) {
-    return this.http.post(`${API_URL}/authentication/login-training/`, {username : email, password}, {responseType: 'text'});
+  public validate(email: string, password: string): Promise<ArrayBuffer> {
+    return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
   }
 }

@@ -179,6 +179,7 @@ body {
     overflow: auto;
     padding: 24px;
     flex: 1;
+    margin-bottom: 56px;
 
     @media screen and (max-width: $breakpoint-sm) {
         margin-top: 32px;
@@ -445,6 +446,20 @@ body {
         }
     }
 
+    .mdm-form-field {
+        width: 100%;
+        
+        .mat-form-field-wrapper {
+            padding: 0 !important;
+
+            .mat-form-field-flex {
+                .mat-form-field-infix {
+                    width: auto;
+                }
+            }
+        }
+    }
+
     th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
         padding: 8px 8px 8px 16px;
     }
@@ -475,18 +490,23 @@ body {
 .mdm-dialog {
     display: flex !important;
     flex-direction: column;
-    width: 900px;
+    min-width: 900px;
+    width: auto;
+
+    .mdm-table {
+        margin-bottom: 24px;
+    }
 
     @media screen and (max-width: $breakpoint-md) {
-        width: 600px;
+        min-width: 600px;
     }
 
     @media screen and (max-width: $breakpoint-sm) {
-        width: 400px;
+        min-width: 400px;
     }
 
     @media screen and (max-width: $breakpoint-xs) {
-        width: 300px;
+        min-width: 300px;
     }
 }
 

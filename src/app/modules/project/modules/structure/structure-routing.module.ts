@@ -1,57 +1,64 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { BasicsComponent } from './pages/basics/basics.component';
-import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.component';
-import { DataSourcesComponent } from './pages/data-sources/data-sources.component';
-import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
-import { SitesComponent } from './pages/sites/sites.component';
-import { UsersComponent } from './pages/users/users.component';
+import { StructureComponent } from './structure.component';
 
 const routes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'basics',
-    component: BasicsComponent
-  },
-  {
-    path: 'cross-cutting',
-    component: CrossCuttingComponent
-  },
-  {
-    path: 'data-sources',
-    component: DataSourcesComponent
-  },
-  {
-    path: 'extra-indicators',
-    component: ExtraIndicatorsComponent
-  },
-  {
-    path: 'history',
-    component: HistoryComponent
-  },
-  {
-    path: 'logical-frame',
-    component: LogicalFrameComponent
-  },
-  {
-    path: 'sites',
-    component: SitesComponent
-  },
-  {
-    path: 'users',
-    component: UsersComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+    path: '',
+    component: StructureComponent,
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./pages/home/home.module')
+        .then(m => m.HomeModule)
+      },
+      {
+        path: 'basics',
+        loadChildren: () => import('./pages/basics/basics.module')
+        .then(m => m.BasicsModule)
+      },
+      {
+        path: 'cross-cutting',
+        loadChildren: () => import('./pages/cross-cutting/cross-cutting.module')
+        .then(m => m.CrossCuttingModule)
+      },
+      {
+        path: 'data-sources',
+        loadChildren: () => import('./pages/data-sources/data-sources.module')
+        .then(m => m.DataSourcesModule)
+      },
+      {
+        path: 'extra-indicators',
+        loadChildren: () => import('./pages/extra-indicators/extra-indicators.module')
+        .then(m => m.ExtraIndicatorsModule)
+      },
+      {
+        path: 'history',
+        loadChildren: () => import('./pages/history/history.module')
+        .then(m => m.HistoryModule)
+      },
+      {
+        path: 'logical-frame',
+        loadChildren: () => import('./pages/logical-frame/logical-frame.module')
+        .then(m => m.LogicalFrameModule)
+      },
+      {
+        path: 'sites',
+        loadChildren: () => import('./pages/sites/sites.module')
+        .then(m => m.SitesModule)
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./pages/users/users.module')
+        .then(m => m.UsersModule)
+      },
+      {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      }
+    ]
+  }
 ];
 
 @NgModule({

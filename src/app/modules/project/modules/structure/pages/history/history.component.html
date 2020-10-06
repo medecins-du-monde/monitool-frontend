@@ -7,7 +7,7 @@
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>{{ 'Date'| translate}} & {{ 'User' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="date"> 
-            <p>{{ element.date }}</p>
+            <p>{{ element.time | date: 'short' }}</p>
             <p>{{ element.username }}</p>
         </td>
     </ng-container>
@@ -17,7 +17,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'HistoryChanges' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="changes"> 
             <ul>
-                <li *ngFor="let change of element.changes" [innerHTML]="change"></li>
+                <li *ngFor="let patch of element.forwards">{{ patch.translationKey | translate }}</li>
             </ul>
         </td>
     </ng-container>
@@ -31,6 +31,12 @@
             </div>
         </td>
     </ng-container>
+
+    <ng-container matColumnDef="expandedRevisions">
+        <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
+            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'SeeOlderRevisions' | translate }}</button>
+        </td>
+    </ng-container>
    
     <tr mat-header-row *matHeaderRowDef="displayedColumns" (mouseover)="mouseLeave()"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
@@ -39,4 +45,5 @@
       (mouseover)='mouseOver(element)'>
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <tr mat-footer-row *matFooterRowDef="['expandedRevisions']" [ngClass]="{'hidden-row': !showLoadMore }"></tr>
 </table>

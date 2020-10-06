@@ -1,74 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './pages/home/home.component';
+import { StructureComponent } from './structure.component';
+import { ProjectSaveModule } from './components/project-save/project-save.module';
 import { StructureRoutingModule } from './structure-routing.module';
-import { BasicsComponent } from './pages/basics/basics.component';
-import { SitesComponent } from './pages/sites/sites.component';
-import { DataSourcesComponent } from './pages/data-sources/data-sources.component';
-import { LogicalFrameComponent } from './pages/logical-frame/logical-frame.component';
-import { CrossCuttingComponent } from './pages/cross-cutting/cross-cutting.component';
-import { ExtraIndicatorsComponent } from './pages/extra-indicators/extra-indicators.component';
-import { UsersComponent } from './pages/users/users.component';
-import { HistoryComponent } from './pages/history/history.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { TranslateModule } from '@ngx-translate/core';
-import { ProgressBarModule } from 'src/app/components/progress-bar/progress-bar.module';
-import { LogicalCardModule } from './components/logical-card/logical-card.module';
-import { UserModule } from './components/user/user.module';
-import { UserModalModule } from './components/user-modal/user-modal.module';
-import { MatDialogModule } from '@angular/material/dialog';
-import { CrossCuttingIndicatorModule } from 'src/app/modules/project/modules/structure/components/cross-cutting-indicator/cross-cutting-indicator.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatChipsModule } from '@angular/material/chips';
-import { DataSourceModule } from './components/data-source/data-source.module';
-
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    BasicsComponent,
-    SitesComponent,
-    DataSourcesComponent,
-    LogicalFrameComponent,
-    CrossCuttingComponent,
-    ExtraIndicatorsComponent,
-    UsersComponent,
-    HistoryComponent,
-  ],
+  declarations: [StructureComponent],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule,
     StructureRoutingModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    ProgressBarModule,
-    LogicalCardModule,
-    MatChipsModule,
-    MatInputModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatDialogModule,
-    ProgressBarModule,
-    UserModule,
-    UserModalModule,
-    DataSourceModule,
-    CrossCuttingIndicatorModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    MatNativeDateModule
+    ProjectSaveModule
   ]
 })
 export class StructureModule { }

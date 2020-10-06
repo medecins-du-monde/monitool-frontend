@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Sidenav } from 'src/app/models/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-project',
@@ -11,11 +13,17 @@ export class ProjectComponent implements OnInit {
 
   public sidenav: Sidenav;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const projectId = params.id;
+      this.projectService.get(projectId).then((project: Project) => {
+        this.projectService.project.next(project);
+      });
       this.sidenav = {
         groups: [
           {
