@@ -9,7 +9,7 @@
 </div>
 <div class="mdm-section" [formGroup]="form">
     <div class="mdm-title">{{ 'CollectionSites' | translate }}</div>
-    <table mat-table [dataSource]="sites.controls" class="mdm-table" formArrayName="sites">
+    <table mat-table [dataSource]="sitesDataSource" class="mdm-table" formArrayName="sites">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef></th>
@@ -79,7 +79,7 @@
 </div>
 <div class="mdm-section" [formGroup]="form">
     <div class="mdm-title">{{ 'Groups' | translate }}</div>
-    <table mat-table [dataSource]="groups.controls" class="mdm-table" formArrayName="groups">
+    <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef></th>
