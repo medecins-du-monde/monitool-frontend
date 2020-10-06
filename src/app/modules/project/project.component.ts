@@ -52,7 +52,7 @@ export class ProjectComponent implements OnInit {
               },
               {
                 name: 'LogicalFrameworks',
-                routerLink: `../${projectId}/structure/logical-frame`,
+                routerLink: `../${projectId}/structure/logical-frames`,
                 icon: 'clipboard'
               },
               {

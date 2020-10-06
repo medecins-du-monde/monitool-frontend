@@ -25,11 +25,11 @@
 <mat-menu #menu="matMenu">
     <a mat-menu-item [href]="portraitPdfUrl" target="_blank">
         <mat-icon>insert_drive_file</mat-icon>
-        <span>Download PDF (portrait)</span>
+        <span>{{ 'Download' | translate }} PDF ( {{'Portrait' | translate}} )</span>
     </a>
     <a mat-menu-item [href]="landscapePdfUrl" target="_blank">
         <mat-icon>note</mat-icon>
-        <span>Download PDF (landscape)</span>
+        <span>{{ 'Download' | translate }} PDF ( {{'Landscape' | translate}} )</span>
     </a>
     <button mat-menu-item (click)="onDelete()">
         <mat-icon>delete</mat-icon>
