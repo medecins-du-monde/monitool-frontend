@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface CollectionSite {
-  name: string;
-  startDate: Date;
-  endDate: Date;
-}
-
-export interface Group {
-  name: string;
-  sites: CollectionSite[];
-}
+import { Entity } from 'src/app/models/entity.model';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-sites',
@@ -19,27 +11,35 @@ export interface Group {
   styleUrls: ['./sites.component.scss']
 })
 export class SitesComponent implements OnInit {
+
+  project: Project;
+
   form: FormGroup;
 
   sitesDisplayedColumns: string[] = ['position', 'name', 'startDate', 'endDate', 'delete'];
 
   groupsDisplayedColumns: string[] = ['position', 'name', 'sites', 'delete'];
 
-  constructor(private fb: FormBuilder) { }
-
+  constructor(
+    private projectService: ProjectService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
+    });
     const sites = [
-      {
+      new Entity({
         name: 'Site 1',
-        startDate: new Date(),
-        endDate: new Date()
-      },
-      {
+        start: new Date(),
+        end: new Date()
+      }),
+      new Entity({
         name: 'Site 2',
-        startDate: new Date(),
-        endDate: new Date()
-      }
+        start: new Date(),
+        end: new Date()
+      })
     ];
 
     this.form = this.fb.group({
@@ -55,6 +55,7 @@ export class SitesComponent implements OnInit {
   get groups() {
     return this.form.get('groups') as FormArray;
   }
+
   public addSite() {
     this.sites.push(this.createSite());
   }
@@ -71,11 +72,11 @@ export class SitesComponent implements OnInit {
     this.groups.removeAt(index);
   }
 
-  private createSite(site?: CollectionSite): FormGroup {
+  private createSite(entity?: Entity): FormGroup {
     return this.fb.group({
-      name: [site ? site.name : '', Validators.required],
-      startDate: [site ? site.startDate : new Date(), Validators.required],
-      endDate: [site ? site.endDate : new Date(), Validators.required],
+      name: [entity ? entity.name : '', Validators.required],
+      startDate: [entity ? entity.start : new Date(), Validators.required],
+      endDate: [entity ? entity.end : new Date(), Validators.required],
     });
   }
 
@@ -85,6 +86,5 @@ export class SitesComponent implements OnInit {
       sites: ['']
     });
   }
-
 
 }
