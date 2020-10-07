@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Entity } from 'src/app/models/entity.model';
+import { Group } from 'src/app/models/group.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -31,31 +32,14 @@ export class SitesComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+      this.form = this.fb.group({
+        sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
+        groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
+      });
+
+      this.sitesDataSource.data = this.sites.controls;
+      this.groupsDataSource.data = this.groups.controls;
     });
-
-    // const sites = [
-    //   new Entity({
-    //     name: 'Site 1',
-    //     start: new Date(),
-    //     end: new Date()
-    //   }),
-    //   new Entity({
-    //     name: 'Site 2',
-    //     start: new Date(),
-    //     end: new Date()
-    //   })
-    // ];
-
-    console.log(this.project.entities);
-    console.log(this.project.id);
-    this.form = this.fb.group({
-      sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
-      groups: this.fb.array([this.createGroup()])
-    });
-    console.log(this.form);
-
-    this.sitesDataSource.data = this.sites.controls;
-    this.groupsDataSource.data = this.groups.controls;
   }
 
   get sites() {
@@ -66,6 +50,13 @@ export class SitesComponent implements OnInit {
     return this.form.get('groups') as FormArray;
   }
 
+  public onChange(){
+    console.log('mudou');
+    this.project.entities = this.convertToEntity(this.sites.controls);
+    this.project.groups = this.convertToGroup(this.groups.controls);
+    this.projectService.alterProject(this.project);
+  }
+
   private convertToEntity(input: any): Entity[]{
     const myEntities = [];
     for (const element of input){
@@ -73,27 +64,39 @@ export class SitesComponent implements OnInit {
         name: element.controls.name.value,
         start: element.controls.startDate.value,
         end: element.controls.endDate.value,
-      }
-      ) );
+      }));
     }
     return myEntities;
+  }
+
+  private convertToGroup(input: any): Group[] {
+    const myGroups = [];
+    for (const element of input){
+      console.log(new Group(element.value));
+      myGroups.push( new Group(element.value) );
+    }
+    return myGroups;
   }
 
   public addSite() {
     this.sites.push(this.createSite());
     this.sitesDataSource.data = this.sites.controls;
     this.project.entities = this.convertToEntity(this.sites.controls);
-    this.projectService.save(this.project);
+    this.projectService.alterProject(this.project);
   }
 
   public removeSite(index: number) {
     this.sites.removeAt(index);
     this.sitesDataSource.data = this.sites.controls;
+    this.project.entities = this.convertToEntity(this.sites.controls);
+    this.projectService.alterProject(this.project);
   }
 
   public addGroup() {
     this.groups.push(this.createGroup());
     this.groupsDataSource.data = this.groups.controls;
+    // this.project.groups = this.convertToGroup(this.groups.controls);
+    // this.projectService.alterProject(this.project);
   }
 
   public removeGroup(index: number) {
@@ -109,10 +112,10 @@ export class SitesComponent implements OnInit {
     });
   }
 
-  private createGroup(): FormGroup {
+  private createGroup(group?: Group): FormGroup {
     return this.fb.group({
-      name: ['', Validators.required],
-      sites: ['']
+      name: [ group ? group.name : '', Validators.required],
+      members: [group ? group.members : '']
     });
   }
 

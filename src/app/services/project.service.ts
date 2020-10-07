@@ -36,7 +36,6 @@ export class ProjectService {
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
-    console.log(project);
     return project;
   }
 
@@ -68,5 +67,9 @@ export class ProjectService {
   public async listRevisions(id: string, offset: number, limit: number) {
     const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset, limit } });
     return response.map(x => new Revision(x));
+  }
+
+  public alterProject(project: Project){
+    this.project.next(project);
   }
 }

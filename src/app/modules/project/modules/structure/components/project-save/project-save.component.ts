@@ -22,7 +22,6 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        console.log('chequei');
         if (!this.savedProject) {
           this.savedProject = project.copy();
           this.currentProject = project.copy();

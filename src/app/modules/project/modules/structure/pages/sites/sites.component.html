@@ -23,7 +23,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput (change)="this.onChange()" formControlName="name" placeholder="{{ 'Name' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
@@ -33,7 +33,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'SpecificStartDate' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="startDate" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput [matDatepicker]="startPicker" formControlName="startDate"
+                    <input matInput (change)="this.onChange()" [matDatepicker]="startPicker" formControlName="startDate"
                         placeholder="{{ 'StartDate' | translate }}">
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker></mat-datepicker>
@@ -46,7 +46,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'SpecificEndDate' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="endDate" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput [matDatepicker]="endPicker" formControlName="endDate"
+                    <input matInput (change)="this.onChange()" [matDatepicker]="endPicker" formControlName="endDate"
                         placeholder="{{ 'EndDate' | translate }}">
                     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                     <mat-datepicker #endPicker></mat-datepicker>
@@ -93,17 +93,16 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput (change)="this.onChange()" formControlName="name" placeholder="{{ 'Name' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
 
-        <!-- Start Date Column -->
         <ng-container matColumnDef="sites">
             <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="sites" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-select formControlName="sites" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                    <mat-select (change)="this.onChange()" formControlName="members" placeholder="{{ 'CollectionSites' | translate }}" multiple>
                         <!-- <mat-select-trigger>
                             <mat-chip-list>
                                 <mat-chip *ngFor="let site of form.controls.sites.value" [removable]="true"
