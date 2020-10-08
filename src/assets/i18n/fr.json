@@ -16,11 +16,11 @@
     "Country": "Pays",
     "Create": "Saisir",
     "CreateNewDataSource": "Créer une nouvelle source de données",
+    "CreateLogicalFramework":"Créer un cadre logique vierge",
     "CreateNewIndicator": "Créer un nouvel indicateur",
     "CreateNewProject": "Créer un project",
     "CreateNewThematic": "Créer une nouvelle thématique",
     "CrossCuttingIndicators": "Indicateurs transversaux",
-    "CreateLogicalFramework":"Créer un cadre logique vierge",
     "CrossCuttingInfo": [
         "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de thématiques renseignée dans les données de bases.",
         "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
