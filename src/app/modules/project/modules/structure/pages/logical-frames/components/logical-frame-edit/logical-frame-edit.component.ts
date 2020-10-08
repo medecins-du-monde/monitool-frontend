@@ -70,7 +70,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       purpose = new Purpose();
     }
     return this.fb.group({
-      assumptions: [purpose.assumtions, Validators.required],
+      assumptions: [purpose.assumptions, Validators.required],
       description: [purpose.description, Validators.required],
       outputs: this.fb.array([])
     });

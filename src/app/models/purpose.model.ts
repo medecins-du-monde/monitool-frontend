@@ -3,7 +3,7 @@ import { Output } from './output.model';
 import { ProjectIndicator } from './project-indicator.model';
 
 export class Purpose implements Deserializable {
-    assumtions: string;
+    assumptions: string;
     description: string;
     indicators: ProjectIndicator[] = [];
     outputs: Output[] = [];
@@ -14,10 +14,16 @@ export class Purpose implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.outputs = ( input && input.outputs ) ? input.outputs.map(x => new Output(x)) : [];
         return this;
     }
 
     serialize() {
-        return this;
+        return {
+            assumptions: this.assumptions,
+            description: this.description,
+            indicators: [],
+            outputs: this.outputs.map(x => x.serialize())
+        };
     }
 }

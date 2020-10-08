@@ -21,6 +21,7 @@ export class LogicalFrame implements Deserializable {
     deserialize(input: any): this {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
+        this.purposes = ( input && input.purposes ) ? input.purposes.map(x => new Purpose(x)) : [];
         return this;
     }
 
@@ -32,7 +33,7 @@ export class LogicalFrame implements Deserializable {
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.id),
-            purposes: [],
+            purposes: this.purposes.map(x => x.serialize()),
             indicators: []
         };
     }
