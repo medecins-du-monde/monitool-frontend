@@ -1,6 +1,6 @@
-<div [formGroup]="purposeForm">
+<div [formGroup]="outputForm">
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'SpecificObjective' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Result' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="description" placeholder="{{ 'Description' | translate }}">
         </mat-form-field>
@@ -11,18 +11,18 @@
             <input matInput formControlName="assumptions" placeholder="{{ 'Assumptions' | translate }}">
         </mat-form-field>
     </div>
-    <mat-accordion formArrayName="outputs">
-        <ng-container *ngFor="let output of outputs.controls; let i=index">
+    <mat-accordion formArrayName="activities">
+        <ng-container *ngFor="let activity of activities.controls; let i=index">
             <mat-expansion-panel [formGroupName]="i">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>Result {{i + 1}}: {{output.value.description}}</mat-panel-title>
+                    <mat-panel-title>Activity {{i + 1}}: {{activity.value.description}}</mat-panel-title>
                     <mat-panel-description>
-                        <button mat-stroked-button class="mdm-button" (click)="onRemoveOutput(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
+                        <button mat-stroked-button class="mdm-button" (click)="onRemoveActivity(i)"><mat-icon>delete</mat-icon>{{ 'RemoveActivity' | translate }}</button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-output-edit [outputForm]="output"></app-output-edit>
+                <app-activity-edit [activityForm]="activity"></app-activity-edit>
             </mat-expansion-panel>
         </ng-container>
     </mat-accordion>
-    <button mat-stroked-button class="mdm-button" (click)="onAddNewOutput()"><mat-icon>add</mat-icon>{{ 'AddOutput' | translate }}</button>
+    <button mat-stroked-button class="mdm-button" (click)="onAddNewActivity()"><mat-icon>add</mat-icon>{{ 'AddActivity' | translate }}</button>
 </div>

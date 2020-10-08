@@ -1,0 +1,8 @@
+<div [formGroup]="activityForm">
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Activity' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="description" placeholder="{{ 'Activity' | translate }}">
+        </mat-form-field>
+    </div>
+</div>

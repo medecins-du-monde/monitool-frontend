@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PurposeEditComponent } from './purpose-edit.component';
+import { ActivityEditComponent } from './activity-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { OutputEditModule } from '../output-edit/output-edit.module';
 
 @NgModule({
-  declarations: [PurposeEditComponent],
+  declarations: [ActivityEditComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -21,9 +19,7 @@ import { OutputEditModule } from '../output-edit/output-edit.module';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
-    MatExpansionModule,
-    OutputEditModule
   ],
-  exports: [PurposeEditComponent]
+  exports: [ActivityEditComponent]
 })
-export class PurposeEditModule { }
+export class ActivityEditModule { }

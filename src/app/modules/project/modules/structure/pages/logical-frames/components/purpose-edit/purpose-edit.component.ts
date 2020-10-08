@@ -31,7 +31,8 @@ export class PurposeEditComponent implements OnInit {
     const output = new Output();
     return this.fb.group({
       assumptions: [output.assumtions, Validators.required],
-      description: [output.description, Validators.required]
+      description: [output.description, Validators.required],
+      activities: this.fb.array([])
     });
   }
 
