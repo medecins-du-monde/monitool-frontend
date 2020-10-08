@@ -45,3 +45,33 @@
         </div>
     </div>
 </div>
+<div class="mdm-section">
+    <div class="mdm-title">General objective</div>
+    <div [formGroup]="logicalFrameForm" class="mdm-form">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'GeneralObjective' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput formControlName="goal" placeholder="{{ 'GeneralObjective' | translate }}">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="mdm-section">
+    <div class="mdm-title">Specific objective</div>
+    <div [formGroup]="logicalFrameForm">
+        <mat-accordion formArrayName="purposes">
+            <ng-container *ngFor="let purpose of purposes.controls; let i=index">
+                <mat-expansion-panel [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Specific objective {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
+                        <mat-panel-description>
+                            <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <app-purpose-edit [purposeForm]="purpose"></app-purpose-edit>
+                </mat-expansion-panel>
+            </ng-container>
+        </mat-accordion>
+    </div>
+</div>
+<button mat-stroked-button class="mdm-button" (click)="onAddNewPurpose()"><mat-icon>add</mat-icon>{{ 'AddPurpose' | translate }}</button>

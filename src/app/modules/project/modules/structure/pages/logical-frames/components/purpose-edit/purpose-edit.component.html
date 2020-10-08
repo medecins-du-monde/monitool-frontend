@@ -1,0 +1,28 @@
+<div [formGroup]="purposeForm">
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'SpecificObjective' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="description" placeholder="{{ 'Description' | translate }}">
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Assumptions' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="assumptions" placeholder="{{ 'Assumptions' | translate }}">
+        </mat-form-field>
+    </div>
+    <mat-accordion formArrayName="outputs">
+        <ng-container *ngFor="let output of outputs.controls; let i=index">
+            <mat-expansion-panel [formGroupName]="i">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Result {{i + 1}}: {{output.value.description}}</mat-panel-title>
+                    <mat-panel-description>
+                        <button mat-stroked-button class="mdm-button" (click)="onRemoveOutput(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <!-- <app-purpose-edit [purposeForm]="purpose"></app-purpose-edit> -->
+            </mat-expansion-panel>
+        </ng-container>
+    </mat-accordion>
+    <button mat-stroked-button class="mdm-button" (click)="onAddNewOutput()"><mat-icon>add</mat-icon>{{ 'AddOutput' | translate }}</button>
+</div>
