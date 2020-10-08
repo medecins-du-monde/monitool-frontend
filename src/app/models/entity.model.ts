@@ -13,7 +13,7 @@ export class Entity implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = input ? input.id : uuid();
+        this.id = input ? (input.id ? input.id : uuid()) : uuid();
         this.name = input ? input.name : null;
         this.start = input ? new Date(input.start) : null;
         this.end = input ? new Date(input.end) : null;

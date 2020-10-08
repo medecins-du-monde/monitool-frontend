@@ -17,12 +17,13 @@ export class SitesComponent implements OnInit {
 
   form: FormGroup;
 
-  sitesDisplayedColumns: string[] = ['position', 'name', 'startDate', 'endDate', 'delete'];
+  sitesDisplayedColumns: string[] = ['position', 'name', 'start', 'end', 'delete'];
 
   groupsDisplayedColumns: string[] = ['position', 'name', 'sites', 'delete'];
 
   sitesDataSource = new MatTableDataSource<AbstractControl>();
   groupsDataSource = new MatTableDataSource<AbstractControl>();
+  loadCount: number;
 
   constructor(
     private projectService: ProjectService,
@@ -30,15 +31,21 @@ export class SitesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadCount = 0;
+
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      this.form = this.fb.group({
-        sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
-        groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
-      });
+      if (this.loadCount <= 1){
+        this.form = this.fb.group({
+          sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
+          groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
+        });
+      }
 
       this.sitesDataSource.data = this.sites.controls;
       this.groupsDataSource.data = this.groups.controls;
+
+      this.loadCount += 1;
     });
   }
 
@@ -50,20 +57,13 @@ export class SitesComponent implements OnInit {
     return this.form.get('groups') as FormArray;
   }
 
-  public onChange(){
-    console.log('mudou');
-    this.project.entities = this.convertToEntity(this.sites.controls);
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.projectService.alterProject(this.project);
-  }
-
   private convertToEntity(input: any): Entity[]{
     const myEntities = [];
     for (const element of input){
       myEntities.push( new Entity({
         name: element.controls.name.value,
-        start: element.controls.startDate.value,
-        end: element.controls.endDate.value,
+        start: element.controls.start.value,
+        end: element.controls.end.value,
       }));
     }
     return myEntities;
@@ -72,10 +72,29 @@ export class SitesComponent implements OnInit {
   private convertToGroup(input: any): Group[] {
     const myGroups = [];
     for (const element of input){
-      console.log(new Group(element.value));
-      myGroups.push( new Group(element.value) );
+      myGroups.push( new Group({
+        name: element.value.name,
+        members: element.value.members.map((x: Entity) => {
+          for (const entity of this.project.entities){
+            if (x.name === entity.name){
+              x.id = entity.id;
+            }
+          }
+          return x;
+        })
+      }));
     }
     return myGroups;
+  }
+
+  public onChange(){
+    this.project.entities = this.convertToEntity(this.sites.controls);
+    this.project.groups = this.convertToGroup(this.groups.controls);
+    this.projectService.alterProject(this.project);
+  }
+  public onSelectionChange(){
+    this.project.groups = this.convertToGroup(this.groups.controls);
+    this.projectService.alterProject(this.project);
   }
 
   public addSite() {
@@ -95,8 +114,8 @@ export class SitesComponent implements OnInit {
   public addGroup() {
     this.groups.push(this.createGroup());
     this.groupsDataSource.data = this.groups.controls;
-    // this.project.groups = this.convertToGroup(this.groups.controls);
-    // this.projectService.alterProject(this.project);
+    this.project.groups = this.convertToGroup(this.groups.controls);
+    this.projectService.alterProject(this.project);
   }
 
   public removeGroup(index: number) {
@@ -107,15 +126,15 @@ export class SitesComponent implements OnInit {
   private createSite(entity?: Entity): FormGroup {
     return this.fb.group({
       name: [entity ? entity.name : '', Validators.required],
-      startDate: [entity ? entity.start : new Date(), Validators.required],
-      endDate: [entity ? entity.end : new Date(), Validators.required],
+      start: [entity ? entity.start : new Date(), Validators.required],
+      end: [entity ? entity.end : new Date(), Validators.required],
     });
   }
 
   private createGroup(group?: Group): FormGroup {
     return this.fb.group({
       name: [ group ? group.name : '', Validators.required],
-      members: [group ? group.members : '']
+      members: [group ? group.members : []]
     });
   }
 
