@@ -5,6 +5,10 @@ import { Entity } from 'src/app/models/entity.model';
 import { Group } from 'src/app/models/group.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { IfStmt } from '@angular/compiler';
+import { threadId } from 'worker_threads';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-sites',
@@ -21,6 +25,8 @@ export class SitesComponent implements OnInit {
 
   groupsDisplayedColumns: string[] = ['position', 'name', 'sites', 'delete'];
 
+  private subscription: Subscription = new Subscription();
+
   sitesDataSource = new MatTableDataSource<AbstractControl>();
   groupsDataSource = new MatTableDataSource<AbstractControl>();
   loadCount: number;
@@ -32,21 +38,36 @@ export class SitesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCount = 0;
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        if (this.loadCount <= 1){
+          this.form = this.fb.group({
+            sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
+            groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
+          });
+        }
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      if (this.loadCount <= 1){
-        this.form = this.fb.group({
-          sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
-          groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
-        });
-      }
+        if (this.loadCount === 1){
+          const value = project.groups.map(group => {
+            return this.fb.group(
+              {
+                name: group.name,
+                members: project.entities.filter(entity => group.members.includes(entity))
+              }
+            );
+          });
+          console.log(value);
+          this.form.controls.groups.setValue(value);
+        }
 
-      this.sitesDataSource.data = this.sites.controls;
-      this.groupsDataSource.data = this.groups.controls;
+        this.sitesDataSource.data = this.sites.controls;
+        this.groupsDataSource.data = this.groups.controls;
 
-      this.loadCount += 1;
-    });
+        this.loadCount += 1;
+      })
+    );
+
   }
 
   get sites() {
@@ -134,7 +155,7 @@ export class SitesComponent implements OnInit {
   private createGroup(group?: Group): FormGroup {
     return this.fb.group({
       name: [ group ? group.name : '', Validators.required],
-      members: [group ? group.members : []]
+      members: [ group ? group.members.map(x => x.id) : []]
     });
   }
 
