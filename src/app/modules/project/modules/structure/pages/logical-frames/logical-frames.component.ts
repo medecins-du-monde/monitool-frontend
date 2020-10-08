@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Entity } from 'src/app/models/entity.model';
 import { LogicalFrame } from 'src/app/models/logical-frame.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -13,6 +14,7 @@ export class LogicalFramesComponent implements OnInit {
   project: Project;
   logicalFrames: LogicalFrame[] = [];
   currentLogicalFrame: LogicalFrame;
+  entities: Entity[];
   edition = false;
 
   constructor(private projectService: ProjectService) { }
@@ -21,6 +23,7 @@ export class LogicalFramesComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
+      this.entities = project.entities;
       if ( this.currentLogicalFrame ) {
         this.currentLogicalFrame = this.logicalFrames.find(x => x.id === this.currentLogicalFrame.id);
       }
@@ -29,6 +32,13 @@ export class LogicalFramesComponent implements OnInit {
 
   onCreate(): void {
     this.currentLogicalFrame = new LogicalFrame();
+    this.project.logicalFrames.push(this.currentLogicalFrame);
+    this.projectService.project.next(this.project);
+    this.edition = true;
+  }
+
+  onClone(logicalFrame: LogicalFrame): void {
+    this.currentLogicalFrame = new LogicalFrame(logicalFrame.serialize());
     this.project.logicalFrames.push(this.currentLogicalFrame);
     this.projectService.project.next(this.project);
     this.edition = true;

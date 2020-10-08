@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { LogicalFrameEditModule } from './components/logical-frame-edit/logical-frame-edit.module';
 import { LogicalFrameModule } from './components/logical-frame/logical-frame.module';
 import { LogicalFramesRoutingModule } from './logical-frames-routing.module';
 import { LogicalFramesComponent } from './logical-frames.component';
@@ -14,6 +15,7 @@ import { LogicalFramesComponent } from './logical-frames.component';
         TranslateModule,
         LogicalFramesRoutingModule,
         LogicalFrameModule,
+        LogicalFrameEditModule,
         MatButtonModule,
         MatIconModule
     ]

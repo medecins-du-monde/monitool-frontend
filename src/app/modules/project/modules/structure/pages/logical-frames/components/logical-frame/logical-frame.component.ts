@@ -31,8 +31,7 @@ export class LogicalFrameComponent implements OnInit {
 
   constructor(private translateService: TranslateService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onClone() {
     this.clone.emit(this.logicalFrame);

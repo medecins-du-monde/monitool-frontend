@@ -25,7 +25,7 @@ interface Purpose {
 export class LogicalFrame implements Deserializable {
     id: string;
     name: string;
-    goal: string;
+    goal = '';
     start: Date;
     end: Date;
     entities: Entity[] = [];
@@ -43,6 +43,15 @@ export class LogicalFrame implements Deserializable {
     }
 
     serialize() {
-        return this;
+        return {
+            id: this.id,
+            name: this.name,
+            goal: this.goal,
+            start: this.start ? this.start.toISOString().slice(0, 10) : null,
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
+            entities: this.entities.map(x => x.id),
+            purposes: [],
+            indicators: []
+        };
     }
 }

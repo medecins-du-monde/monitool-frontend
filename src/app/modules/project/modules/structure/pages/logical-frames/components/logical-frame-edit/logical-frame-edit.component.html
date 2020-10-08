@@ -1,0 +1,47 @@
+<div class="mdm-section">
+    <div class="mdm-title">General informations</div>
+    <div [formGroup]="logicalFrameForm" class="mdm-form">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                    <mat-select-trigger>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
+                                (removed)="onEntityRemoved(entity)">
+                                {{ entity.name }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let entity of entities" [value]="entity">{{ entity.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput [matDatepicker]="startPicker" formControlName="start"
+                    placeholder="{{ 'StartDate' | translate }}">
+                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput [matDatepicker]="endPicker" formControlName="end"
+                    placeholder="{{ 'EndDate' | translate }}">
+                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

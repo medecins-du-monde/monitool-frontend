@@ -115,7 +115,7 @@ export class Project implements Deserializable {
             extraIndicators: [],
             forms: this.forms.map(x => x.serialize()),
             groups: [],
-            logicalFrames: [],
+            logicalFrames: this.logicalFrames.map(x => x.serialize()),
             name: this.name,
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
