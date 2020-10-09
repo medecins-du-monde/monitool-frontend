@@ -36,6 +36,12 @@ export class SitesComponent implements OnInit {
     return this.sitesForm.get('groups') as FormArray;
   }
 
+  get selectedEntities() {
+    return this.groups.value.map(x => {
+      return this.entities.value.filter(e => x.members.includes(e.id));
+    });
+  }
+
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -46,64 +52,34 @@ export class SitesComponent implements OnInit {
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.sitesForm = this.fb.group({
-          entities: this.fb.array(this.project.entities.map(x => this.newEntity(x))),
-          groups: this.fb.array(this.project.groups.map(x => this.newGroup(x)))
-        });
-        this.entitiesDataSource.data = this.entities.controls;
-        this.groupsDataSource.data = this.groups.controls;
+        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev) {
+          this.project = project;
+          this.sitesForm = this.fb.group({
+            entities: this.fb.array(this.project.entities.map(x => this.newEntity(x))),
+            groups: this.fb.array(this.project.groups.map(x => this.newGroup(x)))
+          });
+          this.entitiesDataSource.data = this.entities.controls;
+          this.groupsDataSource.data = this.groups.controls;
+          this.sitesForm.valueChanges.subscribe((value: any) => {
+            value.entities = value.entities.map(x => new Entity(x));
+            const groups = [];
+            value.groups.forEach(x => {
+              const group = new Group(x);
+              const members = x.members;
+              group.members = value.entities.filter(e => members.includes(e.id));
+              groups.push(group);
+            });
+            value.groups = groups;
+            this.projectService.project.next(Object.assign(project, value));
+          });
+        }
       })
     );
   }
 
-  private convertToEntity(input: any): Entity[] {
-    const myEntities = [];
-    for (const element of input) {
-      myEntities.push(new Entity({
-        id: element.controls.id.value,
-        name: element.controls.name.value,
-        start: element.controls.start.value,
-        end: element.controls.end.value,
-      }));
-    }
-    return myEntities;
-  }
-
-  private convertToGroup(input: any): Group[] {
-    const myGroups = [];
-    for (const element of input) {
-      myGroups.push(new Group({
-        name: element.value.name,
-        members: element.value.members.map(x => {
-          for (const entity of this.project.entities) {
-            if (x === entity.id) {
-              return entity;
-            }
-          }
-          return x;
-        })
-      }));
-    }
-    return myGroups;
-  }
-
-  public onChange() {
-    this.project.entities = this.convertToEntity(this.entities.controls);
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.projectService.project.next(this.project);
-  }
-
-  public onSelectionChange() {
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.projectService.project.next(this.project);
-  }
-
   public onAddNewEntity() {
     this.entities.push(this.newEntity());
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.project.entities = this.convertToEntity(this.entities.controls);
-    this.projectService.project.next(this.project);
+    this.entitiesDataSource.data = this.entities.controls;
   }
 
   private newEntity(entity?: Entity): FormGroup {
@@ -120,16 +96,18 @@ export class SitesComponent implements OnInit {
 
   public onRemoveEntity(index: number) {
     this.entities.removeAt(index);
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.project.entities = this.convertToEntity(this.entities.controls);
-    this.projectService.project.next(this.project);
+    this.entitiesDataSource.data = this.entities.controls;
+  }
+
+  onEntityRemoved(index: number, id: number) {
+    const group = this.groups.controls[index] as FormGroup;
+    const members = group.controls.members;
+    members.setValue(members.value.filter(x => x !== id));
   }
 
   public onAddNewGroup() {
     this.groups.push(this.newGroup());
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.project.entities = this.convertToEntity(this.entities.controls);
-    this.projectService.project.next(this.project);
+    this.groupsDataSource.data = this.groups.controls;
   }
 
   private newGroup(group?: Group): FormGroup {
@@ -144,8 +122,6 @@ export class SitesComponent implements OnInit {
 
   public onRemoveGroup(index: number) {
     this.groups.removeAt(index);
-    this.project.groups = this.convertToGroup(this.groups.controls);
-    this.project.entities = this.convertToEntity(this.entities.controls);
-    this.projectService.project.next(this.project);
+    this.groupsDataSource.data = this.groups.controls;
   }
 }

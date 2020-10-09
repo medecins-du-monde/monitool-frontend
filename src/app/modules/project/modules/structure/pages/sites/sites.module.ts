@@ -16,6 +16,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatChipsModule,
         MatTableModule,
         DragDropModule,
         CdkTableModule,
