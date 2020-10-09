@@ -13,9 +13,7 @@ export class Group implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = input ? (input.id ? input.id : uuid()) : uuid();
-        this.name = input ? input.name : null;
-        this.members = input ? input.members : null;
+        this.id = ( input && input.id ) ? input.id : uuid();
         return this;
     }
 
