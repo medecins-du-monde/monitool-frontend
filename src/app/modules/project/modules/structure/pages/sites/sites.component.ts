@@ -6,8 +6,8 @@ import { Group } from 'src/app/models/group.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { IfStmt } from '@angular/compiler';
-import { threadId } from 'worker_threads';
 import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -29,7 +29,6 @@ export class SitesComponent implements OnInit {
 
   sitesDataSource = new MatTableDataSource<AbstractControl>();
   groupsDataSource = new MatTableDataSource<AbstractControl>();
-  loadCount: number;
 
   constructor(
     private projectService: ProjectService,
@@ -37,34 +36,18 @@ export class SitesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadCount = 0;
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        if (this.loadCount <= 1){
-          this.form = this.fb.group({
-            sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
-            groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
-          });
-        }
 
-        if (this.loadCount === 1){
-          const value = project.groups.map(group => {
-            return this.fb.group(
-              {
-                name: group.name,
-                members: project.entities.filter(entity => group.members.includes(entity))
-              }
-            );
-          });
-          console.log(value);
-          this.form.controls.groups.setValue(value);
-        }
+        this.form = this.fb.group({
+          sites: this.fb.array(this.project.entities.map(x => this.createSite(x))),
+          groups: this.fb.array(this.project.groups.map(x => this.createGroup(x)))
+        });
 
         this.sitesDataSource.data = this.sites.controls;
         this.groupsDataSource.data = this.groups.controls;
 
-        this.loadCount += 1;
       })
     );
 
@@ -82,6 +65,7 @@ export class SitesComponent implements OnInit {
     const myEntities = [];
     for (const element of input){
       myEntities.push( new Entity({
+        id: element.controls.id.value,
         name: element.controls.name.value,
         start: element.controls.start.value,
         end: element.controls.end.value,
@@ -95,10 +79,10 @@ export class SitesComponent implements OnInit {
     for (const element of input){
       myGroups.push( new Group({
         name: element.value.name,
-        members: element.value.members.map((x: Entity) => {
+        members: element.value.members.map(x => {
           for (const entity of this.project.entities){
-            if (x.name === entity.name){
-              x.id = entity.id;
+            if (x === entity.id){
+              return entity;
             }
           }
           return x;
@@ -120,32 +104,35 @@ export class SitesComponent implements OnInit {
 
   public addSite() {
     this.sites.push(this.createSite());
-    this.sitesDataSource.data = this.sites.controls;
+    this.project.groups = this.convertToGroup(this.groups.controls);
     this.project.entities = this.convertToEntity(this.sites.controls);
     this.projectService.alterProject(this.project);
   }
 
   public removeSite(index: number) {
     this.sites.removeAt(index);
-    this.sitesDataSource.data = this.sites.controls;
+    this.project.groups = this.convertToGroup(this.groups.controls);
     this.project.entities = this.convertToEntity(this.sites.controls);
     this.projectService.alterProject(this.project);
   }
 
   public addGroup() {
     this.groups.push(this.createGroup());
-    this.groupsDataSource.data = this.groups.controls;
     this.project.groups = this.convertToGroup(this.groups.controls);
+    this.project.entities = this.convertToEntity(this.sites.controls);
     this.projectService.alterProject(this.project);
   }
 
   public removeGroup(index: number) {
     this.groups.removeAt(index);
-    this.groupsDataSource.data = this.groups.controls;
+    this.project.groups = this.convertToGroup(this.groups.controls);
+    this.project.entities = this.convertToEntity(this.sites.controls);
+    this.projectService.alterProject(this.project);
   }
 
   private createSite(entity?: Entity): FormGroup {
     return this.fb.group({
+      id: [entity ? entity.id : '', Validators.required],
       name: [entity ? entity.name : '', Validators.required],
       start: [entity ? entity.start : new Date(), Validators.required],
       end: [entity ? entity.end : new Date(), Validators.required],
