@@ -110,7 +110,14 @@ export class SitesComponent implements OnInit {
   }
 
   public removeSite(index: number) {
+    const removedSite = this.sites.controls[index].value;
+    console.log(removedSite);
     this.sites.removeAt(index);
+    this.groups.controls = this.groups.controls.map(group => {
+      const newGroup = group;
+      newGroup.value.members = group.value.members.filter(x => x !== removedSite.id);
+      return newGroup;
+    });
     this.project.groups = this.convertToGroup(this.groups.controls);
     this.project.entities = this.convertToEntity(this.sites.controls);
     this.projectService.alterProject(this.project);
