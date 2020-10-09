@@ -68,8 +68,4 @@ export class ProjectService {
     const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset, limit } });
     return response.map(x => new Revision(x));
   }
-
-  public alterProject(project: Project){
-    this.project.next(project);
-  }
 }

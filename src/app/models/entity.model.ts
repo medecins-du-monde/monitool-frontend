@@ -15,8 +15,8 @@ export class Entity implements Deserializable {
         Object.assign(this, input);
         this.id = ( input && input.id ) ? input.id : uuid();
         this.name = input ? input.name : null;
-        this.start = input ? new Date(input.start) : null;
-        this.end = input ? new Date(input.end) : null;
+        this.start = ( input && input.start ) ? new Date(input.start) : null;
+        this.end = ( input && input.end )  ? new Date(input.end) : null;
 
         return this;
     }
