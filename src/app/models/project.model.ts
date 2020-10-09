@@ -6,6 +6,7 @@ import { ProjectIndicator } from './project-indicator.model';
 import { Entity } from './entity.model';
 import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
+import { Group } from './group.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -22,7 +23,7 @@ export class Project implements Deserializable {
     extraIndicators: ProjectIndicator[] = [];
     logicalFrames: LogicalFrame[] = [];
     entities: Entity[] = [];
-    groups: any[];
+    groups: Group[] = [];
     forms: Form[] = [];
     users: any[];
     visibility: string;
@@ -76,6 +77,11 @@ export class Project implements Deserializable {
         this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
         this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
+        this.groups = ( input && input.groups ) ? input.groups.map(x => {
+            const group = new Group(x);
+            group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
+            return group;
+        }) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -114,8 +120,8 @@ export class Project implements Deserializable {
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: [],
             forms: this.forms.map(x => x.serialize()),
-            groups: [],
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
+            groups: this.groups.map(x => x.serialize()),
             name: this.name,
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),

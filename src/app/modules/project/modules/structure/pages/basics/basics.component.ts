@@ -53,6 +53,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
         });
       })
     );
+
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
     });
