@@ -11,13 +11,15 @@
     <p>Si vous disposez de plusieurs formulaires papier à saisir (par exemple, un par travailleur social), et que désirez les additioner, vous pouvez rentrer des sommes dans les cases de saisies: "1 + 2 + 3"</p>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mdm-table">
+<table mat-table [dataSource]="taskDataSource" class="mdm-table">
     <!-- Task Column -->
     <ng-container matColumnDef="task">
         <th mat-header-cell *matHeaderCellDef>{{ 'Task' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="task"> 
-            <span>{{ element.taskText1 }}</span>
-            <span><button mat-stroked-button class="mdm-button small-button" [routerLink]="element.routerLink1"><mat-icon svgIcon="{{ element.buttonIcon1 }}"></mat-icon>{{ element.buttonText1 }}</button></span>
+            <span>{{'FillThe' | translate}} </span>
+            <span>{{ element.total }}</span>
+            <span> {{'FormsOf' | translate}} </span>
+            <span><button mat-stroked-button class="mdm-button small-button" [routerLink]="element.routerLink"><mat-icon svgIcon="{{ element.buttonIcon }}"></mat-icon>{{ element.buttonText }}</button></span>
         </td>
     </ng-container>
 

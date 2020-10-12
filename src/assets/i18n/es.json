@@ -67,8 +67,10 @@
         "Los indicadores adicionales son indicadores que no estan en ningún marco lógico.",
         "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
     ],
+    "FillThe": "Rellenar los",
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
+    "FormsOf": "formularios de",
     "fr": "Francés",
     "FullName": "Nombre completo",
     "GeneralReporting": "Informe general",

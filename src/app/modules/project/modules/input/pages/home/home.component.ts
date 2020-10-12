@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { Form } from 'src/app/models/form.model';
+import { Project } from 'src/app/models/project.model';
+import { ProjectService } from 'src/app/services/project.service';
+import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 export interface Task {
-  taskText1: string;
-  buttonText1: string;
-  buttonIcon1: string;
-  status: number;
-  routerLink1: string;
+  buttonText: string;
+  buttonIcon: string;
+  routerLink: string;
   done: number;
   ongoing: number;
   missing: number;
+  total: number;
 }
 
 @Component({
@@ -16,96 +21,38 @@ export interface Task {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['task', 'status'];
   dataSource: Task[];
 
-  constructor() { }
+  taskDataSource = new MatTableDataSource<Task>();
+
+  private subscription: Subscription = new Subscription();
+  project: Project;
+
+
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.dataSource = [
-      {
-        taskText1: 'Remplir les 119 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Extraction du SNIS (CSP)',
-        status: 100,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
 
-      },
-      {
-        taskText1: 'Remplir les 119 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Registre pharmacie (CSP)',
-        status: 30,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 42 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Rapport de supervision trimestriel (CSP)',
-        status: 45,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 144 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Registre des VLG (CSP & Unité mobile)',
-        status: 0,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 36 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Extraction du SNIS (Hôpital de référence)',
-        status: 0,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 36 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Registre des VLG (Hôpital de référence)',
-        status: 0,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 126 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Recensement',
-        status: 0,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-      {
-        taskText1: 'Remplir les 6 saisies de ',
-        buttonIcon1: 'edit',
-        buttonText1: 'Coordination',
-        status: 0,
-        routerLink1: `.`,
-        done: 40,
-        ongoing: 40,
-        missing: 20,
-      },
-    ];
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        console.log(this.project.forms);
+        this.taskDataSource.data = this.project.forms.map(form => {
+          return {
+            buttonIcon: 'edit',
+            buttonText: form.name,
+            routerLink: '.',
+            done: 40,
+            ongoing: 40,
+            missing: 20,
+            total: 119
+          };
+        });
+      })
+    );
   }
 
 }

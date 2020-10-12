@@ -67,8 +67,10 @@
         "Extra indicators are indicators that are not in any logical framework.",
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
+    "FillThe": "Fill the",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
+    "FormsOf": "forms of",
     "fr": "French",
     "FullName": "Full name",
     "GeneralReporting": "General reporting",

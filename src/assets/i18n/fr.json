@@ -67,8 +67,10 @@
         "Les indicateurs annexés sont des indicateurs complémentaires qui ne figurent dans aucun cadre logique.",
         "Ils permettent de suivre des éléments spécifiques du projet (données médicales, logistiques, ...)"
     ],
+    "FillThe": "Remplir les",
     "Finished": "Terminé",
     "FinishedPlural": "Terminés",
+    "FormsOf": "saisies de",
     "fr": "Français",
     "FullName": "Nom",
     "GeneralReporting": "Rapport général",
