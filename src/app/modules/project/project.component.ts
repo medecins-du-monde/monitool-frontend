@@ -12,6 +12,7 @@ import { Project } from 'src/app/models/project.model';
 export class ProjectComponent implements OnInit {
 
   public sidenav: Sidenav;
+  project: Project;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,97 +24,113 @@ export class ProjectComponent implements OnInit {
       const projectId = params.id;
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.project.next(project);
+        this.project = project;
+        this.project.forms.forEach(form => {
+          input.items.push(
+            {
+              name: form.name,
+              routerLink: `../${projectId}/input/inputs/${form.id}`,
+              icon: 'edit'
+            }
+          );
+        });
       });
+
+      const structure = {
+        title: 'Structure',
+        collapsible: true,
+        items: [
+          {
+            name: 'Home',
+            routerLink: `../${projectId}/structure/home`,
+            icon: 'home'
+          },
+          {
+            name: 'Basics',
+            routerLink: `../${projectId}/structure/basics`,
+            icon: 'database'
+          },
+          {
+            name: 'CollectionSites',
+            routerLink: `../${projectId}/structure/sites`,
+            icon: 'location'
+          },
+          {
+            name: 'DataSources',
+            routerLink: `../${projectId}/structure/data-sources`,
+            icon: 'folder'
+          },
+          {
+            name: 'LogicalFrameworks',
+            routerLink: `../${projectId}/structure/logical-frame`,
+            icon: 'clipboard'
+          },
+          {
+            name: 'CrossCuttingIndicators',
+            routerLink: `../${projectId}/structure/cross-cutting`,
+            icon: 'gauge'
+          },
+          {
+            name: 'ExtraIndicators',
+            routerLink: `../${projectId}/structure/extra-indicators`,
+            icon: 'gauge'
+          },
+          {
+            name: 'Users',
+            routerLink: `../${projectId}/structure/users`,
+            icon: 'people'
+          },
+          {
+            name: 'History',
+            routerLink: `../${projectId}/structure/history`,
+            icon: 'history'
+          }
+        ]
+      };
+      const input = {
+        title: 'Input',
+        collapsible: true,
+        items: [
+          {
+            name: 'Home',
+            routerLink: `../${projectId}/input/home`,
+            icon: 'home'
+          },
+          {
+            name: 'Calendar',
+            routerLink: `../${projectId}/input/calendar`,
+            icon: 'edit'
+          }
+        ]
+      };
+
+      const reporting = {
+        title: 'Reporting',
+        collapsible: true,
+        items: [
+          {
+            name: 'Home',
+            routerLink: `../${projectId}/reporting/home`,
+            icon: 'home'
+          },
+          {
+            name: 'GeneralReporting',
+            routerLink: `../${projectId}/reporting/general`,
+            icon: 'clipboard'
+          },
+          {
+            name: 'PivotTable',
+            routerLink: `../${projectId}/reporting/pivot-table`,
+            icon: 'grid'
+          }
+        ]
+      };
+
       this.sidenav = {
         groups: [
-          {
-            title: 'Structure',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/structure/home`,
-                icon: 'home'
-              },
-              {
-                name: 'Basics',
-                routerLink: `../${projectId}/structure/basics`,
-                icon: 'database'
-              },
-              {
-                name: 'CollectionSites',
-                routerLink: `../${projectId}/structure/sites`,
-                icon: 'location'
-              },
-              {
-                name: 'DataSources',
-                routerLink: `../${projectId}/structure/data-sources`,
-                icon: 'folder'
-              },
-              {
-                name: 'LogicalFrameworks',
-                routerLink: `../${projectId}/structure/logical-frame`,
-                icon: 'clipboard'
-              },
-              {
-                name: 'CrossCuttingIndicators',
-                routerLink: `../${projectId}/structure/cross-cutting`,
-                icon: 'gauge'
-              },
-              {
-                name: 'ExtraIndicators',
-                routerLink: `../${projectId}/structure/extra-indicators`,
-                icon: 'gauge'
-              },
-              {
-                name: 'Users',
-                routerLink: `../${projectId}/structure/users`,
-                icon: 'people'
-              },
-              {
-                name: 'History',
-                routerLink: `../${projectId}/structure/history`,
-                icon: 'history'
-              }
-            ]
-          },
-          {
-            title: 'Input',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/input/home`,
-                icon: 'home'
-              },
-              {
-                name: 'Calendar',
-                routerLink: `../${projectId}/input/calendar`,
-                icon: 'edit'
-              }
-            ]
-          },
-          {
-            title: 'Reporting',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/reporting/home`,
-                icon: 'home'
-              },
-              {
-                name: 'GeneralReporting',
-                routerLink: `../${projectId}/reporting/general`,
-                icon: 'clipboard'
-              },
-              {
-                name: 'PivotTable',
-                routerLink: `../${projectId}/reporting/pivot-table`,
-                icon: 'grid'
-              }
-            ]
-          }
+          structure,
+          input,
+          reporting
         ]
       };
     });

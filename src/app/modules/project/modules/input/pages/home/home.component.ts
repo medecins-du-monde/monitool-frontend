@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        console.log(this.project.forms);
         this.taskDataSource.data = this.project.forms.map(form => {
           return {
             buttonIcon: 'edit',

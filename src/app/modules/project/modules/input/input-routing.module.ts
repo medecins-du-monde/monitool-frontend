@@ -13,6 +13,11 @@ const routes: Routes = [
       .then(m => m.CalendarModule)
   },
   {
+    path: 'inputs',
+    loadChildren: () => import('./pages/inputs/inputs.module')
+      .then(m => m.InputsModule)
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
