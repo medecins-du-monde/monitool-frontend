@@ -15,13 +15,13 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
-        <button mat-stroked-button class="mdm-button small-button"><mat-icon svgIcon="edit"></mat-icon>{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()"><mat-icon svgIcon="edit"></mat-icon>{{ 'Edit' | translate }}</button>
         <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
     </mat-card-actions>
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="onDelete()">
         <mat-icon>delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
