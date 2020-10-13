@@ -1,0 +1,24 @@
+.mdm-table {
+    tr {
+        th {
+            text-align: center;
+        }
+        td{
+            height: 100%;
+            padding: 4px;
+            text-align: center;
+
+            &:not(.expand-row) {
+                button{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.create-button{
+    color: white;
+    background-color: rgb(49, 112, 143);
+    border-color: rgb(49, 112, 143) !important;
+}
