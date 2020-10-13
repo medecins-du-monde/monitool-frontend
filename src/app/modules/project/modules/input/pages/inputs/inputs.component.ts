@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Subscription } from 'rxjs';
+import TimeSlot from 'timeslot-dag';
 
 @Component({
   selector: 'app-inputs',
@@ -23,6 +24,16 @@ export class InputsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let slot = new TimeSlot('2020-10');
+    console.log(slot.humanizeValue('en'));
+    slot = slot.next();
+    console.log(slot);
+
+    // slot.periodicity;                     // 'month'
+    // slot.firstDate;                    // Date('2010-01-01')
+    // slot.lastDate;                     // Date('2010-01-31')
+    // slot.previous();                     // TimeSlot('2009-12')
+
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
