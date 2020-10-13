@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { InputsComponent } from './inputs.component';
 
 const routes: Routes = [{
-  path: '',
+  path: '**',
   component: InputsComponent
 }];
 
