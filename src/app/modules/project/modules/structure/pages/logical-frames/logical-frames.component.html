@@ -15,5 +15,5 @@
 </div>
 
 <div class="mdm-section" *ngIf="edition">
-    <app-logical-frame-edit [logicalFrame]="currentLogicalFrame" [entities]="entities" (edit)="onEdit($event)"></app-logical-frame-edit>
+    <app-logical-frame-edit [logicalFrame]="currentLogicalFrame" [entities]="entities" [forms]="project.forms" (edit)="onEdit($event)"></app-logical-frame-edit>
 </div>

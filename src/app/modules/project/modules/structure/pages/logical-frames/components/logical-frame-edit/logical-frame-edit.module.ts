@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { PurposeEditModule } from '../purpose-edit/purpose-edit.module';
+import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -30,7 +31,8 @@ import { PurposeEditModule } from '../purpose-edit/purpose-edit.module';
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
-    PurposeEditModule
+    PurposeEditModule,
+    IndicatorModalModule
   ],
   exports: [LogicalFrameEditComponent]
 })

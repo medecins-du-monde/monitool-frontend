@@ -26,7 +26,7 @@
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
+            <div class="mdm-form-label">{{ 'SpecificStartDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [matDatepicker]="startPicker" formControlName="start"
                     placeholder="{{ 'StartDate' | translate }}">
@@ -35,7 +35,7 @@
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+            <div class="mdm-form-label">{{ 'SpecificEndDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [matDatepicker]="endPicker" formControlName="end"
                     placeholder="{{ 'EndDate' | translate }}">
@@ -53,6 +53,17 @@
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="goal" placeholder="{{ 'GeneralObjective' | translate }}">
             </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
+            <div class="indicators-list" formArrayName="indicators">
+                <!-- <div class="partitions-buttons">
+                    <ng-container *ngFor="let partition of partitions.controls; let i=index">
+                        <button mat-stroked-button class="mdm-button" (click)="openDialog(partition)"><mat-icon>create</mat-icon>{{partition.value.name}}</button>
+                    </ng-container>
+                </div> -->
+                <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+            </div>
         </div>
     </div>
 </div>

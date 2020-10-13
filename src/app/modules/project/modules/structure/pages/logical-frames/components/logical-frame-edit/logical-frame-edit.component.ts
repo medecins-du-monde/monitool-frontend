@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Entity } from 'src/app/models/entity.model';
+import { Form } from 'src/app/models/form.model';
 import { LogicalFrame } from 'src/app/models/logical-frame.model';
+import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Purpose } from 'src/app/models/purpose.model';
+import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 
 @Component({
   selector: 'app-logical-frame-edit',
@@ -13,6 +17,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
   logicalFrameForm: FormGroup;
 
+  @Input() forms: Form[];
   @Input() entities: Entity[];
   @Input() logicalFrame: LogicalFrame;
   @Output() edit = new EventEmitter();
@@ -25,8 +30,13 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     return this.logicalFrameForm.controls.purposes as FormArray;
   }
 
+  get indicators(): FormArray {
+    return this.logicalFrameForm.controls.indicators as FormArray;
+  }
+
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +55,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       start: [this.logicalFrame.start],
       end: [this.logicalFrame.end],
       goal: [this.logicalFrame.goal],
+      indicators: this.fb.array([]),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => this.newPurpose(x)))
     });
     this.logicalFrameForm.valueChanges.subscribe((value: any) => {
@@ -73,6 +84,39 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       assumptions: [purpose.assumptions, Validators.required],
       description: [purpose.description, Validators.required],
       outputs: this.fb.array([])
+    });
+  }
+
+  onAddNewIndicator(): void {
+    const indicator: FormGroup = this.newIndicator();
+    this.openDialog(indicator);
+  }
+
+  private newIndicator(): FormGroup {
+    const indicator = new ProjectIndicator();
+    return this.fb.group({
+      display: [indicator.display, Validators.required],
+      baseline: [indicator.baseline],
+      target: [indicator.target],
+      computation: this.fb.group({
+        formula: [indicator.computation.formula],
+        parameters: [indicator.computation.formula]
+      }),
+      type: [indicator.type]
+    });
+  }
+
+  openDialog(indicator: FormGroup, add?: boolean) {
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        if (add) {
+          this.indicators.push(res.indicator);
+        } else {
+          indicator = res.indicator;
+        }
+      }
     });
   }
 
