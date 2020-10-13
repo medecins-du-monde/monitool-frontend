@@ -11,6 +11,17 @@
             <input matInput formControlName="assumptions" placeholder="{{ 'Assumptions' | translate }}">
         </mat-form-field>
     </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
+        <div class="indicators-list" formArrayName="indicators">
+            <div class="indicators-cards">
+                <ng-container *ngFor="let indicator of indicators.controls; let i=index">
+                    <app-extra-indicator [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
+                </ng-container>
+            </div>
+            <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+        </div>
+    </div>
     <mat-accordion formArrayName="outputs">
         <ng-container *ngFor="let output of outputs.controls; let i=index">
             <mat-expansion-panel [formGroupName]="i">
@@ -20,7 +31,7 @@
                         <button mat-stroked-button class="mdm-button" (click)="onRemoveOutput(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-output-edit [outputForm]="output"></app-output-edit>
+                <app-output-edit [outputForm]="output" [forms]="forms"></app-output-edit>
             </mat-expansion-panel>
         </ng-container>
     </mat-accordion>

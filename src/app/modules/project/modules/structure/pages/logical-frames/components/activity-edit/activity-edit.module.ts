@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
+import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 
 @NgModule({
   declarations: [ActivityEditComponent],
@@ -19,6 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    IndicatorModalModule,
+    ExtraIndicatorModule
   ],
   exports: [ActivityEditComponent]
 })

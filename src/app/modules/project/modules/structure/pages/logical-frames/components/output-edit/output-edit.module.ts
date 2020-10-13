@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivityEditModule } from '../activity-edit/activity-edit.module';
+import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
+import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 
 @NgModule({
   declarations: [OutputEditComponent],
@@ -22,7 +24,9 @@ import { ActivityEditModule } from '../activity-edit/activity-edit.module';
     MatIconModule,
     MatFormFieldModule,
     MatExpansionModule,
-    ActivityEditModule
+    ActivityEditModule,
+    IndicatorModalModule,
+    ExtraIndicatorModule
   ],
   exports: [OutputEditComponent]
 })
