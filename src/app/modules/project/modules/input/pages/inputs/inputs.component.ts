@@ -27,49 +27,10 @@ export enum TimeSlotPeriodicity {
   styleUrls: ['./inputs.component.scss']
 })
 export class InputsComponent implements OnInit, OnDestroy {
+  displayedColumns = [];
+  dataSource = [];
 
-  displayedColumns: string[] = [
-    'Date',
-    'CSP Bimbo 1',
-    'CSP Bimbo 2',
-    'CSP Bimbo 3',
-    'CSP Begoua 1',
-    'CSP Begoua 2',
-    'CSP Begoua 3',
-    'CSP Begoua 4'
-  ];
-  dataSource = [
-    {
-      Date: '2016-Q2',
-      'CSP Bimbo 1': 12,
-      'CSP Bimbo 2': 100,
-      'CSP Bimbo 3': 75,
-      'CSP Begoua 1': 23,
-      'CSP Begoua 2': 15,
-      'CSP Begoua 3': 0,
-      'CSP Begoua 4': 79,
-    },
-    {
-      Date: '2016-Q2',
-      'CSP Bimbo 1': 0,
-      'CSP Bimbo 2': 100,
-      'CSP Bimbo 3': 0,
-      'CSP Begoua 1': 23,
-      'CSP Begoua 2': 34,
-      'CSP Begoua 3': 100,
-      'CSP Begoua 4': 0,
-    },
-    {
-      Date: '2016-Q2',
-      'CSP Bimbo 1': 23,
-      'CSP Bimbo 2': 100,
-      'CSP Bimbo 3': 75,
-      'CSP Begoua 1': 0,
-      'CSP Begoua 2': 0,
-      'CSP Begoua 3': 100,
-      'CSP Begoua 4': 100,
-    },
-  ];
+  seeOlderDatesFlag = true;
   formId: any;
 
   sites = [];
@@ -77,7 +38,8 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   project: Project;
   form: Form;
-  dates: string[];
+  thisYearDates: string[];
+  allDates: string[];
 
   constructor(
     private route: ActivatedRoute,
@@ -100,28 +62,37 @@ export class InputsComponent implements OnInit, OnDestroy {
   }
 
   atualizeData(){
-    this.form = this.project.forms.find(x => x.id = this.formId);
+    this.form = this.project.forms.find(x => x.id === this.formId);
     this.sites = this.form ? this.form.entities.map(x => x.name) : [];
     this.displayedColumns = ['Date'].concat(this.sites);
-    this.dates = [];
+    this.thisYearDates = [];
+    this.allDates = [];
     if (this.form){
-      let slotStart = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
-      const slotEnd = TimeSlot.fromDate(this.form.end, TimeSlotPeriodicity[this.form.periodicity]);
+      let firstDate = new Date();
+      if (firstDate > this.form.end){
+        firstDate = this.form.end;
+      }
+      const currentYear = firstDate.getFullYear().toString();
+
+      let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
+      const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
       if (slotStart === slotEnd){
-        this.dates = [slotStart.humanizeValue('en')];
+        this.thisYearDates = [slotStart.humanizeValue('en')];
+        this.allDates = [slotStart.humanizeValue('en')];
       }else{
         while (slotStart !== slotEnd){
-          this.dates.push(slotStart.humanizeValue('en'));
-          slotStart = slotStart.next();
+          if (currentYear === slotStart.value.slice(0, 4)){
+            this.thisYearDates.push(slotStart.humanizeValue('en'));
+          }
+          this.allDates.push(slotStart.humanizeValue('en'));
+          slotStart = slotStart.previous();
         }
       }
-      console.log(this.dates);
     }
 
-
     const newDataSource = [];
-    for (const date of this.dates){
+    for (const date of this.thisYearDates){
       const current = { Date: date };
 
       for (const site of this.sites){
@@ -130,6 +101,21 @@ export class InputsComponent implements OnInit, OnDestroy {
       newDataSource.push(current);
     }
     this.dataSource = newDataSource;
+  }
+
+  seeOlderDates(){
+    const newDataSource = [];
+    for (const date of this.allDates){
+      const current = { Date: date };
+
+      for (const site of this.sites){
+        current[site] = Math.floor((Math.random() * 101));
+      }
+      newDataSource.push(current);
+    }
+    this.dataSource = newDataSource;
+
+    this.seeOlderDatesFlag = false;
   }
 
   ngOnDestroy() {
