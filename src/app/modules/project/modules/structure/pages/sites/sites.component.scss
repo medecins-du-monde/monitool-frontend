@@ -1,0 +1,22 @@
+.add-row {
+    text-align: center;
+}
+
+.mdm-table {
+
+    tr {
+        th {
+            font-size: 14px;
+        }
+    }
+
+    th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+        padding: 4px;
+        text-align: center;
+    }
+
+    th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+        padding: 4px;
+        text-align: center;
+    }    
+}

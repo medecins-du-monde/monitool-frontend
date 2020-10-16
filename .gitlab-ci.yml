@@ -30,6 +30,6 @@ deploy:
     - npm i
   script:
     - npm run build -- --prod
-    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* tester@217.70.189.97:/var/www/html/mdm-monitool-frontend
+    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
   only:
     - dev
