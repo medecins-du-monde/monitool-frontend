@@ -15,6 +15,8 @@ build:
   before_script:
     - npm i
   script: npm run build -- --prod
+  only:
+    - master
 
 deploy:
   stage: deploy
