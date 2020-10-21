@@ -9,6 +9,8 @@ lint:
   before_script:
     - npm i
   script: npm run lint
+  only:
+    - master
 
 build:
   stage: test
