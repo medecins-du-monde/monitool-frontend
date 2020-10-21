@@ -32,4 +32,4 @@ deploy:
     - npm run build -- --prod
     - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
   only:
-    - dev
+    - master
