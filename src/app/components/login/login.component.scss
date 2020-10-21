@@ -1,6 +1,32 @@
 .login-component {
-    display: flex;
+
+    position: absolute;
+    top: 50%;
+    margin-top: -175px;
+    left: 0;
+    width: 100%;
+}
+
+.center-panel{
+    background-color: #fff;
+    min-width: 300px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
     flex-direction: column;
-    width: 30%;
-    margin: auto;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+button{
+    margin-bottom: 5px;
+}
+
+img{
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
 }
