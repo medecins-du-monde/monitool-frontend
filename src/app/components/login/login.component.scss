@@ -19,9 +19,20 @@
     border-radius: 5px;
     padding: 20px;
 }
+.authenticationPanel{
+    h2{
+        text-align: center;
+    }
+}
 
-button{
-    margin-bottom: 5px;
+.buttons{
+    display: flex;
+    flex-direction: column;
+    button{
+        margin-bottom: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
 
 img{

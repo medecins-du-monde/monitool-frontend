@@ -13,7 +13,13 @@ export class AuthGuardService implements CanActivate {
     if (await this.authService.isAuthenticated()){
       return true;
     }
+
+    console.log('agora vai');
+    console.log(this.route.url);
+    console.log(this.route);
+
     this.route.navigate(['login']);
+
     return false;
   }
 }

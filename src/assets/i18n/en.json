@@ -14,6 +14,7 @@
     "CollectionSites": "Collection sites",
     "CommonRole": "Common",
     "Computation": "Computation",
+    "Connect": "Connect",
     "Countries": "Countries",
     "Country": "Country",
     "Create": "Create",
@@ -74,6 +75,7 @@
     "fr": "French",
     "FullName": "Full name",
     "GeneralReporting": "General reporting",
+    "GoBack": "Go back",
     "GroupName": "Group name",
     "Groups": "Groups",
     "History": "History",
@@ -162,6 +164,8 @@
     "OngoingPlural": "Ongoing",
     "Open": "Open",
     "Owner": "Owner",
+    "PartnerAuthentication": "Partner authentication",
+    "Password": "Password",
     "Patch": {
         "Add": {
             "Thematic": "Add a new thematic to the project"
@@ -209,9 +213,11 @@
     "ThematicEdition": "Thematic edition",
     "Thematics": "Thematics",
     "UpdateUser": "Update the user",
+    "UsePartnerAccount": "Use partner account",
     "User": "User",
     "UserEdition": "User edition",
     "Users": "Users",
+    "UseTrainingAccount":"Use training account (admin)",
     "Valid": "Valid",
     "Visibility": "Visibility",
     "VisibilityPublic": "Visible for all users (besides partners)",
