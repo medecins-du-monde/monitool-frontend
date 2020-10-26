@@ -142,12 +142,11 @@ export class IndicatorModalComponent implements OnInit {
 
     const parametersFormGroup = this.fb.group({});
 
-    const parameterGroup = this.fb.group({
-      elementId: ['', Validators.required],
-      filter: this.fb.group({}),
-    });
     forEach( this.symbols, symbol => {
-      parametersFormGroup.addControl(`${symbol}`, parameterGroup);
+      parametersFormGroup.addControl(`${symbol}`, this.fb.group({
+        elementId: ['', Validators.required],
+        filter: this.fb.group({}),
+      }));
     });
 
     this.data.indicator.controls.computation = this.fb.group({

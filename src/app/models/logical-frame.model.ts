@@ -24,11 +24,9 @@ export class LogicalFrame implements Deserializable {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.purposes = ( input && input.purposes ) ? input.purposes.map(x => new Purpose(x)) : [];
-        this.start = input.start ? new Date(input.start)  : null;
-        this.end = input.end ? new Date(input.end) : null;
-        console.log("here is the input indicator : ")
-        console.log(input.indicators)
-        this.indicators = input.indicators ? input.indicators.map(x => new ProjectIndicator(x)) : [];
+        this.start = ( input && input.start ) ? new Date(input.start)  : null;
+        this.end = ( input && input.end ) ? new Date(input.end) : null;
+        this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }
 
