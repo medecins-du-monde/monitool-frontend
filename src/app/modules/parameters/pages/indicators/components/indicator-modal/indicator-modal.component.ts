@@ -49,6 +49,7 @@ export class IndicatorModalComponent implements OnInit {
         es: [this.data ? this.data.description.es : '', Validators.required],
         fr: [this.data ? this.data.description.fr : '', Validators.required]
       }),
+      _rev: this.data ? this.data.rev : null
     });
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;

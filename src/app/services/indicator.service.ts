@@ -23,7 +23,7 @@ export class IndicatorService {
     });
   }
 
-  public async get(id: string) {
+  public async get(id: string) { // not being used anywhere (?)
     // const response = await this.apiService.get(`/resources/indicator/${id}`);
   }
 
@@ -32,6 +32,6 @@ export class IndicatorService {
   }
 
   public async delete(id: string) {
-    // const response = await this.apiService.post(`/resources/indicator/${id}`);
+    const response = await this.apiService.delete(`/resources/indicator/${id}`);
   }
 }
