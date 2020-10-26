@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
 import { forEach } from 'lodash';
@@ -17,7 +17,8 @@ export class IndicatorModalComponent implements OnInit {
   displayedColumns: string[] = ['parameter', 'variable', 'disaggregations'];
   dataSource = new BehaviorSubject<any[]>([]);
 
-  private initValue: any;
+
+  private initValue: {};
   private parser: Parser;
   private symbols: any;
 
@@ -56,44 +57,25 @@ export class IndicatorModalComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[] }
-  ) {}
-
+  ) { }
 
   ngOnInit(): void {
-    const computation = this.data.indicator.controls.computation as FormGroup;
-
-    const parameterGroup = this.fb.group({
-      elementId: ['', Validators.required],
-      filter: this.fb.group({}),
-    });
-
-    const parametersFormGroup = this.fb.group({});
-
     this.initValue = this.data.indicator.value;
     this.parser = new Parser();
     this.parser.consts = {};
     try {
       this.symbols = this.parser.parse(this.data.indicator.value.computation.formula).variables();
-
-      const newDataSource = [];
-      forEach(this.symbols, symbol => {
-        parametersFormGroup.addControl(symbol, parameterGroup);
-        newDataSource.push({
-        symbol,
-      });
-    });
-      this.dataSource.next(newDataSource);
+      this.dataSource.next(this.symbols);
     }
     catch (e) {
       this.symbols = [];
     }
-    this.data.indicator.controls.computation = this.fb.group({
-      formula: computation.value.formula,
-      parameters: parametersFormGroup,
-    });
   }
 
   onSubmit() {
+    console.log('on Submit...');
+    console.log('data indicator : ');
+    console.log(this.data.indicator);
     this.dialogRef.close({ indicator: this.data.indicator });
   }
 
@@ -103,7 +85,6 @@ export class IndicatorModalComponent implements OnInit {
 
   onTypeChange(type: any) {
     const computation = this.data.indicator.controls.computation as FormGroup;
-
     if (type.value === 'fixed' && isNaN(computation.value.formula)) {
       computation.controls.formula.setValue('0');
     } else if (type.value === 'copy') {
@@ -117,10 +98,13 @@ export class IndicatorModalComponent implements OnInit {
   }
 
   onFormulaChange() {
+    console.log('formula changing...');
     const parameters = this.data.indicator.controls.computation.value.parameters ?
       this.data.indicator.controls.computation.value.parameters : {};
+
     let newSymbols = Object.keys(parameters);
-    // const oldSymbols = Object.keys(parameters);
+    const oldSymbols = Object.keys(parameters);
+
     try {
       newSymbols = this.parser.parse(this.data.indicator.controls.computation.value.formula).variables();
     }
@@ -139,74 +123,84 @@ export class IndicatorModalComponent implements OnInit {
 
     this.symbols = newSymbols;
     const computation = this.data.indicator.controls.computation as FormGroup;
-
     const parametersFormGroup = this.fb.group({});
+    const calculDataList = [];
+    for (let i = 0; i < this.symbols.length; i++ ) {
+      // forEach(this.data.forms[0].elements[i].partitions, partition => {
+      //   console.log('I am the partition : ')
+      //   console.log(partition)
+      //   const valuesPartition = [];
+      //   forEach(partition.elements, value => {
+      //     valuesPartition.push(value.id);
+      //   });
+      //   listFilters.push({
+      //     [partition.id]: valuesPartition,
+      //   });
+      // });
+      console.log("this.data.forms[0].elements[i] : ")
+      console.log(this.data.forms[0].elements[i])
 
-    const parameterGroup = this.fb.group({
-      elementId: ['', Validators.required],
-      filter: this.fb.group({}),
-    });
-    forEach( this.symbols, symbol => {
-      parametersFormGroup.addControl(`${symbol}`, parameterGroup);
-    });
-
+      calculDataList.push({
+        key: this.symbols[i],
+        value: this.data.forms[0].elements[i]
+      });
+      const parameterGroup = this.fb.group({
+        elementId: [this.data.forms[0].elements[i].id || '', Validators.required],
+        // filter: [listFilters, Validators.required]
+        filter: []
+      });
+      parametersFormGroup.addControl(`${this.symbols[i]}`, parameterGroup);
+    }
+    console.log('parameters :')
+    console.log(parameters)
     this.data.indicator.controls.computation = this.fb.group({
       formula: computation.value.formula,
+      // parameters: parameters === {} ? parametersFormGroup : parameters,
       parameters: parametersFormGroup,
     });
-    const newDataSource = [];
-    console.log('data.form');
-    console.log(this.data.forms);
-    forEach(this.symbols, symbol => {
-      newDataSource.push({
-        symbol,
-      });
-    });
-    this.dataSource.next(newDataSource);
-    console.log('Here is the datasource : ');
-    console.log(this.dataSource.getValue());
-    console.log('Here is teh computation');
-    console.log(this.data.indicator.controls.computation);
+    console.log('this.data.indicator.controls.computation : ')
+    console.log(this.data.indicator.controls.computation)
+
+    // const calculDataList = [];
+    // forEach(parametersFormGroup.value, (value, key) => {
+    //   calculDataList.push( {
+    //     key,
+    //     value,
+    //   } );
+    // });
+    console.log('Here is the calculDataList : ')
+    console.log(calculDataList)
+    this.dataSource.next(calculDataList);
+    console.log("Here is the this.data.indicator.controls.computation :")
+    console.log(this.data.indicator.controls.computation)
   }
 
-  onVariableSelected(event, element) {
-    console.log('onVariableSelected...');
-    console.log(this.data.indicator.controls.computation.value.parameters);
-    console.log('here is the event :');
-    console.log(event);
-    console.log('Here is the element : ');
-    console.log(element);
-    const newDataSource = this.dataSource.getValue();
-    console.log('old datasource : ')
-    console.log(newDataSource)
-    forEach(newDataSource, data => {
-      if (data.symbol === element.symbol ) {
-        data.filter = this.data.forms[0].elements.filter(partitionData => partitionData.id === event.value)[0];
-        this.data.indicator.controls.computation
-        .get('parameters')
-        .get(`${data.symbol}`)
-        .get('elementId')
-        .setValue(data.filter ? data.filter.id : '');
-      }
-      console.log('this.data.indicator.controls.computation.get(parameters) :');
-      console.log(this.data.indicator.controls.computation.get('parameters').get(`${data.symbol}`));
-
-      console.log('data : ');
-      console.log(data);
-
-
-
-      console.log('Here is the newDataSource :');
-      console.log(newDataSource);
-      console.log('new computation parameters');
-      console.log(this.data.indicator.controls.computation.get('parameters'));
+  onVariableSelected(element: any, symbol: string) {
+    const newValue = this.data.forms[0].elements.find(data => data.id === element.value);
+    this.dataSource.value.map(parameter => {
+      if (parameter.key === symbol) {
+         parameter.value.elementId = newValue.id;
+         parameter.value.filter = newValue.partitions;
+        }
     });
-
-    this.dataSource.next(newDataSource);
-  }
-
-  getPartitions() {
-    console.log('getPartitions...');
-    console.log(this.data.indicator.controls.computation);
+    console.log('here is the datasource : ')
+    console.log(this.dataSource)
+    // const computation = this.data.indicator.controls.computation as FormGroup;
+    // const parametersFormGroup = this.fb.group({});
+    // for (let i = 0; i < this.dataSource.value.length; i++ ) {
+    //   const parameterGroup = this.fb.group({
+    //     elementId: [this.dataSource.value[i].elementId || '', Validators.required],
+    //     filter: [this.dataSource.value[i].partitions ? this.dataSource.value[i].partitions.filter || {} : {}, Validators.required]
+    //   });
+    //   parametersFormGroup.addControl(`${this.symbols[i]}`, parameterGroup);
+    // }
+    // this.data.indicator.controls.computation = this.fb.group({
+    //   formula: computation.value.formula,
+    //   parameters: parametersFormGroup
+    // });
+    // console.log('computation')
+    // console.log(computation)
+    console.log('this.datasource.value :')
+    console.log(this.dataSource.value)
   }
 }

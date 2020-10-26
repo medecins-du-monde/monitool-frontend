@@ -41,17 +41,16 @@
             <ng-container matColumnDef="parameter">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Parameter' | translate }}</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="type !== 'formula'">{{ 'Enum.Formula.' + element.symbol | translate }}</span>
-                    <span *ngIf="type === 'formula'">{{ element.symbol }}</span>
+                    <span *ngIf="type !== 'formula'">{{ 'Enum.Formula.' + element.key | translate }}</span>
+                    <span *ngIf="type === 'formula'">{{ element.key }}</span>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
             <ng-container matColumnDef="variable" formGroupName="parameters">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Variable' | translate }}</th>
-                <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
-                  {{control.symbol}}
-                    <mat-form-field appearance="outline" class="mdm-form-field" >
-                        <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, control)" placeholder="{{ 'Variable' | translate }}">
+                <td mat-cell *matCellDef="let element" [formGroupName]="element.key">
+                    <mat-form-field appearance="outline" class="mdm-form-field">
+                        <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, element.key)"placeholder="{{ 'Variable' | translate }}">
                             <mat-optgroup *ngFor="let form of data.forms" [label]="form.name">
                                 <mat-option *ngFor="let element of form.elements" [value]="element.id">
                                     {{element.name}}
@@ -63,11 +62,9 @@
                 <td mat-footer-cell *matFooterCellDef>{{ 'Help.Variable' | translate }}</td>
             </ng-container>
             <ng-container matColumnDef="disaggregations" formGroupName="parameters">
-              <th mat-header-cell *matHeaderCellDef>{{ 'Disaggregations' | translate }}</th>
-              <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
-                <div *ngIf="control.filter">
-                  {{control.filter}}
-                  <ng-container *ngFor="let partition of control.filter.partitions">
+                <th mat-header-cell *matHeaderCellDef>{{ 'Disaggregations' | translate }}</th>
+                <td mat-cell *matCellDef="let element" [formGroupName]="element.key">
+                  <ng-container *ngFor="let partition of element.value.filter">
                     {{partition.name}}
                     <mat-form-field appearance="outline" class="mdm-form-field">
                       <mat-select formControlName="filter" placeholder="{{ 'partitionElement' | translate }}" multiple>
@@ -84,14 +81,10 @@
                       </mat-select>
                     </mat-form-field>
                     <br />
-                  </ng-container>
-                </div>
-              </td>
-              <td mat-footer-cell *matFooterCellDef>{{ 'Help.Partition' | translate }}</td>
-          </ng-container>
-
-
-
+                </ng-container>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>{{ 'Help.Partition' | translate }}</td>
+            </ng-container>
 
             <ng-container matColumnDef="formula">
                 <td mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">

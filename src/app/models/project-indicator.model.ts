@@ -22,6 +22,7 @@ export class ProjectIndicator implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.colorize = this.colorize ? this.colorize : true;
         if (input && input.formula) {
             if (!isNaN(input.formula)) {
                 this.type = 'fixed';
@@ -49,6 +50,14 @@ export class ProjectIndicator implements Deserializable {
     }
 
     serialize() {
-        return null;
+      return {
+        baseline: this.baseline,
+        colorize: this.colorize,
+        computation: this.computation,
+        display: this.display,
+        target: this.target,
+        // type: this.type,
+      };
     }
+
 }

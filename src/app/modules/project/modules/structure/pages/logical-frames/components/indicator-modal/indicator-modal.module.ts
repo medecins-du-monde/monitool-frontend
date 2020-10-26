@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -27,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatSelectModule,
     MatDialogModule,
     MatInputModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule
   ],
