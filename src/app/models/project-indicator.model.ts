@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 import { Deserializable } from './deserializable.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
@@ -49,14 +50,24 @@ export class ProjectIndicator implements Deserializable {
         return this;
     }
 
+    private formatComputation(computation): any{
+      forEach(computation.parameters, parameter => {
+        forEach(parameter.filter, (value, key) => {
+          parameter.filter[`${key}`] = value.map(element => {
+            return element.id;
+          });
+        });
+      });
+      return computation;
+    }
+
     serialize() {
       return {
         baseline: this.baseline,
         colorize: this.colorize,
-        computation: this.computation,
+        computation: this.formatComputation(this.computation),
         display: this.display,
         target: this.target,
-        // type: this.type,
       };
     }
 

@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
-import { forEach } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/form.model';
 import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/project-indicator.model';
@@ -76,7 +75,7 @@ export class IndicatorModalComponent implements OnInit {
       this.symbols = this.parser.parse(this.data.indicator.value.computation.formula).variables();
 
       const newDataSource = [];
-      forEach(this.symbols, symbol => {
+      this.symbols.forEach(symbol => {
         parametersFormGroup.addControl(symbol, parameterGroup);
         newDataSource.push({
         symbol,
@@ -120,7 +119,7 @@ export class IndicatorModalComponent implements OnInit {
     const parameters = this.data.indicator.controls.computation.value.parameters ?
       this.data.indicator.controls.computation.value.parameters : {};
     let newSymbols = Object.keys(parameters);
-    // const oldSymbols = Object.keys(parameters);
+
     try {
       newSymbols = this.parser.parse(this.data.indicator.controls.computation.value.formula).variables();
     }
@@ -128,21 +127,12 @@ export class IndicatorModalComponent implements OnInit {
       newSymbols = [];
     }
 
-    // if (!(JSON.stringify(newSymbols) === JSON.stringify(oldSymbols))) {
-    //   const addedSymbols = newSymbols.filter(s => !oldSymbols.includes(s));
-
-    //   // Add new symbols to formula
-    //   addedSymbols.forEach(s => {
-    //     parameters[s] = { elementId: null, filter: {} };
-    //   });
-    // }
-
     this.symbols = newSymbols;
     const computation = this.data.indicator.controls.computation as FormGroup;
 
     const parametersFormGroup = this.fb.group({});
 
-    forEach( this.symbols, symbol => {
+    this.symbols.forEach(symbol => {
       parametersFormGroup.addControl(`${symbol}`, this.fb.group({
         elementId: ['', Validators.required],
         filter: this.fb.group({}),
@@ -154,58 +144,51 @@ export class IndicatorModalComponent implements OnInit {
       parameters: parametersFormGroup,
     });
     const newDataSource = [];
-    console.log('data.form');
-    console.log(this.data.forms);
-    forEach(this.symbols, symbol => {
+    this.symbols.forEach(symbol => {
       newDataSource.push({
         symbol,
       });
     });
     this.dataSource.next(newDataSource);
-    console.log('Here is the datasource : ');
-    console.log(this.dataSource.getValue());
-    console.log('Here is teh computation');
-    console.log(this.data.indicator.controls.computation);
   }
 
   onVariableSelected(event, element) {
-    console.log('onVariableSelected...');
-    console.log(this.data.indicator.controls.computation.value.parameters);
-    console.log('here is the event :');
-    console.log(event);
-    console.log('Here is the element : ');
-    console.log(element);
     const newDataSource = this.dataSource.getValue();
-    console.log('old datasource : ')
-    console.log(newDataSource)
-    forEach(newDataSource, data => {
+    newDataSource.forEach(data => {
       if (data.symbol === element.symbol ) {
         data.filter = this.data.forms[0].elements.filter(partitionData => partitionData.id === event.value)[0];
-        this.data.indicator.controls.computation
-        .get('parameters')
-        .get(`${data.symbol}`)
-        .get('elementId')
-        .setValue(data.filter ? data.filter.id : '');
+        data.filter.partitions.forEach(partition => {
+          const filter = this.data.indicator.controls.computation
+          .get('parameters')
+          .get(`${data.symbol}`)
+          .get('filter') as FormGroup;
+          filter.addControl(`${partition.id}`, new FormControl([]));
+        });
       }
-      console.log('this.data.indicator.controls.computation.get(parameters) :');
-      console.log(this.data.indicator.controls.computation.get('parameters').get(`${data.symbol}`));
-
-      console.log('data : ');
-      console.log(data);
-
-
-
-      console.log('Here is the newDataSource :');
-      console.log(newDataSource);
-      console.log('new computation parameters');
-      console.log(this.data.indicator.controls.computation.get('parameters'));
     });
 
     this.dataSource.next(newDataSource);
   }
 
-  getPartitions() {
-    console.log('getPartitions...');
-    console.log(this.data.indicator.controls.computation);
+  getPartitions(symbol, partitionId) {
+    return this.data.indicator.controls.computation
+      .get('parameters')
+      .get(`${symbol}`)
+      .get('filter')
+      .get(`${partitionId}`).value
+      ;
+  }
+
+  onPartitionElementRemoved(symbol, partitionId, partitionElementId) {
+    const partition = this.data.indicator.controls.computation
+    .get('parameters')
+    .get(`${symbol}`)
+    .get('filter')
+    .get(`${partitionId}`).value
+    ;
+    this.data.indicator.controls.computation
+    .get('parameters')
+    .get(`${symbol}`)
+    .get('filter').get(`${partitionId}`).setValue(partition.filter(p => p.id !== partitionElementId));
   }
 }

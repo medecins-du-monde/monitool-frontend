@@ -49,7 +49,6 @@
             <ng-container matColumnDef="variable" formGroupName="parameters">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Variable' | translate }}</th>
                 <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
-                  {{control.symbol}}
                     <mat-form-field appearance="outline" class="mdm-form-field" >
                         <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, control)" placeholder="{{ 'Variable' | translate }}">
                             <mat-optgroup *ngFor="let form of data.forms" [label]="form.name">
@@ -66,20 +65,22 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'Disaggregations' | translate }}</th>
               <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
                 <div *ngIf="control.filter">
-                  {{control.filter}}
-                  <ng-container *ngFor="let partition of control.filter.partitions">
+                  <ng-container formGroupName="filter" *ngFor="let partition of control.filter.partitions">
                     {{partition.name}}
                     <mat-form-field appearance="outline" class="mdm-form-field">
-                      <mat-select formControlName="filter" placeholder="{{ 'partitionElement' | translate }}" multiple>
+                      <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple>
                           <mat-select-trigger>
                               <mat-chip-list>
-                                  <mat-chip *ngFor="let partitionElement of partition.elements">
+                                  <mat-chip *ngFor="let partitionElement of getPartitions(control.symbol, partition.id)"
+                                  [removable]="true"
+                                  (removed)="onPartitionElementRemoved(control.symbol, partition.id, partitionElement.id)"
+                                  >
                                       {{ partitionElement.name }}
                                       <mat-icon matChipRemove>cancel</mat-icon>
                                   </mat-chip>
                               </mat-chip-list>
                           </mat-select-trigger>
-                          <mat-option *ngFor="let partitionElement of partition.elements" [value]="partitionElement.id">{{partitionElement.name }}
+                          <mat-option *ngFor="let partitionElement of partition.elements" [value]="partitionElement">{{partitionElement.name }}
                           </mat-option>
                       </mat-select>
                     </mat-form-field>
