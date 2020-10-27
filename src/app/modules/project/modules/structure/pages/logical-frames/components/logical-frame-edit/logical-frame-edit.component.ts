@@ -55,7 +55,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       start: [this.logicalFrame.start],
       end: [this.logicalFrame.end],
       goal: [this.logicalFrame.goal],
-      indicators: this.fb.array([]),
+      indicators: this.fb.array(this.logicalFrame.indicators),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => this.newPurpose(x)))
     });
     this.logicalFrameForm.valueChanges.subscribe((value: any) => {

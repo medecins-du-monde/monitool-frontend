@@ -22,32 +22,32 @@ export class ProjectIndicator implements Deserializable {
     }
 
     deserialize(input: any): this {
-        Object.assign(this, input);
-        this.colorize = this.colorize ? this.colorize : true;
-        if (input && input.formula) {
-            if (!isNaN(input.formula)) {
+      Object.assign(this, input);
+      this.colorize = this.colorize ? this.colorize : true;
+      if (input && input.computation.formula) {
+            if (!isNaN(input.computation.formula)) {
                 this.type = 'fixed';
-                this.computation.formula = input.formula;
+                this.computation.formula = input.computation.formula;
                 this.computation.parameters = {};
             } else if (input.formula === COPY_FORMULA) {
                 this.type = 'copy';
                 this.computation.formula = COPY_FORMULA;
-                this.computation.parameters = input.parameters;
+                this.computation.parameters = input.computation.parameters;
             } else if (input.formula === PERCENTAGE_FORMULA) {
                 this.type = 'percentage';
                 this.computation.formula = PERCENTAGE_FORMULA;
-                this.computation.parameters = input.parameters;
+                this.computation.parameters = input.computation.parameters;
             } else if (input.formula === PERMILLE_FORMULA) {
                 this.type = 'permille';
                 this.computation.formula = PERMILLE_FORMULA;
-                this.computation.parameters = input.parameters;
+                this.computation.parameters = input.computation.parameters;
             } else {
                 this.type = 'formula';
-                this.computation.formula = input.formula;
-                this.computation.parameters = input.parameters;
+                this.computation.formula = input.computation.formula;
+                this.computation.parameters = input.computation.parameters;
             }
         }
-        return this;
+      return this;
     }
 
     private formatComputation(computation): any{
