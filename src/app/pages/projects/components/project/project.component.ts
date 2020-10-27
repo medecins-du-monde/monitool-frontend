@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
+
 
 @Component({
   selector: 'app-project',
@@ -23,7 +26,8 @@ export class ProjectComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {}
@@ -43,6 +47,12 @@ export class ProjectComponent implements OnInit {
   }
 
   onClone() {
-    this.clone.emit(this.project);
+    const dialogRef = this.dialog.open(CloneProjectModalComponent);
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res){
+        this.clone.emit(this.project);
+      }
+    });
   }
 }
