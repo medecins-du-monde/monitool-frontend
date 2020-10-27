@@ -23,6 +23,6 @@ export class ThemeService {
   }
 
   public async delete(id: string) {
-    // const response = await this.apiService.delete(`/resources/theme/${id}`);
+    await this.apiService.delete(`/resources/theme/${id}`);
   }
 }
