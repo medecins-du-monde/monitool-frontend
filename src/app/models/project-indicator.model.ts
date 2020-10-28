@@ -24,7 +24,7 @@ export class ProjectIndicator implements Deserializable {
     deserialize(input: any): this {
       Object.assign(this, input);
       this.colorize = this.colorize ? this.colorize : true;
-      if (input && input.computation.formula) {
+      if (input && input.computation) {
             if (!isNaN(input.computation.formula)) {
                 this.type = 'fixed';
                 this.computation.formula = input.computation.formula;
@@ -51,14 +51,17 @@ export class ProjectIndicator implements Deserializable {
     }
 
     private formatComputation(computation): any{
-      forEach(computation.parameters, parameter => {
-        forEach(parameter.filter, (value, key) => {
-          parameter.filter[`${key}`] = value.map(element => {
-            return element.id;
+      if (computation.formula){
+        forEach(computation.parameters, parameter => {
+          forEach(parameter.filter, (value, key) => {
+            parameter.filter[`${key}`] = value.map(element => {
+              return element.id;
+            });
           });
         });
-      });
-      return computation;
+        return computation;
+      }
+      return null;
     }
 
     serialize() {

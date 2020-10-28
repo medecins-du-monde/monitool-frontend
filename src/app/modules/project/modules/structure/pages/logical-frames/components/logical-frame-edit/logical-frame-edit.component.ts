@@ -94,22 +94,22 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   }
 
   onEditIndicator(indicator: FormGroup) {
-    this.openDialog(indicator);
+    this.openDialog(this.newIndicator(indicator.value));
   }
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
   }
 
-  private newIndicator(): FormGroup {
-    const indicator = new ProjectIndicator();
+  private newIndicator(indicatorToEdit = null): FormGroup {
+    const indicator = new ProjectIndicator(indicatorToEdit);
     return this.fb.group({
       display: [indicator.display, Validators.required],
       baseline: [indicator.baseline],
       target: [indicator.target],
       computation: this.fb.group({
-        formula: [indicator.computation.formula],
-        parameters: [indicator.computation.formula]
+        formula: [indicator.computation ? indicator.computation.formula : null],
+        parameters: [indicator.computation ? indicator.computation.parameters : []]
       }),
       type: [indicator.type]
     });
