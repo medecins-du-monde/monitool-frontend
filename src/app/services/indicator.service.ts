@@ -23,10 +23,6 @@ export class IndicatorService {
     });
   }
 
-  public async get(id: string) { // not being used anywhere (?)
-    // const response = await this.apiService.get(`/resources/indicator/${id}`);
-  }
-
   public async save(indicator: Indicator) {
     const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }

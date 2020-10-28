@@ -45,9 +45,9 @@ export class IndicatorModalComponent implements OnInit {
         fr: [this.data ? this.data.name.fr : '', Validators.required]
       }),
       description: this.fb.group({
-        en: [this.data ? this.data.description.en : '', Validators.required],
-        es: [this.data ? this.data.description.es : '', Validators.required],
-        fr: [this.data ? this.data.description.fr : '', Validators.required]
+        en: [this.data ? this.data.description.en : ''],
+        es: [this.data ? this.data.description.es : ''],
+        fr: [this.data ? this.data.description.fr : '']
       }),
       _rev: this.data ? this.data.rev : null
     });
