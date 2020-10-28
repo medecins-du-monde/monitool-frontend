@@ -9,12 +9,16 @@ lint:
   before_script:
     - npm i
   script: npm run lint
+  only:
+    - master
 
 build:
   stage: test
   before_script:
     - npm i
   script: npm run build -- --prod
+  only:
+    - master
 
 deploy:
   stage: deploy
@@ -32,4 +36,4 @@ deploy:
     - npm run build -- --prod
     - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
   only:
-    - dev
+    - master

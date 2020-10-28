@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule,
     MatCardModule,
     MatButtonModule,
+    MatDialogModule,
     MatChipsModule,
     MatIconModule,
     MatMenuModule,
