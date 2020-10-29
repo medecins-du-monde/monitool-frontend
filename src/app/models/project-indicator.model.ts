@@ -68,7 +68,7 @@ export class ProjectIndicator implements Deserializable {
       return {
         baseline: this.baseline,
         colorize: this.colorize,
-        computation: this.formatComputation(this.computation),
+        computation: this.computation ? this.formatComputation(this.computation) : null,
         display: this.display,
         target: this.target,
       };
