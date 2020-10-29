@@ -31,11 +31,6 @@ export class LogicalFrame implements Deserializable {
     }
 
     serialize() {
-      console.log('here are the indicators : ');
-      console.log(this.indicators);
-      console.log('Here is the type of indicators : ')
-      console.log(typeof this.indicators[0])
-      console.log('and now a list of indicators')
       return {
             id: this.id,
             name: this.name,

@@ -93,8 +93,8 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     this.openDialog(indicator, true);
   }
 
-  onEditIndicator(indicator: FormGroup) {
-    this.openDialog(this.newIndicator(indicator.value));
+  onEditIndicator(indicator: FormGroup, index?: number) {
+    this.openDialog(this.newIndicator(indicator.value), false, index);
   }
 
   onDeleteIndicator(i: number) {
@@ -115,15 +115,16 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     });
   }
 
-  openDialog(indicator: FormGroup, add?: boolean) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
-        } else {
-          indicator = res.indicator;
+        }
+        else if (index !== null) {
+          this.indicators.setControl(index, res.indicator);
         }
       }
     });
