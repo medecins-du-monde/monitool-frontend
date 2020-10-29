@@ -174,7 +174,7 @@
     "Reporting": "Rapport",
     "ResetChanges": "Annuler les modifications",
     "RevertToVersion": "Revenir à ce point",
-    "Role": "Role",
+    "Role": "Rôle",
     "SaveIndicator": "Sauvegarder l'indicateur",
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
@@ -182,6 +182,16 @@
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
     "Settings": "Paramètres",
+    "SettingsThematicsEdit": "Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.",
+    "SettingsThematicsInfo": [
+        "Cette page contient la liste des thématiques traitées par l'ONG.",
+        "Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal."
+    ],
+    "SettingsUserEdit": "Vous pouvez ici éditer les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
+    "SettingsUserInfo": [
+        "Cette page contient la liste de tous les utilisateurs qui se sont connectés au moins une fois sur Monitool",
+        "Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il est possible de créer des comptes partenaires depuis l'interface de gestion des projets."
+    ],
     "SpecificEndDate": "Date de fin spécifique",
     "SpecificStartDate": "Date de début spécifique",
     "StartDate": "Date de lancement",

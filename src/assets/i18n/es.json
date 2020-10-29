@@ -6,6 +6,7 @@
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "Admin": "Administrador",
+    "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
     "Baseline": "Valor de base",
     "Basics": "Datos de base",
@@ -24,7 +25,7 @@
     "CreateNewDataSource": "Crear una nueva fuente de datos",
     "CreateNewIndicator": "Crear un nuevo indicador",
     "CreateNewProject": "Crear un nuevo proyecto",
-    "CreateNewThematic": "Create una temática",
+    "CreateNewThematic": "Crear una nueva temática",
     "CrossCuttingIndicators": "Indicadores transversales",
     "CrossCuttingInfo": [
         "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
@@ -182,6 +183,16 @@
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
     "Settings": "Configuración",
+    "SettingsThematicsEdit": "Entre aqui el nombre de la temática en todos los idiomas usados por su organización.",
+    "SettingsThematicsInfo": [
+        "Esta página contiene la lista de las temáticas tratadas por la ONG.",
+        "Los proyectos y los indicadores transversales se pueden conectar a temáticas."
+    ],
+    "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
+    "SettingsUserInfo": [
+        "Esta página contiene la lista de todos los usuarios que se han conectado por lo menos una vez a Monitool",
+        "No es necesario crear cuentas para usuario con una dirección de correo xxx@medecinsdumonde.net: apareceran automáticamente una vez se hayan conectado una vez. Para socios, es posible crear cuentas desde la páginas dedicadas a cada proyecto."
+    ],
     "SpecificEndDate": "Fecha de final específica",
     "SpecificStartDate": "Fecha de inicio específica",
     "StartDate": "Fecha de inicio",

@@ -187,6 +187,16 @@
     "SeeReport": "See report",
     "SeeOlderDates": "See older dates",
     "Settings": "Settings",
+    "SettingsThematicsEdit": "Enter here the name of the thematic in all languages used by your organisation.",
+    "SettingsThematicsInfo": [
+        "This page contains the list of thematics handled by the NGO.",
+        "Projects and cross-cutting indicators can be linked to thematics."
+    ],
+    "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
+    "SettingsUserInfo": [
+        "This page contains the list of all users that connected at least once on Monitool",
+        "It is not needed to create new account for users that have a xxx@medecinsdumonde.net email address: they will automatically appear here once they connect once. For partners, it is possible to create account from the project management pages."
+    ],
     "SpecificEndDate": "Specific end date",
     "SpecificStartDate": "Specific start date",
     "StartDate": "Begin date",
