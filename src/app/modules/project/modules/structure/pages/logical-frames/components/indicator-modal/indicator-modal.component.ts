@@ -2,9 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
+import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/form.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/project-indicator.model';
+import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, ProjectIndicator } from 'src/app/models/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -61,22 +62,13 @@ export class IndicatorModalComponent implements OnInit {
   ngOnInit(): void {
     const computation = this.data.indicator.controls.computation as FormGroup;
 
-    const parameterGroup = this.fb.group({
-      elementId: ['', Validators.required],
-      filter: this.fb.group({}),
-    });
-
-    const parametersFormGroup = this.fb.group({});
-
-    this.initValue = this.data.indicator.value;
+    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
     this.parser = new Parser();
     this.parser.consts = {};
     try {
       this.symbols = this.parser.parse(this.data.indicator.value.computation.formula).variables();
-
       const newDataSource = [];
       this.symbols.forEach(symbol => {
-        parametersFormGroup.addControl(symbol, parameterGroup);
         newDataSource.push({
         symbol,
       });
@@ -86,10 +78,6 @@ export class IndicatorModalComponent implements OnInit {
     catch (e) {
       this.symbols = [];
     }
-    this.data.indicator.controls.computation = this.fb.group({
-      formula: computation.value.formula,
-      parameters: parametersFormGroup,
-    });
   }
 
   onSubmit() {
@@ -97,7 +85,7 @@ export class IndicatorModalComponent implements OnInit {
   }
 
   onReset() {
-    this.data.indicator.setValue(this.initValue);
+    this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
   }
 
   onTypeChange(type: any) {
@@ -116,33 +104,31 @@ export class IndicatorModalComponent implements OnInit {
   }
 
   onFormulaChange() {
-    const parameters = this.data.indicator.controls.computation.value.parameters ?
-      this.data.indicator.controls.computation.value.parameters : {};
-    let newSymbols = Object.keys(parameters);
-
+    let newSymbols = [];
     try {
       newSymbols = this.parser.parse(this.data.indicator.controls.computation.value.formula).variables();
     }
     catch (e) {
       newSymbols = [];
     }
-
     this.symbols = newSymbols;
+
     const computation = this.data.indicator.controls.computation as FormGroup;
 
-    const parametersFormGroup = this.fb.group({});
+    this.data.indicator.controls.computation = this.fb.group({
+      formula: computation.value.formula,
+      parameters: this.fb.group({}),
+    });
+
+    const parameters = this.data.indicator.controls.computation.get('parameters') as FormGroup;
 
     this.symbols.forEach(symbol => {
-      parametersFormGroup.addControl(`${symbol}`, this.fb.group({
+      parameters.addControl(`${symbol}`, this.fb.group({
         elementId: ['', Validators.required],
         filter: this.fb.group({}),
       }));
     });
 
-    this.data.indicator.controls.computation = this.fb.group({
-      formula: computation.value.formula,
-      parameters: parametersFormGroup,
-    });
     const newDataSource = [];
     this.symbols.forEach(symbol => {
       newDataSource.push({
@@ -157,16 +143,15 @@ export class IndicatorModalComponent implements OnInit {
     newDataSource.forEach(data => {
       if (data.symbol === element.symbol ) {
         data.filter = this.data.forms[0].elements.filter(partitionData => partitionData.id === event.value)[0];
+        const filter = this.data.indicator.controls.computation
+        .get('parameters')
+        .get(`${data.symbol}`)
+        .get('filter') as FormGroup;
         data.filter.partitions.forEach(partition => {
-          const filter = this.data.indicator.controls.computation
-          .get('parameters')
-          .get(`${data.symbol}`)
-          .get('filter') as FormGroup;
           filter.addControl(`${partition.id}`, new FormControl([]));
         });
       }
     });
-
     this.dataSource.next(newDataSource);
   }
 

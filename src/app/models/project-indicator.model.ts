@@ -51,15 +51,17 @@ export class ProjectIndicator implements Deserializable {
     }
 
     private formatComputation(computation): any{
-      if (computation.formula){
-        forEach(computation.parameters, parameter => {
-          forEach(parameter.filter, (value, key) => {
-            parameter.filter[`${key}`] = value.map(element => {
-              return element.id;
+      if (computation) {
+        if (computation.formula){
+          forEach(computation.parameters, parameter => {
+            forEach(parameter.filter, (value, key) => {
+              parameter.filter[`${key}`] = value.map(element => {
+                return element.id;
+              });
             });
           });
-        });
-        return computation;
+          return computation;
+        }
       }
       return null;
     }
@@ -68,7 +70,7 @@ export class ProjectIndicator implements Deserializable {
       return {
         baseline: this.baseline,
         colorize: this.colorize,
-        computation: this.computation ? this.formatComputation(this.computation) : null,
+        computation: this.formatComputation(this.computation),
         display: this.display,
         target: this.target,
       };
