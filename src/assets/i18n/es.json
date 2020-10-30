@@ -37,7 +37,7 @@
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
     "DeletedPlural": "Suprimidos",
-    "Description": "Descriptivo",
+    "Description": "Descripción",
     "Done": "Realizado",
     "Edit": "Editar",
     "Email": "Correo electrónico",
@@ -169,6 +169,27 @@
     "Owner": "Proprietario",
     "Periodicity": "Periodicidad",
     "PivotTable": "Tabla dinámica",
+    "ProjectHomeBlueSection": [
+        [
+            "Use nombres cortos para nombrar ubicaciones de colecciones, fuentes de datos, variables e indicadores. Al evitar los acrónimos, mejora la legibilidad de sus cuadros y tablas y permite una mejor comprensión de su proyecto por parte de todos los actores de Médicos del Mundo."
+        ],
+        [
+            "En caso de error, haga clic en ",
+            " para volver a la última versión guardada."
+        ],
+        [
+            "Si ha guardado un error: vaya a la página ",
+            " y restaure una versión anterior del proyecto."
+        ]
+    ],
+    "ProjectHomeInfo": [
+        "Esta sección le ayudará a formalizar su proyecto. Debe ser utilizado durante la fase de planificación del proyecto y revisada durante la fase de implementación del proyecto.",
+        "Use su diagrama de flujo de datos para estructurar su proyecto en Monitool. Si ha seguido todos los pasos, tiene todos los elementos necesarios.",
+        "Documente los objetivos y los resultados esperados de su proyecto",
+        "Documente las actividades que hará para alcanzarlas",
+        "Enumere los indicadores que medirán el logro de sus resultados, así como el monitoreo de sus actividades (indicadores de proceso)",
+        "Enumere sus herramientas de recolección de datos (Excel, papel, ...) así como otras fuentes de datos (SNIS, encuestas ...) que usará para calcular sus indicadores, informando sus sitios de periodicidad y recolección y sus contenido"
+    ],
     "ProjectRole": "Creador proyectos",
     "Projects": "Proyectos",
     "ReadOnlyUser": "Consulta unicamente",
@@ -183,6 +204,12 @@
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
     "Settings": "Configuración",
+    "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si have cambios, tenga cuidado en poner todos los idiomas a día.",
+    "SettingsIndicatorsInfo": [
+        "Esta página contiene la lista de todos los indicadores transversales de la ONG.",
+        "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos una temática en común con ese.",
+        "Para ayudar los proyectos a planificar su colecta de datos, evite cambiar esta lista a menudo."
+    ],
     "SettingsThematicsEdit": "Entre aqui el nombre de la temática en todos los idiomas usados por su organización.",
     "SettingsThematicsInfo": [
         "Esta página contiene la lista de las temáticas tratadas por la ONG.",

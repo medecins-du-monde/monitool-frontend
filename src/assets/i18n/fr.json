@@ -168,6 +168,27 @@
     "Owner": "Propriétaire",
     "Periodicity": "Périodicité",
     "PivotTable": "Tableau croisé dynamique",
+    "ProjectHomeBlueSection": [
+        [
+            "Utilisez des noms courts pour nommer lieux de collecte, sources de données, variables et indicateurs. En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs de Médecins du Monde."
+        ],
+        [
+            "En cas d'erreur, cliquez sur ",
+            " pour revenir à la dernière version sauvegardée."
+        ],
+        [
+            "Si vous sauvegardez une erreur: rendez-vous dans sur la page ",
+            " et restaurez une version antérieure du projet."
+        ]
+    ],
+    "ProjectHomeInfo": [
+        "Cette section va vous aider à formaliser votre projet. Elle doit être utilisé pendant la phase de programmation du projet, puis révisée pendant la phase d'implantation du projet.",
+        "Aidez-vous de votre data-flow pour structurer votre projet dans Monitool. Si vous avez suivi toutes les étapes, vous disposez de tous les éléments nécessaires.",
+        "Documentez les objectifs et résultats attendus par votre projet",
+        "Documentez les activités que vous mettrez en oeuvre pour les atteindre",
+        "Listez les indicateurs qui mesureront l'atteinte de vos résultats, ainsi que le suivi de vos activités (indicateurs de processus)",
+        "Listez vos outils de collecte de donnée (Excel, papier, ...) ainsi que d'autres sources de données (SNIS, enquêtes...) que vous utiliserez pour calculer vos indicateurs, en renseignant leur periodicité et sites de collecte et leur contenu"
+    ],
     "ProjectRole": "Création projets",
     "Projects": "Projets",
     "ReadOnlyUser": "Consultation uniquement",
@@ -182,6 +203,12 @@
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
     "Settings": "Paramètres",
+    "SettingsIndicatorEdit": "Cette page vous permet de modifier la définition d'un indicateur transversal. Si vous réalisez des changements, attention de bien mettre à jour les champs dans toutes les langues.",
+    "SettingsIndicatorsInfo": [
+        "Cette page contient la liste de tous les indicateurs transversaux de l'ONG.",
+        "La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique en commun celui-ci.",
+        "Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette liste."
+    ],
     "SettingsThematicsEdit": "Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.",
     "SettingsThematicsInfo": [
         "Cette page contient la liste des thématiques traitées par l'ONG.",
