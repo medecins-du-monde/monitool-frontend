@@ -38,6 +38,8 @@
     "DeletedPlural": "Supprimés",
     "Description": "Description",
     "Done": "Réalisé",
+    "DownloadPdfLandscape": "Télécharger PDF (paysage)",
+    "DownloadPdfPortrait": "Télécharger PDF (portrait)",
     "Edit": "Modifier",
     "Email": "Email",
     "en": "Anglais",
@@ -151,8 +153,17 @@
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
+    "InputHomeInfo": [
+        "Le rôle de cette section est de fournir à Monitool les données qui lui permettront de calculer vos indicateurs.",
+        "Chaque source de données renseignée lors de la formalisation du projet donne lieu à des formulaires réguliers.",
+        " Lors de la saisie de données, la touch Tab de votre clavier vous permet de naviguer entre les cases.",
+        "Pour revenir à la case précédente, utilisez Shift + Tab",
+        " Une version imprimable de chaque formulaires est disponible.",
+        "Si vous disposez de plusieurs formulaires papier à saisir (par exemple, un par travailleur social), et que désirez les additioner, vous pouvez rentrer des sommes dans les cases de saisies: \"1 + 2 + 3\""
+    ],
     "Language": "Langue",
     "LastEntry": "Dernière saisie",
+    "LoadMoreRevisions": "Voir plus de modifications",
     "LogicalFrameworks": "Cadres logiques",
     "Login": "Login",
     "Members": "Membres",
@@ -168,6 +179,13 @@
     "Owner": "Propriétaire",
     "Periodicity": "Périodicité",
     "PivotTable": "Tableau croisé dynamique",
+    "ProjectBasicsInfo": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",
+    "ProjectDataSourceInfo": [
+        "Les sources de données sont les différents supports desquels les données nécessaires au monitoring du projet sont extraites (fiches de suivi, dossiers patient, fichiers Excel, ...)",
+        "Au sein de monitool, on ne décrira pas l'intégralité des données existantes, mais uniquement la partie qui va être extraite pour le suivi du projet",
+        "Afin de faciliter l'organisation de la saisie, les sources doivent correspondre à des outils réels utilisés sur le terrain."
+    ],
+    "ProjectHistoryInfo": "L'historique des modifications vous permet de consulter la liste des modifications faites sur la structure de votre projet.",
     "ProjectHomeBlueSection": [
         [
             "Utilisez des noms courts pour nommer lieux de collecte, sources de données, variables et indicateurs. En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs de Médecins du Monde."
@@ -191,8 +209,45 @@
     ],
     "ProjectRole": "Création projets",
     "Projects": "Projets",
+    "ProjectSitesInfo": [
+        "Lorsqu'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles.",
+        "Rentrez ici:",
+        "La liste des lieux sur lesquels le projet travaille (par exemple: une liste des centres de santé)",
+        "Des groupements qui seront utilisé lors du suivi (par exemple: des régions, des types de structure)"
+    ],
+    "ProjectsUserInfo": [
+        "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ...",
+        "Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
+    ],
     "ReadOnlyUser": "Consultation uniquement",
     "Reporting": "Rapport",
+    "ReportingHomeBlueSection": [
+        "Utilisez ",
+        " pour afficher un graphique contenant les données de la ligne en cours.",
+        "Utilisez ",
+        " pour désagréger les données de la ligne.",
+        "Le symbole ",
+        " signifie qu'une des étapes pour calculer votre indicateur a échoué.",
+        "Le plus probable est que vous avez réalisé une division par zéro, que toutes les données n'ont pas été saisies, ou que vous avez explicitement indiqué qu'il n'était pas possible d'agréger ces données lors de la mise en place de votre source de donnée.",
+        "Désagrégez votre ligne en cliquant sur ",
+        " puis sur ",
+        " pour identifier le problème.",
+        "Les ",
+        " vous permettent de restreindre les données que vous consultez à certaines dates, lieux de collecte, ou en fonction des désagrégations spécifiées lors de la création de votre projet (tranches d'âges, sexe, ...)"
+    ],
+    "ReportingHomeInfo": [
+        "Cette section vous permet de suivre votre projet.",
+        "Les interfaces ",
+        "Rapport général",
+        " et ",
+        "Tableae croisé dynamique",
+        " vous permettent toutes les deux d'accéder à l'ensemble de vos données, sous des formes différente.",
+        "Rapport général",
+        "Vous permet d'explorer vos données hierarchiquement: en partant d'une vision général de votre projet.",
+        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...).",
+        "Tableau croisé dynamique",
+        "Vous permet de construire des tableaux qui prendront la forme que vous désirez, et de les télécharger en format Excel, afin de les inclure dans des rapports ou de créer des visualisation en dehors de Monitool."
+    ],
     "ResetChanges": "Annuler les modifications",
     "RevertToVersion": "Revenir à ce point",
     "Role": "Rôle",

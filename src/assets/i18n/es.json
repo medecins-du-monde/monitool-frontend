@@ -38,6 +38,8 @@
     "Deleted": "Suprimido",
     "DeletedPlural": "Suprimidos",
     "Description": "Descripción",
+    "DownloadPdfLandscape": "Descargar PDF (horizontal)",
+    "DownloadPdfPortrait": "Descargar PDF (vertical)",
     "Done": "Realizado",
     "Edit": "Editar",
     "Email": "Correo electrónico",
@@ -74,6 +76,7 @@
         "Los indicadores adicionales son indicadores que no estan en ningún marco lógico.",
         "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
     ],
+    "Fiters": "Filtres",
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
     "fr": "Francés",
@@ -152,8 +155,17 @@
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
+    "InputHomeInfo": [
+        "El objectivo de esta sección es permitirle entrar los datos que Monitool usara para calcular sus indicadores",
+        "Cada una de las fuentes de datos que fueron creadas durante la estructuración del proyecto da lugar a un formulario que se rellena periódicamente",
+        " Al ingresar datos, la tecla Tabulador en su teclado le permite navegar entre los cuadros.",
+        "Para volver al cuadro anterior, use Mayús + Tabulador",
+        "Una versión imprimible de cada formulario está disponible.",
+        "Si tiene varios formularios en papel para ingresar (por ejemplo, uno por trabajador social) y desea agregarlos, puede ingresar sumas en los cuadros de entrada: \"1 + 2 + 3\""
+    ],
     "Language": "Idiomas",
     "LastEntry": "Última entrada",
+    "LoadMoreRevisions": "Ver cambios mas antigos",
     "LogicalFrameworks": "Marcos lógicos",
     "Login": "Nombre de usuario",
     "Members": "Miembros",
@@ -169,6 +181,13 @@
     "Owner": "Proprietario",
     "Periodicity": "Periodicidad",
     "PivotTable": "Tabla dinámica",
+    "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
+    "ProjectDataSourceInfo": [
+        "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
+        "En Monitool, no hace falta entrar todos los datos disponibles en las fuentes de datos: solo lo que es relevante",
+        "Para que sea mas facil entrar los datos, la fuentes deben corresponder a herramientas reales usadas en el terreno."
+    ],
+    "ProjectHistoryInfo": "El historial de modificaciones le permite consultar todos los cambios hechos en la estructura de su proyecto.",
     "ProjectHomeBlueSection": [
         [
             "Use nombres cortos para nombrar ubicaciones de colecciones, fuentes de datos, variables e indicadores. Al evitar los acrónimos, mejora la legibilidad de sus cuadros y tablas y permite una mejor comprensión de su proyecto por parte de todos los actores de Médicos del Mundo."
@@ -192,8 +211,45 @@
     ],
     "ProjectRole": "Creador proyectos",
     "Projects": "Proyectos",
+    "ProjectSitesInfo": [
+        "Cuando un proyecto tiene las mismas actividades en varios lugares, se deben seguir por lugar, grupos de lugares y a nivel de proyecto.",
+        "Entre aqui:",
+        "La lista de lugares donde su proyecto trabaja (ej: la lista de centros de salud)",
+        "Los grupos que se usuran durante la vida del proyecto (ej: por región, o tipo de estructura)"
+    ],
+    "ProjectsUserInfo": [
+        "Muchas personas diferentes participan en crear y seguir un proyecto: coordination, equipo M&E, operadores de entrada de datos, partnerarios, ...",
+        "Entre aqui la lista de todos los usuarios que deben tener acceso a los datos del programa."
+    ],
     "ReadOnlyUser": "Consulta unicamente",
     "Reporting": "Informe",
+    "ReportingHomeBlueSection": [
+        "Use ",
+        " para mostrar un gráfico que contiene los datos de la línea actual.",
+        "Use ",
+        " para desagregar los datos de la línea actual.",
+        "El símbolo ",
+        " significa que uno de los pasos para calcular su indicador ha fallado.",
+        "Lo más probable es que haya dividido por cero, que no se hayan ingresado todos los datos o que haya indicado explícitamente que no es posible agregar estos datos al configurar el proyecto.",
+        "Desagrega tu línea haciendo clic en ",
+        " y en ",
+        " para identificar el problema.",
+        "Los ",
+        " le permiten restringir los datos que consulta en determinadas fechas, lugares de recogida o de acuerdo con las desagregaciones especificadas durante la creación de su proyecto (grupos de edad, sexo, ...)."
+    ],
+    "ReportingHomeInfo": [
+        "Esta sección le permite seguir su proyecto.",
+        "Las páginas ",
+        "Informe general",
+        " y ",
+        "Tabla dinámica",
+        " ambas permiten acceder a todos sus datos, en diferentes formas.",
+        "Informe general",
+        "Le permite explorar sus datos jerárquicamente: desde una vista general de su proyecto.",
+        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...).",
+        "Tabla dinámica",
+        "Puede consultar cada marco lógico o fuente de datos, que contiene indicadores, que luego puede desglosar por ubicación de recopilación, parámetros que utilizó para calcularlos y otras desagregaciones de acuerdo con la estructura de datos que recopiló (rango de edad, sexo, patologías, contenido de entrenamiento, ...)."
+    ],
     "ResetChanges": "Cancelar los cambios",
     "RevertToVersion": "Volver a este punto",
     "Role": "Tipo",
