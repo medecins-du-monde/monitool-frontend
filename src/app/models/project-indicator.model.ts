@@ -28,7 +28,6 @@ export class ProjectIndicator implements Deserializable {
       if (input && input.computation) {
         this.type = input.type ? input.type : this.type;
         this.computation.formula = input.computation.formula;
-        this.computation.parameters = {};
         if (input.computation.formula === COPY_FORMULA) {
                 this.type = 'copy';
                 this.computation.formula = COPY_FORMULA;

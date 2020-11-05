@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import * as _ from 'lodash';
+import { forEach } from 'lodash';
 import { Entity } from 'src/app/models/entity.model';
 import { Form } from 'src/app/models/form.model';
 import { LogicalFrame } from 'src/app/models/logical-frame.model';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Purpose } from 'src/app/models/purpose.model';
+import { PartitionElement } from 'src/app/models/partition-element.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 
 @Component({
@@ -89,8 +92,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   }
 
   onAddNewIndicator(): void {
-    const indicator: FormGroup = this.newIndicator();
-    this.openDialog(indicator, true);
+    this.openDialog(this.newIndicator(), true);
   }
 
   onEditIndicator(indicator: FormGroup, index?: number) {
@@ -103,13 +105,30 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
   private newIndicator(indicatorToEdit = null): FormGroup {
     const indicator = new ProjectIndicator(indicatorToEdit);
+
+    const parametersFormGroup = new FormGroup({});
+
+    if (indicator.computation) {
+      forEach(indicator.computation.parameters, (parameter, key) => {
+        const filterGroup = this.fb.group({});
+        // tslint:disable-next-line: no-string-literal
+        forEach(parameter['filter'], (filterValue: string[], keyFilter: string) => {
+        filterGroup.addControl(`${keyFilter}`, new FormControl(filterValue)); });
+        parametersFormGroup.addControl(`${key}`, this.fb.group({
+
+          // tslint:disable-next-line: no-string-literal
+          elementId: [parameter['elementId']],
+          filter: filterGroup as FormGroup,
+        }));
+      });
+    }
     return this.fb.group({
       display: [indicator.display, Validators.required],
-      baseline: [indicator.baseline],
-      target: [indicator.target],
+      baseline: [indicator.baseline, Validators.required],
+      target: [indicator.target, Validators.required],
       computation: this.fb.group({
         formula: [indicator.computation ? indicator.computation.formula : null],
-        parameters: [indicator.computation ? indicator.computation.parameters : []]
+        parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : this.fb.group({}),
       }),
       type: [indicator.type]
     });

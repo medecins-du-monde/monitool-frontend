@@ -15,8 +15,6 @@ export class LogicalFrame implements Deserializable {
     purposes: Purpose[] = [];
 
     constructor(input?: any) {
-      console.log('Here is the input :');
-      console.log(input);
       this.deserialize(input);
     }
 

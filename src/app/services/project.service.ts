@@ -40,7 +40,6 @@ export class ProjectService {
   }
 
   public async save(project: Project) {
-    console.log(project);
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);

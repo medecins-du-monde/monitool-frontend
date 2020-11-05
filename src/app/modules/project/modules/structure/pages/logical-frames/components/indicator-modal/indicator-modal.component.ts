@@ -5,7 +5,7 @@ import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/form.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -60,9 +60,8 @@ export class IndicatorModalComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const computation = this.data.indicator.controls.computation as FormGroup;
 
-    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
+    // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
     this.parser = new Parser();
     this.parser.consts = {};
     try {
@@ -78,6 +77,37 @@ export class IndicatorModalComponent implements OnInit {
     catch (e) {
       this.symbols = [];
     }
+
+    // Updating all the variable part in the DOM in case we already have variables
+    const parameters = this.data.indicator.value.computation.parameters;
+    if (parameters) {
+      const newDataSource = this.dataSource.getValue();
+      newDataSource.forEach(data => {
+        // We look for the variable in every dataSources
+        data.filter = this.lookForVariable(this.data.forms, parameters[`${data.symbol}`].elementId);
+      });
+
+    // Filling the partitionElement list with PartitionElement objects.
+      this.symbols.forEach(symbol => {
+      const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
+      listPartitionDataSource.forEach(partition => {
+        const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
+        const filterValueList = filterForm.get(`${partition.id}`).value;
+        const newList = [];
+        partition.elements.forEach(partitionElement => {
+          if (filterValueList.indexOf(partitionElement.id) !== -1) {
+            newList.push(partitionElement);
+          }
+        });
+        filterForm.setControl(`${partition.id}`, new FormControl(newList));
+      });
+    });
+
+      this.dataSource.next(newDataSource);
+    }
+
+    // Creation of the init value for the reset
+    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
   }
 
   onSubmit() {
@@ -91,6 +121,7 @@ export class IndicatorModalComponent implements OnInit {
   onTypeChange(type: any) {
     const computation = this.data.indicator.controls.computation as FormGroup;
 
+    // Updating the formula in function of the type
     if (type.value === 'fixed' && isNaN(computation.value.formula)) {
       computation.controls.formula.setValue('0');
     } else if (type.value === 'copy') {
@@ -104,30 +135,27 @@ export class IndicatorModalComponent implements OnInit {
   }
 
   onFormulaChange() {
+    // Getting the formula and setting the symbols to update the parameter part in the DOM.
     let newSymbols = [];
     try {
-      newSymbols = this.parser.parse(this.data.indicator.controls.computation.value.formula).variables();
+      newSymbols = this.parser.parse(this.data.indicator.get('computation').value.formula).variables();
     }
     catch (e) {
       newSymbols = [];
     }
     this.symbols = newSymbols;
 
-    const computation = this.data.indicator.controls.computation as FormGroup;
-
-    this.data.indicator.controls.computation = this.fb.group({
-      formula: computation.value.formula,
-      parameters: this.fb.group({}),
-    });
-
-    const parameters = this.data.indicator.controls.computation.get('parameters') as FormGroup;
+    // Updating the variable part
+    const parametersFormGroup = new FormGroup({});
 
     this.symbols.forEach(symbol => {
-      parameters.addControl(`${symbol}`, this.fb.group({
+      parametersFormGroup.addControl(`${symbol}`, this.fb.group({
         elementId: ['', Validators.required],
         filter: this.fb.group({}),
       }));
     });
+
+    (this.data.indicator.get('computation') as FormGroup).setControl('parameters', parametersFormGroup);
 
     const newDataSource = [];
     this.symbols.forEach(symbol => {
@@ -140,19 +168,39 @@ export class IndicatorModalComponent implements OnInit {
 
   onVariableSelected(event, element) {
     const newDataSource = this.dataSource.getValue();
+
+    // Updating the disaggregation part
+    // We create a new filter in order to remove all the controls that we could have gotten before.
+    const newFilter = this.fb.group({});
     newDataSource.forEach(data => {
       if (data.symbol === element.symbol ) {
-        data.filter = this.data.forms[0].elements.filter(partitionData => partitionData.id === event.value)[0];
-        const filter = this.data.indicator.controls.computation
-        .get('parameters')
-        .get(`${data.symbol}`)
-        .get('filter') as FormGroup;
+
+        // We look for the variable in every dataSources
+        data.filter = this.lookForVariable(this.data.forms, event.value);
+
         data.filter.partitions.forEach(partition => {
-          filter.addControl(`${partition.id}`, new FormControl([]));
+          newFilter.addControl(`${partition.id}`, new FormControl([]));
         });
       }
+      // Adding this new filter
+      (
+        this.data.indicator.controls.computation
+        .get('parameters')
+        .get(`${element.symbol}`) as FormGroup
+      ).setControl('filter', newFilter);
     });
+
     this.dataSource.next(newDataSource);
+  }
+
+  private lookForVariable(listDataSource, targetValue): any{
+    let variable;
+    listDataSource.forEach(form => {
+      const valueFound = form.elements.filter(partitionData => partitionData.id === targetValue)[0];
+
+      if (valueFound) { variable = valueFound; }
+    });
+    return variable;
   }
 
   getPartitions(symbol, partitionId) {
