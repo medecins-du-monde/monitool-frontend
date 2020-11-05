@@ -39,6 +39,8 @@
     "DeletedPlural": "Deleted",
     "Description": "Description",
     "Done": "Done",
+    "DownloadPdfLandscape": "Download PDF (landscape)",
+    "DownloadPdfPortrait": "Download PDF (portrait)",
     "Edit": "Edit",
     "Email": "Email",
     "en": "English",
@@ -74,6 +76,7 @@
         "Extra indicators are indicators that are not in any logical framework.",
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
+    "Fiters": "Filters",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
     "fr": "French",
@@ -153,8 +156,17 @@
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
+    "InputHomeInfo": [
+        "This section's goal is providing the data that will allow to compute your indicators to Monitool.",
+        "Each one of the data sources that were created during the structuration of the project results in a periodic form that need to be filled.",
+        "When entering data, the Tab key on your keyboard allows you to navigate between the boxes.",
+        "To return to the previous box, use Shift + Tab",
+        "A printable version of each forms is available.",
+        "If you have several paper forms to enter (for example, one per social worker), and want to add them, you can enter sums in the entry boxes: \"1 + 2 + 3\""
+    ],
     "Language": "Language",
     "LastEntry": "Last entry",
+    "LoadMoreRevisions": "Load more revisions",
     "LogicalFrameworks": "Logical frameworks",
     "Login": "Login",
     "Members": "Members",
@@ -177,10 +189,75 @@
     },
     "Periodicity": "Periodicity",
     "PivotTable": "Pivot table",
+    "ProjectBasicsInfo": "Basics allow to file your project among the others of the NGO.",
+    "ProjectDataSourceInfo": [
+        "The data sources are the different supports where the data needed for monitoring are available (tally sheets, medical records, excel files, ...).",
+        "In Monitool, all the data avaiable on the data sources does not need to be entered, but only what is relevat to the project's monitorings",
+        "To ease the data collection planning, data sources should correspond to real tools used on the field."
+    ],
+    "ProjectHistoryInfo": "The changelog allows to consult all modifications that were made to the structure of your project, and revert to previous revisions if needed.",
+    "ProjectHomeBlueSection": [
+        [
+            "Use short names to name collection sites, data sources, variables, and indicators. By avoiding acronyms you improve the readability of your charts and tables and allow a better understanding of your project by all actors of Doctors of the World."
+        ],
+        [
+            "In case of mistake, click ",
+            " to return to the last saved version."
+        ],
+        [
+            "If you saved a mistake: go to the ",
+            " page and restore an earlier version of the project."
+        ]
+    ],
+    "ProjectHomeInfo": [
+        "This section will help you formalize your project. It must be used during the project planning phase and then revised during the project implementation phase.",
+        "Use your data flow chart to structure your project in Monitool. If you have followed all the steps, you have all the necessary elements.",
+        "Document the objectives and expected results of your project",
+        "Document the activities you will do to reach them",
+        "List the indicators that will measure the achievement of your results, as well as the monitoring of your activities (process indicators)",
+        "List your data collection tools (Excel, paper, ...) as well as other sources of data (NHIS, surveys ...) that you will use to calculate your indicators, by informing their periodicity and collection sites and their contents"
+    ],
     "ProjectRole": "Project creation",
     "Projects": "Projects",
+    "ProjectSitesInfo": [
+        "When a project have the same activities on different sites, those activities need to be followed-up by site, groups of sites, and at project level.",
+        "Enter here:",
+        "The list of sites where your project works (i.e. the list of health centers)",
+        "Groups that will be used during monitoring (i.e. by region, or type of structure)"
+    ],
+    "ProjectsUserInfo": [
+        "Many people take part in setting-up and monitoring a project: coordination, M&E staff, data entry operators, partners, ...",
+        "Enter here all users that need to have access to the monitoring of the project."
+    ],
     "ReadOnlyUser": "Read only",
     "Reporting": "Reporting",
+    "ReportingHomeBlueSection": [
+        "Use ",
+        " in order to display a graph that contains the data of the current row.",
+        "Use ",
+        " in order to disaggregate the data of the current row.",
+        "The ",
+        " symbol means that one of the steps taken to compute your indicador failed.",
+        "The most likely is that you have divided by zero, that all the data was not entered, or that you have explicitly indicated that it was not possible to aggregate this data when setting up your data source.",
+        "Disaggregate your line by clicking ",
+        " and then on ",
+        " to identify the issue.",
+        "The ",
+        " allow you to restrict the data that you consult on certain dates, collection sites, or according to the disaggregations specified during the creation of your project (age groups, sex, ...)."
+    ],
+    "ReportingHomeInfo": [
+        "This section allows you to track your project progress.",
+        "The interfaces ",
+        "General reporting",
+        " and ",
+        "Pivot table",
+        " both allow you to access all of your data, in different ways.",
+        "General reporting",
+        "The first allows you to explore your data hierarchically: starting from a general vision of your project.",
+        "You can consult each logical framework or data source, which contains indicators, which you can then disaggregate by collection site, parameter that you used to calculate them, and other disaggregations according to the data structure that you collected (age range, sex, pathologies, training content, ...).",
+        "Pivot table",
+        "The second one allows you to build tables that will take the form you want, and download them in Excel format, to include them in reports or to create visualizations outside of Monitool."
+    ],
     "ResetChanges": "Reset changes",
     "RevertToVersion": "Revert to this version",
     "Role": "Role",
@@ -191,6 +268,22 @@
     "SeeReport": "See report",
     "SeeOlderDates": "See older dates",
     "Settings": "Settings",
+    "SettingsIndicatorEdit": "This page allows changing the definition of a cross-cutting indicator. If you make changes, take care to update all languages.",
+    "SettingsIndicatorsInfo": [
+        "This page contain the list of all the cross-cutting indicators of the NGO.",
+        "Collecting each indicator is mandatory for all projects that have at least one thematic in common with it.",
+        "To allow projects to plan for their data collection, avoid changing this list often."
+    ],
+    "SettingsThematicsEdit": "Enter here the name of the thematic in all languages used by your organisation.",
+    "SettingsThematicsInfo": [
+        "This page contains the list of thematics handled by the NGO.",
+        "Projects and cross-cutting indicators can be linked to thematics."
+    ],
+    "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
+    "SettingsUserInfo": [
+        "This page contains the list of all users that connected at least once on Monitool",
+        "It is not needed to create new account for users that have a xxx@medecinsdumonde.net email address: they will automatically appear here once they connect once. For partners, it is possible to create account from the project management pages."
+    ],
     "SpecificEndDate": "Specific end date",
     "SpecificStartDate": "Specific start date",
     "StartDate": "Begin date",

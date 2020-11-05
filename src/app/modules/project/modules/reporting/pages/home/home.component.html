@@ -1,26 +1,26 @@
 <div class="info-section">
-    <p>This section allows you to track your project progress.</p>
-    <p>The interfaces <span><button mat-stroked-button class="mdm-button small-button" routerLink="../general"><mat-icon svgIcon="clipboard"></mat-icon>General Reporting</button></span> and <span><button mat-stroked-button class="mdm-button small-button" routerLink="../pivot-table"><mat-icon svgIcon="grid"></mat-icon>Pivot Table</button></span> both allow you to access all of your data, in different ways.</p>
+    <p>{{ 'ReportingHomeInfo.0' | translate }}</p>
+    <p>{{ 'ReportingHomeInfo.1' | translate }}<span><button mat-stroked-button class="mdm-button small-button" routerLink="../general"><mat-icon svgIcon="clipboard"></mat-icon>{{ 'ReportingHomeInfo.2' | translate }}</button></span>{{ 'ReportingHomeInfo.3' | translate }}<span><button mat-stroked-button class="mdm-button small-button" routerLink="../pivot-table"><mat-icon svgIcon="grid"></mat-icon>{{ 'ReportingHomeInfo.4' | translate }}</button></span>{{ 'ReportingHomeInfo.5' | translate }}</p>
 
-    <h3>General reporting</h3>
-    <p>The first allows you to explore your data hierarchically: starting from a general vision of your project.</p>
+    <h3>{{ 'ReportingHomeInfo.6' | translate }}</h3>
+    <p>{{ 'ReportingHomeInfo.7' | translate }}</p>
 
-    <p>You can consult each logical framework or data source, which contains indicators, which you can then disaggregate by collection site, parameter that you used to calculate them, and other disaggregations according to the data structure that you collected (age range, sex, pathologies, training content, ...).</p>
+    <p>{{ 'ReportingHomeInfo.8' | translate }}</p>
 
-    <h3>Pivot table</h3>
-    <p>The second one allows you to build tables that will take the form you want, and download them in Excel format, to include them in reports or to create visualizations outside of Monitool.</p>
+    <h3>{{ 'ReportingHomeInfo.9' | translate }}</h3>
+    <p>{{ 'ReportingHomeInfo.10' | translate }}</p>
 </div>
 <div class="info-section blue">
-    <p>Use <button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon svgIcon="clipboard"></mat-icon></button> in order to display a graph that contains the data of the current row.</p>
+    <p>{{ 'ReportingHomeBlueSection.0' | translate }}<button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon svgIcon="clipboard"></mat-icon></button>{{ 'ReportingHomeBlueSection.1' | translate }}</p>
 </div>
 <div class="info-section blue">
-    <p>Use <button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon>add</mat-icon></button> in order to disaggregate the data of the current row.</p>
+    <p>{{ 'ReportingHomeBlueSection.2' | translate }}<button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon>add</mat-icon></button>{{ 'ReportingHomeBlueSection.3' | translate }}</p>
 </div>
 <div class="info-section blue">
-    <p>The <button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon>block</mat-icon></button> symbol means that one of the steps taken to compute your indicador failed.</p>
-    <p>The most likely is that you have divided by zero, that all the data was not entered, or that you have explicitly indicated that it was not possible to aggregate this data when setting up your data source.</p>
-    <p>Disaggregate your line by clicking <span><button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon svgIcon="clipboard"></mat-icon></button></span> and then on <span><button mat-stroked-button class="mdm-button small-button">Computation</button></span> to identify the issue.</p>
+    <p>{{ 'ReportingHomeBlueSection.4' | translate }}<button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon>block</mat-icon></button>{{ 'ReportingHomeBlueSection.5' | translate }}</p>
+    <p>{{ 'ReportingHomeBlueSection.6' | translate }}</p>
+    <p>{{ 'ReportingHomeBlueSection.7' | translate }}<span><button mat-stroked-button class="mdm-button mat-icon-button small-button"><mat-icon svgIcon="clipboard"></mat-icon></button></span>{{ 'ReportingHomeBlueSection.8' | translate }}<span><button mat-stroked-button class="mdm-button small-button">{{ 'Computation' | translate }}</button></span>{{ 'ReportingHomeBlueSection.9' | translate }}</p>
 </div>
 <div class="info-section blue">
-    <p>The <button mat-stroked-button class="mdm-button small-button"><mat-icon>add_circle</mat-icon>Filters</button> allow you to restrict the data that you consult on certain dates, collection sites, or according to the disaggregations specified during the creation of your project (age groups, sex, ...).</p>
+    <p>{{ 'ReportingHomeBlueSection.10' | translate }}<button mat-stroked-button class="mdm-button small-button"><mat-icon>add_circle</mat-icon>{{ 'Filters' | translate }}</button>{{ 'ReportingHomeBlueSection.11' | translate }}</p>
 </div>

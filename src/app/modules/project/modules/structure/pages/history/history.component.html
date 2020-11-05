@@ -1,4 +1,4 @@
-<div class="info-section blue">The changelog allows to consult all modifications that were made to the structure of your project, and revert to previous revisions if needed.</div>
+<div class="info-section blue">{{ 'ProjectHistoryInfo' | translate }}</div>
 
 <div class="mdm-title">{{ 'History' | translate }}</div>
 <table mat-table multiTemplateDataRows class="mdm-table history-table"
@@ -34,7 +34,7 @@
 
     <ng-container matColumnDef="expandedRevisions">
         <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
-            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'SeeOlderRevisions' | translate }}</button>
+            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'LoadMoreRevisions' | translate }}</button>
         </td>
     </ng-container>
    

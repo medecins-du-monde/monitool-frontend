@@ -1,6 +1,6 @@
 <div class="info-section blue">
-    <p>Cette page contient la liste des thématiques traitées par l'ONG.</p>
-    <p>Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal.</p>
+    <p>{{ 'SettingsThematicsInfo.0' | translate }}</p>
+    <p>{{ 'SettingsThematicsInfo.1' | translate }}</p>
 </div>
 <div class="mdm-cards">
     <app-theme *ngFor="let theme of themes" [theme]="theme" (delete)="onDelete($event)" (edit)="onEdit($event)"

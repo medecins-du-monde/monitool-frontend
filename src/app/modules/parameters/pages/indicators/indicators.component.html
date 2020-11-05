@@ -1,9 +1,7 @@
 <div class="info-section blue">
-    <p>Cette page contient la liste de tous les indicateurs transversaux de l'ONG.</p>
-    <p>La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique
-        en commun celui-ci.</p>
-    <p>Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette
-        liste.</p>
+    <p>{{ 'SettingsIndicatorsInfo.0' | translate }}</p>
+    <p>{{ 'SettingsIndicatorsInfo.1' | translate }}</p>
+    <p>{{ 'SettingsIndicatorsInfo.2' | translate }}</p>
 </div>
 <div class="mdm-cards">
     <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator" (delete)="onDelete($event)"
