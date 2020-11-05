@@ -1,6 +1,67 @@
+@import "../../../stylesheets/variables.scss";
+
 .login-component {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    margin: auto;
+    position: absolute;
+    top: 50%;
+    margin-top: -175px;
+    left: 0;
+    width: 100%;
+
+    @media screen and (max-width: $breakpoint-xs) {
+        position: relative;
+        top: 0;
+        margin-top: 15px;
+    }
+
+    .center-panel{
+        background-color: #fff;
+        min-width: 300px;
+        width: 40%;
+        margin-left: auto;
+        margin-right: auto;
+        flex-direction: column;
+        display: flex;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+
+        @media screen and (max-width: $breakpoint-xs) {
+            width: 90%;
+        }
+
+        .buttons{
+            display: flex;
+            flex-direction: column;
+            button{      
+                margin-bottom: 5px;
+                margin-left: 5px;
+                margin-right: 5px;
+        
+                // this makes the text don't overflow inside the button in a small screen
+                white-space:normal;
+                word-wrap:break-word;
+            }
+        }
+        .authenticationPanel{
+            h2{
+                text-align: center;
+            }
+        }
+    }
 }
+
+
+
+
+img{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    &.mdm-img{
+        width: 250px;
+    }
+    &.sml-img{
+        width: 100px;
+    }
+}
+

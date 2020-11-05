@@ -7,12 +7,13 @@ import { HeaderModule } from './components/header/header.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { LoginComponent } from './components/login/login.component';
+import { LoginModule } from './components/login/login.module';
+// import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    // LoginComponent
   ],
   imports: [
     HttpClientModule,
@@ -27,7 +28,8 @@ import { LoginComponent } from './components/login/login.component';
     AppRoutingModule,
     HeaderModule,
     HttpClientModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,6 +17,7 @@
     "CollectionSites": "Lieux de collecte",
     "CommonRole": "Standard",
     "Computation": "Calcul",
+    "Connect": "Connecter",
     "Confirm": "Confirmer",
     "Countries": "Pays",
     "Country": "Pays",
@@ -39,7 +40,8 @@
     "DeletedPlural": "Supprimés",
     "Description": "Description",
     "Done": "Réalisé",
-    "Download":"Télécharger",
+    "DownloadPdfLandscape": "Télécharger PDF (paysage)",
+    "DownloadPdfPortrait": "Télécharger PDF (portrait)",
     "Edit": "Modifier",
     "Email": "Email",
     "en": "Anglais",
@@ -80,6 +82,7 @@
     "fr": "Français",
     "FullName": "Nom",
     "GeneralReporting": "Rapport général",
+    "GoBack": "Retourner",
     "GroupName": "Nom du groupe",
     "Groups": "Groupes",
     "History": "Historique",
@@ -153,15 +156,24 @@
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
-    "Landscape":"paysage",
+    "InputHomeInfo": [
+        "Le rôle de cette section est de fournir à Monitool les données qui lui permettront de calculer vos indicateurs.",
+        "Chaque source de données renseignée lors de la formalisation du projet donne lieu à des formulaires réguliers.",
+        " Lors de la saisie de données, la touch Tab de votre clavier vous permet de naviguer entre les cases.",
+        "Pour revenir à la case précédente, utilisez Shift + Tab",
+        " Une version imprimable de chaque formulaires est disponible.",
+        "Si vous disposez de plusieurs formulaires papier à saisir (par exemple, un par travailleur social), et que désirez les additioner, vous pouvez rentrer des sommes dans les cases de saisies: \"1 + 2 + 3\""
+    ],
     "Language": "Langue",
     "LastEntry": "Dernière saisie",
+    "LoadMoreRevisions": "Voir plus de modifications",
     "LogicalFrameworks": "Cadres logiques",
     "LogicalFrameworksPageDescription":{
         "Line1":"Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l'avancement de chaque élément",
         "Line2": "Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données"
     },
     "Login": "Login",
+    "LogOut": "Déconnecter",
     "Members": "Membres",
     "Missing": "Manquant",
     "MultipleThematics": "Multi-thématique",
@@ -173,16 +185,82 @@
     "OngoingPlural": "En cours",
     "Open": "Ouvrir",
     "Owner": "Propriétaire",
+    "PartnerAuthentication": "Authentification des partenaires",
+    "Password": "Mot de passe",
     "Periodicity": "Périodicité",
     "PivotTable": "Tableau croisé dynamique",
-    "Portrait": "Portrait",
+    "ProjectBasicsInfo": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",
+    "ProjectDataSourceInfo": [
+        "Les sources de données sont les différents supports desquels les données nécessaires au monitoring du projet sont extraites (fiches de suivi, dossiers patient, fichiers Excel, ...)",
+        "Au sein de monitool, on ne décrira pas l'intégralité des données existantes, mais uniquement la partie qui va être extraite pour le suivi du projet",
+        "Afin de faciliter l'organisation de la saisie, les sources doivent correspondre à des outils réels utilisés sur le terrain."
+    ],
+    "ProjectHistoryInfo": "L'historique des modifications vous permet de consulter la liste des modifications faites sur la structure de votre projet.",
+    "ProjectHomeBlueSection": [
+        [
+            "Utilisez des noms courts pour nommer lieux de collecte, sources de données, variables et indicateurs. En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs de Médecins du Monde."
+        ],
+        [
+            "En cas d'erreur, cliquez sur ",
+            " pour revenir à la dernière version sauvegardée."
+        ],
+        [
+            "Si vous sauvegardez une erreur: rendez-vous dans sur la page ",
+            " et restaurez une version antérieure du projet."
+        ]
+    ],
+    "ProjectHomeInfo": [
+        "Cette section va vous aider à formaliser votre projet. Elle doit être utilisé pendant la phase de programmation du projet, puis révisée pendant la phase d'implantation du projet.",
+        "Aidez-vous de votre data-flow pour structurer votre projet dans Monitool. Si vous avez suivi toutes les étapes, vous disposez de tous les éléments nécessaires.",
+        "Documentez les objectifs et résultats attendus par votre projet",
+        "Documentez les activités que vous mettrez en oeuvre pour les atteindre",
+        "Listez les indicateurs qui mesureront l'atteinte de vos résultats, ainsi que le suivi de vos activités (indicateurs de processus)",
+        "Listez vos outils de collecte de donnée (Excel, papier, ...) ainsi que d'autres sources de données (SNIS, enquêtes...) que vous utiliserez pour calculer vos indicateurs, en renseignant leur periodicité et sites de collecte et leur contenu"
+    ],
     "ProjectRole": "Création projets",
     "Projects": "Projets",
+    "ProjectSitesInfo": [
+        "Lorsqu'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles.",
+        "Rentrez ici:",
+        "La liste des lieux sur lesquels le projet travaille (par exemple: une liste des centres de santé)",
+        "Des groupements qui seront utilisé lors du suivi (par exemple: des régions, des types de structure)"
+    ],
+    "ProjectsUserInfo": [
+        "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ...",
+        "Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
+    ],
     "ReadOnlyUser": "Consultation uniquement",
     "Reporting": "Rapport",
+    "ReportingHomeBlueSection": [
+        "Utilisez ",
+        " pour afficher un graphique contenant les données de la ligne en cours.",
+        "Utilisez ",
+        " pour désagréger les données de la ligne.",
+        "Le symbole ",
+        " signifie qu'une des étapes pour calculer votre indicateur a échoué.",
+        "Le plus probable est que vous avez réalisé une division par zéro, que toutes les données n'ont pas été saisies, ou que vous avez explicitement indiqué qu'il n'était pas possible d'agréger ces données lors de la mise en place de votre source de donnée.",
+        "Désagrégez votre ligne en cliquant sur ",
+        " puis sur ",
+        " pour identifier le problème.",
+        "Les ",
+        " vous permettent de restreindre les données que vous consultez à certaines dates, lieux de collecte, ou en fonction des désagrégations spécifiées lors de la création de votre projet (tranches d'âges, sexe, ...)"
+    ],
+    "ReportingHomeInfo": [
+        "Cette section vous permet de suivre votre projet.",
+        "Les interfaces ",
+        "Rapport général",
+        " et ",
+        "Tableae croisé dynamique",
+        " vous permettent toutes les deux d'accéder à l'ensemble de vos données, sous des formes différente.",
+        "Rapport général",
+        "Vous permet d'explorer vos données hierarchiquement: en partant d'une vision général de votre projet.",
+        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...).",
+        "Tableau croisé dynamique",
+        "Vous permet de construire des tableaux qui prendront la forme que vous désirez, et de les télécharger en format Excel, afin de les inclure dans des rapports ou de créer des visualisation en dehors de Monitool."
+    ],
     "ResetChanges": "Annuler les modifications",
     "RevertToVersion": "Revenir à ce point",
-    "Role": "Role",
+    "Role": "Rôle",
     "SaveIndicator": "Sauvegarder l'indicateur",
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
@@ -190,6 +268,22 @@
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
     "Settings": "Paramètres",
+    "SettingsIndicatorEdit": "Cette page vous permet de modifier la définition d'un indicateur transversal. Si vous réalisez des changements, attention de bien mettre à jour les champs dans toutes les langues.",
+    "SettingsIndicatorsInfo": [
+        "Cette page contient la liste de tous les indicateurs transversaux de l'ONG.",
+        "La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique en commun celui-ci.",
+        "Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette liste."
+    ],
+    "SettingsThematicsEdit": "Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.",
+    "SettingsThematicsInfo": [
+        "Cette page contient la liste des thématiques traitées par l'ONG.",
+        "Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal."
+    ],
+    "SettingsUserEdit": "Vous pouvez ici éditer les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
+    "SettingsUserInfo": [
+        "Cette page contient la liste de tous les utilisateurs qui se sont connectés au moins une fois sur Monitool",
+        "Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il est possible de créer des comptes partenaires depuis l'interface de gestion des projets."
+    ],
     "SpecificEndDate": "Date de fin spécifique",
     "SpecificStartDate": "Date de début spécifique",
     "StartDate": "Date de lancement",
@@ -216,9 +310,11 @@
     "ThematicEdition": "Édition thématique",
     "Thematics": "Thématiques",
     "UpdateUser": "Mettre à jour l'utilisateur",
+    "UsePartnerAccount": "Utiliser un compte partenaire",
     "User": "Utilisateur",
     "UserEdition": "Édition utilisateur",
     "Users": "Utilisateurs",
+    "UseTrainingAccount":"Utiliser le compte de formation (admin)",
     "Valid": "Valide",
     "Visibility": "Visibilité",
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
