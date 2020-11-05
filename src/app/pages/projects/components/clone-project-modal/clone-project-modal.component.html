@@ -1,0 +1,9 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{ 'CloneProject' | translate }}</h2>
+
+<p>{{ 'CloneProjectInfo' | translate }}</p>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'Cancel' | translate }}</button>
+    <button mat-flat-button color="primary" (click)="onSubmit()" class="mdm-button">{{ 'Confirm' | translate }}</button>
+</mat-dialog-actions>
