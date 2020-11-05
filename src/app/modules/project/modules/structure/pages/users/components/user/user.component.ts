@@ -1,7 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'src/app/modules/parameters/models/user';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from '../user-modal/user-modal.component';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
+import { rolesList } from '../../constants/role';
 
 @Component({
   selector: 'app-user',
@@ -11,20 +13,50 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
 export class UserComponent implements OnInit {
 
   @Input() user: User;
-  login: string;
-  role: string;
+  @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
 
-  constructor(private dialog: MatDialog) { }
+  MDMusers: User[];
+
+  constructor(
+    private dialog: MatDialog,
+    private userService: UserService
+  ) { }
+
+  get login(){
+    if (this.user.id){
+      return this.user.id.split(':')[1];
+    }
+  }
+
+  get role(){
+    return rolesList.find(x => x.value === this.user.role).name;
+  }
+
+  get name(){
+    if (this.MDMusers){
+      return this.MDMusers.find(x => x.id === this.user.id).name;
+    }
+    return '';
+  }
 
   ngOnInit(): void {
-    this.login = this.user._id.split(':')[1];
+    this.userService.list().then( users => {
+      this.MDMusers = users;
+    });
+  }
+
+  onDelete(): void {
+    this.delete.emit(this.user.id);
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(UserModalComponent);
+    const dialogRef = this.dialog.open(UserModalComponent, { data : this.user });
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log('dialog closed.');
+      if (res && res.data) {
+        this.edit.emit(res.data);
+      }
     });
   }
 

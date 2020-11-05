@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/modules/parameters/models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
-import { usersList } from './constants/user';
+import { Subscription } from 'rxjs';
+import { ProjectService } from 'src/app/services/project.service';
+import { Project } from 'src/app/models/project.model';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-users',
@@ -11,19 +13,42 @@ import { usersList } from './constants/user';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  private subscription: Subscription = new Subscription();
 
-  constructor(private dialog: MatDialog) { }
+  users: User[];
+  project: Project;
+
+  constructor(
+    private dialog: MatDialog,
+    private projectService: ProjectService
+  ) { }
 
   ngOnInit(): void {
-    this.users = usersList;
+    this.users = [];
+
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.users = this.project.users;
+      })
+    );
   }
 
+  onDelete(id: string) {
+    // this.themeService.delete(id).then(() => this.getThemes());
+  }
+
+  onEdit(user: User) {
+    // this.themeService.save(theme).then(() => this.getThemes());
+  }
   openDialog() {
     const dialogRef = this.dialog.open(UserModalComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      console.log('dialog closed.');
+      if (res && res.data){
+        this.project.users.push(res.data);
+        this.projectService.project.next(this.project);
+      }
     });
   }
 

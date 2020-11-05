@@ -7,6 +7,7 @@ import { Entity } from './entity.model';
 import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
 import { Group } from './group.model';
+import { User } from './user.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -94,6 +95,7 @@ export class Project implements Deserializable {
             return logicalFrame;
         }) : [];
         this.crossCutting = {};
+        this.users = input ? input.users.map(x => new User(x)) : [];
         // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
         //     baseline: 12,
         //     colorize: true,
@@ -126,7 +128,7 @@ export class Project implements Deserializable {
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
-            users: [],
+            users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
             _id: this.id
         };

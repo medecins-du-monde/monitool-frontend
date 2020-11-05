@@ -6,6 +6,8 @@ export class User implements Deserializable {
     type = 'user';
     role: string;
     name: string;
+    username: string;
+    password: string;
 
     get login() {
         return this.id.split(':')[1];
@@ -25,15 +27,13 @@ export class User implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = `user:${(input && input._id) ? input._id : uuid()}`;
         return this;
     }
 
     serialize() {
         return {
-            _id: this.id,
+            id: this.id,
             type: this.type,
-            name: this.name,
             role: this.role
         };
     }
