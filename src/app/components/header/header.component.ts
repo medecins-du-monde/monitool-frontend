@@ -32,12 +32,6 @@ export class HeaderComponent implements OnInit {
   }
 
   disconnect(){
-    // const response = this.authService.logOut();
-    // if (response){
-    //   console.log('redirecionou');
-    //   this.route.navigate(['/']);
-    // }
-
     this.authService.logOut()
       .then( response => {
         if (response){
