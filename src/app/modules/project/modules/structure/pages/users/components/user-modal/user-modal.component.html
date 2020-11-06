@@ -74,5 +74,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-stroked-button (click)="onSubmit()" class="mdm-button">{{ 'UpdateUser' | translate }}</button>
-    <button mat-stroked-button class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
+    <button mat-stroked-button (click)="resetChanges()" class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
 </mat-dialog-actions>

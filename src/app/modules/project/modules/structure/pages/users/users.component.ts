@@ -35,11 +35,17 @@ export class UsersComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    // this.themeService.delete(id).then(() => this.getThemes());
+    const oldUserIndex = this.project.users.findIndex(u => u.id === id);
+    this.project.users.splice(oldUserIndex, 1);
+    console.log(this.project.users);
+    this.projectService.project.next(this.project);
   }
 
   onEdit(user: User) {
-    // this.themeService.save(theme).then(() => this.getThemes());
+    const oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
+    this.project.users[oldUserIndex] = user;
+    console.log(this.project.users);
+    this.projectService.project.next(this.project);
   }
   openDialog() {
     const dialogRef = this.dialog.open(UserModalComponent);

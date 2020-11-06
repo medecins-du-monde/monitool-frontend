@@ -95,7 +95,16 @@ export class Project implements Deserializable {
             return logicalFrame;
         }) : [];
         this.crossCutting = {};
-        this.users = input ? input.users.map(x => new User(x)) : [];
+        this.users = (input && input.users) ? input.users.map(u => {
+            const user = new User(u);
+            if (u.entities){
+                user.entities = this.entities.filter(e => u.entities.indexOf(e.id) >= 0);
+            }
+            if (u.dataSources){
+                user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
+            }
+            return user;
+        }) : [];
         // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
         //     baseline: 12,
         //     colorize: true,

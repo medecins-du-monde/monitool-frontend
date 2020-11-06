@@ -52,8 +52,8 @@ export class UserModalComponent implements OnInit {
         id: [ (this.data ? this.data.id : null), Validators.required ],
         role: [ (this.data ? this.data.role : null), Validators.required ],
         type: [ (this.data ? this.data.type : null), Validators.required ],
-        entities: this.data ? this.data.entities : [[]],
-        dataSources: this.data ? this.data.dataSources : [[]],
+        entities: [ (this.data ? this.data.entities : []), Validators.required],
+        dataSources: [ (this.data ? this.data.dataSources : []), Validators.required],
         name: this.data ? this.data.name : null,
         username: this.data ? this.data.username : null,
         password: this.data ? this.data.password : null,
@@ -73,14 +73,27 @@ export class UserModalComponent implements OnInit {
     this.dialogRef.close({ data: user });
   }
 
+  resetChanges(){
+    this.userForm = this.fb.group({
+      id: [ (this.data ? this.data.id : null), Validators.required ],
+      role: [ (this.data ? this.data.role : null), Validators.required ],
+      type: [ (this.data ? this.data.type : null), Validators.required ],
+      entities: [ (this.data ? this.data.entities : []), Validators.required],
+      dataSources: [ (this.data ? this.data.dataSources : []), Validators.required],
+      name: this.data ? this.data.name : null,
+      username: this.data ? this.data.username : null,
+      password: this.data ? this.data.password : null,
+    });
+  }
+
   onSiteRemoved(site: Entity) {
     const sites = this.userForm.controls.entities.value;
-    this.userForm.controls.entities.setValue(sites.filter(s => s !== site.id));
+    this.userForm.controls.entities.setValue(sites.filter(s => s.id !== site.id));
   }
 
   onDataSourceRemoved(dataSource: Form) {
-    const dataSources = this.userForm.controls.dataSoruces.value;
-    this.userForm.controls.dataSources.setValue(dataSources.filter(d => d !== dataSource.id));
+    const dataSources = this.userForm.controls.dataSources.value;
+    this.userForm.controls.dataSources.setValue(dataSources.filter(d => d.id !== dataSource.id));
   }
 
 }
