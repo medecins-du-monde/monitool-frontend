@@ -5,7 +5,7 @@ export let rolesList = [
     },
     {
         name: 'DataEntryUser',
-        value: 'data'
+        value: 'input'
     },
     {
         name: 'ReadOnlyUser',

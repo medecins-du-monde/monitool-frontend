@@ -1,6 +1,6 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 <h2 mat-dialog-title>{{ 'UserEdition' | translate }}</h2>
-<mat-dialog-content [formGroup]="userForm" class="mdm-dialog">
+<mat-dialog-content *ngIf="userForm" [formGroup]="userForm" class="mdm-dialog">
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Type' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
@@ -27,6 +27,49 @@
             </mat-select>
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}</mat-hint>
         </mat-form-field>
+    </div>
+
+    <div *ngIf="userForm.value.role === roles[1].value">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                    <mat-select-trigger>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let site of selectedSites" [removable]="true"
+                                (removed)="onSiteRemoved(site)">
+                                {{ site.name }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let site of collectionSites" [value]="site">{{ site.name }}</mat-option>
+                </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
+                </mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'DataSources' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <mat-select formControlName="dataSources" placeholder="{{ 'DataSources' | translate }}" multiple>
+                    <mat-select-trigger>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let dataSource of selectedDataSources" [removable]="true"
+                                (removed)="onDataSourceRemoved(dataSource)">
+                                {{ dataSource.name }}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+                        </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let dataSource of dataSources" [value]="dataSource">{{ dataSource.name }}</mat-option>
+                </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
+                </mat-hint>
+            </mat-form-field>
+        </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

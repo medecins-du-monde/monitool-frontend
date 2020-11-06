@@ -1,5 +1,7 @@
 import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
+import { Entity } from './entity.model';
+import { Form } from './form.model';
 
 export class User implements Deserializable {
     id: string;
@@ -8,6 +10,8 @@ export class User implements Deserializable {
     name: string;
     username: string;
     password: string;
+    entities: Entity[];
+    dataSources: Form[];
 
     get login() {
         return this.id.split(':')[1];
@@ -31,10 +35,24 @@ export class User implements Deserializable {
     }
 
     serialize() {
-        return {
+        const value = {
             id: this.id,
             type: this.type,
             role: this.role
         };
+
+        if (this.entities){
+            Object.assign(value, {
+                entities: this.entities.map(x => x.id)
+            });
+        }
+
+        if (this.dataSources){
+            Object.assign(value, {
+                dataSources: this.dataSources.map(x => x.id)
+            });
+        }
+
+        return value;
     }
 }
