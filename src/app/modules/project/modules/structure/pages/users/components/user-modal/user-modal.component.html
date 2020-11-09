@@ -10,15 +10,40 @@
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Type' | translate }}</mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'User' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="id" placeholder="{{ 'User' | translate }}">
-                <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
-            </mat-select>
-            <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
-        </mat-form-field>
+    <div *ngIf="userForm.value.type === types[0].value; else elseBlock">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'User' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}">
+                    <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+                </mat-select>
+                <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
+            </mat-form-field>
+        </div>
     </div>
+    <ng-template #elseBlock>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'Login' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput formControlName="username" placeholder="{{ 'Login' | translate }}">
+                <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'FullName' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input matInput formControlName="name" placeholder="{{ 'FullName' | translate }}">
+                <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'Password' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <input type="password" matInput formControlName="password" placeholder="{{ 'Password' | translate }}">
+                <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
+            </mat-form-field>
+        </div>
+    </ng-template>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Role' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">

@@ -36,21 +36,36 @@ export class User implements Deserializable {
 
     serialize() {
         const value = {
-            id: this.id,
             type: this.type,
             role: this.role
         };
 
-        if (this.entities){
+        if (this.type === 'internal'){
+            if (this.id){
+                Object.assign(value, {
+                    id: this.id
+                });
+            }
+        }
+        else if (this.type === 'partner'){
             Object.assign(value, {
-                entities: this.entities.map(x => x.id)
+                username: this.username,
+                name: this.name,
+                password: this.password
             });
         }
 
-        if (this.dataSources){
-            Object.assign(value, {
-                dataSources: this.dataSources.map(x => x.id)
-            });
+        if (this.role === 'input'){
+            if (this.entities){
+                Object.assign(value, {
+                    entities: this.entities.map(x => x.id)
+                });
+            }
+            if (this.dataSources){
+                Object.assign(value, {
+                    dataSources: this.dataSources.map(x => x.id)
+                });
+            }
         }
 
         return value;

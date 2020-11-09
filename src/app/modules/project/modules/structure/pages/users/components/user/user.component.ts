@@ -24,9 +24,16 @@ export class UserComponent implements OnInit {
   ) { }
 
   get login(){
-    if (this.user.id){
-      return this.user.id.split(':')[1];
+    if (this.user.type === 'internal'){
+      if (this.user.id){
+        return this.user.id.split(':')[1];
+      }
     }
+    else {
+      return this.user.username;
+    }
+
+    return '';
   }
 
   get role(){
@@ -34,8 +41,11 @@ export class UserComponent implements OnInit {
   }
 
   get name(){
-    if (this.MDMusers){
+    if (this.user.type === 'internal' && this.MDMusers){
       return this.MDMusers.find(x => x.id === this.user.id).name;
+    }
+    if (this.user.type === 'partner'){
+      return this.user.name;
     }
     return '';
   }

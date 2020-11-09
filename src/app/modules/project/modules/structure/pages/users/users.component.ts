@@ -37,14 +37,18 @@ export class UsersComponent implements OnInit {
   onDelete(id: string) {
     const oldUserIndex = this.project.users.findIndex(u => u.id === id);
     this.project.users.splice(oldUserIndex, 1);
-    console.log(this.project.users);
     this.projectService.project.next(this.project);
   }
 
   onEdit(user: User) {
-    const oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
+    let oldUserIndex = null;
+    if (user.type === 'internal'){
+      oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
+    }
+    else {
+      oldUserIndex = this.project.users.findIndex(u => u.username === user.username);
+    }
     this.project.users[oldUserIndex] = user;
-    console.log(this.project.users);
     this.projectService.project.next(this.project);
   }
   openDialog() {

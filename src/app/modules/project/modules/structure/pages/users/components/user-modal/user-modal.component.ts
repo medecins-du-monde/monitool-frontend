@@ -43,29 +43,21 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.types = typesList;
+    this.roles = rolesList;
     this.projectService.openedProject.subscribe(project => {
       this.project = project;
       this.collectionSites = project.entities;
       this.dataSources = project.forms;
 
-      this.userForm = this.fb.group({
-        id: [ (this.data ? this.data.id : null), Validators.required ],
-        role: [ (this.data ? this.data.role : null), Validators.required ],
-        type: [ (this.data ? this.data.type : null), Validators.required ],
-        entities: [ (this.data ? this.data.entities : []), Validators.required],
-        dataSources: [ (this.data ? this.data.dataSources : []), Validators.required],
-        name: this.data ? this.data.name : null,
-        username: this.data ? this.data.username : null,
-        password: this.data ? this.data.password : null,
-      });
+      this.resetChanges();
+
     });
 
     this.userService.list().then( users => {
       this.users = users;
     });
 
-    this.types = typesList;
-    this.roles = rolesList;
   }
 
   onSubmit() {
@@ -77,12 +69,12 @@ export class UserModalComponent implements OnInit {
     this.userForm = this.fb.group({
       id: [ (this.data ? this.data.id : null), Validators.required ],
       role: [ (this.data ? this.data.role : null), Validators.required ],
-      type: [ (this.data ? this.data.type : null), Validators.required ],
-      entities: [ (this.data ? this.data.entities : []), Validators.required],
-      dataSources: [ (this.data ? this.data.dataSources : []), Validators.required],
-      name: this.data ? this.data.name : null,
-      username: this.data ? this.data.username : null,
-      password: this.data ? this.data.password : null,
+      type: [ (this.data ? this.data.type : this.types[0].value), Validators.required ],
+      entities: [ ((this.data && this.data.entities) ? this.data.entities : []), Validators.required ],
+      dataSources: [ ((this.data && this.data.dataSources) ? this.data.dataSources : []), Validators.required ],
+      name: [ this.data ? this.data.name : null, Validators.required ],
+      username: [ this.data ? this.data.username : null, Validators.required ],
+      password: [ this.data ? this.data.password : null, Validators.required ]
     });
   }
 
