@@ -6,6 +6,7 @@
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "Admin": "Administrador",
+    "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
     "Baseline": "Valor de base",
     "Basics": "Datos de base",
@@ -17,6 +18,7 @@
     "CollectionSites": "Lugares de colecta",
     "Common": "Normal",
     "Computation": "Cálculo",
+    "Connect": "Conectar",
     "Confirm": "Confirmar",
     "Countries": "Países",
     "Country": "País",
@@ -24,7 +26,7 @@
     "CreateNewDataSource": "Crear una nueva fuente de datos",
     "CreateNewIndicator": "Crear un nuevo indicador",
     "CreateNewProject": "Crear un nuevo proyecto",
-    "CreateNewThematic": "Create una temática",
+    "CreateNewThematic": "Crear una nueva temática",
     "CrossCuttingIndicators": "Indicadores transversales",
     "CrossCuttingInfo": [
         "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
@@ -36,7 +38,9 @@
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
     "DeletedPlural": "Suprimidos",
-    "Description": "Descriptivo",
+    "Description": "Descripción",
+    "DownloadPdfLandscape": "Descargar PDF (horizontal)",
+    "DownloadPdfPortrait": "Descargar PDF (vertical)",
     "Done": "Realizado",
     "Edit": "Editar",
     "Email": "Correo electrónico",
@@ -73,11 +77,13 @@
         "Los indicadores adicionales son indicadores que no estan en ningún marco lógico.",
         "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
     ],
+    "Fiters": "Filtres",
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
     "fr": "Francés",
     "FullName": "Nombre completo",
     "GeneralReporting": "Informe general",
+    "GoBack": "Volver",
     "GroupName": "Nombre del grupo",
     "Groups": "Groupos",
     "History": "Historial",
@@ -151,10 +157,20 @@
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
+    "InputHomeInfo": [
+        "El objectivo de esta sección es permitirle entrar los datos que Monitool usara para calcular sus indicadores",
+        "Cada una de las fuentes de datos que fueron creadas durante la estructuración del proyecto da lugar a un formulario que se rellena periódicamente",
+        " Al ingresar datos, la tecla Tabulador en su teclado le permite navegar entre los cuadros.",
+        "Para volver al cuadro anterior, use Mayús + Tabulador",
+        "Una versión imprimible de cada formulario está disponible.",
+        "Si tiene varios formularios en papel para ingresar (por ejemplo, uno por trabajador social) y desea agregarlos, puede ingresar sumas en los cuadros de entrada: \"1 + 2 + 3\""
+    ],
     "Language": "Idiomas",
     "LastEntry": "Última entrada",
+    "LoadMoreRevisions": "Ver cambios mas antigos",
     "LogicalFrameworks": "Marcos lógicos",
     "Login": "Nombre de usuario",
+    "LogOut": "Desconectar",
     "Members": "Miembros",
     "Missing": "Por hacer",
     "MultipleThematics": "Varias temáticas",
@@ -166,12 +182,79 @@
     "OngoingPlural": "En curso",
     "Open": "Abrir",
     "Owner": "Proprietario",
+    "PartnerAuthentication": "Autenticación de socios",
+    "Password": "Contraseña",
     "Periodicity": "Periodicidad",
     "PivotTable": "Tabla dinámica",
+    "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
+    "ProjectDataSourceInfo": [
+        "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
+        "En Monitool, no hace falta entrar todos los datos disponibles en las fuentes de datos: solo lo que es relevante",
+        "Para que sea mas facil entrar los datos, la fuentes deben corresponder a herramientas reales usadas en el terreno."
+    ],
+    "ProjectHistoryInfo": "El historial de modificaciones le permite consultar todos los cambios hechos en la estructura de su proyecto.",
+    "ProjectHomeBlueSection": [
+        [
+            "Use nombres cortos para nombrar ubicaciones de colecciones, fuentes de datos, variables e indicadores. Al evitar los acrónimos, mejora la legibilidad de sus cuadros y tablas y permite una mejor comprensión de su proyecto por parte de todos los actores de Médicos del Mundo."
+        ],
+        [
+            "En caso de error, haga clic en ",
+            " para volver a la última versión guardada."
+        ],
+        [
+            "Si ha guardado un error: vaya a la página ",
+            " y restaure una versión anterior del proyecto."
+        ]
+    ],
+    "ProjectHomeInfo": [
+        "Esta sección le ayudará a formalizar su proyecto. Debe ser utilizado durante la fase de planificación del proyecto y revisada durante la fase de implementación del proyecto.",
+        "Use su diagrama de flujo de datos para estructurar su proyecto en Monitool. Si ha seguido todos los pasos, tiene todos los elementos necesarios.",
+        "Documente los objetivos y los resultados esperados de su proyecto",
+        "Documente las actividades que hará para alcanzarlas",
+        "Enumere los indicadores que medirán el logro de sus resultados, así como el monitoreo de sus actividades (indicadores de proceso)",
+        "Enumere sus herramientas de recolección de datos (Excel, papel, ...) así como otras fuentes de datos (SNIS, encuestas ...) que usará para calcular sus indicadores, informando sus sitios de periodicidad y recolección y sus contenido"
+    ],
     "ProjectRole": "Creador proyectos",
     "Projects": "Proyectos",
+    "ProjectSitesInfo": [
+        "Cuando un proyecto tiene las mismas actividades en varios lugares, se deben seguir por lugar, grupos de lugares y a nivel de proyecto.",
+        "Entre aqui:",
+        "La lista de lugares donde su proyecto trabaja (ej: la lista de centros de salud)",
+        "Los grupos que se usuran durante la vida del proyecto (ej: por región, o tipo de estructura)"
+    ],
+    "ProjectsUserInfo": [
+        "Muchas personas diferentes participan en crear y seguir un proyecto: coordination, equipo M&E, operadores de entrada de datos, partnerarios, ...",
+        "Entre aqui la lista de todos los usuarios que deben tener acceso a los datos del programa."
+    ],
     "ReadOnlyUser": "Consulta unicamente",
     "Reporting": "Informe",
+    "ReportingHomeBlueSection": [
+        "Use ",
+        " para mostrar un gráfico que contiene los datos de la línea actual.",
+        "Use ",
+        " para desagregar los datos de la línea actual.",
+        "El símbolo ",
+        " significa que uno de los pasos para calcular su indicador ha fallado.",
+        "Lo más probable es que haya dividido por cero, que no se hayan ingresado todos los datos o que haya indicado explícitamente que no es posible agregar estos datos al configurar el proyecto.",
+        "Desagrega tu línea haciendo clic en ",
+        " y en ",
+        " para identificar el problema.",
+        "Los ",
+        " le permiten restringir los datos que consulta en determinadas fechas, lugares de recogida o de acuerdo con las desagregaciones especificadas durante la creación de su proyecto (grupos de edad, sexo, ...)."
+    ],
+    "ReportingHomeInfo": [
+        "Esta sección le permite seguir su proyecto.",
+        "Las páginas ",
+        "Informe general",
+        " y ",
+        "Tabla dinámica",
+        " ambas permiten acceder a todos sus datos, en diferentes formas.",
+        "Informe general",
+        "Le permite explorar sus datos jerárquicamente: desde una vista general de su proyecto.",
+        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...).",
+        "Tabla dinámica",
+        "Puede consultar cada marco lógico o fuente de datos, que contiene indicadores, que luego puede desglosar por ubicación de recopilación, parámetros que utilizó para calcularlos y otras desagregaciones de acuerdo con la estructura de datos que recopiló (rango de edad, sexo, patologías, contenido de entrenamiento, ...)."
+    ],
     "ResetChanges": "Cancelar los cambios",
     "RevertToVersion": "Volver a este punto",
     "Role": "Tipo",
@@ -182,6 +265,22 @@
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
     "Settings": "Configuración",
+    "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si have cambios, tenga cuidado en poner todos los idiomas a día.",
+    "SettingsIndicatorsInfo": [
+        "Esta página contiene la lista de todos los indicadores transversales de la ONG.",
+        "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos una temática en común con ese.",
+        "Para ayudar los proyectos a planificar su colecta de datos, evite cambiar esta lista a menudo."
+    ],
+    "SettingsThematicsEdit": "Entre aqui el nombre de la temática en todos los idiomas usados por su organización.",
+    "SettingsThematicsInfo": [
+        "Esta página contiene la lista de las temáticas tratadas por la ONG.",
+        "Los proyectos y los indicadores transversales se pueden conectar a temáticas."
+    ],
+    "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
+    "SettingsUserInfo": [
+        "Esta página contiene la lista de todos los usuarios que se han conectado por lo menos una vez a Monitool",
+        "No es necesario crear cuentas para usuario con una dirección de correo xxx@medecinsdumonde.net: apareceran automáticamente una vez se hayan conectado una vez. Para socios, es posible crear cuentas desde la páginas dedicadas a cada proyecto."
+    ],
     "SpecificEndDate": "Fecha de final específica",
     "SpecificStartDate": "Fecha de inicio específica",
     "StartDate": "Fecha de inicio",
@@ -208,9 +307,11 @@
     "ThematicEdition": "Editar temática",
     "Thematics": "Temáticas",
     "UpdateUser": "Actualizar el usario",
+    "UsePartnerAccount": "Usar cuenta de socio",
     "User": "Usario",
     "UserEdition": "Editar usuario",
     "Users": "Usuarios",
+    "UseTrainingAccount":"Usar cuenta de entrenamiento (admin)",
     "Valid": "Valido",
     "Visibility": "Visibilidad",
     "VisibilityPublic": "Visible  para todos los usarios",
