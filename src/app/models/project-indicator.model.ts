@@ -53,6 +53,7 @@ export class ProjectIndicator implements Deserializable {
       if (computation) {
         if (computation.formula){
           forEach(computation.parameters, parameter => {
+            // This part allows to convert our partitionElement in id
             forEach(parameter.filter, (value, key) => {
               parameter.filter[`${key}`] = value.map(element => {
                 return element.id;

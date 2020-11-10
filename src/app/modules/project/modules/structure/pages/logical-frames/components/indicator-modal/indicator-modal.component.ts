@@ -92,13 +92,21 @@ export class IndicatorModalComponent implements OnInit {
       const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
       listPartitionDataSource.forEach(partition => {
         const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
-        const filterValueList = filterForm.get(`${partition.id}`).value;
+        let filterValueList = filterForm.get(`${partition.id}`).value;
         const newList = [];
+
+        // If not formated yet
+        const newListOfValue = [];
+        if (typeof(filterValueList[0]) !== 'string' ) {
+          filterValueList.forEach(value => newListOfValue.push(value.id));
+        }
+        if (newListOfValue.length > 0 ) { filterValueList = newListOfValue; }
+
         partition.elements.forEach(partitionElement => {
-          if (filterValueList.indexOf(partitionElement.id) !== -1) {
-            newList.push(partitionElement);
-          }
-        });
+            if (filterValueList.indexOf(partitionElement.id) !== -1) {
+              newList.push(partitionElement);
+            }
+          });
         filterForm.setControl(`${partition.id}`, new FormControl(newList));
       });
     });
