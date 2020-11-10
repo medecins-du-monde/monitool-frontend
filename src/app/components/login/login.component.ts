@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -27,12 +28,24 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    // const cuser = (await this.authService.getCurrentUser());
+    // console.log(cuser);
   }
 
-  login(){
-    this.authService.validate('value', 'value').then((response: any) => {
+  loginTrainingAccount(){
+    this.authService.validateTraining('value', 'value').then((response: any) => {
       this.router.navigate(['home']);
     });
+  }
+
+  loginPartner(){
+    console.log(this.loginForm.controls.username.value);
+    console.log(this.loginForm.controls.password.value);
+    this.authService.validatePartner(
+      this.loginForm.controls.username.value,
+      this.loginForm.controls.password.value
+    );
   }
 
   partnerAccount(){

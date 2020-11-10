@@ -21,8 +21,21 @@ export class AuthService {
     return response;
   }
 
-  public validate(email: string, password: string): Promise<ArrayBuffer> {
+  public async getCurrentUser(){
+    return await this.apiService.get('/resources/myself');
+  }
+
+  public validateTraining(email: string, password: string): Promise<ArrayBuffer> {
     return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
+  }
+  public validatePartner(email: string, password: string) {
+    this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'})
+    .then( response => {
+      return response;
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   public async logOut(){
