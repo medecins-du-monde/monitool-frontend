@@ -1,7 +1,10 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { forEach } from 'lodash';
+import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { Purpose } from 'src/app/models/purpose.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 
 @Component({
@@ -11,8 +14,11 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 })
 export class PurposeEditComponent implements OnInit {
 
-  @Input() purposeForm: FormGroup;
+  purposeForm: FormGroup;
+
+  @Input() purpose: Purpose;
   @Input() forms: Form[];
+  @Output() edit = new EventEmitter();
 
   get outputs(): FormArray {
     return this.purposeForm.controls.outputs as FormArray;
@@ -28,8 +34,25 @@ export class PurposeEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.setForm();
   }
 
+  private setForm(): void {
+    this.purposeForm = this.fb.group({
+      assumptions: [this.purpose.assumptions],
+      description: [this.purpose.description],
+      indicators: this.fb.array(this.purpose.indicators.map(x => this.newIndicator(x))),
+      outputs: this.fb.array(this.purpose.outputs.map(x => this.newOutput())),
+    });
+  }
+
+  onFocusOut(event) {
+    //TODO: Review this focusout
+    if (event.relatedTarget === null) {
+      this.purpose = new Purpose(this.purpose);
+      this.edit.emit(this.purpose.deserialize(this.purposeForm.value));
+    }
+  }
   onAddNewOutput() {
     this.outputs.push(this.newOutput());
   }
@@ -49,41 +72,58 @@ export class PurposeEditComponent implements OnInit {
   }
 
   onAddNewIndicator(): void {
-    const indicator: FormGroup = this.newIndicator();
-    this.openDialog(indicator, true);
+    this.openDialog(this.newIndicator(), true);
   }
 
-  onEditIndicator(indicator: FormGroup) {
-    this.openDialog(indicator);
+  onEditIndicator(indicator: FormGroup, index?: number) {
+    this.openDialog(this.newIndicator(indicator.value), false, index);
   }
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
   }
 
-  private newIndicator(): FormGroup {
-    const indicator = new ProjectIndicator();
+  private newIndicator(indicatorToEdit = null): FormGroup {
+    const indicator = new ProjectIndicator(indicatorToEdit);
+
+    const parametersFormGroup = new FormGroup({});
+
+    if (indicator.computation) {
+      forEach(indicator.computation.parameters, (parameter, key) => {
+        const filterGroup = this.fb.group({});
+        // tslint:disable-next-line: no-string-literal
+        forEach(parameter['filter'], (filterValue: string[], keyFilter: string) => {
+        filterGroup.addControl(`${keyFilter}`, new FormControl(filterValue)); });
+        parametersFormGroup.addControl(`${key}`, this.fb.group({
+
+          // tslint:disable-next-line: no-string-literal
+          elementId: [parameter['elementId']],
+          filter: filterGroup as FormGroup,
+        }));
+      });
+    }
     return this.fb.group({
       display: [indicator.display, Validators.required],
-      baseline: [indicator.baseline],
-      target: [indicator.target],
+      baseline: [indicator.baseline, Validators.required],
+      target: [indicator.target, Validators.required],
       computation: this.fb.group({
-        formula: [indicator.computation.formula],
-        parameters: [indicator.computation.formula]
+        formula: [indicator.computation ? indicator.computation.formula : null],
+        parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : this.fb.group({}),
       }),
       type: [indicator.type]
     });
   }
 
-  openDialog(indicator: FormGroup, add?: boolean) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
-        } else {
-          indicator = res.indicator;
+        }
+        else if (index !== null) {
+          this.indicators.setControl(index, res.indicator);
         }
       }
     });

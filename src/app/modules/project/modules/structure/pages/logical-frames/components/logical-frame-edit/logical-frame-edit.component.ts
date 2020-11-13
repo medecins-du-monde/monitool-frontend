@@ -75,6 +75,10 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     this.purposes.push(this.newPurpose());
   }
 
+  onEditPurpose(purpose: Purpose, index: number) {
+    this.purposes.setControl(index, _.cloneDeep(this.newPurpose(purpose)));
+  }
+
   onRemovePurpose(i: number) {
     this.purposes.removeAt(i);
   }
@@ -86,8 +90,8 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     return this.fb.group({
       assumptions: [purpose.assumptions, Validators.required],
       description: [purpose.description, Validators.required],
-      outputs: this.fb.array([]),
-      indicators: this.fb.array([])
+      outputs: this.fb.array(purpose.outputs),
+      indicators: this.fb.array(purpose.indicators.map(x => this.newIndicator(x))),
     });
   }
 
@@ -103,6 +107,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     this.indicators.removeAt(i);
   }
 
+  // TODO : Check if could be used in the line 61 to not have to use it in the indicator modal after
   private newIndicator(indicatorToEdit = null): FormGroup {
     const indicator = new ProjectIndicator(indicatorToEdit);
 

@@ -15,14 +15,15 @@ export class Purpose implements Deserializable {
     deserialize(input: any): this {
         Object.assign(this, input);
         this.outputs = ( input && input.outputs ) ? input.outputs.map(x => new Output(x)) : [];
+        this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }
 
     serialize() {
-        return {
+      return {
             assumptions: this.assumptions,
             description: this.description,
-            indicators: [],
+            indicators: this.indicators.map(x => x.serialize()),
             outputs: this.outputs.map(x => x.serialize())
         };
     }
