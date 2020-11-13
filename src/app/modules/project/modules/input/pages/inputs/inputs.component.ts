@@ -8,12 +8,12 @@ import { Form } from 'src/app/models/form.model';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
-  monthWeekSat = 'month_week_sat',
-  monthWeekSun = 'month_week_sun',
-  monthWeekMon = 'month_week_mon',
-  weekSat = 'week_sat',
-  weekSun = 'week_sun',
-  weekMon = 'week_mon',
+  month_week_sat = 'month_week_sat',
+  month_week_sun = 'month_week_sun',
+  month_week_mon = 'month_week_mon',
+  week_sat = 'week_sat',
+  week_sun = 'week_sun',
+  week_mon = 'week_mon',
   month = 'month',
   quarter = 'quarter',
   semester = 'semester',
@@ -63,6 +63,7 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   atualizeData(){
     this.form = this.project.forms.find(x => x.id === this.formId);
+    console.log(this.form);
     this.sites = this.form ? this.form.entities.map(x => x.name) : [];
     this.displayedColumns = ['Date'].concat(this.sites);
     this.thisYearDates = [];
