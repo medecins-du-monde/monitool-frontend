@@ -16,7 +16,7 @@
         <div class="indicators-list" formArrayName="indicators">
             <div class="indicators-cards">
                 <ng-container *ngFor="let indicator of indicators.controls; let i=index">
-                    <app-extra-indicator [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
+                    <app-extra-indicator [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
                 </ng-container>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
