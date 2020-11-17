@@ -41,13 +41,13 @@
     "DataSourceCalendarTitle": "Calendario",
     "DataSourceStructureTitle": "Estructura",
     "DataSourceEdit": {
-        "AddNameHint": "",
-        "AddNamePlaceholder": "",
-        "CollectionSitesHint": "",
-        "CollectionSitesPlaceholder": "",
-        "PeriodicityHint": "",
-        "StartDateHint": "",
-        "EndDateHint": ""
+        "AddNameHint": "ej: Datos SNIS, Ficha de colecta ante-natal, Ficha sanidad primaria, ...",
+        "AddNamePlaceholder": "Cual es el nombre de la fuente de datos de la que quiere extraer datos? ej. \"Historiales clínicos electronicos\", \"Fichas de colecta\", \"Informe SNIS\", ...",
+        "CollectionSitesHint": "Ningún elemento esta seleccionado",
+        "CollectionSitesPlaceholder": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
+        "EndDateHint": "Si esta fuente de datos terminara antes del fin del proyecto, o se ha reemplazado, entre la fecha aqui",
+        "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
+        "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto"  
     },
     "DataSources": "Fuente de datos",
     "Date": "Fecha",

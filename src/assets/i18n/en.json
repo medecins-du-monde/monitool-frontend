@@ -43,9 +43,9 @@
         "AddNamePlaceholder": "For instance: NHIS data, Ante-natal care tally sheet, PHC tally sheet, ...",
         "CollectionSitesHint": "Among sites identified in \"Collection sites\", which one collect this data source?",
         "CollectionSitesPlaceholder": "No element is selected",
+        "EndDateHint": " If this data source will end before the end of the project, or was replaced, enter the date here",
         "PeriodicityHint": "How often is this data available? Take care, this is not the same thing as the frenquency of the reports that you need to provide.",
-        "StartDateHint": "If this data source was created after the beginning of the project, enter here the date, otherwise, leave the default value",
-        "EndDateHint": " If this data source will end before the end of the project, or was replaced, enter the date here"
+        "StartDateHint": "If this data source was created after the beginning of the project, enter here the date, otherwise, leave the default value"
     },
     "DataSourceStructureTitle": "Calendario",
     "DataSources": "Data sources",
