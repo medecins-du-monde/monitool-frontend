@@ -13,6 +13,11 @@ const routes: Routes = [
       .then(m => m.CalendarModule)
   },
   {
+    path: 'inputs/:formId/edit/:siteId',
+    loadChildren: () => import('./pages/edit/edit.module')
+      .then(m => m.EditModule)
+  },
+  {
     path: 'inputs/:formId',
     loadChildren: () => import('./pages/inputs/inputs.module')
       .then(m => m.InputsModule)
