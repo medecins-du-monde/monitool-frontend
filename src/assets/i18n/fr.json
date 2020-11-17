@@ -5,6 +5,7 @@
     "Add": "Ajouter",
     "AddIndicator": "Ajouter un indicateur",
     "AddNewUser": "Ajouter un utilisateur",
+    "AddVariableName": "Que mesurez-vous?",
     "AdminRole": "Administrateur",
     "AllCountries": "Tous les pays",
     "Baseline": "Valeur initiale",
@@ -82,6 +83,7 @@
     "fr": "Français",
     "FullName": "Nom",
     "GeneralReporting": "Rapport général",
+    "GeoAggregation": "Comment grouper les saisies entre sites?",
     "GoBack": "Retourner",
     "GroupName": "Nom du groupe",
     "Groups": "Groupes",
@@ -185,6 +187,7 @@
     "OngoingPlural": "En cours",
     "Open": "Ouvrir",
     "Owner": "Propriétaire",
+    "Partitions" : "Quelles sont les désagrégations à utiliser sur cette variable?",
     "PartnerAuthentication": "Authentification des partenaires",
     "Password": "Mot de passe",
     "Periodicity": "Périodicité",
@@ -291,6 +294,7 @@
     "Structure": "Structure",
     "Target": "Valeur cible",
     "Task": "Tâche",
+    "TimeAggregation": "Comment grouper les valeurs de plusieurs périodes?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "Dans quel pays le projet se déroule-t'il? S'il s'agit d'un projet régional, entrez le nom de la région.",

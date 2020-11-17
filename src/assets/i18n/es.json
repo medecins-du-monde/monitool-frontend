@@ -5,6 +5,7 @@
     "Add": "Añadir",
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
+    "AddVariableName": "Qué esta midiendo?",
     "Admin": "Administrador",
     "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
@@ -85,6 +86,7 @@
     "fr": "Francés",
     "FullName": "Nombre completo",
     "GeneralReporting": "Informe general",
+    "GeoAggregation": "Como compilar entradas provenientes de diferentes lugares?",
     "GoBack": "Volver",
     "GroupName": "Nombre del grupo",
     "Groups": "Groupos",
@@ -188,6 +190,7 @@
     "OngoingPlural": "En curso",
     "Open": "Abrir",
     "Owner": "Proprietario",
+    "Partitions" : "Que desagregaciones quiere usar en esta variable?",
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
     "Periodicity": "Periodicidad",
@@ -294,6 +297,7 @@
     "Structure": "Estructura",
     "Target": "Objectivo",
     "Task": "Tarea",
+    "TimeAggregation": "Como compilar entradas provenientes de diferentes periodos?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "En que país tiene lugar su proyecto? Si es un proyecto regional, entre el nombre de la región.",
