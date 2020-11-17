@@ -5,6 +5,7 @@
     "Add": "Add",
     "AddIndicator": "Add indicator",
     "AddNewUser": "Add new user",
+    "AddVariableName" : "What are your measuring?",
     "AdminRole": "Administrator",
     "AllCountries": "All countries",
     "Baseline": "Baseline",
@@ -83,6 +84,7 @@
     "fr": "French",
     "FullName": "Full name",
     "GeneralReporting": "General reporting",
+    "GeoAggregation" : "How to group entries from different sites?",
     "GoBack": "Go back",
     "GroupName": "Group name",
     "Groups": "Groups",
@@ -186,6 +188,7 @@
     "OngoingPlural": "Ongoing",
     "Open": "Open",
     "Owner": "Owner",
+    "Partitions" : "Which disaggregations should be used on this variable?",
     "PartnerAuthentication": "Partner authentication",
     "Password": "Password",
     "Patch": {
@@ -297,6 +300,7 @@
     "Structure": "Structure",
     "Target": "Target",
     "Task": "Task",
+    "TimeAggregation" : "How to group entries from different periods?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",
