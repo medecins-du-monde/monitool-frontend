@@ -46,8 +46,10 @@
         "CollectionSitesHint": "Ningún elemento esta seleccionado",
         "CollectionSitesPlaceholder": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
         "EndDateHint": "Si esta fuente de datos terminara antes del fin del proyecto, o se ha reemplazado, entre la fecha aqui",
+        "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
-        "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto"  
+        "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto",
+        "StartDatePlaceholder": "Igual que el inicio del proyecto"  
     },
     "DataSources": "Fuente de datos",
     "Date": "Fecha",

@@ -47,7 +47,7 @@
             <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [matDatepicker]="startPicker" formControlName="start"
-                    placeholder="{{ 'StartDate' | translate }}">
+                    placeholder="{{ 'DataSourceEdit.StartDatePlaceholder' | translate }}" [value]="dateTransform(project.start)">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
                 <mat-hint>
@@ -59,7 +59,7 @@
             <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [matDatepicker]="endPicker" formControlName="end"
-                    placeholder="{{ 'EndDate' | translate }}">
+                    placeholder="{{ 'DataSourceEdit.EndDatePlaceholder' | translate }}" [value]="project.end">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
                 <mat-hint>

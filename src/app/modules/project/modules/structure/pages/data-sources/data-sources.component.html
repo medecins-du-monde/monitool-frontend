@@ -12,5 +12,5 @@
 </div>
 
 <div class="mdm-section" *ngIf="edition">
-    <app-data-source-edit [form]="currentForm" [entities]="entities" (edit)="onEdit($event)"></app-data-source-edit>
+    <app-data-source-edit [form]="currentForm" [entities]="entities" [project]="project" (edit)="onEdit($event)"></app-data-source-edit>
 </div>

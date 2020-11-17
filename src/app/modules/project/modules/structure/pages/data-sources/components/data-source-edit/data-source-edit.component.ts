@@ -6,6 +6,7 @@ import { Form } from 'src/app/models/form.model';
 import { PartitionElement } from 'src/app/models/partition-element.model';
 import { PartitionGroup } from 'src/app/models/partition-group.model';
 import { Partition } from 'src/app/models/partition.model';
+import { Project } from 'src/app/models/project.model';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -18,6 +19,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   @Input() entities: Entity[];
   @Input() form: Form;
+  @Input() project: Project;
   @Output() edit = new EventEmitter();
 
   public periodicities = [
@@ -160,6 +162,11 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  dateTransform(date) {
+    const isoDate = new Date(date).toISOString();
+    return isoDate;
   }
 
 }
