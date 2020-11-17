@@ -1,16 +1,19 @@
 <div class="mdm-section">
-    <div class="mdm-title">Calendrier</div>
+    <div class="mdm-title">{{ 'DataSourceCalendarTitle' | translate }}</div>
     <div [formGroup]="dataSourceForm" class="mdm-form">
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Name' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                <input matInput formControlName="name" placeholder="{{ 'DataSourceEdit.AddNamePlaceholder' | translate }}">
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'DataSourceEdit.AddNameHint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple>
                     <mat-select-trigger>
                         <mat-chip-list>
                             <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
@@ -23,6 +26,9 @@
                     <mat-option *ngFor="let entity of entities" [value]="entity">{{ entity.name }}
                     </mat-option>
                 </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'DataSourceEdit.CollectionSitesHint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -32,6 +38,9 @@
                     <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">{{ periodicity.display | translate }}
                     </mat-option>
                 </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'DataSourceEdit.PeriodicityHint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -41,6 +50,9 @@
                     placeholder="{{ 'StartDate' | translate }}">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'DataSourceEdit.StartDateHint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -50,12 +62,15 @@
                     placeholder="{{ 'EndDate' | translate }}">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'DataSourceEdit.EndDateHint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
     </div>
 </div>
 <div class="mdm-section">
-    <div class="mdm-title">Structure</div>
+    <div class="mdm-title">{{ 'DataSourceStructureTitle' | translate }}</div>
     <div [formGroup]="dataSourceForm">
         <mat-accordion formArrayName="elements">
             <ng-container *ngFor="let element of elements.controls; let i=index">
