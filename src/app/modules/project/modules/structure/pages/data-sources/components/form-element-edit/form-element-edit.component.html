@@ -4,7 +4,7 @@
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
             <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate }}
+                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '' } }} 
             </mat-hint>
         </mat-form-field>
     </div>

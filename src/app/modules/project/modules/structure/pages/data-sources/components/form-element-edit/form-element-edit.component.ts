@@ -12,6 +12,7 @@ import { PartitionModalComponent } from '../partition-modal/partition-modal.comp
 export class FormElementEditComponent implements OnInit {
 
   @Input() elementForm: FormGroup;
+  @Input() dataSourceName= "TEST";
 
   public aggregations = [
     {
@@ -37,7 +38,6 @@ export class FormElementEditComponent implements OnInit {
   ];
 
   get partitions(): FormArray {
-    console.log(this.elementForm);
     return this.elementForm.controls.partitions as FormArray;
   }
 

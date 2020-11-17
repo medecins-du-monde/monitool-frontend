@@ -6,7 +6,7 @@
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "AddVariableName": "Qué esta midiendo?",
-    "AddVariableNameHint": "Nombre la variable que quiere extraer de {{CalendarName}}. ej: \"Número de diagnosticos\".",
+    "AddVariableNameHint": "Nombre la variable que quiere extraer de {{name}}. ej: \"Número de diagnosticos\".",
     "Admin": "Administrador",
     "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
