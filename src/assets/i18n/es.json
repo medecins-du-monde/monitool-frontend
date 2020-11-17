@@ -6,6 +6,7 @@
     "AddIndicator": "Añadir un indicador",
     "AddNewUser": "Añadir un usario",
     "AddVariableName": "Qué esta midiendo?",
+    "AddVariableNameHint": "Nombre la variable que quiere extraer de {{CalendarName}}. ej: \"Número de diagnosticos\".",
     "Admin": "Administrador",
     "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
@@ -87,6 +88,7 @@
     "FullName": "Nombre completo",
     "GeneralReporting": "Informe general",
     "GeoAggregation": "Como compilar entradas provenientes de diferentes lugares?",
+    "GeoAggregationHint": "En un proyecto que trabaja en dos lugares, si {{name}} vale 10 en el primero, y 20 en el segundo, cual es el valor para el proyecto entero?",
     "GoBack": "Volver",
     "GroupName": "Nombre del grupo",
     "Groups": "Groupos",
@@ -191,6 +193,7 @@
     "Open": "Abrir",
     "Owner": "Proprietario",
     "Partitions" : "Que desagregaciones quiere usar en esta variable?",
+    "PartitionsHint": "¿Quiere poder diferenciar {{name}} por edad, sexo, tipo de consulta, motivo de consulta, patología, hora del dia, ...? No desagrege por zona geográfica: los lugares de colecta ya se rellenaron en la otra página.",
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
     "Periodicity": "Periodicidad",
@@ -298,6 +301,7 @@
     "Target": "Objectivo",
     "Task": "Tarea",
     "TimeAggregation": "Como compilar entradas provenientes de diferentes periodos?",
+    "TimeAggregationHint": "En un proyecto que colecta datos mensuales, si {{name}} vale 10 en enero, 20 en febrero y 30 en marzo, que vale para el trimer trimestre?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "En que país tiene lugar su proyecto? Si es un proyecto regional, entre el nombre de la región.",

@@ -6,6 +6,7 @@
     "AddIndicator": "Add indicator",
     "AddNewUser": "Add new user",
     "AddVariableName" : "What are your measuring?",
+    "AddVariableNameHint": " Name the variable that you want to extract from {{CalendarName}} . i.e. \"Number of diagnostics\".",
     "AdminRole": "Administrator",
     "AllCountries": "All countries",
     "Baseline": "Baseline",
@@ -85,6 +86,7 @@
     "FullName": "Full name",
     "GeneralReporting": "General reporting",
     "GeoAggregation" : "How to group entries from different sites?",
+    "GeoAggregationHint" : "In a project with two sites, if {{name}}  is 10 for the first and 20 for the second, what is the value for the complete project?",
     "GoBack": "Go back",
     "GroupName": "Group name",
     "Groups": "Groups",
@@ -189,6 +191,7 @@
     "Open": "Open",
     "Owner": "Owner",
     "Partitions" : "Which disaggregations should be used on this variable?",
+    "PartitionsHint" : "Do we want to be able to differenciate {{name}} by age, gender, type of care, consultation motive, pathology, hour of the day, referral type, ...? Do not disaggregate by location: your collection sites were already filled in the relevant page.",
     "PartnerAuthentication": "Partner authentication",
     "Password": "Password",
     "Patch": {
@@ -301,6 +304,7 @@
     "Target": "Target",
     "Task": "Task",
     "TimeAggregation" : "How to group entries from different periods?",
+    "TimeAggregationHint" : "In a project collecting monthly data, if {{name}}  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",

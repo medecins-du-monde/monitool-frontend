@@ -37,6 +37,7 @@ export class FormElementEditComponent implements OnInit {
   ];
 
   get partitions(): FormArray {
+    console.log(this.elementForm);
     return this.elementForm.controls.partitions as FormArray;
   }
 

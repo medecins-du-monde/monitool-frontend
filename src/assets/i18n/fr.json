@@ -6,6 +6,7 @@
     "AddIndicator": "Ajouter un indicateur",
     "AddNewUser": "Ajouter un utilisateur",
     "AddVariableName": "Que mesurez-vous?",
+    "AddVariableNameHint": "Nommez la variable que vous voulez extraire de/du {{CalendarName}}. Par exemple \"Nombre de diagnostics effectués\".",
     "AdminRole": "Administrateur",
     "AllCountries": "Tous les pays",
     "Baseline": "Valeur initiale",
@@ -84,6 +85,7 @@
     "FullName": "Nom",
     "GeneralReporting": "Rapport général",
     "GeoAggregation": "Comment grouper les saisies entre sites?",
+    "GeoAggregationHint": "Dans un projet avec deux sites, si {{name}} vaut 10 pour un site, et 20 pour l'autre, que vaut-il pour le projet dans son ensemble?",
     "GoBack": "Retourner",
     "GroupName": "Nom du groupe",
     "Groups": "Groupes",
@@ -188,6 +190,7 @@
     "Open": "Ouvrir",
     "Owner": "Propriétaire",
     "Partitions" : "Quelles sont les désagrégations à utiliser sur cette variable?",
+    "PartitionsHint": " Veut-t'on être capable de différencier {{name}} par age, sexe, prise en charge, motif de consultation, pathologie, tranche horaire, reférencement effectif, ...? Ne désagrégez pas ici par zone géographique ou site d'intervention: vos lieux de collecte ont déjà été renseignés dans la page prévu à cet effet.",
     "PartnerAuthentication": "Authentification des partenaires",
     "Password": "Mot de passe",
     "Periodicity": "Périodicité",
@@ -295,6 +298,7 @@
     "Target": "Valeur cible",
     "Task": "Tâche",
     "TimeAggregation": "Comment grouper les valeurs de plusieurs périodes?",
+    "TimeAggregationHint": "Dans un projet qui collecte mensuellement, si >{{name}}< vaut 10 en janvier, et 20 en février et 30 en mars que vaut-il pour le premier trimestre?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "Dans quel pays le projet se déroule-t'il? S'il s'agit d'un projet régional, entrez le nom de la région.",

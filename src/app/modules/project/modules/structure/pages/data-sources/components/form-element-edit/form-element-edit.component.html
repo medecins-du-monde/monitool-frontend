@@ -3,6 +3,9 @@
         <div class="mdm-form-label">{{ 'AddVariableName' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
@@ -12,6 +15,9 @@
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
@@ -21,10 +27,14 @@
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Partitions' | translate }}</div>
+        
         <div class="partitions-list" formArrayName="partitions">
             <div class="partitions-buttons">
                 <ng-container *ngFor="let partition of partitions.controls; let i=index">
@@ -32,6 +42,9 @@
                 </ng-container>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+            </mat-hint>
         </div>
     </div>
 </div>
