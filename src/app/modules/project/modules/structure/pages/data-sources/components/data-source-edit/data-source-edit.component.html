@@ -46,8 +46,9 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [matDatepicker]="startPicker" formControlName="start"
-                    placeholder="{{ 'DataSourceEdit.StartDatePlaceholder' | translate }}" [value]="dateTransform(project.start)">
+                <mat-label>{{ changedStartDate ? ('DataSourceEdit.CustomDatePlaceholder' | translate) : ('DataSourceEdit.StartDatePlaceholder' | translate)  }}</mat-label>
+                <input matInput [matDatepicker]="startPicker" formControlName="start" (dateChange)="changeStartDate($event)"
+                    placeholder="{{ 'DataSourceEdit.StartDatePlaceholder' | translate }}" [value]="dateTransform(startDate)">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
                 <mat-hint>
@@ -58,8 +59,10 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [matDatepicker]="endPicker" formControlName="end"
-                    placeholder="{{ 'DataSourceEdit.EndDatePlaceholder' | translate }}" [value]="project.end">
+                    <mat-label>{{ changedEndDate ? ('DataSourceEdit.CustomDatePlaceholder' | translate) : ('DataSourceEdit.EndDatePlaceholder' | translate)  }}</mat-label>
+
+                <input matInput [matDatepicker]="endPicker" formControlName="end" (dateChange)="changeEndDate($event)"
+                    placeholder="{{ 'DataSourceEdit.EndDatePlaceholder' | translate }}" [value]="dateTransform(endDate)">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
                 <mat-hint>

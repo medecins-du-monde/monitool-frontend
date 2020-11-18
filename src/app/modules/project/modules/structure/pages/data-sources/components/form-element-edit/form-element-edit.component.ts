@@ -12,7 +12,7 @@ import { PartitionModalComponent } from '../partition-modal/partition-modal.comp
 export class FormElementEditComponent implements OnInit {
 
   @Input() elementForm: FormGroup;
-  @Input() dataSourceName= "TEST";
+  @Input() dataSourceName= "";
 
   public aggregations = [
     {

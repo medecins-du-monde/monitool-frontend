@@ -44,6 +44,7 @@
         "AddNamePlaceholder": "ex: Données SNIS, Fiche consultations prénatales, Fiche consultations générales, ...",
         "CollectionSitesHint": " Parmi les structures identifiées dans \"Lieux de collecte\", lesquelles font remonter cette source de donnée?",
         "CollectionSitesPlaceholder": "Aucun élément selectionné",
+        "CustomDatePlaceholder" : "date personnalisée",
         "EndDateHint": "Si cette source de données finira avant la fin du projet, ou à été remplacée, indiquez le ici",
         "EndDatePlaceholder": "Idem fin du projet",
         "PeriodicityHint": "À quelle fréquence ces données remontent-elles? Attention, cette fréquence est complétement decorrelée de la fréquence à laquelle le projet doit fournir du reporting.",

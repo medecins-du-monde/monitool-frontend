@@ -4,7 +4,7 @@
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name" placeholder="{{ 'AddVariableNamePlaceholder' | translate }}">
             <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '' } }} 
+                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '...' } }} 
             </mat-hint>
         </mat-form-field>
     </div>
@@ -16,7 +16,7 @@
                 </mat-option>
             </mat-select>
             <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
             </mat-hint>
         </mat-form-field>
     </div>
@@ -28,7 +28,7 @@
                 </mat-option>
             </mat-select>
             <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
             </mat-hint>
         </mat-form-field>
     </div>
@@ -45,7 +45,7 @@
             <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
             <div class="hint">
                 <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '' } }}
+                    <mat-icon>info</mat-icon>{{ 'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
                 </mat-hint>
             </div>
         </div>

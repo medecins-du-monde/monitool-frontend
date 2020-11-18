@@ -16,11 +16,16 @@ import { Project } from 'src/app/models/project.model';
 export class DataSourceEditComponent implements OnInit, OnChanges {
 
   dataSourceForm: FormGroup;
+  startDate: Date;
+  endDate: Date;
+  changedStartDate = false;
+  changedEndDate = false;
 
   @Input() entities: Entity[];
   @Input() form: Form;
   @Input() project: Project;
   @Output() edit = new EventEmitter();
+
 
   public periodicities = [
     {
@@ -87,6 +92,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.setForm();
+    this.startDate = this.project.start;
+    this.endDate = this.project.end;
   }
 
   ngOnChanges(): void {
@@ -165,8 +172,18 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   }
 
   dateTransform(date) {
-    const isoDate = new Date(date).toISOString();
+    const isoDate = new Date(date);
     return isoDate;
+  }
+
+  changeStartDate(event) {
+    this.startDate = event.value;
+    this.changedStartDate = true;
+  }
+
+  changeEndDate(event) {
+    this.endDate = event.value;
+    this.changedEndDate = true;
   }
 
 }
