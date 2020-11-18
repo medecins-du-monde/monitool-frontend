@@ -1,11 +1,8 @@
-<p>{{ this.form ? this.form.name : '' }}</p>
-<p>{{ this.site ? this.site.name : '' }}</p>
-<p>
-    {{ this.timeSlotDate }}
-</p>
-<p>
-    {{ this.firstDate }}
-</p>
-<p>
-    {{ this.lastDate }}
-</p>
+<div class="mdm-title">{{ 'GeneralInformations' | translate }}</div>
+<div class="mdm-section">
+    <p>{{ this.form ? this.form.name : '' }}</p>
+    <p>{{ this.site ? this.site.name : '' }}</p>
+    <p>
+        {{ this.timeSlot ? this.timeSlot.humanizeValue(this.currentLanguage) : '' }} ({{ this.firstDate }} - {{ this.lastDate }})
+    </p>
+</div>

@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import TimeSlot from 'timeslot-dag';
 import { Form } from 'src/app/models/form.model';
 import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
@@ -45,7 +46,8 @@ export class InputsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public datepipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -87,28 +89,32 @@ export class InputsComponent implements OnInit, OnDestroy {
       // this is the oldest date of the form
       const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
+      const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+      console.log(slotStart);
+      console.log(this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd'));
+
       if (slotStart === slotEnd){
         this.thisYearDates = [
           {
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: slotStart.value
+            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
           }
         ];
         this.allDates = [{
          humanValue: slotStart.humanizeValue(this.currentLang),
-         value: slotStart.value
+         value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
         }];
       }else{
         while (slotStart !== slotEnd){
           if (currentYear === slotStart.value.slice(0, 4)){
             this.thisYearDates.push({
               humanValue: slotStart.humanizeValue(this.currentLang),
-              value: slotStart.value
+              value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
             });
           }
           this.allDates.push({
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: slotStart.value
+            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
           });
           slotStart = slotStart.previous();
         }

@@ -87,6 +87,7 @@ export class EditComponent implements OnInit, OnDestroy {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
+        console.log(this.timeSlot);
         // const options2 = {year: 'numeric', month: 'long'};
         // console.log(this.timeSlotDate);
         // const date = new Date(Date.parse(this.timeSlotDate));
