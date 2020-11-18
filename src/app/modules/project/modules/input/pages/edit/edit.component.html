@@ -1,2 +1,11 @@
-<p>{{ this.form.name }}</p>
-<p>{{ this.site.name }}</p>
+<p>{{ this.form ? this.form.name : '' }}</p>
+<p>{{ this.site ? this.site.name : '' }}</p>
+<p>
+    {{ this.timeSlotDate }}
+</p>
+<p>
+    {{ this.firstDate }}
+</p>
+<p>
+    {{ this.lastDate }}
+</p>

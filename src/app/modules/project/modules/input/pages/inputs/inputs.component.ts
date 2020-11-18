@@ -39,8 +39,8 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   project: Project;
   form: Form;
-  thisYearDates: string[];
-  allDates: string[];
+  thisYearDates: any[];
+  allDates: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +69,6 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   atualizeData(){
     this.form = this.project.forms.find(x => x.id === this.formId);
-    console.log(this.form);
     // this.sites = this.form ? this.form.entities.map(x => x.name) : [];
     this.sites = this.form ? this.form.entities : [];
     this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
@@ -82,18 +81,35 @@ export class InputsComponent implements OnInit, OnDestroy {
       }
       const currentYear = firstDate.getFullYear().toString();
 
+      // this represents the last availabe time slot of the form
       let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
+
+      // this is the oldest date of the form
       const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
       if (slotStart === slotEnd){
-        this.thisYearDates = [slotStart.humanizeValue(this.currentLang)];
-        this.allDates = [slotStart.humanizeValue(this.currentLang)];
+        this.thisYearDates = [
+          {
+            humanValue: slotStart.humanizeValue(this.currentLang),
+            value: slotStart.value
+          }
+        ];
+        this.allDates = [{
+         humanValue: slotStart.humanizeValue(this.currentLang),
+         value: slotStart.value
+        }];
       }else{
         while (slotStart !== slotEnd){
           if (currentYear === slotStart.value.slice(0, 4)){
-            this.thisYearDates.push(slotStart.humanizeValue(this.currentLang));
+            this.thisYearDates.push({
+              humanValue: slotStart.humanizeValue(this.currentLang),
+              value: slotStart.value
+            });
           }
-          this.allDates.push(slotStart.humanizeValue(this.currentLang));
+          this.allDates.push({
+            humanValue: slotStart.humanizeValue(this.currentLang),
+            value: slotStart.value
+          });
           slotStart = slotStart.previous();
         }
       }
@@ -101,15 +117,15 @@ export class InputsComponent implements OnInit, OnDestroy {
 
     const newDataSource = [];
     for (const date of this.thisYearDates){
-      const current = { Date: date };
+      const current = { Date: date.humanValue };
 
       for (const site of this.sites){
         current[site.name] = {
           value: Math.floor((Math.random() * 101)),
-          routerLink: `./edit/${site.id}`
-          // need to pass:
-          // XXX project_id
-          // XXX form id
+          routerLink: `./edit/${site.id}/${date.value}`
+          // the link needs to pass:
+          // (done) project_id
+          // (done) form id
           // collection_site id
           // time period reference
           // variable/input id ?????
