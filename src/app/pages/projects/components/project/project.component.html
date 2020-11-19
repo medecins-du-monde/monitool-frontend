@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-country">
-            <mat-icon>{{projectCardAvatar()}}</mat-icon>
+            <mat-icon (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
         </div>
         <mat-card-title>
             {{project.country}}

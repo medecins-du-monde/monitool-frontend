@@ -22,6 +22,7 @@ export class ProjectComponent implements OnInit {
   @Output() clone = new EventEmitter();
 
   currentUser : User;
+  projectOwner : boolean;
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -40,6 +41,8 @@ export class ProjectComponent implements OnInit {
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = user;
     });
+    this.projectOwner = (this.project.users.filter(user => user.id === this.currentUser.id).length > 0);
+
   }
 
   async onOpen(): Promise<void> {
@@ -66,14 +69,25 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  projectCardAvatar() {
+  toggleFavourite() {
+    if (!this.projectOwner) {
+      if (!localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)) {
+        localStorage.setItem('user::'+this.currentUser.id +"favorite"+this.project.id, "true");
+      } else {
+        localStorage.removeItem('user::'+this.currentUser.id +"favorite"+this.project.id);
+      }
+    }
+  }
 
+  projectCardAvatar() {
     if (this.project.users.length > 0) {
-      if ( this.project.users.find(user => user.id === this.currentUser.id)) {
+      if (this.projectOwner) {
         return "person";
       }
-    } else {
+    } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)){
       return "star";
+    } else {
+      return "message";
     }
   }
 }
