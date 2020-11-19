@@ -123,9 +123,5 @@ export class AppComponent {
       'edit',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/edit.svg')
     );
-    this.matIconRegistry.addSvgIcon(
-      'starOutline',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/star-outline.svg')
-    );
   }
 }

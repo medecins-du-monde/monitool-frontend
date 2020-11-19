@@ -14,6 +14,7 @@ import { User } from 'src/app/models/user.model';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
+
 export class ProjectComponent implements OnInit {
 
   @Input() project: Project;
@@ -70,6 +71,18 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  projectCardAvatar() {
+    if (this.project.users.length > 0) {
+      if (this.projectOwner) {
+        return "person";
+      }
+    } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)){
+      return "star";
+    } else {
+      return "star_border";
+    }
+  }
+
   toggleFavourite() {
     if (!this.projectOwner) {
       this.getProjects.emit();
@@ -81,15 +94,4 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  projectCardAvatar() {
-    if (this.project.users.length > 0) {
-      if (this.projectOwner) {
-        return "person";
-      }
-    } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)){
-      return "star";
-    } else {
-      return "star-outline";
-    }
-  }
 }
