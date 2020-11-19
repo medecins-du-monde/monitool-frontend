@@ -89,7 +89,7 @@ export class ProjectComponent implements OnInit {
     } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)){
       return "star";
     } else {
-      return "message";
+      return "star-outline";
     }
   }
 }
