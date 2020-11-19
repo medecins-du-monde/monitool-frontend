@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { PartitionModalModule } from '../partition-modal/partition-modal.module';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [FormElementEditComponent],
@@ -22,7 +23,8 @@ import { PartitionModalModule } from '../partition-modal/partition-modal.module'
     MatIconModule,
     MatSelectModule,
     MatFormFieldModule,
-    PartitionModalModule
+    PartitionModalModule,
+    MatRadioModule
   ],
   exports: [FormElementEditComponent]
 })
