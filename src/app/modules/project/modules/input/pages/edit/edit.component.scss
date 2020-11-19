@@ -1,0 +1,21 @@
+.mdm-section{
+    margin-top: 34px;
+    padding: 16px;
+    background-color: #fafafa;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+    border-radius: 4px;
+    
+    .info{
+        display: flex;
+        padding-bottom: 10px;
+        
+        .info-title{
+            width: 20%;
+            text-align: right;
+        }
+        .info-value{
+            padding-left: 20px;
+            width: 80%;
+        }
+    }
+}
