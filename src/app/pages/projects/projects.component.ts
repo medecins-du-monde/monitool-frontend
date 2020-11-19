@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { User } from 'src/app/models/user.model';
+import { Users } from 'src/app/mocked/users.mocked';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
@@ -65,12 +67,26 @@ export class ProjectsComponent implements OnInit {
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
       // this.projects = this.filterByStatuses(this.allProjects);
+      this.projects.sort((a,b) => a.name.localeCompare(b.name));
+      /* this.projects.sort((a,b) => {
+        if (a.users.role === "owner") {
+          return 1;
+        } else if (a.users.role === "starred") {
+          return 1;
+        } else if (a.users.role === "owner" && b.users.role === "owner") {
+          return 0;
+        } 
+        return -1;
+      };*/
+
     });
   }
 
   onCreate(): void {
-    const project = new Project();
-    this.projectService.project.next(project);
+    let project = new Project();
+    const user = new User({type: "internal", role: "owner"});
+    project.users.push(user);
+    this.projectService.create(project);
     this.router.navigate(['/project', project.id]);
   }
 

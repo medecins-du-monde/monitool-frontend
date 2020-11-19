@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
+import { User } from 'src/app/models/user.model';
 
 
 @Component({
@@ -19,6 +21,8 @@ export class ProjectComponent implements OnInit {
   @Output() restore = new EventEmitter();
   @Output() clone = new EventEmitter();
 
+  currentUser : User;
+
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -26,11 +30,17 @@ export class ProjectComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private projectService: ProjectService,
+    private authService: AuthService,
     private router: Router,
     private dialog: MatDialog
-  ) { }
+  ) {
+   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.currentUser.subscribe((user: User) => {
+      this.currentUser = user;
+    });
+  }
 
   async onOpen(): Promise<void> {
     this.projectService.get(this.project.id).then(() => {
@@ -54,5 +64,16 @@ export class ProjectComponent implements OnInit {
         this.clone.emit(this.project);
       }
     });
+  }
+
+  projectCardAvatar() {
+
+    if (this.project.users.length > 0) {
+      if ( this.project.users.filter(user => user.id === this.currentUser.id)) {
+        return "person";
+    }}
+    else {
+    return "star";
+    }
   }
 }

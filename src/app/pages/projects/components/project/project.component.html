@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-country">
-            <img [src]="project.countryImage">
+            <mat-icon>{{projectCardAvatar()}}</mat-icon>
         </div>
         <mat-card-title>
             {{project.country}}
