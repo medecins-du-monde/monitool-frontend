@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   @Output() delete = new EventEmitter();
   @Output() restore = new EventEmitter();
   @Output() clone = new EventEmitter();
+  @Output() getProjects: EventEmitter<any> = new EventEmitter();
 
   currentUser : User;
   projectOwner : boolean;
@@ -71,6 +72,7 @@ export class ProjectComponent implements OnInit {
 
   toggleFavourite() {
     if (!this.projectOwner) {
+      this.getProjects.emit();
       if (!localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)) {
         localStorage.setItem('user::'+this.currentUser.id +"favorite"+this.project.id, "true");
       } else {

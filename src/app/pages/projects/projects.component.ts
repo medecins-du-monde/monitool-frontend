@@ -4,8 +4,8 @@ import { MatOption } from '@angular/material/core';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { User } from 'src/app/models/user.model';
-import { Users } from 'src/app/mocked/users.mocked';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -34,6 +34,7 @@ export class ProjectsComponent implements OnInit {
   filtersForm: FormGroup;
   projects: Project[];
   allProjects: Project[];
+  currentUser : User;
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
@@ -45,6 +46,7 @@ export class ProjectsComponent implements OnInit {
     private fb: FormBuilder,
     private projectService: ProjectService,
     private translateService: TranslateService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -59,37 +61,37 @@ export class ProjectsComponent implements OnInit {
     this.filtersForm.valueChanges.subscribe(() => {
       this.onFilterChange();
     });
+
+    this.authService.currentUser.subscribe((user: User) => {
+      this.currentUser = user;
+    });
   }
 
-  private getProjects() {
+  public getProjects() {
     this.projectService.list().then((res: Project[]) => {
       this.allProjects = res;
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
       // this.projects = this.filterByStatuses(this.allProjects);
       this.projects.sort((a,b) => {
-        if (a.users.find(user => user.role === "owner")) {
-          if (b.users.find(user => user.role === "owner")) {
+        if (a.users.find(user => user.role === "owner") ||(b.users.find(user => user.role === "owner"))) {
+          if (a.users.find(user => user.role === "owner") && (b.users.find(user => user.role === "owner"))) {
+            return a.name.localeCompare(b.name);
+          } else if (a.users.find(user => user.role === "owner")) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+a.id)){
+          if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+b.id)) {
             return a.name.localeCompare(b.name);
           } else {
             return -1;
           }
         } else {
-          return a.name.localeCompare(b.name);
+          return 1;
         }
       });
-      //this.projects.sort((a,b) => a.name.localeCompare(b.name));
-      /* this.projects.sort((a,b) => {
-        if (a.users.role === "owner") {
-          return 1;
-        } else if (a.users.role === "starred") {
-          return 1;
-        } else if (a.users.role === "owner" && b.users.role === "owner") {
-          return 0;
-        } 
-        return -1;
-      };*/
-
     });
   }
 
