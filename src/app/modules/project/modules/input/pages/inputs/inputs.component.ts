@@ -90,8 +90,6 @@ export class InputsComponent implements OnInit, OnDestroy {
       const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
       const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-      console.log(slotStart);
-      console.log(this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd'));
 
       if (slotStart === slotEnd){
         this.thisYearDates = [

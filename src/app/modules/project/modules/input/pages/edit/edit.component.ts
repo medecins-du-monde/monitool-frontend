@@ -7,6 +7,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
+import { createInjectable } from '@angular/compiler/src/core';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
@@ -41,6 +42,12 @@ export class EditComponent implements OnInit, OnDestroy {
   form: Form = new Form({ name: ''});
   firstDate = '';
   lastDate = '';
+  numberCols: number;
+  numberRows: number;
+  x: number;
+  y: any;
+  table: any;
+  tables = [];
 
 
   get currentLang() {
@@ -81,18 +88,127 @@ export class EditComponent implements OnInit, OnDestroy {
       }
       if (this.timeSlotDate && this.form){
         this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
-        console.log(this.timeSlot.firstDate);
-        console.log(this.timeSlot.lastDate);
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
-        console.log(this.timeSlot);
-        // const options2 = {year: 'numeric', month: 'long'};
-        // console.log(this.timeSlotDate);
-        // const date = new Date(Date.parse(this.timeSlotDate));
-        // console.log(date.toLocaleDateString('default', options2));
       }
+    }
+
+    if (this.project && this.form){
+      this.createTable();
+    }
+  }
+
+  createTable(){
+    console.log(this.form);
+    for (const element of this.form.elements){
+      // remove this line once we have an option to control the distribution
+      element.distribution = 1;
+
+      const cols = [];
+      const rows = [];
+
+      this.numberCols = 0;
+      this.numberRows = 0;
+
+      let i = 0;
+      for (i = 0; i < element.distribution; i += 1){
+        rows.push(element.partitions[i]);
+        if (this.numberRows === 0) { this.numberRows = 1; }
+        this.numberRows *= element.partitions[i].elements.length;
+      }
+      for (i = element.distribution; i < element.partitions.length; i += 1){
+        cols.push(element.partitions[i]);
+        if (this.numberCols === 0) { this.numberCols = 1; }
+        this.numberCols *= element.partitions[i].elements.length;
+      }
+
+      this.numberRows = this.numberRows + cols.length + 1;
+      this.numberCols = this.numberCols + rows.length + 1;
+
+      this.table = [];
+      for (i = 0; i < this.numberRows; i += 1){
+        this.table.push([]);
+        for (let j = 0; j < this.numberCols; j += 1 ){
+          if (i < cols.length && j < rows.length){
+            this.table[i].push('');
+          }else{
+            this.table[i].push('0');
+          }
+        }
+      }
+
+      this.fillCollumnLabels(rows, cols);
+      this.fillRowLabels(rows, cols);
+      this.fillTotalLabels(rows, cols);
+
+      this.tables.push(this.table);
+    }
+    console.log(this.tables);
+  }
+  fillTotalLabels(rows, cols) {
+    if (cols.length > 0){
+      const y = this.numberCols - 1;
+      for (let x = 0; x < cols.length; x += 1){
+        this.table[x][y] = 'Total';
+      }
+    }
+    if (rows.length > 0){
+      const x = this.numberRows - 1;
+      for (let y = 0; y < rows.length; y += 1){
+        this.table[x][y] = 'Total';
+      }
+    }
+  }
+  fillRowLabels(rows, cols) {
+    this.x = cols.length;
+    this.y = 0;
+
+    this.fillCurrentRowLabel(rows, cols, 0);
+  }
+
+  fillCurrentRowLabel(rows, cols, pos) {
+    if (pos >= rows.length){ return; }
+    if (pos === rows.length - 1){
+      for (const e of rows[pos].elements){
+        this.table[this.x][this.y] = e.name;
+        this.x += 1;
+      }
+      return;
+    }
+
+    for (const e of rows[pos].elements){
+      this.table[this.x][this.y] = e.name;
+      this.y += 1;
+
+      this.fillCurrentRowLabel(rows, cols, pos + 1);
+      this.y -= 1;
+    }
+  }
+
+  fillCollumnLabels(rows, cols) {
+    this.x = 0;
+    this.y = rows.length;
+
+    this.fillCurrentColLabel(rows, cols, 0);
+  }
+
+  fillCurrentColLabel(rows, cols, pos){
+    if (pos >= cols.length){ return; }
+    if (pos === cols.length - 1){
+      for (const e of cols[pos].elements){
+        this.table[this.x][this.y] = e.name;
+        this.y += 1;
+      }
+      return;
+    }
+
+    for (const e of cols[pos].elements){
+      this.table[this.x][this.y] = e.name;
+      this.x += 1;
+      this.fillCurrentColLabel(rows, cols, pos + 1);
+      this.x -= 1;
     }
   }
 

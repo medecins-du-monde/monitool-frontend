@@ -27,6 +27,7 @@
         "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de thématiques renseignée dans les données de bases.",
         "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
     ],
+    "Data": "Données",
     "DataEntryUser": "Saisisseur",
     "DataSources": "Sources de données",
     "Date": "Date",

@@ -27,6 +27,7 @@
         "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
         "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
     ],
+    "Data": "Datos",
     "DataEntryUser": "Entrada de datos",
     "DataSources": "Fuente de datos",
     "Date": "Fecha",
