@@ -67,7 +67,18 @@ export class ProjectsComponent implements OnInit {
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
       // this.projects = this.filterByStatuses(this.allProjects);
-      this.projects.sort((a,b) => a.name.localeCompare(b.name));
+      this.projects.sort((a,b) => {
+        if (a.users.find(user => user.role === "owner")) {
+          if (b.users.find(user => user.role === "owner")) {
+            return a.name.localeCompare(b.name);
+          } else {
+            return -1;
+          }
+        } else {
+          return a.name.localeCompare(b.name);
+        }
+      });
+      //this.projects.sort((a,b) => a.name.localeCompare(b.name));
       /* this.projects.sort((a,b) => {
         if (a.users.role === "owner") {
           return 1;

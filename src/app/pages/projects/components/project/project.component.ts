@@ -69,11 +69,11 @@ export class ProjectComponent implements OnInit {
   projectCardAvatar() {
 
     if (this.project.users.length > 0) {
-      if ( this.project.users.filter(user => user.id === this.currentUser.id)) {
+      if ( this.project.users.find(user => user.id === this.currentUser.id)) {
         return "person";
-    }}
-    else {
-    return "star";
+      }
+    } else {
+      return "star";
     }
   }
 }
