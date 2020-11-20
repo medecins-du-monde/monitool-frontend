@@ -53,54 +53,33 @@
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Desagregation.DisplayTitle' | translate }}</div>
+        <div>
+            <br>
         <mat-radio-group  [formControl]="floatLabelControl" >
-            <table class="desagregation">
+            <table>
                 <tr>
                     <td>
                         <table class="display">
-                            <tr><td class ="title">title</td></tr>
-                            <tr><td class ="title">title</td></tr>
-                            <tr><td class ="title">title</td></tr>
-                            <tr><td class ="data">data</td></tr>
-                            <tr><mat-radio-button value="structure1"></mat-radio-button></tr>
+                            <app-table-structure [tableStructure]="'structure1'"></app-table-structure>
+                            <tr><td class="radioButton"><mat-radio-button value="structure1"></mat-radio-button></td></tr>
                         </table>
                     </td>
                     <td>
                         <table class="display">
-                            <tr><td class ="title"></td>
-                                <td class ="title">title</td></tr>
-                            <tr><td class ="title">title</td>
-                                <td class ="title">title</td></tr>
-                            <tr><td class ="title">title</td>
-                                <td class ="data">data</td></tr>
-                            <tr colspan="2" ><mat-radio-button value="structure2"></mat-radio-button></tr>
+                            <app-table-structure [tableStructure]="'structure2'"></app-table-structure>
+                            <tr><td class="radioButton" colspan="2"><mat-radio-button value="structure2"></mat-radio-button></td></tr>
                         </table>
                     </td>
                     <td>
                         <table class="display">
-                            <tr>
-                                <td class ="title"></td>
-                                <td class ="title"></td>
-                                <td class ="title">title</td>
-                            </tr>
-                            <tr>
-                                <td class ="title" >title</td>
-                                <td class ="title">title</td>
-                                <td class ="data">data</td>
-                            </tr>
-                            <tr colspan="3"><mat-radio-button value="structure3"></mat-radio-button></tr>
+                            <app-table-structure [tableStructure]="'structure3'"></app-table-structure>
+                            <tr><td class="radioButton" colspan="3"><mat-radio-button value="structure3"></mat-radio-button></td></tr>
                         </table>
-
                     </td>
                     <td>
                         <table class="display">
-                            <tr>
-                                <td class ="title">title</td>
-                                <td class ="title">title</td>
-                                <td class ="title">title</td>
-                                <td class ="data">data</td>
-                            </tr>
-                            <tr colspan="4"><mat-radio-button value="structure4"></mat-radio-button></tr>
+                            <app-table-structure [tableStructure]="'structure4'"></app-table-structure>
+                            <tr><td class="radioButton" colspan="4"><mat-radio-button value="structure4"></mat-radio-button></td></tr>
                         </table>
                     </td>
                 </tr>
@@ -110,15 +89,22 @@
         <mat-hint  class="hint">
             <mat-icon>info</mat-icon>{{ 'Desagregation.DisplayHint' | translate }}
         </mat-hint>
+        </div>
     </div>
 
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Desagregation.OrderTitle' | translate }}</div>
-        <app-table-structure [tableStructure]="floatLabelControl.value.toString()"></app-table-structure>
+        <div>
+            <table table class="display">
+                <td>
+                    <app-table-structure [tableStructure]="floatLabelControl.value.toString()"></app-table-structure>
+                </td>
+            </table>
+            <mat-hint class="hint">
+                <mat-icon>info</mat-icon>{{ 'Desagregation.OrderHint' | translate }}
+            </mat-hint>
+        </div>  
 
-        <mat-hint class="hint">
-            <mat-icon>info</mat-icon>{{ 'Desagregation.OrderHint' | translate }}
-        </mat-hint>
     </div>
 
     
