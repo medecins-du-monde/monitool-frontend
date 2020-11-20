@@ -59,10 +59,16 @@
     "Desagregation": {
         "AddNameHint": "Ce nom apparaîtra dans divers rapports. Il nomme la désagrégation que vous voulez créer sur votre donnée",
         "AddNamePlaceholder": "ex: Tranches d'âge, sexe, motif de consultation, pathologie, référencement effectué, ...",
+        "AggregationHint": "Comment trouver la valeur totale en agrégeant les éléments décrits?",
         "ElementsHint": "Les éléments de la désagrégation doivent être mutuellement exclusifs, et il doit être possible de trouver la valeur totale en les aggrégant.",
         "ElementsPlaceholder": "ex: Moins de 12 ans, Homme, Consultation sociale, Grippe ou Réferencement communautaire, ...",
-        "AggregationHint": "Comment trouver la valeur totale en agrégeant les éléments décrits?",
-        "GroupsHint": "Les groupes permettent de faire des aggrégations intermédiaires"
+        "Data" : "Données",
+        "DisplayTitle" : "Où placer les intitulés des désagrégations dans les formulaires?",
+        "DisplayHint": "Si vous desirez imprimer des formulaires en A4, préférez placer les intitulés sur la gauche des tableaux, afin de limiter leur largeur.",
+        "GroupsHint": "Les groupes permettent de faire des aggrégations intermédiaires",
+        "OrderTitle": "Dans quel ordre placer les intitulés des désagrégations dans les formulaires?",
+        "OrderHint": "Dans quel ordre voulez vous placer vos désagrégations dans les différentes lignes et colonnes?",
+        "Title" : "Intitulés"
     },
     "Description": "Description",
     "Done": "Réalisé",

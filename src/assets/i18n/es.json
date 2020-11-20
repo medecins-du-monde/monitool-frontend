@@ -60,10 +60,16 @@
     "Desagregation": {
         "AddNameHint": "Este nombre aparecera en varios informes. Identifica la desagregación que desea crear en su variable",
         "AddNamePlaceholder": "ej: Grupos de edad, sexo, motivo de consulta, patología, ...",
+        "AggregationHint": "Como calcular el valor total agregando los elementos describidos?",
         "ElementsHint": "Los elementos de la desagregación deben ser mutualmente exclusivos, y se debe poder calcular el valor total agregandolos.",
         "ElementsPlaceholder": "ex: Menor de 12 años, hombre, consultación social, gripe, ...",
-        "AggregationHint": "Como calcular el valor total agregando los elementos describidos?",
-        "GroupsHint": "Los grupos permiten hacer agregaciones intermediarias"
+        "Data" : "Datos",
+        "DisplayTitle" : "Como mostrar la desagregaciones en el formulario de colecta?",
+        "DisplayHint": "Si va a imprimir formulario en A4, prefiera tener columnas a la izquierda para que las tablas sean menor anchas.",
+        "GroupsHint": "Los grupos permiten hacer agregaciones intermediarias",
+        "OrderTitle": "En que ordén mostrar las desagregaciones en el formulario de colecta?",
+        "OrderHint": "En que ordén quiere que aparescan la desagregaciones en las tablas de entrada de datos?",
+        "Title" : "Título"
     },
     "Description": "Descripción",
     "DownloadPdfLandscape": "Descargar PDF (horizontal)",

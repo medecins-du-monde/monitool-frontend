@@ -52,64 +52,74 @@
 
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Disaggregation.DisplayTitle' | translate }}</div>
-        <mat-radio-group>
-            <table>
+        <div class="mdm-form-label">{{ 'Desagregation.DisplayTitle' | translate }}</div>
+        <mat-radio-group  [formControl]="floatLabelControl" >
+            <table class="desagregation">
                 <tr>
                     <td>
                         <table class="display">
-                            <tr><td>title</td></tr>
-                            <tr><td>title</td></tr>
-                            <tr><td>title</td></tr>
-                            <tr><td>data</td></tr>
-                            <tr><mat-radio-button></mat-radio-button></tr>
+                            <tr><td class ="title">title</td></tr>
+                            <tr><td class ="title">title</td></tr>
+                            <tr><td class ="title">title</td></tr>
+                            <tr><td class ="data">data</td></tr>
+                            <tr><mat-radio-button value="structure1"></mat-radio-button></tr>
                         </table>
                     </td>
                     <td>
                         <table class="display">
-                            <tr><td></td>
-                                <td>title</td></tr>
-                            <tr><td></td>
-                                <td>title</td></tr>
-                            <tr><td>title</td>
-                                <td>data</td></tr>
-                            <tr><mat-radio-button></mat-radio-button></tr>
+                            <tr><td class ="title"></td>
+                                <td class ="title">title</td></tr>
+                            <tr><td class ="title">title</td>
+                                <td class ="title">title</td></tr>
+                            <tr><td class ="title">title</td>
+                                <td class ="data">data</td></tr>
+                            <tr colspan="2" ><mat-radio-button value="structure2"></mat-radio-button></tr>
                         </table>
                     </td>
                     <td>
                         <table class="display">
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td>title</td>
+                                <td class ="title"></td>
+                                <td class ="title"></td>
+                                <td class ="title">title</td>
                             </tr>
                             <tr>
-                                <td>title</td>
-                                <td>title</td>
-                                <td>data</td>
+                                <td class ="title" >title</td>
+                                <td class ="title">title</td>
+                                <td class ="data">data</td>
                             </tr>
-                            <tr><mat-radio-button></mat-radio-button></tr>
+                            <tr colspan="3"><mat-radio-button value="structure3"></mat-radio-button></tr>
                         </table>
 
                     </td>
                     <td>
                         <table class="display">
                             <tr>
-                                <td>title</td>
-                                <td>title</td>
-                                <td>title</td>
-                                <td>data</td>
+                                <td class ="title">title</td>
+                                <td class ="title">title</td>
+                                <td class ="title">title</td>
+                                <td class ="data">data</td>
                             </tr>
-                            <tr><mat-radio-button></mat-radio-button></tr>
+                            <tr colspan="4"><mat-radio-button value="structure4"></mat-radio-button></tr>
                         </table>
                     </td>
                 </tr>
             </table>
         </mat-radio-group>
 
-        <!---<mat-hint>
-            <mat-icon>info</mat-icon>{{ 'Disaggregation.DisplayHint' | translate }}
+        <mat-hint  class="hint">
+            <mat-icon>info</mat-icon>{{ 'Desagregation.DisplayHint' | translate }}
         </mat-hint>
-        --->
     </div>
+
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Desagregation.OrderTitle' | translate }}</div>
+        <app-table-structure [tableStructure]="floatLabelControl.value.toString()"></app-table-structure>
+
+        <mat-hint class="hint">
+            <mat-icon>info</mat-icon>{{ 'Desagregation.OrderHint' | translate }}
+        </mat-hint>
+    </div>
+
+    
 </div>

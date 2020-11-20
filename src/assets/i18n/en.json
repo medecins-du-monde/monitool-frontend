@@ -59,10 +59,16 @@
     "Desagregation": {
         "AddNameHint": "This name will appear on multiple reporting tables. It names the disaggregation that you want to create on your variable",
         "AddNamePlaceholder": "ex: Age group, gender, motive for consultation, pathology, referral status, ...",
+        "AggregationHint": "How to find the total value by aggregating the elements described above?",
         "ElementsHint": "Elements from the disaggregation must be mutually exclusive, and it should be possible to find the total value by aggregating them.",
         "ElementsPlaceholder": "ex: Less than 12 years old, male, social consultation, flu, community referral, ...",
-        "AggregationHint": "How to find the total value by aggregating the elements described above?",
-        "GroupsHint": "Groups allow making intermediary aggregations"
+        "Data" : "Data",
+        "DisplayTitle" : "Where should disaggregation elements be displayed on the forms?",
+        "DisplayHint": "If you wish to print the forms in A4 format, prefer having the titles at the left of the tables, to shorten their width.",
+        "GroupsHint": "Groups allow making intermediary aggregations",
+        "OrderTitle": "In which order should the disaggregations be shown?",
+        "OrderHint": "How do you wish to show the disaggregations on the input form?",
+        "Title" : "Titles"
     },
     "Description": "Description",
     "Done": "Done",
