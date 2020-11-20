@@ -11,8 +11,8 @@
     <tr *ngFor="let partition of partitions">
         <td class ="title">
             <mat-form-field>
-            <mat-select placeholder="{{partition.name}}" [(value)]="chosenValue" (selectionChange)="reorderPartitions(partition.name)">
-                <mat-option *ngFor="let part of partitions" [value]="part.name">
+            <mat-select placeholder="{{partition.name}}" [(value)]="chosenValue" (selectionChange)="reorderPartitions(partition.id)">
+                <mat-option *ngFor="let part of partitions" [value]="part.id">
                   {{ part.name }}
                 </mat-option>
               </mat-select>
