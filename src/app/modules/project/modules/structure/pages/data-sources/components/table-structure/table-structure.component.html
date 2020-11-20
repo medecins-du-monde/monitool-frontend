@@ -1,8 +1,13 @@
 <!--- TOTAL STRUCTURES -->
 <div *ngIf="structure('structure1') && visualize">
     <table class="test" *ngFor="let partition of getNumber(partitions.length+1); let i = index">
-        <tr *ngFor="let row of getNumber(partitions.length-i+1)">
-            <td *ngFor="let column of getNumber(i+1)">item</td>
+        <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
+            <td *ngFor="let column of getNumber(i)">empty</td>
+            <td>item</td>
+        </tr>
+        <tr>
+            <td *ngFor="let partition of partitions.slice((partitions.length)-i)">item</td>
+            <td>data</td>
         </tr>
     </table>
 </div>

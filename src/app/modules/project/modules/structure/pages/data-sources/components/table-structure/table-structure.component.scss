@@ -26,7 +26,7 @@
   padding: 5px;
 }
 
-.test,
-td {
+.test * td {
   border: 1px solid #0e0d0d;
+  border-collapse: collapse;
 }
