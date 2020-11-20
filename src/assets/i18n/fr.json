@@ -56,7 +56,7 @@
     "Delete": "Supprimer",
     "Deleted": "Supprimé",
     "DeletedPlural": "Supprimés",
-    "Desagregation": {
+    "Disaggregation": {
         "AddNameHint": "Ce nom apparaîtra dans divers rapports. Il nomme la désagrégation que vous voulez créer sur votre donnée",
         "AddNamePlaceholder": "ex: Tranches d'âge, sexe, motif de consultation, pathologie, référencement effectué, ...",
         "AggregationHint": "Comment trouver la valeur totale en agrégeant les éléments décrits?",

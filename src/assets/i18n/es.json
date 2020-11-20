@@ -57,7 +57,7 @@
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
     "DeletedPlural": "Suprimidos",
-    "Desagregation": {
+    "Disaggregation": {
         "AddNameHint": "Este nombre aparecera en varios informes. Identifica la desagregación que desea crear en su variable",
         "AddNamePlaceholder": "ej: Grupos de edad, sexo, motivo de consulta, patología, ...",
         "AggregationHint": "Como calcular el valor total agregando los elementos describidos?",

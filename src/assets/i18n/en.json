@@ -56,7 +56,7 @@
     "Delete": "Delete",
     "Deleted": "Deleted",
     "DeletedPlural": "Deleted",
-    "Desagregation": {
+    "Disaggregation": {
         "AddNameHint": "This name will appear on multiple reporting tables. It names the disaggregation that you want to create on your variable",
         "AddNamePlaceholder": "ex: Age group, gender, motive for consultation, pathology, referral status, ...",
         "AggregationHint": "How to find the total value by aggregating the elements described above?",
