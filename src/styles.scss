@@ -476,6 +476,14 @@ body {
     }
 }
 
+.input-table{
+    thead{
+        tr.mat-header-row{
+           height: 0px !important; 
+        }
+    }
+}
+
 // === MODALS ===
 .mat-dialog-container {
     position: relative;

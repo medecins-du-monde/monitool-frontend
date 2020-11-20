@@ -7,7 +7,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
-import { createInjectable } from '@angular/compiler/src/core';
+import { DatePipe } from '@angular/common';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
@@ -48,7 +49,7 @@ export class EditComponent implements OnInit, OnDestroy {
   y: any;
   table: any;
   tables = [];
-
+  inputForm: FormGroup;
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -57,7 +58,9 @@ export class EditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public datepipe: DatePipe,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -89,19 +92,41 @@ export class EditComponent implements OnInit, OnDestroy {
       if (this.timeSlotDate && this.form){
         this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
 
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
       }
     }
 
     if (this.project && this.form){
+      this.createForm();
       this.createTable();
     }
   }
 
-  createTable(){
+  createForm() {
+    this.inputForm = this.fb.group({
+      _id: `${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
+      entity: `${this.site.id}`,
+      form: `${this.form.id}`,
+      period: `${this.timeSlotDate}`,
+      project: `${this.project.id}`,
+      myValues: this.createValuesGroup()
+    });
     console.log(this.form);
+    console.log(this.inputForm);
+  }
+  createValuesGroup(): any {
+    const group = this.fb.group({});
+    for (const e of this.form.elements){
+
+      group[e.id] = this.fb.array([0, 0, 0, 0]);
+    }
+    return group;
+  }
+
+  createTable(){
     for (const element of this.form.elements){
       // remove this line once we have an option to control the distribution
       element.distribution = 1;
@@ -131,10 +156,10 @@ export class EditComponent implements OnInit, OnDestroy {
       for (i = 0; i < this.numberRows; i += 1){
         this.table.push([]);
         for (let j = 0; j < this.numberCols; j += 1 ){
-          if (i < cols.length && j < rows.length){
+          if (i < cols.length || j < rows.length){
             this.table[i].push('');
           }else{
-            this.table[i].push('0');
+            this.table[i].push(2);
           }
         }
       }
@@ -143,15 +168,32 @@ export class EditComponent implements OnInit, OnDestroy {
       this.fillRowLabels(rows, cols);
       this.fillTotalLabels(rows, cols);
 
-      this.tables.push(this.table);
+      const currentCollumns = [];
+      for (let k = 0; k < this.numberCols; k += 1){
+        currentCollumns.push(k.toString());
+      }
+
+      this.tables.push({
+        value: this.table,
+        cols,
+        rows,
+        numberCols: this.numberCols,
+        numberRows: this.numberRows,
+        displayedColumns: currentCollumns
+      });
+
     }
-    console.log(this.tables);
   }
+
   fillTotalLabels(rows, cols) {
+    const numOr0 = n => isNaN(n) ? 0 : n;
     if (cols.length > 0){
       const y = this.numberCols - 1;
       for (let x = 0; x < cols.length; x += 1){
         this.table[x][y] = 'Total';
+      }
+      for (let x = cols.length; x <  this.numberRows - 1; x += 1){
+        this.table[x][y] = this.table[x].slice(rows.length, this.numberCols - 1).reduce((a, b) => numOr0(a) + numOr0(b));
       }
     }
     if (rows.length > 0){
@@ -159,8 +201,17 @@ export class EditComponent implements OnInit, OnDestroy {
       for (let y = 0; y < rows.length; y += 1){
         this.table[x][y] = 'Total';
       }
+      for (let y = rows.length; y < this.numberCols; y += 1){
+        let sum = 0;
+        for (let r = cols.length; r < this.numberRows - 1; r += 1){
+          sum += numOr0(this.table[r][y]);
+        }
+        this.table[x][y] = sum;
+      }
     }
   }
+
+
   fillRowLabels(rows, cols) {
     this.x = cols.length;
     this.y = 0;
@@ -211,6 +262,35 @@ export class EditComponent implements OnInit, OnDestroy {
       this.x -= 1;
     }
   }
+
+
+  isInputCell(tableId, i, j){
+    const rows = this.tables[tableId].rows;
+    const cols = this.tables[tableId].cols;
+    const numberRows = this.tables[tableId].numberRows;
+    const numberCols = this.tables[tableId].numberCols;
+
+    if ( i >= cols.length && (rows.length === 0 || i < numberRows - 1) && j >= rows.length && (cols.length === 0 || j < numberCols - 1)){
+      let nRows = numberRows - cols.length - 1;
+      let nCols = numberCols - rows.length - 1;
+
+      if (cols.length === 0){
+        nCols += 1;
+      }
+      if (rows.length === 0){
+        nRows += 1;
+      }
+
+      i -= cols.length;
+      j -= rows.length;
+
+      const pos = i * nCols + j;
+      return pos;
+    }else{
+      return false;
+    }
+  }
+
 
   ngOnDestroy(){
     this.subscription.unsubscribe();

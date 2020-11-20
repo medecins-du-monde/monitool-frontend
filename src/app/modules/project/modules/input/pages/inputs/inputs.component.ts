@@ -95,24 +95,24 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.thisYearDates = [
           {
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
+            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
           }
         ];
         this.allDates = [{
          humanValue: slotStart.humanizeValue(this.currentLang),
-         value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
+         value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
         }];
       }else{
         while (slotStart !== slotEnd){
           if (currentYear === slotStart.value.slice(0, 4)){
             this.thisYearDates.push({
               humanValue: slotStart.humanizeValue(this.currentLang),
-              value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
+              value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
             });
           }
           this.allDates.push({
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd')
+            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
           });
           slotStart = slotStart.previous();
         }
