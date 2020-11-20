@@ -10,9 +10,13 @@
 <table *ngIf="structure('structure1') && !visualize" class="collapse">
     <tr *ngFor="let partition of partitions">
         <td class ="title">
-            <select name="partitionOrder">
-                <option *ngFor="let part of partitions" value="{{partition.name}}">{{ part.name }} ({{part.elements.length}})</option>
-            </select>
+            <mat-form-field>
+            <mat-select placeholder="{{partition.name}}" [(value)]="chosenValue" (selectionChange)="reorderPartitions(partition.name)">
+                <mat-option *ngFor="let part of partitions" [value]="part.name">
+                  {{ part.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
         </td>
     </tr>
     <tr><td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>

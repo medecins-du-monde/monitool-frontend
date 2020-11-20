@@ -14,6 +14,8 @@ export class TableStructureComponent implements OnInit {
   project : Project;
   @Input() visualize = true;
   partitions : any;
+  chosenValue: string;
+
 
   constructor(private projectService: ProjectService) { }
 
@@ -34,7 +36,14 @@ export class TableStructureComponent implements OnInit {
     return false;
   }
 
-  test () {
-    return 'selected';
+
+  reorderPartitions(name) {
+      console.log(this.partitions);
+      const indexNew = this.partitions.findIndex(element => element.name === this.chosenValue);
+      const indexOld = this.partitions.findIndex(element => element.name === name);
+      [this.partitions[indexOld], this.partitions[indexNew]] =[this.partitions[indexNew], this.partitions[indexOld]];
+      console.log(this.partitions)
   }
+
+
 }
