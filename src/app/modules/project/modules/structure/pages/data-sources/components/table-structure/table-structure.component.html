@@ -1,0 +1,85 @@
+<!--- STRUCTURE 1 -->
+<table *ngIf="structure('structure1') && visualize" class="collapse">
+    <tr *ngFor="let partition of partitions">
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+    </tr>
+    <tr><td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
+</table>
+
+
+<table *ngIf="structure('structure1') && !visualize" class="collapse">
+    <tr *ngFor="let partition of partitions">
+        <td class ="title">
+            <select name="partitionOrder">
+                <option *ngFor="let part of partitions" value="{{partition.name}}">{{ part.name }} ({{part.elements.length}})</option>
+            </select>
+        </td>
+    </tr>
+    <tr><td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
+</table>
+
+<!--- STRUCTURE 2 -->
+
+<table  *ngIf="structure('structure2') && visualize" class="collapse">
+    <tr><td class ="title"></td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
+    <tr><td class ="title"></td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
+    <tr><td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
+</table>
+
+<table  *ngIf="structure('structure2') && !visualize" class="collapse">
+    <tr><td class ="title"></td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
+    <tr><td class ="title"></td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
+    <tr><td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
+</table>
+
+<!--- STRUCTURE 3 -->
+ 
+<table  *ngIf="structure('structure3') && visualize" class="collapse">
+    <tr>
+        <td class ="title"></td>
+        <td class ="title"></td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+    </tr>
+    <tr>
+        <td class ="title" >{{ 'Disaggregation.Title' | translate }}</td>
+        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
+    </tr>
+</table>
+
+<table  *ngIf="structure('structure3') && !visualize" class="collapse">
+    <tr>
+        <td *ngFor="let partition of partitions.slice(1)" class ="empty">
+            {{ partition.name }}
+        </td>
+        <td class ="title">{{ partitions[0].name }} </td>
+    </tr>
+    <tr>
+        <div *ngFor="let partition of partitions.slice(1)">
+            <td class ="title">{{ partition.name }}</td>
+        </div>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
+    </tr>
+</table>
+
+<!--- STRUCTURE 4 -->
+
+<table  *ngIf="structure('structure4') && visualize" class="collapse">
+    <tr>
+        <td *ngFor="let partition of partitions" class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
+    </tr>
+</table>
+
+<table  *ngIf="structure('structure4') && !visualize" class="collapse">
+    <tr>
+        <td *ngFor="let partition of partitions" class ="title">{{ partition.name }} ({{partition.elements.length}})</td>
+        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
+    </tr>
+</table>
