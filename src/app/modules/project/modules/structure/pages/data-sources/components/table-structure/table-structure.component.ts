@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-table-structure',
@@ -37,12 +36,17 @@ export class TableStructureComponent implements OnInit {
     return false;
   }
 
-  reorderPartitions(name) {
-      const indexNew = this.partitions.findIndex(element => element.id === this.chosenValue);
+  reorderPartitions(event, name) {
+      const indexNew = this.partitions.findIndex(element => element.id === event.value);
       const indexOld = this.partitions.findIndex(element => element.id === name);
       var old = this.partitions[indexOld];
       this.partitions[indexOld] = this.partitions[indexNew]
       this.partitions[indexNew] = old;
+      console.log(this.partitions)
+  }
+
+  getNumber(number) {
+    return new Array(number);   
   }
 
 }
