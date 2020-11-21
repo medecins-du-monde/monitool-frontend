@@ -16,6 +16,13 @@ export class FormElementEditComponent implements OnInit {
   @Input() dataSourceName= "";
 
   floatLabelControl = new FormControl('structure1');
+
+  chosenStructure:number = 0;
+
+  receiveStructure(event) {
+
+    this.chosenStructure = event;
+  }
   
   public aggregations = [
     {

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
+import { FormControl } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -10,9 +11,14 @@ import { ProjectService } from 'src/app/services/project.service';
 export class TableStructureComponent implements OnInit {
 
 
-  @Input() tableStructure : string;
-  project : Project;
+
+  @Input() tableStructure : number = 0;
   @Input() visualize = true;
+  @Output() chosenStructure = new EventEmitter<number>();
+
+  project : Project;
+  floatLabelControl = new FormControl('0');
+
   partitions : any;
   chosenValue: string;
 
@@ -24,16 +30,12 @@ export class TableStructureComponent implements OnInit {
       this.project = project;
       this.partitions = project.forms[0].elements[0].partitions;
       //TODO distribution === table structure
-      //maybe need only element form
     });
 
   }
 
-  structure(structure : string) {
-    if (this.tableStructure === structure ) {
-      return true;
-    } 
-    return false;
+  selected(event) {
+    this.chosenStructure.emit(event.value);
   }
 
   reorderPartitions(event, name) {
@@ -42,11 +44,20 @@ export class TableStructureComponent implements OnInit {
       var old = this.partitions[indexOld];
       this.partitions[indexOld] = this.partitions[indexNew]
       this.partitions[indexNew] = old;
-      console.log(this.partitions)
   }
 
   getNumber(number) {
-    return new Array(number);   
+    if (number) {
+      return new Array(parseInt(number));   
+    } 
+  }
+
+  toNumber(i) {
+    return parseInt(i);
+  }
+
+  getIndex(x) {
+    return parseInt((this.partitions.length)-this.toNumber(this.tableStructure)+x)
   }
 
 }

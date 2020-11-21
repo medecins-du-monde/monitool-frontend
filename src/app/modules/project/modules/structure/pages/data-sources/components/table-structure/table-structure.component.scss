@@ -26,7 +26,20 @@
   padding: 5px;
 }
 
-.test * td {
-  border: 1px solid #0e0d0d;
+.radioButton {
+  border: none;
+  justify-content: center;
+  text-align: center;
+}
+
+.display table {
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  background-color: rgb(250, 250, 250);
+  padding: 5px;
+  text-align: center;
+}
+
+.display table * td {
   border-collapse: collapse;
 }
