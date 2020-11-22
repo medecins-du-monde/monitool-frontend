@@ -57,12 +57,26 @@ export class TableStructureComponent implements OnInit {
   }
 
   toNumber(i) {
-    console.log(i)
     return parseInt(i);
   }
 
   getIndex(x) {
     return parseInt((this.partitions.length)-this.toNumber(this.tableStructure)+x)
+  }
+
+  getLength(p) {
+
+    console.log(p);
+    let total = 1;
+    p.forEach(x => {
+      console.log("inside", x.elements.length);
+      if (x.elements.length > 0) {
+        total *= x.elements.length;
+      }
+    });
+    console.log(total);
+    console.log(" ");
+    return total;
   }
 
 }

@@ -28,8 +28,7 @@
 
 .radioButton {
   border: none;
-  justify-content: center;
-  text-align: center;
+  font-size: 0px;
 }
 
 .display table {
@@ -46,8 +45,6 @@
 
 .selection,
 .mat-select-content {
-  max-width: 7em;
-  max-height: 2em;
-  margin: 0px;
-  padding: 0px;
+  padding-bottom: 0.2em;
+  line-height: 0.7em;
 }

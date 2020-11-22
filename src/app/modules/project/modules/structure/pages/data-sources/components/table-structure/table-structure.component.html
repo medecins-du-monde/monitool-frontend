@@ -26,12 +26,12 @@
 
 <table  *ngIf="!visualize" class="display" class="test" >
     <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let y = index">
-        <td *ngFor="let column of getNumber(tableStructure); let z = index"></td>
+        <td *ngFor="let column of getNumber(tableStructure); let z = index" class = "empty"></td>
         <td class ="title">
             <mat-form-field class="selection">
                 <mat-select [(value)]="partitions[y].name" (selectionChange)="reorderPartitions($event, partitions[y].name)" >
                     <mat-option *ngFor="let part of partitions" [value]="part.name" >
-                        {{ part.name }}
+                        {{ part.name }} ({{part.elements.length}})
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -42,12 +42,12 @@
             <mat-form-field class="selection">
                 <mat-select  [(value)]="partitions[getIndex(x)].name" (selectionChange)="reorderPartitions($event, partitions[getIndex(x)].name)" >
                     <mat-option *ngFor="let part of partitions" [value]="part.name" >
-                        {{ part.name }}
+                        {{ part.name }} ({{part.elements.length}})
                     </mat-option>
                     </mat-select>
                 </mat-form-field>
         </td>
-        <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
+        <td class="data">{{ 'Disaggregation.Data' | translate }} ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0, (partitions.length)-tableStructure))}}) </td>
     </tr>
 </table>
 
