@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
+import { Partition } from 'src/app/models/partition.model';
 import { FormControl } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { element } from 'protractor';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-table-structure',
@@ -21,6 +23,7 @@ export class TableStructureComponent implements OnInit {
   floatLabelControl = new FormControl('0');
 
   partitions : any;
+  oldPartitions: any;
   chosenValue: string;
 
 
@@ -30,6 +33,7 @@ export class TableStructureComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.partitions = project.forms[0].elements[0].partitions;
+      this.oldPartitions = this.partitions.map(partitionObject => new Partition(partitionObject));
       //TODO distribution === table structure
     });
 
@@ -39,15 +43,13 @@ export class TableStructureComponent implements OnInit {
     this.chosenStructure.emit(event.value);
   }
 
-  reorderPartitions(event, name) {
-      console.log(event)
-      console.log(name)
-      const indexNew = this.partitions.findIndex(element => element.name === event.value);
-      const indexOld = this.partitions.findIndex(element => element.name === name);
-      var old = this.partitions[indexOld];
-      this.partitions[indexOld] = this.partitions[indexNew]
-      this.partitions[indexNew] = old;
-      console.log(this.partitions)
+  reorderPartitions(nextId, currentRowIndex) {
+    const indexNew = this.oldPartitions.findIndex(element => element.id === nextId);
+    var old = this.oldPartitions[currentRowIndex];
+    this.oldPartitions[currentRowIndex] = this.oldPartitions[indexNew]
+    this.oldPartitions[indexNew] = old;
+    this.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
+
   }
 
   getNumber(number) {
@@ -61,21 +63,17 @@ export class TableStructureComponent implements OnInit {
   }
 
   getIndex(x) {
-    return parseInt((this.partitions.length)-this.toNumber(this.tableStructure)+x)
+    const index = parseInt((this.partitions.length)-this.toNumber(this.tableStructure)+x);
+    return index;
   }
 
   getLength(p) {
-
-    console.log(p);
     let total = 1;
     p.forEach(x => {
-      console.log("inside", x.elements.length);
       if (x.elements.length > 0) {
         total *= x.elements.length;
       }
     });
-    console.log(total);
-    console.log(" ");
     return total;
   }
 
