@@ -44,12 +44,12 @@ export class TableStructureComponent implements OnInit {
   }
 
   reorderPartitions(nextId, currentRowIndex) {
-    console.log(this.partitions);
     const indexNew = this.oldPartitions.findIndex(element => element.id === nextId);
     var old = this.oldPartitions[currentRowIndex];
     this.oldPartitions[currentRowIndex] = this.oldPartitions[indexNew]
     this.oldPartitions[indexNew] = old;
     this.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
+    this.elementForm.value.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
     console.log(this.elementForm);
   }
 
