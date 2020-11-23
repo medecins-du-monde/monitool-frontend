@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { Partition } from 'src/app/models/partition.model';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
-import { element } from 'protractor';
-import { debug } from 'console';
+
 
 @Component({
   selector: 'app-table-structure',
@@ -14,7 +13,7 @@ import { debug } from 'console';
 export class TableStructureComponent implements OnInit {
 
 
-
+  @Input() elementForm: FormGroup;
   @Input() tableStructure : number = 0;
   @Input() visualize = true;
   @Output() chosenStructure = new EventEmitter<number>();
@@ -32,10 +31,14 @@ export class TableStructureComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      this.partitions = project.forms[0].elements[0].partitions;
+      this.project.forms.filter(element => element.elements.filter(x => {
+        if (x.id === this.elementForm.value.id) {
+          this.partitions = x.partitions;
+        }
+      }));
       this.oldPartitions = this.partitions.map(partitionObject => new Partition(partitionObject));
-      //TODO distribution === table structure
     });
+
 
   }
 
@@ -44,6 +47,7 @@ export class TableStructureComponent implements OnInit {
   }
 
   reorderPartitions(nextId, currentRowIndex) {
+    console.log(this.partitions);
     const indexNew = this.oldPartitions.findIndex(element => element.id === nextId);
     var old = this.oldPartitions[currentRowIndex];
     this.oldPartitions[currentRowIndex] = this.oldPartitions[indexNew]
