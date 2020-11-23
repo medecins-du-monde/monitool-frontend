@@ -21,7 +21,7 @@ export class TableStructureComponent implements OnInit {
   floatLabelControl = new FormControl('0');
 
   partitions : any;
-  oldPartitions: any;
+  // oldPartitions: any;
   chosenValue: string;
 
   constructor(private projectService: ProjectService) { }
@@ -34,7 +34,7 @@ export class TableStructureComponent implements OnInit {
           this.partitions = x.partitions;
         }
       }));
-      this.oldPartitions = this.partitions.map(partitionObject => new Partition(partitionObject));
+      // this.oldPartitions = this.partitions.map(partitionObject => new Partition(partitionObject));
     });
   }
 
@@ -44,13 +44,12 @@ export class TableStructureComponent implements OnInit {
   }
 
   reorderPartitions(nextId, currentRowIndex) {
-    const indexNew = this.oldPartitions.findIndex(element => element.id === nextId);
-    var old = this.oldPartitions[currentRowIndex];
-    this.oldPartitions[currentRowIndex] = this.oldPartitions[indexNew]
-    this.oldPartitions[indexNew] = old;
-    this.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
-    this.elementForm.value.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
-    console.log(this.elementForm);
+    const partitions = this.elementForm.value.partitions;
+    const nextIndex = partitions.findIndex(element => element.id === nextId);
+    const oldElement = partitions[currentRowIndex];
+    partitions[currentRowIndex] = partitions[nextIndex];
+    partitions[nextIndex] = oldElement;
+    this.elementForm.controls.partitions.patchValue(partitions);
   }
 
   getNumber(number) {

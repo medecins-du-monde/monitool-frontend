@@ -56,6 +56,10 @@ export class FormElementEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.elementForm.valueChanges.subscribe((value: any) => {
+      console.log('element form changed');
+      console.log(value);
+    });
   }
 
   onAddNewPartition() {
