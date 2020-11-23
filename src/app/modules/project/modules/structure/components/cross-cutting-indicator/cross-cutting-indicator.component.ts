@@ -8,7 +8,7 @@ import { Indicator } from 'src/app/models/indicator.model';
   styleUrls: ['./cross-cutting-indicator.component.scss']
 })
 export class CrossCuttingIndicatorComponent implements OnInit {
-
+  // TODO: Check if this is still usefull, else delete it.
   @Input() crossCutting: any;
 
   @Input() indicator: Indicator;

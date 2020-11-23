@@ -3,6 +3,10 @@
 </button>
 <h2 mat-dialog-title>{{ 'IndicatorEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog">
+    <div *ngIf="data.indicator.value.description" class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Description' | translate }}</div>
+        <label>{{ data.indicator.value.description.en }} test</label>
+    </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">

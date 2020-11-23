@@ -1,5 +1,6 @@
 import { forEach } from 'lodash';
 import { Deserializable } from './deserializable.model';
+import { MultiLanguage } from './multi-language.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
@@ -7,7 +8,8 @@ export const COPY_FORMULA = 'copied_value';
 export const UNAVAIlABLE = 'unavailable';
 
 export class ProjectIndicator implements Deserializable {
-
+    id: string;
+    description: MultiLanguage;
     display: string;
     baseline: number;
     target: number;
@@ -24,6 +26,7 @@ export class ProjectIndicator implements Deserializable {
 
     deserialize(input: any): this {
       Object.assign(this, input);
+      // TODO: manage the colorize to have it it the right case
       this.colorize = this.colorize ? this.colorize : true;
       if (input && input.computation) {
         this.type = input.type ? input.type : this.type;
@@ -46,6 +49,13 @@ export class ProjectIndicator implements Deserializable {
                 this.computation.parameters = input.computation.parameters;
             }
         }
+      if (this.type !== 'formula' &&
+            this.type !== 'permille' &&
+            this.type !== 'percentage' &&
+            this.type !== 'copy' &&
+            this.type !== UNAVAIlABLE) {
+              this.type = UNAVAIlABLE;
+            }
       return this;
     }
 
