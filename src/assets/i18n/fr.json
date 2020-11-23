@@ -319,5 +319,18 @@
     "Visibility": "Visibilité",
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
-    "Invalid": "Invalide"
+    "Invalid": "Invalide",
+    "EMail-Hint":"Indiquez votre adresse e-mail",
+    "Name-Hint":"Indiquez votre Nom complet",
+    "CollectionSites-Hint":"Choisissez un Lieu suffisament informatif",
+    "Periodicity-Hint":"veuillez choisir la periodicite  qui convient",
+    "specific-date-start":"veuillez choisir au la Date de début spécifique",
+    "specific-date-end":"veuillez choisir au la Date de fin spécifique",
+    "Baseline-Hint":"veuillez indiquer la valeur initiale",
+    "Target-Hint":"veuillez indiquer la valeur Cible",
+    "Computation-Hint":"veuillez choisir la methode de calcul convenable",
+    "GeneralObjective-Hint":"choisissez un objectif general",
+    "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
+    "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue"
+
 }
