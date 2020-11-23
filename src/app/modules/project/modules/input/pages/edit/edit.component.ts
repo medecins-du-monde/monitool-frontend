@@ -106,24 +106,28 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   createForm() {
-    this.inputForm = this.fb.group({
+
+    const formGroup = {
       _id: `${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
       entity: `${this.site.id}`,
       form: `${this.form.id}`,
       period: `${this.timeSlotDate}`,
       project: `${this.project.id}`,
-      myValues: this.createValuesGroup()
-    });
-    console.log(this.form);
-    console.log(this.inputForm);
-  }
-  createValuesGroup(): any {
-    const group = this.fb.group({});
-    for (const e of this.form.elements){
+    };
 
-      group[e.id] = this.fb.array([0, 0, 0, 0]);
+    for (const e of this.form.elements){
+      formGroup[e.id] = this.fb.array(
+        Array.from({length: this.countInputCells(e)}, (_, i) => 0)
+      );
     }
-    return group;
+
+    this.inputForm = this.fb.group(formGroup);
+
+    this.inputForm.valueChanges.subscribe(val => {
+      console.log(val);
+    });
+
+    console.log(this.inputForm);
   }
 
   createTable(){
@@ -159,7 +163,7 @@ export class EditComponent implements OnInit, OnDestroy {
           if (i < cols.length || j < rows.length){
             this.table[i].push('');
           }else{
-            this.table[i].push(2);
+            this.table[i].push(0);
           }
         }
       }
@@ -174,6 +178,7 @@ export class EditComponent implements OnInit, OnDestroy {
       }
 
       this.tables.push({
+        id: element.id,
         value: this.table,
         cols,
         rows,
@@ -183,6 +188,8 @@ export class EditComponent implements OnInit, OnDestroy {
       });
 
     }
+    console.log(this.tables);
+
   }
 
   fillTotalLabels(rows, cols) {
@@ -264,6 +271,27 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
 
+  countInputCells(variable){
+    console.log(variable);
+
+    const rows = [];
+    const cols = [];
+
+    let numberRows = 1;
+    let numberCols = 1;
+
+    let i = 0;
+    for (i = 0; i < variable.distribution; i += 1){
+      rows.push(variable.partitions[i]);
+      numberRows *= variable.partitions[i].elements.length;
+    }
+    for (i = variable.distribution; i < variable.partitions.length; i += 1){
+      cols.push(variable.partitions[i]);
+      numberCols *= variable.partitions[i].elements.length;
+    }
+
+    return numberCols * numberRows;
+  }
   isInputCell(tableId, i, j){
     const rows = this.tables[tableId].rows;
     const cols = this.tables[tableId].cols;

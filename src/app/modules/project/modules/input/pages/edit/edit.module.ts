@@ -7,7 +7,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -15,10 +17,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     EditRoutingModule,
+    FormsModule,
     TranslateModule,
     MatTableModule,
     MatButtonModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     ReactiveFormsModule
   ]
 })
