@@ -102,7 +102,10 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.project && this.form){
       this.createForm();
       this.createTable();
+      this.updateTotals(this.inputForm.value);
     }
+
+
   }
 
   createForm() {
@@ -115,23 +118,60 @@ export class EditComponent implements OnInit, OnDestroy {
       project: `${this.project.id}`,
     };
 
+    const getRandomInt = (max) => {
+      return Math.floor(Math.random() * Math.floor(max));
+    };
+
     for (const e of this.form.elements){
       formGroup[e.id] = this.fb.array(
-        Array.from({length: this.countInputCells(e)}, (_, i) => 0)
+        Array.from({length: this.countInputCells(e)}, (_, i) => getRandomInt(5))
       );
     }
 
     this.inputForm = this.fb.group(formGroup);
 
     this.inputForm.valueChanges.subscribe(val => {
-      console.log(val);
+      this.updateTotals(val);
     });
 
     console.log(this.inputForm);
   }
 
+  updateTotals(val: any) {
+    for (let i = 0; i < this.tables.length; i += 1){
+      const table = this.tables[i];
+      let x: number;
+      let y: number;
+      let total = 0;
+      for (x = table.cols.length; x < table.numberRows - 1; x += 1){
+        let sum = 0;
+        for (y = 0; y < table.numberCols; y += 1){
+          const inputPos = this.isInputCell(i, x, y);
+          if (inputPos !== false){
+            sum += +val[table.id][inputPos];
+          }
+        }
+        table.value[x][table.numberCols - 1] = sum;
+        total += sum;
+      }
+
+      for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
+        let sum = 0;
+        for (x = 0; x < table.numberRows; x += 1){
+          const inputPos = this.isInputCell(i, x, y);
+          if (inputPos !== false){
+            sum += +val[table.id][inputPos];
+          }
+        }
+        table.value[table.numberRows - 1][y] = sum;
+      }
+      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+    }
+  }
+
   createTable(){
     for (const element of this.form.elements){
+      // TO DO
       // remove this line once we have an option to control the distribution
       element.distribution = 1;
 
@@ -199,21 +239,11 @@ export class EditComponent implements OnInit, OnDestroy {
       for (let x = 0; x < cols.length; x += 1){
         this.table[x][y] = 'Total';
       }
-      for (let x = cols.length; x <  this.numberRows - 1; x += 1){
-        this.table[x][y] = this.table[x].slice(rows.length, this.numberCols - 1).reduce((a, b) => numOr0(a) + numOr0(b));
-      }
     }
     if (rows.length > 0){
       const x = this.numberRows - 1;
       for (let y = 0; y < rows.length; y += 1){
         this.table[x][y] = 'Total';
-      }
-      for (let y = rows.length; y < this.numberCols; y += 1){
-        let sum = 0;
-        for (let r = cols.length; r < this.numberRows - 1; r += 1){
-          sum += numOr0(this.table[r][y]);
-        }
-        this.table[x][y] = sum;
       }
     }
   }
@@ -292,11 +322,12 @@ export class EditComponent implements OnInit, OnDestroy {
 
     return numberCols * numberRows;
   }
-  isInputCell(tableId, i, j){
-    const rows = this.tables[tableId].rows;
-    const cols = this.tables[tableId].cols;
-    const numberRows = this.tables[tableId].numberRows;
-    const numberCols = this.tables[tableId].numberCols;
+
+  isInputCell(tablePos, i, j){
+    const rows = this.tables[tablePos].rows;
+    const cols = this.tables[tablePos].cols;
+    const numberRows = this.tables[tablePos].numberRows;
+    const numberCols = this.tables[tablePos].numberCols;
 
     if ( i >= cols.length && (rows.length === 0 || i < numberRows - 1) && j >= rows.length && (cols.length === 0 || j < numberCols - 1)){
       let nRows = numberRows - cols.length - 1;
@@ -318,7 +349,6 @@ export class EditComponent implements OnInit, OnDestroy {
       return false;
     }
   }
-
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
