@@ -5,6 +5,9 @@
             <div class="mdm-form-label">{{ 'Name' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -20,9 +23,13 @@
                             </mat-chip>
                         </mat-chip-list>
                     </mat-select-trigger>
+                    
                     <mat-option *ngFor="let entity of entities" [value]="entity">{{ entity.name }}
                     </mat-option>
                 </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'CollectionSites' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -32,6 +39,9 @@
                     <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">{{ periodicity.display | translate }}
                     </mat-option>
                 </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Enum.Periodicity.free' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -41,6 +51,9 @@
                     placeholder="{{ 'StartDate' | translate }}">
                 <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                 <mat-datepicker #startPicker></mat-datepicker>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'StartDate' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
@@ -50,6 +63,9 @@
                     placeholder="{{ 'EndDate' | translate }}">
                 <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                 <mat-datepicker #endPicker></mat-datepicker>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'EndDate' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
     </div>
