@@ -110,7 +110,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
-      console.log("change called in edit", this.form);
       this.edit.emit(this.form.deserialize(value));
     });
   }
