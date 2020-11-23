@@ -1,138 +1,54 @@
 <!--- TOTAL STRUCTURES -->
-<mat-radio-group [formControl]="floatLabelControl" (change)=selected($event)>
-    <table *ngIf="visualize" class="display">
-        <tr>
-    <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
-        <table class="test" >
-        <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
-            <td *ngFor="let column of getNumber(i)" class ="empty"></td>
-            <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+<div [formGroup]="elementForm">
+    <mat-radio-group [formControl]="floatLabelControl"  formControlName="distribution" (change)=selected($event)>
+        <table *ngIf="visualize" class="display">
+            <tr>
+        <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
+            <table class="test" >
+            <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
+                <td *ngFor="let column of getNumber(i)" class ="empty"></td>
+                <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+            </tr>
+            <tr>
+                <td *ngFor="let partition of partitions.slice((partitions.length)-i); let x = index" class ="title">
+                    {{ 'Disaggregation.Title' | translate }}
+                </td>
+                <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
+            </tr>
+            <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}"></mat-radio-button></td></tr>
+            </table>
+        </td>
         </tr>
-        <tr>
-            <td *ngFor="let partition of partitions.slice((partitions.length)-i); let x = index" class ="title">
-                {{ 'Disaggregation.Title' | translate }}
-            </td>
-            <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
-        </tr>
-        <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}"></mat-radio-button></td></tr>
         </table>
-    </td>
-    </tr>
-    </table>
-</mat-radio-group>
-
+    </mat-radio-group>
+</div>
 
 <!--- DYNAMIC Structure -->
 
-<table  *ngIf="!visualize" class="display" class="test" >
-    <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let rowIndex = index">
-        <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
-        <td class ="title">
-            <mat-form-field class="selection">
-                <mat-select [(ngModel)]="partitions[rowIndex].id" (selectionChange)="reorderPartitions($event.value, rowIndex)">
-                    <mat-option *ngFor="let part of partitions" [value]="part.id"  >
-                        {{ part.name }} ({{part.elements.length}})
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let partition of partitions.slice((partitions.length)-tableStructure); let lastRowIndex = index" class ="title">
-            <mat-form-field class="selection">
-                <mat-select  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, (lastRowIndex))" >
-                    <mat-option *ngFor="let part of partitions" [value]="part.id" >
-                        {{ part.name }} ({{part.elements.length}})
-                    </mat-option>
+    <table  *ngIf="!visualize" class="display" class="test">
+        <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let rowIndex = index">
+            <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
+            <td class ="title">
+                <mat-form-field class="auto-width" >
+                    <mat-select [(ngModel)]="partitions[rowIndex].id" (selectionChange)="reorderPartitions($event.value, rowIndex)" >
+                        <mat-option *ngFor="let part of partitions" [value]="part.id"  >
+                            {{ part.name }} ({{part.elements.length}})
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
-        </td>
-        <td class="data">{{ 'Disaggregation.Data' | translate }} ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0, (partitions.length)-tableStructure))}}) </td>
-    </tr>
-</table>
+            </td>
+        </tr>
+        <tr>
+            <td *ngFor="let partition of partitions.slice((partitions.length)-tableStructure); let lastRowIndex = index" class ="title">
+                <mat-form-field class="auto-width">
+                    <mat-select  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, (lastRowIndex))" >
+                        <mat-option *ngFor="let part of partitions" [value]="part.id" >
+                            {{ part.name }} ({{part.elements.length}})
+                        </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </td>
+            <td class="data">{{ 'Disaggregation.Data' | translate }} ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0, (partitions.length)-tableStructure))}}) </td>
+        </tr>
+    </table>
 
-
-<!--- STRUCTURE 1 
-<table *ngIf="structure('structure1') && !visualize" class="collapse">
-    <tr *ngFor="let partition of partitions">
-        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
-    </tr>
-    <tr><td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
-</table>
-
-
-<table *ngIf="structure('structure1') && !visualize" class="collapse">
-    <tr *ngFor="let partition of partitions">
-        <td class ="title">
-            <mat-form-field>
-            <mat-select placeholder="{{partition.name}}" (selectionChange)="reorderPartitions($event, partition.id)">
-                <mat-option *ngFor="let part of partitions" [value]="part.id">
-                  {{ part.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-        </td>
-    </tr>
-    <tr><td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
-</table>
-
-
-
-<table  *ngIf="structure('structure2') && visualize" class="collapse">
-    <tr><td class ="title"></td>
-        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
-    <tr><td class ="title"></td>
-        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
-    <tr><td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
-</table>
-
-<table  *ngIf="structure('structure2') && !visualize" class="collapse">
-    <tr *ngFor="let partition of partitions.slice(1)"><td class ="title"></td>
-        <td class ="title">{{ 'Disaggregation.Title' | translate }}</td></tr>
-    <tr><td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td></tr>
-</table>
-
-
- 
-<table  *ngIf="structure('structure3') && visualize" class="collapse">
-    <tr>
-        <td class="title" *ngFor="let partition of partitions.slice(1)"></td>
-        <td class="title">{{ 'Disaggregation.Title' | translate }}</td>
-    </tr>
-    <tr>
-        <td class="title" *ngFor="let partition of partitions.slice(1)">{{ 'Disaggregation.Title' | translate }}</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
-    </tr>
-</table>
-
-<table  *ngIf="structure('structure3') && !visualize" class="collapse">
-    <tr>
-        <td *ngFor="let partition of partitions.slice(1)" class ="empty">
-            {{ partition.name }}
-        </td>
-        <td class ="title">{{ partitions[0].name }} </td>
-    </tr>
-    <tr>
-        <td  *ngFor="let partition of partitions.slice(1)" class ="title">{{ partition.name }}</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
-    </tr>
-</table>
-
-
-
-<table  *ngIf="structure('structure4') && visualize" class="collapse">
-    <tr>
-        <td *ngFor="let partition of partitions" class ="title">{{ 'Disaggregation.Title' | translate }}</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
-    </tr>
-</table>
-
-<table  *ngIf="structure('structure4') && !visualize" class="collapse">
-    <tr>
-        <td *ngFor="let partition of partitions" class ="title">{{ partition.name }} ({{partition.elements.length}})</td>
-        <td class ="data">{{ 'Disaggregation.Data' | translate }}</td>
-    </tr>
-</table>
--->

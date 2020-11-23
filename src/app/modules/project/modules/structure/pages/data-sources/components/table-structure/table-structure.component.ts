@@ -12,7 +12,6 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class TableStructureComponent implements OnInit {
 
-
   @Input() elementForm: FormGroup;
   @Input() tableStructure : number = 0;
   @Input() visualize = true;
@@ -24,7 +23,6 @@ export class TableStructureComponent implements OnInit {
   partitions : any;
   oldPartitions: any;
   chosenValue: string;
-
 
   constructor(private projectService: ProjectService) { }
 
@@ -38,12 +36,11 @@ export class TableStructureComponent implements OnInit {
       }));
       this.oldPartitions = this.partitions.map(partitionObject => new Partition(partitionObject));
     });
-
-
   }
 
   selected(event) {
     this.chosenStructure.emit(event.value);
+    this.elementForm.value.distribution = event.value;
   }
 
   reorderPartitions(nextId, currentRowIndex) {
@@ -53,7 +50,7 @@ export class TableStructureComponent implements OnInit {
     this.oldPartitions[currentRowIndex] = this.oldPartitions[indexNew]
     this.oldPartitions[indexNew] = old;
     this.partitions = this.oldPartitions.map(partitionObject => new Partition(partitionObject));
-
+    console.log(this.elementForm);
   }
 
   getNumber(number) {

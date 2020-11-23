@@ -26,7 +26,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   @Input() project: Project;
   @Output() edit = new EventEmitter();
 
-
   public periodicities = [
     {
       value: 'day',
@@ -93,7 +92,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.setForm();
     this.startDate = this.project.start;
-    this.endDate = this.project.end;
+    this.endDate = this.project.end
   }
 
   ngOnChanges(): void {
@@ -111,6 +110,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      console.log("change called in edit", this.form);
       this.edit.emit(this.form.deserialize(value));
     });
   }

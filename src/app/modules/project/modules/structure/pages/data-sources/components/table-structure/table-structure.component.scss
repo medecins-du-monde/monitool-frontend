@@ -43,8 +43,17 @@
   border-collapse: collapse;
 }
 
-.selection,
-.mat-select-content {
-  padding-bottom: 0.2em;
-  line-height: 0.7em;
+::ng-deep .auto-width {
+  .mat-form-field {
+    width: auto !important;
+  }
+  .mat-select-value {
+    max-width: 100%;
+    width: auto;
+  }
+
+  .mat-option {
+    max-width: 100%;
+    width: auto;
+  }
 }

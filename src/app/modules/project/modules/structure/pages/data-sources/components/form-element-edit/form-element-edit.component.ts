@@ -20,7 +20,6 @@ export class FormElementEditComponent implements OnInit {
   chosenStructure:number = 0;
 
   receiveStructure(event) {
-
     this.chosenStructure = event;
   }
   
@@ -56,7 +55,8 @@ export class FormElementEditComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   onAddNewPartition() {
     const partition: FormGroup = this.newPartition();
