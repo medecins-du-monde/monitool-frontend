@@ -40,7 +40,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.projectService.openedProject.subscribe((project: Project) => {
+      const projectId = project.id;
       const percentages = project.percentages;
       this.dataSource = [
         {
