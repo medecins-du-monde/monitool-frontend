@@ -3,6 +3,9 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Revision } from 'src/app/models/revision.model';
+import { Operation, compare } from 'fast-json-patch';
+import * as jsonpatch from 'fast-json-patch';
+import { applyOperation } from 'fast-json-patch';
 
 @Component({
   selector: 'app-history',
@@ -23,6 +26,7 @@ export class HistoryComponent implements OnInit {
   expandedElement: null;
 
   private projectId: string;
+  private project: Project;
 
   private offset: number;
   private limit: number;
@@ -35,6 +39,8 @@ export class HistoryComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.showLoadMore = true;
       this.projectId = project.id;
+      this.project = project;
+      console.log(project.forms);
       this.offset = 0;
       this.limit = 10;
       this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
@@ -59,6 +65,17 @@ export class HistoryComponent implements OnInit {
       this.dataSource = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });
+  }
+
+  updateProject(operation: Operation[]) {
+    console.log(operation);
+  }
+
+  onRevertToVersion(element) {
+    const patch = element.backwards;
+    console.log(patch);
+    const test = jsonpatch.applyPatch(this.project, patch).newDocument;
+    console.log(test);
   }
 
 }

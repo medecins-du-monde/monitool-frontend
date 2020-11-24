@@ -27,7 +27,7 @@
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
             <div class="example-element-detail" 
               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <button mat-stroked-button class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
+                <button mat-stroked-button (click)="onRevertToVersion(element)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
             </div>
         </td>
     </ng-container>
