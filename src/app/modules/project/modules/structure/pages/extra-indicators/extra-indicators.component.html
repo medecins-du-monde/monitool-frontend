@@ -5,9 +5,12 @@
 
 <div *ngIf="extraIndicators.length !== 0; else elseBlock" >
     <div class="mdm-section">
+       
+            
         <div class="mdm-cards">
             <app-extra-indicator *ngFor="let extraIndicator of extraIndicators" class="mdm-card" [extraIndicator]="extraIndicator"></app-extra-indicator>
         </div>
+    
     </div>
 </div>
 
@@ -16,5 +19,14 @@
 </ng-template>
 
 <div class="mdm-section">
-    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+    <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
+    <div class="indicators-list" formArrayName="indicators">
+        <div class="mdm-cards">
+           
+            <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
+                <app-extra-indicator class="mdm-card"   [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
+            </div>
+        </div>
+        <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+    </div>
 </div>
