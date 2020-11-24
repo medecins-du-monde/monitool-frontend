@@ -53,7 +53,7 @@ const routes: Routes = [
         .then(m => m.UsersModule)
       },
       {
-        path: '**',
+        path: '',
         redirectTo: 'home',
         pathMatch: 'full',
       }

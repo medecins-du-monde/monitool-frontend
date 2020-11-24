@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +29,6 @@ export class HomeComponent implements OnInit {
   dataSource: Task[];
 
   constructor(
-    private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService
   ) { }
@@ -40,7 +38,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.projectService.openedProject.subscribe((project: Project) => {
       const projectId = project.id;
       const percentages = project.percentages;
@@ -65,7 +62,7 @@ export class HomeComponent implements OnInit {
           status: percentages.basics,
           buttonIcon2: '',
           buttonText2:  new MultiLanguage(),
-          routerLink1: `../basics`,
+          routerLink1: `/project/${projectId}/structure/basics`,
           routerLink2: '',
         },
         {
