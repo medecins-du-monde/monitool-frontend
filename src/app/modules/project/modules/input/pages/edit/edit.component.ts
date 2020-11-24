@@ -9,6 +9,8 @@ import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { InputService } from 'src/app/services/input.service';
+import { Input } from 'src/app/models/input.model';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
@@ -49,6 +51,7 @@ export class EditComponent implements OnInit, OnDestroy {
   y: any;
   table: any;
   tables = [];
+  input: Input;
   inputForm: FormGroup;
 
   get currentLang() {
@@ -60,14 +63,15 @@ export class EditComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private translateService: TranslateService,
     public datepipe: DatePipe,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private inputService: InputService
   ) { }
 
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        this.atualizeData();
+        this.updateData();
       })
     );
 
@@ -76,12 +80,12 @@ export class EditComponent implements OnInit, OnDestroy {
         this.formId = params.formId;
         this.siteId = params.siteId;
         this.timeSlotDate = params.timeSlot;
-        this.atualizeData();
+        this.updateData();
       })
     );
   }
 
-  atualizeData(){
+  async updateData(){
     if (this.project){
       if (this.formId){
         this.form = this.project.forms.find(x => x.id === this.formId);
@@ -99,42 +103,62 @@ export class EditComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.project && this.form){
+
+    if (this.project && this.form && this.timeSlotDate){
+      const newInput = await this.getInput();
+      if (newInput){
+        this.input = new Input(newInput[0]);
+        console.log('tem input');
+        console.log(this.input);
+      }else{
+        console.log('input vazio');
+      }
       this.createForm();
       this.createTable();
       this.updateTotals(this.inputForm.value);
-    }
 
+      this.inputForm.valueChanges.subscribe(val => {
+        this.convertToNumber(val);
+        this.updateTotals(val);
+      });
+    }
 
   }
 
   createForm() {
+    const valuesGroup = {};
+    for (const e of this.form.elements){
+      if (this.input && this.input.values && this.input.values[e.id]){
+        valuesGroup[e.id] = this.fb.array(
+          this.input.values[e.id]
+        );
+      }else{
+        valuesGroup[e.id] = this.fb.array(
+          Array.from({length: this.countInputCells(e)}, (_, i) => 0)
+        );
+      }
+    }
 
     const formGroup = {
-      _id: `${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
-      entity: `${this.site.id}`,
-      form: `${this.form.id}`,
-      period: `${this.timeSlotDate}`,
-      project: `${this.project.id}`,
+      _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
+      entity: this.site.id,
+      form: this.form.id,
+      period: this.timeSlotDate,
+      project: this.project.id,
+      rev: (this.input && this.input.rev) ? this.input.rev : null,
+      values: this.fb.group(valuesGroup)
     };
-
-    const getRandomInt = (max) => {
-      return Math.floor(Math.random() * Math.floor(max));
-    };
-
-    for (const e of this.form.elements){
-      formGroup[e.id] = this.fb.array(
-        Array.from({length: this.countInputCells(e)}, (_, i) => getRandomInt(5))
-      );
-    }
 
     this.inputForm = this.fb.group(formGroup);
 
-    this.inputForm.valueChanges.subscribe(val => {
-      this.updateTotals(val);
-    });
-
     console.log(this.inputForm);
+    console.log(this.inputForm.get('values'));
+  }
+
+  convertToNumber(val) {
+    for (const e of this.form.elements){
+      val.values[e.id] = val.values[e.id].map(x => +x);
+    }
   }
 
   updateTotals(val: any) {
@@ -148,7 +172,7 @@ export class EditComponent implements OnInit, OnDestroy {
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
-            sum += +val[table.id][inputPos];
+            sum += +val.values[table.id][inputPos];
           }
         }
         table.value[x][table.numberCols - 1] = sum;
@@ -160,7 +184,7 @@ export class EditComponent implements OnInit, OnDestroy {
         for (x = 0; x < table.numberRows; x += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
-            sum += +val[table.id][inputPos];
+            sum += +val.values[table.id][inputPos];
           }
         }
         table.value[table.numberRows - 1][y] = sum;
@@ -348,6 +372,28 @@ export class EditComponent implements OnInit, OnDestroy {
     }else{
       return false;
     }
+  }
+
+
+  async saveInput(){
+    console.log(this.inputForm.value);
+    const inputToBeSaved = new Input(this.inputForm.value);
+    const response = await this.inputService.save(inputToBeSaved);
+    if (response){
+      this.input = new Input(response);
+      this.inputForm.get('rev').setValue(this.input.rev);
+    }
+  }
+
+  async getInput(): Promise<any>{
+    const response = await this.inputService.get(
+      this.project.id,
+      this.site.id,
+      this.form.id,
+      this.timeSlotDate
+    );
+    console.log(response);
+    return response;
   }
 
   ngOnDestroy(){

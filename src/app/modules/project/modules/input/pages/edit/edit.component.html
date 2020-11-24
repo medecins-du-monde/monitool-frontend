@@ -15,7 +15,7 @@
 </div>
 <div class="mdm-title">{{ 'Data' | translate }}</div>
 
-<div *ngIf="inputForm && tables" [formGroup]="inputForm">
+<div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >
         <p>{{ form.elements[k].name }}</p>
         <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
@@ -24,7 +24,7 @@
                 <td mat-cell *matCellDef="let element; let i = index">
                     <div *ngIf="isInputCell(k, i, j) !== false; else elseBlock">
                         <mat-form-field appearance="outline" class="mdm-form-field">
-                            <input matInput [formControl]="inputForm.get(table.id)['controls'][isInputCell(k, i, j)]" />
+                            <input matInput [formControl]="inputForm.get('values').get(table.id)['controls'][isInputCell(k, i, j)]" />
                         </mat-form-field>
                     </div>
                     <ng-template #elseBlock>
@@ -37,4 +37,8 @@
             <tr mat-row *matRowDef="let row; columns: table.displayedColumns;"></tr>
         </table>
     </div>
+</div>
+<div>
+    <button (click)="saveInput()">SAVE</button>
+    <button (click)="getInput()">GET</button>
 </div>
