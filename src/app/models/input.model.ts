@@ -20,16 +20,12 @@ export class Input implements Deserializable {
     }
 
     deserialize(input: any): this {
-        console.log('chegou esse input');
-        console.log(input);
         Object.assign(this, input);
         this.id = (input && input._id) ? input._id : `input:${this.project}:${this.form}:${this.entity}:${this.period}`;
 
         if (input && input._rev){
             this.rev = input._rev;
         }
-        console.log('depois deserialize');
-        console.log(this);
         return this;
     }
 
@@ -44,13 +40,10 @@ export class Input implements Deserializable {
             values: this.values
         };
         if (this.rev){
-            console.log('entrou no rev');
             Object.assign(serialized, {
                 _rev: this.rev
             });
         }
-        console.log('serialized');
-        console.log(serialized);
         return serialized;
     }
 }

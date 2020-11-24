@@ -41,6 +41,7 @@ export class EditComponent implements OnInit, OnDestroy {
   project: Project;
   timeSlotDate: any;
   timeSlot: TimeSlot;
+  previousTimeSlot: TimeSlot;
   site: Entity = new Entity({name: ''});
   form: Form = new Form({ name: ''});
   firstDate = '';
@@ -53,6 +54,7 @@ export class EditComponent implements OnInit, OnDestroy {
   tables = [];
   input: Input;
   inputForm: FormGroup;
+  previousInput: Input;
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -100,18 +102,34 @@ export class EditComponent implements OnInit, OnDestroy {
 
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
+
+        this.previousTimeSlot = this.timeSlot.previous();
+        const previousDate = this.datepipe.transform(this.previousTimeSlot.firstDate, 'yyyy-MM-dd', '+0000');
+        console.log(previousDate);
+
+        this.inputService.get(
+          this.project.id,
+          this.site.id,
+          this.form.id,
+          previousDate
+        ).then( (response) => {
+          if (response && response.length > 0){
+            this.previousInput = new Input(response[0]);
+            console.log('this.previousInput');
+            console.log(this.previousInput);
+          }
+        });
+
       }
     }
 
 
     if (this.project && this.form && this.timeSlotDate){
-      const newInput = await this.getInput();
-      if (newInput){
-        this.input = new Input(newInput[0]);
-        console.log('tem input');
-        console.log(this.input);
-      }else{
-        console.log('input vazio');
+      const savedInput = await this.getInput();
+      if (savedInput && savedInput.length > 0){
+        // console.log('we have a saved input');
+        // console.log(savedInput);
+        this.input = new Input(savedInput[0]);
       }
       this.createForm();
       this.createTable();
@@ -152,7 +170,6 @@ export class EditComponent implements OnInit, OnDestroy {
     this.inputForm = this.fb.group(formGroup);
 
     console.log(this.inputForm);
-    console.log(this.inputForm.get('values'));
   }
 
   convertToNumber(val) {
@@ -252,7 +269,7 @@ export class EditComponent implements OnInit, OnDestroy {
       });
 
     }
-    console.log(this.tables);
+    // console.log(this.tables);
 
   }
 
@@ -326,8 +343,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
 
   countInputCells(variable){
-    console.log(variable);
-
+    // console.log(variable);
     const rows = [];
     const cols = [];
 
@@ -374,10 +390,23 @@ export class EditComponent implements OnInit, OnDestroy {
     }
   }
 
+  fillWithPreviousData(){
+    console.log(this.previousInput);
+    if (this.previousInput){
+      for (const e of this.form.elements){
+        if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]){
+          this.inputForm.get('values').get(e.id).setValue(this.previousInput.values[e.id]);
+        }
+      }
+    }
+
+  }
 
   async saveInput(){
-    console.log(this.inputForm.value);
     const inputToBeSaved = new Input(this.inputForm.value);
+    console.log(this.inputForm);
+    console.log('inputToBeSaved');
+    console.log(inputToBeSaved);
     const response = await this.inputService.save(inputToBeSaved);
     if (response){
       this.input = new Input(response);
@@ -392,7 +421,6 @@ export class EditComponent implements OnInit, OnDestroy {
       this.form.id,
       this.timeSlotDate
     );
-    console.log(response);
     return response;
   }
 

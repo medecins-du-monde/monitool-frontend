@@ -13,6 +13,11 @@
         <div class="info-value">{{ this.timeSlot ? this.timeSlot.humanizeValue(this.currentLang) : '' }} ({{ this.firstDate }} - {{ this.lastDate }})</div>
     </div>
 </div>
+
+<div *ngIf="previousInput">
+    <button (click)="fillWithPreviousData()">Fill</button>
+</div>
+
 <div class="mdm-title">{{ 'Data' | translate }}</div>
 
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
