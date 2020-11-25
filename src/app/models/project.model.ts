@@ -118,7 +118,7 @@ export class Project implements Deserializable {
             crossCutting: {},
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
-            extraIndicators: [],
+            extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
             groups: this.groups.map(x => x.serialize()),

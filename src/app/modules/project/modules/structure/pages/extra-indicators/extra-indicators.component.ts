@@ -1,5 +1,4 @@
 import { Project } from './../../../../../../models/project.model';
-import { Form } from './../../../../../../models/form.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input } from '@angular/core';
@@ -13,28 +12,27 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
   styleUrls: ['./extra-indicators.component.scss']
 })
 export class ExtraIndicatorsComponent implements OnInit {
+  extraIndicatorsForm: FormGroup;
 
   extraIndicators: ProjectIndicator[] = [];
-  Project: Project;
-  indicatorsForm: FormGroup;
- 
-  constructor(private projectService: ProjectService, private fb: FormBuilder,public dialog:MatDialog) { }
+  project: Project;
+
+  constructor(private projectService: ProjectService, private fb: FormBuilder, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
-      this.extraIndicators = project.extraIndicators;
-      this.Project = project;
+      this.project = project;
+      this.setForm();
     });
-    this.setForm();
   }
-  get indicators(): FormArray {
 
-    return this.indicatorsForm.controls.indicators as FormArray;
+  get indicators(): FormArray {
+    return this.extraIndicatorsForm.controls.indicators as FormArray;
   }
 
   private setForm() {
-    this.indicatorsForm = this.fb.group({
-      indicators: this.fb.array(this.extraIndicators.map(x => FormGroupBuilder.newIndicator(x)))
+    this.extraIndicatorsForm = this.fb.group({
+      indicators: this.fb.array(this.project.extraIndicators.map(x => FormGroupBuilder.newIndicator(x)))
       });
   }
   onAddNewIndicator(): void {
@@ -46,18 +44,24 @@ export class ExtraIndicatorsComponent implements OnInit {
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
+    this.project.extraIndicators.splice(i, 1);
+    this.projectService.project.next(this.project);
   }
 
   openDialog(indicator: FormGroup, add?: boolean, index?: number) {
-    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.indicatorsForm } });
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
+          this.project.extraIndicators.push(new ProjectIndicator(res.indicator.value));
           this.indicators.push(res.indicator);
+          this.projectService.project.next(this.project);
         }
         else if (index !== null) {
+          this.project.extraIndicators[index] = new ProjectIndicator(res.indicator.value);
           this.indicators.setControl(index, res.indicator);
+          this.projectService.project.next(this.project);
         }
       }
     });
