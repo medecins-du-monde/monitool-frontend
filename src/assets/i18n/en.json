@@ -71,6 +71,7 @@
         }
     },
     "es": "Spanish",
+    "EquivalentVersion" : "This version is equivalent to the current state of the project",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
     "ExtraIndicatorsInfo": [

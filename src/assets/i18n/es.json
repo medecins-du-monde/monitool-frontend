@@ -73,6 +73,7 @@
         }
     },
     "es": "Español",
+    "EquivalentVersion" : "Este punto es equivalente al estado actual del proyecto",
     "EveryMonth": "Cada mes",
     "ExtraIndicators": "Indicadores adicionales",
     "ExtraIndicatorsInfo": [

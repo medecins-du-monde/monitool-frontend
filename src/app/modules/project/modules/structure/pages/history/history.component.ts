@@ -6,6 +6,9 @@ import { Revision } from 'src/app/models/revision.model';
 import { Operation, compare } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
 import { applyOperation } from 'fast-json-patch';
+import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
+import { isEqual } from 'lodash';
+
 
 @Component({
   selector: 'app-history',
@@ -40,7 +43,6 @@ export class HistoryComponent implements OnInit {
       this.showLoadMore = true;
       this.projectId = project.id;
       this.project = project;
-      console.log(project.forms);
       this.offset = 0;
       this.limit = 10;
       this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
@@ -52,6 +54,12 @@ export class HistoryComponent implements OnInit {
 
   mouseOver(element){
     this.expandedElement = element;
+  }
+
+  sameVersion(i){
+    let patchedProject = this.patchProject(i);
+    let equal = isEqual(patchedProject, this.project);
+    return (equal);
   }
 
   mouseLeave(){
@@ -67,15 +75,18 @@ export class HistoryComponent implements OnInit {
     });
   }
 
-  updateProject(operation: Operation[]) {
-    console.log(operation);
+  patchProject(revisionIndex) {
+    let revisedProject = this.project.copy();
+    for (let i = 0; i <= revisionIndex; i++) {
+      const patch = this.dataSource[i].backwards;
+      const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+    }
+    return revisedProject;
+
   }
 
-  onRevertToVersion(element) {
-    const patch = element.backwards;
-    console.log(patch);
-    const test = jsonpatch.applyPatch(this.project, patch).newDocument;
-    console.log(test);
+  onRevertToVersion(element, revisionIndex) {
+    const patchedRevision = this.patchProject(revisionIndex);
   }
 
 }
