@@ -14,11 +14,17 @@
     </div>
 </div>
 
-<div *ngIf="previousInput">
-    <button (click)="fillWithPreviousData()">Fill with data from the previous entry</button>
-</div>
 
-<div class="mdm-title">{{ 'Data' | translate }}</div>
+<div class="title">
+    <button *ngIf="previousInput" mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()">
+        <mat-icon>edit</mat-icon>
+        Fill with data from the previous entry
+    </button>
+    <div class="mdm-title">
+        {{ 'Data' | translate }}
+    </div>
+    
+</div>
 
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >

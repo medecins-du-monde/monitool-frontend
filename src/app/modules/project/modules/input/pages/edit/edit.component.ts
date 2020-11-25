@@ -96,7 +96,8 @@ export class EditComponent implements OnInit, OnDestroy {
         this.site = this.project.entities.find(x => x.id === this.siteId);
       }
       if (this.timeSlotDate && this.form){
-        this.timeSlot = TimeSlot.fromValue(this.timeSlotDate);
+        this.timeSlot = new TimeSlot(this.timeSlotDate);
+        // this.timeSlot = TimeSlot.fromValue(this.timeSlotDate);
         // this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
