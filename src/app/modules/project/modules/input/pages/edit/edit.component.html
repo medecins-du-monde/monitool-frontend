@@ -15,7 +15,7 @@
 </div>
 
 <div *ngIf="previousInput">
-    <button (click)="fillWithPreviousData()">Fill</button>
+    <button (click)="fillWithPreviousData()">Fill with data from the previous entry</button>
 </div>
 
 <div class="mdm-title">{{ 'Data' | translate }}</div>
@@ -45,5 +45,4 @@
 </div>
 <div>
     <button (click)="saveInput()">SAVE</button>
-    <button (click)="getInput()">GET</button>
 </div>

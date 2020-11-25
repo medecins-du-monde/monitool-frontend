@@ -7,6 +7,7 @@ import TimeSlot from 'timeslot-dag';
 import { Form } from 'src/app/models/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { InputService } from 'src/app/services/input.service';
 
 export enum TimeSlotPeriodicity {
   day = 'day',
@@ -42,12 +43,14 @@ export class InputsComponent implements OnInit, OnDestroy {
   form: Form;
   thisYearDates: any[];
   allDates: any[];
+  inputProgress: ArrayBuffer;
 
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private inputService: InputService
   ) { }
 
   ngOnInit(): void {
@@ -69,11 +72,12 @@ export class InputsComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  atualizeData(){
-    this.form = this.project.forms.find(x => x.id === this.formId);
-    // this.sites = this.form ? this.form.entities.map(x => x.name) : [];
-    this.sites = this.form ? this.form.entities : [];
-    this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+  async atualizeData(){
+    if (this.formId && this.project){
+      this.form = this.project.forms.find(x => x.id === this.formId);
+      this.sites = this.form ? this.form.entities : [];
+      this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+    }
     this.thisYearDates = [];
     this.allDates = [];
     if (this.form){
@@ -83,70 +87,90 @@ export class InputsComponent implements OnInit, OnDestroy {
       }
       const currentYear = firstDate.getFullYear().toString();
 
-      // this represents the last availabe time slot of the form
+      // this represents the most recent available time slot of the form
       let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
 
       // this is the oldest date of the form
       const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
-      const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-
       if (slotStart === slotEnd){
         this.thisYearDates = [
           {
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
+            value: slotStart.value
           }
         ];
         this.allDates = [{
          humanValue: slotStart.humanizeValue(this.currentLang),
-         value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
+         value: slotStart.value
         }];
       }else{
         while (slotStart !== slotEnd){
           if (currentYear === slotStart.value.slice(0, 4)){
             this.thisYearDates.push({
               humanValue: slotStart.humanizeValue(this.currentLang),
-              value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
+              value: slotStart.value
             });
           }
           this.allDates.push({
             humanValue: slotStart.humanizeValue(this.currentLang),
-            value: this.datepipe.transform(slotStart.firstDate, 'yyyy-MM-dd', '+0000')
+            value: slotStart.value
           });
           slotStart = slotStart.previous();
         }
       }
     }
 
-    const newDataSource = [];
-    for (const date of this.thisYearDates){
-      const current = { Date: date.humanValue };
+    if (this.project && this.form){
 
-      for (const site of this.sites){
-        current[site.name] = {
-          value: Math.floor((Math.random() * 101)),
-          routerLink: `./edit/${site.id}/${date.value}`
-          // the link needs to pass:
-          // (done) project_id
-          // (done) form id
-          // collection_site id
-          // time period reference
-          // variable/input id ?????
-        };
+      this.inputProgress = await this.inputService.list(this.project.id, this.formId);
+      console.log(this.inputProgress);
+
+      const inputId = `input:${this.project.id}:${this.formId}`;
+      const newDataSource = [];
+      for (const date of this.thisYearDates){
+        const current = { Date: date.humanValue };
+
+        for (const site of this.sites){
+
+          if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
+            current[site.name] = {
+              value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
+              routerLink: `./edit/${site.id}/${date.value}`
+            };
+          }else{
+            current[site.name] = {
+              value: -1,
+              routerLink: `./edit/${site.id}/${date.value}`
+            };
+          }
+        }
+        newDataSource.push(current);
       }
-      newDataSource.push(current);
+      this.dataSource = newDataSource;
     }
-    this.dataSource = newDataSource;
   }
 
   seeOlderDates(){
+
+    const inputId = `input:${this.project.id}:${this.formId}`;
     const newDataSource = [];
     for (const date of this.allDates){
-      const current = { Date: date };
+      const current = { Date: date.humanValue };
 
       for (const site of this.sites){
-        current[site.name] = Math.floor((Math.random() * 101));
+        if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
+          current[site.name] = {
+            value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
+            routerLink: `./edit/${site.id}/${date.value}`
+          };
+        }
+        else{
+          current[site.name] = {
+            value: -1,
+            routerLink: `./edit/${site.id}/${date.value}`
+          };
+        }
       }
       newDataSource.push(current);
     }

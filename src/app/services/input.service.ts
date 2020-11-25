@@ -20,6 +20,19 @@ export class InputService {
     return savedInput;
   }
 
+  public async list(projectId: string, formId: string){
+    const response = await this.apiService.get(
+      `resources/input?mode=ids_by_form`,
+      {
+        params: {
+          projectId,
+          formId
+        }
+      }
+    );
+    return response;
+  }
+
   public async get(projectId: string, entityId: string, formId: string, period: string){
     const response: any = await this.apiService.get(
       `/resources/input?mode=current%2Blast`,

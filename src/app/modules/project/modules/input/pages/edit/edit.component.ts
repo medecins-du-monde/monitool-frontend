@@ -96,7 +96,8 @@ export class EditComponent implements OnInit, OnDestroy {
         this.site = this.project.entities.find(x => x.id === this.siteId);
       }
       if (this.timeSlotDate && this.form){
-        this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
+        this.timeSlot = TimeSlot.fromValue(this.timeSlotDate);
+        // this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
 
@@ -104,8 +105,7 @@ export class EditComponent implements OnInit, OnDestroy {
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
 
         this.previousTimeSlot = this.timeSlot.previous();
-        const previousDate = this.datepipe.transform(this.previousTimeSlot.firstDate, 'yyyy-MM-dd', '+0000');
-        console.log(previousDate);
+        const previousDate = this.previousTimeSlot.value;
 
         this.inputService.get(
           this.project.id,
@@ -114,9 +114,10 @@ export class EditComponent implements OnInit, OnDestroy {
           previousDate
         ).then( (response) => {
           if (response && response.length > 0){
-            this.previousInput = new Input(response[0]);
-            console.log('this.previousInput');
-            console.log(this.previousInput);
+            response = response.find(x => x.period === previousDate);
+            if (response !== undefined){
+              this.previousInput = new Input(response);
+            }
           }
         });
 
@@ -125,11 +126,14 @@ export class EditComponent implements OnInit, OnDestroy {
 
 
     if (this.project && this.form && this.timeSlotDate){
-      const savedInput = await this.getInput();
+      let savedInput = await this.getInput();
       if (savedInput && savedInput.length > 0){
         // console.log('we have a saved input');
         // console.log(savedInput);
-        this.input = new Input(savedInput[0]);
+        savedInput = savedInput.find(x => x.period === this.timeSlotDate);
+        if (savedInput !== undefined){
+          this.input = new Input(savedInput);
+        }
       }
       this.createForm();
       this.createTable();
@@ -404,9 +408,8 @@ export class EditComponent implements OnInit, OnDestroy {
 
   async saveInput(){
     const inputToBeSaved = new Input(this.inputForm.value);
-    console.log(this.inputForm);
-    console.log('inputToBeSaved');
-    console.log(inputToBeSaved);
+    // console.log('inputToBeSaved');
+    // console.log(inputToBeSaved);
     const response = await this.inputService.save(inputToBeSaved);
     if (response){
       this.input = new Input(response);

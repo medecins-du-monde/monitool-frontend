@@ -16,7 +16,7 @@
         <td mat-cell *matCellDef="let element" id="{{column}}"> 
             <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
             <ng-template #elseBlock>
-                <div *ngIf="element[column].value === 0; else elseBlock2">
+                <div *ngIf="element[column].value === -1; else elseBlock2">
                     <button mat-stroked-button [routerLink]="element[column].routerLink" class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                 </div>
                 <ng-template #elseBlock2>
