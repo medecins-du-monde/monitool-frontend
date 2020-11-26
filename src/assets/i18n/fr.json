@@ -222,7 +222,7 @@
         "crossCutting_target_replace": "Change la cible d'un indicateur transversal de <code>{{before}}</code> vers <code>{{after}}</code>",
         "crossCutting_colorize_replace": "Change la colorisation d'un indicateur transversal de <code>{{before}}</code> vers <code>{{after}}</code>",
         "crossCutting_computation_replace": "Change le calcul d'un indicateur transversal"
-    }
+    },
     "Home": "Accueil",
     "HomeSections": {
         "OnlinePlatform": {

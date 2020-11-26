@@ -54,7 +54,7 @@ export class HistoryComponent implements OnInit {
   }
 
   mouseOver(element){
-    this.expandedElement = element;
+      this.expandedElement = element;
   }
 
   sameVersion(i){

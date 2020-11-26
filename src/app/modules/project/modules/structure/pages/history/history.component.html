@@ -15,9 +15,9 @@
     <!-- Status Column -->
     <ng-container matColumnDef="changes">
         <th mat-header-cell *matHeaderCellDef>{{ 'HistoryChanges' | translate }}</th>
-        <td mat-cell *matCellDef="let element" id="changes"> 
+        <td mat-cell *matCellDef="let element; let i = dataIndex" id="changes"> 
 
-            <app-revision-summary [revision]="element"></app-revision-summary>
+            <app-revision-summary [revision]="element" [revisions]="dataSource" [index]="i"></app-revision-summary>
         </td>
     </ng-container>
     

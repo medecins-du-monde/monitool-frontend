@@ -4,6 +4,7 @@ import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Operation } from 'fast-json-patch';
+import { transcode } from 'buffer';
 
 
 @Component({
@@ -14,35 +15,33 @@ import { Operation } from 'fast-json-patch';
 
 export class RevisionSummaryComponent implements OnInit {
 
-
   @Input() revision: Revision;
+  @Input() revisions: Revision[];
+  @Input() index: number;
 
-
-  forward = [];
-  backwards = [];
-  output: string[] = [];
+  output = [];
   project: Project = null;
 
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
 
-
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
     });
 
-    let before = this.project.copy();
-    let after = this.project.copy();
+    let before = this.patchProject(this.index);
+    let after = this.patchProject(this.index);
 
     this.revision.forwards.forEach( revision => {
       const operation = revision;
       after = jsonpatch.applyOperation(after, operation as Operation).newDocument;
       const key = this.getTranslationKey(operation);
-      const data = this.getTranslationData(operation, before, after);
+      let data = this.getTranslationData(operation, before, after);
 
       if (key) {
-        this.output.push(key);
+        data['translationKey'] = key;
+        this.output.push(data);
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
@@ -152,6 +151,15 @@ export class RevisionSummaryComponent implements OnInit {
 
     return translationData;
 
+  }
+
+  patchProject(revisionIndex) {
+    let revisedProject = this.project.copy();
+    for (let i = 1; i <= revisionIndex; i++) {
+      const patch = this.revisions[i].backwards;
+      const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+    }
+    return revisedProject;
   }
 
 
