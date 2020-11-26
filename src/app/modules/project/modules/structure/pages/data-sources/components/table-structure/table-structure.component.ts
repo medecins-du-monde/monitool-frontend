@@ -71,7 +71,8 @@ export class TableStructureComponent implements OnInit {
 
   selected(event) {
     this.chosenStructure.emit(event.value);
-    this.elementForm.value.distribution = event.value;
+    var y: number = +event.value;
+    this.elementForm.value.distribution = y;
   }
 
   toNumber(i) {
