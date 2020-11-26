@@ -34,7 +34,7 @@ export class ProjectsComponent implements OnInit {
   filtersForm: FormGroup;
   projects: Project[];
   allProjects: Project[];
-  currentUser : User;
+  currentUser: User;
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
@@ -73,17 +73,17 @@ export class ProjectsComponent implements OnInit {
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
       // this.projects = this.filterByStatuses(this.allProjects);
-      this.projects.sort((a,b) => {
-        if (a.users.find(user => user.role === "owner") ||(b.users.find(user => user.role === "owner"))) {
-          if (a.users.find(user => user.role === "owner") && (b.users.find(user => user.role === "owner"))) {
+      this.projects.sort((a, b) => {
+        if (a.users.find(user => user.role === 'owner') || (b.users.find(user => user.role === 'owner'))) {
+          if (a.users.find(user => user.role === 'owner') && (b.users.find(user => user.role === 'owner'))) {
             return a.name.localeCompare(b.name);
-          } else if (a.users.find(user => user.role === "owner")) {
+          } else if (a.users.find(user => user.role === 'owner')) {
             return -1;
           } else {
             return 1;
           }
-        } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+a.id)){
-          if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+b.id)) {
+        } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
+          if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
             return a.name.localeCompare(b.name);
           } else {
             return -1;
@@ -96,8 +96,8 @@ export class ProjectsComponent implements OnInit {
   }
 
   onCreate(): void {
-    let project = new Project();
-    const user = new User({type: "internal", role: "owner"});
+    const project = new Project();
+    const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
     this.projectService.create(project);
     this.router.navigate(['/project', project.id]);

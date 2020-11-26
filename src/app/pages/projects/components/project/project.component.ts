@@ -23,8 +23,8 @@ export class ProjectComponent implements OnInit {
   @Output() clone = new EventEmitter();
   @Output() getProjects: EventEmitter<any> = new EventEmitter();
 
-  currentUser : User;
-  projectOwner : boolean;
+  currentUser: User;
+  projectOwner: boolean;
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -74,22 +74,22 @@ export class ProjectComponent implements OnInit {
   projectCardAvatar() {
     if (this.project.users.length > 0) {
       if (this.projectOwner) {
-        return "person";
+        return 'person';
       }
-    } else if (localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)){
-      return "star";
+    } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)){
+      return 'star';
     } else {
-      return "star_border";
+      return 'star_border';
     }
   }
 
   toggleFavourite() {
     if (!this.projectOwner) {
       this.getProjects.emit();
-      if (!localStorage.getItem('user::'+this.currentUser.id +"favorite"+this.project.id)) {
-        localStorage.setItem('user::'+this.currentUser.id +"favorite"+this.project.id, "true");
+      if (!localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
+        localStorage.setItem('user::' + this.currentUser.id + 'favorite' + this.project.id, 'true');
       } else {
-        localStorage.removeItem('user::'+this.currentUser.id +"favorite"+this.project.id);
+        localStorage.removeItem('user::' + this.currentUser.id + 'favorite' + this.project.id);
       }
     }
   }
