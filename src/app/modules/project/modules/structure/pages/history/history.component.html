@@ -27,9 +27,9 @@
             <div class="example-element-detail" 
               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                 <span *ngIf="(sameVersion(i) && !showSaveConfirm)" >{{ 'EquivalentVersion' | translate }}</span>
-                <span *ngIf=(expand(element)) >{{ 'SaveConfirm' | translate }}</span>
                 <button mat-stroked-button *ngIf="(!sameVersion(i)  && !showSaveConfirm)" (click)="onRevertClick(i, element)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
             </div>
+            <span *ngIf=(expand(element)) >{{ 'SaveConfirm' | translate }}</span>
         </td>
     </ng-container>
 
