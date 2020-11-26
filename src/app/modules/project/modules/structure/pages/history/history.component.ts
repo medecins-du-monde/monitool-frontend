@@ -27,6 +27,9 @@ export class HistoryComponent implements OnInit {
   dataSource: Revision[];
 
   expandedElement: null;
+  isSameVersion: boolean;
+  showSaveConfirm: boolean;
+  saveConfirmElement: null;
 
   private projectId: string;
   private project: Project;
@@ -58,7 +61,8 @@ export class HistoryComponent implements OnInit {
 
   sameVersion(i){
     let patchedProject = this.patchProject(i);
-    let equal = isEqual(patchedProject, this.project);
+    const equal = isEqual(patchedProject, this.project);
+    this.isSameVersion = equal;
     return (equal);
   }
 
@@ -77,16 +81,21 @@ export class HistoryComponent implements OnInit {
 
   patchProject(revisionIndex) {
     let revisedProject = this.project.copy();
-    for (let i = 0; i <= revisionIndex; i++) {
+    for (let i = 1; i <= revisionIndex; i++) {
       const patch = this.dataSource[i].backwards;
       const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
     }
     return revisedProject;
-
   }
 
-  onRevertToVersion(element, revisionIndex) {
+  expand(element) {
+    return this.saveConfirmElement === element ? true : false;
+  }
+
+  onRevertClick(revisionIndex, element) {
+    this.saveConfirmElement = element;
     const patchedRevision = this.patchProject(revisionIndex);
+    this.projectService.project.next(patchedRevision);
   }
 
 }

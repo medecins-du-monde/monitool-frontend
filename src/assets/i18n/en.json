@@ -269,6 +269,7 @@
     "RevertToVersion": "Revert to this version",
     "Role": "Role",
     "SaveIndicator": "Save indicator",
+    "SaveConfirm": "Save to confirm reverting to this version",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",
     "Search": "Search",

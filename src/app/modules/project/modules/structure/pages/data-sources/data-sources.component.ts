@@ -40,7 +40,7 @@ export class DataSourcesComponent implements OnInit {
   onEdit(form: Form) {
     this.edition = true;
     this.currentForm = form;
-    this.projectService.project.next(this.project);
+    this.projectService.project.next(this.project); 
   }
 
   onDelete(form: Form) {
