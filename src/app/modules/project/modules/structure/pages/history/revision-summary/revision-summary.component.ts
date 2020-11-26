@@ -74,13 +74,10 @@ export class RevisionSummaryComponent implements OnInit {
       editedField = editedField + '_' + operation.op;
     }
 
-    return 'project.history.' + editedField;
+    return 'HistoryRevision.' + editedField;
   }
 
   getTranslationData(operation, before, after) {
-    console.log(before);
-    console.log(operation);
-    console.log(" ");
     const editedField = operation.path.substring(1).replace(/\/\d+\//g, '_').replace(/\/\d+$/, '');
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};

@@ -222,7 +222,7 @@
         "crossCutting_baseline_replace": "Change cross-cutting indicator baseline from <code>{{before}}</code> to <code>{{after}}</code>",
         "crossCutting_target_replace": "Change cross-cutting indicator target from <code>{{before}}</code> to <code>{{after}}</code>",
         "crossCutting_colorize_replace": "Change cross-cutting indicator colorization from <code>{{before}}</code> to <code>{{after}}</code>",
-        "crossCutting_computation_replace"": "Change cross-cutting indicator computation"
+        "crossCutting_computation_replace": "Change cross-cutting indicator computation"
     },
     "Home": "Home",
     "HomeSections": {
