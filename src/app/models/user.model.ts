@@ -2,8 +2,8 @@ import { Deserializable } from './deserializable.model';
 import { v4 as uuid } from 'uuid';
 
 export class User implements Deserializable {
-    id: string;
-    type = 'user';
+    id = 'user:training';
+    type: string;
     role: string;
     name: string;
 
@@ -25,15 +25,15 @@ export class User implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = `user:${(input && input._id) ? input._id : uuid()}`;
+        // this.id = `user:${(input && input._id) ? input._id : uuid()}`;
         return this;
     }
 
     serialize() {
         return {
-            _id: this.id,
+            id: this.id,
             type: this.type,
-            name: this.name,
+            // name: this.name,
             role: this.role
         };
     }
