@@ -21,8 +21,8 @@ export class AuthService {
 
     await this.apiService.get('/resources/myself')
       .then((reply) => {
-        let currentUser = new User(reply);
-        delete currentUser["_id"];
+        const currentUser = new User(reply);
+        delete currentUser.id;
         this.user.next(currentUser);
         response = true;
       })
