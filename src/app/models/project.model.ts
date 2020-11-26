@@ -7,6 +7,7 @@ import { Entity } from './entity.model';
 import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
 import { Group } from './group.model';
+import { User } from './user.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -25,7 +26,7 @@ export class Project implements Deserializable {
     entities: Entity[] = [];
     groups: Group[] = [];
     forms: Form[] = [];
-    users: any[];
+    users: User[];
     visibility: string;
 
     get status() {
@@ -82,6 +83,7 @@ export class Project implements Deserializable {
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
             return group;
         }) : [];
+        this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -126,7 +128,7 @@ export class Project implements Deserializable {
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
-            users: [],
+            users: this.users.map(user => user.serialize()),
             visibility: this.visibility,
             _id: this.id
         };
