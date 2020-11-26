@@ -116,6 +116,9 @@ export class RevisionSummaryComponent implements OnInit {
       for (var j = 0; j < splitPath.length; j += 1) {
         translationData['before'] = translationData['before'][splitPath[j]];
       }
+      if (translationData['before'] instanceof Date) {
+        translationData['before'] = this.transformDate(translationData['before']);
+      }
     }
     else if (operation.op === 'remove') {
       translationData['item'] = before;
@@ -160,6 +163,10 @@ export class RevisionSummaryComponent implements OnInit {
       const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
     }
     return revisedProject;
+  }
+
+  transformDate(date) {
+      return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' +  date.getDate();
   }
 
 

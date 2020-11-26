@@ -92,8 +92,8 @@
     "HistoryRevision": {
         "active_replace": "Change deletion status from {{!before}} to {{!after}}",
         "name_replace": "Rename the project from {{before}} to {{after}}",
-        "start_replace": "Change the project start date of the project from {{before|date}} to {{after|date}}",
-        "end_replace": "Change the project end date from {{before|date}} to {{after|date}}",
+        "start_replace": "Change the project start date of the project from {{before}} to {{after}}",
+        "end_replace": "Change the project end date from {{before}} to {{after}}",
         "country_replace": "Change the project country from {{before}} to {{after}}",
         "visibility_replace": "Change the project visibility from {{before}} vers {{after}}",
 
@@ -105,8 +105,8 @@
         "entities_move": "Reorder the sites of the project",
         "entities_remove": "Remove the site {{item.name}}",
         "entities_name_replace": "Rename the site {{before}} to {{after}}",
-        "entities_start_replace": "Change the site begin date of {{entity.name}} from {{before|date}} to {{after|date}}",
-        "entities_end_replace": "Change the site end date of {{entity.name}} from {{before|date}} to {{after|date}}",
+        "entities_start_replace": "Change the site begin date of {{entity.name}} from {{before}} to {{after}}",
+        "entities_end_replace": "Change the site end date of {{entity.name}} from {{before}} to {{after}}",
 
         "groups_add": "Create the group {{item.name}}",
         "groups_move": "Reorder the project groups",
@@ -134,8 +134,8 @@
         "forms_remove": "Delete the data source {{item.name}}",
         "forms_name_replace": "Rename the data source {{before}} to {{after}}",
         "forms_periodicity_replace": "Change the periodicity of the data source {{form.name}} from {{before}} to {{after}}",
-        "forms_start_replace": "Change the start date of the data source {{form.name}} from {{before|date}} to {{after|date}}",
-        "forms_end_replace": "Change the end date of the data source {{form.name}} from {{before|date}} to {{after|date}}",
+        "forms_start_replace": "Change the start date of the data source {{form.name}} from {{before}} to {{after}}",
+        "forms_end_replace": "Change the end date of the data source {{form.name}} from {{before}} to {{after}}",
 
         "forms_entities_add": "Add the site {{item.name}} to the data source {{form.name}}",
         "forms_entities_move": "Reorder the sites of the data source {{form.name}}",
