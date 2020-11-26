@@ -11,13 +11,14 @@ export class Activity implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }
 
     serialize() {
         return {
             description: this.description,
-            indicators: []
+            indicators: this.indicators.map(x => x.serialize()),
         };
     }
 }

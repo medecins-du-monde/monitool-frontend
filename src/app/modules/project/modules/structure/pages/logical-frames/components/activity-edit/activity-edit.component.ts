@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Form, FormArray, Validators } from '@angular/forms';
+import { FormGroup, Form, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import FormGroupBuilder from 'src/app/utils/form-group-builder';
 
 @Component({
   selector: 'app-activity-edit',
@@ -20,48 +20,34 @@ export class ActivityEditComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
   }
 
   onAddNewIndicator(): void {
-    const indicator: FormGroup = this.newIndicator();
+    const indicator: FormGroup = FormGroupBuilder.newIndicator();
     this.openDialog(indicator, true);
   }
 
-  onEditIndicator(indicator: FormGroup) {
-    this.openDialog(indicator);
+  onEditIndicator(indicator: FormGroup, index?: number) {
+    this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
   }
 
-  private newIndicator(): FormGroup {
-    const indicator = new ProjectIndicator();
-    return this.fb.group({
-      display: [indicator.display, Validators.required],
-      baseline: [indicator.baseline],
-      target: [indicator.target],
-      computation: this.fb.group({
-        formula: [indicator.computation.formula],
-        parameters: [indicator.computation.formula]
-      }),
-      type: [indicator.type]
-    });
-  }
-
-  openDialog(indicator: FormGroup, add?: boolean) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
-        } else {
-          indicator = res.indicator;
+        }
+        else if (index !== null) {
+          this.indicators.setControl(index, res.indicator);
         }
       }
     });

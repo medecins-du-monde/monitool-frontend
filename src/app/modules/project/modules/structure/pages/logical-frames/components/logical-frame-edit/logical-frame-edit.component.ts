@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
-import { forEach } from 'lodash';
 import { Entity } from 'src/app/models/entity.model';
 import { Form } from 'src/app/models/form.model';
 import { LogicalFrame } from 'src/app/models/logical-frame.model';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Purpose } from 'src/app/models/purpose.model';
-import { PartitionElement } from 'src/app/models/partition-element.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import FormGroupBuilder from 'src/app/utils/form-group-builder';
 
 @Component({
   selector: 'app-logical-frame-edit',
@@ -39,7 +37,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +56,8 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       start: [this.logicalFrame.start],
       end: [this.logicalFrame.end],
       goal: [this.logicalFrame.goal],
-      indicators: this.fb.array(this.logicalFrame.indicators),
-      purposes: this.fb.array(this.logicalFrame.purposes.map(x => this.newPurpose(x)))
+      indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
+      purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
     });
     this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       this.edit.emit(this.logicalFrame.deserialize(value));
@@ -72,66 +70,27 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   }
 
   onAddNewPurpose() {
-    this.purposes.push(this.newPurpose());
+    this.purposes.push(FormGroupBuilder.newPurpose());
+  }
+
+  onEditPurpose(purpose: Purpose, index: number) {
+    this.purposes.setControl(index, _.cloneDeep(FormGroupBuilder.newPurpose(purpose)));
   }
 
   onRemovePurpose(i: number) {
     this.purposes.removeAt(i);
   }
 
-  private newPurpose(purpose?: Purpose): FormGroup {
-    if (!purpose) {
-      purpose = new Purpose();
-    }
-    return this.fb.group({
-      assumptions: [purpose.assumptions, Validators.required],
-      description: [purpose.description, Validators.required],
-      outputs: this.fb.array([]),
-      indicators: this.fb.array([])
-    });
-  }
-
   onAddNewIndicator(): void {
-    this.openDialog(this.newIndicator(), true);
+    this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
 
   onEditIndicator(indicator: FormGroup, index?: number) {
-    this.openDialog(this.newIndicator(indicator.value), false, index);
+    this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
-  }
-
-  private newIndicator(indicatorToEdit = null): FormGroup {
-    const indicator = new ProjectIndicator(indicatorToEdit);
-
-    const parametersFormGroup = new FormGroup({});
-
-    if (indicator.computation) {
-      forEach(indicator.computation.parameters, (parameter, key) => {
-        const filterGroup = this.fb.group({});
-        // tslint:disable-next-line: no-string-literal
-        forEach(parameter['filter'], (filterValue: string[], keyFilter: string) => {
-        filterGroup.addControl(`${keyFilter}`, new FormControl(filterValue)); });
-        parametersFormGroup.addControl(`${key}`, this.fb.group({
-
-          // tslint:disable-next-line: no-string-literal
-          elementId: [parameter['elementId']],
-          filter: filterGroup as FormGroup,
-        }));
-      });
-    }
-    return this.fb.group({
-      display: [indicator.display, Validators.required],
-      baseline: [indicator.baseline, Validators.required],
-      target: [indicator.target, Validators.required],
-      computation: this.fb.group({
-        formula: [indicator.computation ? indicator.computation.formula : null],
-        parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : this.fb.group({}),
-      }),
-      type: [indicator.type]
-    });
   }
 
   openDialog(indicator: FormGroup, add?: boolean, index?: number) {

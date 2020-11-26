@@ -2,7 +2,7 @@ import { Activity } from './activity.model';
 import { Deserializable } from './deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
 
-export class Output implements Deserializable {
+export class OutputElement implements Deserializable {
     assumptions: string;
     description: string;
     activities: Activity[] = [];
@@ -15,6 +15,7 @@ export class Output implements Deserializable {
     deserialize(input: any): this {
         Object.assign(this, input);
         this.activities = ( input && input.activities ) ? input.activities.map(x => new Activity(x)) : [];
+        this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }
 
@@ -22,7 +23,7 @@ export class Output implements Deserializable {
         return {
             assumptions: this.assumptions,
             description: this.description,
-            indicators: [],
+            indicators: this.indicators.map(x => x.serialize()),
             activities: this.activities.map(x => x.serialize())
         };
     }

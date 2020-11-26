@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Form, FormArray, FormGroup } from '@angular/forms';
+import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import FormGroupBuilder from 'src/app/utils/form-group-builder';
 
 @Component({
   selector: 'app-purpose-edit',
@@ -13,6 +14,7 @@ export class PurposeEditComponent implements OnInit {
 
   @Input() purposeForm: FormGroup;
   @Input() forms: Form[];
+  @Output() edit = new EventEmitter();
 
   get outputs(): FormArray {
     return this.purposeForm.controls.outputs as FormArray;
@@ -24,66 +26,40 @@ export class PurposeEditComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onAddNewOutput() {
-    this.outputs.push(this.newOutput());
+    this.outputs.push(FormGroupBuilder.newOutput());
   }
 
   onRemoveOutput(i: number) {
     this.outputs.removeAt(i);
   }
 
-  private newOutput(): FormGroup {
-    const output = new Output();
-    return this.fb.group({
-      assumptions: [output.assumptions, Validators.required],
-      description: [output.description, Validators.required],
-      activities: this.fb.array([]),
-      indicators: this.fb.array([])
-    });
-  }
-
   onAddNewIndicator(): void {
-    const indicator: FormGroup = this.newIndicator();
-    this.openDialog(indicator, true);
+    this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
 
-  onEditIndicator(indicator: FormGroup) {
-    this.openDialog(indicator);
+  onEditIndicator(indicator: FormGroup, index?: number) {
+    this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
   onDeleteIndicator(i: number) {
     this.indicators.removeAt(i);
   }
 
-  private newIndicator(): FormGroup {
-    const indicator = new ProjectIndicator();
-    return this.fb.group({
-      display: [indicator.display, Validators.required],
-      baseline: [indicator.baseline],
-      target: [indicator.target],
-      computation: this.fb.group({
-        formula: [indicator.computation.formula],
-        parameters: [indicator.computation.formula]
-      }),
-      type: [indicator.type]
-    });
-  }
-
-  openDialog(indicator: FormGroup, add?: boolean) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
-        } else {
-          indicator = res.indicator;
+        }
+        else if (index !== null) {
+          this.indicators.setControl(index, res.indicator);
         }
       }
     });
