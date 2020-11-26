@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +21,7 @@ export class LoginComponent implements OnInit {
   partner = false;
 
   loginForm: FormGroup;
+  wrongCredentials = false;
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginTrainingAccount(){
-    this.authService.validateTraining('value', 'value').then((response: any) => {
+    this.authService.validateTraining('value', 'value').then(() => {
       this.router.navigate(['home']);
     });
   }
@@ -40,7 +40,12 @@ export class LoginComponent implements OnInit {
     this.authService.validatePartner(
       this.loginForm.controls.username.value,
       this.loginForm.controls.password.value
-    );
+    ).then(() => {
+      this.router.navigate(['home']);
+    })
+    .catch(err => {
+      this.wrongCredentials = true;
+    });
   }
 
   partnerAccount(){

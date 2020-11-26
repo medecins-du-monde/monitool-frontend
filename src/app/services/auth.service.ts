@@ -40,14 +40,8 @@ export class AuthService {
   public validateTraining(email: string, password: string): Promise<ArrayBuffer> {
     return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
   }
-  public validatePartner(email: string, password: string) {
-    this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'})
-    .then( response => {
-      return response;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  public validatePartner(email: string, password: string): Promise<ArrayBuffer> {
+    return this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'});
   }
 
   public async logOut(){
