@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit {
             fr: 'Cadres logiques',
           }),
           routerLink1: `/project/${projectId}/structure/data-sources`,
-          routerLink2: '/project/${projectId}/structure/extra-indicators',
+          routerLink2: '/project/${projectId}/structure/logical-frames',
         },
         {
           taskText1: new MultiLanguage({
