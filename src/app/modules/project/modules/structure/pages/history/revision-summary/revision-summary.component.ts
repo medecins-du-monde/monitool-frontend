@@ -3,6 +3,7 @@ import { Revision } from 'src/app/models/revision.model';
 import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { Operation } from 'fast-json-patch';
 
 
 @Component({
@@ -35,15 +36,16 @@ export class RevisionSummaryComponent implements OnInit {
     let after = this.project.copy();
 
     this.revision.forwards.forEach( revision => {
-      let operation = revision;
-
-      //after = jsonpatch.applyOperation(after, operation as Operation[]);
-      let key = this.getTranslationKey(operation);
-      let data = this.getTranslationData(operation, before, after);
+      const operation = revision;
+      after = jsonpatch.applyOperation(after, operation as Operation).newDocument;
+      const key = this.getTranslationKey(operation);
+      const data = this.getTranslationData(operation, before, after);
 
       if (key) {
         this.output.push(key);
       }
+
+      before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
     });
   }
 
@@ -76,15 +78,15 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   getTranslationData(operation, before, after) {
-    let editedField = operation.path.substring(1).replace(/\/\d+\//g, '_').replace(/\/\d+$/, '');
-    let splitPath = operation.path.split('/').slice(1);
-    let translationData = {};
-    
-    let currentItem = this.project.copy();
-
+    console.log(before);
+    console.log(operation);
+    console.log(" ");
+    const editedField = operation.path.substring(1).replace(/\/\d+\//g, '_').replace(/\/\d+$/, '');
+    const splitPath = operation.path.split('/').slice(1);
+    const translationData = {};
+    let currentItem = before;
 
     for (let j = 1; j < splitPath.length - 1; j += 2) {
-
       let name = splitPath[j - 1];
       const id = splitPath[j];
       currentItem = currentItem[name][id];
@@ -97,14 +99,61 @@ export class RevisionSummaryComponent implements OnInit {
       }
       else { // we can have the singular by removing the trailing 's' (i.e. logicalFrames => logicalFrame)
         name = name.substring(0, name.length - 1);
+      }
+      translationData[name] = currentItem;
     }
-      translationData[name] = currentItem.name;
 
+
+    //////////////////////////
+    // Get the actual item that got modified.
+    // For replace operations, we define both the "before" and "after" keys
+    // Otherwise, just the "item".
+    //////////////////////////
+
+
+    if (operation.op === 'add') {
+      translationData['item'] = operation.value;
+    }
+    else if (operation.op === 'replace') {
+      translationData['after'] = operation.value;
+      translationData['before'] = before;
+      for (var j = 0; j < splitPath.length; j += 1) {
+        translationData['before'] = translationData['before'][splitPath[j]];
+      }
+    }
+    else if (operation.op === 'remove') {
+      translationData['item'] = before;
+      for (let j = 0; j < splitPath.length; j += 1) {
+        translationData['item'] = translationData['item'][splitPath[j]];
+      }
+    }
+    else if (operation.op === 'move') {
+      translationData['item'] = before;
+      const splitpath2 = operation.from.split('/').slice(1);
+      for (let j = 0; j < splitpath2.length; j += 1) {
+        translationData["item"] = translationData['item'][splitpath2[j]];
+      }
     }
 
+    //////////////////////////
+    // When the modification is adding or removing ids that refer to something else, we
+    // replace the id by the actual value it refers to, to allow proper printing
+    // i.e. Avoid "Added 347b57e7-a8e0-441c-a673-419b2aefb6f8 to sites in form x"
+    //////////////////////////
 
+    if (operation.op === 'add' || operation.op === 'remove') {
+      if (editedField === 'users_dataSources') {
+        translationData['item'] = before.forms.find(e => e.id === translationData['item']);
+      }
+      if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
+        translationData['item'] = before.entities.find(e => e.id === translationData['item']);
+      }
+      if (editedField === 'forms_elements_partitions_groups_members') {
+        translationData['item'] = translationData['partition']['elements'].find(e => e.id == translationData['item']);
+      }
+    }
 
-
+    return translationData;
 
   }
 
