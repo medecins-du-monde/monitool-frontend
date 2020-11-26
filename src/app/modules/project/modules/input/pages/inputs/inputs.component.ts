@@ -57,13 +57,13 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        this.atualizeData();
+        this.updateData();
       })
     );
     this.subscription.add(
       this.route.params.subscribe(params => {
         this.formId = params.formId;
-        this.atualizeData();
+        this.updateData();
       })
     );
   }
@@ -72,7 +72,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  async atualizeData(){
+  async updateData(){
     if (this.formId && this.project){
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
@@ -124,7 +124,6 @@ export class InputsComponent implements OnInit, OnDestroy {
     if (this.project && this.form){
 
       this.inputProgress = await this.inputService.list(this.project.id, this.formId);
-      console.log(this.inputProgress);
 
       const inputId = `input:${this.project.id}:${this.formId}`;
       const newDataSource = [];

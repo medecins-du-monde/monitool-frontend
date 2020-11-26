@@ -20,6 +20,11 @@ export class InputService {
     return savedInput;
   }
 
+  public async delete(input: Input) {
+    const response: any = await this.apiService.delete(`/resources/input/${input.id}`);
+    return response;
+  }
+
   public async list(projectId: string, formId: string){
     const response = await this.apiService.get(
       `resources/input?mode=ids_by_form`,

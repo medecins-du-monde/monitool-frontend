@@ -173,8 +173,6 @@ export class EditComponent implements OnInit, OnDestroy {
     };
 
     this.inputForm = this.fb.group(formGroup);
-
-    console.log(this.inputForm);
   }
 
   convertToNumber(val) {
@@ -409,13 +407,16 @@ export class EditComponent implements OnInit, OnDestroy {
 
   async saveInput(){
     const inputToBeSaved = new Input(this.inputForm.value);
-    // console.log('inputToBeSaved');
-    // console.log(inputToBeSaved);
     const response = await this.inputService.save(inputToBeSaved);
     if (response){
       this.input = new Input(response);
       this.inputForm.get('rev').setValue(this.input.rev);
     }
+  }
+
+  async deleteInput(){
+    const inputToBeDeleted = new Input(this.inputForm.value);
+    const response = await this.inputService.delete(inputToBeDeleted);
   }
 
   async getInput(): Promise<any>{
@@ -426,6 +427,26 @@ export class EditComponent implements OnInit, OnDestroy {
       this.timeSlotDate
     );
     return response;
+  }
+
+  get canBeSaved(){
+    if (!this.input){
+      return true;
+    }
+    if (this.inputForm && this.input){
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+  get inputHasModification(){
+    if (this.inputForm && this.input){
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+
+  resetInput(){
+    this.inputForm.get('values').setValue(this.input.values);
   }
 
   ngOnDestroy(){
