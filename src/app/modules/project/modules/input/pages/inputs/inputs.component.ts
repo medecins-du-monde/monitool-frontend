@@ -86,12 +86,11 @@ export class InputsComponent implements OnInit, OnDestroy {
         firstDate = this.form.end;
       }
       const currentYear = firstDate.getFullYear().toString();
-
       // this represents the most recent available time slot of the form
-      let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
+      let slotStart = TimeSlot.fromDate(firstDate.toISOString(), TimeSlotPeriodicity[this.form.periodicity]);
 
       // this is the oldest date of the form
-      const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+      const slotEnd = TimeSlot.fromDate(this.form.start.toISOString(), TimeSlotPeriodicity[this.form.periodicity]);
 
       if (slotStart === slotEnd){
         this.thisYearDates = [
@@ -118,6 +117,16 @@ export class InputsComponent implements OnInit, OnDestroy {
           });
           slotStart = slotStart.previous();
         }
+        if (currentYear === slotStart.value.slice(0, 4)){
+          this.thisYearDates.push({
+            humanValue: slotStart.humanizeValue(this.currentLang),
+            value: slotStart.value
+          });
+        }
+        this.allDates.push({
+          humanValue: slotStart.humanizeValue(this.currentLang),
+          value: slotStart.value
+        });
       }
     }
 

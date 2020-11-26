@@ -4,6 +4,10 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { InputService } from 'src/app/services/input.service';
+import TimeSlot from 'timeslot-dag';
+import { TimeSlotPeriodicity } from '../inputs/inputs.component';
+// import TimeSlotPeriodicity from 'timeslot-dag';
 
 
 export interface Task {
@@ -32,24 +36,55 @@ export class HomeComponent implements OnInit {
   project: Project;
 
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private inputService: InputService
+  ) { }
 
   ngOnInit(): void {
 
     this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
+      this.projectService.openedProject.subscribe( async (project: Project) => {
         this.project = project;
-        this.taskDataSource.data = this.project.forms.map(form => {
-          return {
+
+        const data = [];
+        for (const form of this.project.forms){
+          const list = await this.inputService.list(this.project.id, form.id);
+
+          const max = (a: Date, b: Date) => a >= b ? a : b;
+          const min = (a: Date, b: Date) => a >= b ? b : a;
+
+          // gets the first date that is inside the interval of the project and of the form at the same time
+          const startDate: Date = max(form.start, this.project.start);
+          // gets the last date that is inside the interval of the project and of the form at the same time
+          const endDate: Date = min(form.end, min(this.project.end, new Date()));
+
+          let startTimeSlot = TimeSlot.fromDate(startDate.toISOString(), TimeSlotPeriodicity[form.periodicity]);
+          const endTimeSlot = TimeSlot.fromDate(endDate.toISOString(), TimeSlotPeriodicity[form.periodicity]);
+
+          const periods = [];
+          while (startTimeSlot !== endTimeSlot){
+            periods.push(startTimeSlot.value);
+            startTimeSlot = startTimeSlot.next();
+          }
+          periods.push(endTimeSlot.value);
+
+          const total = periods.length * form.entities.length;
+          const done = Object.values(list).filter(x => x === 1).length;
+          const ongoing = Object.values(list).filter(x => x !== 1).length;
+          const missing = total - done - ongoing;
+
+          data.push({
             buttonIcon: 'edit',
             buttonText: form.name,
-            routerLink: '.',
-            done: 40,
-            ongoing: 40,
-            missing: 20,
-            total: 119
-          };
-        });
+            routerLink: `/project/${project.id}/input/inputs/${form.id}`,
+            done,
+            ongoing,
+            missing,
+            total
+          });
+        }
+        this.taskDataSource.data = data;
       })
     );
   }
