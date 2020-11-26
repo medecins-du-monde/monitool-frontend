@@ -5,8 +5,6 @@ import { Project } from 'src/app/models/project.model';
 import { Revision } from 'src/app/models/revision.model';
 import { Operation, compare } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
-import { applyOperation } from 'fast-json-patch';
-import { FixedSizeVirtualScrollStrategy } from '@angular/cdk/scrolling';
 import { isEqual } from 'lodash';
 
 
