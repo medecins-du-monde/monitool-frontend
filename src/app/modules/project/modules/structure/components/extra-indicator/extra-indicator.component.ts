@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 
@@ -10,10 +10,20 @@ import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 export class ExtraIndicatorComponent implements OnInit {
 
   @Input() extraIndicator: ProjectIndicator;
+  @Output() edit = new EventEmitter();
+  @Output() delete = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onEdit() {
+    this.edit.emit();
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 
 }

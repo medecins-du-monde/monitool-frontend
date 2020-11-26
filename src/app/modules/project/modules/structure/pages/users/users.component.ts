@@ -57,7 +57,6 @@ export class UsersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res && res.data){
         this.project.users.push(res.data);
-        console.log(this.project);
         this.projectService.project.next(this.project);
       }
     });

@@ -1,0 +1,19 @@
+<div class="info-section blue">
+    <p>{{'LogicalFrameworksPageDescription.Line1' | translate}}</p>
+    <p>{{'LogicalFrameworksPageDescription.Line2' | translate}}</p>
+</div>
+
+<div class="mdm-section" *ngIf="!edition">
+    <div class="mdm-cards">
+        <app-logical-frame class="mdm-card" *ngFor="let logicalFrame of logicalFrames" [project]="project" [logicalFrame]='logicalFrame' (clone)="onClone($event)" (edit)='onEdit($event)' (delete)="onDelete($event)">
+        </app-logical-frame>
+    </div>
+    <button mat-stroked-button class="mdm-button" (click)="onCreate()">
+        <mat-icon>add</mat-icon>
+        {{ 'CreateLogicalFramework' | translate }}
+    </button>
+</div>
+
+<div class="mdm-section" *ngIf="edition">
+    <app-logical-frame-edit [logicalFrame]="currentLogicalFrame" [entities]="entities" [forms]="project.forms" (edit)="onEdit($event)"></app-logical-frame-edit>
+</div>

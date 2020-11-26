@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="mdm-cards">
-        <app-project *ngFor="let project of projects" class="mdm-card"
+        <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"
             [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)"
         ></app-project>
     </div>

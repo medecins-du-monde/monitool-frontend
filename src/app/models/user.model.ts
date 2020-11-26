@@ -1,11 +1,10 @@
 import { Deserializable } from './deserializable.model';
-import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
 import { Form } from './form.model';
 
 export class User implements Deserializable {
     id: string;
-    type = 'user';
+    type: string;
     role: string;
     name: string;
     username: string;
@@ -30,25 +29,28 @@ export class User implements Deserializable {
     }
 
     deserialize(input: any): this {
-        Object.assign(this, input);
-        return this;
+      Object.assign(this, input);
+      // tslint:disable-next-line: no-string-literal
+      this.id = (input && input['_id']) ? input['_id'] : this.id;
+        // this.id = `user:${(input && input._id) ? input._id : uuid()}`;
+      return this;
     }
 
     serialize() {
-        const value = {
+        const user = {
             type: this.type,
             role: this.role
         };
 
         if (this.type === 'internal'){
             if (this.id){
-                Object.assign(value, {
-                    id: this.id
+                Object.assign(user, {
+                    id: this.id,
                 });
             }
         }
         else if (this.type === 'partner'){
-            Object.assign(value, {
+            Object.assign(user, {
                 username: this.username,
                 name: this.name,
                 password: this.password
@@ -57,17 +59,17 @@ export class User implements Deserializable {
 
         if (this.role === 'input'){
             if (this.entities){
-                Object.assign(value, {
+                Object.assign(user, {
                     entities: this.entities.map(x => x.id)
                 });
             }
             if (this.dataSources){
-                Object.assign(value, {
+                Object.assign(user, {
                     dataSources: this.dataSources.map(x => x.id)
                 });
             }
         }
 
-        return value;
+        return user;
     }
 }

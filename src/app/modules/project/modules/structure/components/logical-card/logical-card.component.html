@@ -1,0 +1,39 @@
+<mat-card>
+    <mat-card-header class="logical-card-header">
+        <mat-card-title>{{logicalFramework.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="logical-card-info">
+            <div class="logical-card-info-title">{{'Date' | translate }}</div>
+            <div class="logical-card-info-value">{{logicalFramework.start  | date: 'mediumDate'}} - {{logicalFramework.end  | date: 'mediumDate'}}</div>
+        </div>
+        <div class="logical-card-info">
+            <div class="logical-card-info-title">{{'CollectionSites'| translate }}</div>
+            <div class="logical-card-info-value" >{{logicalFramework.collectionSites}}</div>
+        </div>
+    </mat-card-content>
+    
+    <mat-card-actions align="end">
+        <button mat-stroked-button  class="mdm-button">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'Clone' | translate }}</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>insert_drive_file</mat-icon>
+        <span>{{ 'Download' | translate }} PDF ( {{'Portrait' | translate}} )</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>insert_drive_file</mat-icon>
+        <span>{{ 'Download' | translate }} PDF ( {{'Landscape' | translate}} )</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>delete</mat-icon>
+        <span>{{ 'Delete' | translate }}</span>
+    </button>
+</mat-menu>

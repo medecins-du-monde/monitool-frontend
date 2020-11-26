@@ -28,9 +28,6 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-    // const cuser = (await this.authService.getCurrentUser());
-    // console.log(cuser);
   }
 
   loginTrainingAccount(){
@@ -40,8 +37,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginPartner(){
-    console.log(this.loginForm.controls.username.value);
-    console.log(this.loginForm.controls.password.value);
     this.authService.validatePartner(
       this.loginForm.controls.username.value,
       this.loginForm.controls.password.value

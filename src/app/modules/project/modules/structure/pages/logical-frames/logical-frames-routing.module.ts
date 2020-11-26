@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LogicalFrameComponent } from './logical-frame.component';
+import { LogicalFramesComponent } from './logical-frames.component';
 
 
 const routes: Routes = [{
   path: '',
-  component: LogicalFrameComponent
+  component: LogicalFramesComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LogicalFrameRoutingModule { }
+export class LogicalFramesRoutingModule { }

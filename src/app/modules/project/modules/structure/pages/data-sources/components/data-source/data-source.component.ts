@@ -16,8 +16,6 @@ export class DataSourceComponent implements OnInit {
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 
-  periodicity: string;
-
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -32,9 +30,7 @@ export class DataSourceComponent implements OnInit {
 
   constructor(private translateService: TranslateService) { }
 
-  ngOnInit(): void {
-    this.periodicity = 'EveryMonth';
-  }
+  ngOnInit(): void {}
 
   onEdit() {
     this.edit.emit(this.form);

@@ -23,6 +23,7 @@
     "Country": "Pays",
     "Create": "Saisir",
     "CreateNewDataSource": "Créer une nouvelle source de données",
+    "CreateLogicalFramework":"Créer un cadre logique vierge",
     "CreateNewIndicator": "Créer un nouvel indicateur",
     "CreateNewProject": "Créer un project",
     "CreateNewThematic": "Créer une nouvelle thématique",
@@ -167,6 +168,10 @@
     "LastEntry": "Dernière saisie",
     "LoadMoreRevisions": "Voir plus de modifications",
     "LogicalFrameworks": "Cadres logiques",
+    "LogicalFrameworksPageDescription":{
+        "Line1":"Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l'avancement de chaque élément",
+        "Line2": "Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données"
+    },
     "Login": "Login",
     "LogOut": "Déconnecter",
     "Members": "Membres",

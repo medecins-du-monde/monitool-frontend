@@ -38,9 +38,9 @@ const routes: Routes = [
         .then(m => m.HistoryModule)
       },
       {
-        path: 'logical-frame',
-        loadChildren: () => import('./pages/logical-frame/logical-frame.module')
-        .then(m => m.LogicalFrameModule)
+        path: 'logical-frames',
+        loadChildren: () => import('./pages/logical-frames/logical-frames.module')
+        .then(m => m.LogicalFramesModule)
       },
       {
         path: 'sites',

@@ -23,6 +23,7 @@
     "Country": "Country",
     "Create": "Create",
     "CreateNewDataSource": "Create a new data source",
+    "CreateLogicalFramework":"create a blank Logical Framework",
     "CreateNewIndicator": "Create a new indicator",
     "CreateNewProject": "Create a new project",
     "CreateNewThematic": "Create a new thematic",
@@ -168,6 +169,10 @@
     "LastEntry": "Last entry",
     "LoadMoreRevisions": "Load more revisions",
     "LogicalFrameworks": "Logical frameworks",
+    "LogicalFrameworksPageDescription":{
+        "Line1":"A logical framework is a document that describe objectives, expected results, and actities to achieve them, as well as indicators to monitor the advancement of each of those elements",
+        "Line2": "All indicators have to be computable from the data described in data sources"
+    },
     "Login": "Login",
     "LogOut": "Log out",
     "Members": "Members",

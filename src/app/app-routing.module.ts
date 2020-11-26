@@ -36,7 +36,7 @@ const routes: Routes = [{
   path: 'parameters',
   loadChildren: () => import('./modules/parameters/parameters.module')
     .then(m => m.ParametersModule),
-  canActivate : [AuthGuard]
+ canActivate : [AuthGuard]
 },
 {
   path: 'indicators',
