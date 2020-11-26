@@ -13,16 +13,10 @@ import { PartitionModalComponent } from '../partition-modal/partition-modal.comp
 export class FormElementEditComponent implements OnInit {
 
   @Input() elementForm: FormGroup;
-  @Input() dataSourceName= "";
+  @Input() dataSourceName = '';
 
-  floatLabelControl = new FormControl('structure1');
+  chosenStructure;
 
-  chosenStructure:number = 0;
-
-  receiveStructure(event) {
-    this.chosenStructure = event;
-  }
-  
   public aggregations = [
     {
       value: 'sum',
@@ -46,6 +40,10 @@ export class FormElementEditComponent implements OnInit {
     }
   ];
 
+  receiveStructure(event) {
+    this.chosenStructure = event;
+  }
+
   get partitions(): FormArray {
     return this.elementForm.controls.partitions as FormArray;
   }
@@ -56,6 +54,8 @@ export class FormElementEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.chosenStructure = this.elementForm.value.distribution;
+
     this.elementForm.valueChanges.subscribe((value: any) => {
     });
   }

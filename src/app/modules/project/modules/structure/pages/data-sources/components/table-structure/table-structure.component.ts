@@ -13,16 +13,16 @@ import { ProjectService } from 'src/app/services/project.service';
 export class TableStructureComponent implements OnInit {
 
   @Input() elementForm: FormGroup;
-  @Input() tableStructure = 0;
+  @Input() tableStructure;
   @Input() visualize = true;
   @Output() chosenStructure = new EventEmitter<number>();
 
   project: Project;
-  floatLabelControl = new FormControl('0');
+  floatLabelControl = new FormControl();
 
-  partitions : any;
-  // oldPartitions: any;
-  chosenValue: string;
+  partitions: any;
+
+  test = 0;
 
   constructor(private projectService: ProjectService) { }
 
@@ -54,11 +54,11 @@ export class TableStructureComponent implements OnInit {
       this.project.forms.filter(element => element.elements.filter(x => {
         if (x.id === this.elementForm.value.id) {
           this.partitions = x.partitions;
+          this.test = x.distribution ? x.distribution : 0;
         }
       }));
     });
   }
-
 
   reorderPartitions(nextId, currentRowIndex) {
     const partitions = this.elementForm.value.partitions;
@@ -71,7 +71,7 @@ export class TableStructureComponent implements OnInit {
 
   selected(event) {
     this.chosenStructure.emit(event.value);
-    var y: number = +event.value;
+    const y: number = +event.value;
     this.elementForm.value.distribution = y;
   }
 
