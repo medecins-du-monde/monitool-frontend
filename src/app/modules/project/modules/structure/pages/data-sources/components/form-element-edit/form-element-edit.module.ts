@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { PartitionModalModule } from '../partition-modal/partition-modal.module';
 import { MatRadioModule } from '@angular/material/radio';
-import { TableStructureModule } from '../table-structure/table-structure.module'
+import { TableStructureModule } from '../table-structure/table-structure.module';
 
 @NgModule({
   declarations: [FormElementEditComponent],
