@@ -326,5 +326,17 @@
     "VisibilityPublic": "Visible for all users (besides partners)",
     "VisibilityPrivate": "Visible only to members of this project",
     "Invalid": "Invalid",
-    "WrongCredentials": "Wrong username or password. Please try again"
+    "WrongCredentials": "Wrong username or password. Please try again",
+    "EMail-Hint": "Enter your e-mail address",
+     "Name-Hint": "Indicate your Full Name",
+     "CollectionSites-Hint": "Choose a sufficiently informative Location",
+     "Periodicity-Hint": "Please choose the appropriate periodicity",
+     "specific-date-start": "Please choose the specific start date",
+     "specific-date-end": "Please choose the specific end date",
+     "Baseline-Hint": "Please indicate the initial value",
+     "Target-Hint": "Please indicate the target value",
+     "Computation-Hint":"Please choose the appropriate calculation method",
+     "GeneralObjective-Hint":"Choose a general goal",
+     "Name-Hint2":"Make sure you put the correct name for each language",
+     "description-Hint":"Make sure you put the correct description for each language"
 }
