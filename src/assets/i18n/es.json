@@ -152,6 +152,11 @@
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
+    "InputsInfo": [
+        "Este calendario de entrada hace la lista de todas las entradas de datos programadas para la fuente de datos ",
+        "Para limitar los errores de entrada, es preferible entrar los datos cerca de donde se colectaron, directamente en Monitool.",
+        "Si no es posible, una versión PDF del formulario esta provista."
+    ],
     "Language": "Idiomas",
     "LastEntry": "Última entrada",
     "LogicalFrameworks": "Marcos lógicos",

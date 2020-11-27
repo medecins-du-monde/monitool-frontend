@@ -152,6 +152,11 @@
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
+    "InputsInfo": [
+        "This input calendar list all the inputs that were programmed for the data source ",
+        "To limit data entry errors, the preferred course is to do the data entry close from the site where the data is extracted, directly on monitool.",
+        "If not attainable, a PDF version of the form is provided."
+    ],
     "Language": "Language",
     "LastEntry": "Last entry",
     "LogicalFrameworks": "Logical frameworks",
