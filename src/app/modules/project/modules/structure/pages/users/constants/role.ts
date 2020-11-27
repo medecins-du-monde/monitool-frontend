@@ -1,5 +1,14 @@
 export let rolesList = [
-    'Owner',
-    'DataEntryUser',
-    'ReadOnlyUser'
+    {
+        name: 'Owner',
+        value: 'owner'
+    },
+    {
+        name: 'DataEntryUser',
+        value: 'input'
+    },
+    {
+        name: 'ReadOnlyUser',
+        value: 'read'
+    }
 ];

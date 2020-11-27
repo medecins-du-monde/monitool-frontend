@@ -325,5 +325,6 @@
     "Visibility": "Visibility",
     "VisibilityPublic": "Visible for all users (besides partners)",
     "VisibilityPrivate": "Visible only to members of this project",
-    "Invalid": "Invalid"
+    "Invalid": "Invalid",
+    "WrongCredentials": "Wrong username or password. Please try again"
 }

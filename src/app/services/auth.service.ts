@@ -1,28 +1,47 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { User } from '../models/user.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  user: BehaviorSubject<User> = new BehaviorSubject(new User());
+
+  get currentUser(): Observable<User> {
+    return this.user.asObservable();
+  }
+
   constructor(private apiService: ApiService) { }
 
   public async isAuthenticated(): Promise<boolean> {
-    let response = false;
+    let gotResponse = false;
 
     await this.apiService.get('/resources/myself')
-      .then(() => {
-        response = true;
+      .then((response) => {
+        const currentUser = new User(response);
+        delete currentUser.id;
+        this.user.next(currentUser);
+        gotResponse = true;
       })
       .catch(() => {
-        response = false;
+        gotResponse = false;
       });
-    return response;
+
+    return gotResponse;
   }
 
-  public validate(email: string, password: string): Promise<ArrayBuffer> {
+  public async getCurrentUser(){
+    return await this.apiService.get('/resources/myself');
+  }
+
+  public validateTraining(email: string, password: string): Promise<ArrayBuffer> {
     return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
+  }
+  public validatePartner(email: string, password: string): Promise<ArrayBuffer> {
+    return this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'});
   }
 
   public async logOut(){

@@ -331,6 +331,6 @@
     "Computation-Hint":"Veuillez choisir la methode de calcul convenable",
     "GeneralObjective-Hint":"Choisissez un objectif general",
     "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
-    "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue"
-
+    "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue",
+    "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore"
 }
