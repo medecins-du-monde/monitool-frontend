@@ -34,7 +34,8 @@ export class ThemeModalComponent implements OnInit {
         en: [this.data ? this.data.shortName.en : '', Validators.required],
         es: [this.data ? this.data.shortName.es : '', Validators.required],
         fr: [this.data ? this.data.shortName.fr : '', Validators.required]
-      })
+      }),
+      _rev: this.data ? this.data.rev : null
     });
   }
 

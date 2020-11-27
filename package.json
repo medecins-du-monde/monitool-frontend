@@ -25,6 +25,7 @@
     "@ngneat/svg-icon": "^1.0.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "expr-eval": "^2.0.2",
     "lodash": "^4.17.20",
     "rxjs": "~6.5.4",
     "timeslot-dag": "^2.1.3",

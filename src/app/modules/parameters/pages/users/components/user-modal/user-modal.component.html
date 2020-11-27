@@ -2,18 +2,24 @@
 <h2 mat-dialog-title>{{ 'UserEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="userForm" class="mdm-dialog">
     <div class="info-section blue">
-        <p>Vous pouvez ici éditer les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur "Afficher l'aide sur ce champ" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles.</p>
+        <p>{{ 'SettingsUserEdit' | translate }}</p>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Email' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="email">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'EMail-Hint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'FullName' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Name-Hint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
@@ -22,6 +28,9 @@
             <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
                 <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.display | translate }}</mat-option>
             </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <!-- TODO: add table below -->

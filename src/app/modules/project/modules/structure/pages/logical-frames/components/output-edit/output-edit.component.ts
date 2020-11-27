@@ -1,0 +1,69 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import * as _ from 'lodash';
+import { Form } from 'src/app/models/form.model';
+import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import FormGroupBuilder from 'src/app/utils/form-group-builder';
+
+@Component({
+  selector: 'app-output-edit',
+  templateUrl: './output-edit.component.html',
+  styleUrls: ['./output-edit.component.scss']
+})
+export class OutputEditComponent implements OnInit {
+
+  @Input() outputForm: FormGroup;
+  @Input() forms: Form[];
+
+  get activities(): FormArray {
+    return this.outputForm.controls.activities as FormArray;
+  }
+
+  get indicators(): FormArray {
+    return this.outputForm.controls.indicators as FormArray;
+  }
+
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder
+  ) { }
+
+  ngOnInit(): void {}
+
+  onAddNewActivity() {
+    this.activities.push(FormGroupBuilder.newActivity());
+  }
+
+  onRemoveActivity(i: number) {
+    this.activities.removeAt(i);
+  }
+
+  onAddNewIndicator(): void {
+    const indicator: FormGroup = FormGroupBuilder.newIndicator();
+    this.openDialog(indicator, true);
+  }
+
+  onEditIndicator(indicator: FormGroup, index?: number) {
+    this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
+  }
+
+  onDeleteIndicator(i: number) {
+    this.indicators.removeAt(i);
+  }
+
+  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        if (add) {
+          this.indicators.push(res.indicator);
+        }
+        else if (index !== null) {
+          this.indicators.setControl(index, res.indicator);
+        }
+      }
+    });
+  }
+}

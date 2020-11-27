@@ -4,7 +4,10 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+            <input matInput formControlName="name" placeholder="{{ 'Disaggregation.AddNamePlaceholder' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Disaggregation.AddNameHint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
@@ -44,6 +47,9 @@
             <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['add']"></tr>
         </table>
+        <mat-hint class="hint">
+            <mat-icon>info</mat-icon>{{ 'Disaggregation.ElementsHint' | translate }}
+        </mat-hint>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
@@ -52,11 +58,17 @@
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Disaggregation.AggregationHint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Groups' | translate }}</div>
         <mat-checkbox class="mdm-form-field" formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
+        <mat-hint class="hint">
+            <mat-icon>info</mat-icon>{{ 'Disaggregation.GroupsHint' | translate }}
+        </mat-hint>
     </div>
     <div class="mdm-form-group" *ngIf="data.value.useGroups">
         <div class="mdm-form-label"></div>

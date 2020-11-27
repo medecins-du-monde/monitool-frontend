@@ -7,7 +7,7 @@ export class FormElement implements Deserializable {
     name: string;
     geoAgg = 'sum';
     timeAgg = 'sum';
-    distribution = 0;
+    distribution: number;
     partitions: Partition[] = [];
 
     constructor(input?: any) {
@@ -18,6 +18,8 @@ export class FormElement implements Deserializable {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.partitions = (input && input.partitions) ? input.partitions.map(x => new Partition(x)) : [];
+        // tslint:disable-next-line: radix
+        this.distribution = (input && input.distribution) ? parseInt(input.distribution) : 0;
         return this;
     }
 

@@ -1,5 +1,37 @@
 <div class="login-component">
-    <button (click)="login()"> Use training account (admin)</button>
-    <button> Use partner account </button>
+    <div class="center-panel">
+        <div *ngIf="partner === false; else elseBlock" class="buttons">
+            <img [src]="logo" class="mdm-img">
+            <button mat-raised-button class="mat-primary" (click)="loginTrainingAccount()">{{ 'UseTrainingAccount' | translate }}</button>
+            <button mat-stroked-button (click)="partnerAccount()">{{ 'UsePartnerAccount' | translate }}</button>
+        </div>
+        <ng-template #elseBlock >
+            <img [src]="logo" class="sml-img">
+            <div class="authenticationPanel">
+                <h2>{{ 'PartnerAuthentication' | translate }}</h2>
+                <div [formGroup]="loginForm" class="login-form">
+                    <div class="mdm-form-group login-form">
+                        <div class="mdm-form-label">{{ 'User' | translate }}</div>
+                        <mat-form-field appearance="outline" class="mdm-form-field">
+                            <input matInput formControlName="username" placeholder="{{ 'User' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div class="mdm-form-group login-form">
+                        <div class="mdm-form-label">{{ 'Password' | translate }}</div>
+                        <mat-form-field appearance="outline" class="mdm-form-field">
+                            <input matInput type="password" formControlName="password" placeholder="{{ 'Password' | translate }}">
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="wrongCredentials" class="wrong-credentials">
+                      {{ 'WrongCredentials' | translate }}
+                    </div>
+                    <div class="buttons">
+                        <button mat-raised-button (click)="loginPartner()" class="mat-primary">{{ 'Connect' | translate }}</button>
+                        <button mat-stroked-button (click)="partnerAccount()">{{ 'GoBack' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
 </div>
 

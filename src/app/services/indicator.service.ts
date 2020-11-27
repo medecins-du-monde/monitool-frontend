@@ -23,15 +23,11 @@ export class IndicatorService {
     });
   }
 
-  public async get(id: string) {
-    // const response = await this.apiService.get(`/resources/indicator/${id}`);
-  }
-
   public async save(indicator: Indicator) {
     const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
 
   public async delete(id: string) {
-    // const response = await this.apiService.post(`/resources/indicator/${id}`);
+    const response = await this.apiService.delete(`/resources/indicator/${id}`);
   }
 }

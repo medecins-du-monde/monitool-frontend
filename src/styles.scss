@@ -663,4 +663,12 @@ body {
         flex: 1;
         width: 100%;
     }
+
+    &.login-form{
+        .mdm-form-field{
+            .mat-form-field-wrapper{
+                padding-bottom: 0 !important;
+            }
+        }
+    }
 }

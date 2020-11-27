@@ -2,30 +2,12 @@ import { Deserializable } from './deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
 import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
-
-interface Activity {
-    description: string;
-    indicators: ProjectIndicator[];
-}
-
-interface Output {
-    assumtions: string;
-    description: string;
-    activities: Activity[];
-    indicators: ProjectIndicator[];
-}
-
-interface Purpose {
-    assumtions: string;
-    description: string;
-    indicators: ProjectIndicator[];
-    outputs: Output[];
-}
+import { Purpose } from './purpose.model';
 
 export class LogicalFrame implements Deserializable {
     id: string;
     name: string;
-    goal: string;
+    goal = '';
     start: Date;
     end: Date;
     entities: Entity[] = [];
@@ -33,16 +15,29 @@ export class LogicalFrame implements Deserializable {
     purposes: Purpose[] = [];
 
     constructor(input?: any) {
-        this.deserialize(input);
+      this.deserialize(input);
     }
 
     deserialize(input: any): this {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
+        this.purposes = ( input && input.purposes ) ? input.purposes.map(x => new Purpose(x)) : [];
+        this.start = ( input && input.start ) ? new Date(input.start)  : null;
+        this.end = ( input && input.end ) ? new Date(input.end) : null;
+        this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }
 
     serialize() {
-        return this;
+      return {
+            id: this.id,
+            name: this.name,
+            goal: this.goal,
+            start: this.start ? this.start.toISOString().slice(0, 10) : null,
+            end: this.end ? this.end.toISOString().slice(0, 10) : null,
+            entities: this.entities.map(x => x.id),
+            purposes: this.purposes.map(x => x.serialize()),
+            indicators: this.indicators.map(x => x.serialize()),
+        };
     }
 }

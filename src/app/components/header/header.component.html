@@ -47,6 +47,7 @@
 <mat-menu #menu="matMenu">
     <button mat-menu-item [routerLink]="['parameters']">{{ 'Settings' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
+    <button mat-menu-item (click)="disconnect()">{{ 'LogOut' | translate }}</button>
 </mat-menu>
 
 <mat-menu #langMenu="matMenu">

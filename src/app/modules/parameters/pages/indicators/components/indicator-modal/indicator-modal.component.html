@@ -2,7 +2,7 @@
 <h2 mat-dialog-title>{{ 'IndicatorEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="indicatorForm" class="mdm-dialog">
     <div class="info-section blue">
-        <p>Cette page vous permet de modifier la définition d'un indicateur transversal. Si vous réalisez des changements, attention de bien mettre à jour les champs dans toutes les langues.</p>
+        <p>{{ 'SettingsIndicatorEdit' | translate }}</p>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
@@ -20,6 +20,9 @@
                 <mat-option *ngFor="let theme of themes" [value]="theme">{{ theme.name[currentLang] + '-' + theme.shortName[currentLang] }}
                 </mat-option>
             </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <ng-container formGroupName="name">
@@ -27,6 +30,9 @@
             <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Name' | translate }}">
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Name-Hint2' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
     </ng-container>
@@ -35,6 +41,9 @@
             <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Description' | translate }}">
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'description-Hint' | translate }}
+                </mat-hint>
             </mat-form-field>
         </div>
     </ng-container>
