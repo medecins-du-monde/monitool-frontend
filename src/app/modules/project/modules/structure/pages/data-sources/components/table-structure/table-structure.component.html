@@ -5,7 +5,7 @@
         <table *ngIf="visualize" class="display">
             <tr>
         <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
-            <table class="test" >
+            <table>
             <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
                 <td *ngFor="let column of getNumber(i)" class ="empty"></td>
                 <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
@@ -16,7 +16,7 @@
                 </td>
                 <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
             </tr>
-            <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}"></mat-radio-button></td></tr>
+            <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}" [checked]="isCurrent(i)"></mat-radio-button></td></tr>
             </table>
         </td>
         </tr>
@@ -26,7 +26,7 @@
 <!--- DYNAMIC Structure -->
 
 <div [formGroup]="elementForm"> 
-<table  *ngIf="!visualize" class="display" class="test">
+<table  *ngIf="!visualize" class="display">
     <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let rowIndex = index">
         <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
         <td class ="title">
@@ -42,7 +42,7 @@
     <tr>
         <td *ngFor="let partition of partitions.slice((partitions.length)-tableStructure); let lastRowIndex = index" class ="title">
             <mat-form-field class="auto-width">
-                <mat-select  formArrayName="partitions"  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, (lastRowIndex))" >
+                <mat-select  formArrayName="partitions"  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, getIndex(lastRowIndex))" >
                     <mat-option *ngFor="let part of partitions" [value]="part.id" >
                         {{ part.name }} ({{part.elements.length}})
                     </mat-option>

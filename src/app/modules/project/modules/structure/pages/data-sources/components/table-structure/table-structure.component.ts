@@ -22,7 +22,7 @@ export class TableStructureComponent implements OnInit {
 
   partitions: any;
 
-  test = 0;
+  savedStructure: number;
 
   constructor(private projectService: ProjectService) { }
 
@@ -54,7 +54,7 @@ export class TableStructureComponent implements OnInit {
       this.project.forms.filter(element => element.elements.filter(x => {
         if (x.id === this.elementForm.value.id) {
           this.partitions = x.partitions;
-          this.test = x.distribution ? x.distribution : 0;
+          this.savedStructure = x.distribution ? x.distribution : 0;
         }
       }));
     });
@@ -77,6 +77,10 @@ export class TableStructureComponent implements OnInit {
 
   toNumber(i) {
     return parseInt(i, 10);
+  }
+
+  isCurrent(i) {
+    return i === this.savedStructure;
   }
 
 
