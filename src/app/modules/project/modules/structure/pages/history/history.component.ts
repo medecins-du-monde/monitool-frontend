@@ -23,7 +23,7 @@ import { Form } from 'src/app/models/form.model';
 })
 export class HistoryComponent implements OnInit {
   displayedColumns: string[] = ['date', 'changes'];
-  dataSource: Revision[];
+  revisions: Revision[];
 
   expandedElement: null;
   isSameVersion: boolean;
@@ -48,7 +48,7 @@ export class HistoryComponent implements OnInit {
       this.offset = 0;
       this.limit = 10;
       this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
-        this.dataSource = revisions;
+        this.revisions = revisions;
         this.showLoadMore = revisions.length < 10 ? false : true;
       });
     });
@@ -73,16 +73,21 @@ export class HistoryComponent implements OnInit {
     this.offset += 10;
     this.limit += 10;
     this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
-      this.dataSource = revisions;
+      this.revisions = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });
   }
 
   patchProject(revisionIndex) {
     let revisedProject = this.project.copy();
-    for (let i = 1; i <= revisionIndex; i++) {
-      const patch = this.dataSource[i].backwards;
-      const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+    for (let i = 0; i < revisionIndex; i++) {
+      try {
+        const patch = this.revisions[i].backwards;
+        jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+      } catch (e) {
+        console.log("Error in reverting to datasource at Index ", i);
+        console.log(e);
+      }
     }
     revisedProject.forms = revisedProject.forms.map(y => new Form(y));
     return revisedProject;

@@ -5,6 +5,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Operation } from 'fast-json-patch';
 import { Form } from 'src/app/models/form.model';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -35,22 +36,31 @@ export class RevisionSummaryComponent implements OnInit {
 
 
   createDynamicRevisionText() {
-
-    let before = this.patchProject(this.index);
+    let before = this.patchProject(this.index+1);
     let after = this.patchProject(this.index);
+    after = jsonpatch.applyPatch(after, this.revisions[this.index].backwards as Operation[]).newDocument;
+    after.forms = after.forms.map(y => new Form(y));
 
-    this.revision.forwards.forEach( revision => {
-      const operation = revision;
-      after = jsonpatch.applyOperation(after, operation as Operation).newDocument;
+
+    this.revision.forwards.forEach( rev => {
+
+      const operation = rev;
       const key = this.getTranslationKey(operation);
-      let data = this.getTranslationData(operation, before, after);
+      let data;
+      if (this.index === 0) {
+        data = this.getTranslationData(operation, after, after);
+      } else {
+        data = this.getTranslationData(operation, before, after);
+      }
 
       if (key) {
         data['translationKey'] = key;
         this.output.push(data);
+      } else {
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
+      before.forms = before.forms.map(y => new Form(y));
     });
   }
 
@@ -127,7 +137,7 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
-      translationData['item'] = before;
+      translationData['item'] = after; //TODO: TEST THIS; ORIGINAL IS BEFORE!
       for (let j = 0; j < splitPath.length; j += 1) {
         translationData['item'] = translationData['item'][splitPath[j]];
       }
@@ -163,11 +173,17 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   patchProject(revisionIndex) {
-    let revisedProject = this.project.copy();
-    for (let i = 1; i <= revisionIndex; i++) {
-      const patch = this.revisions[i].backwards;
-      const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+    let revisedProject = _.cloneDeep(this.project);
+    for (let i = 0; i < revisionIndex; i++) {
+      try {
+        const patch = this.revisions[i].backwards;
+        jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+      } catch (e) {
+        console.log("Error in reverting to datasource at Index ", i);
+        console.log(e);
+      }
     }
+
     revisedProject.forms = revisedProject.forms.map(y => new Form(y));
     return revisedProject;
   }
@@ -175,6 +191,5 @@ export class RevisionSummaryComponent implements OnInit {
   transformDate(date) {
       return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' +  date.getDate();
   }
-
 
 }
