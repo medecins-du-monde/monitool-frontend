@@ -6,6 +6,7 @@ import { Revision } from 'src/app/models/revision.model';
 import { Operation, compare } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
 import { isEqual } from 'lodash';
+import { Form } from 'src/app/models/form.model';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class HistoryComponent implements OnInit {
   expandedElement: null;
   isSameVersion: boolean;
   showSaveConfirm: boolean;
-  saveConfirmElement: null;
+  saveConfirmElement: number;
 
   private projectId: string;
   private project: Project;
@@ -54,11 +55,11 @@ export class HistoryComponent implements OnInit {
   }
 
   mouseOver(element){
-      this.expandedElement = element;
+    this.expandedElement = element;
   }
 
   sameVersion(i){
-    let patchedProject = this.patchProject(i);
+    const patchedProject = this.patchProject(i);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
@@ -83,6 +84,7 @@ export class HistoryComponent implements OnInit {
       const patch = this.dataSource[i].backwards;
       const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
     }
+    revisedProject.forms = revisedProject.forms.map(y => new Form(y));
     return revisedProject;
   }
 
@@ -90,9 +92,11 @@ export class HistoryComponent implements OnInit {
     return this.saveConfirmElement === element ? true : false;
   }
 
-  onRevertClick(revisionIndex, element) {
-    this.saveConfirmElement = element;
+  onRevertClick(revisionIndex) {
+    this.saveConfirmElement = revisionIndex;
     const patchedRevision = this.patchProject(revisionIndex);
+
+    patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     this.projectService.project.next(patchedRevision);
   }
 

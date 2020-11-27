@@ -4,7 +4,7 @@ import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Operation } from 'fast-json-patch';
-import { transcode } from 'buffer';
+import { Form } from 'src/app/models/form.model';
 
 
 @Component({
@@ -29,6 +29,12 @@ export class RevisionSummaryComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
     });
+
+    this.createDynamicRevisionText();
+  }
+
+
+  createDynamicRevisionText() {
 
     let before = this.patchProject(this.index);
     let after = this.patchProject(this.index);
@@ -162,6 +168,7 @@ export class RevisionSummaryComponent implements OnInit {
       const patch = this.revisions[i].backwards;
       const test = jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
     }
+    revisedProject.forms = revisedProject.forms.map(y => new Form(y));
     return revisedProject;
   }
 
