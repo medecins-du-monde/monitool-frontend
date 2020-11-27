@@ -49,19 +49,19 @@
         </table>
     </div>
 </div>
-<div>
-    <button *ngIf="canBeSaved; else elseSave" (click)="saveInput()">SAVE</button>
-    <ng-template #elseSave>
-        <button disabled>SAVE</button>
-    </ng-template>
+<div class="save-actions">
+    <button mat-stroked-button class="mdm-button primary" [disabled]="!canBeSaved" (click)="saveInput()">
+        <mat-icon>save</mat-icon>
+        {{ 'Save' | translate }}
+    </button>
     
-    <button *ngIf="inputHasModification; else elseReset" (click)="resetInput()">RESET CHANGES</button>
-    <ng-template #elseReset>
-        <button disabled>RESET CHANGES</button>
-    </ng-template>
+    <button mat-stroked-button class="mdm-button" [disabled]="!canBeSaved" (click)="resetInput()">
+        <mat-icon>replay</mat-icon>
+        {{ 'Reset changes' | translate }}
+    </button>
 
-    <button *ngIf="input; else elseDelete" (click)="deleteInput()">DELETE</button>
-    <ng-template #elseDelete>
-        <button disabled>DELETE</button>
-    </ng-template>
+    <button mat-stroked-button class="mdm-button warn" *ngIf="input" (click)="deleteInput()">
+        <mat-icon>clear</mat-icon>
+        {{ 'Delete' | translate }}
+    </button>
 </div>

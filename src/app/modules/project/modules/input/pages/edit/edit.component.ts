@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from 'src/app/models/form.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -66,7 +66,8 @@ export class EditComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     public datepipe: DatePipe,
     private fb: FormBuilder,
-    private inputService: InputService
+    private inputService: InputService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -417,6 +418,7 @@ export class EditComponent implements OnInit, OnDestroy {
   async deleteInput(){
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
+    this.router.navigate(['./../../../'], {relativeTo: this.route});
   }
 
   async getInput(): Promise<any>{

@@ -1,3 +1,4 @@
+@import "src/stylesheets/variables.scss";
 .mdm-section{
     margin-top: 34px;
     padding: 16px;
@@ -25,4 +26,38 @@
     .fill-button{
         float: right;
     }
+}
+
+
+.save-actions {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+    padding: 12px 16px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+
+    @media screen and (max-width: $breakpoint-sm) {
+        width: 100%;
+    }
+    
+    button {
+        margin-right: 8px;
+        
+        &.warn{
+            background-color: #f44336;
+            color: white;
+
+        }
+        &.primary{
+            background-color: #337ab7;
+            color: white;
+            &.mat-stroked-button.mat-button-disabled.mat-button-disabled{
+                opacity: .65;
+            }
+        }
+    }
+    
 }
