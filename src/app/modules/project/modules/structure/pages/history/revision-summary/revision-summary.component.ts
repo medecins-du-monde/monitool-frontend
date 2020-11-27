@@ -150,6 +150,11 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
 
+    if (!translationData["item"]) {
+      console.log("EEMPTY", translationData);
+      translationData["item"] = '';
+    }
+
     //////////////////////////
     // When the modification is adding or removing ids that refer to something else, we
     // replace the id by the actual value it refers to, to allow proper printing

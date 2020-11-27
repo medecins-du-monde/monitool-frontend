@@ -99,7 +99,7 @@ export class HistoryComponent implements OnInit {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex);
+    const patchedRevision = this.patchProject(revisionIndex+1);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     this.projectService.project.next(patchedRevision);
