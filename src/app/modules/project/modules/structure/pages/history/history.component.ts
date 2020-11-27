@@ -3,7 +3,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { Revision } from 'src/app/models/revision.model';
-import { Operation, compare } from 'fast-json-patch';
+import { Operation } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
 import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/form.model';
@@ -85,7 +85,7 @@ export class HistoryComponent implements OnInit {
         const patch = this.revisions[i].backwards;
         jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
       } catch (e) {
-        console.log("Error in reverting to datasource at Index ", i);
+        console.log('Error in reverting to datasource at Index ', i);
         console.log(e);
       }
     }

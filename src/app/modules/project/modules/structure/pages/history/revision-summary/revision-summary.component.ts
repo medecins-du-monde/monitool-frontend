@@ -26,7 +26,6 @@ export class RevisionSummaryComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
     });
@@ -36,17 +35,17 @@ export class RevisionSummaryComponent implements OnInit {
 
 
   createDynamicRevisionText() {
-    let before = this.patchProject(this.index+1);
+    let before = this.patchProject(this.index + 1);
     let after = this.patchProject(this.index);
     after = jsonpatch.applyPatch(after, this.revisions[this.index].backwards as Operation[]).newDocument;
     after.forms = after.forms.map(y => new Form(y));
 
-
+    // loop through revision of element and apply datatransformation to create table input
     this.revision.forwards.forEach( rev => {
-
       const operation = rev;
       const key = this.getTranslationKey(operation);
       let data;
+
       if (this.index === 0) {
         data = this.getTranslationData(operation, after, after);
       } else {
@@ -81,7 +80,6 @@ export class RevisionSummaryComponent implements OnInit {
     // All computation changes in indicators are simplified to be complete replacement.
     const computationMatch = editedField.match('^(.*)_computation');
     if (computationMatch) {
-      // truncate everything after computation
       editedField = computationMatch[1] + '_computation';
       editedField = editedField + '_replace';
     }
@@ -116,12 +114,7 @@ export class RevisionSummaryComponent implements OnInit {
     }
 
 
-    //////////////////////////
     // Get the actual item that got modified.
-    // For replace operations, we define both the "before" and "after" keys
-    // Otherwise, just the "item".
-    //////////////////////////
-
 
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
@@ -137,7 +130,7 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
-      translationData['item'] = after; //TODO: TEST THIS; ORIGINAL IS BEFORE!
+      translationData['item'] = after; // This part used to be translationData['item'] = before;
       for (let j = 0; j < splitPath.length; j += 1) {
         translationData['item'] = translationData['item'][splitPath[j]];
       }
@@ -150,8 +143,8 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
 
+    // In case we needed an item but it was not defined yet (in our framework we currently don't default values for some)
     if (!translationData["item"]) {
-      console.log("EEMPTY", translationData);
       translationData["item"] = '';
     }
 
@@ -184,7 +177,7 @@ export class RevisionSummaryComponent implements OnInit {
         const patch = this.revisions[i].backwards;
         jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
       } catch (e) {
-        console.log("Error in reverting to datasource at Index ", i);
+        console.log('Error in reverting to datasource at Index ', i);
         console.log(e);
       }
     }
