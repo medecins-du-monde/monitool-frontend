@@ -91,8 +91,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.setForm();
-    this.startDate = this.project.start;
-    this.endDate = this.project.end
   }
 
   ngOnChanges(): void {
@@ -105,8 +103,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       name: [this.form.name, Validators.required],
       entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id)), Validators.required],
       periodicity: [this.form.periodicity, Validators.required],
-      start: [this.form.start],
-      end: [this.form.end],
+      start: [this.form.start ? this.form.start : this.project.start],
+      end: [this.form.end ? this.form.end : this.project.end],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
@@ -169,20 +167,4 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
   }
-
-  dateTransform(date) {
-    const isoDate = new Date(date);
-    return isoDate;
-  }
-
-  changeStartDate(event) {
-    this.startDate = event.value;
-    this.changedStartDate = true;
-  }
-
-  changeEndDate(event) {
-    this.endDate = event.value;
-    this.changedEndDate = true;
-  }
-
 }
