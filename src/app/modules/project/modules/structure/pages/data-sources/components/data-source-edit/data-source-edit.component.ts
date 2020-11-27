@@ -7,6 +7,7 @@ import { PartitionElement } from 'src/app/models/partition-element.model';
 import { PartitionGroup } from 'src/app/models/partition-group.model';
 import { Partition } from 'src/app/models/partition.model';
 import { Project } from 'src/app/models/project.model';
+import Dates from 'src/app/utils/dates';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -103,13 +104,17 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       name: [this.form.name, Validators.required],
       entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id)), Validators.required],
       periodicity: [this.form.periodicity, Validators.required],
-      start: [this.form.start ? this.form.start : this.project.start],
-      end: [this.form.end ? this.form.end : this.project.end],
+      start: [this.form.start, Validators.required],
+      end: [this.form.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      this.changedStartDate = !Dates.areEquals(new Date(value.start), new Date(this.project.start));
+      this.changedEndDate = !Dates.areEquals(new Date(value.end), new Date(this.project.end));
       this.edit.emit(this.form.deserialize(value));
     });
+    if (this.form.start) { this.changedStartDate = !Dates.areEquals(new Date(this.form.start), new Date(this.project.start)); }
+    if (this.form.end) { this.changedEndDate = !Dates.areEquals(new Date(this.form.end), new Date(this.project.end)); }
   }
 
   onEntityRemoved(entity: Entity) {
