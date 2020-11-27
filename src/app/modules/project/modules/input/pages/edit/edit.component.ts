@@ -367,6 +367,12 @@ export class EditComponent implements OnInit, OnDestroy {
     return numberCols * numberRows;
   }
 
+  isLabelCell(tablePos, i, j){
+    const rows = this.tables[tablePos].rows;
+    const cols = this.tables[tablePos].cols;
+
+    return (i < cols.length || j < rows.length);
+  }
   isInputCell(tablePos, i, j){
     const rows = this.tables[tablePos].rows;
     const cols = this.tables[tablePos].cols;

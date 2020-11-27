@@ -32,14 +32,14 @@
         <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
             <ng-container *ngFor="let column of table.displayedColumns; let j = index" matColumnDef="{{ column }}">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <td mat-cell *matCellDef="let element; let i = index">
-                    <div *ngIf="isInputCell(k, i, j) !== false; else elseBlock">
-                        <mat-form-field appearance="outline" class="mdm-form-field">
-                            <input matInput [formControl]="inputForm.get('values').get(table.id)['controls'][isInputCell(k, i, j)]" />
-                        </mat-form-field>
+                <td mat-cell *matCellDef="let element; let i = index" [ngClass]="{'tableLabel': isLabelCell(k, i, j)}" class="input-td">
+                    <div class="input-div" *ngIf="isInputCell(k, i, j) !== false; else elseBlock">
+                        <input matInput [formControl]="inputForm.get('values').get(table.id)['controls'][isInputCell(k, i, j)]" />
                     </div>
                     <ng-template #elseBlock>
-                        {{ element[column] }}
+                        <div class="table-value">
+                            {{ element[column] }}
+                        </div>
                     </ng-template>
                 </td>
             </ng-container>

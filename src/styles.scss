@@ -471,6 +471,9 @@ body {
     th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
         padding: 8px 16px 8px 8px;
     }
+    th.input-td.mat-header-cell:last-of-type, td.input-td.mat-cell:last-of-type, td.input-td.mat-footer-cell:last-of-type {
+        padding: 0px;
+    }
 
     code{
         padding: 2px 4px;
@@ -484,6 +487,38 @@ body {
     thead{
         tr.mat-header-row{
            height: 0px !important; 
+        }
+    }
+    tbody{
+        tr{
+            td{
+                position: relative;
+                &.tableLabel{
+                    background-color: #eeeeee;
+                    .table-value{
+                        color: inherit;
+                    }
+                }
+                
+                .input-div{
+                    padding: 0px;
+                    input{
+                        padding: 8px;
+                        width: 100%;
+                        font-family: inherit;
+                        
+                        //this is to make the input ocuppy the entire cell
+                        position:absolute;
+                        top: 1px;
+                        height: calc(100% - 2px);
+                        border: 0;
+                    }
+                }
+                .table-value{
+                    padding: 8px;
+                    color: #777777;
+                }
+            }
         }
     }
 }
