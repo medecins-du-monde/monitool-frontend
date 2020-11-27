@@ -29,7 +29,7 @@
                 <span *ngIf="(sameVersion(i) && i !== saveConfirmElement)" >{{ 'EquivalentVersion' | translate }}</span>
                 <button mat-stroked-button *ngIf="(!sameVersion(i) && i !== saveConfirmElement)" (click)="onRevertClick(i)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
             </div>
-            <span *ngIf="i === saveConfirmElement">{{ 'SaveConfirm' | translate }}</span>
+            <div class="static-row" *ngIf="i === saveConfirmElement">{{ 'SaveConfirm' | translate }}</div>
         </td>
     </ng-container>
 
