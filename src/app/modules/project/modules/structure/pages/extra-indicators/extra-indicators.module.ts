@@ -1,4 +1,7 @@
+import { MatCardModule } from '@angular/material/card';
+import {  MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +18,10 @@ import { ExtraIndicatorsComponent } from './extra-indicators.component';
         ExtraIndicatorsRoutingModule,
         ExtraIndicatorModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatDialogModule,
+        MatCardModule,
+        ReactiveFormsModule
     ]
 })
 export class ExtraIndicatorsModule { }

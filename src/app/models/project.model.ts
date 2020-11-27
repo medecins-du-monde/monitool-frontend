@@ -83,7 +83,7 @@ export class Project implements Deserializable {
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
             return group;
         }) : [];
-        this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
+        // this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -96,6 +96,16 @@ export class Project implements Deserializable {
             return logicalFrame;
         }) : [];
         this.crossCutting = {};
+        this.users = (input && input.users) ? input.users.map(u => {
+            const user = new User(u);
+            if (u.entities){
+                user.entities = this.entities.filter(e => u.entities.indexOf(e.id) >= 0);
+            }
+            if (u.dataSources){
+                user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
+            }
+            return user;
+        }) : [];
         // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
         //     baseline: 12,
         //     colorize: true,
@@ -120,7 +130,7 @@ export class Project implements Deserializable {
             crossCutting: {},
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
-            extraIndicators: [],
+            extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
             groups: this.groups.map(x => x.serialize()),
@@ -128,7 +138,7 @@ export class Project implements Deserializable {
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
-            users: this.users.map(user => user.serialize()),
+            users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
             _id: this.id
         };

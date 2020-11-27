@@ -17,24 +17,31 @@ export class AuthService {
   constructor(private apiService: ApiService) { }
 
   public async isAuthenticated(): Promise<boolean> {
-    let response = false;
+    let gotResponse = false;
 
     await this.apiService.get('/resources/myself')
-      .then((reply) => {
-        let currentUser = new User(reply);
-        delete currentUser["_id"];
+      .then((response) => {
+        const currentUser = new User(response);
+        delete currentUser.id;
         this.user.next(currentUser);
-        response = true;
+        gotResponse = true;
       })
       .catch(() => {
-        response = false;
+        gotResponse = false;
       });
 
-    return response;
+    return gotResponse;
   }
 
-  public validate(email: string, password: string): Promise<ArrayBuffer> {
+  public async getCurrentUser(){
+    return await this.apiService.get('/resources/myself');
+  }
+
+  public validateTraining(email: string, password: string): Promise<ArrayBuffer> {
     return this.apiService.post('/authentication/login-training/', {username : email, password}, {responseType: 'text'});
+  }
+  public validatePartner(email: string, password: string): Promise<ArrayBuffer> {
+    return this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'});
   }
 
   public async logOut(){

@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+
 
 @NgModule({
   declarations: [UserModalComponent],
@@ -16,11 +19,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule,
+    MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatSelectModule,
+    MatChipsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
   ],
   exports: [UserModalComponent]
 })

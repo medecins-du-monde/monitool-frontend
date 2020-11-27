@@ -41,10 +41,9 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((user: User) => {
-      this.currentUser = user;
+      this.currentUser = new User(user);
+      this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
     });
-    this.projectOwner = (this.project.users.filter(user => user.id === this.currentUser.id).length > 0);
-
   }
 
   async onOpen(): Promise<void> {
@@ -76,10 +75,11 @@ export class ProjectComponent implements OnInit {
       if (this.projectOwner) {
         return 'person';
       }
-    } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)){
-      return 'star';
-    } else {
-      return 'star_border';
+      else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)){
+        return 'star';
+      } else {
+        return 'star_border';
+      }
     }
   }
 

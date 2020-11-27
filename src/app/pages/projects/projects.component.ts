@@ -63,7 +63,7 @@ export class ProjectsComponent implements OnInit {
     });
 
     this.authService.currentUser.subscribe((user: User) => {
-      this.currentUser = user;
+      this.currentUser = new User(user);
     });
   }
 
@@ -72,19 +72,25 @@ export class ProjectsComponent implements OnInit {
       this.allProjects = res;
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
-      // this.projects = this.filterByStatuses(this.allProjects);
-      this.projects.sort((a, b) => {
-        if (a.users.find(user => user.role === 'owner') || (b.users.find(user => user.role === 'owner'))) {
-          if (a.users.find(user => user.role === 'owner') && (b.users.find(user => user.role === 'owner'))) {
-            return a.name.localeCompare(b.name);
-          } else if (a.users.find(user => user.role === 'owner')) {
+      const listToReturn = this.projects.sort((a, b) => {
+        // If owner of at least one of both project
+        if (a.users.find(user => this.isOwner(user))
+        || b.users.find(user => this.isOwner(user))
+        ) {
+          // If owner of both project
+          if (a.users.find(user => this.isOwner(user))
+          && b.users.find(user => this.isOwner(user))
+          ) {
+            // alphabetical order
+            return a.country.localeCompare(b.country);
+          } else if (a.users.find(user => this.isOwner(user))) {
             return -1;
           } else {
             return 1;
           }
         } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
           if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
-            return a.name.localeCompare(b.name);
+            return a.country.localeCompare(b.country);
           } else {
             return -1;
           }
@@ -92,6 +98,7 @@ export class ProjectsComponent implements OnInit {
           return 1;
         }
       });
+      return listToReturn;
     });
   }
 
@@ -182,5 +189,9 @@ export class ProjectsComponent implements OnInit {
       filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
     }
     return filteredProjects;
+  }
+
+  private isOwner(user: User) {
+    return user.role === 'owner' && user.id === this.currentUser.id;
   }
 }
