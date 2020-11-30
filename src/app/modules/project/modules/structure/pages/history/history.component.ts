@@ -59,7 +59,7 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i);
+    const patchedProject = this.patchProject(i+1);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
