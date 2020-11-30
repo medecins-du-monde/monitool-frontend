@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   partner = false;
 
   loginForm: FormGroup;
+  wrongCredentials = false;
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -29,9 +30,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login(){
-    this.authService.validate('value', 'value').then((response: any) => {
+  loginTrainingAccount(){
+    this.authService.validateTraining('value', 'value').then(() => {
       this.router.navigate(['home']);
+    });
+  }
+
+  loginPartner(){
+    this.authService.validatePartner(
+      this.loginForm.controls.username.value,
+      this.loginForm.controls.password.value
+    ).then(() => {
+      this.router.navigate(['home']);
+    })
+    .catch(err => {
+      this.wrongCredentials = true;
     });
   }
 

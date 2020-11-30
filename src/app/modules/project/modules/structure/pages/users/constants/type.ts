@@ -1,4 +1,10 @@
 export let typesList = [
-    'AccountMDM',
-    'AccountPartner'
+    {
+        name: 'AccountMDM',
+        value: 'internal'
+    },
+    {
+        name: 'AccountPartner',
+        value: 'partner'
+    }
 ];

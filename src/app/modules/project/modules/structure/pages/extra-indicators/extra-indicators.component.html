@@ -2,19 +2,17 @@
     <p>{{ "ExtraIndicatorsInfo.0" | translate }}</p>
     <p>{{ "ExtraIndicatorsInfo.1" | translate }}</p>
 </div>
-
-<div *ngIf="extraIndicators.length !== 0; else elseBlock" >
-    <div class="mdm-section">
-        <div class="mdm-cards">
-            <app-extra-indicator *ngFor="let extraIndicator of extraIndicators" class="mdm-card" [extraIndicator]="extraIndicator"></app-extra-indicator>
+<div [formGroup]="extraIndicatorsForm" class="mdm-section">
+    <div class="indicators-list" formArrayName="indicators">
+        <div *ngIf="project.extraIndicators.length !== 0; else elseBlock" class="mdm-cards">
+            <ng-container class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
+                <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
+            </ng-container>
         </div>
+        <ng-template #elseBlock>
+          <p>{{ 'NoExtraIndicator' | translate }} </p>
+        </ng-template>
+        <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
     </div>
 </div>
 
-<ng-template #elseBlock>
-    <p>{{ 'NoExtraIndicator' | translate }} </p>
-</ng-template>
-
-<div class="mdm-section">
-    <button mat-stroked-button class="mdm-button"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
-</div>
