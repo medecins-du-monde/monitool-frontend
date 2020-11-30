@@ -1,15 +1,18 @@
-<mat-form-field appearance="fill">
-  <mat-label>Chart Type</mat-label>
-  <mat-select (selectionChange)="changeChartType($event)">
-    <mat-option *ngFor="let type of chartTypes" [value]="type.value">
-      {{type.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="chart-field">
+  <mat-form-field appearance="fill">
+    
+    <mat-label>Chart Type</mat-label>
+    <mat-select (selectionChange)="changeChartType($event)">
+      <mat-option *ngFor="let type of chartTypes" [value]="type.value">
+        {{type.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<div id="divChart">
-    <canvas id="MyChart"></canvas>
+  <div id="divChart">
+      <canvas id="MyChart"></canvas>
+  </div>
+
+  <button mat-stroked-button (click)=addGraph()>Add Data</button>
+  <button mat-stroked-button (click)=deleteGraph()>Delete Graph</button>
 </div>
-
-<button mat-stroked-button (click)=addGraph()>Add Data</button>
-<button mat-stroked-button (click)=deleteGraph()>Delete Graph</button>
