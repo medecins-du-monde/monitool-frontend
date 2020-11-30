@@ -1,7 +1,3 @@
-import { Indicator } from './../../../../../../../../models/indicator.model';
-import { PartitionElement } from './../../../../../../../../models/partition-element.model';
-import { element } from 'protractor';
-import { FormElement } from './../../../../../../../../models/form-element.model';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -63,9 +59,6 @@ export class IndicatorModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
-    this.data.indicator.valueChanges.subscribe(() => {
-      this.dataChanged = true;
-    });
     // Creation of the init value for the reset
     this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
     this.initDataSource = this.dataSource.getValue();
@@ -74,8 +67,9 @@ export class IndicatorModalComponent implements OnInit {
    onSubmit() {
     this.dialogRef.close({ indicator: this.data.indicator });
   }
-    loadData() {
-          // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
+
+  loadData() {
+    // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
     this.parser = new Parser();
     this.parser.consts = {};
     try {
@@ -127,7 +121,12 @@ export class IndicatorModalComponent implements OnInit {
 
       this.dataSource.next(newDataSource);
     }
-    }
+    this.dataChanged = false;
+    this.data.indicator.valueChanges.subscribe(() => {
+      this.dataChanged = true;
+    });
+  }
+
   onReset() {
     this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
     this.dataSource.next(this.initDataSource);
