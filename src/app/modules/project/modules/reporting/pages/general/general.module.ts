@@ -6,6 +6,7 @@ import { GeneralComponent } from './general.component';
 import { ChartModule} from './chart/chart.module';
 import { ObjectGroupingModule} from './objectGrouping/object-grouping.module';
 import { FilterModule} from './filter/filter.module';
+import { DataTableModule } from './dataTable/data-table.module'
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { FilterModule} from './filter/filter.module';
         ChartModule,
         ObjectGroupingModule,
         FilterModule,
+        DataTableModule
     ]
 })
 export class GeneralModule { }

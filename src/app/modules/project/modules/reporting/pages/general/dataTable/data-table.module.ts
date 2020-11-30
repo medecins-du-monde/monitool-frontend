@@ -1,23 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { ObjectGroupingComponent } from './object-grouping.component';
-import { MatSelectModule } from '@angular/material/select';
+import { DataTableComponent } from './data-table.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
-    declarations: [ObjectGroupingComponent],
-    exports: [ObjectGroupingComponent],
+    declarations: [DataTableComponent],
+    exports: [DataTableComponent],
     imports: [
         CommonModule,
         TranslateModule,
-        MatSelectModule,
         MatIconModule,
         MatGridListModule,
-        MatButtonModule
+        MatTableModule
     ]
 })
-export class ObjectGroupingModule { }
+export class DataTableModule { }
