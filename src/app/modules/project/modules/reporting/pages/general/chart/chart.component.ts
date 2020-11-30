@@ -10,6 +10,7 @@ export class ChartComponent implements OnInit {
 
   constructor() { }
 
+  private chartType = 'line';
   private options =  {fill: false};
   private labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Me'];
   private data = {
@@ -18,15 +19,26 @@ export class ChartComponent implements OnInit {
         label: '# of Votes',
         data: [12, 19, 3, 5, 2, 3, 25],
         borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 1)',
         fill: false,
     }]
   }
   private chart;
 
+  barChartTypes = [
+    {value: 'bar', viewValue: 'Bar Chart'},
+    {value: 'line', viewValue: 'Line Chart'},
+    {value: 'bubble', viewValue: 'Bubble Plot'},
+    {value: 'scatter', viewValue: 'Scatter Plot'},
+    {value: 'radar', viewValue: 'Radar Plot'},
+    {value: 'doughnut', viewValue: 'Doughnut '},
+    {value: 'area', viewValue: 'Area Chart'}
+  ];
+
 
   ngOnInit(): void {
     this.chart = new Chart("MyChart", {
-      type: 'line',
+      type: this.chartType,
       data: this.data,
       options: this.options,
   });
@@ -39,10 +51,12 @@ export class ChartComponent implements OnInit {
       tempData.push(this.randomNumberLimit(30));
     }
 
+    const chartColor =  this.randomColor()
     let temp = {
       label: '# of Votes',
       data: tempData,
-      borderColor: this.randomColor(),
+      borderColor: chartColor,
+      backgroundColor: chartColor,
       fill: false,
     };
 
@@ -61,6 +75,20 @@ export class ChartComponent implements OnInit {
 
     console.log(col);
     return col;
+  }
+
+  deleteGraph() {
+    this.chart.data.datasets = [];
+    this.chart.update();
+  }
+
+  changeChartType(event) {
+    this.chart.destroy();
+    this.chart = new Chart("MyChart", {
+      type: event.value,
+      data: this.data,
+      options: this.options,
+  });
   }
 
 }
