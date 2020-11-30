@@ -1,13 +1,23 @@
-<div>
-<mat-icon>filter_none</mat-icon>
-<mat-form-field appearance="fill">
-  <mat-label>Grouping</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let type of groupOptions" [value]="type.value">
-      {{type.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<span><mat-icon>system_update</mat-icon><button>Download table</button></span>
+<mat-grid-list cols="16" rowHeight="1.5:1">
+    <mat-grid-tile colspan="1">
+        <mat-icon>filter_none</mat-icon>
+    </mat-grid-tile>
 
-</div>
+    <mat-grid-tile colspan="13">
+        <div class="form-field-group">
+        <mat-form-field appearance="fill">
+            <mat-label>Grouping</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let type of groupOptions" [value]="type.value">
+                {{type.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+        <mat-icon>system_update</mat-icon><button>Download table</button>
+    </mat-grid-tile>        
+
+</mat-grid-list>

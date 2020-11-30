@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ChartComponent } from './chart.component';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
     declarations: [ChartComponent],
@@ -10,7 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
     imports: [
         CommonModule,
         TranslateModule,
-        MatSelectModule
+        MatSelectModule,
+        MatButtonModule
     ]
 })
 export class ChartModule { }

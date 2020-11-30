@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ObjectGroupingComponent } from './object-grouping.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
         CommonModule,
         TranslateModule,
         MatSelectModule,
-        MatIconModule
+        MatIconModule,
+        MatGridListModule
     ]
 })
 export class ObjectGroupingModule { }
