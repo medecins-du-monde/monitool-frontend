@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { GeneralRoutingModule } from './general-routing.module';
 import { GeneralComponent } from './general.component';
 import { ChartModule} from './chart/chart.module';
+import { ObjectGroupingModule} from './objectGrouping/object-grouping.module';
 
 @NgModule({
     declarations: [GeneralComponent],
@@ -11,7 +12,8 @@ import { ChartModule} from './chart/chart.module';
         CommonModule,
         TranslateModule,
         GeneralRoutingModule,
-        ChartModule
+        ChartModule,
+        ObjectGroupingModule
     ]
 })
 export class GeneralModule { }

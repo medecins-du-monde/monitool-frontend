@@ -1,8 +1,7 @@
-<h4>Basic mat-select</h4>
 <mat-form-field appearance="fill">
   <mat-label>Chart Type</mat-label>
   <mat-select (selectionChange)="changeChartType($event)">
-    <mat-option *ngFor="let type of barChartTypes" [value]="type.value">
+    <mat-option *ngFor="let type of chartTypes" [value]="type.value">
       {{type.viewValue}}
     </mat-option>
   </mat-select>

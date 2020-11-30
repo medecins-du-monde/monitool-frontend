@@ -25,7 +25,7 @@ export class ChartComponent implements OnInit {
   }
   private chart;
 
-  barChartTypes = [
+  chartTypes = [
     {value: 'bar', viewValue: 'Bar Chart'},
     {value: 'line', viewValue: 'Line Chart'},
     {value: 'bubble', viewValue: 'Bubble Plot'},
