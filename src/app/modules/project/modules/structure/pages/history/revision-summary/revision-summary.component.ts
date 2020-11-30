@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { Component, OnInit, Input } from '@angular/core';
 import { Revision } from 'src/app/models/revision.model';
 import * as jsonpatch from 'fast-json-patch';
@@ -121,31 +122,26 @@ export class RevisionSummaryComponent implements OnInit {
     }
     else if (operation.op === 'replace') {
       translationData['after'] = operation.value;
+
       translationData['before'] = before;
-      for (var j = 0; j < splitPath.length; j += 1) {
-        translationData['before'] = translationData['before'][splitPath[j]];
-      }
+      splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
         translationData['before'] = this.transformDate(translationData['before']);
       }
     }
     else if (operation.op === 'remove') {
       translationData['item'] = after; // This part used to be translationData['item'] = before;
-      for (let j = 0; j < splitPath.length; j += 1) {
-        translationData['item'] = translationData['item'][splitPath[j]];
-      }
+      splitPath.forEach(path => translationData['item'] = translationData['item'][path]);
     }
     else if (operation.op === 'move') {
       translationData['item'] = before;
       const splitpath2 = operation.from.split('/').slice(1);
-      for (let j = 0; j < splitpath2.length; j += 1) {
-        translationData["item"] = translationData['item'][splitpath2[j]];
-      }
+      splitpath2.forEach(path => translationData['item'] = translationData['item'][path]);
     }
 
     // In case we needed an item but it was not defined yet (in our framework we currently don't default values for some)
-    if (!translationData["item"]) {
-      translationData["item"] = '';
+    if (!translationData['item']) {
+      translationData['item'] = '';
     }
 
     //////////////////////////
@@ -162,7 +158,7 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = before.entities.find(e => e.id === translationData['item']);
       }
       if (editedField === 'forms_elements_partitions_groups_members') {
-        translationData['item'] = translationData['partition']['elements'].find(e => e.id == translationData['item']);
+        translationData['item'] = translationData['partition']['elements'].find(e => e.id === translationData['item']);
       }
     }
 
@@ -171,11 +167,11 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   patchProject(revisionIndex) {
-    let revisedProject = _.cloneDeep(this.project);
+    const revisedProject = _.cloneDeep(this.project);
     for (let i = 0; i < revisionIndex; i++) {
       try {
-        const patch = this.revisions[i].backwards;
-        jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+        const patch = this.revisions[i].backwards as Operation[];
+        jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at Index ', i);
         console.log(e);
@@ -187,7 +183,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   transformDate(date) {
-      return date.getFullYear() + '-' +  (date.getMonth()+1) + '-' +  date.getDate();
+      return date.getFullYear() + '-' +  (date.getMonth() + 1) + '-' +  date.getDate();
   }
 
 }
