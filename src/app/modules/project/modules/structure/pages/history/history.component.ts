@@ -47,10 +47,12 @@ export class HistoryComponent implements OnInit {
       this.project = project;
       this.offset = 0;
       this.limit = 10;
-      this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
-        this.revisions = revisions;
-        this.showLoadMore = revisions.length < 10 ? false : true;
-      });
+      if (project.id) {
+        this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
+          this.revisions = revisions;
+          this.showLoadMore = revisions.length < 10 ? false : true;
+        });
+      }
     });
   }
 
@@ -59,7 +61,7 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i+1);
+    const patchedProject = this.patchProject(i + 1);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
@@ -70,20 +72,19 @@ export class HistoryComponent implements OnInit {
   }
 
   onLoadMore() {
-    this.offset += 10;
     this.limit += 10;
-    this.projectService.listRevisions(this.projectId, this.offset, this.limit).then((revisions: Revision[]) => {
+    this.projectService.listRevisions(this.projectId, this.limit).then((revisions: Revision[]) => {
       this.revisions = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });
   }
 
   patchProject(revisionIndex) {
-    let revisedProject = this.project.copy();
+    const revisedProject = this.project.copy();
     for (let i = 0; i < revisionIndex; i++) {
       try {
-        const patch = this.revisions[i].backwards;
-        jsonpatch.applyPatch(revisedProject, patch as Operation[]).newDocument;
+        const patch = this.revisions[i].backwards as Operation[];
+        jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at Index ', i);
         console.log(e);
@@ -99,10 +100,10 @@ export class HistoryComponent implements OnInit {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex+1);
+    const patchedRevision = this.patchProject(revisionIndex + 1);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
-    this.projectService.project.next(patchedRevision);
+    this.projectService.project.next(new Project(patchedRevision));
   }
 
 }

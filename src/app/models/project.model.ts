@@ -70,7 +70,7 @@ export class Project implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input._id) ? input._id : `project:${uuid()}`;
+        this.id = (input && input._id) ? input._id : null;
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
@@ -106,20 +106,6 @@ export class Project implements Deserializable {
             }
             return user;
         }) : [];
-        // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
-        //     baseline: 12,
-        //     colorize: true,
-        //     computation: {formula: '12', parameters: {}},
-        //     display: 'test',
-        //     target: 100
-        // };
-        // this.crossCutting['indicator:7d4599d1-7a54-425c-a8e9-4d1bc594b82b'] = {
-        //     baseline: null,
-        //     colorize: true,
-        //     computation: null,
-        //     display: 'test 2',
-        //     target: null
-        // };
         return this;
     }
 

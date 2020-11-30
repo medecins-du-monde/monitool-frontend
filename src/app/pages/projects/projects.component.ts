@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
+import { v4 as uuid } from 'uuid';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { User } from 'src/app/models/user.model';
@@ -104,6 +105,7 @@ export class ProjectsComponent implements OnInit {
 
   onCreate(): void {
     const project = new Project();
+    project.id = `project:${uuid()}`;
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
     this.projectService.create(project);
