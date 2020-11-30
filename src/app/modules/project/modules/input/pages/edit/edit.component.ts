@@ -216,10 +216,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
   createTable(){
     for (const element of this.form.elements){
-      // TO DO
-      // remove this line once we have an option to control the distribution
-      element.distribution = 1;
-
       const cols = [];
       const rows = [];
 
