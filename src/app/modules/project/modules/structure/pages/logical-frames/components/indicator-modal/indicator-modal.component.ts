@@ -62,7 +62,20 @@ export class IndicatorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
+    this.loadData();
+    this.data.indicator.valueChanges.subscribe(() => {
+      this.dataChanged = true;
+    });
+    // Creation of the init value for the reset
+    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
+    this.initDataSource = this.dataSource.getValue();
+  }
+
+   onSubmit() {
+    this.dialogRef.close({ indicator: this.data.indicator });
+  }
+    loadData() {
+          // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
     this.parser = new Parser();
     this.parser.consts = {};
     try {
@@ -114,20 +127,11 @@ export class IndicatorModalComponent implements OnInit {
 
       this.dataSource.next(newDataSource);
     }
-    this.data.indicator.valueChanges.subscribe(() => {
-      this.dataChanged = true;
-    });
-    // Creation of the init value for the reset
-    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
-    this.initDataSource = this.dataSource.getValue();
-  }
-   onSubmit() {
-    this.dialogRef.close({ indicator: this.data.indicator });
-  }
+    }
   onReset() {
     this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
     this.dataSource.next(this.initDataSource);
-    this.ngOnInit();
+    this.loadData();
   }
 
   onTypeChange(type: any) {
