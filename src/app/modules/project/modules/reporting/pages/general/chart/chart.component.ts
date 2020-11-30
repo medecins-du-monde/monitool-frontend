@@ -10,17 +10,57 @@ export class ChartComponent implements OnInit {
 
   constructor() { }
 
+  private options =  {fill: false};
+  private labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Me'];
+  private data = {
+    labels: this.labels,
+    datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3, 25],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        fill: false,
+    }]
+  }
+  private chart;
+
+
   ngOnInit(): void {
-    var myChart = new Chart("MyChart", {
+    this.chart = new Chart("MyChart", {
       type: 'line',
-      data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
-          }]
-      }
+      data: this.data,
+      options: this.options,
   });
+  }
+
+  addGraph() {
+    const tempData = [];
+
+    for (let i = 0; i < this.labels.length; ++i) {
+      tempData.push(this.randomNumberLimit(30));
+    }
+
+    let temp = {
+      label: '# of Votes',
+      data: tempData,
+      borderColor: this.randomColor(),
+      fill: false,
+    };
+
+    this.data.datasets.push(temp);
+    this.chart.update();
+  }
+
+  randomNumberLimit(limit) {
+    return Math.floor((Math.random() * limit) + 1);
+  }
+
+  randomColor() {
+    const col = 'rgba(' + this.randomNumberLimit(255)
+      + ',' + this.randomNumberLimit(255)
+      + ',' + this.randomNumberLimit(255) + '1)';
+
+    console.log(col);
+    return col;
   }
 
 }
