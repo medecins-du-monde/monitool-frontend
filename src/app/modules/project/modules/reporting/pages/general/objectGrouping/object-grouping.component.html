@@ -7,7 +7,7 @@
         <div class="form-field-group">
         <mat-form-field appearance="fill">
             <mat-label>Grouping</mat-label>
-            <mat-select>
+            <mat-select (selectionChange)="onChangeGrouping($event)">
                 <mat-option *ngFor="let type of groupOptions" [value]="type.value">
                 {{type.viewValue}}
                 </mat-option>

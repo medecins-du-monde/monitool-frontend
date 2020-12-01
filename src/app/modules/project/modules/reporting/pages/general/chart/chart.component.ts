@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit {
       tempData.push(this.randomNumberLimit(30));
     }
 
-    const chartColor =  this.randomColor()
+    const chartColor =  this.randomColor();
     let temp = {
       label: '# of Votes',
       data: tempData,

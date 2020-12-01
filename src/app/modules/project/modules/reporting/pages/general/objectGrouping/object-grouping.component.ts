@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 
 @Component({
   selector: 'app-object-grouping',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./object-grouping.component.scss']
 })
 export class ObjectGroupingComponent implements OnInit {
+
+  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
@@ -19,6 +21,11 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+  }
+
+  onChangeGrouping(event) {
+    this.filter.emit(event.value);
+    console.log("event.emitted");
   }
 
 }
