@@ -25,7 +25,7 @@ export class ObjectGroupingComponent implements OnInit {
 
   onChangeGrouping(event) {
     this.filter.emit(event.value);
-    console.log("event.emitted");
+    console.log(event.value);
   }
 
 }

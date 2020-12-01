@@ -9,19 +9,17 @@
 
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>Choose a startdate</mat-label>
-                    <input matInput [matDatepicker]="start">
+                    <input matInput [matDatepicker]="start" [value]="startDate">
                     <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>Choose an Enddate</mat-label>
-                    <input matInput [matDatepicker]="end">
+                    <input matInput [matDatepicker]="end" [value]="endDate">
                     <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
-
-                
 
         </td>
     </tr>
