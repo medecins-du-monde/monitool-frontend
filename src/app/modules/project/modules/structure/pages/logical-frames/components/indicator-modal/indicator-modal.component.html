@@ -44,9 +44,10 @@
     </div>
     <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput type="number" formControlName="formula" placeholder="{{ 'Placeholder.Fixed' | translate }}">
+            <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.Fixed' | translate }}">
         </mat-form-field>
     </div>
+
     <div class="mdm-form-group" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
         <div class="mdm-form-label"></div>
         <table mat-table [dataSource]="dataSource" class="mdm-table">
@@ -120,7 +121,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="data.indicator.invalid">
+    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="!data.indicator.dirty ">
         <mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}
     </button>
     <button mat-stroked-button class="mdm-button" (click)="onReset()">

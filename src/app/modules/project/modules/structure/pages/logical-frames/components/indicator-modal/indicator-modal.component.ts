@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateRange } from '@angular/material/datepicker';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/form.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/project-indicator.model';
+import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, UNAVAIlABLE, FIXED } from 'src/app/models/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -130,7 +131,9 @@ export class IndicatorModalComponent implements OnInit {
     const computation = this.data.indicator.controls.computation as FormGroup;
 
     // Updating the formula in function of the type
-    if (type.value === 'fixed' && isNaN(computation.value.formula)) {
+    if (type.value === 'unavailable') {
+      computation.controls.formula.setValue(UNAVAIlABLE);
+    }else if (type.value === 'fixed' && isNaN(computation.value.formula)) {
       computation.controls.formula.setValue('0');
     } else if (type.value === 'copy') {
       computation.controls.formula.setValue(COPY_FORMULA);
@@ -152,7 +155,6 @@ export class IndicatorModalComponent implements OnInit {
       newSymbols = [];
     }
     this.symbols = newSymbols;
-
     // Updating the variable part
     const parametersFormGroup = new FormGroup({});
 

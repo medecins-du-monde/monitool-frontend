@@ -1,3 +1,5 @@
+
+
 import { forEach } from 'lodash';
 import { Deserializable } from './deserializable.model';
 
@@ -5,6 +7,7 @@ export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
 export const COPY_FORMULA = 'copied_value';
 export const UNAVAIlABLE = 'unavailable';
+export const FIXED = 'fixed';
 
 export class ProjectIndicator implements Deserializable {
 
@@ -45,6 +48,16 @@ export class ProjectIndicator implements Deserializable {
                 this.computation.formula = input.computation.formula;
                 this.computation.parameters = input.computation.parameters;
             }
+            else if (input.computation.formula === UNAVAIlABLE) {
+              this.type = 'unavailable';
+              this.computation.formula = null;
+              this.computation.parameters = {};
+          }
+          else if (input.computation.formula === FIXED) {
+            this.type = 'fixed';
+            this.computation.formula = input.computation.formula;
+            this.computation.parameters = {};
+        }
         }
       return this;
     }
@@ -52,6 +65,7 @@ export class ProjectIndicator implements Deserializable {
     private formatComputation(computation): any{
       if (computation) {
         if (computation.formula){
+          if (Object.entries(computation.parameters).length !== 0){
           forEach(computation.parameters, parameter => {
             // This part allows to convert our partitionElement in id
             forEach(parameter.filter, (value, key) => {
@@ -67,9 +81,12 @@ export class ProjectIndicator implements Deserializable {
           });
           return computation;
         }
+      else {
+        computation.formula = computation.formula.toString();
       }
-      return null;
-    }
+      }
+        return null;
+    }}
 
     serialize() {
       return {
