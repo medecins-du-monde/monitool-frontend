@@ -120,10 +120,10 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="data.indicator.invalid">
+    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="data.indicator.invalid || !dataChanged">
         <mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}
     </button>
-    <button mat-stroked-button class="mdm-button" (click)="onReset()">
+    <button mat-stroked-button class="mdm-button" (click)="onReset()" [disabled]="!dataChanged" >
         <mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}
     </button>
 </mat-dialog-actions>

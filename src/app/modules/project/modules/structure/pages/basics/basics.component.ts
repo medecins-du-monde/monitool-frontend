@@ -36,6 +36,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // TODO: Check if the subscription.add is usefull, if yes, we may have to set it everywhere
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.basicsForm = this.fb.group({

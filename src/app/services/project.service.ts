@@ -72,8 +72,8 @@ export class ProjectService {
     await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 
-  public async listRevisions(id: string, offset: number, limit: number) {
-    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset, limit } });
+  public async listRevisions(id: string, limit: number) {
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
 }
