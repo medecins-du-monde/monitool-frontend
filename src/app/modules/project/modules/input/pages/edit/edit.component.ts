@@ -12,20 +12,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/input.model';
 
-export enum TimeSlotPeriodicity {
-  day = 'day',
-  month_week_sat = 'month_week_sat',
-  month_week_sun = 'month_week_sun',
-  month_week_mon = 'month_week_mon',
-  week_sat = 'week_sat',
-  week_sun = 'week_sun',
-  week_mon = 'week_mon',
-  month = 'month',
-  quarter = 'quarter',
-  semester = 'semester',
-  year = 'year',
-  all = 'all'
-}
 
 @Component({
   selector: 'app-edit',
@@ -130,8 +116,6 @@ export class EditComponent implements OnInit, OnDestroy {
     if (this.project && this.form && this.timeSlotDate){
       let savedInput = await this.getInput();
       if (savedInput && savedInput.length > 0){
-        // console.log('we have a saved input');
-        // console.log(savedInput);
         savedInput = savedInput.find(x => x.period === this.timeSlotDate);
         if (savedInput !== undefined){
           this.input = new Input(savedInput);
@@ -269,8 +253,6 @@ export class EditComponent implements OnInit, OnDestroy {
       });
 
     }
-    // console.log(this.tables);
-
   }
 
   fillTotalLabels(rows, cols) {
@@ -343,7 +325,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
 
   countInputCells(variable){
-    // console.log(variable);
     const rows = [];
     const cols = [];
 
@@ -397,7 +378,6 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   fillWithPreviousData(){
-    console.log(this.previousInput);
     if (this.previousInput){
       for (const e of this.form.elements){
         if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]){

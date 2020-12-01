@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { InputService } from 'src/app/services/input.service';
 import TimeSlot from 'timeslot-dag';
-import { TimeSlotPeriodicity } from '../inputs/inputs.component';
-// import TimeSlotPeriodicity from 'timeslot-dag';
+import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+
 
 
 export interface Task {

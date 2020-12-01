@@ -8,21 +8,9 @@ import { Form } from 'src/app/models/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { InputService } from 'src/app/services/input.service';
+import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 
-export enum TimeSlotPeriodicity {
-  day = 'day',
-  month_week_sat = 'month_week_sat',
-  month_week_sun = 'month_week_sun',
-  month_week_mon = 'month_week_mon',
-  week_sat = 'week_sat',
-  week_sun = 'week_sun',
-  week_mon = 'week_mon',
-  month = 'month',
-  quarter = 'quarter',
-  semester = 'semester',
-  year = 'year',
-  all = 'all'
-}
+
 
 @Component({
   selector: 'app-inputs',
