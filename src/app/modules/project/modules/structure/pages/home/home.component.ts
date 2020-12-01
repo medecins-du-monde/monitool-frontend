@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,11 +25,11 @@ export interface Task {
 export class HomeComponent implements OnInit {
 
   displayedColumns: string[] = ['task', 'status'];
+  historyLink = '';
 
   dataSource: Task[];
 
   constructor(
-    private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService
   ) { }
@@ -41,6 +40,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
+      const projectId = project.id;
+      this.historyLink = '/project/' + projectId + '/structure/history';
       const percentages = project.percentages;
       this.dataSource = [
         {
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
           status: percentages.basics,
           buttonIcon2: '',
           buttonText2:  new MultiLanguage(),
-          routerLink1: `../basics`,
+          routerLink1: `/project/${projectId}/structure/basics`,
           routerLink2: '',
         },
         {
@@ -86,7 +87,7 @@ export class HomeComponent implements OnInit {
           status: percentages.sites,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../sites`,
+          routerLink1: `/project/${projectId}/structure/sites`,
           routerLink2: '',
         },
         {
@@ -105,7 +106,7 @@ export class HomeComponent implements OnInit {
           status: percentages.logicalFrames,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../logical-frame`,
+          routerLink1: `/project/${projectId}/structure/logical-frames`,
           routerLink2: '',
         },
         {
@@ -128,7 +129,7 @@ export class HomeComponent implements OnInit {
           status: percentages.logicalFramesOther,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../logical-frame`,
+          routerLink1: `/project/${projectId}/structure/logical-frames`,
           routerLink2: '',
         },
         {
@@ -147,7 +148,7 @@ export class HomeComponent implements OnInit {
           status: percentages.extraIndicators,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../extra-indicators`,
+          routerLink1: `/project/${projectId}/structure/extra-indicators`,
           routerLink2: '',
         },
         {
@@ -174,8 +175,8 @@ export class HomeComponent implements OnInit {
             es: 'Marcos lógicos',
             fr: 'Cadres logiques',
           }),
-          routerLink1: `../data-sources`,
-          routerLink2: '../extra-indicators',
+          routerLink1: `/project/${projectId}/structure/data-sources`,
+          routerLink2: '/project/${projectId}/structure/logical-frames',
         },
         {
           taskText1: new MultiLanguage({
@@ -193,7 +194,7 @@ export class HomeComponent implements OnInit {
           status: percentages.crossCuttingUpdate,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../cross-cutting`,
+          routerLink1: `/project/${projectId}/structure/cross-cutting`,
           routerLink2: '',
         },
         {
@@ -212,7 +213,7 @@ export class HomeComponent implements OnInit {
           status: percentages.extraIndicatorsUpdate,
           buttonIcon2: '',
           buttonText2: new MultiLanguage(),
-          routerLink1: `../extra-indicators`,
+          routerLink1: `/project/${projectId}/structure/extra-indicators`,
           routerLink2: '',
         },
       ];

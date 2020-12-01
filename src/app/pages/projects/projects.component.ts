@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
+import { v4 as uuid } from 'uuid';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
+import { User } from 'src/app/models/user.model';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,6 +35,7 @@ export class ProjectsComponent implements OnInit {
   filtersForm: FormGroup;
   projects: Project[];
   allProjects: Project[];
+  currentUser: User;
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
@@ -43,6 +47,7 @@ export class ProjectsComponent implements OnInit {
     private fb: FormBuilder,
     private projectService: ProjectService,
     private translateService: TranslateService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -57,20 +62,53 @@ export class ProjectsComponent implements OnInit {
     this.filtersForm.valueChanges.subscribe(() => {
       this.onFilterChange();
     });
+
+    this.authService.currentUser.subscribe((user: User) => {
+      this.currentUser = new User(user);
+    });
   }
 
-  private getProjects() {
+  public getProjects() {
     this.projectService.list().then((res: Project[]) => {
       this.allProjects = res;
       this.countries = [... new Set(res.map(x => x.country))];
       this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
-      // this.projects = this.filterByStatuses(this.allProjects);
+      const listToReturn = this.projects.sort((a, b) => {
+        // If owner of at least one of both project
+        if (a.users.find(user => this.isOwner(user))
+        || b.users.find(user => this.isOwner(user))
+        ) {
+          // If owner of both project
+          if (a.users.find(user => this.isOwner(user))
+          && b.users.find(user => this.isOwner(user))
+          ) {
+            // alphabetical order
+            return a.country.localeCompare(b.country);
+          } else if (a.users.find(user => this.isOwner(user))) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
+          if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
+            return a.country.localeCompare(b.country);
+          } else {
+            return -1;
+          }
+        } else {
+          return 1;
+        }
+      });
+      return listToReturn;
     });
   }
 
   onCreate(): void {
     const project = new Project();
-    this.projectService.project.next(project);
+    project.id = `project:${uuid()}`;
+    const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
+    project.users.push(user);
+    this.projectService.create(project);
     this.router.navigate(['/project', project.id]);
   }
 
@@ -153,5 +191,9 @@ export class ProjectsComponent implements OnInit {
       filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
     }
     return filteredProjects;
+  }
+
+  private isOwner(user: User) {
+    return user.role === 'owner' && user.id === this.currentUser.id;
   }
 }

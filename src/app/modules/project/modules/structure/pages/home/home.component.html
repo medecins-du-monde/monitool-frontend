@@ -15,7 +15,7 @@
     <p>{{ 'ProjectHomeBlueSection.1.0' | translate }}<button mat-stroked-button  class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate}}</button>{{ 'ProjectHomeBlueSection.1.1' | translate }}</p>
 </div>
 <div class="info-section blue">
-    <p>{{ 'ProjectHomeBlueSection.2.0' | translate }}<button mat-stroked-button  class="mdm-button"><mat-icon svgIcon="history"></mat-icon>{{ 'History' | translate }}</button>{{ 'ProjectHomeBlueSection.2.1' | translate }}</p>
+    <p>{{ 'ProjectHomeBlueSection.2.0' | translate }}<button mat-stroked-button  [routerLink]="historyLink" class="mdm-button"><mat-icon svgIcon="history"></mat-icon>{{ 'History' | translate }}</button>{{ 'ProjectHomeBlueSection.2.1' | translate }}</p>
 </div>
 
 <table mat-table [dataSource]="dataSource" class="mdm-table">

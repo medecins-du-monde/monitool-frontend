@@ -7,6 +7,7 @@ import { Entity } from './entity.model';
 import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
 import { Group } from './group.model';
+import { User } from './user.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -25,7 +26,7 @@ export class Project implements Deserializable {
     entities: Entity[] = [];
     groups: Group[] = [];
     forms: Form[] = [];
-    users: any[];
+    users: User[];
     visibility: string;
 
     get status() {
@@ -69,7 +70,7 @@ export class Project implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input._id) ? input._id : `project:${uuid()}`;
+        this.id = (input && input._id) ? input._id : null;
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
@@ -82,6 +83,7 @@ export class Project implements Deserializable {
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
             return group;
         }) : [];
+        // this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -94,20 +96,16 @@ export class Project implements Deserializable {
             return logicalFrame;
         }) : [];
         this.crossCutting = {};
-        // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
-        //     baseline: 12,
-        //     colorize: true,
-        //     computation: {formula: '12', parameters: {}},
-        //     display: 'test',
-        //     target: 100
-        // };
-        // this.crossCutting['indicator:7d4599d1-7a54-425c-a8e9-4d1bc594b82b'] = {
-        //     baseline: null,
-        //     colorize: true,
-        //     computation: null,
-        //     display: 'test 2',
-        //     target: null
-        // };
+        this.users = (input && input.users) ? input.users.map(u => {
+            const user = new User(u);
+            if (u.entities){
+                user.entities = this.entities.filter(e => u.entities.indexOf(e.id) >= 0);
+            }
+            if (u.dataSources){
+                user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
+            }
+            return user;
+        }) : [];
         return this;
     }
 
@@ -118,7 +116,7 @@ export class Project implements Deserializable {
             crossCutting: {},
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
-            extraIndicators: [],
+            extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
             groups: this.groups.map(x => x.serialize()),
@@ -126,7 +124,7 @@ export class Project implements Deserializable {
             start: this.start ? this.start.toISOString().slice(0, 10) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
-            users: [],
+            users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
             _id: this.id
         };

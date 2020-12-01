@@ -8,6 +8,7 @@ import { Revision } from '../models/revision.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProjectService {
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
@@ -19,7 +20,8 @@ export class ProjectService {
   constructor(
     private apiService: ApiService,
     private themeService: ThemeService
-  ) {}
+  ) {
+  }
 
   public async list() {
     const themes = await this.themeService.list();
@@ -29,6 +31,11 @@ export class ProjectService {
       project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       return project;
     });
+  }
+
+  public create(project){
+    this.project.next(project);
+    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
   public async get(id: string) {
@@ -44,6 +51,7 @@ export class ProjectService {
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+
     return savedProject;
   }
 
@@ -64,8 +72,8 @@ export class ProjectService {
     await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 
-  public async listRevisions(id: string, offset: number, limit: number) {
-    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset, limit } });
+  public async listRevisions(id: string, limit: number) {
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
 }

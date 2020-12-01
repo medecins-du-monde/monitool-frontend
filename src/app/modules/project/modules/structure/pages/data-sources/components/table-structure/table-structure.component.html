@@ -1,0 +1,55 @@
+<!--- TOTAL STRUCTURES -->
+
+<div [formGroup]="elementForm">
+    <mat-radio-group [formControl]="floatLabelControl"  formControlName="distribution" (change)=selected($event)>
+        <table *ngIf="visualize" class="display">
+            <tr>
+        <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
+            <table>
+            <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
+                <td *ngFor="let column of getNumber(i)" class ="empty"></td>
+                <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
+            </tr>
+            <tr>
+                <td *ngFor="let partition of partitions.slice((partitions.length)-i); let x = index" class ="title">
+                    {{ 'Disaggregation.Title' | translate }}
+                </td>
+                <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
+            </tr>
+            <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}" [checked]="isCurrent(i)"></mat-radio-button></td></tr>
+            </table>
+        </td>
+        </tr>
+        </table>
+    </mat-radio-group>
+</div>
+<!--- DYNAMIC Structure -->
+
+<div [formGroup]="elementForm"> 
+<table  *ngIf="!visualize" class="display">
+    <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let rowIndex = index">
+        <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
+        <td class ="title">
+            <mat-form-field class="auto-width" >
+                <mat-select formArrayName="partitions"  [(value)]="partitions[rowIndex].id" (selectionChange)="reorderPartitions($event.value, rowIndex)">
+                    <mat-option *ngFor="let part of partitions" [value]="part.id"  >
+                        {{ part.name }} ({{part.elements.length}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </td>
+    </tr>
+    <tr>
+        <td *ngFor="let partition of partitions.slice((partitions.length)-tableStructure); let lastRowIndex = index" class ="title">
+            <mat-form-field class="auto-width">
+                <mat-select  formArrayName="partitions"  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, getIndex(lastRowIndex))" >
+                    <mat-option *ngFor="let part of partitions" [value]="part.id" >
+                        {{ part.name }} ({{part.elements.length}})
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+        </td>
+        <td class="data">{{ 'Disaggregation.Data' | translate }} ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0, (partitions.length)-tableStructure))}}) </td>
+    </tr>
+</table>
+</div>

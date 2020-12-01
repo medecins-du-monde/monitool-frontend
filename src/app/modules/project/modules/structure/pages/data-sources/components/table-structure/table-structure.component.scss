@@ -1,0 +1,59 @@
+.collapse {
+  border-collapse: collapse !important;
+}
+
+.title {
+  border: 1px solid #c4c4c4;
+  border-collapse: collapse;
+  background-color: #e1e1e1;
+  font-weight: 520;
+  padding: 5px;
+}
+
+.empty {
+  border: 1px solid #c4c4c4;
+  border-collapse: collapse !important;
+  background-color: #e1e1e1;
+  font-weight: 520;
+  padding: 5px;
+  color: #e1e1e1;
+}
+
+.data {
+  border: 1px solid #c4c4c4;
+  border-collapse: collapse !important;
+  background-color: white;
+  padding: 5px;
+}
+
+.radioButton {
+  border: none;
+  font-size: 0px;
+}
+
+.display table {
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  background-color: rgb(250, 250, 250);
+  padding: 5px;
+  text-align: center;
+}
+
+.display table * td {
+  border-collapse: collapse;
+}
+
+::ng-deep .auto-width {
+  .mat-form-field {
+    width: auto !important;
+  }
+  .mat-select-value {
+    max-width: 100%;
+    width: auto;
+  }
+
+  .mat-option {
+    max-width: 100%;
+    width: auto;
+  }
+}

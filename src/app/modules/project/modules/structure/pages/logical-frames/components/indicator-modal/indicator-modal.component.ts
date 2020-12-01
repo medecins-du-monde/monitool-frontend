@@ -16,10 +16,11 @@ export class IndicatorModalComponent implements OnInit {
 
   displayedColumns: string[] = ['parameter', 'variable', 'disaggregations'];
   dataSource = new BehaviorSubject<any[]>([]);
-
   private initValue: any;
   private parser: Parser;
   private symbols: any;
+  dataChanged = false;
+  private initDataSource: any;
 
   public computationTypes = [
     {
@@ -47,20 +48,27 @@ export class IndicatorModalComponent implements OnInit {
       display: 'Enum.Computation.formula'
     },
   ];
-
   get type() {
     return this.data.indicator.value.type;
   }
-
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[] }
-  ) {}
-
+    @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[] }
+  ) { }
 
   ngOnInit(): void {
+    this.loadData();
+    // Creation of the init value for the reset
+    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
+    this.initDataSource = this.dataSource.getValue();
+  }
 
+   onSubmit() {
+    this.dialogRef.close({ indicator: this.data.indicator });
+  }
+
+  loadData() {
     // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
     this.parser = new Parser();
     this.parser.consts = {};
@@ -69,9 +77,9 @@ export class IndicatorModalComponent implements OnInit {
       const newDataSource = [];
       this.symbols.forEach(symbol => {
         newDataSource.push({
-        symbol,
+          symbol,
+        });
       });
-    });
       this.dataSource.next(newDataSource);
     }
     catch (e) {
@@ -87,43 +95,42 @@ export class IndicatorModalComponent implements OnInit {
         data.filter = this.lookForVariable(this.data.forms, parameters[`${data.symbol}`].elementId);
       });
 
-    // Filling the partitionElement list with PartitionElement objects.
+      // Filling the partitionElement list with PartitionElement objects.
       this.symbols.forEach(symbol => {
-      const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
-      listPartitionDataSource.forEach(partition => {
-        const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
-        let filterValueList = filterForm.get(`${partition.id}`).value;
-        const newList = [];
+        const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
+        listPartitionDataSource.forEach(partition => {
+          const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
+          let filterValueList = filterForm.get(`${partition.id}`).value;
+          const newList = [];
 
-        // If not formated yet
-        const newListOfValue = [];
-        if (typeof(filterValueList[0]) !== 'string' ) {
-          filterValueList.forEach(value => newListOfValue.push(value.id));
-        }
-        if (newListOfValue.length > 0 ) { filterValueList = newListOfValue; }
+          // If not formated yet
+          const newListOfValue = [];
+          if (typeof (filterValueList[0]) !== 'string') {
+            filterValueList.forEach(value => newListOfValue.push(value.id));
+          }
+          if (newListOfValue.length > 0) { filterValueList = newListOfValue; }
 
-        partition.elements.forEach(partitionElement => {
+          partition.elements.forEach(partitionElement => {
             if (filterValueList.indexOf(partitionElement.id) !== -1) {
               newList.push(partitionElement);
             }
           });
-        filterForm.setControl(`${partition.id}`, new FormControl(newList));
+          filterForm.setControl(`${partition.id}`, new FormControl(newList));
+        });
       });
-    });
 
       this.dataSource.next(newDataSource);
     }
-
-    // Creation of the init value for the reset
-    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
-  }
-
-  onSubmit() {
-    this.dialogRef.close({ indicator: this.data.indicator });
+    this.dataChanged = false;
+    this.data.indicator.valueChanges.subscribe(() => {
+      this.dataChanged = true;
+    });
   }
 
   onReset() {
     this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
+    this.dataSource.next(this.initDataSource);
+    this.loadData();
   }
 
   onTypeChange(type: any) {
@@ -145,7 +152,7 @@ export class IndicatorModalComponent implements OnInit {
   onFormulaChange() {
     // Getting the formula and setting the symbols to update the parameter part in the DOM.
     let newSymbols = [];
-    try {
+    try{
       newSymbols = this.parser.parse(this.data.indicator.get('computation').value.formula).variables();
     }
     catch (e) {
@@ -181,7 +188,7 @@ export class IndicatorModalComponent implements OnInit {
     // We create a new filter in order to remove all the controls that we could have gotten before.
     const newFilter = this.fb.group({});
     newDataSource.forEach(data => {
-      if (data.symbol === element.symbol ) {
+      if (data.symbol === element.symbol) {
 
         // We look for the variable in every dataSources
         data.filter = this.lookForVariable(this.data.forms, event.value);
@@ -193,15 +200,15 @@ export class IndicatorModalComponent implements OnInit {
       // Adding this new filter
       (
         this.data.indicator.controls.computation
-        .get('parameters')
-        .get(`${element.symbol}`) as FormGroup
+          .get('parameters')
+          .get(`${element.symbol}`) as FormGroup
       ).setControl('filter', newFilter);
     });
 
     this.dataSource.next(newDataSource);
   }
 
-  private lookForVariable(listDataSource, targetValue): any{
+  private lookForVariable(listDataSource, targetValue): any {
     let variable;
     listDataSource.forEach(form => {
       const valueFound = form.elements.filter(partitionData => partitionData.id === targetValue)[0];
@@ -222,14 +229,14 @@ export class IndicatorModalComponent implements OnInit {
 
   onPartitionElementRemoved(symbol, partitionId, partitionElementId) {
     const partition = this.data.indicator.controls.computation
-    .get('parameters')
-    .get(`${symbol}`)
-    .get('filter')
-    .get(`${partitionId}`).value
-    ;
+      .get('parameters')
+      .get(`${symbol}`)
+      .get('filter')
+      .get(`${partitionId}`).value
+      ;
     this.data.indicator.controls.computation
-    .get('parameters')
-    .get(`${symbol}`)
-    .get('filter').get(`${partitionId}`).setValue(partition.filter(p => p.id !== partitionElementId));
+      .get('parameters')
+      .get(`${symbol}`)
+      .get('filter').get(`${partitionId}`).setValue(partition.filter(p => p.id !== partitionElementId));
   }
 }

@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Partition } from 'src/app/models/partition.model';
 import { PartitionModalComponent } from '../partition-modal/partition-modal.component';
+
 
 @Component({
   selector: 'app-form-element-edit',
@@ -12,6 +13,9 @@ import { PartitionModalComponent } from '../partition-modal/partition-modal.comp
 export class FormElementEditComponent implements OnInit {
 
   @Input() elementForm: FormGroup;
+  @Input() dataSourceName = '';
+
+  chosenStructure;
 
   public aggregations = [
     {
@@ -36,6 +40,10 @@ export class FormElementEditComponent implements OnInit {
     }
   ];
 
+  receiveStructure(event) {
+    this.chosenStructure = event;
+  }
+
   get partitions(): FormArray {
     return this.elementForm.controls.partitions as FormArray;
   }
@@ -45,7 +53,12 @@ export class FormElementEditComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chosenStructure = this.elementForm.value.distribution;
+
+    this.elementForm.valueChanges.subscribe((value: any) => {
+    });
+  }
 
   onAddNewPartition() {
     const partition: FormGroup = this.newPartition();

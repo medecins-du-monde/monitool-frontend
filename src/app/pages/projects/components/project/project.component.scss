@@ -1,18 +1,26 @@
 .card-header {
-    .project-country {
-        height: 24px;
-        width: 24px;
+  .project-country {
+    height: 24px;
+    width: 24px;
 
-        img {
-            height: 100%;
-        }
+    img {
+      height: 100%;
     }
+  }
 
-    .project-status {
-        margin-left: auto;
-    }
+  .project-status {
+    margin-left: auto;
+  }
 }
 
 .card-info {
-    flex-direction: row;
+  flex-direction: row;
+}
+
+.icon-button {
+  cursor: pointer;
+}
+
+.icon-default {
+  cursor: default;
 }

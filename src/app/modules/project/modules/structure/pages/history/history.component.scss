@@ -1,45 +1,50 @@
-#date{
-    width: 20%;
+#date {
+  width: 20%;
 }
 
 #changes {
-    ul {
-        margin: 0;
-    }
+  ul {
+    margin: 0;
+  }
 }
 
 .expand-row {
-    text-align: center;
+  text-align: center;
 }
 
 .hidden-row {
-    display: none;
+  display: none;
 }
 
 tr.example-detail-row {
-    height: 0;
+  height: 0;
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
+  background: whitesmoke;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+  background: #efefef;
 }
 
 .example-element-row td {
-    border-bottom-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .example-element-detail {
-    overflow: hidden;
-    display: flex;
-    padding: 5px;
-    justify-content: center;
+  overflow: hidden;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
 }
 
-.mat-column-expandedDetail{
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+.mat-column-expandedDetail {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.static-row {
+  text-align: center;
+  padding: 10px 0px 2px 0px;
 }
