@@ -75,9 +75,12 @@ export class CrossCuttingComponent implements OnInit {
         indicators.map(indicator => {
           const indicatorFound  = listOldCrossCutting.find(x => x.id === indicator.id);
           if (indicatorFound) {
-          indicatorFound.themes = indicator.themes;
-          indicatorFound.description = indicator.description;
-          this.indicators.push(new ProjectIndicator(indicatorFound));
+          // Filling all data coming from the indicator configuration
+            indicatorFound.themes = indicator.themes;
+            // TODO: Filling it with the name in the right language
+            indicatorFound.display = indicator.name.en;
+            indicatorFound.description = indicator.description;
+            this.indicators.push(new ProjectIndicator(indicatorFound));
           }
           else {
             this.indicators.push(new ProjectIndicator(indicator));
