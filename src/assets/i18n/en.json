@@ -108,6 +108,11 @@
 			"percentage": "percentage",
 			"permille": "permille",
 			"formula": "formula"
+        },
+        "Formula":{
+            "numerator": "Numerator",
+            "denominator": "Denominator",
+            "copied": "Copied Value"
         }
         
     },
@@ -531,5 +536,6 @@
      "Disaggregations": "Disaggregations",
      "partitionElement": "partitionElement",
      "Help.Partition": "Help.Partition",
-     "ApplyChanges" : "ApplyChanges"
+     "ApplyChanges" : "ApplyChanges",
+     "elementsymbol" :"sbanyouria"
 }

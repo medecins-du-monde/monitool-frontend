@@ -53,8 +53,9 @@
             <ng-container matColumnDef="parameter">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Parameter' | translate }}</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="type !== 'formula'">{{ element.symbol | translate }}</span>
+                    <span *ngIf="type !== 'formula' && type !== 'copy'">{{ 'Enum.Formula.' + element.symbol | translate }}</span>
                     <span *ngIf="type === 'formula'">{{ element.symbol }}</span>
+                    <span *ngIf="type === 'copy'">{{ 'Enum.Formula.copied'| translate }}</span>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
