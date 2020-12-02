@@ -37,25 +37,6 @@ export class ProjectComponent implements OnInit {
       });
 
       const structure = {
-        // title: 'Structure',
-        // collapsible: true,
-        // items: [
-        //   {
-        //     name: 'Home',
-        //     routerLink: `../${projectId}/structure/home`,
-        //     icon: 'home'
-        //   },
-        //   {
-        //     name: 'Basics',
-        //     routerLink: `../${projectId}/structure/basics`,
-        //     icon: 'database'
-        //   },
-        //   {
-        //     name: 'CollectionSites',
-        //     routerLink: `../${projectId}/structure/sites`,
-        //     icon: 'location'
-        //   },
-        //   {
             title: 'Structure',
             collapsible: true,
             items: [
@@ -105,33 +86,6 @@ export class ProjectComponent implements OnInit {
                 icon: 'history'
               }
             ]
-        //   },
-        //   {
-        //     name: 'LogicalFrameworks',
-        //     routerLink: `../${projectId}/structure/logical-frame`,
-        //     icon: 'clipboard'
-        //   },
-        //   {
-        //     name: 'CrossCuttingIndicators',
-        //     routerLink: `../${projectId}/structure/cross-cutting`,
-        //     icon: 'gauge'
-        //   },
-        //   {
-        //     name: 'ExtraIndicators',
-        //     routerLink: `../${projectId}/structure/extra-indicators`,
-        //     icon: 'gauge'
-        //   },
-        //   {
-        //     name: 'Users',
-        //     routerLink: `../${projectId}/structure/users`,
-        //     icon: 'people'
-        //   },
-        //   {
-        //     name: 'History',
-        //     routerLink: `../${projectId}/structure/history`,
-        //     icon: 'history'
-        //   }
-        // ]
       };
       const input = {
         title: 'Input',
