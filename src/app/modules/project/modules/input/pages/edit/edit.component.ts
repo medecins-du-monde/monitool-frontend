@@ -20,7 +20,7 @@ import { Input } from 'src/app/models/input.model';
 })
 
 export class EditComponent implements OnInit, OnDestroy {
-
+// TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
   formId: string;
   siteId: string;
