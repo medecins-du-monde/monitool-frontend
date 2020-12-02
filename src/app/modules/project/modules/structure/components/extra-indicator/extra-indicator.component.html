@@ -1,8 +1,8 @@
 <mat-card>
     <mat-card-header class="card-header">{{ extraIndicator.display }}</mat-card-header>
     <mat-card-content>
-        <div *ngIf="extraIndicator.description" class="card-info">
-            <div class="card-info-value"><b>{{ 'Description' | translate }}: </b>{{ extraIndicator.description.en }}</div>
+        <div *ngIf="extraIndicator.crossCutting" class="card-info">
+            <div class="card-info-value"><b>{{ 'Description' | translate }}: </b>{{ extraIndicator.description ? extraIndicator.description.en : null }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>{{ extraIndicator.baseline ? extraIndicator.baseline : '?' }}</div>

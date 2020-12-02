@@ -6,8 +6,10 @@ export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
 export const COPY_FORMULA = 'copied_value';
 export const UNAVAIlABLE = 'unavailable';
+import { Theme } from './theme.model';
 
 export class ProjectIndicator implements Deserializable {
+    crossCutting = false;
     id: string;
     description: MultiLanguage;
     display: string;
@@ -19,6 +21,7 @@ export class ProjectIndicator implements Deserializable {
         parameters: {}
     };
     type = UNAVAIlABLE;
+    themes: Theme[] = [];
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -28,6 +31,7 @@ export class ProjectIndicator implements Deserializable {
       Object.assign(this, input);
       // TODO: manage the colorize to have it it the right case
       this.colorize = this.colorize ? this.colorize : true;
+      this.display = input.display || (input.name ? input.name.en : null);
       if (input && input.computation) {
         this.type = input.type ? input.type : this.type;
         this.computation.formula = input.computation.formula;
@@ -81,14 +85,17 @@ export class ProjectIndicator implements Deserializable {
       return null;
     }
 
-    serialize() {
-      return {
+    serialize(crossCuttingType = false) {
+      const serializedIndicator = {
         baseline: this.baseline,
         colorize: this.colorize,
         computation: this.formatComputation(this.computation),
-        display: this.display,
         target: this.target,
       };
+      // tslint:disable-next-line: no-string-literal
+      if (!crossCuttingType) { serializedIndicator['display'] = this.display; }
+
+      return serializedIndicator;
     }
 
 }

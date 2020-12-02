@@ -16,8 +16,7 @@ export class ExtraIndicatorComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onEdit() {
     this.edit.emit();

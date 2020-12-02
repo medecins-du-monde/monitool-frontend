@@ -65,13 +65,14 @@ export default class FormGroupBuilder {
     // TODO: Review to have a way to do it cleaner
     if (crossCutting) {
       return new FormGroup({
+        crossCutting: new FormControl(true, Validators.required),
         id: new FormControl(indicator.id, Validators.required),
         description: indicator.description ? new FormGroup({
-          en: new FormControl(indicator.description.en, Validators.required),
-          es: new FormControl(indicator.description.es, Validators.required),
-          fr: new FormControl(indicator.description.fr, Validators.required),
-        }) : new FormControl(null, Validators.required),
-        display: new FormControl(indicator.display, Validators.required),
+          en: new FormControl(indicator.description.en),
+          es: new FormControl(indicator.description.es),
+          fr: new FormControl(indicator.description.fr),
+        }) : new FormControl(null),
+        display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
         computation: new FormGroup({
