@@ -5,6 +5,6 @@
 
 <app-filter [startDate]="startDate" [sites]="collectionSites" (filter)=setFilter($event)></app-filter>
 
-<app-chart></app-chart>
+<app-chart [chartType]="chartType" [options]="options" [data]="data"></app-chart>
 
 <app-data-table></app-data-table>

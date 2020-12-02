@@ -18,6 +18,22 @@ export class GeneralComponent implements OnInit {
   collectionSites: object;
   computation: object;
 
+
+  /*examplatory data to test if chart components accepts input*/
+  chartType = 'line';
+  options =  {fill: false};
+  data = {
+    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 1)',
+        fill: false,
+    }]
+  };
+  /*--------------------------*/
+
   constructor(private projectService: ProjectService, private reportingService: ReportingService ) { }
 
   ngOnInit(): void {
@@ -33,7 +49,6 @@ export class GeneralComponent implements OnInit {
       this.computation = project.logicalFrames[0].indicators[1].computation;
       console.log(this.computation);
     });
-
 
 
   }
