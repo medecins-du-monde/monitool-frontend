@@ -72,8 +72,6 @@ export class ChartComponent implements OnInit {
     const col = 'rgba(' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255) + '1)';
-
-    console.log(col);
     return col;
   }
 

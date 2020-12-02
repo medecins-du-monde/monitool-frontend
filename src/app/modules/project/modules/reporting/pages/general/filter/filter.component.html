@@ -21,6 +21,15 @@
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
 
+                <mat-form-field appearance="outline">
+                    <mat-label>Collection Sites</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let site of sites" [value]="site.value">
+                        {{site.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
         </td>
     </tr>
 </table>

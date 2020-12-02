@@ -10,11 +10,12 @@ export class FilterComponent implements OnInit {
 
   userForm: FormGroup;
   collapsed = true;
-  @Input() startDate: Date;
   endDate: Date;
 
+  @Input() startDate: Date;
+  @Input() sites: any[];
 
-  @Output() filter: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filter: EventEmitter<object> = new EventEmitter<object>();
 
   constructor( private fb: FormBuilder) { }
 
@@ -30,6 +31,16 @@ export class FilterComponent implements OnInit {
     });
     const currentYear = new Date().getFullYear(); //we assume it is last day of the current year
     this.endDate = new Date(currentYear, 11, 31);
+
+    const tempObject = {_start: this.transformDate(this.startDate), _end: this.transformDate(this.endDate)};
+    this.filter.emit(tempObject);
   }
+
+  transformDate(date: Date) {
+    const tempDate = date.getFullYear() + '-' + ( date.getMonth()+1 ) + '-' + date.getDate();
+    return tempDate;
+  }
+
+
 
 }
