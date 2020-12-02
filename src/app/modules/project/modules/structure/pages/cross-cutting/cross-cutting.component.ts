@@ -76,6 +76,7 @@ export class CrossCuttingComponent implements OnInit {
           const indicatorFound  = listOldCrossCutting.find(x => x.id === indicator.id);
           if (indicatorFound) {
           indicatorFound.themes = indicator.themes;
+          indicatorFound.description = indicator.description;
           this.indicators.push(new ProjectIndicator(indicatorFound));
           }
           else {
@@ -115,12 +116,18 @@ export class CrossCuttingComponent implements OnInit {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
+        // Filling the formGroup
         if (!indexGroup) {
           const multiThemesArray = this.crossCuttingForm.controls.multiThemesArray as FormArray;
           multiThemesArray.setControl(indexIndicator, res.indicator);
         }
-        const groupsArray = this.crossCuttingForm.controls.groupsArray as FormArray;
-        const groupIndicators = groupsArray.at(indexGroup).get('indicators') as FormArray;
+        else {
+          const groupsArray = this.crossCuttingForm.controls.groupsArray as FormArray;
+          const groupIndicators = groupsArray.at(indexGroup).get('indicators') as FormArray;
+          groupIndicators.setControl(indexIndicator, res.indicator);
+        }
+
+        // Updating the openedProject
         const indexToEdit = this.project.crossCutting[res.indicator.value.id];
         if (indexToEdit !== -1) {
           this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
@@ -129,8 +136,7 @@ export class CrossCuttingComponent implements OnInit {
           this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
         }
         this.projectService.project.next(this.project);
-        groupIndicators.setControl(indexIndicator, res.indicator);
-      }
+        }
     });
   }
 
