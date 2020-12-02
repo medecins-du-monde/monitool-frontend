@@ -137,8 +137,8 @@ $mdm-monitool-frontend-typography: mat-typography-config(
 }
 
 html, body { height: 100%; }
-body { 
-    margin: 0; 
+body {
+    margin: 0;
     font-family: $main-font;
     font-size: 18px;
     color: var(--main);
@@ -234,7 +234,7 @@ body {
 .mdm-section {
     margin-bottom: 68px;
     color: black;
-    
+
     .mat-icon{
         line-height: 20px;
     }
@@ -274,13 +274,13 @@ body {
     .card-header {
         border-bottom: 1px solid rgba(144, 144, 144, 0.24);
     }
-    
+
     .card-info {
         display: flex;
         flex-direction: column;
         font-size: 14px;
         margin-bottom: 8px;
-    
+
         .card-info-title {
             flex: 1;
 
@@ -291,16 +291,16 @@ body {
         .card-info-value {
             flex: 1;
         }
-        
+
         .computation {
             &.valid {
                 color: #3c763d;
             }
-    
+
             &.invalid {
                 color: #a94442;
             }
-    
+
             mat-icon{
                 height: 14px;
                 width: 14px;
@@ -452,7 +452,7 @@ body {
 
     .mdm-form-field {
         width: 100%;
-        
+
         .mat-form-field-wrapper {
             padding: 0 !important;
 
@@ -571,17 +571,17 @@ body {
             color: white;
         }
     }
-        
+
     .mat-form-field-invalid {
         .mat-form-field-prefix {
             color: blue;
         }
     }
-        
+
     .mat-form-field-wrapper {
         margin: 0 !important;
     }
-    
+
     &:not(.searchbar) {
         &.mat-form-field:not(.mat-focused) {
             .mat-form-field-outline {
@@ -598,11 +598,11 @@ body {
             }
         }
     }
-    
+
     input {
         height: 23px !important;
     }
-    
+
     .mat-form-field-flex>.mat-form-field-infix {
         border-top: 10px solid transparent;
         padding: 7px 0 7px 0;
@@ -612,25 +612,25 @@ body {
         top: -10px;
         padding-top: 10px;
     }
-    
+
     .mat-form-field-label {
         top: 20px !important;
     }
-    
+
     &.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
         transform: translateY(-1em) scale(.75) !important;
     }
-        
+
     &.mat-form-field-appearance-outline {
         .mat-form-field-suffix {
             right: -0.6em;
-        
+
             .mat-icon-button {
                 line-height: 35px;
                 top: -2px;
             }
         }
-    
+
         .mat-select-arrow-wrapper {
             transform: none !important;
         }
@@ -652,6 +652,11 @@ body {
         .mdm-form-label {
             margin-bottom: 8px;
         }
+    }
+
+    label {
+      font-size: inherit;
+      padding-bottom: 1.34375em;
     }
 
     .mdm-form-label {
