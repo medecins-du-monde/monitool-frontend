@@ -18,6 +18,7 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
   styleUrls: ['./inputs.component.scss']
 })
 export class InputsComponent implements OnInit, OnDestroy {
+  // TODO: Check if possible to clean and make simplify this component
   displayedColumns = [];
   dataSource = [];
 
