@@ -102,7 +102,16 @@
 			"semester": "Cada semestre",
 			"year": "Cada año",
 			"free": "Libre"
+        },
+        "Computation": {
+            "unavailable": "indisponible",
+			"fixed": "fijo",
+			"copy": "Copiar",
+			"percentage": "porcentaje",
+			"permille": "Por milla",
+			"formula": "fórmula"
         }
+      
     },
     "es": "Español",
     "EquivalentVersion" : "Este punto es equivalente al estado actual del proyecto",
@@ -512,5 +521,12 @@
     "Computation-Hint": "Elija el método de cálculo adecuado",
     "GeneralObjective-Hint": "Elige un objetivo general",
     "Name-Hint2": "Asegúrese de poner el nombre correcto para cada idioma",
-    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma"
+    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma",
+    "Parameter": "Parámetro",
+    "Variable": "Variable",
+    "Help.Variable": "Ayuda.Variable",
+    "Disaggregations": "Desagregaciones",
+    "partitionElement": "elemento de partición",
+    "Help.Partition": "Ayuda.Partition",
+    "ApplyChanges" : "Aplicar cambios"
 }

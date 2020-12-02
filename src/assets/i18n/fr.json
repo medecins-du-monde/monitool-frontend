@@ -100,7 +100,16 @@
 			"semester": "Tous les semestres",
 			"year": "Tous les ans",
 			"free": "Libre"
+        },
+        "Computation": {
+            "unavailable": "indisponible",
+			"fixed": "fixée",
+			"copy": "copie",
+			"percentage": "pourcentage",
+			"permille": "permille",
+			"formula": "formule"
         }
+       
     },
     "es": "Espagnol",
     "EquivalentVersion" : "Ce point est équivalent à l'état actuel du projet",
@@ -509,5 +518,12 @@
     "GeneralObjective-Hint":"Choisissez un objectif general",
     "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
     "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue",
-    "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore"
+    "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore",
+     "Parameter": "Paramètre",
+     "Variable": "Variable",
+     "Help.Variable": "Aide.variable",
+     "Disaggregations": "Désagrégations",
+     "partitionElement": "Élément de partition",
+     "Help.Partition": "Aide.Partition",
+     "ApplyChanges" : "Appliquer les modifications"
 }

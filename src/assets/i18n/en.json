@@ -100,7 +100,16 @@
             "semester": "Every semester",
             "year": "Every year",
             "free": "Free"
+        },
+        "Computation": {
+            "unavailable": "unavailable",
+			"fixed": "fixed",
+			"copy": "copy",
+			"percentage": "percentage",
+			"permille": "permille",
+			"formula": "formula"
         }
+        
     },
     "es": "Spanish",
     "EquivalentVersion" : "This version is equivalent to the current state of the project",
@@ -515,5 +524,12 @@
      "Computation-Hint":"Please choose the appropriate calculation method",
      "GeneralObjective-Hint":"Choose a general goal",
      "Name-Hint2":"Make sure you put the correct name for each language",
-     "description-Hint":"Make sure you put the correct description for each language"
+     "description-Hint":"Make sure you put the correct description for each language",
+     "Parameter": "Parameter",
+     "Variable": "Variable",
+     "Help.Variable": "Help.Variable",
+     "Disaggregations": "Disaggregations",
+     "partitionElement": "partitionElement",
+     "Help.Partition": "Help.Partition",
+     "ApplyChanges" : "ApplyChanges"
 }
