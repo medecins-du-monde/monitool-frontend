@@ -34,7 +34,7 @@
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
-                <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display }}
+                <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                 </mat-option>
             </mat-select>
             <mat-hint>

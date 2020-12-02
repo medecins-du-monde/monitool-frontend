@@ -2,7 +2,7 @@
     <div *ngFor="let group of groups" class="mdm-section">
         <div class="mdm-title">{{group.theme.name[currentLang]}}</div>
         <div class="mdm-cards">
-            <app-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator" class="mdm-card"></app-indicator>
+            <app-indicator  *ngFor="let indicator of group.indicators" [indicator]="indicator" class="mdm-card"></app-indicator>
         </div>
     </div>
     <div class="mdm-section">

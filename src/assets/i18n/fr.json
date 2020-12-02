@@ -101,13 +101,13 @@
 			"year": "Tous les ans",
 			"free": "Libre"
         },
-        "Computation": {
-            "unavailable": "indisponible",
-			"fixed": "fixée",
-			"copy": "copie",
-			"percentage": "pourcentage",
-			"permille": "permille",
-			"formula": "formule"
+        "Computation":{
+            "unavailable": "Il n'est pas possible de calculer cet indicateur",
+			"fixed": "Utiliser une valeur fixe",
+			"copy": "Copier une valeur (depuis une sources de données)",
+			"percentage": "Pourcentage (depuis les sources de données)",
+			"permille": "Pour mille (depuis les sources de données)",
+			"formula": "Formule personalisée (depuis les sources de données)"
         },
         "Formula":{
             "numerator": "Numérateur",
