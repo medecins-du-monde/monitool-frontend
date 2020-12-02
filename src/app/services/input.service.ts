@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Input } from '../models/input.model';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InputService {
-
-  // input: BehaviorSubject<Input> = new BehaviorSubject(new Input());
 
   constructor(
     private apiService: ApiService,
@@ -27,7 +24,7 @@ export class InputService {
 
   public async list(projectId: string, formId: string){
     const response = await this.apiService.get(
-      `resources/input?mode=ids_by_form`,
+      `/resources/input?mode=ids_by_form`,
       {
         params: {
           projectId,
