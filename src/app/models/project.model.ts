@@ -95,7 +95,7 @@ export class Project implements Deserializable {
             logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
             return logicalFrame;
         }) : [];
-        this.crossCutting = {};
+        this.crossCutting = (input && input.crossCutting) ? input.crossCutting : {};
         this.users = (input && input.users) ? input.users.map(u => {
             const user = new User(u);
             if (u.entities){
@@ -109,11 +109,19 @@ export class Project implements Deserializable {
         return this;
     }
 
+    formatCrossCutting(): any {
+      const crossCuttingFormated = {};
+      Object.keys(this.crossCutting).map(x => {
+        crossCuttingFormated[x] = new ProjectIndicator(this.crossCutting[x]).serialize(true);
+      });
+      return crossCuttingFormated;
+    }
+
     serialize() {
-        const serialized = {
+      const serialized = {
             active: this.active,
             country: this.country,
-            crossCutting: {},
+            crossCutting: this.formatCrossCutting(),
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: this.extraIndicators.map(x => x.serialize()),
@@ -128,8 +136,8 @@ export class Project implements Deserializable {
             visibility: this.visibility,
             _id: this.id
         };
-        Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
-        return serialized;
+      Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
+      return serialized;
     }
 
     copy(): Project {
