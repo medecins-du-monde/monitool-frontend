@@ -17,7 +17,7 @@
         </div>
     </div>
   </div>
-  <div formArrayName="multiThemesArray">
+  <div *ngIf="multiThemesArray.length > 0"formArrayName="multiThemesArray">
     <div class="mdm-section">
         <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
         <div class="indicators-list">

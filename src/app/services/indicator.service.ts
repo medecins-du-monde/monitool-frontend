@@ -23,6 +23,20 @@ export class IndicatorService {
     });
   }
 
+  public async listForProject(themesList: string[]) {
+    const indicatorsList = await this.list();
+    const result = indicatorsList.filter(indicator => {
+      let response = false;
+      indicator.themes.forEach( theme => {
+       if (themesList.includes(theme.id)) {
+         response = true;
+        }
+      });
+      return response;
+    });
+    return result;
+  }
+
   public async save(indicator: Indicator) {
     const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
