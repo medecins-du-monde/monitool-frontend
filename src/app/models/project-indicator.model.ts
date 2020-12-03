@@ -2,15 +2,19 @@
 
 import { forEach } from 'lodash';
 import { Deserializable } from './deserializable.model';
+import { MultiLanguage } from './multi-language.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
 export const COPY_FORMULA = 'copied_value';
 export const UNAVAIlABLE = 'unavailable';
 export const FIXED = 'fixed';
+import { Theme } from './theme.model';
 
 export class ProjectIndicator implements Deserializable {
-
+    crossCutting = false;
+    id: string;
+    description: MultiLanguage;
     display: string;
     baseline: number;
     target: number;
@@ -20,6 +24,7 @@ export class ProjectIndicator implements Deserializable {
         parameters: {}
     };
     type = UNAVAIlABLE;
+    themes: Theme[] = [];
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -27,7 +32,9 @@ export class ProjectIndicator implements Deserializable {
 
     deserialize(input: any): this {
       Object.assign(this, input);
+      // TODO: manage the colorize to have it it the right case
       this.colorize = this.colorize ? this.colorize : true;
+      this.display = input ? input.display || (input.name ? input.name.en : null) : null;
       if (input && input.computation) {
         this.type = input.type ? input.type : this.type;
         this.computation.formula = input.computation.formula;
@@ -59,6 +66,13 @@ export class ProjectIndicator implements Deserializable {
             this.computation.parameters = {};
         }
         }
+      if (this.type !== 'formula' &&
+            this.type !== 'permille' &&
+            this.type !== 'percentage' &&
+            this.type !== 'copy' &&
+            this.type !== UNAVAIlABLE) {
+              this.type = UNAVAIlABLE;
+            }
       return this;
     }
 
@@ -88,14 +102,17 @@ export class ProjectIndicator implements Deserializable {
         return null;
     }}
 
-    serialize() {
-      return {
+    serialize(crossCuttingType = false) {
+      const serializedIndicator = {
         baseline: this.baseline,
         colorize: this.colorize,
         computation: this.formatComputation(this.computation),
-        display: this.display,
         target: this.target,
       };
+      // tslint:disable-next-line: no-string-literal
+      if (!crossCuttingType) { serializedIndicator['display'] = this.display; }
+
+      return serializedIndicator;
     }
 
 }

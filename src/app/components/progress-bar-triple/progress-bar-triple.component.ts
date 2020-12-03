@@ -15,9 +15,9 @@ export class ProgressBarTripleComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.done = (this.done / this.total) * 100;
-    this.ongoing = (this.ongoing / this.total) * 100;
-    this.missing = (this.missing / this.total) * 100;
+    this.done = Math.round( (this.done / this.total) * 100);
+    this.ongoing = Math.round((this.ongoing / this.total) * 100);
+    this.missing = Math.round((this.missing / this.total) * 100);
   }
 
 }
