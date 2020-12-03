@@ -1,4 +1,5 @@
 import { Deserializable } from './deserializable.model';
+import { Operation } from 'fast-json-patch';
 
 class Patch {
     op: string;

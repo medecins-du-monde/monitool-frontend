@@ -25,13 +25,13 @@
 </div>
 <!--- DYNAMIC Structure -->
 
-<div [formGroup]="elementForm"> 
-<table  *ngIf="!visualize" class="display">
-    <tr *ngFor="let row of getNumber((partitions.length)-tableStructure); let rowIndex = index">
+<div *ngIf="partitions" [formGroup]="elementForm"> 
+<table *ngIf="!visualize" class="display">
+    <tr *ngFor="let row of partitions.slice(tableStructure); let rowIndex = index">
         <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
         <td class ="title">
             <mat-form-field class="auto-width" >
-                <mat-select formArrayName="partitions"  [(value)]="partitions[rowIndex].id" (selectionChange)="reorderPartitions($event.value, rowIndex)">
+                <mat-select formArrayName="partitions"  [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id" (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))">
                     <mat-option *ngFor="let part of partitions" [value]="part.id"  >
                         {{ part.name }} ({{part.elements.length}})
                     </mat-option>
@@ -40,9 +40,9 @@
         </td>
     </tr>
     <tr>
-        <td *ngFor="let partition of partitions.slice((partitions.length)-tableStructure); let lastRowIndex = index" class ="title">
+        <td *ngFor="let partition of partitions.slice(0, tableStructure); let lastRowIndex = index" class ="title">
             <mat-form-field class="auto-width">
-                <mat-select  formArrayName="partitions"  [(value)]="partitions[getIndex(lastRowIndex)].id" (selectionChange)="reorderPartitions($event.value, getIndex(lastRowIndex))" >
+                <mat-select formArrayName="partitions" [(value)]="partitions[lastRowIndex].id" (selectionChange)="reorderPartitions($event.value, lastRowIndex)" >
                     <mat-option *ngFor="let part of partitions" [value]="part.id" >
                         {{ part.name }} ({{part.elements.length}})
                     </mat-option>

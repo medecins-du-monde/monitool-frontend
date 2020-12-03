@@ -70,7 +70,7 @@ export class Project implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input._id) ? input._id : `project:${uuid()}`;
+        this.id = (input && input._id) ? input._id : null;
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
@@ -95,7 +95,7 @@ export class Project implements Deserializable {
             logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
             return logicalFrame;
         }) : [];
-        this.crossCutting = {};
+        this.crossCutting = (input && input.crossCutting) ? input.crossCutting : {};
         this.users = (input && input.users) ? input.users.map(u => {
             const user = new User(u);
             if (u.entities){
@@ -106,28 +106,22 @@ export class Project implements Deserializable {
             }
             return user;
         }) : [];
-        // this.crossCutting['indicator:5c72fa08-f0ec-4e80-8e9a-5d32566a0dc5'] = {
-        //     baseline: 12,
-        //     colorize: true,
-        //     computation: {formula: '12', parameters: {}},
-        //     display: 'test',
-        //     target: 100
-        // };
-        // this.crossCutting['indicator:7d4599d1-7a54-425c-a8e9-4d1bc594b82b'] = {
-        //     baseline: null,
-        //     colorize: true,
-        //     computation: null,
-        //     display: 'test 2',
-        //     target: null
-        // };
         return this;
     }
 
+    formatCrossCutting(): any {
+      const crossCuttingFormated = {};
+      Object.keys(this.crossCutting).map(x => {
+        crossCuttingFormated[x] = new ProjectIndicator(this.crossCutting[x]).serialize(true);
+      });
+      return crossCuttingFormated;
+    }
+
     serialize() {
-        const serialized = {
+      const serialized = {
             active: this.active,
             country: this.country,
-            crossCutting: {},
+            crossCutting: this.formatCrossCutting(),
             end: this.end ? this.end.toISOString().slice(0, 10) : null,
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: this.extraIndicators.map(x => x.serialize()),
@@ -142,8 +136,8 @@ export class Project implements Deserializable {
             visibility: this.visibility,
             _id: this.id
         };
-        Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
-        return serialized;
+      Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
+      return serialized;
     }
 
     copy(): Project {

@@ -8,6 +8,8 @@ import { PartitionGroup } from 'src/app/models/partition-group.model';
 import { Partition } from 'src/app/models/partition.model';
 import { Project } from 'src/app/models/project.model';
 import Dates from 'src/app/utils/dates';
+import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+
 
 @Component({
   selector: 'app-data-source-edit',
@@ -27,57 +29,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   @Input() project: Project;
   @Output() edit = new EventEmitter();
 
-  public periodicities = [
-    {
-      value: 'day',
-      display: 'Enum.Periodicity.day'
-    },
-    {
-      value: 'month_week_sat',
-      display: 'Enum.Periodicity.month_week_sat'
-    },
-    {
-      value: 'month_week_sun',
-      display: 'Enum.Periodicity.month_week_sun'
-    },
-    {
-      value: 'month_week_mon',
-      display: 'Enum.Periodicity.month_week_mon'
-    },
-    {
-      value: 'week_sat',
-      display: 'Enum.Periodicity.week_sat'
-    },
-    {
-      value: 'week_sun',
-      display: 'Enum.Periodicity.week_sun'
-    },
-    {
-      value: 'week_mon',
-      display: 'Enum.Periodicity.week_mon'
-    },
-    {
-      value: 'month',
-      display: 'Enum.Periodicity.month'
-    },
-    {
-      value: 'quarter',
-      display: 'Enum.Periodicity.quarter'
-    },
-    {
-      value: 'semester',
-      display: 'Enum.Periodicity.semester'
-    },
-    {
-      value: 'year',
-      display: 'Enum.Periodicity.year'
-    },
-    {
-      value: 'free',
-      display: 'Enum.Periodicity.free'
-    }
-  ];
-
+  public periodicities = [];
   get selectedEntities() {
     return this.dataSourceForm.controls.entities.value;
   }
@@ -92,6 +44,13 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.setForm();
+
+    for (const value of Object.values(TimeSlotPeriodicity)){
+      this.periodicities.push({
+        value,
+        display: `Enum.Periodicity.${value}`
+      });
+    }
   }
 
   ngOnChanges(): void {
