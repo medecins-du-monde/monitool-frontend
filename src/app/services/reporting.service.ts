@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import TimeSlot from 'timeslot-dag';
+import TimeSlot, { timeSlotRange } from 'timeslot-dag';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +18,12 @@ export class ReportingService {
 
     // Missing information will return null for now. //
     if (!computation) {
-      console.log('no computation available');
+      console.log('computation unavailable');
       return null;
     }
 
     if (filter.length === 0) {
-      console.log('no filter available');
+      console.log('filter unavailable');
       return null;
     }
 
@@ -31,20 +31,20 @@ export class ReportingService {
     const periodicities = this.computeCompatiblePeriodicities(project, computation);
     dimensionIds.forEach(dimensionId => {
       if (this.TIME_PERIODICITIES.includes(dimensionId) && !periodicities.includes(dimensionId)) {
+        console.log('periodicity unavailable');
         return null;
       }
     });
 
     // No need to load if value is fixed.
     if (Object.keys(computation.parameters).length === 0) {
-      console.log("IN");
-      let result = parseFloat(computation.formula);
-
+      const value =  parseFloat(computation.formula);
+      let result = computation.formula;
       for (let i = dimensionIds.length - 1; i >= 0; --i) {
         const dimId = dimensionIds[i];
         const newResult = {};
         let ids;
-        /*
+
         if (filter[dimId]) {
           ids = filter[dimId];
         }
@@ -54,16 +54,17 @@ export class ReportingService {
               TimeSlot.fromDate(new Date(filter._start + 'T00:00:00Z'), dimId),
               TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId)
             )
-          ).map(s => s.value);
+          )
+          ids = ids.map(s => s._value);
         }
         else {
-          throw new Error('could not find elements for ' + dimId)
+          console.log('could not find elements for ' + dimId);
         }
-        ids.forEach(id => newResult[id] = result);
+        ids.forEach(id => newResult[id] = value);
         if (withTotals) {
-          newResult._total = result;
+          newResult['_total'] = value;
         }
-        result = newResult;*/
+        result = newResult;
       }
       return result;
     }
@@ -78,8 +79,8 @@ export class ReportingService {
       withGroups
     };
 
-
     const response: any = await this.apiService.post(url, data);
+
     return response;
   }
 
@@ -92,7 +93,6 @@ export class ReportingService {
         variableIds.push(computation.parameters[key].elementId);
       }
     }
-    console.log(variableIds);
 
     const dsPeriodicities = project.forms
       .filter(ds => ds.elements.some(variable => variableIds.includes(variable.id)))
@@ -103,7 +103,6 @@ export class ReportingService {
         if (dsPeriodicity === 'free' || periodicity === dsPeriodicity) {
           return true;
         }
-        /*
         try {
           let t = TimeSlot.fromDate(new Date(), dsPeriodicity);
           t.toUpperSlot(periodicity);
@@ -111,7 +110,7 @@ export class ReportingService {
         }
         catch (e) {
           return false;
-        }*/
+        }
 
       });
     });

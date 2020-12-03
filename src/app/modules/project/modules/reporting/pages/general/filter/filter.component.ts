@@ -38,10 +38,10 @@ export class FilterComponent implements OnInit {
 
   transformDate(date: Date) {
     const month = date.getMonth() + 1;
-    const monthWithZero = month <= 9 ? '0'  + month.toString : month.toString();
+    const monthWithZero = month <= 9 ? '0'  + month.toString() : month.toString();
 
-    const day = date.getDate() + 1;
-    const dayWithZero = day <= 9 ? '0'  + day.toString : day.toString();
+    const day = date.getDate();
+    const dayWithZero = day <= 9 ? '0'  + day.toString() : day.toString();
 
     const tempDate = date.getFullYear() + '-' + monthWithZero + '-' + dayWithZero;
     return tempDate;

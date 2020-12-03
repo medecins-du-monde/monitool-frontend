@@ -43,11 +43,10 @@ export class GeneralComponent implements OnInit {
       this.startDate = new Date(currentYear, 0, 1);
       this.collectionSites = project.entities;
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
-      then we get all the indicators and attach them to the body to make the request 
+      then we get all the indicators and attach them to the body to make the request once clicked on the plus
       then we remove this dummy variable */
-      console.log(project.extraIndicators);
-      this.computation = project.logicalFrames[0].indicators[1].computation;
-      console.log(this.computation);
+      console.log(this.project.logicalFrames[0].purposes);
+      this.computation = project.logicalFrames[0].purposes[0].indicators[0].computation;
     });
 
 
