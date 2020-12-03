@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
+import { ChartService } from 'src/app/services/chart.service';
 
 @Component({
   selector: 'app-chart',
@@ -48,6 +49,10 @@ export class ChartComponent implements OnInit {
       data: this.data,
       options: this.options,
     });
+    this.chartService.dataset.subscribe(data => {
+      console.log("changed ", data);
+      this.addDataset(data)}
+      );
   }
 
   addDataset(newDataset) {
@@ -69,7 +74,7 @@ export class ChartComponent implements OnInit {
    });
   }
 
-  constructor() { }
+  constructor(private chartService: ChartService) { }
 
   // delete all functions below later - only for populating with random data//
   addRandomData() {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ReportingService } from 'src/app/services/reporting.service';
+import { ChartService } from 'src/app/services/chart.service';
 
 @Component({
   selector: 'app-general',
@@ -22,12 +23,12 @@ export class GeneralComponent implements OnInit {
   /*examplatory data to test if chart components accepts input*/
   chartType = 'line';
   options =  {fill: false};
-  data = {
-
-  };
+  data;
   /*--------------------------*/
 
-  constructor(private projectService: ProjectService, private reportingService: ReportingService ) { }
+  constructor(private projectService: ProjectService,
+              private reportingService: ReportingService,
+              private chartService: ChartService ) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -41,6 +42,8 @@ export class GeneralComponent implements OnInit {
       console.log(this.project.logicalFrames[0].purposes[0].indicators[0]);
       this.computation = project.logicalFrames[0].indicators[0].computation;
     });
+
+    //this.chartService.dataset.subscribe(data => this.data = data);
   }
 
   setGrouping(event) {
@@ -67,7 +70,7 @@ export class GeneralComponent implements OnInit {
           fill: false,
       }]
     };
-    return data;
+    this.chartService.addDataset(data);
   }
 
 }
