@@ -23,14 +23,7 @@ export class GeneralComponent implements OnInit {
   chartType = 'line';
   options =  {fill: false};
   data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 1)',
-        fill: false,
-    }]
+
   };
   /*--------------------------*/
 
@@ -45,11 +38,9 @@ export class GeneralComponent implements OnInit {
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
       then we remove this dummy variable */
-      console.log(this.project.logicalFrames[0].purposes);
-      this.computation = project.logicalFrames[0].purposes[0].indicators[0].computation;
+      console.log(this.project.logicalFrames[0].purposes[0].indicators[0]);
+      this.computation = project.logicalFrames[0].indicators[0].computation;
     });
-
-
   }
 
   setGrouping(event) {
@@ -60,8 +51,23 @@ export class GeneralComponent implements OnInit {
     this.filter = event;
   }
 
-  makeRequest(){
-    this.reportingService.fetchData(this.project, this.computation, this.grouping, this.filter, true, true);
+  async makeRequest(){
+    const response = await this.reportingService.fetchData(this.project, this.computation, this.grouping, this.filter, true, true);
+    this.responseToGraphData(response);
+  }
+
+  responseToGraphData(response) {
+    const data = {
+      labels: Object.keys(response),
+      datasets: [{
+          label: this.project.logicalFrames[0].purposes[0].indicators[0].display,
+          data: Object.values(response),
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 1)',
+          fill: false,
+      }]
+    };
+    return data;
   }
 
 }

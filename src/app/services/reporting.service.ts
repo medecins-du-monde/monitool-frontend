@@ -80,7 +80,6 @@ export class ReportingService {
     };
 
     const response: any = await this.apiService.post(url, data);
-
     return response;
   }
 
