@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import TimeSlot, { timeSlotRange } from 'timeslot-dag';
+import TimeSlot from 'timeslot-dag';
 
 @Injectable({
   providedIn: 'root'
@@ -49,12 +49,15 @@ export class ReportingService {
           ids = filter[dimId];
         }
         else if (periodicities.includes(dimId)) {
-          ids = Array.from(
-            timeSlotRange(
-              TimeSlot.fromDate(new Date(filter._start + 'T00:00:00Z'), dimId),
-              TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId)
-            )
-          )
+          ids = []
+          let slotStart = TimeSlot.fromDate(new Date(filter._start + 'T00:00:00Z'), dimId);
+          let slotEnd = TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId);
+          ids.push(slotStart);
+          while (slotStart !== slotEnd){
+            slotStart = slotStart.next();
+            ids.push(slotStart);
+          }
+          console.log(ids);
           ids = ids.map(s => s._value);
         }
         else {
@@ -104,7 +107,7 @@ export class ReportingService {
         }
         try {
           let t = TimeSlot.fromDate(new Date(), dsPeriodicity);
-          t.toUpperSlot(periodicity);
+          t.toParentPeriodicity(dsPeriodicity);
           return true;
         }
         catch (e) {

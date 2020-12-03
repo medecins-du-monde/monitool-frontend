@@ -56,14 +56,15 @@ export class GeneralComponent implements OnInit {
 
   async makeRequest(){
     const response = await this.reportingService.fetchData(this.project, this.computation, this.grouping, this.filter, true, true);
-    this.addDataToGraph(this.responseToGraphData(response));
+    console.log(response);
+    this.addDataToGraph(this.responseToGraphData(response, 'get label from current data'));
   }
 
-  responseToGraphData(response) {
+  responseToGraphData(response, label) {
     const data = {
       labels: Object.keys(response),
       datasets: [{
-          label: this.project.logicalFrames[0].purposes[0].indicators[0].display,
+          label: label,
           data: Object.values(response),
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'rgba(255, 99, 132, 1)',
