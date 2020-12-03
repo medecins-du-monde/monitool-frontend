@@ -49,7 +49,7 @@ export class ReportingService {
           ids = filter[dimId];
         }
         else if (periodicities.includes(dimId)) {
-          ids = []
+          ids = [];
           let slotStart = TimeSlot.fromDate(new Date(filter._start + 'T00:00:00Z'), dimId);
           let slotEnd = TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId);
           ids.push(slotStart);
@@ -57,7 +57,6 @@ export class ReportingService {
             slotStart = slotStart.next();
             ids.push(slotStart);
           }
-          console.log(ids);
           ids = ids.map(s => s._value);
         }
         else {

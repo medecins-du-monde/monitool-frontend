@@ -81,7 +81,6 @@ export class InputsComponent implements OnInit, OnDestroy {
       // this is the oldest date of the form
       const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
 
-      console.log(slotStart);
       if (slotStart === slotEnd){
         this.thisYearDates = [
           {

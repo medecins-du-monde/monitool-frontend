@@ -39,7 +39,7 @@ export class GeneralComponent implements OnInit {
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
       then we remove this dummy variable */
-      console.log(this.project.logicalFrames[0].purposes[0].indicators[0]);
+      console.log(this.project.logicalFrames[0].indicators[0]);
       this.computation = project.logicalFrames[0].indicators[0].computation;
     });
 
