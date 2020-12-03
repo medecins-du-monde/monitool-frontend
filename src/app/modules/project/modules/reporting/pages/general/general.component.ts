@@ -56,7 +56,7 @@ export class GeneralComponent implements OnInit {
 
   async makeRequest(){
     const response = await this.reportingService.fetchData(this.project, this.computation, this.grouping, this.filter, true, true);
-    this.responseToGraphData(response);
+    this.addDataToGraph(this.responseToGraphData(response));
   }
 
   responseToGraphData(response) {
@@ -70,6 +70,14 @@ export class GeneralComponent implements OnInit {
           fill: false,
       }]
     };
+    return data;
+  }
+
+  addDataToGraph(data) {
+    this.chartService.addData(data);
+  }
+
+  addDatasetToGraph(data) {
     this.chartService.addDataset(data);
   }
 

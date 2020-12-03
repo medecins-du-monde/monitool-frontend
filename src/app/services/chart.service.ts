@@ -15,9 +15,20 @@ export class ChartService {
   dataset: BehaviorSubject<object> = new BehaviorSubject(new Object());
   currentDataset = this.dataset.asObservable();
 
+  data: BehaviorSubject<object> = new BehaviorSubject(new Object());
+  currentData = this.data.asObservable();
+
 
   addDataset(dataset) {
     this.dataset.next(dataset);
+  }
+
+  addData(data) {
+    this.data.next(data);
+  }
+
+  changeType(type) {
+    this.type.next(type);
   }
 
 

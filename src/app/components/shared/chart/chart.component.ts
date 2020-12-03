@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
+import { isEmpty } from 'lodash';
 
 @Component({
   selector: 'app-chart',
@@ -49,14 +50,33 @@ export class ChartComponent implements OnInit {
       data: this.data,
       options: this.options,
     });
+
     this.chartService.dataset.subscribe(data => {
-      console.log("changed ", data);
-      this.addDataset(data)}
-      );
+      if (!isEmpty(data)) {
+        this.addDataset(data);
+      }
+    });
+
+    this.chartService.data.subscribe(data => {
+      if (!isEmpty(data)) {
+        this.addData(data);
+      }
+    });
+
+    this.chartService.type.subscribe(type => {
+      if (!isEmpty(type)) {
+        this.changeChartType(type);
+      }
+    });
   }
 
-  addDataset(newDataset) {
-    this.chart.data.datasets.push(newDataset);
+  addDataset(data) {
+    this.chart.data.datasets.push(data.datasets);
+    this.chart.update();
+  }
+
+  addData(data) {
+    this.chart.data = data;
     this.chart.update();
   }
 
@@ -68,7 +88,7 @@ export class ChartComponent implements OnInit {
   changeChartType(event) {
     this.chart.destroy();
     this.chart = new Chart('currentChart', {
-      type: event.value,
+      type: event,
       data: this.data,
       options: this.options,
    });
