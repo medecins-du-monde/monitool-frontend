@@ -17,8 +17,8 @@ export class ObjectGroupingComponent implements OnInit {
     {value: 'quarter', viewValue: 'Quarter'},
     {value: 'semester', viewValue: 'Semester'},
     {value: 'year', viewValue: 'Year'},
-    {value: 'collection sites', viewValue: 'Collection Sites'},
-    {value: 'groups', viewValue: 'Groups'}
+    {value: 'entity', viewValue: 'Collection Sites'},
+    {value: 'group', viewValue: 'Groups'}
   ];
 
   ngOnInit(): void {
