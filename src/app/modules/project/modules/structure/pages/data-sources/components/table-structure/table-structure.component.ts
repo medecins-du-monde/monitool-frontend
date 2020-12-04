@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { Partition } from 'src/app/models/partition.model';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 
 
@@ -60,13 +60,25 @@ export class TableStructureComponent implements OnInit {
     });
   }
 
-  reorderPartitions(nextId, currentRowIndex) {
+  // swaps the form controls when the user reorder the partitions
+  reorderPartitions(nextId, currentRowIndex: number) {
     const partitions = this.elementForm.value.partitions;
     const nextIndex = partitions.findIndex(element => element.id === nextId);
-    const oldElement = partitions[currentRowIndex];
-    partitions[currentRowIndex] = partitions[nextIndex];
-    partitions[nextIndex] = oldElement;
-    this.elementForm.controls.partitions.patchValue(partitions);
+
+    // saves the control in currentRowIndex
+    const oldControl = this.elementForm.get('partitions').get(currentRowIndex.toString());
+
+    // overwrite the currentRowIndex with the control in the nextIndex position
+    (this.elementForm.get('partitions') as FormArray).setControl(
+      currentRowIndex,
+      this.elementForm.get('partitions').get(nextIndex.toString())
+    );
+
+    // overwrite the control in the nextIndex position with the saved control
+    (this.elementForm.get('partitions') as FormArray).setControl(
+      nextIndex,
+      oldControl
+    );
   }
 
   selected(event) {

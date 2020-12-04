@@ -5,6 +5,7 @@ import { OutputElement } from 'src/app/models/output-element.model';
 import { Purpose } from 'src/app/models/purpose.model';
 import { Activity } from 'src/app/models/activity.model';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { Theme } from 'src/app/models/theme.model';
 
 export default class FormGroupBuilder {
 
@@ -42,7 +43,7 @@ export default class FormGroupBuilder {
     });
   }
 
-  static newIndicator(indicatorToEdit = null): FormGroup {
+  static newIndicator(indicatorToEdit = null, crossCutting = false): FormGroup {
     const indicator = new ProjectIndicator(indicatorToEdit);
 
     const parametersFormGroup = new FormGroup({});
@@ -61,16 +62,64 @@ export default class FormGroupBuilder {
         }));
       });
     }
+    // TODO: Review to have a way to do it cleaner
+    if (crossCutting) {
+      return new FormGroup({
+        crossCutting: new FormControl(true, Validators.required),
+        id: new FormControl(indicator.id, Validators.required),
+        description: indicator.description ? new FormGroup({
+          en: new FormControl(indicator.description.en),
+          es: new FormControl(indicator.description.es),
+          fr: new FormControl(indicator.description.fr),
+        }) : new FormControl(null),
+        display: new FormControl(indicator.display),
+        baseline: new FormControl(indicator.baseline, Validators.required),
+        target: new FormControl(indicator.target, Validators.required),
+        computation: new FormGroup({
+          formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
+          parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
+        }),
+        type: new FormControl(indicator.type)
+      });
+    }
+    else {
+      return new FormGroup({
+        display: new FormControl(indicator.display, Validators.required),
+        baseline: new FormControl(indicator.baseline, Validators.required),
+        target: new FormControl(indicator.target, Validators.required),
+        computation: new FormGroup({
+          formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
+          parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
+        }),
+        type: new FormControl(indicator.type)
+      });
+    }
+  }
+
+  static newTheme(theme?: Theme): FormGroup {
+    if (!theme) {
+      theme = new Theme();
+    }
     return new FormGroup({
-      display: new FormControl(indicator.display, Validators.required),
-      baseline: new FormControl(indicator.baseline, Validators.required),
-      target: new FormControl(indicator.target, Validators.required),
-      computation: new FormGroup({
-        formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
-        parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
-      }),
-      type: new FormControl(indicator.type)
+      id: new FormControl(theme.id, Validators.required),
+      type: new FormControl(theme.type, Validators.required),
+      name: new FormControl(theme.name, Validators.required),
+      shortName: new FormControl(theme.shortName, Validators.required),
+      rev: new FormControl(theme.rev, Validators.required),
     });
   }
+
+  static newIndicatorGroup(group?: {theme: Theme, indicators: ProjectIndicator[]}): FormGroup {
+    if (!group) {
+      const theme = new Theme();
+      const indicators: ProjectIndicator[] = [];
+      group = {theme, indicators};
+    }
+    return new FormGroup({
+      theme: this.newTheme(group.theme),
+      indicators: new FormArray(group.indicators.map(indicator => this.newIndicator(indicator, true))),
+    });
+  }
+
 }
 

@@ -26,6 +26,7 @@
     "Confirm": "Confirmar",
     "Countries": "Países",
     "Country": "País",
+    "CoveredPeriod": "Periodo cubierto",
     "Create": "Crear",
     "CreateNewDataSource": "Crear una nueva fuente de datos",
     "CreateLogicalFramework":"Añadir un marco lógico en blanco",
@@ -37,6 +38,7 @@
         "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
         "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
     ],
+    "Data": "Datos",
     "DataEntryUser": "Entrada de datos",
     "DataSourceCalendarTitle": "Calendario",
     "DataSourceStructureTitle": "Estructura",
@@ -50,7 +52,7 @@
         "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
         "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto",
-        "StartDatePlaceholder": "Igual que el inicio del proyecto"  
+        "StartDatePlaceholder": "Igual que el inicio del proyecto"
     },
     "DataSources": "Fuente de datos",
     "Date": "Fecha",
@@ -126,11 +128,14 @@
         "Los indicadores adicionales son indicadores que no estan en ningún marco lógico.",
         "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
     ],
+    "FillThe": "Rellenar los",
     "Fiters": "Filtres",
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
+    "FormsOf": "formularios de",
     "fr": "Francés",
     "FullName": "Nombre completo",
+    "GeneralInformations": "Informaciones generales",
     "GeneralReporting": "Informe general",
     "GeoAggregation": "Como compilar entradas provenientes de diferentes lugares?",
     "GeoAggregationHint": "En un proyecto que trabaja en dos lugares, si {{name}} vale 10 en el primero, y 20 en el segundo, cual es el valor para el proyecto entero?",
@@ -343,6 +348,11 @@
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
+    "InputsInfo": [
+        "Este calendario de entrada hace la lista de todas las entradas de datos programadas para la fuente de datos ",
+        "Para limitar los errores de entrada, es preferible entrar los datos cerca de donde se colectaron, directamente en Monitool.",
+        "Si no es posible, una versión PDF del formulario esta provista."
+    ],
     "InputHomeInfo": [
         "El objectivo de esta sección es permitirle entrar los datos que Monitool usara para calcular sus indicadores",
         "Cada una de las fuentes de datos que fueron creadas durante la estructuración del proyecto da lugar a un formulario que se rellena periódicamente",
@@ -509,6 +519,7 @@
     "UserEdition": "Editar usuario",
     "Users": "Usuarios",
     "UseTrainingAccount":"Usar cuenta de entrenamiento (admin)",
+    "UseMDMAccount": "Usar cuenta de MDM",
     "Valid": "Valido",
     "Visibility": "Visibilidad",
     "VisibilityPublic": "Visible  para todos los usarios",
