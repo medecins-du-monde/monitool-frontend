@@ -192,7 +192,8 @@ export class EditComponent implements OnInit, OnDestroy {
             sum += +val.values[table.id][inputPos];
           }
         }
-        table.value[table.numberRows - 1][y] = sum;
+        table.value[y][table.numberRows - 1] = sum;
+        total += sum;
       }
       table.value[table.numberRows - 1][table.numberCols - 1] = total;
     }
