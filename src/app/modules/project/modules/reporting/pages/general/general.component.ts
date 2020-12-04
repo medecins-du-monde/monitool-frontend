@@ -3,7 +3,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-general',
@@ -26,11 +26,18 @@ export class GeneralComponent implements OnInit {
   options =  {fill: false};
   data;
 
-
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService,
               private fb: FormBuilder ) { }
+
+  addDataToGraph(data) {
+    this.chartService.addData(data);
+  }
+
+  addDatasetToGraph(data) {
+    this.chartService.addDataset(data);
+  }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -55,11 +62,6 @@ export class GeneralComponent implements OnInit {
       filter: this.filter,
     });
   }
-
-  setGrouping(event) {
-    this.grouping = [event.value];
-  }
-
 
   async makeRequest(){
     const tempFilter = this.requestForm.value.filter;
@@ -89,7 +91,7 @@ export class GeneralComponent implements OnInit {
           group => {
             group.id === key ? labels.push(group.name) : null;
             key === '_total' ? labels.push(key) : null;
-            })
+            });
           });
     } else if (grouping === 'entity') {
       console.log(this.project);
@@ -110,12 +112,8 @@ export class GeneralComponent implements OnInit {
     return data;
   }
 
-  addDataToGraph(data) {
-    this.chartService.addData(data);
+  setGrouping(event) {
+    this.grouping = [event.value];
   }
-
-  addDatasetToGraph(data) {
-    this.chartService.addDataset(data);
-  }
-
+  
 }

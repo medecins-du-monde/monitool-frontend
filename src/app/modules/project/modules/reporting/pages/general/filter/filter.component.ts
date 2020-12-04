@@ -20,8 +20,15 @@ export class FilterComponent implements OnInit{
 
   constructor() { }
 
-  toggleCollapsed() {
-    this.collapsed = this.collapsed ? false : true;
+  addSite(site){
+    site.forEach(s => {
+      const exists = this.selectedSites.some(element => element.id === s.id);
+      if (!exists) {
+        const tempSite = {id: s.id, name: s.name};
+        this.selectedSites.push(tempSite);
+      }
+    });
+    this.createFilter();
   }
 
   createFilter() {
@@ -40,26 +47,13 @@ export class FilterComponent implements OnInit{
     this.requestForm.value.filter = filter;
   }
 
-  ngOnInit(): void {
-    const currentYear = new Date().getFullYear(); //we assume it is last day of the current year
-    this.endDate = new Date(currentYear, 11, 31);
-    this.createFilter();
-  }
-
   onEntityRemoved(entity) {
     this.selectedSites = this.selectedSites.filter(site => site.id !== entity.id);
     this.createFilter();
   }
 
-  addSite(site){
-    site.forEach(s => {
-      const exists = this.selectedSites.some(element => element.id === s.id);
-      if (!exists) {
-        const tempSite = {id: s.id, name: s.name};
-        this.selectedSites.push(tempSite);
-      }
-    });
-    this.createFilter();
+  toggleCollapsed() {
+    this.collapsed = this.collapsed ? false : true;
   }
 
   transformDate(date: Date) {
@@ -77,6 +71,12 @@ export class FilterComponent implements OnInit{
 
   onDateChange(event, where) {
     this.requestForm.value[where] = this.transformDate(event.value);
+  }
+
+  ngOnInit(): void {
+    const currentYear = new Date().getFullYear(); //we assume it is last day of the current year
+    this.endDate = new Date(currentYear, 11, 31);
+    this.createFilter();
   }
 
 }
