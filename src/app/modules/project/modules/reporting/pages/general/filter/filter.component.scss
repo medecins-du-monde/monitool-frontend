@@ -12,6 +12,10 @@ td {
   background: white;
 }
 
-.mat-form-field {
-  padding: 2em;
+.mdm-form-group:first-child {
+  padding-top: 1em;
+}
+
+.mdm-form-group {
+  padding: 0em 2em 0em 2em;
 }

@@ -6,29 +6,46 @@
     </tr>
     <tr>
         <td *ngIf="!collapsed">
-
+            <div class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'Start' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>Choose a startdate</mat-label>
                     <input matInput [matDatepicker]="start" [value]="startDate">
                     <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
+            </div>
 
+            <div class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'End' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-label>Choose an Enddate</mat-label>
+                    <mat-label>Choose an enddate</mat-label>
                     <input matInput [matDatepicker]="end" [value]="endDate">
                     <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
-
-                <mat-form-field appearance="outline">
-                    <mat-label>Collection Sites</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let site of sites" [value]="site.value">
-                        {{site.name}}
+            </div>
+                        
+            <div class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
+                <mat-form-field appearance="outline" class="mdm-form-field">
+                    <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple>
+                        <mat-select-trigger>
+                            <mat-chip-list>
+                                <mat-chip *ngFor="let site of selectedSites" [removable]="true"
+                                (selectionChange)="addSite($event)"
+                                    >
+                                    {{ site.name }}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                            </mat-chip-list>
+                        </mat-select-trigger>
+    
+                        <mat-option *ngFor="let site of sites" [value]="site">{{ site.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
 
         </td>
     </tr>
