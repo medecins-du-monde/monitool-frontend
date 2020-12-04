@@ -93,8 +93,6 @@ export class GeneralComponent implements OnInit {
             key === '_total' ? labels.push(key) : null;
             });
           });
-    } else if (grouping === 'entity') {
-      console.log(this.project);
     } else {
       labels = keys;
     }
@@ -115,5 +113,5 @@ export class GeneralComponent implements OnInit {
   setGrouping(event) {
     this.grouping = [event.value];
   }
-  
+
 }
