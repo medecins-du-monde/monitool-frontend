@@ -70,10 +70,37 @@ export class GeneralComponent implements OnInit {
   }
 
   responseToGraphData(response, label) {
+    let grouping = this.requestForm.value.grouping[0];
+    let idToName = false;
+    if (grouping === 'group') {
+      grouping = 'groups';
+      idToName = true;
+    }
+    if (grouping === 'entity') {
+      grouping = 'entities';
+      idToName = true;
+    }
+
+    let labels = [];
+    const keys = Object.keys(response);
+    if (idToName) {
+      keys.forEach(key => {
+        this.project[grouping].find(
+          group => {
+            group.id === key ? labels.push(group.name) : null;
+            key === '_total' ? labels.push(key) : null;
+            })
+          });
+    } else if (grouping === 'entity') {
+      console.log(this.project);
+    } else {
+      labels = keys;
+    }
+
     const data = {
-      labels: Object.keys(response),
+      labels,
       datasets: [{
-          label: label,
+          label,
           data: Object.values(response),
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'rgba(255, 99, 132, 1)',
