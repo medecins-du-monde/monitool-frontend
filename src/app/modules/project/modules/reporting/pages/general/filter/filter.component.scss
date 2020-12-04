@@ -1,5 +1,6 @@
 .hover {
   cursor: pointer;
+  padding: 5px;
 }
 
 table {
@@ -10,6 +11,7 @@ table {
 td {
   border: solid 1px #e7e7e7 !important;
   background: white;
+  vertical-align: middle;
 }
 
 .mdm-form-group:first-child {
@@ -18,4 +20,18 @@ td {
 
 .mdm-form-group {
   padding: 0em 2em 0em 2em;
+}
+
+h2 {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  width: 110px;
+  justify-content: baseline;
+  padding-left: 1em;
+}
+
+.mat-icon {
+  padding: 2px;
 }

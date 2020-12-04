@@ -3,6 +3,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-general',
@@ -18,17 +19,18 @@ export class GeneralComponent implements OnInit {
   startDate: Date;
   collectionSites: object;
   computation: object;
+  requestForm: FormGroup;
 
 
-  /*examplatory data to test if chart components accepts input*/
   chartType = 'line';
   options =  {fill: false};
   data;
-  /*--------------------------*/
+
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
-              private chartService: ChartService ) { }
+              private chartService: ChartService,
+              private fb: FormBuilder ) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -39,24 +41,26 @@ export class GeneralComponent implements OnInit {
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
       then we remove this dummy variable */
-      console.log(this.project.logicalFrames[0].indicators[0]);
       this.computation = project.logicalFrames[0].indicators[0].computation;
     });
 
-    //this.chartService.dataset.subscribe(data => this.data = data);
+    this.requestForm = this.fb.group({
+      project: this.project,
+      computation: this.computation,
+      grouping: this.grouping,
+      filter: this.filter,
+    });
   }
 
   setGrouping(event) {
     this.grouping = [event.value];
   }
 
-  setFilter(event) {
-    this.filter = event;
-  }
 
   async makeRequest(){
-    const response = await this.reportingService.fetchData(this.project, this.computation, this.grouping, this.filter, true, true);
-    console.log(response);
+    const tempFilter = this.requestForm.value.filter;
+    const grouping = [this.requestForm.value.grouping];
+    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , tempFilter, true, true);
     this.addDataToGraph(this.responseToGraphData(response, 'get label from current data'));
   }
 

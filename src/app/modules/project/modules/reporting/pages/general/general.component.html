@@ -1,9 +1,9 @@
 
 <button (click)="makeRequest()">Make Request</button>
 
-<app-object-grouping (grouping)=setGrouping($event)></app-object-grouping>
+<app-object-grouping [requestForm]="requestForm"></app-object-grouping>
 
-<app-filter [startDate]="startDate" [sites]="collectionSites" (filter)=setFilter($event)></app-filter>
+<app-filter [startDate]="startDate" [sites]="collectionSites" [requestForm]="requestForm"></app-filter>
 
 <app-chart [chartType]="chartType" [options]="options" [data]="data"></app-chart>
 

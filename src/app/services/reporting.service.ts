@@ -29,6 +29,7 @@ export class ReportingService {
 
     // No need to load if the periodicity is not available.
     const periodicities = this.computeCompatiblePeriodicities(project, computation);
+    console.log
     dimensionIds.forEach(dimensionId => {
       if (this.TIME_PERIODICITIES.includes(dimensionId) && !periodicities.includes(dimensionId)) {
         console.log('periodicity unavailable');

@@ -4,20 +4,16 @@
     </mat-grid-tile>
 
     <mat-grid-tile colspan="12">
-        <div class="form-field-group">
-        <mat-form-field appearance="fill">
-            <mat-label>Grouping</mat-label>
-            <mat-select (selectionChange)="onChangeGrouping($event)">
-                <mat-option *ngFor="let type of groupOptions" [value]="type.value">
-                {{type.viewValue}}
+        <mat-form-field appearance="none" class="mdm-form-field">
+            <mat-select  (selectionChange)="onChangeGrouping($event)" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}">
+                <mat-option *ngFor="let type of groupOptions" [value]="type">{{ type.value }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-    </div>
     </mat-grid-tile>
 
     <mat-grid-tile colspan="3">
-        <mat-icon>system_update</mat-icon><button mat-stroked-button>Download table</button>
+        <button mat-stroked-button ><mat-icon>play_for_work</mat-icon> Download table</button>
     </mat-grid-tile>        
 
 </mat-grid-list>

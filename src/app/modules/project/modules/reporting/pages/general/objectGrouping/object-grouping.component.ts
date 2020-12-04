@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
+import {  FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-object-grouping',
@@ -7,7 +8,7 @@ import { Component, OnInit, EventEmitter, Output  } from '@angular/core';
 })
 export class ObjectGroupingComponent implements OnInit {
 
-  @Output() grouping: EventEmitter<string> = new EventEmitter<string>();
+  @Input() requestForm: FormGroup;
 
   constructor() { }
 
@@ -24,7 +25,7 @@ export class ObjectGroupingComponent implements OnInit {
   }
 
   onChangeGrouping(event) {
-    this.grouping.emit(event.value);
+    this.requestForm.value.grouping = [event.value.value];
   }
 
 }
