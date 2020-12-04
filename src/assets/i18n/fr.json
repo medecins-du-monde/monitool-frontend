@@ -83,40 +83,40 @@
     "Enum": {
         "Aggregation": {
             "sum": "Faire une somme",
-			"average": "Faire une moyenne",
-			"highest": "Prendre la plus grande valeure",
-			"lowest": "Prendre la plus petite valeure",
-			"last": "Prendre la dernière valeur",
-			"none": "Il n'est pas possible de faire ce calcul"
+            "average": "Faire une moyenne",
+            "highest": "Prendre la plus grande valeure",
+            "lowest": "Prendre la plus petite valeure",
+            "last": "Prendre la dernière valeur",
+            "none": "Il n'est pas possible de faire ce calcul"
         },
         "Periodicity": {
             "day": "Tous les jours",
-			"month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
-			"month_week_sun": "Toutes les semaines (dimanche à lundi / coupées par mois)",
-			"month_week_mon": "Toutes les semaines (lundi à dimanche / coupées par mois)",
-			"week_sat": "Toutes les semaines (samedi à vendredi)",
-			"week_sun": "Toutes les semaines (dimanche à lundi)",
-			"week_mon": "Toutes les semaines (lundi à dimanche)",
-			"month": "Tous les mois",
-			"quarter": "Tous les trimestres",
-			"semester": "Tous les semestres",
-			"year": "Tous les ans",
-			"free": "Libre"
+            "month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
+            "month_week_sun": "Toutes les semaines (dimanche à lundi / coupées par mois)",
+            "month_week_mon": "Toutes les semaines (lundi à dimanche / coupées par mois)",
+            "week_sat": "Toutes les semaines (samedi à vendredi)",
+            "week_sun": "Toutes les semaines (dimanche à lundi)",
+            "week_mon": "Toutes les semaines (lundi à dimanche)",
+            "month": "Tous les mois",
+            "quarter": "Tous les trimestres",
+            "semester": "Tous les semestres",
+            "year": "Tous les ans",
+            "free": "Libre"
         },
         "Computation":{
             "unavailable": "Il n'est pas possible de calculer cet indicateur",
-			"fixed": "Utiliser une valeur fixe",
-			"copy": "Copier une valeur (depuis une sources de données)",
-			"percentage": "Pourcentage (depuis les sources de données)",
-			"permille": "Pour mille (depuis les sources de données)",
-			"formula": "Formule personalisée (depuis les sources de données)"
+            "fixed": "Utiliser une valeur fixe",
+            "copy": "Copier une valeur (depuis une sources de données)",
+            "percentage": "Pourcentage (depuis les sources de données)",
+            "permille": "Pour mille (depuis les sources de données)",
+            "formula": "Formule personalisée (depuis les sources de données)"
         },
         "Formula":{
             "numerator": "Numérateur",
             "denominator": "Dénominateur",
             "copied": "Valeur à copier"
         }
-       
+
     },
     "es": "Espagnol",
     "EquivalentVersion" : "Ce point est équivalent à l'état actuel du projet",

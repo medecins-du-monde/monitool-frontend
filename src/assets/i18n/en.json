@@ -105,18 +105,18 @@
         },
         "Computation": {
             "unavailable": "It is not possible to compute this indicator",
-			"fixed": "Use a constant value",
-			"copy": "Copy a value (from a data source)",
-			"percentage": "Percentage (from data sources)",
-			"permille": "Per thousands (from data sources)",
-			"formula": "Custom formula (from data sources)"
+            "fixed": "Use a constant value",
+            "copy": "Copy a value (from a data source)",
+            "percentage": "Percentage (from data sources)",
+            "permille": "Per thousands (from data sources)",
+            "formula": "Custom formula (from data sources)"
         },
         "Formula":{
             "numerator": "Numerator",
             "denominator": "Denominator",
             "copied": "Copied Value"
         }
-        
+
     },
     "es": "Spanish",
     "EquivalentVersion" : "This version is equivalent to the current state of the project",
