@@ -52,7 +52,7 @@
         "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
         "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto",
-        "StartDatePlaceholder": "Igual que el inicio del proyecto"  
+        "StartDatePlaceholder": "Igual que el inicio del proyecto"
     },
     "DataSources": "Fuente de datos",
     "Date": "Fecha",
@@ -505,6 +505,7 @@
     "UserEdition": "Editar usuario",
     "Users": "Usuarios",
     "UseTrainingAccount":"Usar cuenta de entrenamiento (admin)",
+    "UseMDMAccount": "Usar cuenta de MDM",
     "Valid": "Valido",
     "Visibility": "Visibilidad",
     "VisibilityPublic": "Visible  para todos los usarios",
