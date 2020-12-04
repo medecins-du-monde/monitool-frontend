@@ -83,26 +83,40 @@
     "Enum": {
         "Aggregation": {
             "sum": "Faire une somme",
-			"average": "Faire une moyenne",
-			"highest": "Prendre la plus grande valeure",
-			"lowest": "Prendre la plus petite valeure",
-			"last": "Prendre la dernière valeur",
-			"none": "Il n'est pas possible de faire ce calcul"
+            "average": "Faire une moyenne",
+            "highest": "Prendre la plus grande valeure",
+            "lowest": "Prendre la plus petite valeure",
+            "last": "Prendre la dernière valeur",
+            "none": "Il n'est pas possible de faire ce calcul"
         },
         "Periodicity": {
             "day": "Tous les jours",
-			"month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
-			"month_week_sun": "Toutes les semaines (dimanche à lundi / coupées par mois)",
-			"month_week_mon": "Toutes les semaines (lundi à dimanche / coupées par mois)",
-			"week_sat": "Toutes les semaines (samedi à vendredi)",
-			"week_sun": "Toutes les semaines (dimanche à lundi)",
-			"week_mon": "Toutes les semaines (lundi à dimanche)",
-			"month": "Tous les mois",
-			"quarter": "Tous les trimestres",
-			"semester": "Tous les semestres",
-			"year": "Tous les ans",
-			"free": "Libre"
+            "month_week_sat": "Toutes les semaines (samedi à vendredi / coupées par mois)",
+            "month_week_sun": "Toutes les semaines (dimanche à lundi / coupées par mois)",
+            "month_week_mon": "Toutes les semaines (lundi à dimanche / coupées par mois)",
+            "week_sat": "Toutes les semaines (samedi à vendredi)",
+            "week_sun": "Toutes les semaines (dimanche à lundi)",
+            "week_mon": "Toutes les semaines (lundi à dimanche)",
+            "month": "Tous les mois",
+            "quarter": "Tous les trimestres",
+            "semester": "Tous les semestres",
+            "year": "Tous les ans",
+            "free": "Libre"
+        },
+        "Computation":{
+            "unavailable": "Il n'est pas possible de calculer cet indicateur",
+            "fixed": "Utiliser une valeur fixe",
+            "copy": "Copier une valeur (depuis une sources de données)",
+            "percentage": "Pourcentage (depuis les sources de données)",
+            "permille": "Pour mille (depuis les sources de données)",
+            "formula": "Formule personalisée (depuis les sources de données)"
+        },
+        "Formula":{
+            "numerator": "Numérateur",
+            "denominator": "Dénominateur",
+            "copied": "Valeur à copier"
         }
+
     },
     "es": "Espagnol",
     "EquivalentVersion" : "Ce point est équivalent à l'état actuel du projet",
@@ -502,6 +516,7 @@
     "UserEdition": "Édition utilisateur",
     "Users": "Utilisateurs",
     "UseTrainingAccount":"Utiliser le compte de formation (admin)",
+    "UseMDMAccount": "Utiliser le compte MDM",
     "Valid": "Valide",
     "Visibility": "Visibilité",
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
@@ -519,5 +534,13 @@
     "GeneralObjective-Hint":"Choisissez un objectif general",
     "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
     "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue",
-    "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore"
+    "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore",
+     "Parameter": "Paramètre",
+     "Variable": "Variable",
+     "Help.Variable": "Aide.variable",
+     "Disaggregations": "Désagrégations",
+     "partitionElement": "Élément de partition",
+     "Help.Partition": "Aide.Partition",
+     "ApplyChanges" : "Appliquer les modifications",
+     "elementsymbol" :"sbanyouraaaa"
 }
