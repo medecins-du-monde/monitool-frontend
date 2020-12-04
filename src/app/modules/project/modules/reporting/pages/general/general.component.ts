@@ -64,7 +64,8 @@ export class GeneralComponent implements OnInit {
   async makeRequest(){
     const tempFilter = this.requestForm.value.filter;
     const grouping = [this.requestForm.value.grouping];
-    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , tempFilter, true, true);
+    // TODO: Check if with group should be true sometimes
+    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , tempFilter, true, false);
     this.addDataToGraph(this.responseToGraphData(response, 'get label from current data'));
   }
 
