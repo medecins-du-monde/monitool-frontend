@@ -25,6 +25,7 @@
     "Confirm": "Confirmer",
     "Countries": "Pays",
     "Country": "Pays",
+    "CoveredPeriod": "Période couverte",
     "Create": "Saisir",
     "CreateNewDataSource": "Créer une nouvelle source de données",
     "CreateLogicalFramework":"Créer un cadre logique vierge",
@@ -36,6 +37,7 @@
         "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de thématiques renseignée dans les données de bases.",
         "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
     ],
+    "Data": "Données",
     "DataEntryUser": "Saisisseur",
     "DataSourceCalendarTitle": "Calendrier",
     "DataSourceStructureTitle": "Structure",
@@ -124,10 +126,13 @@
         "Les indicateurs annexés sont des indicateurs complémentaires qui ne figurent dans aucun cadre logique.",
         "Ils permettent de suivre des éléments spécifiques du projet (données médicales, logistiques, ...)"
     ],
+    "FillThe": "Remplir les",
     "Finished": "Terminé",
     "FinishedPlural": "Terminés",
+    "FormsOf": "saisies de",
     "fr": "Français",
     "FullName": "Nom",
+    "GeneralInformations": "Informations génerales",
     "GeneralReporting": "Rapport général",
     "GeoAggregation": "Comment grouper les saisies entre sites?",
     "GeoAggregationHint": "Dans un projet avec deux sites, si {{name}} vaut 10 pour un site, et 20 pour l'autre, que vaut-il pour le projet dans son ensemble?",
@@ -340,6 +345,11 @@
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
+    "InputsInfo": [
+        "Ce planning liste toutes les saisies qui ont été programmées pour la source de données ",
+        "Afin de limiter les erreurs, il est préférable de réaliser la saisie au plus près du lieu d'où sont extraites les données, directement sur Monitool.",
+        "Si ce n'est pas possible, une version PDF à imprimer du formulaire est disponible."
+    ],
     "InputHomeInfo": [
         "Le rôle de cette section est de fournir à Monitool les données qui lui permettront de calculer vos indicateurs.",
         "Chaque source de données renseignée lors de la formalisation du projet donne lieu à des formulaires réguliers.",
@@ -506,6 +516,7 @@
     "UserEdition": "Édition utilisateur",
     "Users": "Utilisateurs",
     "UseTrainingAccount":"Utiliser le compte de formation (admin)",
+    "UseMDMAccount": "Utiliser le compte MDM",
     "Valid": "Valide",
     "Visibility": "Visibilité",
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",

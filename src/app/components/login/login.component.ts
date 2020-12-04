@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { ConfigService } from '../../services/config.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -12,6 +13,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private configService: ConfigService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -23,10 +25,18 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   wrongCredentials = false;
 
+  training = true;
+  config = {
+    trainingLabel: null,
+  };
+
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
+    });
+    this.configService.getConfig().then(result => {
+      Object.assign(this.config, result);
     });
   }
 
@@ -36,6 +46,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  loginAzure() {
+    this.authService.validateAzure()
+    .then(() => {
+      this.router.navigate(['home']);
+    });
+    }
+
   loginPartner(){
     this.authService.validatePartner(
       this.loginForm.controls.username.value,
@@ -43,12 +60,8 @@ export class LoginComponent implements OnInit {
     ).then(() => {
       this.router.navigate(['home']);
     })
-    .catch(err => {
+    .catch(() => {
       this.wrongCredentials = true;
     });
-  }
-
-  partnerAccount(){
-    this.partner = !this.partner;
   }
 }

@@ -25,6 +25,7 @@
     "Confirm": "Confirm",
     "Countries": "Countries",
     "Country": "Country",
+    "CoveredPeriod": "Covered period",
     "Create": "Create",
     "CreateNewDataSource": "Create a new data source",
     "CreateLogicalFramework":"create a blank Logical Framework",
@@ -36,6 +37,7 @@
         "Cross-cutting indicators are determined from the list of thematics in \"Basics\".",
         "This list contains all cross-cutting indicators that your project need to collect"
     ],
+    "Data": "Data",
     "DataEntryUser": "Data entry",
     "DataSourceCalendarTitle": "Calendar",
     "DataSourceEdit": {
@@ -124,11 +126,14 @@
         "Extra indicators are indicators that are not in any logical framework.",
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
+    "FillThe": "Fill the",
     "Fiters": "Filters",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
+    "FormsOf": "forms of",
     "fr": "French",
     "FullName": "Full name",
+    "GeneralInformations": "General informations",
     "GeneralReporting": "General reporting",
     "GeoAggregation" : "How to group entries from different sites?",
     "GeoAggregationHint" : "In a project with two sites, if {{name}}  is 10 for the first and 20 for the second, what is the value for the complete project?",
@@ -341,6 +346,11 @@
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
+    "InputsInfo": [
+        "This input calendar list all the inputs that were programmed for the data source ",
+        "To limit data entry errors, the preferred course is to do the data entry close from the site where the data is extracted, directly on monitool.",
+        "If not attainable, a PDF version of the form is provided."
+    ],
     "InputHomeInfo": [
         "This section's goal is providing the data that will allow to compute your indicators to Monitool.",
         "Each one of the data sources that were created during the structuration of the project results in a periodic form that need to be filled.",
@@ -512,6 +522,7 @@
     "UserEdition": "User edition",
     "Users": "Users",
     "UseTrainingAccount":"Use training account (admin)",
+    "UseMDMAccount": "Use MDM Account",
     "Valid": "Valid",
     "Visibility": "Visibility",
     "VisibilityPublic": "Visible for all users (besides partners)",

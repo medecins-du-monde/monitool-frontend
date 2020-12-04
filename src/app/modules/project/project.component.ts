@@ -12,6 +12,7 @@ import { Project } from 'src/app/models/project.model';
 export class ProjectComponent implements OnInit {
 
   public sidenav: Sidenav;
+  project: Project;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,10 +24,19 @@ export class ProjectComponent implements OnInit {
       const projectId = params.id;
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.project.next(project);
+        this.project = project;
+        this.project.forms.forEach(form => {
+          input.items.push(
+            {
+              name: form.name,
+              routerLink: `../${projectId}/input/inputs/${form.id}`,
+              icon: 'edit'
+            }
+          );
+        });
       });
-      this.sidenav = {
-        groups: [
-          {
+
+      const structure = {
             title: 'Structure',
             collapsible: true,
             items: [
@@ -76,44 +86,46 @@ export class ProjectComponent implements OnInit {
                 icon: 'history'
               }
             ]
-          },
+      };
+      const input = {
+        title: 'Input',
+        collapsible: true,
+        items: [
           {
-            title: 'Input',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/input/home`,
-                icon: 'home'
-              },
-              {
-                name: 'Calendar',
-                routerLink: `../${projectId}/input/calendar`,
-                icon: 'edit'
-              }
-            ]
-          },
-          {
-            title: 'Reporting',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/reporting/home`,
-                icon: 'home'
-              },
-              {
-                name: 'GeneralReporting',
-                routerLink: `../${projectId}/reporting/general`,
-                icon: 'clipboard'
-              },
-              {
-                name: 'PivotTable',
-                routerLink: `../${projectId}/reporting/pivot-table`,
-                icon: 'grid'
-              }
-            ]
+            name: 'Home',
+            routerLink: `../${projectId}/input/home`,
+            icon: 'home'
           }
+        ]
+      };
+
+      const reporting = {
+        title: 'Reporting',
+        collapsible: true,
+        items: [
+          {
+            name: 'Home',
+            routerLink: `../${projectId}/reporting/home`,
+            icon: 'home'
+          },
+          {
+            name: 'GeneralReporting',
+            routerLink: `../${projectId}/reporting/general`,
+            icon: 'clipboard'
+          },
+          {
+            name: 'PivotTable',
+            routerLink: `../${projectId}/reporting/pivot-table`,
+            icon: 'grid'
+          }
+        ]
+      };
+
+      this.sidenav = {
+        groups: [
+          structure,
+          input,
+          reporting
         ]
       };
     });
