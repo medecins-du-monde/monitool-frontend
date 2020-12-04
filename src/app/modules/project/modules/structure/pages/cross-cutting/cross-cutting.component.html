@@ -8,9 +8,9 @@
         <div class="mdm-title">{{ group.value.theme.name.en }}</div>
         <div [formGroupName]="groupNumber">
           <div class="indicators-list" formArrayName="indicators">
-            <div class="indicators-cards">
-              <ng-container *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
-                <app-extra-indicator [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i, groupNumber)" [deletable]="false"></app-extra-indicator>
+            <div class="mdm-cards">
+              <ng-container class="mdm-card"  *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
+                <app-extra-indicator class="mdm-card"  [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i, groupNumber)" [deletable]="false"></app-extra-indicator>
               </ng-container>
             </div>
           </div>
@@ -21,9 +21,9 @@
     <div class="mdm-section">
         <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
         <div class="indicators-list">
-          <div class="indicators-cards">
-            <ng-container *ngFor="let indicator of multiThemesArray.controls; let i=index">
-              <app-extra-indicator [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" [deletable]="false"></app-extra-indicator>
+          <div class="mdm-cards">
+            <ng-container class="mdm-card" *ngFor="let indicator of multiThemesArray.controls; let i=index">
+              <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" [deletable]="false"></app-extra-indicator>
             </ng-container>
           </div>
         </div>

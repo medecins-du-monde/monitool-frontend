@@ -314,7 +314,7 @@ body {
 
 // === MATERIAL ===
 .mat-card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
 
     .mat-card-header {
         align-items: center;
@@ -486,7 +486,7 @@ body {
 .input-table{
     thead{
         tr.mat-header-row{
-           height: 0px !important; 
+           height: 0px !important;
         }
     }
     tbody{
@@ -499,14 +499,14 @@ body {
                         color: inherit;
                     }
                 }
-                
+
                 .input-div{
                     padding: 0px;
                     input{
                         padding: 8px;
                         width: 100%;
                         font-family: inherit;
-                        
+
                         //this is to make the input ocuppy the entire cell
                         position:absolute;
                         top: 1px;
