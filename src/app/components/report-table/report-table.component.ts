@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
@@ -20,17 +20,21 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class ReportTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   columnsToDisplay = ['icon', 'name', 'baseline', 'target'];
+  columnsToDisplayGroup = ['icon', 'groupName'];
   expandedElement: InfoRow | null;
 
+  @Input() dimensions: any[] = [];
   private subscription: Subscription = new Subscription();
   project: Project;
 
   isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
+  isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
 
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.columnsToDisplay = this.columnsToDisplay.concat(this.dimensions);
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
@@ -73,6 +77,19 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         // if it is opened we add data to the table
         if ((row as SectionTitle).opened){
           newData.push({
+            icon: false,
+            groupName: 'productivity at work (en)',
+            sectionId
+          });
+
+          newData.push({
+            icon: true,
+            name: 'number of lines written',
+            baseline: 50,
+            target: 100,
+            sectionId
+          });
+          newData.push({
             icon: true,
             name: 'number of lines written',
             baseline: 50,
@@ -95,6 +112,7 @@ export interface SectionTitle{
 export interface GroupTitle{
   icon: boolean;
   groupName: string;
+  sectionId: number;
 }
 
 export interface InfoRow {
@@ -103,6 +121,7 @@ export interface InfoRow {
   baseline: number | null;
   target: number | null;
   sectionId: number;
+  values: any;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
