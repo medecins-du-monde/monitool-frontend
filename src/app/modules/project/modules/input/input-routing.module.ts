@@ -8,9 +8,14 @@ const routes: Routes = [
       .then(m => m.HomeModule)
   },
   {
-    path: 'calendar',
-    loadChildren: () => import('./pages/calendar/calendar.module')
-      .then(m => m.CalendarModule)
+    path: 'inputs/:formId/edit/:siteId/:timeSlot',
+    loadChildren: () => import('./pages/edit/edit.module')
+      .then(m => m.EditModule)
+  },
+  {
+    path: 'inputs/:formId',
+    loadChildren: () => import('./pages/inputs/inputs.module')
+      .then(m => m.InputsModule)
   },
   {
     path: '**',

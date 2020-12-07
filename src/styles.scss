@@ -137,8 +137,8 @@ $mdm-monitool-frontend-typography: mat-typography-config(
 }
 
 html, body { height: 100%; }
-body { 
-    margin: 0; 
+body {
+    margin: 0;
     font-family: $main-font;
     font-size: 18px;
     color: var(--main);
@@ -234,7 +234,7 @@ body {
 .mdm-section {
     margin-bottom: 68px;
     color: black;
-    
+
     .mat-icon{
         line-height: 20px;
     }
@@ -274,13 +274,13 @@ body {
     .card-header {
         border-bottom: 1px solid rgba(144, 144, 144, 0.24);
     }
-    
+
     .card-info {
         display: flex;
         flex-direction: column;
         font-size: 14px;
         margin-bottom: 8px;
-    
+
         .card-info-title {
             flex: 1;
 
@@ -291,16 +291,16 @@ body {
         .card-info-value {
             flex: 1;
         }
-        
+
         .computation {
             &.valid {
                 color: #3c763d;
             }
-    
+
             &.invalid {
                 color: #a94442;
             }
-    
+
             mat-icon{
                 height: 14px;
                 width: 14px;
@@ -314,7 +314,7 @@ body {
 
 // === MATERIAL ===
 .mat-card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
 
     .mat-card-header {
         align-items: center;
@@ -371,6 +371,10 @@ body {
     height: 32px;
     padding: 0 12px !important;
     font-size: 14px;
+
+    mat-icon{
+        line-height: 20px;
+    }
 
     &.small-button {
         padding: 0 8px !important;
@@ -448,7 +452,7 @@ body {
 
     .mdm-form-field {
         width: 100%;
-        
+
         .mat-form-field-wrapper {
             padding: 0 !important;
 
@@ -467,12 +471,55 @@ body {
     th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
         padding: 8px 16px 8px 8px;
     }
+    th.input-td.mat-header-cell:last-of-type, td.input-td.mat-cell:last-of-type, td.input-td.mat-footer-cell:last-of-type {
+        padding: 0px;
+    }
 
     code{
         padding: 2px 4px;
         font-size: 90%;
         color: #c7254e;
         background-color: #f9f2f4;
+    }
+}
+
+.input-table{
+    thead{
+        tr.mat-header-row{
+           height: 0px !important;
+        }
+    }
+    tbody{
+        tr{
+            td{
+                position: relative;
+                &.tableLabel{
+                    background-color: #eeeeee;
+                    .table-value{
+                        color: inherit;
+                    }
+                }
+
+                .input-div{
+                    padding: 0px;
+                    input{
+                        padding: 8px;
+                        width: 100%;
+                        font-family: inherit;
+
+                        //this is to make the input ocuppy the entire cell
+                        position:absolute;
+                        top: 1px;
+                        height: calc(100% - 2px);
+                        border: 0;
+                    }
+                }
+                .table-value{
+                    padding: 8px;
+                    color: #777777;
+                }
+            }
+        }
     }
 }
 
@@ -524,17 +571,17 @@ body {
             color: white;
         }
     }
-        
+
     .mat-form-field-invalid {
         .mat-form-field-prefix {
             color: blue;
         }
     }
-        
+
     .mat-form-field-wrapper {
         margin: 0 !important;
     }
-    
+
     &:not(.searchbar) {
         &.mat-form-field:not(.mat-focused) {
             .mat-form-field-outline {
@@ -551,11 +598,11 @@ body {
             }
         }
     }
-    
+
     input {
         height: 23px !important;
     }
-    
+
     .mat-form-field-flex>.mat-form-field-infix {
         border-top: 10px solid transparent;
         padding: 7px 0 7px 0;
@@ -565,25 +612,25 @@ body {
         top: -10px;
         padding-top: 10px;
     }
-    
+
     .mat-form-field-label {
         top: 20px !important;
     }
-    
+
     &.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
         transform: translateY(-1em) scale(.75) !important;
     }
-        
+
     &.mat-form-field-appearance-outline {
         .mat-form-field-suffix {
             right: -0.6em;
-        
+
             .mat-icon-button {
                 line-height: 35px;
                 top: -2px;
             }
         }
-    
+
         .mat-select-arrow-wrapper {
             transform: none !important;
         }
@@ -605,6 +652,11 @@ body {
         .mdm-form-label {
             margin-bottom: 8px;
         }
+    }
+
+    label {
+      font-size: inherit;
+      padding-bottom: 1.34375em;
     }
 
     .mdm-form-label {

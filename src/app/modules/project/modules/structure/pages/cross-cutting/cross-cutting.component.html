@@ -2,16 +2,31 @@
     <p>{{ "CrossCuttingInfo.0" | translate }}</p>
     <p>{{ "CrossCuttingInfo.1" | translate }}</p>
 </div>
-
-<div *ngFor="let group of groups" class="mdm-section">
-    <div class="mdm-title">{{group.theme.name[currentLang]}}</div>
-    <div class="mdm-cards">
-        <app-cross-cutting-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator" [crossCutting]="crossCutting[indicator.id]" class="mdm-card"></app-cross-cutting-indicator>
+<div [formGroup]="crossCuttingForm">
+  <div formArrayName="groupsArray">
+    <div *ngFor="let group of groupsArray.controls; let groupNumber=index" class="mdm-section">
+        <div class="mdm-title">{{ group.value.theme.name.en }}</div>
+        <div [formGroupName]="groupNumber">
+          <div class="indicators-list" formArrayName="indicators">
+            <div class="mdm-cards">
+              <ng-container class="mdm-card"  *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
+                <app-extra-indicator class="mdm-card"  [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i, groupNumber)" [deletable]="false"></app-extra-indicator>
+              </ng-container>
+            </div>
+          </div>
+        </div>
     </div>
-</div>
-<div class="mdm-section">
-    <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
-    <div class="mdm-cards">
-        <app-cross-cutting-indicator *ngFor="let indicator of multiThemesIndicators" [indicator]="indicator" [crossCutting]="crossCutting[indicator.id]" class="mdm-card"></app-cross-cutting-indicator>
+  </div>
+  <div *ngIf="multiThemesArray.length > 0"formArrayName="multiThemesArray">
+    <div class="mdm-section">
+        <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
+        <div class="indicators-list">
+          <div class="mdm-cards">
+            <ng-container class="mdm-card" *ngFor="let indicator of multiThemesArray.controls; let i=index">
+              <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" [deletable]="false"></app-extra-indicator>
+            </ng-container>
+          </div>
+        </div>
     </div>
+  </div>
 </div>

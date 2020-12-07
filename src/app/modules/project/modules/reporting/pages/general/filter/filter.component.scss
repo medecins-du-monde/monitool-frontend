@@ -1,0 +1,38 @@
+.hover {
+  cursor: pointer;
+  padding: 5px;
+}
+
+table {
+  padding: 2em 0em 2em 0em;
+  width: 100%;
+}
+
+td {
+  border: solid 1px #e7e7e7 !important;
+  background: white;
+  vertical-align: middle;
+}
+
+.mdm-form-group:first-child {
+  padding-top: 1em;
+}
+
+.mdm-form-group {
+  padding: 0em 2em 0em 2em;
+}
+
+h2 {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  width: 110px;
+  justify-content: baseline;
+  padding: 10px;
+  margin: 0;
+}
+
+.mat-icon {
+  padding: 2px;
+}

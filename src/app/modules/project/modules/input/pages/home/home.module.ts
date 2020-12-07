@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProgressBarTripleModule } from 'src/app/components/progress-bar-triple/progress-bar-triple.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -17,7 +18,8 @@ import { HomeComponent } from './home.component';
         MatTableModule,
         MatButtonModule,
         MatIconModule,
-        ProgressBarTripleModule
+        ProgressBarTripleModule,
+        RouterModule
     ]
 })
 export class HomeModule { }
