@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/input.model';
+import { sum } from 'lodash';
 
 
 @Component({
@@ -177,13 +178,14 @@ export class EditComponent implements OnInit, OnDestroy {
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
-            sum += +val.values[table.id][inputPos];
+            sum += val.values[table.id][inputPos];
           }
         }
         table.value[x][table.numberCols - 1] = sum;
         total += sum;
       }
-
+      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      total = 0;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
         let sum = 0;
         for (x = 0; x < table.numberRows; x += 1){
@@ -192,10 +194,12 @@ export class EditComponent implements OnInit, OnDestroy {
             sum += +val.values[table.id][inputPos];
           }
         }
-        table.value[y][table.numberRows - 1] = sum;
+        table.value[table.numberRows - 1][y] = sum;
         total += sum;
       }
-      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      if (total !== 0){
+        table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      }
     }
   }
 
