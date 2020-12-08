@@ -18,12 +18,14 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ],
 })
 export class ReportTableComponent implements OnInit, OnDestroy {
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource([]);
   columnsToDisplay = ['icon', 'name', 'baseline', 'target'];
   columnsToDisplayGroup = ['icon', 'groupName'];
   expandedElement: InfoRow | null;
 
   @Input() dimensions: any[] = [];
+  @Input() dimensionsIds: any[] = [];
+  @Input() filter: any;
   private subscription: Subscription = new Subscription();
   project: Project;
 
@@ -34,24 +36,13 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    console.log(this.dimensionsIds);
+    console.log(this.filter);
     this.columnsToDisplay = this.columnsToDisplay.concat(this.dimensions);
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
-
-        const newData = ELEMENT_DATA;
-        let id = 2;
-        for (const form of this.project.forms){
-          newData.push(
-            {
-              title: `Data source: ${form.name}`,
-              sectionId: id,
-              opened: false
-            }
-          );
-          id += 1;
-        }
-        this.dataSource = new MatTableDataSource(newData);
+        this.buildTableRows();
       })
     );
   }
@@ -59,23 +50,72 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // this replace the current datasource with a new one, adding or removing rows as needed
+  buildTableRows(){
+    if (!this.project){
+      return;
+    }
+
+    const newData = [];
+    let id = 0;
+    for (const logicalFrame of this.project.logicalFrames){
+      newData.push({
+        title: `Logical framework: ${logicalFrame.name}`,
+        sectionId: id,
+        open: false
+      });
+      id += 1;
+    }
+
+    newData.push({
+      title: 'Cross-cutting Indicators',
+      sectionId: id,
+      open: false
+    });
+    id += 1;
+
+    newData.push({
+      title: 'Extra indicators',
+      sectionId: id,
+      open: false
+    });
+    id += 1;
+
+
+    for (const form of this.project.forms){
+      newData.push(
+        {
+          title: `Data source: ${form.name}`,
+          sectionId: id,
+          open: false,
+          click: (myId: number) => this.dataSourceToggle(myId),
+          formId: form.id
+        }
+      );
+      id += 1;
+    }
+
+
+
+    this.dataSource = new MatTableDataSource(newData);
+  }
+
+  // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
   toggleData(sectionId: number){
     const newData = [];
     let foundSection = false;
-    let opened = true;
+    let open = true;
 
     for (const row of this.dataSource.data){
-      if (!foundSection || opened || (row as SectionTitle).sectionId !== sectionId){
+      if (!foundSection || open || (row as SectionTitle).sectionId !== sectionId){
         newData.push(row);
       }
 
       if ( !foundSection && (row as SectionTitle).sectionId === sectionId){
         foundSection = true;
-        (row as SectionTitle).opened = !(row as SectionTitle).opened;
-        opened = (row as SectionTitle).opened;
-        // if it is opened we add data to the table
-        if ((row as SectionTitle).opened){
+        (row as SectionTitle).open = !(row as SectionTitle).open;
+        open = (row as SectionTitle).open;
+        // if it is open we add data to the table
+        if ((row as SectionTitle).open){
           newData.push({
             icon: false,
             groupName: 'productivity at work (en)',
@@ -101,12 +141,46 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     }
     this.dataSource = new MatTableDataSource(newData);
   }
+
+  dataSourceToggle(sectionId: number){
+    const newData = [];
+    let foundSection = false;
+    let open = true;
+
+    for (let row of this.dataSource.data){
+      // if the row is unrelated to the click, we just copy it
+      if (!foundSection || open || (row as SectionTitle).sectionId !== sectionId){
+        newData.push(row);
+      }
+
+      row = row as SectionTitle;
+      // found the first row with that sectionId
+      if ( !foundSection && row.sectionId === sectionId){
+        foundSection = true;
+        row.open = !row.open;
+        open = row.open;
+
+        // if it is open we add data to the table
+        if (row.open){
+          const form = this.project.forms.find( (myform) => myform.id === row.formId);
+          console.log(form);
+
+          for (const element of form.elements){
+            console.log(element);
+          }
+        }
+      }
+    }
+    this.dataSource = new MatTableDataSource(newData);
+  }
+
 }
 
 export interface SectionTitle{
   title: string;
   sectionId: number;
-  opened: boolean;
+  open: boolean;
+  click: (id: number) => void;
 }
 
 export interface GroupTitle{
@@ -127,14 +201,14 @@ export interface InfoRow {
 type Row = SectionTitle | GroupTitle | InfoRow;
 
 const ELEMENT_DATA: Row[] = [
-  {
-    title: 'Cross-cutting Indicators',
-    sectionId: 0,
-    opened: false
-  },
-  {
-    title: 'Extra indicators',
-    sectionId: 1,
-    opened: false
-  },
+  // {
+  //   title: 'Cross-cutting Indicators',
+  //   sectionId: 0,
+  //   open: false
+  // },
+  // {
+  //   title: 'Extra indicators',
+  //   sectionId: 1,
+  //   open: false
+  // },
 ];

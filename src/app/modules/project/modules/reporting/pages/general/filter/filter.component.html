@@ -5,12 +5,12 @@
         </td>
     </tr>
     <tr>
-        <td *ngIf="!collapsed">
+        <td *ngIf="!collapsed" [formGroup]="filterForm">
             <div class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'Start' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>Choose a startdate</mat-label>
-                    <input matInput [matDatepicker]="start" [value]="startDate" (dateChange)="onDateChange($event, '_start')">
+                    <input matInput [matDatepicker]="start" formControlName="_start">
                     <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -20,7 +20,7 @@
                 <div class="mdm-form-label">{{ 'End' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>Choose an enddate</mat-label>
-                    <input matInput [matDatepicker]="end" [value]="endDate" (dateChange)="onDateChange($event, '_end')">
+                    <input matInput [matDatepicker]="end" formControlName="_end">
                     <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
@@ -29,10 +29,7 @@
             <div class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-select formControlName="entities"
-                    placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}"
-                    multiple
-                    (selectionChange)="addSite($event.value)">
+                    <mat-select formControlName="entity" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple >
                         <mat-select-trigger>
                             <mat-chip-list>
                                 <mat-chip *ngFor="let site of selectedSites" [removable]="true"
@@ -43,7 +40,7 @@
                             </mat-chip-list>
                         </mat-select-trigger>
     
-                        <mat-option *ngFor="let site of sites" [value]="site">{{ site.name }}
+                        <mat-option *ngFor="let site of sites" [value]="site.id">{{ site.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

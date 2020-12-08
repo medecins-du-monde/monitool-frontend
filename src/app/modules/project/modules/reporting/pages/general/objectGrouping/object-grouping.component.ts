@@ -25,7 +25,7 @@ export class ObjectGroupingComponent implements OnInit {
   }
 
   onChangeGrouping(event) {
-    this.requestForm.value.grouping = [event.value.value];
+    this.requestForm.get('grouping').setValue([event.value.value]);
   }
 
 }

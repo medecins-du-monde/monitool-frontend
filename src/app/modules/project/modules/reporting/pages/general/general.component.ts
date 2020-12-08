@@ -3,7 +3,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-general',
@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 
 export class GeneralComponent implements OnInit {
+  endDate: Date;
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
@@ -20,7 +21,7 @@ export class GeneralComponent implements OnInit {
 
   protected project: Project;
   grouping = ['semester'];
-  filter: object[];
+  filter: any;
   startDate: Date;
   collectionSites: object;
   computation: object;
@@ -43,10 +44,10 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filter = {};
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      const currentYear = project.start.getFullYear(); // we assume it is first day of year of the project start
-      this.startDate = new Date(currentYear, 0, 1);
+
       this.collectionSites = project.entities;
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
@@ -56,21 +57,26 @@ export class GeneralComponent implements OnInit {
           this.computation = project.logicalFrames[0].indicators[0].computation;
         }
       }
+
+      this.requestForm = this.fb.group({
+        project: this.project,
+        computation: this.computation,
+        grouping: this.grouping,
+      });
     });
 
-    this.requestForm = this.fb.group({
-      project: this.project,
-      computation: this.computation,
-      grouping: this.grouping,
-      filter: this.filter,
-    });
   }
 
   async makeRequest(){
-    const tempFilter = this.requestForm.value.filter;
     const grouping = [this.requestForm.value.grouping];
+
+    // we have to pass dates in the YYYY-mm-dd format
+    const modifiedFilter = this.filter;
+    modifiedFilter._start = modifiedFilter._start.toISOString().slice(0, 10);
+    modifiedFilter._end = modifiedFilter._end.toISOString().slice(0, 10);
+
     // TODO: Check if withGroup should be true sometimes
-    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , tempFilter, true, false);
+    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , modifiedFilter, true, false);
     if (response){
       this.addDataToGraph(this.responseToGraphData(response, 'get label from current data'));
     }
@@ -117,6 +123,10 @@ export class GeneralComponent implements OnInit {
 
   setGrouping(event) {
     this.grouping = [event.value];
+  }
+
+  receiveFilter(value){
+    this.filter = value;
   }
 
 }

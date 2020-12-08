@@ -3,8 +3,8 @@
 
 <app-object-grouping [requestForm]="requestForm"></app-object-grouping>
 
-<app-filter [startDate]="startDate" [sites]="collectionSites" [requestForm]="requestForm"></app-filter>
+<app-filter (filterEvent)="receiveFilter($event)"></app-filter>
 
 <app-chart [chartType]="chartType" [options]="options" [data]="data"></app-chart>
     
-<app-report-table [dimensions]="dimensions"></app-report-table>
+<app-report-table [dimensions]="dimensions" [dimensionsIds]="grouping" [filter]="filter"></app-report-table>
