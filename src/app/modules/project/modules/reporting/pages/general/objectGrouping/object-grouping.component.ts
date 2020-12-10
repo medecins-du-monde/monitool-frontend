@@ -1,5 +1,5 @@
-import { Component, OnInit, Input  } from '@angular/core';
-import {  FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
+import {  FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-object-grouping',
@@ -8,9 +8,12 @@ import {  FormGroup } from '@angular/forms';
 })
 export class ObjectGroupingComponent implements OnInit {
 
-  @Input() requestForm: FormGroup;
+  // @Input() requestForm: FormGroup;
 
-  constructor() { }
+  dimensionForm: FormGroup;
+  @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private fb: FormBuilder ) { }
 
   groupOptions = [
     {value: 'month', viewValue: 'Month'},
@@ -22,10 +25,15 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-  }
+    const initialValue = 'quarter';
+    this.dimensionForm = this.fb.group({
+      dimensionId: initialValue
+    });
 
-  onChangeGrouping(event) {
-    this.requestForm.get('grouping').setValue([event.value.value]);
+    this.dimensionEvent.emit(initialValue);
+    this.dimensionForm.get('dimensionId').valueChanges.subscribe( value => {
+      this.dimensionEvent.emit(value);
+    });
   }
 
 }

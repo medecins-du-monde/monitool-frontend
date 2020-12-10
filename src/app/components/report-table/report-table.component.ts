@@ -1,9 +1,14 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/project.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import TimeSlot from 'timeslot-dag';
+import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+
+const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
+
 
 @Component({
   selector: 'app-report-table',
@@ -17,15 +22,19 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ],
 })
+
 export class ReportTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource([]);
-  columnsToDisplay = ['icon', 'name', 'baseline', 'target'];
-  columnsToDisplayGroup = ['icon', 'groupName'];
+  
+  columnsToDisplay = COLUMNS_TO_DISPLAY;
+  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];  
+
   expandedElement: InfoRow | null;
 
-  @Input() dimensions: any[] = [];
-  @Input() dimensionsIds: any[] = [];
-  @Input() filter: any;
+  dimensions: string[] = [];
+  @Input() dimensionIds: BehaviorSubject<string>;
+  @Input() filter: BehaviorSubject<any>;
+
   private subscription: Subscription = new Subscription();
   project: Project;
 
@@ -36,16 +45,59 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    console.log(this.dimensionsIds);
+    console.log(this.dimensionIds);
     console.log(this.filter);
-    this.columnsToDisplay = this.columnsToDisplay.concat(this.dimensions);
+    
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
         this.buildTableRows();
       })
     );
+
+    this.subscription.add(
+      this.dimensionIds.subscribe(value => {
+        console.log('dimensions changed');
+        console.log(value);
+        this.fillDimensions();
+      })
+    );
+
+    this.subscription.add(
+      this.filter.subscribe(value => {
+        console.log('filter changed');
+        console.log(value);
+        this.fillDimensions();
+      })
+    )
   }
+
+  fillDimensions() {
+
+    if (this.dimensionIds.value === 'entity'){
+      this.dimensions = this.project.entities.map(x => x.name);
+    }
+    else if (this.dimensionIds.value === 'group'){
+      this.dimensions = this.project.groups.map(x => x.name)
+    }
+    else {
+      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
+      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);    
+  
+      this.dimensions = [];
+      while(startTimeSlot !== endTimeSlot){
+        this.dimensions.push(startTimeSlot.value);
+        startTimeSlot = startTimeSlot.next()
+      }
+      this.dimensions.push(endTimeSlot.value);
+      this.dimensions.push('_total');
+
+      console.log(this.dimensions);
+    }
+
+    this.columnsToDisplay = COLUMNS_TO_DISPLAY.concat(this.dimensions); 
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -154,7 +206,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       }
 
       row = row as SectionTitle;
-      // found the first row with that sectionId
+      // found the first row with that specific sectionId
       if ( !foundSection && row.sectionId === sectionId){
         foundSection = true;
         row.open = !row.open;

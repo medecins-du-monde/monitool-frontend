@@ -4,6 +4,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import _ from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-general',
@@ -20,8 +22,12 @@ export class GeneralComponent implements OnInit {
               private fb: FormBuilder ) { }
 
   protected project: Project;
-  grouping = ['semester'];
-  filter: any;
+  grouping = '';
+  
+  filter = new BehaviorSubject<any>({});
+  
+  dimensionIds = new BehaviorSubject('');
+
   startDate: Date;
   collectionSites: object;
   computation: object;
@@ -33,7 +39,7 @@ export class GeneralComponent implements OnInit {
   data;
 
   // dimensions = ['2020-Q3', '2020-Q4', '2021-Q1', '2021-Q2',	'2021-Q3', '2021-Q4', 'Total'];
-  dimensions = ['2020-S2', '2021-S1', '2021-S2', 'Total'];
+  // dimensions = ['2020-S2', '2021-S1', '2021-S2', 'Total'];
 
   addDataToGraph(data) {
     this.chartService.addData(data);
@@ -44,7 +50,7 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filter = {};
+  
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
 
@@ -57,39 +63,35 @@ export class GeneralComponent implements OnInit {
           this.computation = project.logicalFrames[0].indicators[0].computation;
         }
       }
-
-      this.requestForm = this.fb.group({
-        project: this.project,
-        computation: this.computation,
-        grouping: this.grouping,
-      });
     });
 
   }
 
   async makeRequest(){
-    const grouping = [this.requestForm.value.grouping];
-
-    // we have to pass dates in the YYYY-mm-dd format
-    const modifiedFilter = this.filter;
+    // we have to pass dates to strings in the YYYY-mm-dd format
+    let modifiedFilter = this.filter.value
+    // this.filter_.clone(this.filter);
+    // Object.assign(modifiedFilter, this.filter);
+    
     modifiedFilter._start = modifiedFilter._start.toISOString().slice(0, 10);
     modifiedFilter._end = modifiedFilter._end.toISOString().slice(0, 10);
 
     // TODO: Check if withGroup should be true sometimes
-    const response = await this.reportingService.fetchData(this.project, this.computation, grouping , modifiedFilter, true, false);
+    const response = await this.reportingService.fetchData(this.project, this.computation, [this.grouping] , modifiedFilter, true, false);
     if (response){
       this.addDataToGraph(this.responseToGraphData(response, 'get label from current data'));
     }
   }
 
   responseToGraphData(response, label) {
-    let grouping = this.requestForm.value.grouping[0];
+    let grouping = _.clone(this.grouping);
+    
     let idToName = false;
-    if (grouping === 'group') {
+    if (this.grouping === 'group') {
       grouping = 'groups';
       idToName = true;
     }
-    if (grouping === 'entity') {
+    if (this.grouping === 'entity') {
       grouping = 'entities';
       idToName = true;
     }
@@ -121,12 +123,13 @@ export class GeneralComponent implements OnInit {
     return data;
   }
 
-  setGrouping(event) {
-    this.grouping = [event.value];
+  receiveFilter(value){
+    this.filter.next(value);
   }
 
-  receiveFilter(value){
-    this.filter = value;
+  receiveDimension(value){
+    this.dimensionIds.next(value);
+    this.grouping = value;
   }
 
 }

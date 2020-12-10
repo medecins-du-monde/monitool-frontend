@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { MatButtonModule } from '@angular/material/button';
         MatSelectModule,
         MatIconModule,
         MatGridListModule,
-        MatButtonModule
+        MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
     ]
 })
 export class ObjectGroupingModule { }
