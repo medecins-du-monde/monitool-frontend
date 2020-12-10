@@ -6,7 +6,7 @@ import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/form.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, UNAVAIlABLE, FIXED } from 'src/app/models/project-indicator.model';
+import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, FIXED, UNAVAIlABLE } from 'src/app/models/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -65,7 +65,7 @@ export class IndicatorModalComponent implements OnInit {
     this.initDataSource = this.dataSource.getValue();
   }
 
-   onSubmit() {
+  onSubmit() {
     this.dialogRef.close({ indicator: this.data.indicator });
   }
 
@@ -136,18 +136,19 @@ export class IndicatorModalComponent implements OnInit {
 
   onTypeChange(type: any) {
     const computation = this.data.indicator.controls.computation as FormGroup;
-
     // Updating the formula in function of the type
-    if (type.value === 'unavailable') {
-      computation.controls.formula.setValue(UNAVAIlABLE);
-    }else if (type.value === 'fixed' && isNaN(computation.value.formula)) {
+    if (type.value === 'fixed' && isNaN(computation.value.formula)) {
       computation.controls.formula.setValue('0');
-    } else if (type.value === 'copy') {
+    }
+    else if (type.value === 'copy') {
       computation.controls.formula.setValue(COPY_FORMULA);
     } else if (type.value === 'percentage') {
       computation.controls.formula.setValue(PERCENTAGE_FORMULA);
     } else if (type.value === 'permille') {
       computation.controls.formula.setValue(PERMILLE_FORMULA);
+    }
+    else if (type.value === 'unavailable') {
+      computation.controls.formula.setValue(null);
     }
     this.onFormulaChange();
   }
@@ -155,7 +156,7 @@ export class IndicatorModalComponent implements OnInit {
   onFormulaChange() {
     // Getting the formula and setting the symbols to update the parameter part in the DOM.
     let newSymbols = [];
-    try{
+    try {
       newSymbols = this.parser.parse(this.data.indicator.get('computation').value.formula).variables();
     }
     catch (e) {
