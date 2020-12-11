@@ -93,15 +93,15 @@ export class FilterComponent implements OnInit{
 
       this.sites = this.project.entities;
 
-      const startYear = project.start.getFullYear(); // we assume it is first day of year of the project start
-      this.startDate = new Date(startYear, 0, 1);
+      // const startYear = project.start.getFullYear(); // we assume it is first day of year of the project start
+      // this.startDate = new Date(startYear, 0, 1);
 
-      const currentYear = new Date().getFullYear(); // we assume it is last day of the current year
-      this.endDate = new Date(currentYear, 11, 31);
+      // const currentYear = new Date().getFullYear(); // we assume it is last day of the current year
+      // this.endDate = new Date(currentYear, 11, 31);
 
       this.filterForm = this.fb.group({
-        _start: [this.startDate, Validators.required],
-        _end: [this.endDate, Validators.required ],
+        _start: [this.project.start, Validators.required],
+        _end: [this.project.end, Validators.required ],
         entity: [ this.project.entities.map(x => x.id), Validators.required]
       });
 

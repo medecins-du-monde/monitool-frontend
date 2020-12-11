@@ -30,7 +30,7 @@
 
   <ng-container matColumnDef="title">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <mat-icon *ngIf="!element.opened; else elseOpen">add_circle</mat-icon>
+      <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
       <ng-template #elseOpen>
         <mat-icon>remove_circle</mat-icon>
       </ng-template>

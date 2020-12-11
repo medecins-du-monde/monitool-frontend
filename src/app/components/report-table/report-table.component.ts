@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { ReportingService } from 'src/app/services/reporting.service';
 
 const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
 
@@ -42,12 +43,10 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+              private reportingService: ReportingService) { }
 
   ngOnInit(): void {
-    console.log(this.dimensionIds);
-    console.log(this.filter);
-    
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
@@ -57,16 +56,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.dimensionIds.subscribe(value => {
-        console.log('dimensions changed');
-        console.log(value);
         this.fillDimensions();
       })
     );
 
     this.subscription.add(
       this.filter.subscribe(value => {
-        console.log('filter changed');
-        console.log(value);
         this.fillDimensions();
       })
     )
@@ -92,7 +87,6 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
 
-      console.log(this.dimensions);
     }
 
     this.columnsToDisplay = COLUMNS_TO_DISPLAY.concat(this.dimensions); 
@@ -146,8 +140,6 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       id += 1;
     }
 
-
-
     this.dataSource = new MatTableDataSource(newData);
   }
 
@@ -194,7 +186,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(newData);
   }
 
-  dataSourceToggle(sectionId: number){
+  async dataSourceToggle(sectionId: number){
     const newData = [];
     let foundSection = false;
     let open = true;
@@ -207,7 +199,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       row = row as SectionTitle;
       // found the first row with that specific sectionId
-      if ( !foundSection && row.sectionId === sectionId){
+      if ( !foundSection && row.sectionId === sectionId){ 
         foundSection = true;
         row.open = !row.open;
         open = row.open;
@@ -219,6 +211,35 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
           for (const element of form.elements){
             console.log(element);
+            
+            const computation =  {
+              formula: 'a',
+              parameters: {
+                a: {
+                  elementId: element.id,
+                  filter: {}
+                }
+              }
+            };
+
+            const currentFilter = this.filter.value;
+            let modifiedFilter = {
+              _start: currentFilter._start.toISOString().slice(0, 10),
+              _end: currentFilter._end.toISOString().slice(0, 10),
+              entity: currentFilter.entity
+            };
+
+            const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+            console.log(response);
+
+            newData.push( {
+              icon: true,
+              name: element.name,
+              baseline: null,
+              target: null,
+              sectionId,
+              values: response
+            } as InfoRow )
           }
         }
       }
@@ -252,7 +273,7 @@ export interface InfoRow {
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
-const ELEMENT_DATA: Row[] = [
+// const ELEMENT_DATA: Row[] = [
   // {
   //   title: 'Cross-cutting Indicators',
   //   sectionId: 0,
@@ -263,4 +284,4 @@ const ELEMENT_DATA: Row[] = [
   //   sectionId: 1,
   //   open: false
   // },
-];
+// ];
