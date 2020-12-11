@@ -107,7 +107,9 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       newData.push({
         title: `Logical framework: ${logicalFrame.name}`,
         sectionId: id,
-        open: false
+        open: false,
+        click: (myId: number) => this.sectionToggle(myId, this.openLogicalFrameworks),
+        logicalFrameId: logicalFrame.id
       });
       id += 1;
     }
@@ -133,7 +135,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           title: `Data source: ${form.name}`,
           sectionId: id,
           open: false,
-          click: (myId: number) => this.dataSourceToggle(myId),
+          click: (myId: number) => this.sectionToggle(myId, this.openDataSource),
           formId: form.id
         }
       );
@@ -186,8 +188,9 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(newData);
   }
 
-  async dataSourceToggle(sectionId: number){
-    const newData = [];
+  // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
+  async sectionToggle(sectionId: number, openSection ) {
+    let newData = [];
     let foundSection = false;
     let open = true;
 
@@ -206,45 +209,54 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
         // if it is open we add data to the table
         if (row.open){
-          const form = this.project.forms.find( (myform) => myform.id === row.formId);
-          console.log(form);
-
-          for (const element of form.elements){
-            console.log(element);
-            
-            const computation =  {
-              formula: 'a',
-              parameters: {
-                a: {
-                  elementId: element.id,
-                  filter: {}
-                }
-              }
-            };
-
-            const currentFilter = this.filter.value;
-            let modifiedFilter = {
-              _start: currentFilter._start.toISOString().slice(0, 10),
-              _end: currentFilter._end.toISOString().slice(0, 10),
-              entity: currentFilter.entity
-            };
-
-            const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
-            console.log(response);
-
-            newData.push( {
-              icon: true,
-              name: element.name,
-              baseline: null,
-              target: null,
-              sectionId,
-              values: response
-            } as InfoRow )
-          }
+          const newRows = await openSection(row, sectionId);
+          newData = newData.concat(newRows);
         }
       }
     }
     this.dataSource = new MatTableDataSource(newData);
+  }
+
+  openLogicalFrameworks = async (row, sectionId) => {
+    console.log('chamei o logical frameworks');
+    return [];
+  };
+
+  openDataSource = async (row, sectionId) => {
+    const form = this.project.forms.find( (myform) => myform.id === row.formId);
+
+    const dataSourceRows = [];
+    for (const element of form.elements){
+      const currentFilter = this.filter.value;
+      let modifiedFilter = {
+        _start: currentFilter._start.toISOString().slice(0, 10),
+        _end: currentFilter._end.toISOString().slice(0, 10),
+        entity: currentFilter.entity
+      };
+
+      const computation =  {
+        formula: 'a',
+        parameters: {
+          a: {
+            elementId: element.id,
+            filter: {}
+          }
+        }
+      };
+
+      const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      console.log(response);
+
+      dataSourceRows.push( {
+        icon: true,
+        name: element.name,
+        baseline: null,
+        target: null,
+        sectionId,
+        values: response
+      } as InfoRow )
+    }
+    return dataSourceRows;
   }
 
 }
