@@ -148,48 +148,6 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(newData);
   }
 
-  // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
-  toggleData(sectionId: number){
-    const newData = [];
-    let foundSection = false;
-    let open = true;
-
-    for (const row of this.dataSource.data){
-      if (!foundSection || open || (row as SectionTitle).sectionId !== sectionId){
-        newData.push(row);
-      }
-
-      if ( !foundSection && (row as SectionTitle).sectionId === sectionId){
-        foundSection = true;
-        (row as SectionTitle).open = !(row as SectionTitle).open;
-        open = (row as SectionTitle).open;
-        // if it is open we add data to the table
-        if ((row as SectionTitle).open){
-          newData.push({
-            icon: false,
-            groupName: 'productivity at work (en)',
-            sectionId
-          });
-
-          newData.push({
-            icon: true,
-            name: 'number of lines written',
-            baseline: 50,
-            target: 100,
-            sectionId
-          });
-          newData.push({
-            icon: true,
-            name: 'number of lines written',
-            baseline: 50,
-            target: 100,
-            sectionId
-          });
-        }
-      }
-    }
-    this.dataSource = new MatTableDataSource(newData);
-  }
 
   // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
   async sectionToggle(sectionId: number, openSection: { (row: any, sectionId: any): Promise<any[]>; } ) {

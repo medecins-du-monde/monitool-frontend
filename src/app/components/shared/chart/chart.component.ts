@@ -97,33 +97,33 @@ export class ChartComponent implements OnInit {
   constructor(private chartService: ChartService) { }
 
   // delete all functions below later - only for populating with random data//
-  addRandomData() {
-    const tempData = [];
-    for (let i = 0; i < this.chart.data.labels.length; ++i) {
-      tempData.push(this.randomNumberLimit(30));
-    }
+  // addRandomData() {
+  //   const tempData = [];
+  //   for (let i = 0; i < this.chart.data.labels.length; ++i) {
+  //     tempData.push(this.randomNumberLimit(30));
+  //   }
 
-    const chartColor =  this.randomColor();
-    const temp = {
-      label: '# of Votes',
-      data: tempData,
-      borderColor: chartColor,
-      backgroundColor: chartColor,
-      fill: false,
-    };
+  //   const chartColor =  this.randomColor();
+  //   const temp = {
+  //     label: '# of Votes',
+  //     data: tempData,
+  //     borderColor: chartColor,
+  //     backgroundColor: chartColor,
+  //     fill: false,
+  //   };
 
-    this.chart.data.datasets.push(temp);
-    this.chart.update();
-  }
+  //   this.chart.data.datasets.push(temp);
+  //   this.chart.update();
+  // }
 
-  randomNumberLimit(limit) {
-    return Math.floor((Math.random() * limit) + 1);
-  }
+  // randomNumberLimit(limit) {
+  //   return Math.floor((Math.random() * limit) + 1);
+  // }
 
-  randomColor() {
-    const col = 'rgba(' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255) + '1)';
-    return col;
-  }
+  // randomColor() {
+  //   const col = 'rgba(' + this.randomNumberLimit(255)
+  //     + ',' + this.randomNumberLimit(255)
+  //     + ',' + this.randomNumberLimit(255) + '1)';
+  //   return col;
+  // }
 }

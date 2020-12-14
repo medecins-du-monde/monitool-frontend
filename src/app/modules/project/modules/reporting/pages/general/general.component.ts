@@ -33,13 +33,10 @@ export class GeneralComponent implements OnInit {
   computation: object;
   requestForm: FormGroup;
 
-
+  // initial values for the chart
   chartType = 'line';
   options =  {fill: false};
-  data;
-
-  // dimensions = ['2020-Q3', '2020-Q4', '2021-Q1', '2021-Q2',	'2021-Q3', '2021-Q4', 'Total'];
-  // dimensions = ['2020-S2', '2021-S1', '2021-S2', 'Total'];
+  data = {};
 
   addDataToGraph(data) {
     this.chartService.addData(data);
@@ -69,12 +66,14 @@ export class GeneralComponent implements OnInit {
 
   async makeRequest(){
     // we have to pass dates to strings in the YYYY-mm-dd format
-    let modifiedFilter = this.filter.value
-    // this.filter_.clone(this.filter);
-    // Object.assign(modifiedFilter, this.filter);
-    
-    modifiedFilter._start = modifiedFilter._start.toISOString().slice(0, 10);
-    modifiedFilter._end = modifiedFilter._end.toISOString().slice(0, 10);
+    // let modifiedFilter = this.filter.value
+
+    const currentFilter = this.filter.value;
+    let modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
 
     // TODO: Check if withGroup should be true sometimes
     const response = await this.reportingService.fetchData(this.project, this.computation, [this.grouping] , modifiedFilter, true, false);
@@ -112,14 +111,17 @@ export class GeneralComponent implements OnInit {
 
     const data = {
       labels,
-      datasets: [{
+      datasets: [
+        {
           label,
           data: Object.values(response),
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'rgba(255, 99, 132, 1)',
           fill: false,
-      }]
+        },
+      ]
     };
+    console.log(data);
     return data;
   }
 
