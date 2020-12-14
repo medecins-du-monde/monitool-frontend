@@ -7,6 +7,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { ReportingService } from 'src/app/services/reporting.service';
+import { round } from 'lodash';
 
 const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
 
@@ -108,7 +109,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         title: `Logical framework: ${logicalFrame.name}`,
         sectionId: id,
         open: false,
-        click: (myId: number) => this.sectionToggle(myId, this.openLogicalFrameworks),
+        click: async (myId: number) => await this.sectionToggle(myId, this.openLogicalFrameworks),
         logicalFrameId: logicalFrame.id
       });
       id += 1;
@@ -117,14 +118,16 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     newData.push({
       title: 'Cross-cutting Indicators',
       sectionId: id,
-      open: false
+      open: false,
+      click: async (myId: number) => await this.sectionToggle(myId, this.openCrossCuttingIndicators),
     });
     id += 1;
 
     newData.push({
       title: 'Extra indicators',
       sectionId: id,
-      open: false
+      open: false,
+      click: async (myId: number) => await this.sectionToggle(myId, this.openExtraIndicators),
     });
     id += 1;
 
@@ -135,7 +138,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           title: `Data source: ${form.name}`,
           sectionId: id,
           open: false,
-          click: (myId: number) => this.sectionToggle(myId, this.openDataSource),
+          click: async (myId: number) => await this.sectionToggle(myId, this.openDataSource),
           formId: form.id
         }
       );
@@ -189,7 +192,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   }
 
   // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
-  async sectionToggle(sectionId: number, openSection ) {
+  async sectionToggle(sectionId: number, openSection: { (row: any, sectionId: any): Promise<any[]>; } ) {
     let newData = [];
     let foundSection = false;
     let open = true;
@@ -219,7 +222,6 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
   openLogicalFrameworks = async (row, sectionId) => {
     const lf = this.project.logicalFrames.find(x => x.id === row.logicalFrameId);
-    console.log(lf);
 
     const currentFilter = this.filter.value;
     let modifiedFilter = {
@@ -237,7 +239,8 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
     for (const indicator of lf.indicators){
       const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
-      
+      this.roundResponse(response);
+
       logicalRows.push({
         icon: true,
         name: indicator.display,
@@ -258,7 +261,8 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       for (const indicator of purpose.indicators){
         const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
-        
+        this.roundResponse(response);
+
         logicalRows.push({
           icon: true,
           name: indicator.display,
@@ -268,11 +272,40 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           values: response
         } as InfoRow);
       }
-
-
     }
     return logicalRows;
   };
+
+  openCrossCuttingIndicators = async (row, sectionId) => {
+    console.log('TO DO: implement openCrossCuttingIndicators function');
+    return [];
+  }
+
+  openExtraIndicators = async (row, sectionId) => {
+    const currentFilter = this.filter.value;
+    let modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
+
+    const extraIndicatorsRows = [];
+    for (const indicator of this.project.extraIndicators){
+      const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      this.roundResponse(response);
+
+      extraIndicatorsRows.push({
+        icon: true,
+        name: indicator.display,
+        baseline: indicator.baseline,
+        target: indicator.target,
+        sectionId,
+        values: response
+      } as InfoRow);
+    }
+
+    return extraIndicatorsRows;
+  }
 
   openDataSource = async (row, sectionId) => {
     const form = this.project.forms.find( (myform) => myform.id === row.formId);
@@ -297,7 +330,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       };
 
       const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
-      console.log(response);
+      this.roundResponse(response);
 
       dataSourceRows.push( {
         icon: true,
@@ -311,6 +344,13 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     return dataSourceRows;
   }
 
+  roundResponse(response){
+    for (const [key, value] of Object.entries(response)) {
+      response[key] = round(value as number);
+    }
+
+    return response;
+  }
 }
 
 export interface SectionTitle{
