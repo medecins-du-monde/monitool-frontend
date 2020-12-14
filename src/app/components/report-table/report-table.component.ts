@@ -218,8 +218,60 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   }
 
   openLogicalFrameworks = async (row, sectionId) => {
-    console.log('chamei o logical frameworks');
-    return [];
+    const lf = this.project.logicalFrames.find(x => x.id === row.logicalFrameId);
+    console.log(lf);
+
+    const currentFilter = this.filter.value;
+    let modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
+
+    const logicalRows = [];
+    logicalRows.push({
+      icon: false,
+      groupName: `General objective: ${lf.goal}`,
+      sectionId
+    } as GroupTitle );
+
+    for (const indicator of lf.indicators){
+      const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      
+      logicalRows.push({
+        icon: true,
+        name: indicator.display,
+        baseline: indicator.baseline,
+        target: indicator.target,
+        sectionId,
+        values: response
+      } as InfoRow);
+    }
+
+
+    for (const purpose of lf.purposes){
+      logicalRows.push({
+        icon: false,
+        groupName: `Specific objective: ${purpose.description}`,
+        sectionId
+      } as GroupTitle);
+
+      for (const indicator of purpose.indicators){
+        const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+        
+        logicalRows.push({
+          icon: true,
+          name: indicator.display,
+          baseline: indicator.baseline,
+          target: indicator.target,
+          sectionId,
+          values: response
+        } as InfoRow);
+      }
+
+
+    }
+    return logicalRows;
   };
 
   openDataSource = async (row, sectionId) => {
