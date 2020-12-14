@@ -1,4 +1,4 @@
-import { forEach, isNumber } from 'lodash';
+import { forEach } from 'lodash';
 import { Deserializable } from './deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 
@@ -7,7 +7,11 @@ export const PERMILLE_FORMULA = '1000 * numerator / denominator';
 export const COPY_FORMULA = 'copied_value';
 export const UNAVAIlABLE = 'unavailable';
 export const FIXED = 'fixed';
+export const COPY = 'copy';
+export const PERCENTAGE = 'percentage';
+export const PERMILLE = 'permille';
 export const FORMULA = 'formula';
+
 import { Theme } from './theme.model';
 
 export class ProjectIndicator implements Deserializable {
@@ -23,6 +27,7 @@ export class ProjectIndicator implements Deserializable {
     parameters: {}
   };
   type = UNAVAIlABLE;
+  typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
 
   constructor(input?: any) {
@@ -37,43 +42,40 @@ export class ProjectIndicator implements Deserializable {
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
       this.computation.formula = input.computation.formula;
-      if (input.type === 'unavailable') {
-        this.type = 'unavailable';
+      if (input.type === UNAVAIlABLE) {
+        this.type = UNAVAIlABLE;
         this.computation.formula = '';
         this.computation.parameters = {};
       }
       else
         if (input.computation.formula === COPY_FORMULA) {
-          this.type = 'copy';
+          this.type = COPY;
           this.computation.formula = COPY_FORMULA;
           this.computation.parameters = input.computation.parameters;
         } else if (input.computation.formula === PERCENTAGE_FORMULA) {
-          this.type = 'percentage';
+          this.type = PERCENTAGE;
           this.computation.formula = PERCENTAGE_FORMULA;
           this.computation.parameters = input.computation.parameters;
         } else if (input.computation.formula === PERMILLE_FORMULA) {
-          this.type = 'permille';
+          this.type = PERMILLE;
           this.computation.formula = PERMILLE_FORMULA;
           this.computation.parameters = input.computation.parameters;
         }
-        else if (!isNaN(Number(input.computation.formula)) && input.computation.formula !== null) {
-          this.type = 'fixed';
+
+        else if (input.computation.formula !== null && !isNaN(Number(input.computation.formula))) {
+          this.type = FIXED;
           this.computation.formula = input.computation.formula;
           this.computation.parameters = {};
         }
         else if (input.computation.formula !== null) {
-          this.type = 'formula';
+          this.type = FORMULA;
           this.computation.formula = input.computation.formula;
           this.computation.parameters = input.computation.parameters;
         }
 
     }
 
-    if (this.type !== 'formula' &&
-      this.type !== 'permille' &&
-      this.type !== 'percentage' &&
-      this.type !== 'copy' &&
-      this.type !== 'fixed') {
+    if (!this.typeList.includes(this.type)) {
       this.type = UNAVAIlABLE;
     }
     return this;
