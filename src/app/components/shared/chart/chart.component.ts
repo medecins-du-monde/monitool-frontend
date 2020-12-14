@@ -96,12 +96,11 @@ export class ChartComponent implements OnInit {
 
   constructor(private chartService: ChartService) { }
 
-  // delete all functions below later - only for populating with random data//
+  // TODO: delete all functions below later - only for populating with random data//
   addRandomData() {
     const tempData = [];
-    for (let i = 0; i < this.chart.data.labels.length; ++i) {
-      tempData.push(this.randomNumberLimit(30));
-    }
+
+    this.chart.data.labels.forEach(() => tempData.push(this.randomNumberLimit(30)));
 
     const chartColor =  this.randomColor();
     const temp = {
