@@ -11,7 +11,6 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/input.model';
-import { sum } from 'lodash';
 
 
 @Component({
@@ -85,8 +84,6 @@ export class EditComponent implements OnInit, OnDestroy {
       }
       if (this.timeSlotDate && this.form){
         this.timeSlot = new TimeSlot(this.timeSlotDate);
-        // this.timeSlot = TimeSlot.fromValue(this.timeSlotDate);
-        // this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
 
@@ -167,6 +164,7 @@ export class EditComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO optimise this method
   updateTotals(val: any) {
     for (let i = 0; i < this.tables.length; i += 1){
       const table = this.tables[i];
