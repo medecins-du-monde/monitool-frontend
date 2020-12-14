@@ -112,7 +112,7 @@
                 <td mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput formControlName="formula" (change)="onFormulaChange()"
-                            placeholder="{{ 'Formula' | translate }}" [disabled]="type !== 'formula'">
+                            placeholder="{{ 'Formula' | translate }}" [readonly]="type !== 'formula'">
                     </mat-form-field>
                 </td>
             </ng-container>
