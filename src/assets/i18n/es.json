@@ -85,26 +85,40 @@
     "Enum": {
         "Aggregation": {
             "sum": "Suma",
-			"average": "Promedio",
-			"highest": "Número mayor",
-			"lowest": "Número menor",
-			"last": "Último valor",
-			"none": "No es posible compilar"
+            "average": "Promedio",
+            "highest": "Número mayor",
+            "lowest": "Número menor",
+            "last": "Último valor",
+            "none": "No es posible compilar"
         },
         "Periodicity": {
             "day": "Diario",
-			"month_week_sat": "Cada semana (sábado a viernes / cortado por mes)",
-			"month_week_sun": "Cada semana (domingo a sábado / cortado por mes)",
-			"month_week_mon": "Cada semana (lunes a domingo / cortado por mes)",
-			"week_sat": "Cada semana (sábado a viernes)",
-			"week_sun": "Cada semana (domingo a sábado)",
-			"week_mon": "Cada semana (lunes a domingo)",
-			"month": "Cada mes",
-			"quarter": "Cada trimestre",
-			"semester": "Cada semestre",
-			"year": "Cada año",
-			"free": "Libre"
+            "month_week_sat": "Cada semana (sábado a viernes / cortado por mes)",
+            "month_week_sun": "Cada semana (domingo a sábado / cortado por mes)",
+            "month_week_mon": "Cada semana (lunes a domingo / cortado por mes)",
+            "week_sat": "Cada semana (sábado a viernes)",
+            "week_sun": "Cada semana (domingo a sábado)",
+            "week_mon": "Cada semana (lunes a domingo)",
+            "month": "Cada mes",
+            "quarter": "Cada trimestre",
+            "semester": "Cada semestre",
+            "year": "Cada año",
+            "free": "Libre"
+        },
+        "Computation":{
+            "unavailable": "No es posible calcular este indicador",
+            "fixed": "Usar un valor constante",
+            "copy": "Copiar un valor (desde una fuente de datos)",
+            "percentage": "Porcentaje (desde fuentes de datos)",
+            "permille": "Por mil (desde fuentes de datos)",
+            "formula": "Formula personalizada (desde fuentes de datos)"
+        },
+        "Formula":{
+            "numerator": "Numerador",
+            "denominator": "Denominador",
+            "copied": "Valor a copiar"
         }
+
     },
     "es": "Español",
     "EquivalentVersion" : "Este punto es equivalente al estado actual del proyecto",
@@ -523,5 +537,13 @@
     "Computation-Hint": "Elija el método de cálculo adecuado",
     "GeneralObjective-Hint": "Elige un objetivo general",
     "Name-Hint2": "Asegúrese de poner el nombre correcto para cada idioma",
-    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma"
+    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma",
+    "Parameter": "Parámetro",
+    "Variable": "Variable",
+    "Help.Variable": "Ayuda.Variable",
+    "Disaggregations": "Desagregaciones",
+    "partitionElement": "elemento de partición",
+    "Help.Partition": "Ayuda.Partition",
+    "ApplyChanges" : "Aplicar cambios",
+    "elementsymbol" :"sbanyour"
 }

@@ -38,7 +38,7 @@
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
-                <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display }}
+                <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                 </mat-option>
             </mat-select>
             <mat-hint>
@@ -48,7 +48,7 @@
     </div>
     <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput type="number" formControlName="formula" placeholder="{{ 'Placeholder.Fixed' | translate }}">
+            <input matInput type="number" formControlName="formula" placeholder="{{ 'Enum.Computation.fixed' | translate }}">
         </mat-form-field>
     </div>
     <div class="mdm-form-group" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
@@ -57,7 +57,7 @@
             <ng-container matColumnDef="parameter">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Parameter' | translate }}</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="type !== 'formula'">{{ 'Enum.Formula.' + element.symbol | translate }}</span>
+                    <span *ngIf="type !== 'formula'">{{ (type!== 'copy' ?'Enum.Formula.' + element.symbol : 'Enum.Formula.copied') | translate }}</span>
                     <span *ngIf="type === 'formula'">{{ element.symbol }}</span>
                 </td>
                 <td mat-footer-cell *matFooterCellDef></td>

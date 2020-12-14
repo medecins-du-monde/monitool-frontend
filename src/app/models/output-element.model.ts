@@ -21,8 +21,8 @@ export class OutputElement implements Deserializable {
 
     serialize() {
         return {
-            assumptions: this.assumptions,
-            description: this.description,
+            assumptions: this.assumptions || '',
+            description: this.description || '',
             indicators: this.indicators.map(x => x.serialize()),
             activities: this.activities.map(x => x.serialize())
         };
