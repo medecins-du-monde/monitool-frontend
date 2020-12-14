@@ -2,8 +2,8 @@
     <div class="center-panel">
         <div *ngIf="partner === false; else elseBlock" class="buttons">
             <img [src]="logo" class="mdm-img">
-            <button mat-raised-button class="mat-primary" (click)="loginTrainingAccount()">{{ 'UseTrainingAccount' | translate }}</button>
-            <button mat-stroked-button (click)="partnerAccount()">{{ 'UsePartnerAccount' | translate }}</button>
+            <button mat-raised-button class="mat-primary" (click)="config.trainingLabel ? loginTrainingAccount(): loginAzure()">{{ (config.trainingLabel ? 'UseTrainingAccount' : 'UseMDMAccount') | translate }}</button>
+            <button mat-stroked-button (click)="partner = !partner">{{ 'UsePartnerAccount' | translate }}</button>
         </div>
         <ng-template #elseBlock >
             <img [src]="logo" class="sml-img">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="buttons">
                         <button mat-raised-button (click)="loginPartner()" class="mat-primary">{{ 'Connect' | translate }}</button>
-                        <button mat-stroked-button (click)="partnerAccount()">{{ 'GoBack' | translate }}</button>
+                        <button mat-stroked-button (click)="partner = !partner">{{ 'GoBack' | translate }}</button>
                     </div>
                 </div>
             </div>

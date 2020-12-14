@@ -66,8 +66,10 @@ export class CrossCuttingComponent implements OnInit {
         listOldCrossCutting.push(crossCutting);
       }
       );
-
-      this.indicatorService.list().then((indicators: Indicator[]) => {
+      this.indicatorService
+        .listForProject(Object.keys(project.themes)
+        .map(x => project.themes[x].id))
+        .then((indicators: Indicator[]) => {
         this.indicators = [];
         this.groups = [];
         this.multiThemesIndicators = [];
@@ -81,9 +83,6 @@ export class CrossCuttingComponent implements OnInit {
             indicatorFound.display = indicator.name.en;
             indicatorFound.description = indicator.description;
             this.indicators.push(new ProjectIndicator(indicatorFound));
-          }
-          else {
-            this.indicators.push(new ProjectIndicator(indicator));
           }
         });
         this.indicators.forEach(x => {

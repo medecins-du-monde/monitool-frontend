@@ -17,7 +17,7 @@
                     <mat-select-trigger>
                         <mat-chip-list>
                             <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
-                                (removed)="onEntityRemoved(entity)">
+                                (removed)="onEntityRemoved(entity)" >
                                 {{ entity.name }}
                                 <mat-icon matChipRemove>cancel</mat-icon>
                             </mat-chip>

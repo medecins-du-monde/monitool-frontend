@@ -84,8 +84,6 @@ export class EditComponent implements OnInit, OnDestroy {
       }
       if (this.timeSlotDate && this.form){
         this.timeSlot = new TimeSlot(this.timeSlotDate);
-        // this.timeSlot = TimeSlot.fromValue(this.timeSlotDate);
-        // this.timeSlot = TimeSlot.fromDate(this.timeSlotDate, TimeSlotPeriodicity[this.form.periodicity]);
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
 
@@ -166,6 +164,7 @@ export class EditComponent implements OnInit, OnDestroy {
     }
   }
 
+  // TODO optimise this method
   updateTotals(val: any) {
     for (let i = 0; i < this.tables.length; i += 1){
       const table = this.tables[i];
@@ -177,13 +176,14 @@ export class EditComponent implements OnInit, OnDestroy {
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
-            sum += +val.values[table.id][inputPos];
+            sum += val.values[table.id][inputPos];
           }
         }
         table.value[x][table.numberCols - 1] = sum;
         total += sum;
       }
-
+      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      total = 0;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
         let sum = 0;
         for (x = 0; x < table.numberRows; x += 1){
@@ -193,8 +193,11 @@ export class EditComponent implements OnInit, OnDestroy {
           }
         }
         table.value[table.numberRows - 1][y] = sum;
+        total += sum;
       }
-      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      if (total !== 0){
+        table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      }
     }
   }
 
