@@ -40,3 +40,21 @@ deploy_beta:
     - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
   only:
     - dev
+
+deploy_prod:
+  stage: deploy
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq sshpass rsync
+    - 'which ssh-agent || (apt-get install -y -qq openssh-client)'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_PROD" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - npm i
+  script:
+    - npm run build -- --prod
+    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapplications@52.148.234.173:/var/www/html/mdm-monitool-frontend
+  only:
+    - master
