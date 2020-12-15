@@ -23,8 +23,8 @@ build:
     - master
 
 
-deploy:
-  stage: deploy_dev
+deploy_beta:
+  stage: deploy
   before_script:
     - apt-get update -qq && apt-get install -y -qq sshpass rsync
     - 'which ssh-agent || (apt-get install -y -qq openssh-client)'
