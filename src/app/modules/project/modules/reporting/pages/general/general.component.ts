@@ -64,6 +64,10 @@ export class GeneralComponent implements OnInit {
 
   }
 
+  get chartData(){
+    return this.chartService.data.value;
+  }
+
   async makeRequest(){
     // we have to pass dates to strings in the YYYY-mm-dd format
     // let modifiedFilter = this.filter.value
@@ -121,7 +125,6 @@ export class GeneralComponent implements OnInit {
         },
       ]
     };
-    console.log(data);
     return data;
   }
 

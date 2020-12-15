@@ -4,7 +4,9 @@
   <ng-container matColumnDef="icon">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element"> 
-      <mat-icon *ngIf="element.icon" >insights</mat-icon>
+      <button *ngIf="element.icon" class="mdm-button mat-icon-button" (click)="updateChart(element)">
+        <mat-icon>insights</mat-icon>
+      </button>
     </td>
   </ng-container>
 

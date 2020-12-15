@@ -8,6 +8,7 @@ import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { round } from 'lodash';
+import { ChartService } from 'src/app/services/chart.service';
 
 const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
 
@@ -45,7 +46,8 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
 
   constructor(private projectService: ProjectService,
-              private reportingService: ReportingService) { }
+              private reportingService: ReportingService,
+              private chartService: ChartService) { }
 
   ngOnInit(): void {
     this.subscription.add(
@@ -199,13 +201,30 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
       this.roundResponse(response);
 
+      let data = []
+      for (const [key, value] of Object.entries(response)) {
+        data.push({
+          y: value,
+          x: key
+        });
+      }
+
       logicalRows.push({
         icon: true,
         name: indicator.display,
         baseline: indicator.baseline,
         target: indicator.target,
         sectionId,
-        values: response
+        values: response,
+        onChart: false,
+        dataset: {
+          label: indicator.display,
+          data,
+          labels: Object.keys(response),
+          borderColor: this.randomColor(),
+          backgroundColor: this.randomColor(),
+          fill: false
+        }
       } as InfoRow);
     }
 
@@ -220,6 +239,14 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       for (const indicator of purpose.indicators){
         const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
         this.roundResponse(response);
+        
+        let data = []
+        for (const [key, value] of Object.entries(response)) {
+          data.push({
+            y: value,
+            x: key
+          });
+        }
 
         logicalRows.push({
           icon: true,
@@ -227,7 +254,16 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           baseline: indicator.baseline,
           target: indicator.target,
           sectionId,
-          values: response
+          values: response,
+          onChart: false,
+          dataset: {
+            label: indicator.display,
+            data,
+            labels: Object.keys(response),
+            borderColor: this.randomColor(),
+            backgroundColor: this.randomColor(),
+            fill: false
+          }
         } as InfoRow);
       }
     }
@@ -252,13 +288,30 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
       this.roundResponse(response);
 
+      let data = []
+      for (const [key, value] of Object.entries(response)) {
+        data.push({
+          y: value,
+          x: key
+        });
+      }
+
       extraIndicatorsRows.push({
         icon: true,
         name: indicator.display,
         baseline: indicator.baseline,
         target: indicator.target,
         sectionId,
-        values: response
+        values: response,
+        onChart: false,
+        dataset: {
+          label: indicator.display,
+          data,
+          labels: Object.keys(response),
+          borderColor: this.randomColor(),
+          backgroundColor: this.randomColor(),
+          fill: false
+        }
       } as InfoRow);
     }
 
@@ -290,13 +343,30 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
       this.roundResponse(response);
 
+      let data = []
+      for (const [key, value] of Object.entries(response)) {
+        data.push({
+          y: value,
+          x: key
+        });
+      }
+
       dataSourceRows.push( {
         icon: true,
         name: element.name,
         baseline: null,
         target: null,
         sectionId,
-        values: response
+        values: response,
+        onChart: false,
+        dataset: {
+          label: element.name,
+          data,
+          labels: Object.keys(response),
+          borderColor: this.randomColor(),
+          backgroundColor: this.randomColor(),
+          fill: false
+        }
       } as InfoRow )
     }
     return dataSourceRows;
@@ -306,10 +376,44 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
-
     return response;
   }
+
+  // this method builds the chart again everytime there is a click in the chart button
+  updateChart(element: InfoRow){
+    element.onChart = !element.onChart;
+
+    const datasets = [];
+    let labels = [];
+
+    for (const row of this.dataSource.data){
+      if (row.onChart){
+        datasets.push(row.dataset);
+        // this adds the dataset labels without having duplicate values
+        labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
+      }
+    }
+    const data = { 
+      labels,
+      datasets
+    }
+    this.chartService.addData(data);
+  }
+
+  randomNumberLimit(limit) {
+    return Math.floor((Math.random() * limit) + 1);
+  }
+  randomColor() {
+    const col = 'rgba(' + this.randomNumberLimit(255)
+      + ',' + this.randomNumberLimit(255)
+      + ',' + this.randomNumberLimit(255) + ', 1)';
+    return col;
+  }
+
 }
+
+
+  
 
 export interface SectionTitle{
   title: string;
@@ -331,6 +435,8 @@ export interface InfoRow {
   target: number | null;
   sectionId: number;
   values: any;
+  onChart?: boolean;
+  dataset?: any;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;

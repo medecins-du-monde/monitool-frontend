@@ -25,7 +25,7 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    const initialValue = 'quarter';
+    const initialValue = 'month';
     this.dimensionForm = this.fb.group({
       dimensionId: initialValue
     });
