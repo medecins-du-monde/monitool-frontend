@@ -10,6 +10,7 @@ lint:
     - npm i
   script: npm run lint
   only:
+    - dev
     - master
 
 build:
@@ -18,10 +19,12 @@ build:
     - npm i
   script: npm run build -- --prod
   only:
+    - dev
     - master
 
+
 deploy:
-  stage: deploy
+  stage: deploy_dev
   before_script:
     - apt-get update -qq && apt-get install -y -qq sshpass rsync
     - 'which ssh-agent || (apt-get install -y -qq openssh-client)'
@@ -36,4 +39,4 @@ deploy:
     - npm run build -- --prod
     - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
   only:
-    - master
+    - dev
