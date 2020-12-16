@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   API_URL: '/api',
-  clientId: 'd62083d8-fdc0-4a6a-8618-652380eebdb9',
-  authority: 'https://login.microsoftonline.com/fbacd48d-ccf4-480d-baf0-31048368055f',
+  clientId: 'ec380c9b-e98c-4de9-a311-9fa2495e6daf',
+  authority: 'https://login.microsoftonline.com/3c3a3c6a-8d0a-446a-ae82-cee5b605904e',
   redirectUrl: 'http://localhost:4200',
 };
