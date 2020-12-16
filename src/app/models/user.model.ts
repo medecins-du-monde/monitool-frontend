@@ -36,7 +36,6 @@ export class User implements Deserializable {
         this.role = ( input && input.role ) ? input.role : null;
         this.name = ( input && input.name ) ? input.name : null;
         this.type = ( input && input.type ) ? input.type : null;
-          this.type = ( input && input.type ) ? input.type : null;
           this.rev = ( input && input._rev ) ? input._rev : null;
       return this;
     }
