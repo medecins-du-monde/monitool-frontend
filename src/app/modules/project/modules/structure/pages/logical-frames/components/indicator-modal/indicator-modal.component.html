@@ -48,9 +48,10 @@
     </div>
     <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput type="number" formControlName="formula" placeholder="{{ 'Enum.Computation.fixed' | translate }}">
+            <input matInput type="string" formControlName="formula" placeholder="{{ 'Enum.Computation.fixed' | translate }}">
         </mat-form-field>
     </div>
+
     <div class="mdm-form-group" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
         <div class="mdm-form-label"></div>
         <table mat-table [dataSource]="dataSource" class="mdm-table">
@@ -111,7 +112,7 @@
                 <td mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput formControlName="formula" (change)="onFormulaChange()"
-                            placeholder="{{ 'Formula' | translate }}" [disabled]="type !== 'formula'">
+                            placeholder="{{ 'Formula' | translate }}" [readonly]="type !== 'formula'">
                     </mat-form-field>
                 </td>
             </ng-container>

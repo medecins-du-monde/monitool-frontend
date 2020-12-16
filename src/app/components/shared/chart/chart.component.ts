@@ -75,7 +75,7 @@ export class ChartComponent implements OnInit {
       this.chart.data.datasets.push(data.datasets);
       this.chart.update();
     }
-    this.data.datasets.push(data.datasets)
+    this.data.datasets.push(data.datasets);
   }
 
   addData(data) {
@@ -92,7 +92,7 @@ export class ChartComponent implements OnInit {
   }
 
   changeChartType(event) {
-    if(this.chart){
+    if (this.chart){
       this.chart.destroy();
     }
     this.chart = new Chart('currentChart', {

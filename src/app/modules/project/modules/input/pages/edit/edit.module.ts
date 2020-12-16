@@ -25,6 +25,6 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule
-  ]
+  ],
 })
 export class EditModule { }

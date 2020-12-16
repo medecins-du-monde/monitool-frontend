@@ -23,9 +23,9 @@ export class GeneralComponent implements OnInit {
 
   protected project: Project;
   grouping = '';
-  
+
   filter = new BehaviorSubject<any>({});
-  
+
   dimensionIds = new BehaviorSubject('');
 
   startDate: Date;
@@ -46,10 +46,9 @@ export class GeneralComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-
       this.collectionSites = project.entities;
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
@@ -87,7 +86,7 @@ export class GeneralComponent implements OnInit {
 
   responseToGraphData(response, label) {
     let grouping = _.clone(this.grouping);
-    
+
     let idToName = false;
     if (this.grouping === 'group') {
       grouping = 'groups';
@@ -104,8 +103,8 @@ export class GeneralComponent implements OnInit {
       keys.forEach(key => {
         this.project[grouping].find(
           group => {
-            group.id === key ? labels.push(group.name) : null;
-            key === '_total' ? labels.push(key) : null;
+            if (group.id === key) { labels.push(group.name); }
+            if (key === '_total') { labels.push(key); }
             });
           });
     } else {
