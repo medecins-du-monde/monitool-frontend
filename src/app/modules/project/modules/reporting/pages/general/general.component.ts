@@ -34,7 +34,6 @@ export class GeneralComponent implements OnInit {
   requestForm: FormGroup;
 
   // initial values for the chart
-  chartType = 'line';
   options =  {fill: false};
   data = {};
 

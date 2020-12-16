@@ -70,13 +70,29 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     )
   }
 
-  fillDimensions() {
+  getSiteOrGroupName(id){
+    if (this.project && (this.dimensionIds.value === 'entity' ||  this.dimensionIds.value === 'group')){
+      const site = this.project.entities.find(s => s.id === id);
+      if (site !== undefined){
+        return site.name;
+      }
+  
+      const group = this.project.groups.find(g => g.id === id);
+      if (group !== undefined){
+        return group.name;
+      }
+    }
 
+    return id;
+  }
+
+  fillDimensions() {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = this.project.entities.map(x => x.name);
+      this.dimensions = this.project.entities.map(x => x.id);
+      this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      this.dimensions = this.project.groups.map(x => x.name)
+      this.dimensions = this.project.groups.map(x => x.id)
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
@@ -203,10 +219,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       let data = []
       for (const [key, value] of Object.entries(response)) {
-        data.push({
-          y: value,
-          x: key
-        });
+        if (key !== '_total'){
+          data.push({
+            y: value,
+            x: key
+          });
+        }
       }
 
       logicalRows.push({
@@ -220,7 +238,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         dataset: {
           label: indicator.display,
           data,
-          labels: Object.keys(response),
+          labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
           borderColor: this.randomColor(),
           backgroundColor: this.randomColor(),
           fill: false
@@ -242,10 +260,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         
         let data = []
         for (const [key, value] of Object.entries(response)) {
-          data.push({
-            y: value,
-            x: key
-          });
+          if (key !== '_total'){
+            data.push({
+              y: value,
+              x: key
+            });
+          }
         }
 
         logicalRows.push({
@@ -259,7 +279,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           dataset: {
             label: indicator.display,
             data,
-            labels: Object.keys(response),
+            labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
             borderColor: this.randomColor(),
             backgroundColor: this.randomColor(),
             fill: false
@@ -290,10 +310,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       let data = []
       for (const [key, value] of Object.entries(response)) {
-        data.push({
-          y: value,
-          x: key
-        });
+        if (key !== '_total'){
+          data.push({
+            y: value,
+            x: key
+          });
+        }
       }
 
       extraIndicatorsRows.push({
@@ -307,7 +329,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         dataset: {
           label: indicator.display,
           data,
-          labels: Object.keys(response),
+          labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
           borderColor: this.randomColor(),
           backgroundColor: this.randomColor(),
           fill: false
@@ -320,7 +342,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
   openDataSource = async (row, sectionId) => {
     const form = this.project.forms.find( (myform) => myform.id === row.formId);
-
+ 
     const dataSourceRows = [];
     for (const element of form.elements){
       const currentFilter = this.filter.value;
@@ -345,10 +367,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       let data = []
       for (const [key, value] of Object.entries(response)) {
-        data.push({
-          y: value,
-          x: key
-        });
+        if (key !== '_total'){
+          data.push({
+            y: value,
+            x: key
+          });
+        }
       }
 
       dataSourceRows.push( {
@@ -362,7 +386,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         dataset: {
           label: element.name,
           data,
-          labels: Object.keys(response),
+          labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
           borderColor: this.randomColor(),
           backgroundColor: this.randomColor(),
           fill: false
@@ -394,10 +418,19 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       }
     }
     const data = { 
-      labels,
+      // labels,
+      labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     }
+    console.log(data);
     this.chartService.addData(data);
+    
+    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+      this.chartService.changeType('bar');
+    }else{
+      this.chartService.changeType('line');
+    }
+    
   }
 
   randomNumberLimit(limit) {
@@ -411,9 +444,6 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   }
 
 }
-
-
-  
 
 export interface SectionTitle{
   title: string;
@@ -441,15 +471,3 @@ export interface InfoRow {
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
-// const ELEMENT_DATA: Row[] = [
-  // {
-  //   title: 'Cross-cutting Indicators',
-  //   sectionId: 0,
-  //   open: false
-  // },
-  // {
-  //   title: 'Extra indicators',
-  //   sectionId: 1,
-  //   open: false
-  // },
-// ];

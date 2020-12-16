@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -28,9 +29,8 @@ export class ChartComponent implements OnInit {
 
   private chart;
 
-  @Input() chartType = 'line';
   @Input() options: object;
-  @Input() data: object;
+  @Input() data: any;
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [
@@ -46,7 +46,7 @@ export class ChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.chart = new Chart('currentChart', {
-      type: this.chartType,
+      type: this.chartService.type.value,
       data: this.data,
       options: this.options,
     });
@@ -71,13 +71,19 @@ export class ChartComponent implements OnInit {
   }
 
   addDataset(data) {
-    this.chart.data.datasets.push(data.datasets);
-    this.chart.update();
+    if (this.chart){
+      this.chart.data.datasets.push(data.datasets);
+      this.chart.update();
+    }
+    this.data.datasets.push(data.datasets)
   }
 
   addData(data) {
-    this.chart.data = data;
-    this.chart.update();
+    if (this.chart){
+      this.chart.data = data;
+      this.chart.update();
+    }
+    this.data = data;
   }
 
   clearGraph() {
@@ -86,12 +92,15 @@ export class ChartComponent implements OnInit {
   }
 
   changeChartType(event) {
-    this.chart.destroy();
+    if(this.chart){
+      this.chart.destroy();
+    }
+    console.log(this.data);
     this.chart = new Chart('currentChart', {
       type: event,
       data: this.data,
       options: this.options,
-   });
+    });
   }
 
   constructor(private chartService: ChartService) { }

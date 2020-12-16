@@ -5,6 +5,6 @@
 
 <app-filter (filterEvent)="receiveFilter($event)"></app-filter>
 
-<app-chart *ngIf="chartData.datasets && chartData.datasets.length > 0" [chartType]="chartType" [options]="options" [data]="chartData"></app-chart>
-    
+<app-chart [class.hide-chart]="!(chartData.datasets && chartData.datasets.length > 0)" [options]="options" [data]="chartData"></app-chart>
+
 <app-report-table [dimensionIds]="dimensionIds" [filter]="filter"></app-report-table>
