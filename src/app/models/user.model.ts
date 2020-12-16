@@ -5,6 +5,7 @@ import { Form } from './form.model';
 export class User implements Deserializable {
     id: string;
     type: string;
+    rev: string;
     role: string;
     name: string;
     username: string;
@@ -31,15 +32,22 @@ export class User implements Deserializable {
     deserialize(input: any): this {
       Object.assign(this, input);
       // tslint:disable-next-line: no-string-literal
-      this.id = (input && input['_id']) ? input['_id'] : this.id;
-        // this.id = `user:${(input && input._id) ? input._id : uuid()}`;
+        this.id = (input && input._id) ? input._id : null;
+        this.role = ( input && input.role ) ? input.role : null;
+        this.name = ( input && input.name ) ? input.name : null;
+        this.type = ( input && input.type ) ? input.type : null;
+          this.type = ( input && input.type ) ? input.type : null;
+          this.rev = ( input && input._rev ) ? input._rev : null;
       return this;
     }
 
     serialize() {
         const user = {
+            _rev:this.rev,
+            _id:this.id,
             type: this.type,
-            role: this.role
+            role: this.role,
+            
         };
 
         if (this.type === 'internal'){
@@ -56,6 +64,16 @@ export class User implements Deserializable {
                 password: this.password
             });
         }
+        else if (this.type ==='user')
+        {
+            Object.assign(user, {
+                name:this.name,
+                role: this.role,
+                type: this.type,
+                _id: this.id,
+                _rev: this.rev
+            });
+        }
 
         if (this.role === 'input'){
             if (this.entities){
@@ -69,7 +87,6 @@ export class User implements Deserializable {
                 });
             }
         }
-
         return user;
     }
 }
