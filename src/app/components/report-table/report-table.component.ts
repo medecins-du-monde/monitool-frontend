@@ -286,6 +286,88 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           }
         } as InfoRow);
       }
+
+      for (const output of purpose.outputs){
+        logicalRows.push({
+          icon: false,
+          groupName: `Result: ${output.description}`,
+          sectionId
+        } as GroupTitle);
+
+        for (const indicator of output.indicators){
+          const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+          this.roundResponse(response);
+          
+          let data = []
+          for (const [key, value] of Object.entries(response)) {
+            if (key !== '_total'){
+              data.push({
+                y: value,
+                x: key
+              });
+            }
+          }
+
+          logicalRows.push({
+            icon: true,
+            name: indicator.display,
+            baseline: indicator.baseline,
+            target: indicator.target,
+            sectionId,
+            values: response,
+            onChart: false,
+            dataset: {
+              label: indicator.display,
+              data,
+              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+              borderColor: this.randomColor(),
+              backgroundColor: this.randomColor(),
+              fill: false
+            }
+          } as InfoRow);
+        }
+
+        for (const activity of output.activities){
+          logicalRows.push({
+            icon: false,
+            groupName: `Activity: ${activity.description}`,
+            sectionId
+          } as GroupTitle);
+
+          for (const indicator of activity.indicators){
+            const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+            this.roundResponse(response);
+            
+            let data = []
+            for (const [key, value] of Object.entries(response)) {
+              if (key !== '_total'){
+                data.push({
+                  y: value,
+                  x: key
+                });
+              }
+            }
+
+            logicalRows.push({
+              icon: true,
+              name: indicator.display,
+              baseline: indicator.baseline,
+              target: indicator.target,
+              sectionId,
+              values: response,
+              onChart: false,
+              dataset: {
+                label: indicator.display,
+                data,
+                labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                borderColor: this.randomColor(),
+                backgroundColor: this.randomColor(),
+                fill: false
+              }
+            } as InfoRow);
+          }
+        }
+      }
     }
     return logicalRows;
   };
@@ -422,7 +504,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     }
-    console.log(data);
+
     this.chartService.addData(data);
     
     if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){

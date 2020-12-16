@@ -95,7 +95,6 @@ export class ChartComponent implements OnInit {
     if(this.chart){
       this.chart.destroy();
     }
-    console.log(this.data);
     this.chart = new Chart('currentChart', {
       type: event,
       data: this.data,
