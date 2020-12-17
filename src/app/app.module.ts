@@ -36,7 +36,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       auth: {
         clientId: environment.clientId, // This is your client ID
         authority: environment.authority, // This is your tenant ID
-        redirectUri: environment.redirectUrl// This is your redirect URI
+        redirectUri: environment.redirectUrl,// This is your redirect URI
+        postLogoutRedirectUri: environment.postLogoutRedirectUri,
       },
       cache: {
         cacheLocation: 'localStorage',
