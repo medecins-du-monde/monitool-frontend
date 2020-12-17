@@ -55,6 +55,6 @@ deploy_prod:
     - npm i
   script:
     - npm run build -- --prod
-    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
+    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapplications@52.148.234.173:/var/www/html/mdm-monitool-frontend
   only:
     - master
