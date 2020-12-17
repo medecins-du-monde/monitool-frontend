@@ -7,4 +7,5 @@
 
 <app-chart [class.hide-chart]="!(chartData.datasets && chartData.datasets.length > 0)" [options]="options" [data]="chartData"></app-chart>
 
-<app-report-table [dimensionIds]="dimensionIds" [filter]="filter"></app-report-table>
+<app-reporting-table [dimensionIds]="dimensionIds" [filter]="filter" [tableContent]=tableContent ></app-reporting-table>
+<!-- <app-report-table [dimensionIds]="dimensionIds" [filter]="filter"></app-report-table> -->

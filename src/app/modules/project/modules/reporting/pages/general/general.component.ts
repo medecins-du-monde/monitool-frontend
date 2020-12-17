@@ -33,6 +33,8 @@ export class GeneralComponent implements OnInit {
   computation: object;
   requestForm: FormGroup;
 
+  tableContent = new BehaviorSubject<any[]>([]);
+
   // initial values for the chart
   options =  {fill: false};
   data = {};
@@ -50,6 +52,8 @@ export class GeneralComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.collectionSites = project.entities;
+
+      this.tableContent.next(this.project.extraIndicators);
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
       then we remove this dummy variable */

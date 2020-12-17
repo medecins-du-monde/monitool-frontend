@@ -8,6 +8,7 @@ import { ChartModule} from 'src/app/components/shared/chart/chart.module';
 import { ObjectGroupingModule} from './objectGrouping/object-grouping.module';
 import { FilterModule} from './filter/filter.module';
 import { DataTableModule } from './dataTable/data-table.module';
+import { ReportingTableModule } from 'src/app/components/reporting-table/reporting-table.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { DataTableModule } from './dataTable/data-table.module';
         TranslateModule,
         GeneralRoutingModule,
         ReportTableModule,
+        ReportingTableModule,
         ChartModule,
         ObjectGroupingModule,
         FilterModule,
