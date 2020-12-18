@@ -55,7 +55,7 @@ export class GeneralComponent implements OnInit {
       this.project = project;
       // this.collectionSites = project.entities;
       this.buildIndicators();
-      
+
 
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
       then we get all the indicators and attach them to the body to make the request once clicked on the plus
@@ -81,51 +81,51 @@ export class GeneralComponent implements OnInit {
           sectionId: id,
           open: false,
         } as SectionTitle);
-  
+
         rows.push({
           icon: false,
           groupName: `General objective: ${logicalFrame.goal}`,
           sectionId: id
         } as GroupTitle);
-  
+
         rows = rows.concat(logicalFrame.indicators);
-  
+
         for (const purpose of logicalFrame.purposes){
           rows.push({
             icon: false,
             groupName: purpose.description,
             sectionId: id
           } as GroupTitle);
-  
+
           rows = rows.concat(purpose.indicators);
-  
+
           for (const output of purpose.outputs){
             rows.push({
               icon: false,
               groupName: output.description,
               sectionId: id
             } as GroupTitle);
-  
+
             rows = rows.concat(output.indicators);
-  
+
             for (const activity of output.activities){
               rows.push({
                 icon: false,
                 groupName: activity.description,
                 sectionId: id
               } as GroupTitle);
-  
+
               rows = rows.concat(activity.indicators);
             }
           }
         }
-  
+
         id += 1;
       }
     }
 
     if (this.project.crossCutting){
-      // TO DO 
+      // TO DO
       // add cross cutting indicators to the table when they work correctly
     }
 
@@ -135,7 +135,7 @@ export class GeneralComponent implements OnInit {
         sectionId: id,
         open: false,
       }as SectionTitle);
-      
+
       rows = rows.concat(this.project.extraIndicators);
       id += 1;
     }
@@ -158,7 +158,7 @@ export class GeneralComponent implements OnInit {
                 filter: {}
               }
             }
-          }
+          };
           rows.push(new ProjectIndicator({
             display: element.name,
             baseline: 0,
@@ -167,7 +167,7 @@ export class GeneralComponent implements OnInit {
             computation
           }));
         }
-        
+
         id += 1;
       }
     }

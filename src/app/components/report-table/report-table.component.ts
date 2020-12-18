@@ -28,7 +28,7 @@ const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
 
 export class ReportTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource([]);
-  
+
   columnsToDisplay = COLUMNS_TO_DISPLAY;
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
 
@@ -67,7 +67,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       this.filter.subscribe(value => {
         this.fillDimensions();
       })
-    )
+    );
   }
 
   getSiteOrGroupName(id){
@@ -76,7 +76,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       if (site !== undefined){
         return site.name;
       }
-  
+
       const group = this.project.groups.find(g => g.id === id);
       if (group !== undefined){
         return group.name;
@@ -92,23 +92,23 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      this.dimensions = this.project.groups.map(x => x.id)
+      this.dimensions = this.project.groups.map(x => x.id);
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
-      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);    
-  
+      const endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);
+
       this.dimensions = [];
-      while(startTimeSlot !== endTimeSlot){
+      while (startTimeSlot !== endTimeSlot){
         this.dimensions.push(startTimeSlot.value);
-        startTimeSlot = startTimeSlot.next()
+        startTimeSlot = startTimeSlot.next();
       }
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
 
     }
 
-    this.columnsToDisplay = COLUMNS_TO_DISPLAY.concat(this.dimensions); 
+    this.columnsToDisplay = COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
   ngOnDestroy(): void {
@@ -168,7 +168,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
 
   // this replace the current MataTableDataSource with a new one, adding or removing rows as needed
-  async sectionToggle(sectionId: number, openSection: { (row: any, sectionId: any): Promise<any[]>; } ) {
+  async sectionToggle(sectionId: number, openSection: (row: any, sectionId: any) => Promise<any[]> ) {
     let newData = [];
     let foundSection = false;
     let open = true;
@@ -181,7 +181,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
       row = row as SectionTitle;
       // found the first row with that specific sectionId
-      if ( !foundSection && row.sectionId === sectionId){ 
+      if ( !foundSection && row.sectionId === sectionId){
         foundSection = true;
         row.open = !row.open;
         open = row.open;
@@ -200,7 +200,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     const lf = this.project.logicalFrames.find(x => x.id === row.logicalFrameId);
 
     const currentFilter = this.filter.value;
-    let modifiedFilter = {
+    const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
       _end: currentFilter._end.toISOString().slice(0, 10),
       entity: currentFilter.entity
@@ -214,10 +214,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
     } as GroupTitle );
 
     for (const indicator of lf.indicators){
-      const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      const response = await this.reportingService.fetchData(
+        this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+        );
       this.roundResponse(response);
 
-      let data = []
+      const data = [];
       for (const [key, value] of Object.entries(response)) {
         if (key !== '_total'){
           data.push({
@@ -255,10 +257,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       } as GroupTitle);
 
       for (const indicator of purpose.indicators){
-        const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+        const response = await this.reportingService.fetchData(
+          this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+          );
         this.roundResponse(response);
-        
-        let data = []
+
+        const data = [];
         for (const [key, value] of Object.entries(response)) {
           if (key !== '_total'){
             data.push({
@@ -295,10 +299,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         } as GroupTitle);
 
         for (const indicator of output.indicators){
-          const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+          const response = await this.reportingService.fetchData(
+            this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+            );
           this.roundResponse(response);
-          
-          let data = []
+
+          const data = [];
           for (const [key, value] of Object.entries(response)) {
             if (key !== '_total'){
               data.push({
@@ -335,10 +341,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           } as GroupTitle);
 
           for (const indicator of activity.indicators){
-            const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+            const response = await this.reportingService.fetchData(
+              this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+              );
             this.roundResponse(response);
-            
-            let data = []
+
+            const data = [];
             for (const [key, value] of Object.entries(response)) {
               if (key !== '_total'){
                 data.push({
@@ -370,16 +378,15 @@ export class ReportTableComponent implements OnInit, OnDestroy {
       }
     }
     return logicalRows;
-  };
+  }
 
   openCrossCuttingIndicators = async (row, sectionId) => {
-    console.log('TO DO: implement openCrossCuttingIndicators function');
     return [];
   }
 
   openExtraIndicators = async (row, sectionId) => {
     const currentFilter = this.filter.value;
-    let modifiedFilter = {
+    const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
       _end: currentFilter._end.toISOString().slice(0, 10),
       entity: currentFilter.entity
@@ -387,10 +394,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
     const extraIndicatorsRows = [];
     for (const indicator of this.project.extraIndicators){
-      const response = await this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      const response = await this.reportingService.fetchData(
+        this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+        );
       this.roundResponse(response);
 
-      let data = []
+      const data = [];
       for (const [key, value] of Object.entries(response)) {
         if (key !== '_total'){
           data.push({
@@ -424,11 +433,11 @@ export class ReportTableComponent implements OnInit, OnDestroy {
 
   openDataSource = async (row, sectionId) => {
     const form = this.project.forms.find( (myform) => myform.id === row.formId);
- 
+
     const dataSourceRows = [];
     for (const element of form.elements){
       const currentFilter = this.filter.value;
-      let modifiedFilter = {
+      const modifiedFilter = {
         _start: currentFilter._start.toISOString().slice(0, 10),
         _end: currentFilter._end.toISOString().slice(0, 10),
         entity: currentFilter.entity
@@ -444,10 +453,12 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         }
       };
 
-      const response = await this.reportingService.fetchData(this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false);
+      const response = await this.reportingService.fetchData(
+        this.project, computation, [this.dimensionIds.value] , modifiedFilter, true, false
+        );
       this.roundResponse(response);
 
-      let data = []
+      const data = [];
       for (const [key, value] of Object.entries(response)) {
         if (key !== '_total'){
           data.push({
@@ -473,7 +484,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
           backgroundColor: this.randomColor(),
           fill: false
         }
-      } as InfoRow )
+      } as InfoRow );
     }
     return dataSourceRows;
   }
@@ -499,20 +510,20 @@ export class ReportTableComponent implements OnInit, OnDestroy {
         labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
-    const data = { 
+    const data = {
       // labels,
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
-    }
+    };
 
     this.chartService.addData(data);
-    
+
     if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
       this.chartService.changeType('bar');
     }else{
       this.chartService.changeType('line');
     }
-    
+
   }
 
   randomNumberLimit(limit) {
