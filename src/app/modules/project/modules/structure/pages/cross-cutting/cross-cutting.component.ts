@@ -84,6 +84,9 @@ export class CrossCuttingComponent implements OnInit {
             indicatorFound.description = indicator.description;
             this.indicators.push(new ProjectIndicator(indicatorFound));
           }
+          else {
+            this.indicators.push(new ProjectIndicator(indicator));
+          }
         });
         this.indicators.forEach(x => {
           if (x.themes.length > 1) {

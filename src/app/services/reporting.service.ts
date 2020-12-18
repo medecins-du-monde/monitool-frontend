@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import TimeSlot from 'timeslot-dag';
@@ -51,7 +52,7 @@ export class ReportingService {
         else if (periodicities.includes(dimId)) {
           ids = [];
           let slotStart = TimeSlot.fromDate(new Date(filter._start + 'T00:00:00Z'), dimId);
-          let slotEnd = TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId);
+          const slotEnd = TimeSlot.fromDate(new Date(filter._end + 'T00:00:00Z'), dimId);
           ids.push(slotStart);
           while (slotStart !== slotEnd){
             slotStart = slotStart.next();
@@ -87,9 +88,8 @@ export class ReportingService {
 
 
   computeCompatiblePeriodicities(project, computation) {
-
     const variableIds = [];
-    for (let key in computation.parameters) {
+    for (const key in computation.parameters) {
       if (computation.parameters.hasOwnProperty(key)) {
         variableIds.push(computation.parameters[key].elementId);
       }
@@ -105,7 +105,7 @@ export class ReportingService {
           return true;
         }
         try {
-          let t = TimeSlot.fromDate(new Date(), dsPeriodicity);
+          const t = TimeSlot.fromDate(new Date(), dsPeriodicity);
           t.toParentPeriodicity(dsPeriodicity);
           return true;
         }
