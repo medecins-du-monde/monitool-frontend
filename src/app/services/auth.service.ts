@@ -44,10 +44,6 @@ export class AuthService {
     return this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'});
   }
 
-  public validateAzure() {
-    return this.apiService.get('/authentication/login-azure');
-  }
-
   public async logOut(){
     let response = false;
     await this.apiService.post('/authentication/logout', {}, {responseType: 'text'})

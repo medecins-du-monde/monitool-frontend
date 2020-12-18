@@ -42,7 +42,7 @@ export class GeneralComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      const currentYear = project.start.getFullYear(); //we assume it is first day of year of the project start
+      const currentYear = project.start.getFullYear(); // we assume it is first day of year of the project start
       this.startDate = new Date(currentYear, 0, 1);
       this.collectionSites = project.entities;
       /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
@@ -89,8 +89,8 @@ export class GeneralComponent implements OnInit {
       keys.forEach(key => {
         this.project[grouping].find(
           group => {
-            group.id === key ? labels.push(group.name) : null;
-            key === '_total' ? labels.push(key) : null;
+            if (group.id === key) { labels.push(group.name); }
+            if (key === '_total') { labels.push(key); }
             });
           });
     } else {

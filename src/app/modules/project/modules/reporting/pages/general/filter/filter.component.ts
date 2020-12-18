@@ -34,7 +34,7 @@ export class FilterComponent implements OnInit{
   createFilter() {
     let filter = {};
     if (this.selectedSites.length > 0) {
-      let entities = [];
+      const entities = [];
       this.selectedSites.forEach(site => entities.push(site.id));
       filter =  {
                 _start: this.transformDate(this.startDate),
@@ -74,7 +74,7 @@ export class FilterComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    const currentYear = new Date().getFullYear(); //we assume it is last day of the current year
+    const currentYear = new Date().getFullYear(); // we assume it is last day of the current year
     this.endDate = new Date(currentYear, 11, 31);
     this.createFilter();
   }
