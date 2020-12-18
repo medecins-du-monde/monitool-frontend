@@ -30,7 +30,7 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource([]);
   
   columnsToDisplay = COLUMNS_TO_DISPLAY;
-  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];  
+  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
 
   expandedElement: InfoRow | null;
 

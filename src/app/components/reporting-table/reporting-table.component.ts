@@ -36,7 +36,6 @@ export interface InfoRow {
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
-const COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
 
 
 @Component({
@@ -48,25 +47,29 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-
   isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
-
+  
+  
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<any>;
   rows = new BehaviorSubject<Row[]>([]);
-
+  
   dataSource = new MatTableDataSource([]);
   
+  
   private subscription: Subscription = new Subscription();
-
+  
   project: Project;
   dimensions: string[];
   columnsToDisplay: any;
   
   constructor(private projectService: ProjectService,
-              private reportingService: ReportingService,
-              private chartService: ChartService) { }
+    private reportingService: ReportingService,
+    private chartService: ChartService) { }
+    
+  COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
+  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
 
   ngOnInit(): void {
     
@@ -79,7 +82,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
-        console.log(this.project);
         this.updateTableContent();
       })
     );
@@ -133,7 +135,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     }
 
-    this.columnsToDisplay = COLUMNS_TO_DISPLAY.concat(this.dimensions); 
+    this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions); 
   }
 
   convertToRow = (item: any) => {
@@ -164,7 +166,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     } as InfoRow;
 
 
-    console.log(this.project)
     this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
       response => {
         this.roundResponse(response);
