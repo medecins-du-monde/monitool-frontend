@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -36,7 +37,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       auth: {
         clientId: environment.clientId, // This is your client ID
         authority: environment.authority, // This is your tenant ID
-        redirectUri: environment.redirectUrl// This is your redirect URI
+        redirectUri: environment.redirectUrl, // This is your redirect URI
+        postLogoutRedirectUri: environment.postLogoutRedirectUri,
       },
       cache: {
         cacheLocation: 'localStorage',

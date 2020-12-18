@@ -36,15 +36,16 @@ export class UserModalComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = this.fb.group({
       _id: [{ value: this.data.id, disabled: true }],
+      _rev: [{ value: this.data.rev, disabled: true }],
       email: [{ value: this.data.email, disabled: true }],
       name: [{ value: this.data.name, disabled: true }],
       role: [this.data.role, Validators.required]
-    });
+    }
+    );
   }
-
   onSubmit() {
-    const user = new User(this.userForm.value);
+    const user = this.data;
+    Object.assign(user, this.userForm.value);
     this.dialogRef.close({ data: user });
   }
-
 }

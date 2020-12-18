@@ -44,35 +44,35 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   styleUrls: ['./reporting-table.component.scss']
 })
 export class ReportingTableComponent implements OnInit, OnDestroy {
-  isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
-  isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
-  isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-  isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
-  
-  
+
+  constructor(private projectService: ProjectService,
+              private reportingService: ReportingService,
+              private chartService: ChartService) { }
+
+
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<any>;
   rows = new BehaviorSubject<Row[]>([]);
-  
+
   dataSource = new MatTableDataSource([]);
-  
-  
+
+
   private subscription: Subscription = new Subscription();
-  
+
   project: Project;
   dimensions: string[];
   columnsToDisplay: any;
-  
-  constructor(private projectService: ProjectService,
-    private reportingService: ReportingService,
-    private chartService: ChartService) { }
-    
+
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
+  isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
+  isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
+  isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
+  isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
-    
+
     this.subscription.add(
       this.rows.subscribe(value => {
         this.dataSource = new MatTableDataSource(value);
@@ -119,23 +119,23 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      this.dimensions = this.project.groups.map(x => x.id)
+      this.dimensions = this.project.groups.map(x => x.id);
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
-      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);    
-  
+      const endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);
+
       this.dimensions = [];
-      while(startTimeSlot !== endTimeSlot){
+      while (startTimeSlot !== endTimeSlot){
         this.dimensions.push(startTimeSlot.value);
-        startTimeSlot = startTimeSlot.next()
+        startTimeSlot = startTimeSlot.next();
       }
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
 
     }
 
-    this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions); 
+    this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
   convertToRow = (item: any) => {
@@ -153,7 +153,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       _end: currentFilter._end.toISOString().slice(0, 10),
       entity: currentFilter.entity
     };
-    
+
     const row = {
       icon: true,
       name: indicator.display,
@@ -168,22 +168,24 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
       response => {
-        this.roundResponse(response);
-        const data = this.formatResponseToDataset(response);
-        row.dataset = {
+
+        if (response) {
+          this.roundResponse(response);
+          const data = this.formatResponseToDataset(response);
+          row.dataset = {
           label: indicator.display,
           data,
           labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
           borderColor: this.randomColor(),
           backgroundColor: this.randomColor(),
           fill: false
-        } 
-          
-        row.values = response;  
+        };
+          row.values = response;
+        }
       }
     );
 
-    
+
     return row;
   }
 
@@ -193,7 +195,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       if (site !== undefined){
         return site.name;
       }
-  
+
       const group = this.project.groups.find(g => g.id === id);
       if (group !== undefined){
         return group.name;
@@ -216,20 +218,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
-    const data = { 
+    const data = {
       // labels,
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
-    }
+    };
 
     this.chartService.addData(data);
-    
+
     if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
       this.chartService.changeType('bar');
     }else{
       this.chartService.changeType('line');
     }
-    
+
   }
 
   roundResponse(response){
@@ -240,7 +242,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   formatResponseToDataset(response){
-    let data = []
+    const data = [];
     for (const [key, value] of Object.entries(response)) {
       if (key !== '_total'){
         data.push({
