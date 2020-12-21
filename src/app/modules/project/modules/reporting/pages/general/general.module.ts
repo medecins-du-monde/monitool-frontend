@@ -7,7 +7,6 @@ import { ReportTableModule } from 'src/app/components/report-table/report-table.
 import { ChartModule} from 'src/app/components/shared/chart/chart.module';
 import { ObjectGroupingModule} from './objectGrouping/object-grouping.module';
 import { FilterModule} from './filter/filter.module';
-import { DataTableModule } from './dataTable/data-table.module';
 import { ReportingTableModule } from 'src/app/components/reporting-table/reporting-table.module';
 
 
@@ -22,7 +21,6 @@ import { ReportingTableModule } from 'src/app/components/reporting-table/reporti
         ChartModule,
         ObjectGroupingModule,
         FilterModule,
-        DataTableModule
     ]
 })
 export class GeneralModule { }

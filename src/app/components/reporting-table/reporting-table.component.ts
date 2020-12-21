@@ -184,8 +184,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-
     return row;
   }
 
