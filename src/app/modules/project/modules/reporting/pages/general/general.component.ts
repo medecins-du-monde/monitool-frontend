@@ -141,7 +141,6 @@ export class GeneralComponent implements OnInit {
     }
 
     if (this.project.forms){
-      console.log(this.project.forms);
       for (const form of this.project.forms){
         rows.push({
           title: `Data source: ${form.name}`,

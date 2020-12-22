@@ -36,8 +36,6 @@ export interface InfoRow {
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
-
-
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
@@ -53,16 +51,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<any>;
-  rows = new BehaviorSubject<Row[]>([]);
-
-  dataSource = new MatTableDataSource([]);
-
-
+  
   private subscription: Subscription = new Subscription();
-
+  
   project: Project;
+  rows = new BehaviorSubject<Row[]>([]);
+  dataSource = new MatTableDataSource([]);
   dimensions: string[];
   columnsToDisplay: any;
+  openSections = null;
 
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
@@ -72,10 +69,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
-
     this.subscription.add(
       this.rows.subscribe(value => {
-        this.dataSource = new MatTableDataSource(value);
+        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId]));
       })
     );
 
@@ -106,11 +102,44 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       })
     );
   }
-
+  
   updateTableContent(){
     if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
-      this.rows.next(this.tableContent.value.map(this.convertToRow));
+      let converted = this.tableContent.value.map(this.convertToRow);
+      console.log(converted);
+      converted = this.createOpenSections(converted);
+      this.rows.next(converted);
     }
+  }
+  
+  createOpenSections(rows : Row[]) {
+    let first = false;
+    if (this.openSections === null){
+      this.openSections = {};
+      first = true;
+    }
+    
+    let id = 0;
+    this.openSections[0] = true;
+
+    for (const row of rows){
+      if (this.isSectionTitle(0, row)){
+        id += 1;
+        if (first){
+          this.openSections[id] = false;
+          row.open = false;
+        }
+      }
+      row.sectionId = id;
+    }
+    
+    return rows;
+  }
+
+  sectionClick(sectionRow: SectionTitle){
+    sectionRow.open = !sectionRow.open;
+    this.openSections[sectionRow.sectionId] = sectionRow.open;
+    this.dataSource = new MatTableDataSource(this.rows.value.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId]));
   }
 
   fillDimensions() {
@@ -132,9 +161,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
-
     }
-
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
@@ -146,7 +173,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   indicatorToRow(indicator: ProjectIndicator): InfoRow{
-
     const currentFilter = this.filter.value;
     const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
@@ -165,10 +191,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       dataset: {}
     } as InfoRow;
 
-
     this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
       response => {
-
         if (response) {
           this.roundResponse(response);
           const data = this.formatResponseToDataset(response);
@@ -193,7 +217,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       if (site !== undefined){
         return site.name;
       }
-
       const group = this.project.groups.find(g => g.id === id);
       if (group !== undefined){
         return group.name;
@@ -207,17 +230,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     element.onChart = !element.onChart;
 
     const datasets = [];
-    let labels = [];
 
     for (const row of this.dataSource.data){
       if (row.onChart){
         datasets.push(row.dataset);
-        // this adds the dataset labels without having duplicate values
-        labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
     const data = {
-      // labels,
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
@@ -229,7 +248,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }else{
       this.chartService.changeType('line');
     }
-
   }
 
   roundResponse(response){
