@@ -93,6 +93,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   getTranslationData(operation, before, after) {
+
     const editedField = operation.path.substring(1).replace(/\/\d+\//g, '_').replace(/\/\d+$/, '');
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
@@ -122,8 +123,10 @@ export class RevisionSummaryComponent implements OnInit {
         operation.value['id'] = operation.value.name;
       }
     }
+
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
+      console.log("translation Data", operation.value, translationData)
     }
     else if (operation.op === 'replace') {
       translationData['after'] = operation.value;
@@ -135,7 +138,6 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
-      console.log('before',splitPath);
       translationData['item'] = after; // This part used to be translationData['item'] = before;
       splitPath.forEach(path => {
       translationData['item'] = translationData['item'][path];
@@ -163,9 +165,13 @@ export class RevisionSummaryComponent implements OnInit {
     //////////////////////////
 
     if (operation.op === 'add' || operation.op === 'remove') {
+
       if (editedField === 'users_dataSources') {
-        console.log(translationData);
-        translationData['item'] = before.forms.find(e => e.id === translationData['item']);
+
+        translationData['item']= before.forms.find(e => {
+          return e.id === translationData['item'][0];
+        });
+
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
         translationData['item'] = before.entities.find(e => e.id === translationData['item']);
