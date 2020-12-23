@@ -12,13 +12,14 @@ export class UserService {
   constructor(private apiService: ApiService) { }
 
   public async list() {
-    // const response: any = await this.apiService.get('/resources/user');
+    const response: any = await this.apiService.get('/resources/user');
     // const response = Users;
-    const response = usersList;
+    // const response = usersList;
     return response.map(x => new User(x));
   }
 
   public async save(user: User) {
-    // const response = await this.apiService.put(`/resources/user/${user.id}`, user);
+    await this.apiService.put(`/resources/user/${user.id}`, user.serialize());
   }
+
 }

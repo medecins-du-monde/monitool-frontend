@@ -24,7 +24,7 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -42,10 +42,11 @@ export class RevisionSummaryComponent implements OnInit {
     after.forms = after.forms.map(y => new Form(y));
 
     // loop through revision of element and apply datatransformation to create table input
-    this.revision.forwards.forEach( rev => {
+    this.revision.forwards.forEach(rev => {
       const operation = rev;
       const key = this.getTranslationKey(operation);
       let data;
+
 
       if (this.index === 0) {
         data = this.getTranslationData(operation, after, after);
@@ -58,7 +59,7 @@ export class RevisionSummaryComponent implements OnInit {
         this.output.push(data);
       } else {
       }
-
+      // 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
       before.forms = before.forms.map(y => new Form(y));
     });
@@ -116,7 +117,11 @@ export class RevisionSummaryComponent implements OnInit {
 
 
     // Get the actual item that got modified.
-
+    if (operation.value?.type) {
+      if (operation.value.type === 'partner') {
+        operation.value['id'] = operation.value.name;
+      }
+    }
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
     }
@@ -130,8 +135,15 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
+      console.log('before',splitPath);
       translationData['item'] = after; // This part used to be translationData['item'] = before;
-      splitPath.forEach(path => translationData['item'] = translationData['item'][path]);
+      splitPath.forEach(path => {
+      translationData['item'] = translationData['item'][path];
+      // translationData['item'] = translationData.item[path]
+      // translationData['item'] = translationData[path];
+      console.log('path is ',path);
+      });
+        
     }
     else if (operation.op === 'move') {
       translationData['item'] = before;
@@ -152,6 +164,7 @@ export class RevisionSummaryComponent implements OnInit {
 
     if (operation.op === 'add' || operation.op === 'remove') {
       if (editedField === 'users_dataSources') {
+        console.log(translationData);
         translationData['item'] = before.forms.find(e => e.id === translationData['item']);
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
@@ -183,7 +196,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   transformDate(date) {
-      return date.getFullYear() + '-' +  (date.getMonth() + 1) + '-' +  date.getDate();
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
 }
