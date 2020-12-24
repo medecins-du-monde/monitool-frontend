@@ -32,6 +32,7 @@ export interface InfoRow {
   values: any;
   onChart?: boolean;
   dataset?: any;
+  filterFlag: boolean;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -162,7 +163,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       sectionId: 0,
       values: {},
       onChart: false,
-      dataset: {}
+      dataset: {},
+      filterFlag: true
     } as InfoRow;
 
 
