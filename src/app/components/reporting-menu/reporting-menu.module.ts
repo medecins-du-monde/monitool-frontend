@@ -4,6 +4,7 @@ import { ReportingMenuComponent } from './reporting-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [ReportingMenuComponent],
@@ -11,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     TranslateModule,
     MatTableModule,
+    MatMenuModule,
     MatIconModule,
   ],
   exports: [ReportingMenuComponent]

@@ -33,6 +33,7 @@ export interface InfoRow {
   onChart?: boolean;
   dataset?: any;
   filterFlag: boolean;
+  computation: any;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -76,7 +77,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.rows.subscribe(value => {
-        console.log(value);
         this.dataSource = new MatTableDataSource(value);
       })
     );
@@ -186,7 +186,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       values: {},
       onChart: false,
       dataset: {},
-      filterFlag: true
+      filterFlag: true,
+      computation: indicator.computation
     } as InfoRow;
 
 
