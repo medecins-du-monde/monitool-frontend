@@ -12,8 +12,7 @@ export class ReportingMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.indicator);
+    // console.log(this.indicator);
   }
 
 }
- 

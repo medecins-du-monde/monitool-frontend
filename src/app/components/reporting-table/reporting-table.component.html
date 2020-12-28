@@ -51,8 +51,8 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: ['title']; when: isSectionTitle" 
         class="example-element-row"
+        (click)="openSection(element)"
     ></tr>
-    <!-- (click)="element.click(element.sectionId)" -->
     
     
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRow"></tr>

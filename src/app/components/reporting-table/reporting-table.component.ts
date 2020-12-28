@@ -64,7 +64,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
   dimensions: string[];
   columnsToDisplay: any;
-
+  openSections = {};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
   isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
@@ -76,6 +76,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.rows.subscribe(value => {
+        console.log(value);
         this.dataSource = new MatTableDataSource(value);
       })
     );
@@ -110,8 +111,36 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   updateTableContent(){
     if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
-      this.rows.next(this.tableContent.value.map(this.convertToRow));
+      const content = this.tableContent.value;
+      let id = 0;
+
+      for (const row of content){
+        if (this.isSectionTitle(0, row)){
+          id += 1;
+          this.openSections[id] = row.open;
+        }
+        row.sectionId = id;
+      }
+
+      this.rows.next(
+        content
+        .filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
+        .map(this.convertToRow)
+      );
     }
+  }
+
+  openSection(row: SectionTitle){
+    row.open = !row.open;
+    this.openSections[row.sectionId] = row.open;
+    this.updateTableContent();
+  }
+
+  convertToRow = (item: any) => {
+    if (this.isProjectIndicator(item)){
+      return this.indicatorToRow(item);
+    }
+    return item;
   }
 
   fillDimensions() {
@@ -139,15 +168,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
-  convertToRow = (item: any) => {
-    if (this.isProjectIndicator(item)){
-      return this.indicatorToRow(item);
-    }
-    return item;
-  }
 
   indicatorToRow(indicator: ProjectIndicator): InfoRow{
-
     const currentFilter = this.filter.value;
     const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
