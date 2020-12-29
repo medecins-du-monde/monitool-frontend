@@ -33,7 +33,6 @@ export class ReportingMenuComponent implements OnInit {
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
     
     if (numberOfParameters === 1){
-      console.log(Object.entries(this.indicator.computation.parameters));
       let parameterName, parameterValue;
       [parameterName, parameterValue] = Object.entries(this.indicator.computation.parameters)[0];
 
@@ -52,9 +51,14 @@ export class ReportingMenuComponent implements OnInit {
       }
 
       for (const partition of element.partitions){
-        this.options.push({
-          value: partition.name
-        });
+        if (parameterValue.filter &&
+           (!(partition.id in parameterValue.filter) ||
+             parameterValue.filter[partition.id]?.length === partition.elements?.length)){
+          
+          this.options.push({
+            value: partition.name
+          });
+        }
       }
     }
 

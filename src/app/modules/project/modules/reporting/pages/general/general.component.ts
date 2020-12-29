@@ -93,7 +93,7 @@ export class GeneralComponent implements OnInit {
         for (const purpose of logicalFrame.purposes){
           rows.push({
             icon: false,
-            groupName: purpose.description,
+            groupName: `Specific objective: ${purpose.description}`,
             sectionId: id
           } as GroupTitle);
 
@@ -102,7 +102,7 @@ export class GeneralComponent implements OnInit {
           for (const output of purpose.outputs){
             rows.push({
               icon: false,
-              groupName: output.description,
+              groupName: `Result: ${output.description}`,
               sectionId: id
             } as GroupTitle);
 
@@ -111,7 +111,7 @@ export class GeneralComponent implements OnInit {
             for (const activity of output.activities){
               rows.push({
                 icon: false,
-                groupName: activity.description,
+                groupName: `Activity: ${activity.description}`,
                 sectionId: id
               } as GroupTitle);
 
