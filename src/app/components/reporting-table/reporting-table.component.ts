@@ -38,8 +38,6 @@ export interface InfoRow {
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
-
-
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
@@ -278,6 +276,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return data;
   }
+
+  receiveIndicators(rows){
+    console.log('expand');
+    console.log(rows);
+  }
+
+  collapseIndicators(event){
+    console.log('collapse');
+    console.log(event);
+  };
 
   randomNumberLimit(limit) {
     return Math.floor((Math.random() * limit) + 1);

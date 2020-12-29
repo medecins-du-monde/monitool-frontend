@@ -1,9 +1,18 @@
-<button [matMenuTriggerFor]="menu" class="mdm-button mat-icon-button">
-    <mat-icon>add</mat-icon>
-</button>
 
-<mat-menu #menu="matMenu">
-    <button *ngFor="let option of options" mat-menu-item>
-        <span>{{ option.value }}</span>
+<div *ngIf="open; else elseBlock">
+    <button [matMenuTriggerFor]="menu" class="mdm-button mat-icon-button">
+        <mat-icon>add</mat-icon>
     </button>
-</mat-menu>
+
+    <mat-menu #menu="matMenu">
+        <button *ngFor="let option of options" mat-menu-item (click)="option.action()">
+            <span>{{ option.value }}</span>
+        </button>
+    </mat-menu>
+</div>
+
+<ng-template #elseBlock>
+    <button class="mdm-button mat-icon-button" (click)="closeIndicator()">
+        <mat-icon>remove</mat-icon>
+    </button>
+</ng-template>

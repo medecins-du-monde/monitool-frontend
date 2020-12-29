@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -13,7 +13,10 @@ export class ReportingMenuComponent implements OnInit {
   @Input() indicator;
 
   options: any[];
-  
+  open: boolean = true;
+  @Output() addIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
+  @Output() collapseIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
+
   private subscription: Subscription = new Subscription();
   project: Project;
 
@@ -56,7 +59,8 @@ export class ReportingMenuComponent implements OnInit {
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
           
           this.options.push({
-            value: partition.name
+            value: partition.name,
+            action: this.openIndicator
           });
         }
       }
@@ -64,9 +68,24 @@ export class ReportingMenuComponent implements OnInit {
 
     if (numberOfParameters > 1){ 
       this.options.push({
-        value: 'Computation'
+        value: 'Computation',
+        action: this.openIndicator
       })
     }
+  }
+
+  openIndicator = () => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit({
+      test: 'test expanding'
+    })
+  }
+
+  closeIndicator = () =>{
+    this.open = !this.open;
+    this.collapseIndicatorsEvent.emit({
+      test: 'test collapsing'
+    })
   }
 
 }
