@@ -44,6 +44,7 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   styleUrls: ['./reporting-table.component.scss']
 })
 export class ReportingTableComponent implements OnInit, OnDestroy {
+  content: any;
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
@@ -102,6 +103,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.tableContent.subscribe(content => {
+        this.content = this.tableContent.value;
         this.updateTableContent();
       })
     );
@@ -109,10 +111,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   updateTableContent(){
     if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
-      const content = this.tableContent.value;
       let id = 0;
 
-      for (const row of content){
+      for (const row of this.content){
         if (this.isSectionTitle(0, row)){
           id += 1;
           this.openSections[id] = row.open;
@@ -120,10 +121,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         row.sectionId = id;
       }
 
+      this.content = this.content.map(this.convertToRow);
       this.rows.next(
-        content
-        .filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
-        .map(this.convertToRow)
+        this.content.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
       );
     }
   }

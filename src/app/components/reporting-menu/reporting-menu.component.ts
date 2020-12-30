@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -8,7 +8,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './reporting-menu.component.html',
   styleUrls: ['./reporting-menu.component.scss']
 })
-export class ReportingMenuComponent implements OnInit {
+export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   @Input() indicator;
 
@@ -86,6 +86,10 @@ export class ReportingMenuComponent implements OnInit {
     this.collapseIndicatorsEvent.emit({
       test: 'test collapsing'
     })
+  }
+  
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 
 }
