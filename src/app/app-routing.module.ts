@@ -44,6 +44,12 @@ const routes: Routes = [{
     .then(m => m.IndicatorsModule),
   canActivate : [AuthGuard]
 },
+/*{
+  path: 'indicators/indicator/:id',
+  loadChildren: () => import('./pages/indicators/indicators.module')
+    .then(m => m.IndicatorsModule),
+  canActivate : [AuthGuard],
+},*/
 {
   path: '**',
   redirectTo: 'home',

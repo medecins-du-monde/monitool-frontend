@@ -381,7 +381,50 @@ export class ReportTableComponent implements OnInit, OnDestroy {
   }
 
   openCrossCuttingIndicators = async (row, sectionId) => {
-    return [];
+    const currentFilter = this.filter.value;
+    const modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
+
+    const CcIndicatorsRows = [];
+    for (const indicator of this.project.crossCutting){
+      const response = await this.reportingService.fetchData(
+        this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false
+        );
+      this.roundResponse(response);
+
+      const data = [];
+      for (const [key, value] of Object.entries(response)) {
+        if (key !== '_total'){
+          data.push({
+            y: value,
+            x: key
+          });
+        }
+      }
+
+      CcIndicatorsRows.push({
+        icon: true,
+        name: indicator.display,
+        baseline: indicator.baseline,
+        target: indicator.target,
+        sectionId,
+        values: response,
+        onChart: false,
+        dataset: {
+          label: indicator.display,
+          data,
+          labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+          borderColor: this.randomColor(),
+          backgroundColor: this.randomColor(),
+          fill: false
+        }
+      } as InfoRow);
+    }
+
+    return CcIndicatorsRows;
   }
 
   openExtraIndicators = async (row, sectionId) => {
