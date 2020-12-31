@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -69,7 +70,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     if (numberOfParameters > 1){ 
       this.options.push({
         value: 'Computation',
-        action: this.openIndicator
+        action: this.computationOption
       })
     }
   }
@@ -79,6 +80,33 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     this.addIndicatorsEvent.emit({
       test: 'test expanding'
     })
+  }
+
+  computationOption =  () => {
+    this.open = !this.open;
+    const newIndicators = [];
+    let newComputation;
+
+    for(const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
+      newComputation = {
+        formula: parameter,
+        parameters: {}
+      }
+      newComputation.parameters[parameter] = value;
+
+      newIndicators.push(new ProjectIndicator({
+        computation: newComputation,
+        display: parameter,
+        baseline: 0,
+        target: 0     
+      }))
+    }
+    this.addIndicatorsEvent.emit(
+      {
+        indicator: this.indicator,
+        newIndicators
+      }
+    );
   }
 
   closeIndicator = () =>{

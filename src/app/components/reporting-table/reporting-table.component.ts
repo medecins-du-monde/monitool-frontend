@@ -76,7 +76,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.rows.subscribe(value => {
-        this.dataSource = new MatTableDataSource(value);
+        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId]));
       })
     );
 
@@ -123,7 +123,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
       this.content = this.content.map(this.convertToRow);
       this.rows.next(
-        this.content.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
+        this.content
+        // this.content.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
       );
     }
   }
@@ -160,9 +161,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
-
     }
-
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
@@ -277,9 +276,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  receiveIndicators(rows){
-    console.log('expand');
-    console.log(rows);
+  receiveIndicators(info){
+    let indicatorIndex = this.content.indexOf(info.indicator);
+    for (const newIndicator of info.newIndicators){
+      indicatorIndex += 1;
+      
+      const newRow = this.indicatorToRow(newIndicator);
+      newRow.sectionId = info.indicator.sectionId
+
+      this.content.splice(indicatorIndex, 0, newRow);
+      this.rows.next(this.content);      
+    }
   }
 
   collapseIndicators(event){
