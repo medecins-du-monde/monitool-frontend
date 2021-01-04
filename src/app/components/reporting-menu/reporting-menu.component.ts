@@ -61,7 +61,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           
           this.options.push({
             value: partition.name,
-            action: this.openIndicator
+            action: this.partitionOption,
+            partition: partition
           });
         }
       }
@@ -75,11 +76,33 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  openIndicator = () => {
+  partitionOption = (partition) => {
     this.open = !this.open;
-    this.addIndicatorsEvent.emit({
-      test: 'test expanding'
-    })
+
+    const newIndicators = [];
+    let newComputation;
+    
+    for (const partitionElement of partition.elements){
+      //clones the computation
+      newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
+
+      let parameterValue = Object.values(newComputation.parameters)[0];
+      parameterValue['filter'][partition.id] = [partitionElement.id];
+
+      newIndicators.push(new ProjectIndicator({
+        computation: newComputation,
+        display: partitionElement.name,
+        baseline: 0,
+        target: 0  
+      }))
+    }
+
+    this.addIndicatorsEvent.emit(
+      {
+        indicator: this.indicator,
+        newIndicators
+      }
+    );
   }
 
   computationOption =  () => {
