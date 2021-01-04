@@ -124,7 +124,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.content = this.content.map(this.convertToRow);
       this.rows.next(
         this.content
-        // this.content.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId])
       );
     }
   }
