@@ -34,6 +34,8 @@ export interface InfoRow {
   dataset?: any;
   filterFlag: boolean;
   computation: any;
+  nextRow: Row;
+  open: boolean;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -183,7 +185,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       onChart: false,
       dataset: {},
       filterFlag: true,
-      computation: indicator.computation
+      computation: indicator.computation,
+      open: true
     } as InfoRow;
 
 
@@ -240,7 +243,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
     }
     const data = {
-      // labels,
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
@@ -277,20 +279,39 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   receiveIndicators(info){
     let indicatorIndex = this.content.indexOf(info.indicator);
+    
+    let currentIndicator = this.content[indicatorIndex];
+    currentIndicator.open = !currentIndicator.open;
+
+    currentIndicator.nextRow = this.content[indicatorIndex + 1];
+
     for (const newIndicator of info.newIndicators){
       indicatorIndex += 1;
-      
+
       const newRow = this.indicatorToRow(newIndicator);
       newRow.sectionId = info.indicator.sectionId
 
       this.content.splice(indicatorIndex, 0, newRow);
-      this.rows.next(this.content);      
+      this.updateTableContent();
+      // this.rows.next(this.content);
     }
   }
 
-  collapseIndicators(event){
-    console.log('collapse');
-    console.log(event);
+  collapseIndicators(info){
+    let indicatorIndex = this.content.indexOf(info.indicator);
+    let currentIndicator = this.content[indicatorIndex];
+    currentIndicator.open = !currentIndicator.open;
+
+    for (let i = indicatorIndex + 1; i < this.content.length; i += 1){
+      if(this.content[i] === currentIndicator.nextRow){
+        break;
+      }  
+      this.content.splice(i, 1);
+      i -= 1;
+    }
+
+    this.updateTableContent();
+    // this.rows.next(this.content);
   };
 
   randomNumberLimit(limit) {

@@ -14,7 +14,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   @Input() indicator;
 
   options: any[];
-  open: boolean = true;
+  open: boolean;
   @Output() addIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
   @Output() collapseIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
 
@@ -24,6 +24,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.open = this.indicator.open;
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
@@ -135,7 +136,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   closeIndicator = () =>{
     this.open = !this.open;
     this.collapseIndicatorsEvent.emit({
-      test: 'test collapsing'
+      indicator: this.indicator
     })
   }
   
