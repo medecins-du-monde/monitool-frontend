@@ -6,7 +6,7 @@ import { ChartService } from 'src/app/services/chart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { GroupTitle, SectionTitle } from 'src/app/components/reporting-table/reporting-table.component';
+import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 
 @Component({
