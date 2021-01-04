@@ -6,7 +6,6 @@ import { GeneralComponent } from './general.component';
 import { ChartModule} from 'src/app/components/chart/chart.module';
 import { ObjectGroupingModule} from './objectGrouping/object-grouping.module';
 import { FilterModule} from './filter/filter.module';
-import { DataTableModule } from './dataTable/data-table.module';
 import { ReportingTableModule } from 'src/app/components/report/reporting-table/reporting-table.module';
 
 
@@ -20,7 +19,6 @@ import { ReportingTableModule } from 'src/app/components/report/reporting-table/
         ChartModule,
         ObjectGroupingModule,
         FilterModule,
-        DataTableModule
     ]
 })
 export class GeneralModule { }
