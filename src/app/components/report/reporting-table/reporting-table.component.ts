@@ -92,6 +92,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.dimensionIds.subscribe(value => {
         this.fillDimensions();
+        this.refreshValues();
         this.updateTableContent();
       })
     );
@@ -208,9 +209,41 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-
     return row;
+  }
+
+  refreshValues(){
+    if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
+      const currentFilter = this.filter.value;
+      const modifiedFilter = {
+        _start: currentFilter._start.toISOString().slice(0, 10),
+        _end: currentFilter._end.toISOString().slice(0, 10),
+        entity: currentFilter.entity
+      };
+  
+      this.content.map( row => {
+        if (this.isInfoRow(0, row)){
+          this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+            response => {
+              if (response) {
+                this.roundResponse(response);
+                const data = this.formatResponseToDataset(response);
+                row.dataset = {
+                  label: row.name,
+                  data,
+                  labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                  borderColor: this.randomColor(),
+                  backgroundColor: this.randomColor(),
+                  fill: false
+                };
+                row.values = response;
+              }
+            }
+          );
+        }
+        return row;
+      });
+    }
   }
 
   getSiteOrGroupName(id){
