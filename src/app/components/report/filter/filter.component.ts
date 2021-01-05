@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -14,9 +14,6 @@ export class FilterComponent implements OnInit{
   collapsed = true;
 
   selectedSites = [];
-
-  endDate: Date;
-  startDate: Date;
 
   sites: Entity[];
   filterForm: FormGroup;

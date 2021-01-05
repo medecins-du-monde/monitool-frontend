@@ -1,4 +1,4 @@
-import { Component, ContentChild, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
@@ -318,15 +318,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
-    for (const newIndicator of info.newIndicators){
+    for (const disaggregatedIndicators of info.disaggregatedIndicators){
       indicatorIndex += 1;
 
-      const newRow = this.indicatorToRow(newIndicator);
+      const newRow = this.indicatorToRow(disaggregatedIndicators);
       newRow.sectionId = info.indicator.sectionId
 
       this.content.splice(indicatorIndex, 0, newRow);
       this.updateTableContent();
-      // this.rows.next(this.content);
     }
   }
 
@@ -344,7 +343,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     this.updateTableContent();
-    // this.rows.next(this.content);
   };
 
   randomNumberLimit(limit) {
