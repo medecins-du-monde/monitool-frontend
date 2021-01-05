@@ -80,7 +80,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   partitionOption = (partition) => {
     this.open = !this.open;
 
-    const newIndicators = [];
+    const disaggregatedIndicators = [];
     let newComputation;
     
     for (const partitionElement of partition.elements){
@@ -90,7 +90,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       let parameterValue = Object.values(newComputation.parameters)[0];
       parameterValue['filter'][partition.id] = [partitionElement.id];
 
-      newIndicators.push(new ProjectIndicator({
+      disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
         display: partitionElement.name,
         baseline: 0,
@@ -101,14 +101,14 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     this.addIndicatorsEvent.emit(
       {
         indicator: this.indicator,
-        newIndicators
+        disaggregatedIndicators
       }
     );
   }
 
   computationOption =  () => {
     this.open = !this.open;
-    const newIndicators = [];
+    const disaggregatedIndicators = [];
     let newComputation;
 
     for(const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
@@ -118,7 +118,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       }
       newComputation.parameters[parameter] = value;
 
-      newIndicators.push(new ProjectIndicator({
+      disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
         display: parameter,
         baseline: 0,
@@ -128,7 +128,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     this.addIndicatorsEvent.emit(
       {
         indicator: this.indicator,
-        newIndicators
+        disaggregatedIndicators
       }
     );
   }
