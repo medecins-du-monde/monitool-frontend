@@ -54,7 +54,6 @@
         (click)="openSection(element)"
     ></tr>
     
-    
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRow"></tr>
     <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_GROUP; when: isGroupTitle"></tr>
   </table>

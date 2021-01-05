@@ -100,6 +100,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.filter.subscribe(value => {
         this.fillDimensions();
+        this.refreshValues();
         this.updateTableContent();
       })
     );
@@ -125,9 +126,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
 
       this.content = this.content.map(this.convertToRow);
-      this.rows.next(
-        this.content
-      );
+      this.rows.next(this.content);
     }
   }
 
@@ -238,6 +237,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
                 };
                 row.values = response;
               }
+
+              this.updateChart();
             }
           );
         }
@@ -246,7 +247,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  getSiteOrGroupName(id){
+  getSiteOrGroupName(id: string){
     if (this.project && (this.dimensionIds.value === 'entity' ||  this.dimensionIds.value === 'group')){
       const site = this.project.entities.find(s => s.id === id);
       if (site !== undefined){
@@ -262,8 +263,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // this method builds the chart again everytime there is a click in the chart button
-  updateChart(element: InfoRow){
-    element.onChart = !element.onChart;
+  updateChart(element?: InfoRow){
+    if (element){
+      element.onChart = !element.onChart;
+    }
+
+    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+      this.chartService.changeType('bar');
+    }else{
+      this.chartService.changeType('line');
+    }
 
     const datasets = [];
     let labels = [];
@@ -281,13 +290,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     };
 
     this.chartService.addData(data);
-
-    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
-      this.chartService.changeType('bar');
-    }else{
-      this.chartService.changeType('line');
-    }
-
   }
 
   roundResponse(response){
