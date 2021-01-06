@@ -66,7 +66,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
   dimensions: string[];
   columnsToDisplay: any;
-  openSections = {};
+  openedSections = {};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
   isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
@@ -78,30 +78,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.rows.subscribe(value => {
-        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openSections[row.sectionId]));
+        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openedSections[row.sectionId]));
       })
     );
 
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
-        this.fillDimensions();
+        this.updateDimensions();
         this.refreshValues();
         this.updateTableContent();
       })
     );
 
     this.subscription.add(
-      this.dimensionIds.subscribe(value => {
-        this.fillDimensions();
+      this.dimensionIds.subscribe( () => {
+        this.updateDimensions();
         this.refreshValues();
         this.updateTableContent();
       })
     );
 
     this.subscription.add(
-      this.filter.subscribe(value => {
-        this.fillDimensions();
+      this.filter.subscribe( () => {
+        this.updateDimensions();
         this.refreshValues();
         this.updateTableContent();
       })
@@ -109,7 +109,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.tableContent.subscribe(content => {
-        this.content = this.tableContent.value;
+        this.content = content;
         this.updateTableContent();
       })
     );
@@ -122,7 +122,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       for (const row of this.content){
         if (this.isSectionTitle(0, row)){
           id += 1;
-          this.openSections[id] = row.open;
+          this.openedSections[id] = row.open;
         }
         row.sectionId = id;
       }
@@ -134,18 +134,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   openSection(row: SectionTitle){
     row.open = !row.open;
-    this.openSections[row.sectionId] = row.open;
+    this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
   }
-
+  
+  // Create new row if it s an indicator
   convertToRow = (item: any) => {
     if (this.isProjectIndicator(item)){
       return this.indicatorToRow(item);
     }
     return item;
   }
-
-  fillDimensions() {
+  
+  // table after dimension change
+  updateDimensions() {
     if (this.dimensionIds.value === 'entity'){
       this.dimensions = this.filter.value.entity;
       this.dimensions.push('_total');
@@ -176,7 +178,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
   }
 
-
+  // Create row of the table from a ProjectIndicator
   indicatorToRow(indicator: ProjectIndicator): InfoRow{
     const row = {
       icon: true,
@@ -226,7 +228,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return row;
   }
-
+  
+  // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(){
     if (this.project.id && this.tableContent && this.filter
         && this.dimensionIds && this.dimensions.length > 0){
@@ -309,7 +312,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.chartService.addData(data);
   }
-
+  
+  // This allosws to round all values
   roundResponse(response){
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
-import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
@@ -16,12 +14,9 @@ import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 })
 
 export class GeneralComponent implements OnInit {
-  endDate: Date;
 
   constructor(private projectService: ProjectService,
-              private reportingService: ReportingService,
-              private chartService: ChartService,
-              private fb: FormBuilder ) { }
+              private chartService: ChartService ) { }
 
   protected project: Project;
   grouping = '';
@@ -29,9 +24,6 @@ export class GeneralComponent implements OnInit {
   filter = new BehaviorSubject<any>({});
 
   dimensionIds = new BehaviorSubject('');
-
-  startDate: Date;
-  requestForm: FormGroup;
 
   tableContent = new BehaviorSubject<any[]>([]);
 
@@ -83,7 +75,7 @@ export class GeneralComponent implements OnInit {
               groupName: `Result: ${output.description}`,
               sectionId: id
             } as GroupTitle);
-
+            
             rows = rows.concat(output.indicators);
 
             for (const activity of output.activities){
@@ -92,7 +84,7 @@ export class GeneralComponent implements OnInit {
                 groupName: `Activity: ${activity.description}`,
                 sectionId: id
               } as GroupTitle);
-
+              
               rows = rows.concat(activity.indicators);
             }
           }
@@ -102,8 +94,7 @@ export class GeneralComponent implements OnInit {
     }
 
     if (this.project.crossCutting){
-      // TO DO
-      // add cross cutting indicators to the table when they work correctly
+      // TODO: add cross cutting indicators to the table when they work correctly
     }
 
     if (this.project.extraIndicators){
