@@ -98,7 +98,7 @@ export class RevisionSummaryComponent implements OnInit {
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
     let currentItem = before;
-    console.log('currentItem', currentItem);
+   
     for (let j = 1; j < splitPath.length - 1; j += 2) {
       let name = splitPath[j - 1];
       const id = splitPath[j];
@@ -115,7 +115,7 @@ export class RevisionSummaryComponent implements OnInit {
       }
       translationData[name] = currentItem;
     }
-    console.log('begin', translationData);
+  
 
     // Get the actual item that got modified.
     if (operation.value?.type) {
