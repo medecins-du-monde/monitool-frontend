@@ -145,7 +145,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   fillDimensions() {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = this.project.entities.map(x => x.id);
+      this.dimensions = this.filter.value.entity;
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
@@ -168,13 +168,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
 
   indicatorToRow(indicator: ProjectIndicator): InfoRow{
-    const currentFilter = this.filter.value;
-    const modifiedFilter = {
-      _start: currentFilter._start.toISOString().slice(0, 10),
-      _end: currentFilter._end.toISOString().slice(0, 10),
-      entity: currentFilter.entity
-    };
-
     const row = {
       icon: true,
       name: indicator.display,
@@ -189,37 +182,52 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       open: true
     } as InfoRow;
 
-
-    this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-      response => {
-
-        if (response) {
-          this.roundResponse(response);
-          const data = this.formatResponseToDataset(response);
-          row.dataset = {
-          label: indicator.display,
-          data,
-          labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-          borderColor: this.randomColor(),
-          backgroundColor: this.randomColor(),
-          fill: false
-        };
-          row.values = response;
-        }
-      }
-    );
-    return row;
-  }
-
-  refreshValues(){
-    if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
+    
+    
+    if (this.project.id && this.tableContent && this.filter 
+        && this.dimensionIds && this.dimensions.length){
+      
       const currentFilter = this.filter.value;
       const modifiedFilter = {
         _start: currentFilter._start.toISOString().slice(0, 10),
         _end: currentFilter._end.toISOString().slice(0, 10),
         entity: currentFilter.entity
       };
+
+
+      this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+        response => {
   
+          if (response) {
+            this.roundResponse(response);
+            const data = this.formatResponseToDataset(response);
+            row.dataset = {
+            label: indicator.display,
+            data,
+            labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+            borderColor: this.randomColor(),
+            backgroundColor: this.randomColor(),
+            fill: false
+          };
+            row.values = response;
+          }
+        }
+      );
+    }
+    return row;
+  }
+
+  refreshValues(){
+    if (this.project.id && this.tableContent && this.filter
+        && this.dimensionIds && this.dimensions.length){
+
+      const currentFilter = this.filter.value;
+      const modifiedFilter = {
+        _start: currentFilter._start.toISOString().slice(0, 10),
+        _end: currentFilter._end.toISOString().slice(0, 10),
+        entity: currentFilter.entity
+      };
+
       this.content.map( row => {
         if (this.isInfoRow(0, row)){
           this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
