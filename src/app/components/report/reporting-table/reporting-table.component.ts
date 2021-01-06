@@ -85,6 +85,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe( (project: Project) => {
         this.project = project;
+        this.fillDimensions();
+        this.refreshValues();
         this.updateTableContent();
       })
     );
@@ -149,7 +151,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      this.dimensions = this.project.groups.map(x => x.id);
+      const entities = this.filter.value.entity;
+      this.dimensions = this.project.groups.filter(group =>{
+        for(const e of group.members){
+          if (entities.includes(e.id)){
+            return true;
+          }
+        }
+        return false;
+      }).map(x => x.id);
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
