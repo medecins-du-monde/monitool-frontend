@@ -98,7 +98,7 @@ export class RevisionSummaryComponent implements OnInit {
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
     let currentItem = before;
-
+    console.log('currentItem', currentItem);
     for (let j = 1; j < splitPath.length - 1; j += 2) {
       let name = splitPath[j - 1];
       const id = splitPath[j];
@@ -115,7 +115,7 @@ export class RevisionSummaryComponent implements OnInit {
       }
       translationData[name] = currentItem;
     }
-
+    console.log('begin', translationData);
 
     // Get the actual item that got modified.
     if (operation.value?.type) {
@@ -126,7 +126,7 @@ export class RevisionSummaryComponent implements OnInit {
 
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
-      console.log("translation Data", operation.value, translationData)
+
     }
     else if (operation.op === 'replace') {
       translationData['after'] = operation.value;
@@ -140,12 +140,12 @@ export class RevisionSummaryComponent implements OnInit {
     else if (operation.op === 'remove') {
       translationData['item'] = after; // This part used to be translationData['item'] = before;
       splitPath.forEach(path => {
-      translationData['item'] = translationData['item'][path];
-      // translationData['item'] = translationData.item[path]
-      // translationData['item'] = translationData[path];
-      console.log('path is ',path);
+        translationData['item'] = translationData['item'][path];
+        // translationData['item'] = translationData.item[path]
+        // translationData['item'] = translationData[path];
+
       });
-        
+
     }
     else if (operation.op === 'move') {
       translationData['item'] = before;
@@ -167,17 +167,39 @@ export class RevisionSummaryComponent implements OnInit {
     if (operation.op === 'add' || operation.op === 'remove') {
 
       if (editedField === 'users_dataSources') {
-
-        translationData['item']= before.forms.find(e => {
-          return e.id === translationData['item'][0];
+       
+        translationData['item'] = before.forms.find(e => {
+         
+          if (Array.isArray(translationData['item'])) {
+          return e.id === translationData['item'][0];}
+          else {
+            return e.id === translationData['item'];
+          }
         });
 
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
-        translationData['item'] = before.entities.find(e => e.id === translationData['item']);
+
+        translationData['item'] = before.entities.find(e => {
+
+          if (Array.isArray(translationData['item'])) {
+            return e.id === translationData['item'][0];
+             } 
+          else {
+            return e.id === translationData['item'];
+          }
+        });
+
       }
+
       if (editedField === 'forms_elements_partitions_groups_members') {
-        translationData['item'] = translationData['partition']['elements'].find(e => e.id === translationData['item']);
+        translationData['item'] = translationData['partition']['elements'].find(e => {
+          if (Array.isArray(translationData['item'])) {
+            return e.id === translationData['item'][0];
+             } 
+          else {
+            return e.id === translationData['item'];
+          } });
       }
     }
 
