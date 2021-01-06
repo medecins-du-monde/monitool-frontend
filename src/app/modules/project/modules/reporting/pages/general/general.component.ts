@@ -6,6 +6,10 @@ import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { IndicatorService } from 'src/app/services/indicator.service';
+import { Indicator } from 'src/app/models/indicator.model';
+import { ThemeService } from 'src/app/services/theme.service';
+import { Theme } from 'src/app/models/theme.model';
 
 @Component({
   selector: 'app-general',
@@ -14,8 +18,9 @@ import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 })
 
 export class GeneralComponent implements OnInit {
-
   constructor(private projectService: ProjectService,
+              private indicatorService: IndicatorService,
+              private themeService: ThemeService,
               private chartService: ChartService ) { }
 
   protected project: Project;
@@ -27,20 +32,40 @@ export class GeneralComponent implements OnInit {
 
   tableContent = new BehaviorSubject<any[]>([]);
 
+  themes: Theme[];
+
+  crosscutting: Indicator[];
+
+  multiThemesIndicators: Indicator[];
+
+  groups: { theme: Theme, indicators: Indicator[]}[] = [];
+
 
   options =  {fill: false};
   data = {};
 
   ngOnInit(): void {
-
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      this.buildIndicators();
+     
+      this.indicatorService.listForProject(this.project.themes.map(x => x.id))
+        .then((crosscutting: Indicator[]) => { 
+          this.crosscutting = crosscutting;
+          this.buildIndicators();
+        });
     });
+
+    this.themeService.list().then( (themes: Theme[]) => {
+      this.themes = themes;
+      this.buildIndicators();
+    })
   }
 
 
   buildIndicators() {
+    if (!(this.themes && this.crosscutting && this.project)){
+      return;
+    }
     let rows = [];
     let id = 0;
 
@@ -94,7 +119,58 @@ export class GeneralComponent implements OnInit {
     }
 
     if (this.project.crossCutting){
-      // TODO: add cross cutting indicators to the table when they work correctly
+    
+      this.buildCrossCuttingIndicators();
+
+      rows.push({
+        title: 'Cross-cutting indicators',
+        sectionId: id,
+        open: false,
+      } as SectionTitle);
+
+      if (this.multiThemesIndicators.length > 0){
+        rows.push({
+          icon: false,
+          groupName: 'Multiple thematics',
+          sectionId: id
+        } as GroupTitle);
+
+        for (const indicator of this.multiThemesIndicators){
+          if (indicator.id in this.project.crossCutting){
+            const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+            // TODO: choose right language here  
+            projectIndicator.display = indicator.name.en;
+            rows.push(projectIndicator);
+          }
+          else{
+            rows.push(new ProjectIndicator(indicator));
+          }
+        }
+      }
+
+      if (this.groups.length > 0){
+        for (const group of this.groups){
+          rows.push({
+            icon: false,
+            // TODO: choose right language here  
+            groupName: group.theme.name.en,
+            sectionId: id
+          });
+
+          for (const indicator of group.indicators){
+            if (indicator.id in this.project.crossCutting){
+              const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+              // TODO: choose right language here  
+              projectIndicator.display = indicator.name.en;
+              rows.push(projectIndicator);
+            }
+            else{
+              rows.push(new ProjectIndicator(indicator));
+            }
+          }
+        }
+      }
+
     }
 
     if (this.project.extraIndicators){
@@ -139,6 +215,27 @@ export class GeneralComponent implements OnInit {
       }
     }
     this.tableContent.next(rows);
+  }
+  
+  buildCrossCuttingIndicators() {
+    this.multiThemesIndicators = [];
+    for (const c of this.crosscutting){
+      if(c.multiThemes){
+        this.multiThemesIndicators.push(c);
+      }
+      else{
+        const group = this.groups.find(g => g.theme === c.themes[0]);
+        if (group){
+          group.indicators.push(c);
+        }
+        else{
+          this.groups.push({
+            theme: c.themes[0],
+            indicators: [c]
+          });
+        }
+      }
+    }
   }
 
   get chartData(){
