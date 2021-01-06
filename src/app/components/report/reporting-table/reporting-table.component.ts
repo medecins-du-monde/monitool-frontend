@@ -185,7 +185,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     
     
     if (this.project.id && this.tableContent && this.filter 
-        && this.dimensionIds && this.dimensions.length){
+        && this.dimensionIds && this.dimensions.length > 0){
       
       const currentFilter = this.filter.value;
       const modifiedFilter = {
@@ -219,7 +219,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   refreshValues(){
     if (this.project.id && this.tableContent && this.filter
-        && this.dimensionIds && this.dimensions.length){
+        && this.dimensionIds && this.dimensions.length > 0){
 
       const currentFilter = this.filter.value;
       const modifiedFilter = {
