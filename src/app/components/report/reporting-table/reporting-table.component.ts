@@ -6,7 +6,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import { round } from 'lodash';
+import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 
@@ -46,12 +46,12 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   styleUrls: ['./reporting-table.component.scss']
 })
 export class ReportingTableComponent implements OnInit, OnDestroy {
-  content: any;
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService) { }
-
+  
+  content: any;
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
@@ -115,8 +115,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateTableContent(){
-    if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
+  updateTableContent(): void{
+    // TODO: Check why this.tableContent and not this.content
+    if (this.project.id && this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
 
       for (const row of this.content){
@@ -132,7 +133,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  openSection(row: SectionTitle){
+  openSection(row: SectionTitle): void{
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -147,7 +148,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
   
   // table after dimension change
-  updateDimensions() {
+  updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
       this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
       this.dimensions.push('_total');
@@ -228,7 +229,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
   
   // Fetch all data in function of project, content, filter, dimension and update table and chart
-  refreshValues(){
+  refreshValues(): void{
     if (this.project.id && this.tableContent && this.filter
         && this.dimensionIds && this.dimensions.length > 0){
 
@@ -239,34 +240,39 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entity
       };
 
-      this.content.map( row => {
-        if (this.isInfoRow(0, row)){
-          this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-            response => {
-              if (response) {
-                this.roundResponse(response);
-                const data = this.formatResponseToDataset(response);
-                row.dataset = {
-                  label: row.name,
-                  data,
-                  labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                  borderColor: this.randomColor(),
-                  backgroundColor: this.randomColor(),
-                  fill: false
-                };
-                row.values = response;
-              }
-            
-              if (row.onChart){
+      if (isArray(this.content)) {
+        this.content.map( row => {
+          if (this.isInfoRow(0, row)){
+            this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+              response => {
+                if (response) {
+                  this.roundResponse(response);
+                  const data = this.formatResponseToDataset(response);
+                  row.dataset = {
+                    label: row.name,
+                    data,
+                    labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                    borderColor: this.randomColor(),
+                    backgroundColor: this.randomColor(),
+                    fill: false
+                  };
+                  row.values = response;
+                }
+
                 this.updateChart();
               }
+            );
+            
+            if (row.onChart){
+              this.updateChart();
             }
-          );
+          }
+          return row;
         }
-        return row;
-      });
-    }else{
-      this.updateChart();
+        );
+      }else{
+        this.updateChart();
+      }
     }
   }
 
@@ -286,8 +292,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // this method builds the chart again everytime there is a click in the chart button
-  updateChart(element?: InfoRow){
-    console.log('updated chart');
+  updateChart(element?: InfoRow): void{
     if (element){
       element.onChart = !element.onChart;
     }
@@ -317,8 +322,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.chartService.addData(data);
   }
   
-  // This allows to round all values
-  roundResponse(response){
+  // This allosws to round all values
+  roundResponse(response): number{
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
@@ -338,10 +343,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  receiveIndicators(info){
+  receiveIndicators(info): void{
     let indicatorIndex = this.content.indexOf(info.indicator);
     
-    let currentIndicator = this.content[indicatorIndex];
+    const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
@@ -357,9 +362,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  collapseIndicators(info){
-    let indicatorIndex = this.content.indexOf(info.indicator);
-    let currentIndicator = this.content[indicatorIndex];
+  collapseIndicators(info): void{
+    const indicatorIndex = this.content.indexOf(info.indicator);
+    const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
     for (let i = indicatorIndex + 1; i < this.content.length; i += 1){
@@ -371,19 +376,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     this.updateTableContent();
-  };
+  }
 
-  randomNumberLimit(limit) {
+  randomNumberLimit(limit): number {
     return Math.floor((Math.random() * limit) + 1);
   }
-  randomColor() {
+  randomColor(): string {
     const col = 'rgba(' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255) + ', 1)';
     return col;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 }

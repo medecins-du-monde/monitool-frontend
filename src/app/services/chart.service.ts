@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,6 @@ export class ChartService {
   type = new BehaviorSubject('line');
   currentType = this.type.asObservable();
 
-  options: BehaviorSubject<object> = new BehaviorSubject(new Object());
-  currentOptions = this.options.asObservable();
-
   dataset: BehaviorSubject<object> = new BehaviorSubject(new Object());
   currentDataset = this.dataset.asObservable();
 
@@ -19,19 +16,15 @@ export class ChartService {
   currentData = this.data.asObservable();
 
 
-  addDataset(dataset) {
+  addDataset(dataset): void {
     this.dataset.next(dataset);
   }
 
-  addData(data) {
+  addData(data): void {
     this.data.next(data);
   }
 
-  changeType(type) {
+  changeType(type): void{
     this.type.next(type);
   }
-
-
-
-  constructor() { }
 }

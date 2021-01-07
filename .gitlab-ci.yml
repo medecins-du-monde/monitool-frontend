@@ -37,7 +37,7 @@ deploy_beta:
     - npm i
   script:
     - npm run build --configuration=beta
-    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* newton@92.243.16.149:/var/www/html/mdm-monitool-frontend
+    - rsync -e "ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapps@92.243.25.191:/var/www/html/mdm-monitool-frontend
   only:
     - dev
 
