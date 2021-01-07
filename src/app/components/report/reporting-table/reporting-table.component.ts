@@ -175,8 +175,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push(endTimeSlot.value);
       this.dimensions.push('_total');
     }
-    this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
-    console.log(this.dimensions);
+    this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions)
   }
 
   // Create row of the table from a ProjectIndicator
@@ -194,8 +193,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       computation: indicator.computation,
       open: true
     } as InfoRow;
-
-    
     
     if (this.project.id && this.tableContent && this.filter 
         && this.dimensionIds && this.dimensions.length > 0){
@@ -259,13 +256,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
                 };
                 row.values = response;
               }
-
-              this.updateChart();
+            
+              if (row.onChart){
+                this.updateChart();
+              }
             }
           );
         }
         return row;
       });
+    }else{
+      this.updateChart();
     }
   }
 
@@ -286,6 +287,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow){
+    console.log('updated chart');
     if (element){
       element.onChart = !element.onChart;
     }
@@ -297,13 +299,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     const datasets = [];
-    let labels = [];
+    // let labels = [];
 
     for (const row of this.dataSource.data){
       if (row.onChart){
         datasets.push(row.dataset);
         // this adds the dataset labels without having duplicate values
-        labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
+        // labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
     const data = {
@@ -311,6 +313,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       datasets
     };
 
+    console.log(data);
     this.chartService.addData(data);
   }
   
