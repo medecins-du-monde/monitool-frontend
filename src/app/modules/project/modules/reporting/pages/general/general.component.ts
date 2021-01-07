@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ChartService } from 'src/app/services/chart.service';
-import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
@@ -62,7 +61,7 @@ export class GeneralComponent implements OnInit {
   }
 
 
-  buildIndicators() {
+  buildIndicators() : void{
     if (!(this.themes && this.crosscutting && this.project)){
       return;
     }
@@ -217,7 +216,7 @@ export class GeneralComponent implements OnInit {
     this.tableContent.next(rows);
   }
   
-  buildCrossCuttingIndicators() {
+  buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
     for (const c of this.crosscutting){
       if(c.multiThemes){
@@ -242,11 +241,11 @@ export class GeneralComponent implements OnInit {
     return this.chartService.data.value;
   }
 
-  receiveFilter(value){
+  receiveFilter(value): void{
     this.filter.next(value);
   }
 
-  receiveDimension(value){
+  receiveDimension(value): void{
     this.dimensionIds.next(value);
     this.grouping = value;
   }

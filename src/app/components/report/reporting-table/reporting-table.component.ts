@@ -115,7 +115,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateTableContent(){
+  updateTableContent(): void{
     // TODO: Check why this.tableContent and not this.content
     if (this.project.id && this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
@@ -133,7 +133,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  openSection(row: SectionTitle){
+  openSection(row: SectionTitle): void{
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -148,7 +148,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
   
   // table after dimension change
-  updateDimensions() {
+  updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
       this.dimensions = this.filter.value.entity;
       this.dimensions.push('_total');
@@ -231,7 +231,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
   
   // Fetch all data in function of project, content, filter, dimension and update table and chart
-  refreshValues(){
+  refreshValues(): void{
     if (this.project.id && this.tableContent && this.filter
         && this.dimensionIds && this.dimensions.length > 0){
 
@@ -242,32 +242,32 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entity
       };
 
-if (isArray(this.content)) {
-  this.content.map( row => {
-    if (this.isInfoRow(0, row)){
-      this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-        response => {
-          if (response) {
-            this.roundResponse(response);
-            const data = this.formatResponseToDataset(response);
-            row.dataset = {
-              label: row.name,
-              data,
-              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-              borderColor: this.randomColor(),
-              backgroundColor: this.randomColor(),
-              fill: false
-            };
-            row.values = response;
-          }
+      if (isArray(this.content)) {
+        this.content.map( row => {
+          if (this.isInfoRow(0, row)){
+            this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+              response => {
+                if (response) {
+                  this.roundResponse(response);
+                  const data = this.formatResponseToDataset(response);
+                  row.dataset = {
+                    label: row.name,
+                    data,
+                    labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                    borderColor: this.randomColor(),
+                    backgroundColor: this.randomColor(),
+                    fill: false
+                  };
+                  row.values = response;
+                }
 
-          this.updateChart();
-        }
-      );
-    }
-    return row;
-  });
-}
+                this.updateChart();
+              }
+            );
+          }
+          return row;
+        });
+      }
     }
   }
 
@@ -287,7 +287,7 @@ if (isArray(this.content)) {
   }
 
   // this method builds the chart again everytime there is a click in the chart button
-  updateChart(element?: InfoRow){
+  updateChart(element?: InfoRow): void{
     if (element){
       element.onChart = !element.onChart;
     }
@@ -312,12 +312,12 @@ if (isArray(this.content)) {
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
-    
+
     this.chartService.addData(data);
   }
   
   // This allosws to round all values
-  roundResponse(response){
+  roundResponse(response): number{
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
@@ -337,10 +337,10 @@ if (isArray(this.content)) {
     return data;
   }
 
-  receiveIndicators(info){
+  receiveIndicators(info): void{
     let indicatorIndex = this.content.indexOf(info.indicator);
     
-    let currentIndicator = this.content[indicatorIndex];
+    const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
@@ -356,9 +356,9 @@ if (isArray(this.content)) {
     }
   }
 
-  collapseIndicators(info){
-    let indicatorIndex = this.content.indexOf(info.indicator);
-    let currentIndicator = this.content[indicatorIndex];
+  collapseIndicators(info): void{
+    const indicatorIndex = this.content.indexOf(info.indicator);
+    const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
     for (let i = indicatorIndex + 1; i < this.content.length; i += 1){
@@ -370,19 +370,19 @@ if (isArray(this.content)) {
     }
 
     this.updateTableContent();
-  };
+  }
 
-  randomNumberLimit(limit) {
+  randomNumberLimit(limit): number {
     return Math.floor((Math.random() * limit) + 1);
   }
-  randomColor() {
+  randomColor(): string {
     const col = 'rgba(' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255) + ', 1)';
     return col;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 }
