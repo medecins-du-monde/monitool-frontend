@@ -50,17 +50,9 @@ export class LoginComponent implements OnInit {
   }
 
   loginAzure() {
-    const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
-
-    if (isIE) {
-        this.azureService.loginRedirect({
-          extraScopesToConsent: ['user.read', 'openid', 'profile']
-        });
-    } else {
-      this.azureService.loginPopup({
-      extraScopesToConsent: ['user.read', 'openid', 'profile']
-    });
-    }
+      this.azureService.loginRedirect({
+        extraScopesToConsent: ['user.read', 'openid', 'profile']
+      });
   }
 
   loginPartner(){

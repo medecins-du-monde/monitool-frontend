@@ -10,7 +10,7 @@ export class DataTableComponent implements OnInit {
   displayedColumns: string[] = ['name', 'baseline', 'target', 'Q1', 'total'];
 
 
-   dataSource =  [
+  dataSource =  [
     {name: 'test1', baseline: 5, target: 1.0079, Q1: 'H', total: 2},
     {name: 'test2', baseline: 5, target: 1.0079, Q1: 'H', total: 2},
     {name: 'test3', baseline: 5, target: 1.0079, Q1: 'H', total: 2},
@@ -18,8 +18,6 @@ export class DataTableComponent implements OnInit {
   ];
 
   constructor() { }
-
-
 
   ngOnInit(): void {
   }
