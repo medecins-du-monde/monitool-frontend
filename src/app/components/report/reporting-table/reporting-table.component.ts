@@ -138,7 +138,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
   
-  // Create new row if it s an indicator
+  // Create new row if it is an indicator
   convertToRow = (item: any) => {
     if (this.isProjectIndicator(item)){
       return this.indicatorToRow(item);
@@ -149,7 +149,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // table after dimension change
   updateDimensions() {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = this.filter.value.entity;
+      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
@@ -176,6 +176,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
+    console.log(this.dimensions);
   }
 
   // Create row of the table from a ProjectIndicator
@@ -313,7 +314,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.chartService.addData(data);
   }
   
-  // This allosws to round all values
+  // This allows to round all values
   roundResponse(response){
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
