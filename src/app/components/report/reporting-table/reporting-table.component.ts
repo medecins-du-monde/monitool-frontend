@@ -231,7 +231,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
     if (this.project.id && this.tableContent && this.filter
-        && this.dimensionIds && this.dimensions.length > 0){
+        && this.dimensionIds ){
 
       const currentFilter = this.filter.value;
       const modifiedFilter = {
@@ -243,35 +243,41 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       if (isArray(this.content)) {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
-            this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-              response => {
-                if (response) {
-                  this.roundResponse(response);
-                  const data = this.formatResponseToDataset(response);
-                  row.dataset = {
-                    label: row.name,
-                    data,
-                    labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                    borderColor: this.randomColor(),
-                    backgroundColor: this.randomColor(),
-                    fill: false
-                  };
-                  row.values = response;
+            if (this.dimensions.length > 0){
+              this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+                response => {
+                  if (response) {
+                    this.roundResponse(response);
+                    const data = this.formatResponseToDataset(response);
+                    row.dataset = {
+                      label: row.name,
+                      data,
+                      labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                      borderColor: this.randomColor(),
+                      backgroundColor: this.randomColor(),
+                      fill: false
+                    };
+                    row.values = response;
+  
+                    if(row.onChart){
+                      this.updateChart();
+                    }
+                  }
                 }
-
+              );
+            }
+            // this only happens when you group by collection sites or by group and you don't have any site or group in your project
+            else {
+              row.values = {};
+              row.dataset = {};
+              if (row.onChart){
                 this.updateChart();
               }
-            );
-            
-            if (row.onChart){
-              this.updateChart();
             }
           }
           return row;
         }
         );
-      }else{
-        this.updateChart();
       }
     }
   }
@@ -317,13 +323,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
-
-    console.log(data);
     this.chartService.addData(data);
   }
   
   // This allosws to round all values
-  roundResponse(response): number{
+  roundResponse(response): any{
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
