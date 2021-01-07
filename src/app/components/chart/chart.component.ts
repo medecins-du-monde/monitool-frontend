@@ -43,6 +43,7 @@ export class ChartComponent implements OnInit {
     {value: 'pie', viewValue: 'Pie Chart'}, // quantitative proportion of data, only recommended when little data
     {value: 'polarArea', viewValue: 'Polar Area'}, // quantitative proportion of data also shown in size, only recommended when little data
   ];
+  constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
     this.chart = new Chart('currentChart', {
@@ -51,13 +52,13 @@ export class ChartComponent implements OnInit {
       options: this.options,
     });
 
-    this.chartService.dataset.subscribe(data => {
+    this.chartService.currentDataset.subscribe(data => {
       if (!isEmpty(data)) {
         this.addDataset(data);
       }
     });
 
-    this.chartService.data.subscribe(data => {
+    this.chartService.currentData.subscribe(data => {
       if (!isEmpty(data)) {
         this.addData(data);
       }
@@ -93,7 +94,9 @@ export class ChartComponent implements OnInit {
 
   changeChartType(event) {
     if (this.chart){
-      this.chart.destroy();
+      // TODO: Understand why chart destroy and not update 
+      // this.chart.destroy();
+      this.chart.update();
     }
     this.chart = new Chart('currentChart', {
       type: event,
@@ -101,37 +104,4 @@ export class ChartComponent implements OnInit {
       options: this.options,
     });
   }
-
-  constructor(private chartService: ChartService) { }
-
-  // delete all functions below later - only for populating with random data//
-  // addRandomData() {
-  //   const tempData = [];
-  //   for (let i = 0; i < this.chart.data.labels.length; ++i) {
-  //     tempData.push(this.randomNumberLimit(30));
-  //   }
-
-  //   const chartColor =  this.randomColor();
-  //   const temp = {
-  //     label: '# of Votes',
-  //     data: tempData,
-  //     borderColor: chartColor,
-  //     backgroundColor: chartColor,
-  //     fill: false,
-  //   };
-
-  //   this.chart.data.datasets.push(temp);
-  //   this.chart.update();
-  // }
-
-  // randomNumberLimit(limit) {
-  //   return Math.floor((Math.random() * limit) + 1);
-  // }
-
-  // randomColor() {
-  //   const col = 'rgba(' + this.randomNumberLimit(255)
-  //     + ',' + this.randomNumberLimit(255)
-  //     + ',' + this.randomNumberLimit(255) + '1)';
-  //   return col;
-  // }
 }

@@ -6,7 +6,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import { round } from 'lodash';
+import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 
@@ -46,12 +46,12 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   styleUrls: ['./reporting-table.component.scss']
 })
 export class ReportingTableComponent implements OnInit, OnDestroy {
-  content: any;
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService) { }
-
+  
+  content: any;
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
@@ -116,7 +116,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   updateTableContent(){
-    if (this.project.id && this.tableContent && this.filter && this.dimensionIds){
+    // TODO: Check why this.tableContent and not this.content
+    if (this.project.id && this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
 
       for (const row of this.content){
@@ -241,30 +242,32 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entity
       };
 
-      this.content.map( row => {
-        if (this.isInfoRow(0, row)){
-          this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-            response => {
-              if (response) {
-                this.roundResponse(response);
-                const data = this.formatResponseToDataset(response);
-                row.dataset = {
-                  label: row.name,
-                  data,
-                  labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                  borderColor: this.randomColor(),
-                  backgroundColor: this.randomColor(),
-                  fill: false
-                };
-                row.values = response;
-              }
+if (isArray(this.content)) {
+  this.content.map( row => {
+    if (this.isInfoRow(0, row)){
+      this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+        response => {
+          if (response) {
+            this.roundResponse(response);
+            const data = this.formatResponseToDataset(response);
+            row.dataset = {
+              label: row.name,
+              data,
+              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+              borderColor: this.randomColor(),
+              backgroundColor: this.randomColor(),
+              fill: false
+            };
+            row.values = response;
+          }
 
-              this.updateChart();
-            }
-          );
+          this.updateChart();
         }
-        return row;
-      });
+      );
+    }
+    return row;
+  });
+}
     }
   }
 
@@ -309,7 +312,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
-
+    
     this.chartService.addData(data);
   }
   

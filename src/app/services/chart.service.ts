@@ -9,9 +9,6 @@ export class ChartService {
   type = new BehaviorSubject('line');
   currentType = this.type.asObservable();
 
-  options: BehaviorSubject<object> = new BehaviorSubject(new Object());
-  currentOptions = this.options.asObservable();
-
   dataset: BehaviorSubject<object> = new BehaviorSubject(new Object());
   currentDataset = this.dataset.asObservable();
 
