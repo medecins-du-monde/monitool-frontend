@@ -388,7 +388,6 @@
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
     "Periodicity": "Periodicidad",
-    "PivotTable": "Tabla dinámica",
     "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
     "ProjectDataSourceInfo": [
         "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
@@ -449,14 +448,10 @@
         "Esta sección le permite seguir su proyecto.",
         "Las páginas ",
         "Informe general",
-        " y ",
-        "Tabla dinámica",
-        " ambas permiten acceder a todos sus datos, en diferentes formas.",
+        " permite acceder a todos sus datos de una forma diferente",
         "Informe general",
         "Le permite explorar sus datos jerárquicamente: desde una vista general de su proyecto.",
-        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...).",
-        "Tabla dinámica",
-        "Puede consultar cada marco lógico o fuente de datos, que contiene indicadores, que luego puede desglosar por ubicación de recopilación, parámetros que utilizó para calcularlos y otras desagregaciones de acuerdo con la estructura de datos que recopiló (rango de edad, sexo, patologías, contenido de entrenamiento, ...)."
+        "Vous pouvez y consulter chaque cadre logique ou source de données, qui contiennent des indicateurs, que vous pourrez ensuite désagréger par lieu de collecte, paramètres que vous avez utilisé pour les calculer, et d'autres désagrégations selon la structure des données que vous avez collecté (tranche d'age, sexe, pathologies, contenu de formations, ...)."
     ],
     "ResetChanges": "Cancelar los cambios",
     "RevertToVersion": "Volver a este punto",

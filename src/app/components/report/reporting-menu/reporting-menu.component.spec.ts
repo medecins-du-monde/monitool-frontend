@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PivotTableComponent } from './pivot-table.component';
+import { ReportingMenuComponent } from './reporting-menu.component';
 
-describe('PivotTableComponent', () => {
-  let component: PivotTableComponent;
-  let fixture: ComponentFixture<PivotTableComponent>;
+describe('ReportingMenuComponent', () => {
+  let component: ReportingMenuComponent;
+  let fixture: ComponentFixture<ReportingMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PivotTableComponent ]
+      declarations: [ ReportingMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PivotTableComponent);
+    fixture = TestBed.createComponent(ReportingMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
