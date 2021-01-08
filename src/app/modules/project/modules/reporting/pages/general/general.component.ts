@@ -23,7 +23,6 @@ export class GeneralComponent implements OnInit {
               private chartService: ChartService ) { }
 
   protected project: Project;
-  grouping = '';
 
   filter = new BehaviorSubject<any>({});
 
@@ -31,17 +30,12 @@ export class GeneralComponent implements OnInit {
 
   tableContent = new BehaviorSubject<any[]>([]);
 
-  themes: Theme[];
-
-  crosscutting: Indicator[];
-
-  multiThemesIndicators: Indicator[];
-
-  groups: { theme: Theme, indicators: Indicator[]}[] = [];
-
-
   options =  {fill: false};
-  data = {};
+
+  themes: Theme[];
+  crosscutting: Indicator[];
+  multiThemesIndicators: Indicator[];
+  groups: { theme: Theme, indicators: Indicator[]}[] = [];
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -248,7 +242,6 @@ export class GeneralComponent implements OnInit {
 
   receiveDimension(value): void{
     this.dimensionIds.next(value);
-    this.grouping = value;
   }
 
 }

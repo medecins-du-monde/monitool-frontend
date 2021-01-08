@@ -66,7 +66,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
   dimensions: string[];
   columnsToDisplay: any;
-  openedSections = {};
+  openedSections = { 0: true };
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
   isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
@@ -75,7 +75,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
-
     this.subscription.add(
       this.rows.subscribe(value => {
         this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openedSections[row.sectionId]));
@@ -117,7 +116,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   updateTableContent(): void{
     // TODO: Check why this.tableContent and not this.content
-    if (this.project.id && this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
+    if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
 
       for (const row of this.content){
@@ -129,6 +128,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
 
       this.content = this.content.map(this.convertToRow);
+
       this.rows.next(this.content);
     }
   }
