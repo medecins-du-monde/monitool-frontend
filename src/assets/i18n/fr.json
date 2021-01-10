@@ -144,8 +144,8 @@
     "HistoryRevision" : {
         "active_replace": "Change le status de suppression de {{!before}} vers {{!after}}",
         "name_replace": "Renomme le projet de {{before}} vers {{after}}",
-        "start_replace": "Modifie la date de début du projet de {{before|date}} vers {{after|date}}",
-        "end_replace": "Modifie la date de fin du projet de {{before|date}} vers {{after|date}}",
+        "start_replace": "Modifie la date de début du projet de {{before}} vers {{after}}",
+        "end_replace": "Modifie la date de fin du projet de {{before}} vers {{after}}",
         "country_replace": "Modifie le pays du projet de {{before}} vers {{after}}",
         "visibility_replace": "Modifie la visibilité du projet de {{before}} vers {{after}}",
 
@@ -157,8 +157,8 @@
         "entities_move": "Reordonne les lieux du projet",
         "entities_remove": "Supprime le lieu {{item.name}}",
         "entities_name_replace": "Renomme le lieu {{before}} en {{after}}",
-        "entities_start_replace": "Change la date de début du lieu {{entity.name}} de {{before|date}} vers {{after|date}}",
-        "entities_end_replace": "Change la date de fin du lieu {{entity.name}} de {{before|date}} vers {{after|date}}",
+        "entities_start_replace": "Change la date de début du lieu {{entity.name}} de {{before}} vers {{after}}",
+        "entities_end_replace": "Change la date de fin du lieu {{entity.name}} de {{before}} vers {{after}}",
 
         "groups_add": "Ajoute le groupe {{item.name}}",
         "groups_move": "Reordonne les groupes du projet",
@@ -186,8 +186,8 @@
         "forms_remove": "Supprime la source de données {{item.name}}",
         "forms_name_replace": "Renomme la source de données {{before}} en {{after}}",
         "forms_periodicity_replace": "Change la périodicité de {{form.name}} de {{before}} vers {{after}}",
-        "forms_start_replace": "Change la date de début de {{form.name}} de {{before|date}} vers {{after|date}}",
-        "forms_end_replace": "Change la date de fin de {{form.name}} de {{before|date}} vers {{after|date}}",
+        "forms_start_replace": "Change la date de début de {{form.name}} de {{before}} vers {{after}}",
+        "forms_end_replace": "Change la date de fin de {{form.name}} de {{before}} vers {{after}}",
 
         "forms_entities_add": "Ajoute le lieu {{item.name}} à la source de données {{form.name}}",
         "forms_entities_move": "Reordonne les lieux de la source de données {{form.name}}",

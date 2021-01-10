@@ -147,8 +147,8 @@
     "HistoryRevision" : {
         "active_replace": "Cambia el estatus de supresión de {{!before}} a {{!after}}",
         "name_replace": "Cambia el nombre del proyecto de {{before}} a {{after}}",
-        "start_replace": "Cambia el inicio del proyecto de {{before|date}} a {{after|date}}",
-        "end_replace": "Cambia el final del proyecto de {{before|date}} a {{after|date}}",
+        "start_replace": "Cambia el inicio del proyecto de {{before}} a {{after}}",
+        "end_replace": "Cambia el final del proyecto de {{before}} a {{after}}",
         "country_replace": "Cambia el país del proyecto de {{before}} a {{after}}",
         "visibility_replace": "Cambia la visibilidad del proyecto de {{before}} a {{after}}",
 
@@ -160,8 +160,8 @@
         "entities_move": "Reordena los lugares del proyecto",
         "entities_remove": "Elimina el lugar {{item.name}}",
         "entities_name_replace": "Cambia el nombre del lugar {{before}} en {{after}}",
-        "entities_start_replace": "Cambia el inicio del lugar {{entity.name}} de {{before|date}} a {{after|date}}",
-        "entities_end_replace": "Cambia el final del lugar {{entity.name}} de {{before|date}} a {{after|date}}",
+        "entities_start_replace": "Cambia el inicio del lugar {{entity.name}} de {{before}} a {{after}}",
+        "entities_end_replace": "Cambia el final del lugar {{entity.name}} de {{before}} a {{after}}",
 
         "groups_add": "Añade el grupo {{item.name}}",
         "groups_move": "Reordena los grupos del proyecto",
@@ -189,8 +189,8 @@
         "forms_remove": "Elimina la fuente de datos {{item.name}}",
         "forms_name_replace": "Cambia el nombre de la fuente de datos {{before}} en {{after}}",
         "forms_periodicity_replace": "Cambia la periodicidad de {{form.name}} de {{before}} a {{after}}",
-        "forms_start_replace": "Cambia el inicio de {{form.name}} de {{before|date}} a {{after|date}}",
-        "forms_end_replace": "Cambia el final de {{form.name}} de {{before|date}} a {{after|date}}",
+        "forms_start_replace": "Cambia el inicio de {{form.name}} de {{before}} a {{after}}",
+        "forms_end_replace": "Cambia el final de {{form.name}} de {{before}} a {{after}}",
 
         "forms_entities_add": "Añade el lugar {{item.name}} a la fuente de datos {{form.name}}",
         "forms_entities_move": "Reordena los lugares de la fuente de datos {{form.name}}",
