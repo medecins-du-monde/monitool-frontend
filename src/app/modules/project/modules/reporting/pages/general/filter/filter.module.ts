@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -28,7 +29,9 @@ import { MatChipsModule } from '@angular/material/chips';
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule ,
-        MatChipsModule
+        MatChipsModule,
+        FormsModule,
+        ReactiveFormsModule,
     ]
 })
 export class FilterModule { }

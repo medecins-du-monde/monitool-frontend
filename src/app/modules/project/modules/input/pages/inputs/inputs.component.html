@@ -1,7 +1,17 @@
 <div class="info-section blue">
     <div class="info-buttons">
-        <button mat-stroked-button class="mdm-button"><mat-icon>insert_drive_file</mat-icon>Download PDF (portrait)</button>
-        <button mat-stroked-button class="mdm-button"><mat-icon>note</mat-icon>Download PDF (landscape)</button>
+
+        <a mat-stroked-button type="button" class="mdm-button"
+            href="/api/resources/project/{{project.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"
+            rel="noopener noreferrer">
+            <mat-icon>insert_drive_file</mat-icon>Download PDF (portrait)
+        </a>
+
+        <a mat-stroked-button type="button" class="mdm-button"
+        href="/api/resources/project/{{project.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"
+        rel="noopener noreferrer">
+        <mat-icon>note</mat-icon>Download PDF (landscape)
+    </a>
     </div>
     <span>
         <p>{{ 'InputsInfo.0' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>
@@ -12,15 +22,18 @@
 
 <table mat-table [dataSource]="dataSource" class="mdm-table">
     <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
+
         <th mat-header-cell *matHeaderCellDef>{{ column | translate }}</th>
-        <td mat-cell *matCellDef="let element" id="{{column}}"> 
+        <td mat-cell *matCellDef="let element" id="{{column}}">
             <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
             <ng-template #elseBlock>
                 <div *ngIf="element[column].value === -1; else elseBlock2">
-                    <button mat-stroked-button [routerLink]="element[column].routerLink" class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                    <button mat-stroked-button [routerLink]="element[column].routerLink"
+                        class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                 </div>
                 <ng-template #elseBlock2>
-                    <button mat-stroked-button [routerLink]="element[column].routerLink" class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column].value }}%)</button>
+                    <button mat-stroked-button [routerLink]="element[column].routerLink"
+                        class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column].value }}%)</button>
                 </ng-template>
             </ng-template>
         </td>
@@ -29,7 +42,8 @@
     <ng-container matColumnDef="expandedDates">
         <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
             <ng-template [ngIf]="seeOlderDatesFlag">
-                <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ 'SeeOlderDates' | translate }}</button>
+                <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ 'SeeOlderDates'
+                    | translate }}</button>
             </ng-template>
         </td>
     </ng-container>
