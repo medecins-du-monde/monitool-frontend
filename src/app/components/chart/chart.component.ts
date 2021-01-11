@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -94,7 +93,7 @@ export class ChartComponent implements OnInit {
 
   changeChartType(event) {
     if (this.chart){
-      // TODO: Understand why chart destroy and not update 
+      // TODO: Understand why chart destroy and not update
       // this.chart.destroy();
       this.chart.update();
     }

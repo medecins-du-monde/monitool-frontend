@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
@@ -26,9 +27,9 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.open = this.indicator.open;
     this.subscription.add(
-      this.projectService.openedProject.subscribe( (project: Project) => {
+      this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        this.createOptions()
+        this.createOptions();
       })
     );
   }
@@ -36,44 +37,47 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   createOptions() {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
-    
-    if (numberOfParameters === 1){
-      let parameterName, parameterValue;
+
+    if (numberOfParameters === 1) {
+      let parameterName;
+      let parameterValue;
       [parameterName, parameterValue] = Object.entries(this.indicator.computation.parameters)[0];
 
-      let element = undefined;
+      let element;
 
       let found = false;
-      for (const f of this.project.forms){
-        for (const e of f.elements){
-          if (parameterValue.elementId === e.id){
+      for (const f of this.project.forms) {
+        for (const e of f.elements) {
+          if (parameterValue.elementId === e.id) {
             element = e;
             found = true;
             break;
           }
         }
-        if (found) break;
+        if (found) {
+          break;
+        }
       }
 
-      for (const partition of element.partitions){
+      for (const partition of element.partitions) {
         if (parameterValue.filter &&
-           (!(partition.id in parameterValue.filter) ||
-             parameterValue.filter[partition.id]?.length === partition.elements?.length)){
-          
+          (!(partition.id in parameterValue.filter) ||
+            parameterValue.filter[partition.id]?.length === partition.elements?.length)) {
+
           this.options.push({
             value: partition.name,
             action: this.partitionOption,
-            partition: partition
+            partition
           });
         }
       }
     }
 
-    if (numberOfParameters > 1){ 
+    if (numberOfParameters > 1) {
       this.options.push({
         value: 'Computation',
         action: this.computationOption
-      })
+      });
     }
   }
 
@@ -82,20 +86,20 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
     const disaggregatedIndicators = [];
     let newComputation;
-    
-    for (const partitionElement of partition.elements){
-      //clones the computation
+
+    for (const partitionElement of partition.elements) {
+      // clones the computation
       newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
-      let parameterValue = Object.values(newComputation.parameters)[0];
+      const parameterValue = Object.values(newComputation.parameters)[0];
       parameterValue['filter'][partition.id] = [partitionElement.id];
 
       disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
         display: partitionElement.name,
         baseline: 0,
-        target: 0  
-      }))
+        target: 0
+      }));
     }
 
     this.addIndicatorsEvent.emit(
@@ -106,24 +110,24 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     );
   }
 
-  computationOption =  () => {
+  computationOption = (): void => {
     this.open = !this.open;
     const disaggregatedIndicators = [];
     let newComputation;
 
-    for(const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
+    for (const [parameter, value] of Object.entries(this.indicator.computation.parameters)) {
       newComputation = {
         formula: parameter,
         parameters: {}
-      }
+      };
       newComputation.parameters[parameter] = value;
 
       disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
         display: parameter,
         baseline: 0,
-        target: 0     
-      }))
+        target: 0
+      }));
     }
     this.addIndicatorsEvent.emit(
       {
@@ -133,14 +137,14 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     );
   }
 
-  closeIndicator = () =>{
+  closeIndicator = (): void => {
     this.open = !this.open;
     this.collapseIndicatorsEvent.emit({
       indicator: this.indicator
-    })
+    });
   }
-  
-  ngOnDestroy(){
+
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 

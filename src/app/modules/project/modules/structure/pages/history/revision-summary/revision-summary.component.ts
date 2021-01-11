@@ -94,7 +94,7 @@ export class RevisionSummaryComponent implements OnInit {
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
     let currentItem = before;
-   
+
     for (let j = 1; j < splitPath.length - 1; j += 2) {
       let name = splitPath[j - 1];
       const id = splitPath[j];
@@ -111,7 +111,7 @@ export class RevisionSummaryComponent implements OnInit {
       }
       translationData[name] = currentItem;
     }
-  
+
     // Get the actual item that got modified.
     if (operation.value?.type) {
       if (operation.value.type === 'partner') {
@@ -159,11 +159,11 @@ export class RevisionSummaryComponent implements OnInit {
     if (operation.op === 'add' || operation.op === 'remove') {
 
       if (editedField === 'users_dataSources') {
-       
+
         translationData['item'] = before.forms.find(e => {
-         
+
           if (Array.isArray(translationData['item'])) {
-          return e.id === translationData['item'][0];}
+          return e.id === translationData['item'][0]; }
           else {
             return e.id === translationData['item'];
           }
@@ -176,7 +176,7 @@ export class RevisionSummaryComponent implements OnInit {
 
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             } 
+             }
           else {
             return e.id === translationData['item'];
           }
@@ -188,7 +188,7 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = translationData['partition']['elements'].find(e => {
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             } 
+             }
           else {
             return e.id === translationData['item'];
           } });

@@ -50,7 +50,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService) { }
-  
+
   content: any;
 
   @Input() tableContent: BehaviorSubject<any[]>;
@@ -138,7 +138,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
   }
-  
+
   // Create new row if it s an indicator
   convertToRow = (item: any) => {
     if (this.isProjectIndicator(item)){
@@ -146,7 +146,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return item;
   }
-  
+
   // table after dimension change
   updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
@@ -155,8 +155,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     else if (this.dimensionIds.value === 'group'){
       const entities = this.filter.value.entity;
-      this.dimensions = this.project.groups.filter(group =>{
-        for(const e of group.members){
+      this.dimensions = this.project.groups.filter(group => {
+        for (const e of group.members){
           if (entities.includes(e.id)){
             return true;
           }
@@ -195,11 +195,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       open: true
     } as InfoRow;
 
-    
-    
-    if (this.project.id && this.tableContent && this.filter 
+
+
+    if (this.project.id && this.tableContent && this.filter
         && this.dimensionIds && this.dimensions.length > 0){
-      
+
       const currentFilter = this.filter.value;
       const modifiedFilter = {
         _start: currentFilter._start.toISOString().slice(0, 10),
@@ -210,7 +210,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
       this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
         response => {
-  
+
           if (response) {
             this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
@@ -229,7 +229,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return row;
   }
-  
+
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
     if (this.project.id && this.tableContent && this.filter
@@ -315,7 +315,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.chartService.addData(data);
   }
-  
+
   // This allosws to round all values
   roundResponse(response): number{
     for (const [key, value] of Object.entries(response)) {
@@ -339,7 +339,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   receiveIndicators(info): void{
     let indicatorIndex = this.content.indexOf(info.indicator);
-    
+
     const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
@@ -349,7 +349,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       indicatorIndex += 1;
 
       const newRow = this.indicatorToRow(disaggregatedIndicators);
-      newRow.sectionId = info.indicator.sectionId
+      newRow.sectionId = info.indicator.sectionId;
 
       this.content.splice(indicatorIndex, 0, newRow);
       this.updateTableContent();
@@ -362,9 +362,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     currentIndicator.open = !currentIndicator.open;
 
     for (let i = indicatorIndex + 1; i < this.content.length; i += 1){
-      if(this.content[i] === currentIndicator.nextRow){
+      if (this.content[i] === currentIndicator.nextRow){
         break;
-      }  
+      }
       this.content.splice(i, 1);
       i -= 1;
     }

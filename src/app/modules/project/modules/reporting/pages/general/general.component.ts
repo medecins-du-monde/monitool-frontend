@@ -46,9 +46,9 @@ export class GeneralComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-     
+
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
-        .then((crosscutting: Indicator[]) => { 
+        .then((crosscutting: Indicator[]) => {
           this.crosscutting = crosscutting;
           this.buildIndicators();
         });
@@ -57,11 +57,11 @@ export class GeneralComponent implements OnInit {
     this.themeService.list().then( (themes: Theme[]) => {
       this.themes = themes;
       this.buildIndicators();
-    })
+    });
   }
 
 
-  buildIndicators() : void{
+  buildIndicators(): void{
     if (!(this.themes && this.crosscutting && this.project)){
       return;
     }
@@ -99,7 +99,7 @@ export class GeneralComponent implements OnInit {
               groupName: `Result: ${output.description}`,
               sectionId: id
             } as GroupTitle);
-            
+
             rows = rows.concat(output.indicators);
 
             for (const activity of output.activities){
@@ -108,7 +108,7 @@ export class GeneralComponent implements OnInit {
                 groupName: `Activity: ${activity.description}`,
                 sectionId: id
               } as GroupTitle);
-              
+
               rows = rows.concat(activity.indicators);
             }
           }
@@ -118,7 +118,7 @@ export class GeneralComponent implements OnInit {
     }
 
     if (this.project.crossCutting){
-    
+
       this.buildCrossCuttingIndicators();
 
       rows.push({
@@ -137,7 +137,7 @@ export class GeneralComponent implements OnInit {
         for (const indicator of this.multiThemesIndicators){
           if (indicator.id in this.project.crossCutting){
             const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
-            // TODO: choose right language here  
+            // TODO: choose right language here
             projectIndicator.display = indicator.name.en;
             rows.push(projectIndicator);
           }
@@ -151,7 +151,7 @@ export class GeneralComponent implements OnInit {
         for (const group of this.groups){
           rows.push({
             icon: false,
-            // TODO: choose right language here  
+            // TODO: choose right language here
             groupName: group.theme.name.en,
             sectionId: id
           });
@@ -159,7 +159,7 @@ export class GeneralComponent implements OnInit {
           for (const indicator of group.indicators){
             if (indicator.id in this.project.crossCutting){
               const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
-              // TODO: choose right language here  
+              // TODO: choose right language here
               projectIndicator.display = indicator.name.en;
               rows.push(projectIndicator);
             }
@@ -215,11 +215,11 @@ export class GeneralComponent implements OnInit {
     }
     this.tableContent.next(rows);
   }
-  
+
   buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
     for (const c of this.crosscutting){
-      if(c.multiThemes){
+      if (c.multiThemes){
         this.multiThemesIndicators.push(c);
       }
       else{
