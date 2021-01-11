@@ -6,7 +6,7 @@ import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { InfoRow } from '../reporting-table/reporting-table.component';
 
-interface AddedIndicators {
+export interface AddedIndicators {
   indicator: InfoRow;
   disaggregatedIndicators: ProjectIndicator[];
 }

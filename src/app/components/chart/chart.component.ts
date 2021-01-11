@@ -1,15 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
 
   /* CHART COMPONENT
     required Input:
@@ -43,6 +43,9 @@ export class ChartComponent implements OnInit {
     {value: 'pie', viewValue: 'Pie Chart'}, // quantitative proportion of data, only recommended when little data
     {value: 'polarArea', viewValue: 'Polar Area'}, // quantitative proportion of data also shown in size, only recommended when little data
   ];
+
+  private subscription: Subscription = new Subscription();
+  
   constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
@@ -52,32 +55,23 @@ export class ChartComponent implements OnInit {
       options: this.options,
     });
 
-    this.chartService.currentDataset.subscribe(data => {
-      if (!isEmpty(data)) {
-        this.addDataset(data);
-      }
-    });
+    this.subscription.add(
+      this.chartService.currentData.subscribe(data => {
+        if (!isEmpty(data)) {
+          this.addData(data);
+        }
+      })
+    );
 
-    this.chartService.currentData.subscribe(data => {
-      if (!isEmpty(data)) {
-        this.addData(data);
-      }
-    });
-
-    this.chartService.type.subscribe(type => {
-      if (!isEmpty(type)) {
-        this.changeChartType(type);
-      }
-    });
+    this.subscription.add(
+      this.chartService.currentType.subscribe(type => {
+        if (!isEmpty(type)) {
+          this.changeChartType(type);
+        }
+      })
+    );
   }
 
-  addDataset(data) {
-    if (this.chart){
-      this.chart.data.datasets.push(data.datasets);
-      this.chart.update();
-    }
-    this.data.datasets.push(data.datasets);
-  }
 
   addData(data) {
     if (this.chart){
@@ -103,5 +97,9 @@ export class ChartComponent implements OnInit {
       data: this.data,
       options: this.options,
     });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 }

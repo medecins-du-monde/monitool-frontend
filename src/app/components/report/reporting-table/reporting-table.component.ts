@@ -9,6 +9,7 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
+import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 
 export interface SectionTitle{
   title: string;
@@ -51,7 +52,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               private reportingService: ReportingService,
               private chartService: ChartService) { }
 
-  content: any;
+  content: any[];
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
@@ -65,14 +66,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   project: Project;
   dimensions: string[];
-  columnsToDisplay: any;
+  columnsToDisplay: string[];
   openedSections = {};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
-  isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
-  isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
-  isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-  isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+  isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
+  isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
+  isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
+  isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
 
@@ -140,7 +141,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create new row if it is an indicator
-  convertToRow = (item: any) => {
+  convertToRow = (item: Row): Row => {
     if (this.isProjectIndicator(item)){
       return this.indicatorToRow(item);
     }
@@ -282,7 +283,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  getSiteOrGroupName(id: string){
+  getSiteOrGroupName(id: string): string{
     if (this.project && (this.dimensionIds.value === 'entity' ||  this.dimensionIds.value === 'group')){
       const site = this.project.entities.find(s => s.id === id);
       if (site !== undefined){
@@ -310,13 +311,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     const datasets = [];
-    // let labels = [];
 
     for (const row of this.dataSource.data){
       if (row.onChart){
         datasets.push(row.dataset);
-        // this adds the dataset labels without having duplicate values
-        // labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
     const data = {
@@ -326,15 +324,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.chartService.addData(data);
   }
 
-  // This allosws to round all values
-  roundResponse(response): any{
+  // This allows to round all values
+  roundResponse(response: unknown): unknown{
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
     return response;
   }
 
-  formatResponseToDataset(response){
+  formatResponseToDataset(response: unknown): {x: string, y: number}[]{
     const data = [];
     for (const [key, value] of Object.entries(response)) {
       if (key !== '_total'){
@@ -347,7 +345,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  receiveIndicators(info): void{
+  receiveIndicators(info: AddedIndicators): void{
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
@@ -366,7 +364,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  collapseIndicators(info): void{
+  collapseIndicators(info: {indicator: InfoRow}): void{
     const indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
@@ -382,7 +380,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
 
-  randomNumberLimit(limit): number {
+  randomNumberLimit(limit: number): number {
     return Math.floor((Math.random() * limit) + 1);
   }
   randomColor(): string {

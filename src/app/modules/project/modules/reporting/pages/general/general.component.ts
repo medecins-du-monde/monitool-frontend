@@ -44,6 +44,8 @@ export class GeneralComponent implements OnInit {
   data = {};
 
   ngOnInit(): void {
+    this.chartService.clearChart();
+
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
 
