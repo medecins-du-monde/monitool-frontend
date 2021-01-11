@@ -92,14 +92,14 @@ export class ChartComponent implements OnInit {
     this.chart.update();
   }
 
-  changeChartType(event) {
+  changeChartType(type) {
     if (this.chart){
       // TODO: Understand why chart destroy and not update 
       this.chart.destroy();
       // this.chart.update();
     }
     this.chart = new Chart('currentChart', {
-      type: event,
+      type,
       data: this.data,
       options: this.options,
     });
