@@ -30,7 +30,6 @@ export class RevisionSummaryComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
     });
-
     this.createDynamicRevisionText();
   }
 
@@ -42,7 +41,7 @@ export class RevisionSummaryComponent implements OnInit {
     after.forms = after.forms.map(y => new Form(y));
 
     // loop through revision of element and apply datatransformation to create table input
-    this.revision.forwards.forEach( rev => {
+    this.revision.forwards.forEach(rev => {
       const operation = rev;
       const key = this.getTranslationKey(operation);
       let data;
@@ -56,7 +55,6 @@ export class RevisionSummaryComponent implements OnInit {
       if (key) {
         data['translationKey'] = key;
         this.output.push(data);
-      } else {
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
@@ -96,7 +94,7 @@ export class RevisionSummaryComponent implements OnInit {
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
     let currentItem = before;
-
+   
     for (let j = 1; j < splitPath.length - 1; j += 2) {
       let name = splitPath[j - 1];
       const id = splitPath[j];
@@ -113,16 +111,20 @@ export class RevisionSummaryComponent implements OnInit {
       }
       translationData[name] = currentItem;
     }
-
-
+  
     // Get the actual item that got modified.
+    if (operation.value?.type) {
+      if (operation.value.type === 'partner') {
+        operation.value['id'] = operation.value.name;
+      }
+    }
 
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
+
     }
     else if (operation.op === 'replace') {
       translationData['after'] = operation.value;
-
       translationData['before'] = before;
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
@@ -130,8 +132,12 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
-      translationData['item'] = after; // This part used to be translationData['item'] = before;
-      splitPath.forEach(path => translationData['item'] = translationData['item'][path]);
+      translationData['item'] = after;
+      splitPath.forEach(path => {
+        translationData['item'] = translationData['item'][path];
+
+      });
+
     }
     else if (operation.op === 'move') {
       translationData['item'] = before;
@@ -151,14 +157,41 @@ export class RevisionSummaryComponent implements OnInit {
     //////////////////////////
 
     if (operation.op === 'add' || operation.op === 'remove') {
+
       if (editedField === 'users_dataSources') {
-        translationData['item'] = before.forms.find(e => e.id === translationData['item']);
+       
+        translationData['item'] = before.forms.find(e => {
+         
+          if (Array.isArray(translationData['item'])) {
+          return e.id === translationData['item'][0];}
+          else {
+            return e.id === translationData['item'];
+          }
+        });
+
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
-        translationData['item'] = before.entities.find(e => e.id === translationData['item']);
+
+        translationData['item'] = before.entities.find(e => {
+
+          if (Array.isArray(translationData['item'])) {
+            return e.id === translationData['item'][0];
+             } 
+          else {
+            return e.id === translationData['item'];
+          }
+        });
+
       }
+
       if (editedField === 'forms_elements_partitions_groups_members') {
-        translationData['item'] = translationData['partition']['elements'].find(e => e.id === translationData['item']);
+        translationData['item'] = translationData['partition']['elements'].find(e => {
+          if (Array.isArray(translationData['item'])) {
+            return e.id === translationData['item'][0];
+             } 
+          else {
+            return e.id === translationData['item'];
+          } });
       }
     }
 
@@ -183,7 +216,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   transformDate(date) {
-      return date.getFullYear() + '-' +  (date.getMonth() + 1) + '-' +  date.getDate();
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
 }
