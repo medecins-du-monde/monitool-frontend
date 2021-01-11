@@ -29,7 +29,7 @@ export class ChartComponent implements OnInit {
 
   private chart;
 
-  @Input() options: object;
+  @Input() options: any;
   @Input() data: any;
 
   /* which chart to choose from should always depend on the datatype */
@@ -94,7 +94,7 @@ export class ChartComponent implements OnInit {
 
   changeChartType(event) {
     if (this.chart){
-      // TODO: Understand why chart destroy and not update 
+      // TODO: Understand why chart destroy and not update
       this.chart.destroy();
       // this.chart.update();
     }
