@@ -204,10 +204,6 @@ export class RevisionSummaryComponent implements OnInit {
     for (let i = 0; i < revisionIndex; i++) {
       try {
         const patch = this.revisions[i].backwards as Operation[];
-        console.log('revised project :');
-        console.log(revisedProject);
-        console.log('patch : ');
-        console.log(patch);
         jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at Index ', i);
