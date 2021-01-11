@@ -34,6 +34,7 @@ export interface InfoRow {
   dataset?: any;
   filterFlag: boolean;
   computation: any;
+  originProject?: Project;
   nextRow: Row;
   open: boolean;
 }
@@ -108,6 +109,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.tableContent.subscribe(content => {
+        console.log('new table content');
+        console.log(content);
         this.content = content;
         this.updateTableContent();
       })
@@ -140,8 +143,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
   
   // Create new row if it s an indicator
-  convertToRow = (item: any) => {
+  convertToRow = (item: Row | ProjectIndicator): Row => {
+    console.log('converting item');
     if (this.isProjectIndicator(item)){
+      console.log('entrou aqui');
       return this.indicatorToRow(item);
     }
     return item;
@@ -192,14 +197,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       dataset: {},
       filterFlag: true,
       computation: indicator.computation,
+      originProject: indicator.originProject ? indicator.originProject : undefined,
       open: true
     } as InfoRow;
 
-    
-    
-    if (this.project.id && this.tableContent && this.filter 
-        && this.dimensionIds && this.dimensions.length > 0){
-      
+    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
+
       const currentFilter = this.filter.value;
       const modifiedFilter = {
         _start: currentFilter._start.toISOString().slice(0, 10),
@@ -207,10 +210,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entity
       };
 
+      const currentProject = indicator.originProject ? indicator.originProject : this.project;
 
-      this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+      this.reportingService.fetchData(currentProject, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
         response => {
-  
+
           if (response) {
             this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
@@ -227,6 +231,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       );
     }
+    console.log(row);
     return row;
   }
   

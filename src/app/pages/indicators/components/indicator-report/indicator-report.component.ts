@@ -1,17 +1,12 @@
-import { forEach } from 'lodash';
 import { Project } from 'src/app/models/project.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/indicator.model';
-import { SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
-import { FormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ChartService } from 'src/app/services/chart.service';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
-import { Theme } from 'src/app/models/theme.model';
-import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-indicator-report',
@@ -22,7 +17,6 @@ import { ThemeService } from 'src/app/services/theme.service';
 export class IndicatorReportComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
-              private themeService: ThemeService,
               private chartService: ChartService,
               private route: ActivatedRoute ) { }
  
@@ -55,18 +49,18 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     );
   }
 
-  buildIndicators() {
+  buildIndicators(): void{
     this.relatedProjects = this.relatedProjects.filter(project => project.status === 'Ongoing');
 
     const indicators = [];
 
     for (const project of this.relatedProjects){
-      console.log(project.crossCutting);
       if (this.mainIndicator.id in project.crossCutting){
 
         const newIndicator = new ProjectIndicator(project.crossCutting[this.mainIndicator.id]);
         newIndicator.display = `${project.country} - ${project.name}`;
-        console.log(newIndicator);
+        // this property is necessary for creating the menu options in the report table
+        newIndicator.originProject = project;
         indicators.push(newIndicator);
       }
     }
@@ -74,15 +68,15 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     this.tableContent.next(indicators);
   }
 
-  get chartData(){
+  get chartData(): unknown{
     return this.chartService.data.value;
   }
 
-  receiveFilter(value){
+  receiveFilter(value: unknown): void{
     this.filter.next(value);
   }
 
-  receiveDimension(value){
+  receiveDimension(value: string): void{
     this.dimensionIds.next(value);
   }
 

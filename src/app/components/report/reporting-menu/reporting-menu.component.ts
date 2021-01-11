@@ -15,8 +15,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   options: any[];
   open: boolean;
-  @Output() addIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
-  @Output() collapseIndicatorsEvent: EventEmitter<object> = new EventEmitter<any[]>();
+  @Output() addIndicatorsEvent: EventEmitter<any> = new EventEmitter<any[]>();
+  @Output() collapseIndicatorsEvent: EventEmitter<any> = new EventEmitter<any[]>();
 
   private subscription: Subscription = new Subscription();
   project: Project;
@@ -36,15 +36,19 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   createOptions() {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
-    
-    if (numberOfParameters === 1){
-      let parameterName, parameterValue;
-      [parameterName, parameterValue] = Object.entries(this.indicator.computation.parameters)[0];
 
+    let currentProject = this.project;
+
+    if (this.indicator.originProject){
+      currentProject = this.indicator.originProject;
+    }
+
+    if (numberOfParameters === 1){
+      const parameterValue: any = Object.entries(this.indicator.computation.parameters)[0][1];
       let element = undefined;
 
       let found = false;
-      for (const f of this.project.forms){
+      for (const f of currentProject.forms){
         for (const e of f.elements){
           if (parameterValue.elementId === e.id){
             element = e;
@@ -54,12 +58,13 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
         if (found) break;
       }
+      
 
       for (const partition of element.partitions){
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
-          
+
           this.options.push({
             value: partition.name,
             action: this.partitionOption,
@@ -87,7 +92,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       //clones the computation
       newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
-      let parameterValue = Object.values(newComputation.parameters)[0];
+      const parameterValue = Object.values(newComputation.parameters)[0];
       parameterValue['filter'][partition.id] = [partitionElement.id];
 
       disaggregatedIndicators.push(new ProjectIndicator({
