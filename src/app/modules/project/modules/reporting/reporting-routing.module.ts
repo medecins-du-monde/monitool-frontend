@@ -13,11 +13,6 @@ const routes: Routes = [
       .then(m => m.GeneralModule)
   },
   {
-    path: 'pivot-table',
-    loadChildren: () => import('./pages/pivot-table/pivot-table.module')
-      .then(m => m.PivotTableModule)
-  },
-  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',

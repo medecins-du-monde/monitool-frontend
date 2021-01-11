@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
-import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { GroupTitle, SectionTitle } from 'src/app/components/reporting-table/reporting-table.component';
+import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { IndicatorService } from 'src/app/services/indicator.service';
+import { Indicator } from 'src/app/models/indicator.model';
+import { ThemeService } from 'src/app/services/theme.service';
+import { Theme } from 'src/app/models/theme.model';
 
 @Component({
   selector: 'app-general',
@@ -16,12 +17,10 @@ import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 })
 
 export class GeneralComponent implements OnInit {
-  endDate: Date;
-
   constructor(private projectService: ProjectService,
-              private reportingService: ReportingService,
-              private chartService: ChartService,
-              private fb: FormBuilder ) { }
+              private indicatorService: IndicatorService,
+              private themeService: ThemeService,
+              private chartService: ChartService ) { }
 
   protected project: Project;
   grouping = '';
@@ -30,47 +29,42 @@ export class GeneralComponent implements OnInit {
 
   dimensionIds = new BehaviorSubject('');
 
-  startDate: Date;
-  // collectionSites: object;
-  // computation: object;
-  requestForm: FormGroup;
-
   tableContent = new BehaviorSubject<any[]>([]);
 
-  // initial values for the chart
+  themes: Theme[];
+
+  crosscutting: Indicator[];
+
+  multiThemesIndicators: Indicator[];
+
+  groups: { theme: Theme, indicators: Indicator[]}[] = [];
+
+
   options =  {fill: false};
   data = {};
 
-  // addDataToGraph(data) {
-  //   this.chartService.addData(data);
-  // }
-
-  // addDatasetToGraph(data) {
-  //   this.chartService.addDataset(data);
-  // }
-
   ngOnInit(): void {
-
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      // this.collectionSites = project.entities;
-      this.buildIndicators();
-
-
-      /* We need to forEach throught he project.logicalFrames || DataSources || ExtraIndicators...
-      then we get all the indicators and attach them to the body to make the request once clicked on the plus
-      then we remove this dummy variable */
-      // if (project.logicalFrames.length > 0 ) {
-      //   if (project.logicalFrames[0].indicators[0]) {
-      //     this.computation = project.logicalFrames[0].indicators[0].computation;
-      //   }
-      // }
+     
+      this.indicatorService.listForProject(this.project.themes.map(x => x.id))
+        .then((crosscutting: Indicator[]) => { 
+          this.crosscutting = crosscutting;
+          this.buildIndicators();
+        });
     });
+
+    this.themeService.list().then( (themes: Theme[]) => {
+      this.themes = themes;
+      this.buildIndicators();
+    })
   }
 
 
-  buildIndicators() {
-
+  buildIndicators() : void{
+    if (!(this.themes && this.crosscutting && this.project)){
+      return;
+    }
     let rows = [];
     let id = 0;
 
@@ -93,7 +87,7 @@ export class GeneralComponent implements OnInit {
         for (const purpose of logicalFrame.purposes){
           rows.push({
             icon: false,
-            groupName: purpose.description,
+            groupName: `Specific objective: ${purpose.description}`,
             sectionId: id
           } as GroupTitle);
 
@@ -102,31 +96,80 @@ export class GeneralComponent implements OnInit {
           for (const output of purpose.outputs){
             rows.push({
               icon: false,
-              groupName: output.description,
+              groupName: `Result: ${output.description}`,
               sectionId: id
             } as GroupTitle);
-
+            
             rows = rows.concat(output.indicators);
 
             for (const activity of output.activities){
               rows.push({
                 icon: false,
-                groupName: activity.description,
+                groupName: `Activity: ${activity.description}`,
                 sectionId: id
               } as GroupTitle);
-
+              
               rows = rows.concat(activity.indicators);
             }
           }
         }
-
         id += 1;
       }
     }
 
     if (this.project.crossCutting){
-      // TO DO
-      // add cross cutting indicators to the table when they work correctly
+    
+      this.buildCrossCuttingIndicators();
+
+      rows.push({
+        title: 'Cross-cutting indicators',
+        sectionId: id,
+        open: false,
+      } as SectionTitle);
+
+      if (this.multiThemesIndicators.length > 0){
+        rows.push({
+          icon: false,
+          groupName: 'Multiple thematics',
+          sectionId: id
+        } as GroupTitle);
+
+        for (const indicator of this.multiThemesIndicators){
+          if (indicator.id in this.project.crossCutting){
+            const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+            // TODO: choose right language here  
+            projectIndicator.display = indicator.name.en;
+            rows.push(projectIndicator);
+          }
+          else{
+            rows.push(new ProjectIndicator(indicator));
+          }
+        }
+      }
+
+      if (this.groups.length > 0){
+        for (const group of this.groups){
+          rows.push({
+            icon: false,
+            // TODO: choose right language here  
+            groupName: group.theme.name.en,
+            sectionId: id
+          });
+
+          for (const indicator of group.indicators){
+            if (indicator.id in this.project.crossCutting){
+              const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+              // TODO: choose right language here  
+              projectIndicator.display = indicator.name.en;
+              rows.push(projectIndicator);
+            }
+            else{
+              rows.push(new ProjectIndicator(indicator));
+            }
+          }
+        }
+      }
+
     }
 
     if (this.project.extraIndicators){
@@ -141,7 +184,6 @@ export class GeneralComponent implements OnInit {
     }
 
     if (this.project.forms){
-      console.log(this.project.forms);
       for (const form of this.project.forms){
         rows.push({
           title: `Data source: ${form.name}`,
@@ -171,62 +213,39 @@ export class GeneralComponent implements OnInit {
         id += 1;
       }
     }
-
-
     this.tableContent.next(rows);
+  }
+  
+  buildCrossCuttingIndicators(): void {
+    this.multiThemesIndicators = [];
+    for (const c of this.crosscutting){
+      if(c.multiThemes){
+        this.multiThemesIndicators.push(c);
+      }
+      else{
+        const group = this.groups.find(g => g.theme === c.themes[0]);
+        if (group){
+          group.indicators.push(c);
+        }
+        else{
+          this.groups.push({
+            theme: c.themes[0],
+            indicators: [c]
+          });
+        }
+      }
+    }
   }
 
   get chartData(){
     return this.chartService.data.value;
   }
 
-  // responseToGraphData(response, label) {
-  //   let grouping = _.clone(this.grouping);
-
-  //   let idToName = false;
-  //   if (this.grouping === 'group') {
-  //     grouping = 'groups';
-  //     idToName = true;
-  //   }
-  //   if (this.grouping === 'entity') {
-  //     grouping = 'entities';
-  //     idToName = true;
-  //   }
-
-  //   let labels = [];
-  //   const keys = Object.keys(response);
-  //   if (idToName) {
-  //     keys.forEach(key => {
-  //       this.project[grouping].find(
-  //         group => {
-  //           if (group.id === key) { labels.push(group.name); }
-  //           if (key === '_total') { labels.push(key); }
-  //           });
-  //         });
-  //   } else {
-  //     labels = keys;
-  //   }
-
-  //   const data = {
-  //     labels,
-  //     datasets: [
-  //       {
-  //         label,
-  //         data: Object.values(response),
-  //         borderColor: 'rgba(255, 99, 132, 1)',
-  //         backgroundColor: 'rgba(255, 99, 132, 1)',
-  //         fill: false,
-  //       },
-  //     ]
-  //   };
-  //   return data;
-  // }
-
-  receiveFilter(value){
+  receiveFilter(value): void{
     this.filter.next(value);
   }
 
-  receiveDimension(value){
+  receiveDimension(value): void{
     this.dimensionIds.next(value);
     this.grouping = value;
   }
