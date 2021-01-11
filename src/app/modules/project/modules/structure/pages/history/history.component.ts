@@ -32,8 +32,6 @@ export class HistoryComponent implements OnInit {
 
   private projectId: string;
   private project: Project;
-
-  private offset: number;
   private limit: number;
 
   public showLoadMore: boolean;
@@ -45,7 +43,6 @@ export class HistoryComponent implements OnInit {
       this.showLoadMore = true;
       this.projectId = project.id;
       this.project = project;
-      this.offset = 0;
       this.limit = 10;
       if (project.id) {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {

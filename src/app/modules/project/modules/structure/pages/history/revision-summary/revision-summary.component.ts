@@ -24,13 +24,12 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
     });
-
     this.createDynamicRevisionText();
   }
 
@@ -47,7 +46,6 @@ export class RevisionSummaryComponent implements OnInit {
       const key = this.getTranslationKey(operation);
       let data;
 
-
       if (this.index === 0) {
         data = this.getTranslationData(operation, after, after);
       } else {
@@ -57,9 +55,8 @@ export class RevisionSummaryComponent implements OnInit {
       if (key) {
         data['translationKey'] = key;
         this.output.push(data);
-      } else {
       }
-      // 
+
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
       before.forms = before.forms.map(y => new Form(y));
     });
@@ -93,7 +90,6 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
   getTranslationData(operation, before, after) {
-
     const editedField = operation.path.substring(1).replace(/\/\d+\//g, '_').replace(/\/\d+$/, '');
     const splitPath = operation.path.split('/').slice(1);
     const translationData = {};
@@ -116,7 +112,6 @@ export class RevisionSummaryComponent implements OnInit {
       translationData[name] = currentItem;
     }
   
-
     // Get the actual item that got modified.
     if (operation.value?.type) {
       if (operation.value.type === 'partner') {
@@ -130,7 +125,6 @@ export class RevisionSummaryComponent implements OnInit {
     }
     else if (operation.op === 'replace') {
       translationData['after'] = operation.value;
-
       translationData['before'] = before;
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
@@ -138,11 +132,9 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
     else if (operation.op === 'remove') {
-      translationData['item'] = after; // This part used to be translationData['item'] = before;
+      translationData['item'] = after;
       splitPath.forEach(path => {
         translationData['item'] = translationData['item'][path];
-        // translationData['item'] = translationData.item[path]
-        // translationData['item'] = translationData[path];
 
       });
 
@@ -212,6 +204,10 @@ export class RevisionSummaryComponent implements OnInit {
     for (let i = 0; i < revisionIndex; i++) {
       try {
         const patch = this.revisions[i].backwards as Operation[];
+        console.log('revised project :');
+        console.log(revisedProject);
+        console.log('patch : ');
+        console.log(patch);
         jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at Index ', i);
