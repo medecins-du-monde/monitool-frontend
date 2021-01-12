@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -88,9 +88,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   changeChartType(type) {
     if (this.chart){
-      // TODO: Understand why chart destroy and not update
       this.chart.destroy();
-      // this.chart.update();
     }
     this.chart = new Chart('currentChart', {
       type,

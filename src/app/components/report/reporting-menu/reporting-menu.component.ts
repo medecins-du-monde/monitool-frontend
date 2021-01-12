@@ -96,7 +96,10 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
       const parameterValue: any = Object.values(newComputation.parameters)[0];
-      parameterValue.filter[partition.id] = [partitionElement.id];
+
+      if (parameterValue.filter) {
+        parameterValue.filter[partition.id] = [partitionElement.id];
+      }
 
       disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,

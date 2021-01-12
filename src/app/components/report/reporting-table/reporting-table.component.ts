@@ -12,6 +12,7 @@ import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 
+// TODO: Stock these interfaces in their own file
 export interface SectionTitle{
   title: string;
   sectionId: number;
