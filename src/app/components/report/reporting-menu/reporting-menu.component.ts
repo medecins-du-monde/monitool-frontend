@@ -1,3 +1,4 @@
+/* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Partition } from 'src/app/models/partition.model';
@@ -33,7 +34,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.open = this.indicator.open;
     this.subscription.add(
-      this.projectService.openedProject.subscribe( (project: Project) => {
+      this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.createOptions();
       })
@@ -50,9 +51,9 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       let element;
 
       let found = false;
-      for (const f of this.project.forms){
-        for (const e of f.elements){
-          if (parameterValue.elementId === e.id){
+      for (const f of this.project.forms) {
+        for (const e of f.elements) {
+          if (parameterValue.elementId === e.id) {
             element = e;
             found = true;
             break;
@@ -63,7 +64,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
       }
 
-      for (const partition of element.partitions){
+      for (const partition of element.partitions) {
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
