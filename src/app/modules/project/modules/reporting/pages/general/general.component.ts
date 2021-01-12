@@ -181,7 +181,6 @@ export class GeneralComponent implements OnInit {
       }as SectionTitle);
 
       rows = rows.concat(this.project.extraIndicators);
-      console.log(rows);
       id += 1;
     }
 

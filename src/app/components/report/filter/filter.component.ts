@@ -73,15 +73,11 @@ export class FilterComponent implements OnInit{
       });
     }
 
-    console.log(this.filterForm);
     this.filterEvent.emit(this.filterForm.value);
 
     this.filterForm.valueChanges.subscribe(value => {
       this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
       this.filterEvent.emit(value as Filter);
     });
-    // this.projectService.openedProject.subscribe((project: Project) => {
-      // this.project = project;
-    // });
   }
 }

@@ -102,10 +102,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             return false;
           }
         });
-
-        console.log(value);
-        console.log(filteredRows);
-      
         this.dataSource = new MatTableDataSource(filteredRows);
       })
     );
