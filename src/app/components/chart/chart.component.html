@@ -1,21 +1,6 @@
-<div class="chart-field">
-    <!-- <mat-form-field appearance="fill">
-      
-      <mat-label>Chart Type</mat-label>
-      <mat-select (selectionChange)="changeChartType($event.value)">
-        <mat-option *ngFor="let type of chartTypes" [value]="type.value">
-          {{type.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field> -->
-  
-  <!--- only these lines actually create the chart. The buttons might depend on usage and could be disgarded-->
+<!-- these conditions hide the chart when there is no data -->
+<div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
     <div id="divChart">
         <canvas id="currentChart"></canvas>
     </div>
-  
-    <!-- <button mat-stroked-button (click)=addRandomData()>Add Data</button>
-    <button mat-stroked-button (click)=clearGraph()>Delete Graph</button> -->
-  </div>
-  
-  <!-- -->
+</div>

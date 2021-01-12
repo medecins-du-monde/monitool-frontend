@@ -1,3 +1,4 @@
+// tslint:disable: variable-name
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -9,7 +10,9 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
+import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 
+// TODO: Stock these interfaces in their own file
 export interface SectionTitle{
   title: string;
   sectionId: number;
@@ -51,8 +54,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService) { }
-  
-  content: any;
+
+  content: any[];
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
@@ -66,14 +69,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   project: Project;
   dimensions: string[];
-  columnsToDisplay: any;
-  openedSections = { 0: true };
+  columnsToDisplay: string[];
+  openedSections = {};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
-  isSectionTitle = (index, item: any): item is SectionTitle => (item as SectionTitle).title ? true : false;
-  isInfoRow = (index, item: any): item is InfoRow => (item as InfoRow).name ? true : false;
-  isGroupTitle = (index, item: any): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-  isProjectIndicator = (item: any): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+  isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
+  isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
+  isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
+  isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
     this.subscription.add(
@@ -144,24 +147,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   
   // Create new row if it s an indicator
   convertToRow = (item: Row | ProjectIndicator): Row => {
-    console.log('converting item');
     if (this.isProjectIndicator(item)){
-      console.log('entrou aqui');
       return this.indicatorToRow(item);
     }
     return item;
   }
-  
+
   // table after dimension change
   updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = this.filter.value.entity;
+      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
       const entities = this.filter.value.entity;
-      this.dimensions = this.project.groups.filter(group =>{
-        for(const e of group.members){
+      this.dimensions = this.project.groups.filter(group => {
+        for (const e of group.members){
           if (entities.includes(e.id)){
             return true;
           }
@@ -234,11 +235,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     console.log(row);
     return row;
   }
-  
+
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
     if (this.project.id && this.tableContent && this.filter
-        && this.dimensionIds && this.dimensions.length > 0){
+        && this.dimensionIds ){
 
       const currentFilter = this.filter.value;
       const modifiedFilter = {
@@ -250,33 +251,46 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       if (isArray(this.content)) {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
-            this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-              response => {
-                if (response) {
-                  this.roundResponse(response);
-                  const data = this.formatResponseToDataset(response);
-                  row.dataset = {
-                    label: row.name,
-                    data,
-                    labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                    borderColor: this.randomColor(),
-                    backgroundColor: this.randomColor(),
-                    fill: false
-                  };
-                  row.values = response;
-                }
+            if (this.dimensions.length > 0){
+              this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+                response => {
+                  if (response) {
+                    this.roundResponse(response);
+                    const data = this.formatResponseToDataset(response);
+                    row.dataset = {
+                      label: row.name,
+                      data,
+                      labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+                      borderColor: this.randomColor(),
+                      backgroundColor: this.randomColor(),
+                      fill: false
+                    };
+                    row.values = response;
 
+                    if (row.onChart){
+                      this.updateChart();
+                    }
+                  }
+                }
+              );
+            }
+            // this only happens when you group by collection sites or by group and you don't have any site or group in your project
+            else {
+              row.values = {};
+              row.dataset = {};
+              if (row.onChart){
                 this.updateChart();
               }
-            );
+            }
           }
           return row;
-        });
+        }
+        );
       }
     }
   }
 
-  getSiteOrGroupName(id: string){
+  getSiteOrGroupName(id: string): string{
     if (this.project && (this.dimensionIds.value === 'entity' ||  this.dimensionIds.value === 'group')){
       const site = this.project.entities.find(s => s.id === id);
       if (site !== undefined){
@@ -304,32 +318,28 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     const datasets = [];
-    let labels = [];
 
     for (const row of this.dataSource.data){
       if (row.onChart){
         datasets.push(row.dataset);
-        // this adds the dataset labels without having duplicate values
-        labels = labels.concat(row.dataset.labels.filter(key => labels.indexOf(key) < 0));
       }
     }
     const data = {
       labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
       datasets
     };
-
     this.chartService.addData(data);
   }
-  
-  // This allosws to round all values
-  roundResponse(response): number{
+
+  // This allows to round all values
+  roundResponse(response: unknown): unknown{
     for (const [key, value] of Object.entries(response)) {
       response[key] = round(value as number);
     }
     return response;
   }
 
-  formatResponseToDataset(response){
+  formatResponseToDataset(response: unknown): {x: string, y: number}[]{
     const data = [];
     for (const [key, value] of Object.entries(response)) {
       if (key !== '_total'){
@@ -342,9 +352,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  receiveIndicators(info): void{
+  receiveIndicators(info: AddedIndicators): void{
     let indicatorIndex = this.content.indexOf(info.indicator);
-    
+
     const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
@@ -354,22 +364,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       indicatorIndex += 1;
 
       const newRow = this.indicatorToRow(disaggregatedIndicators);
-      newRow.sectionId = info.indicator.sectionId
+      newRow.sectionId = info.indicator.sectionId;
 
       this.content.splice(indicatorIndex, 0, newRow);
       this.updateTableContent();
     }
   }
 
-  collapseIndicators(info): void{
+  collapseIndicators(info: {indicator: InfoRow}): void{
     const indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
 
     for (let i = indicatorIndex + 1; i < this.content.length; i += 1){
-      if(this.content[i] === currentIndicator.nextRow){
+      if (this.content[i] === currentIndicator.nextRow){
         break;
-      }  
+      }
       this.content.splice(i, 1);
       i -= 1;
     }
@@ -377,7 +387,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
 
-  randomNumberLimit(limit): number {
+  randomNumberLimit(limit: number): number {
     return Math.floor((Math.random() * limit) + 1);
   }
   randomColor(): string {
