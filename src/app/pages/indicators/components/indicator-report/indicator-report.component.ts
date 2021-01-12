@@ -50,21 +50,16 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   }
 
   buildIndicators(): void{
-    this.relatedProjects = this.relatedProjects.filter(project => project.status === 'Ongoing');
+    const projects = this.relatedProjects.filter(project => project.status === 'Ongoing' || project.status === 'Finished');
 
     const indicators = [];
-
-    for (const project of this.relatedProjects){
-      if (this.mainIndicator.id in project.crossCutting){
-
+    for (const project of projects){
         const newIndicator = new ProjectIndicator(project.crossCutting[this.mainIndicator.id]);
         newIndicator.display = `${project.country} - ${project.name}`;
         // this property is necessary for creating the menu options in the report table
         newIndicator.originProject = project;
         indicators.push(newIndicator);
-      }
     }
-
     this.tableContent.next(indicators);
   }
 

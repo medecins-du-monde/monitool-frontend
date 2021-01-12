@@ -9,6 +9,8 @@ import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Theme } from 'src/app/models/theme.model';
+import { Filter } from 'src/app/components/report/filter/filter.component';
+
 
 @Component({
   selector: 'app-general',
@@ -22,9 +24,12 @@ export class GeneralComponent implements OnInit {
               private themeService: ThemeService,
               private chartService: ChartService ) { }
 
-  protected project: Project;
+  project: Project;
 
-  filter = new BehaviorSubject<any>({});
+  filter = new BehaviorSubject<Filter>({
+    _start: new Date(),
+    _end: new Date(),
+  });
 
   dimensionIds = new BehaviorSubject('');
 

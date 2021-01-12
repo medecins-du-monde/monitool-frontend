@@ -99,7 +99,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: partitionElement.name,
         baseline: 0,
-        target: 0  
+        target: 0 ,
+        originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
       }))
     }
 

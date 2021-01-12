@@ -1,6 +1,6 @@
 <app-object-grouping (dimensionEvent)="receiveDimension($event)"></app-object-grouping>
 
-<app-filter (filterEvent)="receiveFilter($event)"></app-filter>
+<app-filter (filterEvent)="receiveFilter($event)" [project]="project"></app-filter>
 
 <app-chart [class.hide-chart]="!(chartData.datasets && chartData.datasets.length > 0)" [options]="options" [data]="chartData"></app-chart>
 

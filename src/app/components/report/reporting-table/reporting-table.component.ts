@@ -78,7 +78,26 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.rows.subscribe(value => {
-        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openedSections[row.sectionId]));
+        this.dataSource = new MatTableDataSource(value.filter(row => {
+          if (this.isSectionTitle(0, row)){
+            return true;
+          }
+
+          if (this.openedSections[row.sectionId]){
+            if (this.isInfoRow(0, row)) {
+              if (row.originProject){
+                if (this.filter.value.finished){
+                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished'; 
+                }else{
+                  return row.originProject.status === 'Ongoing';
+                }
+              }
+            }
+            return true;
+          } else {
+            return false;
+          }
+        }));
       })
     );
 
@@ -109,8 +128,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.tableContent.subscribe(content => {
-        console.log('new table content');
-        console.log(content);
         this.content = content;
         this.updateTableContent();
       })
@@ -144,9 +161,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   
   // Create new row if it s an indicator
   convertToRow = (item: Row | ProjectIndicator): Row => {
-    console.log('converting item');
     if (this.isProjectIndicator(item)){
-      console.log('entrou aqui');
       return this.indicatorToRow(item);
     }
     return item;
@@ -231,13 +246,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       );
     }
-    console.log(row);
     return row;
   }
   
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
-    if (this.project.id && this.tableContent && this.filter
+    if (this.tableContent && this.filter
         && this.dimensionIds && this.dimensions.length > 0){
 
       const currentFilter = this.filter.value;
@@ -250,7 +264,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       if (isArray(this.content)) {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
-            this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
+            const currentProject = row.originProject ? row.originProject : this.project;
+            this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
               response => {
                 if (response) {
                   this.roundResponse(response);
