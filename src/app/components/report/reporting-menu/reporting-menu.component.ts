@@ -1,8 +1,16 @@
+/* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Partition } from 'src/app/models/partition.model';
 import { ProjectIndicator } from 'src/app/models/project-indicator.model';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { InfoRow } from '../reporting-table/reporting-table.component';
+
+export interface AddedIndicators {
+  indicator: InfoRow;
+  disaggregatedIndicators: ProjectIndicator[];
+}
 
 @Component({
   selector: 'app-reporting-menu',
@@ -15,8 +23,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   options: any[];
   open: boolean;
-  @Output() addIndicatorsEvent: EventEmitter<any> = new EventEmitter<any[]>();
-  @Output() collapseIndicatorsEvent: EventEmitter<any> = new EventEmitter<any[]>();
+  @Output() addIndicatorsEvent: EventEmitter<AddedIndicators> = new EventEmitter<AddedIndicators>();
+  @Output() collapseIndicatorsEvent: EventEmitter<{indicator: InfoRow}> = new EventEmitter<{indicator: InfoRow}>();
 
   private subscription: Subscription = new Subscription();
   project: Project;
@@ -26,41 +34,40 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.open = this.indicator.open;
     this.subscription.add(
-      this.projectService.openedProject.subscribe( (project: Project) => {
+      this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        this.createOptions()
+        this.createOptions();
       })
     );
   }
 
-  createOptions() {
+  createOptions(): void {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
 
-    let currentProject = this.project;
-
-    if (this.indicator.originProject){
-      currentProject = this.indicator.originProject;
-    }
+    const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
 
     if (numberOfParameters === 1){
       const parameterValue: any = Object.entries(this.indicator.computation.parameters)[0][1];
-      let element = undefined;
+
+      let element;
 
       let found = false;
-      for (const f of currentProject.forms){
-        for (const e of f.elements){
-          if (parameterValue.elementId === e.id){
+      for (const f of currentProject.forms) {
+        for (const e of f.elements) {
+          if (parameterValue.elementId === e.id) {
             element = e;
             found = true;
             break;
           }
         }
-        if (found) break;
+        if (found){
+          break;
+        }
       }
       
 
-      for (const partition of element.partitions){
+      for (const partition of element.partitions) {
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
@@ -68,32 +75,35 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           this.options.push({
             value: partition.name,
             action: this.partitionOption,
-            partition: partition
+            partition
           });
         }
       }
     }
 
-    if (numberOfParameters > 1){ 
+    if (numberOfParameters > 1){
       this.options.push({
         value: 'Computation',
         action: this.computationOption
-      })
+      });
     }
   }
 
-  partitionOption = (partition) => {
+  partitionOption = (partition: Partition): void => {
     this.open = !this.open;
 
     const disaggregatedIndicators = [];
     let newComputation;
-    
+
     for (const partitionElement of partition.elements){
-      //clones the computation
+      // clones the computation
       newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
-      const parameterValue = Object.values(newComputation.parameters)[0];
-      parameterValue['filter'][partition.id] = [partitionElement.id];
+      const parameterValue: any = Object.values(newComputation.parameters)[0];
+
+      if (parameterValue.filter) {
+        parameterValue.filter[partition.id] = [partitionElement.id];
+      }
 
       disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
@@ -112,24 +122,24 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     );
   }
 
-  computationOption =  () => {
+  computationOption =  (): void  => {
     this.open = !this.open;
     const disaggregatedIndicators = [];
     let newComputation;
 
-    for(const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
+    for (const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
       newComputation = {
         formula: parameter,
         parameters: {}
-      }
+      };
       newComputation.parameters[parameter] = value;
 
       disaggregatedIndicators.push(new ProjectIndicator({
         computation: newComputation,
         display: parameter,
         baseline: 0,
-        target: 0     
-      }))
+        target: 0
+      }));
     }
     this.addIndicatorsEvent.emit(
       {
@@ -139,14 +149,14 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     );
   }
 
-  closeIndicator = () =>{
+  closeIndicator = (): void => {
     this.open = !this.open;
     this.collapseIndicatorsEvent.emit({
       indicator: this.indicator
-    })
+    });
   }
-  
-  ngOnDestroy(){
+
+  ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 

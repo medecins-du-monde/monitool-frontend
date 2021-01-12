@@ -2,6 +2,6 @@
 
 <app-filter (filterEvent)="receiveFilter($event)" [project]="project"></app-filter>
 
-<app-chart [class.hide-chart]="!(chartData.datasets && chartData.datasets.length > 0)" [options]="options" [data]="chartData"></app-chart>
+<app-chart [options]="options" [data]="chartData"></app-chart>
 
 <app-reporting-table [dimensionIds]="dimensionIds" [filter]="filter" [tableContent]=tableContent ></app-reporting-table>
