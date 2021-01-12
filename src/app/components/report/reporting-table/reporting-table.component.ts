@@ -11,6 +11,7 @@ import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
+import { Filter } from 'src/app/components/report/filter/filter.component';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -59,7 +60,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
-  @Input() filter: BehaviorSubject<any>;
+  @Input() filter: BehaviorSubject<Filter>;
   rows = new BehaviorSubject<Row[]>([]);
 
   dataSource = new MatTableDataSource([]);
@@ -144,6 +145,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
 
+      this.content = this.content.map(this.convertToRow);
+
       for (const row of this.content){
         if (this.isSectionTitle(0, row)){
           id += 1;
@@ -151,8 +154,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
         row.sectionId = id;
       }
-
-      this.content = this.content.map(this.convertToRow);
 
       this.rows.next(this.content);
     }

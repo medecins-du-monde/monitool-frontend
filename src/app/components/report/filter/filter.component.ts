@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter, Input, Output} from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, OnDestroy} from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/entity.model';
+import { Subscription } from 'rxjs';
 
 
 export interface Filter{
@@ -17,7 +18,7 @@ export interface Filter{
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit{
+export class FilterComponent implements OnInit, OnDestroy{
 
   collapsed = true;
 
@@ -29,6 +30,8 @@ export class FilterComponent implements OnInit{
   @Input() isCrosscuttingReport = false;
   @Input() project: Project;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
+
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -51,33 +54,50 @@ export class FilterComponent implements OnInit{
     let endDate = new Date((new Date()).getFullYear(), 11, 31);
     let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
 
-    if (this.project){
-      this.sites = this.project.entities;
-      endDate = this.project.end;
-      startDate = this.project.start;
-
-      this.selectedSites = this.project.entities.map(entity => entity);
-    }
-
     if (this.isCrosscuttingReport){
       this.filterForm = this.fb.group({
         _start: [startDate, Validators.required],
         _end: [endDate, Validators.required],
         finished: [false, Validators.required],
       });
-    } else {
-      this.filterForm = this.fb.group({
-        _start: [startDate, Validators.required],
-        _end: [endDate, Validators.required ],
-        entity: [this.project.entities.map(x => x.id), Validators.required]
+      this.filterEvent.emit(this.filterForm.value);
+
+      this.filterForm.valueChanges.subscribe(value => {
+        this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
+        this.filterEvent.emit(value as Filter);
       });
+    } else {
+      this.subscription.add(
+        this.projectService.openedProject.subscribe( (project: Project): void => {
+          this.project = project;
+      
+          if (this.project){
+            this.sites = this.project.entities;
+            endDate = this.project.end;
+            startDate = this.project.start;
+
+            this.selectedSites = this.project.entities.map(entity => entity);
+          }
+
+          this.filterForm = this.fb.group({
+            _start: [startDate, Validators.required],
+            _end: [endDate, Validators.required ],
+            entity: [this.project.entities.map(x => x.id), Validators.required]
+          });
+          this.filterEvent.emit(this.filterForm.value);
+
+          this.filterForm.valueChanges.subscribe(value => {
+            this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
+            this.filterEvent.emit(value as Filter);
+          });
+        })
+      )
     }
 
-    this.filterEvent.emit(this.filterForm.value);
+    
+  }
 
-    this.filterForm.valueChanges.subscribe(value => {
-      this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
-      this.filterEvent.emit(value as Filter);
-    });
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 }
