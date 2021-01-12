@@ -45,7 +45,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   ];
 
   private subscription: Subscription = new Subscription();
-  
+
   constructor(private chartService: ChartService) { }
 
   ngOnInit(): void {
