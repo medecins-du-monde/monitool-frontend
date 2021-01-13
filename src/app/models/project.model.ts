@@ -36,7 +36,7 @@ export class Project implements Deserializable {
         return 'Deleted';
     }
 
-    get percentages(): unknown{
+    get percentages(){
         return {
             basics: ( this.name && this.country && this.themes.length > 0 ) ? 100 : 0,
             sites: ( this.entities.length > 0 ) ? 100 : 0,
