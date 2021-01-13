@@ -1,9 +1,11 @@
+@import "src/assets/theme/size_vars.scss";
+
 .toolbar-logo {
     height: 100%;
     box-sizing: border-box;
     padding: 3px 0;
     margin-right: 32px;
-    font-size: 18px;
+    font-size: $big_text;
     
     img {
         height: 100%;
@@ -13,26 +15,26 @@
 
     @media screen and (max-width: 645px) {
         margin-right: auto;
-        font-size: 16px;
+        font-size: $normal_text;
     }
 }
 
 button {
     @media screen and (max-width: 645px) {
-        font-size: 16px;
+        font-size: $normal_text;
     }
-    font-size: 18px;
+    font-size: $big_text;
 }
 
 .toolbar-nav {
     @media screen and (max-width: 645px) {
         margin: 0 8px;
-        font-size: 16px;
+        font-size: $normal_text;
         line-height: 56px;
     }
     display: block;
     margin-right: auto;
-    font-size: 18px;
+    font-size: $big_text;
     .toolbar-nav-list {
         list-style: none;
         margin: 0;

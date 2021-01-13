@@ -1,6 +1,6 @@
 @import '~@angular/material/theming';
-@import "./stylesheets/variables.scss";
-
+@import "./assets/theme/size_vars.scss";
+@import "./assets/theme/font_vars.scss";
 @include mat-core();
 
 $mdm-primary-colors: (
@@ -140,7 +140,7 @@ html, body { height: 100%; }
 body {
     margin: 0;
     font-family: $main-font;
-    font-size: 18px;
+    font-size: $big_text;
     color: var(--main);
 }
 
@@ -177,7 +177,7 @@ body {
 
 .drawer-page {
     overflow: auto;
-    padding: 24px;
+    padding: 10px;
     flex: 1;
     margin-bottom: 56px;
 
@@ -188,15 +188,20 @@ body {
     }
 }
 
+mat-hint {
+font-size: $small_text;
+display: flex;
+padding-top: 5px;
+}
 // === TEXT ===
 .mdm-title {
-    font-size: 18px;
+    font-size: $big_text;
     color: #151515;
     line-height: 24px;
 }
 
 .mdm-sub-title {
-    font-size: 14px;
+    font-size: $small_text;
     color: #777777;
     line-height: 16px;
     padding-left: 8px;
@@ -205,10 +210,17 @@ body {
 // === SECTIONS ===
 .info-section {
     background-color: #ececec;
-    font-size: 12px;
-    padding: 12px 16px;
+    font-size: $normal_text;
+    padding: 10px;
     color: #777b7e;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    p {
+        margin: 0;
+    }
 
     h3{
         font-weight: bold;
@@ -278,7 +290,7 @@ body {
     .card-info {
         display: flex;
         flex-direction: column;
-        font-size: 14px;
+        font-size: $small_text;
         margin-bottom: 8px;
 
         .card-info-title {
@@ -304,7 +316,7 @@ body {
             mat-icon{
                 height: 14px;
                 width: 14px;
-                font-size: 14px;
+                font-size: $small_text;
                 line-height: 14px;
                 vertical-align: middle;
             }
@@ -326,7 +338,7 @@ body {
         }
 
         .mat-card-title {
-            font-size: 16px;
+            font-size: $normal_text;
             margin-bottom: 0;
         }
     }
@@ -353,7 +365,7 @@ body {
 }
 
 .mat-chip {
-    font-size: 12px;
+    font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
 
@@ -370,7 +382,7 @@ body {
     border: 1px solid #c8c9cc !important;
     height: 32px;
     padding: 0 12px !important;
-    font-size: 14px;
+    font-size: $small_text;
 
     mat-icon{
         line-height: 20px;
@@ -384,7 +396,7 @@ body {
         .mat-icon {
             height: 14px;
             width: 14px;
-            font-size: 14px;
+            font-size: $small_text;
             line-height: 14px;
             margin-right: 8px;
         }
@@ -430,7 +442,7 @@ body {
 // === TABLE ===
 .mdm-table {
     width: 100%;
-    margin-top: 24px;
+    margin-top: 15px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #dddddd;
 
@@ -440,11 +452,11 @@ body {
         }
 
         td {
-            font-size: 14px;
+            font-size: $small_text;
         }
 
         th {
-            font-size: 18px;
+            font-size: $big_text;
             font-weight: bold;
             color: black;
         }
@@ -465,7 +477,7 @@ body {
     }
 
     th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-        padding: 8px 8px 8px 16px;
+        padding: 8px 5px;
     }
 
     th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
