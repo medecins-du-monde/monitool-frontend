@@ -82,7 +82,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription.add(
       this.rows.subscribe(value => {
-        
+
         const filteredRows = value.filter(row => {
           if (this.isSectionTitle(0, row)){
             return true;
@@ -92,7 +92,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             if (this.isInfoRow(0, row)) {
               if (row.originProject){
                 if (this.filter.value.finished){
-                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished'; 
+                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished';
                 }else{
                   return row.originProject.status === 'Ongoing';
                 }
@@ -164,7 +164,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
   }
-  
+
   // Create new row if it s an indicator
   convertToRow = (item: Row | ProjectIndicator): Row => {
     if (this.isProjectIndicator(item)){
@@ -299,7 +299,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           return row;
         });
       }
-      
+
     }
   }
 

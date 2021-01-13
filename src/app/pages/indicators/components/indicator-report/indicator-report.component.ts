@@ -19,16 +19,15 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
               private indicatorService: IndicatorService,
               private chartService: ChartService,
               private route: ActivatedRoute ) { }
- 
+
   // protected project: Project;
-  
   filter = new BehaviorSubject<any>({});
 
   dimensionIds = new BehaviorSubject('');
 
   tableContent = new BehaviorSubject<any[]>([]);
-  
-  options =  {fill: false};
+
+  options = {fill: false};
 
   mainIndicator: Indicator;
   relatedProjects: Project[];
@@ -42,11 +41,11 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(val => {
         this.indicatorService.get(val.id).then((response: Indicator) => {
           this.mainIndicator = response;
-          this.projectService.listByIndicator(this.mainIndicator.id).then(response => {
-            this.relatedProjects = response;
+          this.projectService.listByIndicator(this.mainIndicator.id).then(list => {
+            this.relatedProjects = list;
             this.buildIndicators();
-          })
-        })
+          });
+        });
       })
     );
   }

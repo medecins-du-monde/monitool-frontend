@@ -48,7 +48,7 @@ export class FilterComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    
+
     // by default the end date is the last day of the current year
     // and the start date is the first day of the previous year
     let endDate = new Date((new Date()).getFullYear(), 11, 31);
@@ -70,7 +70,7 @@ export class FilterComponent implements OnInit, OnDestroy{
       this.subscription.add(
         this.projectService.openedProject.subscribe( (project: Project): void => {
           this.project = project;
-      
+
           if (this.project){
             this.sites = this.project.entities;
             endDate = this.project.end;
@@ -91,10 +91,9 @@ export class FilterComponent implements OnInit, OnDestroy{
             this.filterEvent.emit(value as Filter);
           });
         })
-      )
+      );
     }
 
-    
   }
 
   ngOnDestroy(): void{

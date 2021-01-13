@@ -65,7 +65,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           break;
         }
       }
-      
+
 
       for (const partition of element.partitions) {
         if (parameterValue.filter &&
@@ -111,7 +111,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         baseline: 0,
         target: 0 ,
         originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
-      }))
+      }));
     }
 
     this.addIndicatorsEvent.emit(

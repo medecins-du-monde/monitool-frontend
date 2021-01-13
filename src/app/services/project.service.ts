@@ -46,7 +46,7 @@ export class ProjectService {
     return project;
   }
 
-  public async save(project: Project) {
+  public async save(project: Project){
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
@@ -73,12 +73,12 @@ export class ProjectService {
   }
 
   public async listRevisions(id: string, limit: number) {
-    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset: 0, limit } });
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, {params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
 
   public async listByIndicator(indicatorId: string): Promise<Project[]>{
-    const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId: indicatorId} });
+    const response: any = await this.apiService.get(`/resources/project`, {params: { mode: 'crossCutting', indicatorId} });
     return response.map(x => new Project(x));
   }
 }

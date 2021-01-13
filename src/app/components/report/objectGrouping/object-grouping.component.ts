@@ -11,7 +11,7 @@ export class ObjectGroupingComponent implements OnInit {
   dimensionForm: FormGroup;
   @Input() isCrosscuttingReport = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
-  
+
   groupOptions: { value: string; viewValue: string; }[];
 
   constructor(private fb: FormBuilder ) { }
