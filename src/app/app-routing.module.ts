@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { AuthGuardService as AuthGuard } from './guards/auth-guard.service';
 
 const routes: Routes = [{
@@ -12,7 +11,6 @@ const routes: Routes = [{
   path: 'login',
   loadChildren: () => import('./components/login/login.module')
   .then(m => m.LoginModule),
-  // component: LoginComponent,
 },
 {
   path: 'home',
@@ -44,12 +42,6 @@ const routes: Routes = [{
     .then(m => m.IndicatorsModule),
   canActivate : [AuthGuard]
 },
-/*{
-  path: 'indicators/indicator/:id',
-  loadChildren: () => import('./pages/indicators/indicators.module')
-    .then(m => m.IndicatorsModule),
-  canActivate : [AuthGuard],
-},*/
 {
   path: '**',
   redirectTo: 'home',

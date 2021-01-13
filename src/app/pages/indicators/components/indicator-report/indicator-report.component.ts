@@ -20,7 +20,6 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
               private chartService: ChartService,
               private route: ActivatedRoute ) { }
 
-  // protected project: Project;
   filter = new BehaviorSubject<any>({});
 
   dimensionIds = new BehaviorSubject('');
