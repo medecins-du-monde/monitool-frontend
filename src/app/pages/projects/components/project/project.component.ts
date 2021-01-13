@@ -26,7 +26,7 @@ export class ProjectComponent implements OnInit {
   currentUser: User;
   projectOwner: boolean;
 
-  get currentLang() {
+  get currentLang(): string{
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -52,15 +52,15 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  onDelete() {
+  onDelete(): void{
     this.delete.emit(this.project);
   }
 
-  onRestore() {
+  onRestore(): void{
     this.restore.emit(this.project);
   }
 
-  onClone() {
+  onClone(): void{
     const dialogRef = this.dialog.open(CloneProjectModalComponent);
 
     dialogRef.afterClosed().subscribe(res => {
