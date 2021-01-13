@@ -36,6 +36,8 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
+    this.chartService.clearChart();
+
     this.subscription.add(
       this.route.params.subscribe(val => {
         this.indicatorService.get(val.id).then((response: Indicator) => {
