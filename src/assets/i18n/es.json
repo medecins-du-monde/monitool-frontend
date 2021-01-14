@@ -4,6 +4,9 @@
     "Acronym": "Sigla",
     "Add": "Añadir",
     "AddIndicator": "Añadir un indicador",
+    "AddPurpose": "Añadir un objetivo específico",
+    "AddOutput": "Añadir un resultado",
+    "AddActivity" : "Añadir una actividad",
     "AddNewUser": "Añadir un usario",
     "AddPartition": "Añadir una desagregación",
     "AddVariableName": "Qué esta midiendo?",
@@ -429,6 +432,9 @@
         "Entre aqui la lista de todos los usuarios que deben tener acceso a los datos del programa."
     ],
     "ReadOnlyUser": "Consulta unicamente",
+    "RemoveActivity": "Suprimir la actividad",
+    "RemoveOutput": "Suprimir el resultado",
+    "RemovePurpose": "Suprimir el objectivo especifico",
     "Reporting": "Informe",
     "ReportingHomeBlueSection": [
         "Use ",
@@ -535,10 +541,12 @@
     "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma",
     "Parameter": "Parámetro",
     "Variable": "Variable",
-    "Help.Variable": "Ayuda.Variable",
+    "Help": {
+        "Variable": "De que variable viene esta información?",
+        "Partition": "Qué desagregaciones son relevantes?"
+    },
     "Disaggregations": "Desagregaciones",
     "partitionElement": "elemento de partición",
-    "Help.Partition": "Ayuda.Partition",
     "ApplyChanges" : "Aplicar cambios",
     "elementsymbol" :"sbanyour"
 }

@@ -4,6 +4,9 @@
     "Acronym": "Sigle",
     "Add": "Ajouter",
     "AddIndicator": "Ajouter un indicateur",
+    "AddPurpose": "Ajouter un objectif spécifique",
+    "AddOutput": "Ajouter un résultat",
+    "AddActivity" : "Ajouter une activité",
     "AddNewUser": "Ajouter un utilisateur",
     "AddPartition": "Ajouter une désagrégation",
     "AddVariableName": "Que mesurez-vous?",
@@ -426,6 +429,9 @@
         "Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
     ],
     "ReadOnlyUser": "Consultation uniquement",
+    "RemoveActivity": "Supprimer l'activité",
+    "RemoveOutput": "Supprimer le résultat",
+    "RemovePurpose": "Supprimer l'objectif spécifique",
     "Reporting": "Rapport",
     "ReportingHomeBlueSection": [
         "Utilisez ",
@@ -530,12 +536,14 @@
     "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
     "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue",
     "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore",
-     "Parameter": "Paramètre",
-     "Variable": "Variable",
-     "Help.Variable": "Aide.variable",
-     "Disaggregations": "Désagrégations",
-     "partitionElement": "Élément de partition",
-     "Help.Partition": "Aide.Partition",
-     "ApplyChanges" : "Appliquer les modifications",
-     "elementsymbol" :"sbanyouraaaa"
+    "Parameter": "Paramètre",
+    "Variable": "Variable",
+    "Help": {
+        "Variable": "De quelle variable provient cette information?",
+        "Partition": "Quelles désagrégations sont concernées?"
+    },
+    "Disaggregations": "Désagrégations",
+    "partitionElement": "Élément de partition",
+    "ApplyChanges" : "Appliquer les modifications",
+    "elementsymbol" :"sbanyouraaaa"
 }
