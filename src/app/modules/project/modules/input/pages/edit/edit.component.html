@@ -32,7 +32,7 @@
         <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
             <ng-container *ngFor="let column of table.displayedColumns; let j = index" matColumnDef="{{ column }}">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <td mat-cell *matCellDef="let element; let i = index" [ngClass]="{'tableLabel': isLabelCell(k, i, j)}" class="input-td">
+                <td mat-cell *matCellDef="let element; let i = index" (paste)="onPaste($event, table.id, j)" [ngClass]="{'tableLabel': isLabelCell(k, i, j)}" class="input-td">
                     <div class="input-div" *ngIf="isInputCell(k, i, j) !== false; else elseBlock">
                         <input matInput [formControl]="inputForm.get('values').get(table.id)['controls'][isInputCell(k, i, j)]" />
                     </div>

@@ -72,6 +72,21 @@ export class EditComponent implements OnInit, OnDestroy {
         this.updateData();
       })
     );
+
+  }
+
+  onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
+    const data = [];
+    const row_data = event.clipboardData.getData('text').split('\n');
+
+    row_data.forEach(row => {
+      row.split('\t').forEach(column_data => {
+        data.push(column_data);
+      });
+    });
+    for (let i = index; i < this.inputForm.value.values[`${tableId}`].length; i++) {
+      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i] ? data[i] : 0);
+    }
   }
 
   async updateData(){
@@ -156,6 +171,8 @@ export class EditComponent implements OnInit, OnDestroy {
     };
 
     this.inputForm = this.fb.group(formGroup);
+    console.log('inputForm : ');
+    console.log(this.inputForm.value);
   }
 
   convertToNumber(val) {
