@@ -231,13 +231,11 @@ padding-top: 5px;
     }
 
     .info-buttons {
-        float: right;
-        margin-left: 4px;
         display: flex;
         flex-direction: column;
-
-        button {
-            width: auto;
+        align-self: flex-end;
+        height:30%;
+        a {
             margin-bottom: 4px;
         }
     }
