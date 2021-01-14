@@ -215,8 +215,13 @@ padding-top: 5px;
     color: #777b7e;
     margin-bottom: 14px;
     display: flex;
-    flex-direction: column;
+    @media screen and (max-width: $breakpoint-xs) {
+    flex-direction: column;    
+    }
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    text-align: justify;
 
     p {
         margin: 0;
