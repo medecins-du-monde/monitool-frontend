@@ -2,4 +2,5 @@
     <mat-label>{{ 'Search' | translate }}</mat-label>
     <mat-icon svgIcon="search" matPrefix></mat-icon>
     <input type="text" matInput placeholder="{{ 'Search' | translate }}" [(ngModel)]="searchText" (ngModelChange)="onSearch($event)">
+    <mat-hint>{{ 'SearchHelp' | translate }}</mat-hint>
 </mat-form-field>
