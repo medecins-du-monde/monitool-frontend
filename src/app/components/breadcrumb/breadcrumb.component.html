@@ -1,0 +1,12 @@
+<p>breadcrumb works!</p>
+
+<ul>
+    <li *ngFor="let item of items">
+        <a *ngIf="item.link; else elseBlock" [routerLink]="item.link" routerLinkActive="active-link">
+            {{item.value | translate }}
+        </a>
+        <ng-template #elseBlock>
+            {{item.value | translate }}
+        </ng-template>
+    </li>
+</ul>
