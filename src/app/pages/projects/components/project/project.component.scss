@@ -1,5 +1,5 @@
 .card-header {
-  .project-country {
+  .project-country { 
     height: 24px;
     width: 24px;
 
@@ -23,4 +23,8 @@
 
 .icon-default {
   cursor: default;
+}
+
+mat-card-title {
+  word-break: break-word;
 }

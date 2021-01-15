@@ -20,15 +20,18 @@ export class ProjectsComponent implements OnInit {
   statuses = [
     {
       text: 'OngoingPlural',
-      value: 'Ongoing'
+      value: 'Ongoing',
+      count: 0
     },
     {
       text: 'FinishedPlural',
-      value: 'Finished'
+      value: 'Finished',
+      count: 0
     },
     {
       text: 'DeletedPlural',
-      value: 'Deleted'
+      value: 'Deleted',
+      count: 0
     }
   ];
 
@@ -99,8 +102,15 @@ export class ProjectsComponent implements OnInit {
           return 1;
         }
       });
+      this.setCountProjectStatus(res);
       return listToReturn;
     });
+  }
+
+  setCountProjectStatus(res : Project[]) {
+      this.statuses.forEach((value, index) => {
+        this.statuses[index].count = res.filter(project => project.status === value.value).length | 0;
+      });
   }
 
   onCreate(): void {
