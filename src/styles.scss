@@ -278,6 +278,9 @@ padding-top: 5px;
 
     .card-header {
         border-bottom: 1px solid rgba(144, 144, 144, 0.24);
+        padding: 16px 0px 16px 16px;
+    
+        
     }
 
     .card-info {
@@ -285,16 +288,17 @@ padding-top: 5px;
         flex-direction: column;
         font-size: $small_text;
         margin-bottom: 8px;
+        padding: 0px 16px 16px 16px;
 
         .card-info-title {
-            flex: 1;
+            width: 30%;
 
             &:not(b) {
                 color: #909090;
             }
         }
         .card-info-value {
-            flex: 1;
+            width: 30%;
         }
 
         .computation {
@@ -325,6 +329,8 @@ padding-top: 5px;
         align-items: center;
         padding-bottom: 8px;
         margin-bottom: 12px;
+        background-color: #ddd;
+     
 
         .mat-card-header-text {
             margin: 0 0 0 16px;
@@ -361,19 +367,20 @@ padding-top: 5px;
     font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
-
     &.mat-chip-selected {
         &.mat-accent {
             color: white !important;
         }
     }
+    
 }
+
 
 // === BUTTONS ===
 .mdm-button {
     background-color: white;
     border: 1px solid #c8c9cc !important;
-    height: 32px;
+    height: 26px;
     padding: 0 12px !important;
     font-size: $small_text;
 
@@ -400,9 +407,10 @@ padding-top: 5px;
         border-radius: 4px;
 
         &:not(.small-button) {
-            height: 32px;
-            width: 32px;
+            height: 26px;
+            width: 26px;
             line-height: 32px;
+            
         }
 
         &.small-button {
@@ -411,6 +419,7 @@ padding-top: 5px;
 
         .mat-icon {
             margin: 0;
+           
         }
     }
 }
