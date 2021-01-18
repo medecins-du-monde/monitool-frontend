@@ -1,0 +1,17 @@
+@import "src/assets/theme/size_vars.scss";
+
+.container{
+    padding: 20px 10px 10px 10px;
+}
+ul li{
+    font-size: $big_text;
+    display: inline;
+    mat-icon{
+        vertical-align: middle;
+        line-height: 22px;
+    }
+
+    .item:not(.ng-star-inserted){
+        padding: 0 10px;
+    }
+}

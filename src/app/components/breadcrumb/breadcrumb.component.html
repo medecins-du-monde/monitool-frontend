@@ -1,12 +1,13 @@
-<p>breadcrumb works!</p>
-
-<ul>
-    <li *ngFor="let item of items">
-        <a *ngIf="item.link; else elseBlock" [routerLink]="item.link" routerLinkActive="active-link">
-            {{item.value | translate }}
-        </a>
-        <ng-template #elseBlock>
-            {{item.value | translate }}
-        </ng-template>
-    </li>
-</ul>
+<div class="container">
+    <ul>
+        <li *ngFor="let item of items; let i = index">
+            <mat-icon *ngIf="i > 0">keyboard_arrow_right</mat-icon>
+            <span class="item">
+                <a *ngIf="item.link; else elseBlock" [routerLink]="item.link" routerLinkActive="active-link">{{item.value | translate }}</a>
+            </span>
+            <ng-template #elseBlock>
+                <span class="item">{{ item.value | translate }}</span>
+            </ng-template>
+        </li>
+    </ul>
+</div>
