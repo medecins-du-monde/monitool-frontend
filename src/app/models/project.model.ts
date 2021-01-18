@@ -29,14 +29,14 @@ export class Project implements Deserializable {
     users: User[];
     visibility: string;
 
-    get status() {
+    get status(): string{
         if ( this.active ) {
             return this.end > new Date() ? 'Ongoing' : 'Finished';
         }
         return 'Deleted';
     }
 
-    get percentages() {
+    get percentages(){
         return {
             basics: ( this.name && this.country && this.themes.length > 0 ) ? 100 : 0,
             sites: ( this.entities.length > 0 ) ? 100 : 0,
@@ -46,13 +46,10 @@ export class Project implements Deserializable {
             logicalFramesUpdate: 0,
             crossCuttingUpdate: 0,
             extraIndicatorsUpdate: 0
-            // lfIndicatorsDone: lfIndicators.filter(i => !!i.computation).length / lfIndicators.length,
-            // ccIndicatorsDone: ccIndicators.filter(i => !!this.project.crossCutting[i._id]).length / ccIndicators.length,
-            // extraIndicatorsDone: this.project.extraIndicators.filter(i => !!i.computation).length / this.project.extraIndicators.length
         };
     }
 
-    get countryImage() {
+    get countryImage(): string{
         if ( this.country === 'Burkina Faso' ) {
             return 'assets/images/burkina-flag.png';
         } else {
@@ -60,7 +57,7 @@ export class Project implements Deserializable {
         }
     }
 
-    constructor(input?: any) {
+    constructor(input?: any){
         this.deserialize(input);
     }
 
@@ -70,7 +67,7 @@ export class Project implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input._id) ? input._id : null;
+        this.id = (input && input._id) ? input._id : `project:${uuid()}`;
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
@@ -83,7 +80,6 @@ export class Project implements Deserializable {
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
             return group;
         }) : [];
-        // this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -109,7 +105,7 @@ export class Project implements Deserializable {
         return this;
     }
 
-    formatCrossCutting(): any {
+    formatCrossCutting(): any{
       const crossCuttingFormated = {};
       Object.keys(this.crossCutting).map(x => {
         crossCuttingFormated[x] = new ProjectIndicator(this.crossCutting[x]).serialize(true);
@@ -136,18 +132,12 @@ export class Project implements Deserializable {
             visibility: this.visibility,
             _id: this.id
         };
-      Object.assign(serialized, this.rev ? { _rev: this.rev } : null );
+      Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
       return serialized;
     }
 
     copy(): Project {
         return _.cloneDeep(this);
-        // const obj = this.serialize();
-        // const themes = this.themes;
-        // const project = new Project(obj);
-        // project.themes = themes;
-        // return project;
-        // return new Project(JSON.parse(JSON.stringify(this)));
     }
 
     equals(project: Project): boolean {
