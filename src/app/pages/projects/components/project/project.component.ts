@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { InputService } from 'src/app/services/input.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
@@ -25,6 +26,7 @@ export class ProjectComponent implements OnInit {
 
   currentUser: User;
   projectOwner: boolean;
+  lastEntry: string = "";
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -35,15 +37,43 @@ export class ProjectComponent implements OnInit {
     private projectService: ProjectService,
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
-  ) {
-   }
+    private dialog: MatDialog,
+    private inputService: InputService,
+  ) {}
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
+      this.getLastEntry();
     });
+    
+  }
+
+  getLastEntry(){
+
+    if(this.project.forms.length > 0){
+      this.project.forms.forEach((value, index) => {
+        this.inputService.list(this.project.id, value.id).then(
+          data => {            
+            let items = Object.entries(data).slice();
+            items.forEach(item => {
+              item.forEach(itemData => {
+                if(typeof itemData === "string" && itemData != null){
+                  let itemDataSplit = itemData.split(":");
+                  this.inputService.get( this.project.id, value.entities[0].id, value.id, itemDataSplit[5]).then(
+                    entryData => {
+                      if(entryData[0].updatedAt > this.lastEntry){
+                        this.lastEntry = entryData[0].updatedAt;
+                      }
+                     }
+                  );
+                }
+              })
+            })
+          })        
+      });
+    }
   }
 
   async onOpen(): Promise<void> {
