@@ -20,6 +20,7 @@ export class IndicatorModalComponent implements OnInit {
   private parser: Parser;
   private symbols: any;
   dataChanged = false;
+  isdisabled = false;
   private initDataSource: any;
 
   public computationTypes = [
@@ -58,6 +59,7 @@ export class IndicatorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isdisabled=false;
     this.loadData();
     // Creation of the init value for the reset
     this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;

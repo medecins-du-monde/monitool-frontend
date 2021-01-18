@@ -37,7 +37,7 @@ export class ProjectIndicator implements Deserializable {
   deserialize(input: any): this {
     Object.assign(this, input);
     // TODO: manage the colorize to have it it the right case
-    this.colorize = this.colorize ? this.colorize : true;
+    this.colorize = this.colorize ? this.colorize : false;
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;

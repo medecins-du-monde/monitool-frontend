@@ -34,6 +34,15 @@
             </mat-hint>
         </mat-form-field>
     </div>
+    <div class="mdm-form-group" *ngIf="isdisabled === true || (data.indicator.controls.target.invalid === false && data.indicator.controls.baseline.invalid === false )">
+        <div class="mdm-form-label">{{ 'Colorize' | translate }}</div>
+            
+            <mat-checkbox class="mat-checkbox-inner-container-no-side-margin"  formControlName="colorize"  ></mat-checkbox>
+            <mat-hint>
+                <mat-icon class="icon-style">info</mat-icon>{{ 'Colorize-Hint' | translate }}
+            </mat-hint>
+          
+    </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
