@@ -46,9 +46,6 @@ export class Project implements Deserializable {
             logicalFramesUpdate: 0,
             crossCuttingUpdate: 0,
             extraIndicatorsUpdate: 0
-            // lfIndicatorsDone: lfIndicators.filter(i => !!i.computation).length / lfIndicators.length,
-            // ccIndicatorsDone: ccIndicators.filter(i => !!this.project.crossCutting[i._id]).length / ccIndicators.length,
-            // extraIndicatorsDone: this.project.extraIndicators.filter(i => !!i.computation).length / this.project.extraIndicators.length
         };
     }
 
@@ -83,7 +80,6 @@ export class Project implements Deserializable {
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
             return group;
         }) : [];
-        // this.users = ( input && input.users ) ? input.users.map(x => new User(x)) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
             const form = new Form(x);
@@ -142,12 +138,6 @@ export class Project implements Deserializable {
 
     copy(): Project {
         return _.cloneDeep(this);
-        // const obj = this.serialize();
-        // const themes = this.themes;
-        // const project = new Project(obj);
-        // project.themes = themes;
-        // return project;
-        // return new Project(JSON.parse(JSON.stringify(this)));
     }
 
     equals(project: Project): boolean {
