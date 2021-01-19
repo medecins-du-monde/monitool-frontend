@@ -27,7 +27,7 @@
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
-            <div class="card-info-value">{{ project.inputDate == "" || !project.inputDate ? ( 'None' | translate ) : (project.inputDate | date: 'mediumDate')  }}</div>
+            <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | date: 'mediumDate')  }}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
