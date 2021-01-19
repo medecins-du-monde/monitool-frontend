@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
 import { User } from 'src/app/models/user.model';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ProjectComponent implements OnInit {
 
   currentUser: User;
   projectOwner: boolean;
-  lastEntry: string = "";
+  lastEntry: string;
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -42,38 +43,39 @@ export class ProjectComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getLastEntry().then(result => this.lastEntry = result);
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
-      this.getLastEntry();
     });
-    
+
   }
 
-  getLastEntry(){
+  // Make an async method in the service.
+  async getLastEntry(): Promise<string>{
+    let newLastEntry = this.lastEntry;
+    if (this.project.forms.length > 0){
+      for (const form of this.project.forms) {
+         await this.inputService.list(this.project.id, form.id).then(
+          async data => {
+            const items = Object.entries(data);
+            for (const item of items) {
+                // item[0] is the id of the input
+                const itemDataSplit = item[0].split(':');
 
-    if(this.project.forms.length > 0){
-      this.project.forms.forEach((value, index) => {
-        this.inputService.list(this.project.id, value.id).then(
-          data => {            
-            let items = Object.entries(data).slice();
-            items.forEach(item => {
-              item.forEach(itemData => {
-                if(typeof itemData === "string" && itemData != null){
-                  let itemDataSplit = itemData.split(":");
-                  this.inputService.get( this.project.id, value.entities[0].id, value.id, itemDataSplit[5]).then(
-                    entryData => {
-                      if(entryData[0].updatedAt > this.lastEntry){
-                        this.lastEntry = entryData[0].updatedAt;
-                      }
+                // itemDataSplit[3] is the form id also called datasource.
+                // itemDataSplit[4] is the entity id
+                // itemDataSplit[5] is the update period
+                await this.inputService.get( this.project.id, itemDataSplit[4], itemDataSplit[3], itemDataSplit[5]).then(
+                  entryData => {
+                    newLastEntry = DatesHelper.getTheBiggest(newLastEntry, entryData[0].updatedAt);
                      }
                   );
-                }
-              })
-            })
-          })        
-      });
+            }
+          });
+      }
     }
+    return newLastEntry;
   }
 
   async onOpen(): Promise<void> {
