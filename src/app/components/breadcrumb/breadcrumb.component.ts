@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 export interface BreadcrumbItem{
   value: string;
-  link?: string
+  link?: string;
 }
 
 @Component({
@@ -12,5 +12,5 @@ export interface BreadcrumbItem{
 })
 export class BreadcrumbComponent {
   @Input() items: BreadcrumbItem[] = [];
-  
+
 }

@@ -24,7 +24,7 @@ export class ProjectComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -53,7 +53,7 @@ export class ProjectComponent implements OnInit {
           {
             value: this.project.name,
           } as BreadcrumbItem,
-        ]
+        ];
 
       });
 
