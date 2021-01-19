@@ -25,3 +25,12 @@
 .icon-default {
   cursor: default;
 }
+
+.custom.mat-card{
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  position: relative;
+  padding: 0px;
+  border-radius: 4px;
+ }
+

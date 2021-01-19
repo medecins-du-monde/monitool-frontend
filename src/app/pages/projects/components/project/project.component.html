@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="custom">
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-country">
             <mat-icon class="{{projectOwner ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
@@ -32,7 +32,7 @@
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
         <ng-container *ngIf="project.active">
-            <button mat-stroked-button (click)="onOpen()" class="mdm-button">{{ 'Open' | translate }}</button>
+            <button mat-stroked-button (click)="onOpen()" class="customm">{{ 'Open' | translate }}</button>
             <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
         </ng-container>
         <ng-container *ngIf="!project.active">

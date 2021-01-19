@@ -291,7 +291,7 @@ padding-top: 5px;
         padding: 0px 16px 16px 16px;
 
         .card-info-title {
-            width: 30%;
+            width: 40%;
 
             &:not(b) {
                 color: #909090;
@@ -322,6 +322,11 @@ padding-top: 5px;
 }
 
 // === MATERIAL ===
+.mat-card>.mat-card-actions:last-child {
+    margin-bottom: -8px;
+    padding-bottom: 4px !important;
+    padding-right: 3px !important ;
+}
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
 
@@ -360,6 +365,7 @@ padding-top: 5px;
 .mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
     &:last-child {
         margin-left: 0;
+       
     }
 }
 
@@ -374,7 +380,18 @@ padding-top: 5px;
     }
     
 }
-
+.customm.mat-stroked-button {
+    border: 1px solid currentColor;
+    padding: 0 15px;
+    line-height: 27px !important;
+    background-color: white;
+    border: 1px solid #c8c9cc !important;
+    height: 26px;
+    padding: 0 12px !important;
+    font-size: $small_text;
+    margin-right: 7px;
+    margin-bottom: 4px;
+  }
 
 // === BUTTONS ===
 .mdm-button {
@@ -431,11 +448,13 @@ padding-top: 5px;
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
                 border-right-style: none !important;
+                margin-bottom: 6px;
             }
 
             &:last-child {
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
+            
             }
         }
     }
