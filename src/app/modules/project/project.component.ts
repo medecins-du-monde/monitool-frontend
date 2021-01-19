@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Sidenav } from 'src/app/models/sidenav.model';
+import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
-import { BreadcrumbItem } from 'src/app/components/breadcrumb/breadcrumb.component';
-import { TranslateService } from '@ngx-translate/core';
+import { Project } from 'src/app/models/classes/project.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-project',
@@ -21,7 +20,6 @@ export class ProjectComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private translateService: TranslateService
   ) { }
 
 

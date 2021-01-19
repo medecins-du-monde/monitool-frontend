@@ -1,9 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export interface BreadcrumbItem{
-  value: string;
-  link?: string;
-}
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -12,5 +8,4 @@ export interface BreadcrumbItem{
 })
 export class BreadcrumbComponent {
   @Input() items: BreadcrumbItem[] = [];
-
 }

@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
-import { User } from 'src/app/models/user.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { User } from 'src/app/models/classes/user.model';
 
 @Component({
   selector: 'app-users',

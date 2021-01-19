@@ -2,8 +2,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
-import { Project } from 'src/app/models/project.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';

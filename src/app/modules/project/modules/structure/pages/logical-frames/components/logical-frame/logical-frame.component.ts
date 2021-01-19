@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { LogicalFrame } from 'src/app/models/logical-frame.model';
-import { Project } from 'src/app/models/project.model';
+import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { InputService } from 'src/app/services/input.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/models/classes/user.model';
 import DatesHelper from 'src/app/utils/dates-helper';
 
 
