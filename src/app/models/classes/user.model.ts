@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { Entity } from './entity.model';
 import { Form } from './form.model';
 

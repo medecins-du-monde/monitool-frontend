@@ -1,5 +1,5 @@
-import { Deserializable } from './deserializable.model';
-import { ProjectIndicator } from './project-indicator.model';
+import { Deserializable } from '../interfaces/deserializable.model';
+import { ProjectIndicator } from '../classes/project-indicator.model';
 
 export class Activity implements Deserializable {
     description: string;

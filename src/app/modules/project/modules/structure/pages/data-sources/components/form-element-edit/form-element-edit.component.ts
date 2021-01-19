@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Partition } from 'src/app/models/partition.model';
+import { Partition } from 'src/app/models/classes/partition.model';
 import { PartitionModalComponent } from '../partition-modal/partition-modal.component';
 
 
