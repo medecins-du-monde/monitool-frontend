@@ -11,8 +11,6 @@ export class SidenavComponent implements OnInit {
 
   public activeGroup: string;
 
-  constructor() { }
-
   ngOnInit(): void {
     this.activeGroup = this.sidenav.groups.length > 0 ? this.sidenav.groups[0].title : '';
   }
