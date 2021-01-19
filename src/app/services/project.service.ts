@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { Project } from '../models/project.model';
+import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Revision } from '../models/revision.model';
+import { Revision } from '../models/classes/revision.model';
 
 @Injectable({
   providedIn: 'root'

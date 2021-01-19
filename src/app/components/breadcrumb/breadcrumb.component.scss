@@ -1,0 +1,17 @@
+@import "src/assets/theme/size_vars.scss";
+
+ul li{
+    font-size: $big_text;
+    display: inline;
+    mat-icon{
+        vertical-align: middle;
+        line-height: 22px;
+    }
+
+    span  a{
+        color: #0266b3;
+        &:hover {
+            font-weight: bold;
+          }
+    }
+}

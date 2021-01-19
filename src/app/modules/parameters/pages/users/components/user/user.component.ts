@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/models/classes/user.model';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 
 @Component({

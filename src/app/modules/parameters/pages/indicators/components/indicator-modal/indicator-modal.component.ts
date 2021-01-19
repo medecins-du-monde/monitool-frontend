@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Indicator } from 'src/app/models/indicator.model';
-import { Theme } from 'src/app/models/theme.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Entity } from 'src/app/models/entity.model';
-import { FormElement } from 'src/app/models/form-element.model';
-import { Form } from 'src/app/models/form.model';
-import { PartitionElement } from 'src/app/models/partition-element.model';
-import { PartitionGroup } from 'src/app/models/partition-group.model';
-import { Partition } from 'src/app/models/partition.model';
-import { Project } from 'src/app/models/project.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { FormElement } from 'src/app/models/classes/form-element.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { PartitionElement } from 'src/app/models/classes/partition-element.model';
+import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
+import { Partition } from 'src/app/models/classes/partition.model';
+import { Project } from 'src/app/models/classes/project.model';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 

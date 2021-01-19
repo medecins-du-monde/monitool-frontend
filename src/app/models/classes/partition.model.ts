@@ -1,4 +1,4 @@
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { PartitionElement } from './partition-element.model';
 import { PartitionGroup } from './partition-group.model';

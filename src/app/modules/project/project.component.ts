@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Sidenav } from 'src/app/models/sidenav.model';
+import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-project',
@@ -14,10 +15,14 @@ export class ProjectComponent implements OnInit {
   public sidenav: Sidenav;
   project: Project;
 
+  breadcrumbList: BreadcrumbItem[];
+
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
   ) { }
+
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -34,6 +39,20 @@ export class ProjectComponent implements OnInit {
             }
           );
         });
+
+        this.breadcrumbList = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: this.project.country,
+          } as BreadcrumbItem,
+          {
+            value: this.project.name,
+          } as BreadcrumbItem,
+        ];
+
       });
 
       const structure = {
