@@ -113,11 +113,6 @@ export class ProjectComponent implements OnInit {
             routerLink: `../${projectId}/reporting/general`,
             icon: 'clipboard'
           },
-          {
-            name: 'PivotTable',
-            routerLink: `../${projectId}/reporting/pivot-table`,
-            icon: 'grid'
-          }
         ]
       };
 

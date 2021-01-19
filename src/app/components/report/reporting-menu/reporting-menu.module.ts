@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReportTableComponent } from './report-table.component';
+import { ReportingMenuComponent } from './reporting-menu.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [ReportTableComponent],
+  declarations: [ReportingMenuComponent],
   imports: [
     CommonModule,
     TranslateModule,
     MatTableModule,
+    MatMenuModule,
     MatIconModule,
   ],
-  exports: [ReportTableComponent]
+  exports: [ReportingMenuComponent]
 })
-export class ReportTableModule { }
+export class ReportingMenuModule { }

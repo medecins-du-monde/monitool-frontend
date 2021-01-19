@@ -1,3 +1,5 @@
+@import "src/assets/theme/size_vars.scss";
+
 :host {
   overflow: auto;
   padding-right: 2px;
@@ -16,7 +18,7 @@
   min-width: 250px;
     
   .sidenav-title{
-    font-size: 18px;
+    font-size: $big_text;
     font-weight: bold;
     color: #1c1c1c;
     padding: 16px 0;
@@ -40,9 +42,9 @@
   .sidenav-item {
     display: flex;
     align-items: center;
-    height: 48px;
+    height: 40px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: $normal_text;
     text-decoration: none;
     color: var(--main);
 

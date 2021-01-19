@@ -1,3 +1,5 @@
+@import "src/assets/theme/size_vars.scss";
+
 .form-field-group {
   display: flex;
   flex-direction: row;
@@ -31,4 +33,13 @@
 
 .mat-select {
   padding-left: 20px;
+}
+
+button {
+  width: 98%;
+  height: 90%;
+  @media screen and (max-width: $breakpoint-xs) {
+    font-size: $extra_small_text;
+  }
+  font-size: $normal_text;
 }

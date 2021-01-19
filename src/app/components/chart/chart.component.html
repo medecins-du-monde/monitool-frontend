@@ -1,0 +1,6 @@
+<!-- these conditions hide the chart when there is no data -->
+<div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
+    <div id="divChart">
+        <canvas id="currentChart"></canvas>
+    </div>
+</div>

@@ -1,7 +1,6 @@
 
 <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-  
-    <ng-container matColumnDef="icon">
+    <ng-container class="menu" matColumnDef="icon">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element"> 
         <button *ngIf="element.icon" class="mdm-button mat-icon-button" (click)="updateChart(element)">
@@ -12,7 +11,10 @@
   
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> {{ 'Name' | translate }} </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td class="menu" mat-cell *matCellDef="let element">
+        {{element.name}}
+        <app-reporting-menu [indicator]="element" (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"></app-reporting-menu>
+      </td>
     </ng-container>
   
     <ng-container matColumnDef="baseline">
@@ -48,7 +50,7 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let element; columns: ['title']; when: isSectionTitle" 
         class="example-element-row"
-        (click)="sectionClick(element)"
+        (click)="openSection(element)"
     ></tr>
     
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRow"></tr>

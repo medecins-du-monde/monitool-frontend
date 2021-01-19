@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import {  FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,8 +7,6 @@ import {  FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./object-grouping.component.scss']
 })
 export class ObjectGroupingComponent implements OnInit {
-
-  // @Input() requestForm: FormGroup;
 
   dimensionForm: FormGroup;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();

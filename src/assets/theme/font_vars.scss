@@ -1,15 +1,6 @@
-/**
- * Template style variables
- */
 
-// Screen sizes
-$breakpoint-xs: 599px;
-$breakpoint-sm: 1023px;
-$breakpoint-md: 1440px;
-$breakpoint-lg: 1919px;
-$breakpoint-xl: 1920px;
+// This file will be used to define all the font family of the app
 
-// Fonts
 @font-face {
     font-family: "Neutra-Text";
     src: url("/assets/fonts/Neutra-Text_32171.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */

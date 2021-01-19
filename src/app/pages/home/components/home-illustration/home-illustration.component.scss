@@ -1,5 +1,7 @@
+@import "src/assets/theme/size_vars.scss";
+
 :host {
-    font-size: 14px;
+    font-size: $small_text;
     width: 208px;
     margin: 0 auto;
 }
