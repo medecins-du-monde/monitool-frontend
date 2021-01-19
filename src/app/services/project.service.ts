@@ -23,7 +23,7 @@ export class ProjectService {
   ) {
   }
 
-  public async list() {
+  public async list(): Promise<Project[]>{
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get('/resources/project', { mode: 'short' });
     return response.map(x => {
@@ -33,12 +33,12 @@ export class ProjectService {
     });
   }
 
-  public create(project){
+  public create(project: Project): void{
     this.project.next(project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
-  public async get(id: string) {
+  public async get(id: string): Promise<Project>{
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
@@ -46,7 +46,7 @@ export class ProjectService {
     return project;
   }
 
-  public async save(project: Project) {
+  public async save(project: Project): Promise<Project>{
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
@@ -55,25 +55,25 @@ export class ProjectService {
     return savedProject;
   }
 
-  public async delete(id: string) {
+  public async delete(id: string): Promise<void>{
     const project: any = await this.apiService.get(`/resources/project/${id}`);
     project.active = false;
     await this.apiService.put(`/resources/project/${id}`, project);
   }
 
-  public async restore(id: string) {
+  public async restore(id: string): Promise<void>{
     const project: any = await this.apiService.get(`/resources/project/${id}`);
     project.active = true;
     await this.apiService.put(`/resources/project/${id}`, project);
   }
 
-  public async clone(id: string) {
+  public async clone(id: string): Promise<void>{
     const project = new Project();
     await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 
-  public async listRevisions(id: string, limit: number) {
-    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset: 0, limit } });
+  public async listRevisions(id: string, limit: number): Promise<Revision[]>{
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, {params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
 }

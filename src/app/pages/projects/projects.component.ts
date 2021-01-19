@@ -39,7 +39,7 @@ export class ProjectsComponent implements OnInit {
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
-  get currentLang() {
+  get currentLang(): string{
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
