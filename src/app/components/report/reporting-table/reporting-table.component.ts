@@ -18,12 +18,14 @@ export interface SectionTitle{
   sectionId: number;
   open: boolean;
   click: (id: number) => void;
+  level: number;
 }
 
 export interface GroupTitle{
   icon: boolean;
   groupName: string;
   sectionId: number;
+  level: number;
 }
 
 export interface InfoRow {
@@ -39,6 +41,7 @@ export interface InfoRow {
   computation: any;
   nextRow: Row;
   open: boolean;
+  level: number;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -132,6 +135,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
 
       this.content = this.content.map(this.convertToRow);
+      for (let i = 1; i < this.content.length; i += 1){
+        if (this.content[i].level === undefined){
+          this.content[i].level = this.content[i-1].level;
+        }
+      }
       this.rows.next(this.content);
     }
   }
@@ -382,9 +390,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
 
+  calcPaddingLevel(element: Row): string{
+    if (element.level){
+      return `padding-left: ${element.level * 20 + 15}px;`;
+    }
+    return '';
+  }
+
   randomNumberLimit(limit: number): number {
     return Math.floor((Math.random() * limit) + 1);
   }
+
   randomColor(): string {
     const col = 'rgba(' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255)
