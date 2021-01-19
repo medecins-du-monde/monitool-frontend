@@ -29,3 +29,11 @@ table {
   .gradient-background{
     background-image: repeating-linear-gradient(-45deg, rgb(255, 255, 255), rgb(255, 255, 255) 3px, rgb(240, 240, 240) 0px, rgb(240, 240, 240) 6px);
   }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    padding: 0px 15px 0px 15px;
+  }
