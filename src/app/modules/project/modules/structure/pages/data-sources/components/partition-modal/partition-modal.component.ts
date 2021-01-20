@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
-import { PartitionElement } from 'src/app/models/partition-element.model';
-import { PartitionGroup } from 'src/app/models/partition-group.model';
+import { PartitionElement } from 'src/app/models/classes/partition-element.model';
+import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 
 @Component({
   selector: 'app-partition-modal',

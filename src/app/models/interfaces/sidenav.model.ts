@@ -4,7 +4,7 @@ interface SidenavItem {
     routerLink: string;
 }
 
-interface SidenavGroup {
+interface SidenavGroup {
     title: string;
     items: SidenavItem[];
     collapsible: boolean;

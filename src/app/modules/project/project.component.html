@@ -1,6 +1,8 @@
+
 <div class="drawer">
     <app-sidenav [sidenav]="sidenav"></app-sidenav>
     <div class="drawer-page">
+        <app-breadcrumb [items]="breadcrumbList"></app-breadcrumb>
         <router-outlet></router-outlet>
     </div>
 </div>

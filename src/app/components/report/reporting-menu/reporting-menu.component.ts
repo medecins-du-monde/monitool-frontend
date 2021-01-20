@@ -1,9 +1,9 @@
 /* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Partition } from 'src/app/models/partition.model';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
-import { Project } from 'src/app/models/project.model';
+import { Partition } from 'src/app/models/classes/partition.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { InfoRow } from '../reporting-table/reporting-table.component';
 

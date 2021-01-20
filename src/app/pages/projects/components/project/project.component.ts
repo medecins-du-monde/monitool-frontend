@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/models/classes/user.model';
 
 
 @Component({
@@ -25,8 +25,9 @@ export class ProjectComponent implements OnInit {
 
   currentUser: User;
   projectOwner: boolean;
+  lastEntry: string;
 
-  get currentLang() {
+  get currentLang(): string{
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -35,15 +36,15 @@ export class ProjectComponent implements OnInit {
     private projectService: ProjectService,
     private authService: AuthService,
     private router: Router,
-    private dialog: MatDialog
-  ) {
-   }
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
     });
+
   }
 
   async onOpen(): Promise<void> {
@@ -52,15 +53,15 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  onDelete() {
+  onDelete(): void{
     this.delete.emit(this.project);
   }
 
-  onRestore() {
+  onRestore(): void{
     this.restore.emit(this.project);
   }
 
-  onClone() {
+  onClone(): void{
     const dialogRef = this.dialog.open(CloneProjectModalComponent);
 
     dialogRef.afterClosed().subscribe(res => {

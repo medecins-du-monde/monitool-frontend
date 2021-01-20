@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Theme } from '../models/theme.model';
+import { Theme } from '../models/classes/theme.model';
 import { ApiService } from './api.service';
 
 @Injectable({

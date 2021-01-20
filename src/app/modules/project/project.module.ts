@@ -5,6 +5,7 @@ import { ProjectRoutingModule } from './project-routing.module';
 import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -13,7 +14,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     TranslateModule,
     ProjectRoutingModule,
     SidenavModule,
-    MatSidenavModule
+    MatSidenavModule,
+    BreadcrumbModule
   ]
 })
 export class ProjectModule { }
