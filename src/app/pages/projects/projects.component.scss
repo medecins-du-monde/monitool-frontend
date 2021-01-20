@@ -8,7 +8,7 @@
   margin-top: 24px;
 
   .actions-group {
-    display: flex;
+    display: contents;
     flex-direction: row;
     flex-wrap: wrap;
 
@@ -23,6 +23,7 @@
       }
   
       &:last-child {
+        flex: auto;
         justify-content: flex-end;
         .action:not(:first-child) {
           margin-left: 16px;
@@ -38,6 +39,10 @@
       &:first-child {
         margin-bottom: 24px;
       }
+    }
+
+    .action-bar {
+      width:55%;
     }
   }
 }
