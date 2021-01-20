@@ -6,7 +6,7 @@
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
                 <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
+                    <mat-icon>info</mat-icon>{{ 'NameLogicalFramework-Hint' | translate }}
                 </mat-hint>
             </mat-form-field>
         </div>
@@ -78,6 +78,9 @@
                     </ng-container>
                 </div>
                 <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'AddIndicator-GeneralObjective-Hint' | translate }}
+                </mat-hint>
             </div>
         </div>
     </div>
