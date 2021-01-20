@@ -107,9 +107,9 @@ export class ProjectsComponent implements OnInit {
     });
   }
 
-  setCountProjectStatus(res : Project[]) {
+  setCountProjectStatus(res: Project[]) {
       this.statuses.forEach((value, index) => {
-        this.statuses[index].count = res.filter(project => project.status === value.value).length | 0;
+        this.statuses[index].count = res.filter(project => project.status === value.value).length;
       });
   }
 
