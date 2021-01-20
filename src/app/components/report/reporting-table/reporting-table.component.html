@@ -13,7 +13,7 @@
       <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
       <td class="menu" mat-cell *matCellDef="let element" [style]="calcPaddingLevel(element)">
         {{element.name}}
-        <app-reporting-menu [indicator]="element" (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"></app-reporting-menu>
+        <app-reporting-menu [indicator]="element" [dimensionName]="dimensionIds.value" (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"></app-reporting-menu>
       </td>
     </ng-container>
   

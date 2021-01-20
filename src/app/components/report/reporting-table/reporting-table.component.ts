@@ -147,6 +147,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           this.content[i].level = this.content[i-1].level;
         }
       }
+      console.log('updated the ');
       this.rows.next(this.content);
     }
   }
@@ -363,22 +364,48 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   receiveIndicators(info: AddedIndicators): void{
+    console.log('receiving this indicators:');
+    console.log(info);
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
-    currentIndicator.open = !currentIndicator.open;
-
+    // currentIndicator.open = !currentIndicator.open;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
-    for (const disaggregatedIndicator of info.disaggregatedIndicators){
-      indicatorIndex += 1;
+    console.log(currentIndicator);
 
-      const newRow = this.indicatorToRow(disaggregatedIndicator);
-      newRow.sectionId = info.indicator.sectionId;
-      newRow.level = info.indicator.level + 1;
+    if (info.splitBySites){
+      console.log(this.filter.value);
+      const newIndicators = [];
+      for (const entityId of this.filter.value.entity){
+        const customFilter = JSON.parse(JSON.stringify(this.filter.value));
+        customFilter.entity = [entityId];
+        console.log(customFilter);
 
-      this.content.splice(indicatorIndex, 0, newRow);
+        const customIndicator = JSON.parse(JSON.stringify(info.indicator));
+        customIndicator.level = info.indicator.level + 1
+        customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
+        newIndicators.push(customIndicator);
+      }
+      console.log(newIndicators);
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+      console.log(this.content);
+      
+      currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
+    }
+    else {
+      for (const disaggregatedIndicator of info.disaggregatedIndicators){
+        indicatorIndex += 1;
+  
+        const newRow = this.indicatorToRow(disaggregatedIndicator);
+        newRow.sectionId = info.indicator.sectionId;
+        newRow.level = info.indicator.level + 1;
+  
+        this.content.splice(indicatorIndex, 0, newRow);
+        currentIndicator.open = !currentIndicator.open;
+        this.updateTableContent();
+      }
     }
   }
 

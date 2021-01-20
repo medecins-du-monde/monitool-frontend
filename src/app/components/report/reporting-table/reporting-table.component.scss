@@ -36,6 +36,7 @@ tr.example-element-row:not(.example-expanded-row):active {
   justify-content: space-between;
   padding: 0px 15px 0px 15px;
   height: 48px;
+  min-width: 200px;
 }
 
 .groupName{
