@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { Entity } from 'src/app/models/entity.model';
-import { Group } from 'src/app/models/group.model';
-import { Project } from 'src/app/models/project.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { Group } from 'src/app/models/classes/group.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs';
 

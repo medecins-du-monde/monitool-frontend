@@ -1,4 +1,4 @@
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { OutputElement } from './output-element.model';
 import { ProjectIndicator } from './project-indicator.model';
 

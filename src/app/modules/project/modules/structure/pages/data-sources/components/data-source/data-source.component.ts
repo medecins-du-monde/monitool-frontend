@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Form } from 'src/app/models/form.model';
-import { Project } from 'src/app/models/project.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { environment } from 'src/environments/environment';
 
 @Component({

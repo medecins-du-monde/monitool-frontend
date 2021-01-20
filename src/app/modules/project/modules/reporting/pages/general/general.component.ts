@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { BehaviorSubject } from 'rxjs';
 import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
-import { Indicator } from 'src/app/models/indicator.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
-import { Theme } from 'src/app/models/theme.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 
 @Component({
   selector: 'app-general',

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { Project } from 'src/app/models/project.model';
-import { Theme } from 'src/app/models/theme.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
