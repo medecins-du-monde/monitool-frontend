@@ -34,11 +34,14 @@ tr.example-element-row:not(.example-expanded-row):active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
   padding: 0px 15px 0px 15px;
   height: 48px;
 }
 
 .groupName{
   padding-left: 15px;
+  font-weight: bold;
+}
+.title{
+  font-weight: bold;
 }

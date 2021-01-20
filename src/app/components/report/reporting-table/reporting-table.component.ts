@@ -135,6 +135,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
 
       this.content = this.content.map(this.convertToRow);
+      // defines the level of the first row as zero if it is undefined
+      if (this.content.length > 0){
+        if (this.content[0].level === undefined){
+          this.content[0].level = 0;
+        }
+      }
+      // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1){
         if (this.content[i].level === undefined){
           this.content[i].level = this.content[i-1].level;
@@ -363,11 +370,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
-    for (const disaggregatedIndicators of info.disaggregatedIndicators){
+    for (const disaggregatedIndicator of info.disaggregatedIndicators){
       indicatorIndex += 1;
 
-      const newRow = this.indicatorToRow(disaggregatedIndicators);
+      const newRow = this.indicatorToRow(disaggregatedIndicator);
       newRow.sectionId = info.indicator.sectionId;
+      newRow.level = info.indicator.level + 1;
 
       this.content.splice(indicatorIndex, 0, newRow);
       this.updateTableContent();
