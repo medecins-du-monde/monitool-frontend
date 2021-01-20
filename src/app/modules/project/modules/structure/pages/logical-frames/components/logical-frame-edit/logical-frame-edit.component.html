@@ -86,13 +86,13 @@
     </div>
 </div>
 <div class="mdm-section">
-    <div class="mdm-title">Specific objective</div>
+    <div class="mdm-title">{{ 'SpecificObjective' | translate }}</div>
     <div [formGroup]="logicalFrameForm">
         <mat-accordion formArrayName="purposes">
             <ng-container *ngFor="let purpose of purposes.controls; let i=index;">
                 <mat-expansion-panel [formGroupName]="i">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>Specific objective {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
+                        <mat-panel-title>{{ 'SpecificObjective' | translate }} {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
                         <mat-panel-description>
                             <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
                         </mat-panel-description>
