@@ -215,8 +215,7 @@ padding-top: 5px;
     color: #777b7e;
     margin-bottom: 14px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column;    
 
     p {
         margin: 0;
@@ -231,14 +230,12 @@ padding-top: 5px;
     }
 
     .info-buttons {
-        float: right;
-        margin-left: 4px;
         display: flex;
         flex-direction: column;
-
-        button {
-            width: auto;
-            margin-bottom: 4px;
+        align-self: flex-end;
+        margin-bottom: 4px;
+        a {
+            margin-bottom:  4px;
         }
     }
 }
@@ -268,10 +265,6 @@ padding-top: 5px;
     .mdm-card {
         width: calc(25% - 24px);
         margin: 0 12px 24px;
-
-        // @media screen and (max-width: $breakpoint-md) {
-        //     width: calc(1 / 4 * 100% - 24px);
-        // }
 
         @media screen and (max-width: $breakpoint-sm) {
             width: calc(50% - 24px);
