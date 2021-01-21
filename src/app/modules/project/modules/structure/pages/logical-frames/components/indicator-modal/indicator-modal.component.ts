@@ -59,7 +59,7 @@ export class IndicatorModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isdisabled=false;
+    this.isdisabled = false;
     this.loadData();
     // Creation of the init value for the reset
     this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;

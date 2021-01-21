@@ -191,22 +191,7 @@ body {
 mat-hint {
     font-size: $small_text;
     display: flex;
-    padding-top: 7px;
-    margin-block-start: auto;
-    margin-left: -12px;
-    margin-bottom: auto;
-    @media screen and (max-width: $breakpoint-sm){
-        flex-direction: column;
-        margin-left: 0px !important;
-        display: block;
-    }
-        .icon-style{
-          width: 1em;
-          height: 1em;
-          font-size: inherit;
-          vertical-align: baseline;
-          margin-top: 4px;
-        }
+    padding-top: 5px;
 }
 
 // === TEXT ===
@@ -673,11 +658,6 @@ mat-hint {
 
         .mdm-form-label {
             margin-bottom: 8px;
-            margin-top: 7px;
-        }
-        .mat-checkbox-inner-container-no-side-margin {
-            margin-left: 1px !important; 
-            margin-bottom: -14px !important;    
         }
     }
 
@@ -689,12 +669,6 @@ mat-hint {
     .mdm-form-label {
         font-weight: bold;
         flex: 0.4;
-    }
-    .mat-checkbox-inner-container-no-side-margin {
-        margin-right: -2px;
-        margin-bottom: auto;
-        padding-bottom: 5px;
-        margin-left: 58px;
     }
     .mdm-form-field {
         flex: 1;
