@@ -1,6 +1,5 @@
-/* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -20,7 +19,7 @@ export interface AddedIndicators {
 })
 export class ReportingMenuComponent implements OnInit, OnDestroy {
 
-  @Input() indicator;
+  @Input() indicator: InfoRow;
   @Input() dimensionName: string;
   options: any[];
   open: boolean;
@@ -53,10 +52,17 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.dimensionName !== 'entity' && this.dimensionName !== 'group'){
+    if (this.dimensionName !== 'entity' && this.dimensionName !== 'group' && !this.indicator.customFilter){
       this.options.push({
         value: 'Collection Sites',
         action: this.collectionSitesOption
+      })
+    }
+
+    if ((this.dimensionName === 'entity' || this.dimensionName === 'group') && !this.indicator.customFilter){
+      this.options.push({
+        value: 'Month',
+        action: () => {console.log('selected months')}
       })
     }
 

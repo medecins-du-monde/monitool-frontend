@@ -39,6 +39,7 @@ export interface InfoRow {
   dataset?: any;
   filterFlag: boolean;
   computation: any;
+  customFilter?: any;
   nextRow: Row;
   open: boolean;
   level: number;
@@ -147,7 +148,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           this.content[i].level = this.content[i-1].level;
         }
       }
-      console.log('updated the ');
       this.rows.next(this.content);
     }
   }
@@ -199,8 +199,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create row of the table from a ProjectIndicator
-  indicatorToRow(indicator: ProjectIndicator): InfoRow{
-    const row = {
+  indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow{
+    let row = {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
@@ -214,76 +214,67 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       open: true
     } as InfoRow;
 
-    if (this.project.id && this.tableContent && this.filter
-        && this.dimensionIds && this.dimensions.length > 0){
+    if (customFilter){
+      row.customFilter = customFilter;
+    }
 
-      const currentFilter = this.filter.value;
-      const modifiedFilter = {
-        _start: currentFilter._start.toISOString().slice(0, 10),
-        _end: currentFilter._end.toISOString().slice(0, 10),
-        entity: currentFilter.entity
-      };
+    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
+      row = this.updateRowValues(row);
+    }
+    return row;
+  }
+  // Fetch the data of one especific row in function of project, content, filter and dimension 
+  updateRowValues(row: InfoRow): InfoRow{
+    const currentFilter = this.filter.value;
+    const modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
 
+    const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
+    if (row.customFilter){
+      Object.assign(customFilter, row.customFilter);
+    }
+    console.log('modifiedFilter')
+    console.log(modifiedFilter)
+    console.log('customFilter')
+    console.log(customFilter)
 
-      this.reportingService.fetchData(this.project, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-        response => {
-
-          if (response) {
-            this.roundResponse(response);
-            const data = this.formatResponseToDataset(response);
-            row.dataset = {
-            label: indicator.display,
+    this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+      response => {
+        if (response) {
+          this.roundResponse(response);
+          const data = this.formatResponseToDataset(response);
+          row.dataset = {
+            label: row.name,
             data,
             labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
             borderColor: this.randomColor(),
             backgroundColor: this.randomColor(),
             fill: false
           };
-            row.values = response;
+          row.values = response;
+
+          if (row.onChart){
+            this.updateChart();
           }
         }
-      );
-    }
+      }
+    );
+    
     return row;
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
-    if (this.project.id && this.tableContent && this.filter
-        && this.dimensionIds ){
-
-      const currentFilter = this.filter.value;
-      const modifiedFilter = {
-        _start: currentFilter._start.toISOString().slice(0, 10),
-        _end: currentFilter._end.toISOString().slice(0, 10),
-        entity: currentFilter.entity
-      };
+    if (this.tableContent && this.filter && this.dimensionIds ){
 
       if (isArray(this.content)) {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
             if (this.dimensions.length > 0){
-              this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-                response => {
-                  if (response) {
-                    this.roundResponse(response);
-                    const data = this.formatResponseToDataset(response);
-                    row.dataset = {
-                      label: row.name,
-                      data,
-                      labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                      borderColor: this.randomColor(),
-                      backgroundColor: this.randomColor(),
-                      fill: false
-                    };
-                    row.values = response;
-
-                    if (row.onChart){
-                      this.updateChart();
-                    }
-                  }
-                }
-              );
+              row = this.updateRowValues(row);
             }
             // this only happens when you group by collection sites or by group and you don't have any site or group in your project
             else {
@@ -292,7 +283,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               if (row.onChart){
                 this.updateChart();
               }
-            }
+            }  
           }
           return row;
         }
@@ -364,32 +355,31 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   receiveIndicators(info: AddedIndicators): void{
-    console.log('receiving this indicators:');
-    console.log(info);
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
-    // currentIndicator.open = !currentIndicator.open;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
-    console.log(currentIndicator);
-
     if (info.splitBySites){
-      console.log(this.filter.value);
       const newIndicators = [];
       for (const entityId of this.filter.value.entity){
-        const customFilter = JSON.parse(JSON.stringify(this.filter.value));
-        customFilter.entity = [entityId];
-        console.log(customFilter);
+        const customFilter = { 
+          entity: [entityId]
+        }
 
-        const customIndicator = JSON.parse(JSON.stringify(info.indicator));
+        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        
         customIndicator.level = info.indicator.level + 1
         customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+
+        customIndicator = this.updateRowValues(customIndicator);
+
         newIndicators.push(customIndicator);
       }
-      console.log(newIndicators);
+
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
-      console.log(this.content);
       
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
@@ -398,14 +388,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       for (const disaggregatedIndicator of info.disaggregatedIndicators){
         indicatorIndex += 1;
   
-        const newRow = this.indicatorToRow(disaggregatedIndicator);
+        let newRow;
+        if (currentIndicator.customFilter){
+          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
+        }
+        else{
+          newRow = this.indicatorToRow(disaggregatedIndicator);
+        }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
   
         this.content.splice(indicatorIndex, 0, newRow);
-        currentIndicator.open = !currentIndicator.open;
-        this.updateTableContent();
       }
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
     }
   }
 
