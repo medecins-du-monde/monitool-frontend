@@ -699,17 +699,21 @@ mat-hint {
 }
 
 .checkbox-form { 
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    label {
-        padding: 0;
+    flex-direction: column;
+    div {
+        display: flex;
+        flex-direction: row;
     }
     mat-hint {
-        padding: 0;
+        padding-top: 8px;
+        align-self: center;
+        mat-icon {
+            font-size: $small_text;
+        }
     }
     .mdm-form-label {
-        margin: 0;
+        margin-right: 100px;
     }
+    
     margin-bottom: 8px;
 }
