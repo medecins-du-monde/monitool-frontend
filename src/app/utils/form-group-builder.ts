@@ -75,6 +75,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
@@ -85,8 +86,9 @@ export default class FormGroupBuilder {
     else {
       return new FormGroup({
         display: new FormControl(indicator.display, Validators.required),
-        baseline: new FormControl(indicator.baseline, Validators.required),
-        target: new FormControl(indicator.target, Validators.required),
+        baseline: new FormControl(indicator.baseline),
+        target: new FormControl(indicator.target),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),

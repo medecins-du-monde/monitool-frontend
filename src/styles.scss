@@ -189,10 +189,12 @@ body {
 }
 
 mat-hint {
-font-size: $small_text;
-display: flex;
-padding-top: 5px;
+    font-size: $small_text;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
 }
+
 // === TEXT ===
 .mdm-title {
     font-size: $big_text;
@@ -223,6 +225,7 @@ padding-top: 5px;
 
     h3{
         font-weight: bold;
+        margin-top: 16px;
     }
     &.blue {
         background-color: #d9edf7;
@@ -246,6 +249,7 @@ padding-top: 5px;
 
     .mat-icon{
         line-height: 20px;
+        font-size: $small_text;
     }
 }
 
@@ -562,6 +566,18 @@ padding-top: 5px;
     }
 }
 
+// === Hints ===
+mat-hint {
+    mat-icon {
+        width: 25px !important;
+        height: 100% !important;
+        margin-right: 10px;
+        @media screen and (max-width: $breakpoint-sm) {
+            width: 35px;
+        }
+    }
+}
+
 // === FORMS ===
 
 .mdm-form {
@@ -661,14 +677,13 @@ padding-top: 5px;
 
     label {
       font-size: inherit;
-      padding-bottom: 1.34375em;
+      padding-bottom: 5px;
     }
 
     .mdm-form-label {
         font-weight: bold;
-        flex: 0.3;
+        flex: 0.4;
     }
-
     .mdm-form-field {
         flex: 1;
         width: 100%;
@@ -681,4 +696,25 @@ padding-top: 5px;
             }
         }
     }
+    
+}
+
+.checkbox-form { 
+    flex-direction: column;
+    div {
+        display: flex;
+        flex-direction: row;
+    }
+    mat-hint {
+        padding-top: 8px;
+        align-self: center;
+        mat-icon {
+            font-size: $small_text;
+        }
+    }
+    .mdm-form-label {
+        margin-right: 100px;
+    }
+    
+    margin-bottom: 8px;
 }
