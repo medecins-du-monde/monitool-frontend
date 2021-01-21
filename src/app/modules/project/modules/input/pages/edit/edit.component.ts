@@ -72,6 +72,23 @@ export class EditComponent implements OnInit, OnDestroy {
         this.updateData();
       })
     );
+
+  }
+
+  onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
+    const data = [];
+    const rowData = event.clipboardData.getData('text').split('\n');
+
+    rowData.forEach(row => {
+      row.split('\t').forEach(columnData => {
+        data.push(columnData);
+      });
+    });
+    for (let i = index; i < this.inputForm.value.values[`${tableId}`].length; i++) {
+      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i - index] ? data[i - index] : 0);
+    }
+    // This is used to block the pasted text inside the input and insert everything from this method
+    return event.preventDefault();
   }
 
   async updateData(){
