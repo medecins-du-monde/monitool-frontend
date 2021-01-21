@@ -191,6 +191,7 @@ body {
 mat-hint {
     font-size: $small_text;
     display: flex;
+    align-items: center;
     padding-top: 5px;
 }
 
@@ -564,6 +565,18 @@ mat-hint {
     }
 }
 
+// === Hints ===
+mat-hint {
+    mat-icon {
+        width: 25px !important;
+        height: 100% !important;
+        margin-right: 10px;
+        @media screen and (max-width: $breakpoint-sm) {
+            width: 35px;
+        }
+    }
+}
+
 // === FORMS ===
 
 .mdm-form {
@@ -663,7 +676,7 @@ mat-hint {
 
     label {
       font-size: inherit;
-      padding-bottom: 1.34375em;
+      padding-bottom: 5px;
     }
 
     .mdm-form-label {
@@ -683,4 +696,20 @@ mat-hint {
         }
     }
     
+}
+
+.checkbox-form { 
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    label {
+        padding: 0;
+    }
+    mat-hint {
+        padding: 0;
+    }
+    .mdm-form-label {
+        margin: 0;
+    }
+    margin-bottom: 8px;
 }
