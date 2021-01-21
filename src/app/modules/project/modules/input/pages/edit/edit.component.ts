@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Form } from 'src/app/models/form.model';
-import { Project } from 'src/app/models/project.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
-import { Entity } from 'src/app/models/entity.model';
+import { Entity } from 'src/app/models/classes/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
-import { Input } from 'src/app/models/input.model';
+import { Input } from 'src/app/models/classes/input.model';
 
 
 @Component({

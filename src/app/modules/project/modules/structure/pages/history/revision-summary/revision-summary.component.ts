@@ -1,11 +1,11 @@
 // tslint:disable: no-string-literal
 import { Component, OnInit, Input } from '@angular/core';
-import { Revision } from 'src/app/models/revision.model';
+import { Revision } from 'src/app/models/classes/revision.model';
 import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { Operation } from 'fast-json-patch';
-import { Form } from 'src/app/models/form.model';
+import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Theme } from 'src/app/models/theme.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeModalComponent } from '../theme-modal/theme-modal.component';
 
 @Component({
