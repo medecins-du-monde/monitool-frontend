@@ -6,11 +6,28 @@ import { Project } from 'src/app/models/classes/project.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ThemeService } from 'src/app/services/theme.service';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-basics',
   templateUrl: './basics.component.html',
-  styleUrls: ['./basics.component.scss']
+  styleUrls: ['./basics.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE, 
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS, 
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class BasicsComponent implements OnInit, OnDestroy {
 
@@ -32,7 +49,9 @@ export class BasicsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private projectService: ProjectService,
     private themeService: ThemeService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +77,12 @@ export class BasicsComponent implements OnInit, OnDestroy {
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
     });
+
+    this.dateService.langValueObs$.subscribe(
+      lang=>{
+        this.adapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnDestroy() {

@@ -6,13 +6,28 @@ import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs';
-
-
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-sites',
   templateUrl: './sites.component.html',
-  styleUrls: ['./sites.component.scss']
+  styleUrls: ['./sites.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE, 
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS, 
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class SitesComponent implements OnInit {
 
@@ -46,7 +61,9 @@ export class SitesComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +91,12 @@ export class SitesComponent implements OnInit {
           });
         }
       })
+    );
+
+    this.dateService.langValueObs$.subscribe(
+      lang=>{
+        this.adapter.setLocale(lang);
+      }
     );
   }
 

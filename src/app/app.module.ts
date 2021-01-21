@@ -11,6 +11,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
 import { MsalModule } from '@azure/msal-angular';
 import { environment } from 'src/environments/environment';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 @NgModule({
@@ -31,6 +34,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     HeaderModule,
     HttpClientModule,
     NoopAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     LoginModule,
     MsalModule.forRoot({
       auth: {
@@ -57,7 +62,12 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       extraQueryParameters: {}
     })
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'fr'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
