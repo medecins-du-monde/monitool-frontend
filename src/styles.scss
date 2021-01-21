@@ -239,6 +239,7 @@ mat-hint {
 
     h3{
         font-weight: bold;
+        margin-top: 16px;
     }
     &.blue {
         background-color: #d9edf7;
@@ -687,7 +688,7 @@ mat-hint {
 
     .mdm-form-label {
         font-weight: bold;
-        flex: 0.3;
+        flex: 0.4;
     }
     .mat-checkbox-inner-container-no-side-margin {
         margin-right: -2px;

@@ -4,8 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { Form } from 'src/app/models/form.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA, FIXED, UNAVAIlABLE } from 'src/app/models/project-indicator.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',

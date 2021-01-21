@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { v4 as uuid } from 'uuid';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
-import { User } from 'src/app/models/user.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { User } from 'src/app/models/classes/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -20,15 +20,18 @@ export class ProjectsComponent implements OnInit {
   statuses = [
     {
       text: 'OngoingPlural',
-      value: 'Ongoing'
+      value: 'Ongoing',
+      count: 0
     },
     {
       text: 'FinishedPlural',
-      value: 'Finished'
+      value: 'Finished',
+      count: 0
     },
     {
       text: 'DeletedPlural',
-      value: 'Deleted'
+      value: 'Deleted',
+      count: 0
     }
   ];
 
@@ -99,8 +102,15 @@ export class ProjectsComponent implements OnInit {
           return 1;
         }
       });
+      this.setCountProjectStatus(res);
       return listToReturn;
     });
+  }
+
+  setCountProjectStatus(res: Project[]) {
+      this.statuses.forEach((value, index) => {
+        this.statuses[index].count = res.filter(project => project.status === value.value).length;
+      });
   }
 
   onCreate(): void {

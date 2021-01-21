@@ -1,4 +1,4 @@
-export default class Dates {
+export default class DatesHelper {
 
   static areEquals(date1: Date, date2: Date ): boolean {
     if (

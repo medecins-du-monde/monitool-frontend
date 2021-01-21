@@ -9,8 +9,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
-import { MsalModule } from '@azure/msal-angular';
-import { environment } from 'src/environments/environment';
+import { MsalModule } from '@azure/msal-angular';
+import { environment } from 'src/environments/environment';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 @NgModule({
@@ -62,6 +62,6 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
 })
 export class AppModule { }
 
-export function httpTranslateLoader(http: HttpClient) {
+export function httpTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }

@@ -1,11 +1,11 @@
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
+import { Entity } from './entity.model';
 import { v4 as uuid } from 'uuid';
-import { PartitionElement } from './partition-element.model';
 
-export class PartitionGroup implements Deserializable {
+export class Group implements Deserializable {
     id: string;
     name: string;
-    members: PartitionElement[] = [];
+    members: Entity[] = [];
 
     constructor(input?: any) {
         this.deserialize(input);
@@ -13,7 +13,7 @@ export class PartitionGroup implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
-        this.id = (input && input.id) ? input.id : uuid();
+        this.id = ( input && input.id ) ? input.id : uuid();
         return this;
     }
 

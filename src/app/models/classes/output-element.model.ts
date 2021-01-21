@@ -1,5 +1,5 @@
 import { Activity } from './activity.model';
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
 
 export class OutputElement implements Deserializable {

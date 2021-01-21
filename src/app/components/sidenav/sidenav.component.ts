@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Sidenav } from 'src/app/models/sidenav.model';
+import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,8 +10,6 @@ export class SidenavComponent implements OnInit {
   @Input() sidenav: Sidenav;
 
   public activeGroup: string;
-
-  constructor() { }
 
   ngOnInit(): void {
     this.activeGroup = this.sidenav.groups.length > 0 ? this.sidenav.groups[0].title : '';

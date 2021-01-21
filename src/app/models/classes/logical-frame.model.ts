@@ -1,4 +1,4 @@
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
 import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
