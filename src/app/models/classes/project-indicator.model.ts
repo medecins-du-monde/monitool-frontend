@@ -108,7 +108,7 @@ export class ProjectIndicator implements Deserializable {
   serialize(crossCuttingType = false) {
     const serializedIndicator = {
       baseline: this.baseline,
-      colorize: this.colorize,
+      colorize: (this.baseline && this.target) ? true : false,
       computation: this.formatComputation(this.computation),
       target: this.target,
     };
