@@ -236,10 +236,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (row.customFilter){
       Object.assign(customFilter, row.customFilter);
     }
-    console.log('modifiedFilter')
-    console.log(modifiedFilter)
-    console.log('customFilter')
-    console.log(customFilter)
 
     this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
       response => {
@@ -379,6 +375,37 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         newIndicators.push(customIndicator);
       }
 
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+      
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitByTime){
+      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[info.splitByTime]);
+      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[info.splitByTime]);
+      endTimeSlot = endTimeSlot.next();
+
+      const newIndicators = [];
+
+      while (startTimeSlot !== endTimeSlot){
+        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        
+        customIndicator.level = info.indicator.level + 1
+        // TO DO: add correct language here
+        customIndicator.name = startTimeSlot.humanizeValue('en');
+        customIndicator.values = {};
+
+        if (!customIndicator.customFilter){
+          customIndicator.customFilter = {};
+        }
+        customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value]
+
+        customIndicator = this.updateRowValues(customIndicator);
+        newIndicators.push(customIndicator);
+
+        startTimeSlot = startTimeSlot.next();
+      }
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
       
       currentIndicator.open = !currentIndicator.open;

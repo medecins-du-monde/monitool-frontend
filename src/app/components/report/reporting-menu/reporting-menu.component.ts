@@ -10,6 +10,7 @@ export interface AddedIndicators {
   indicator: InfoRow;
   disaggregatedIndicators?: ProjectIndicator[];
   splitBySites?: boolean;
+  splitByTime?: string;
 }
 
 @Component({
@@ -59,11 +60,34 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       })
     }
 
-    if ((this.dimensionName === 'entity' || this.dimensionName === 'group') && !this.indicator.customFilter){
-      this.options.push({
-        value: 'Month',
-        action: () => {console.log('selected months')}
-      })
+    if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
+      if (!this.indicator.customFilter?.month){
+        this.options.push({
+          value: 'Months',
+          action: () => this.timeOption('month')
+        });
+
+        if (!this.indicator.customFilter?.quarter){
+          this.options.push({
+            value: 'Quarters',
+            action: () => this.timeOption('quarter')
+          });
+
+          if (!this.indicator.customFilter?.semester){
+            this.options.push({
+              value: 'Semesters',
+              action: () => this.timeOption('semester')
+            });
+
+            if (!this.indicator.customFilter?.year){
+              this.options.push({
+                value: 'Years',
+                action: () => this.timeOption('year')
+              })
+            }
+          }
+        }
+      }
     }
 
     if (numberOfParameters === 1){
@@ -169,6 +193,15 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         splitBySites: true
       } as AddedIndicators
     );
+  }
+
+  timeOption = (time: string): void => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit({
+      indicator: this.indicator,
+      disaggregatedIndicators: [],
+      splitByTime: time
+    })
   }
 
   closeIndicator = (): void => {
