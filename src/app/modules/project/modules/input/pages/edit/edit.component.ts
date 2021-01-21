@@ -77,16 +77,18 @@ export class EditComponent implements OnInit, OnDestroy {
 
   onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
     const data = [];
-    const row_data = event.clipboardData.getData('text').split('\n');
+    const rowData = event.clipboardData.getData('text').split('\n');
 
-    row_data.forEach(row => {
-      row.split('\t').forEach(column_data => {
-        data.push(column_data);
+    rowData.forEach(row => {
+      row.split('\t').forEach(columnData => {
+        data.push(columnData);
       });
     });
     for (let i = index; i < this.inputForm.value.values[`${tableId}`].length; i++) {
-      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i] ? data[i] : 0);
+      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i - index] ? data[i - index] : 0);
     }
+    // This is used to block the pasted text inside the input and insert everything from this method
+    return event.preventDefault();
   }
 
   async updateData(){
@@ -171,8 +173,6 @@ export class EditComponent implements OnInit, OnDestroy {
     };
 
     this.inputForm = this.fb.group(formGroup);
-    console.log('inputForm : ');
-    console.log(this.inputForm.value);
   }
 
   convertToNumber(val) {
