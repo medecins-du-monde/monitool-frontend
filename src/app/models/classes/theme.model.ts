@@ -1,4 +1,4 @@
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 import { v4 as uuid } from 'uuid';
 

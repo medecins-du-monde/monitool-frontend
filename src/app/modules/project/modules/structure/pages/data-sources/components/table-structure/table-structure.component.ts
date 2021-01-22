@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Project } from 'src/app/models/project.model';
-import { Partition } from 'src/app/models/partition.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 

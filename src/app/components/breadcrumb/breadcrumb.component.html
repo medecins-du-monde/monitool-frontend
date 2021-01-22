@@ -1,0 +1,13 @@
+<div class="container">
+    <ul>
+        <li *ngFor="let item of items; let i = index">
+            <mat-icon *ngIf="i > 0">keyboard_arrow_right</mat-icon>
+            <span *ngIf="item.link; else elseBlock" class="item">
+                <a [routerLink]="item.link" routerLinkActive="active-link">{{item.value | translate }}</a>
+            </span>
+            <ng-template #elseBlock>
+                <span class="item">{{ item.value | translate }}</span>
+            </ng-template>
+        </li>
+    </ul>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sidenav } from 'src/app/models/sidenav.model';
+import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 
 @Component({
   selector: 'app-parameters',
