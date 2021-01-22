@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/project.model';
 import { ThemeService } from './theme.service';
@@ -9,7 +9,10 @@ import { Revision } from '../models/revision.model';
   providedIn: 'root'
 })
 
-export class ProjectService {
+export class ProjectService{
+
+  private savedProject: Project;
+  private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
@@ -17,10 +20,28 @@ export class ProjectService {
     return this.project.asObservable();
   }
 
-  constructor(
-    private apiService: ApiService,
-    private themeService: ThemeService
-  ) {
+  get hasPendingChanges(): boolean{
+    return !this.savedProject.equals(this.currentProject);
+  }
+
+  constructor(private apiService: ApiService, private themeService: ThemeService) {
+    this.openedProject.subscribe( (project: Project) => {
+      if (!this.savedProject) {
+        this.savedProject = project.copy();
+        this.currentProject = project.copy();
+      } else {
+        if ( project.id !== this.savedProject.id ) {
+          this.savedProject = project.copy();
+          this.currentProject = project.copy();
+        } else {
+          this.currentProject = project.copy();
+        }
+      }
+    });
+  }
+
+  public discardPendingChanges(): void {
+    this.project.next(this.savedProject.copy());
   }
 
   public async list(): Promise<Project[]>{
@@ -52,6 +73,8 @@ export class ProjectService {
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
 
+    this.savedProject = savedProject.copy();
+    this.currentProject = savedProject.copy();
     return savedProject;
   }
 

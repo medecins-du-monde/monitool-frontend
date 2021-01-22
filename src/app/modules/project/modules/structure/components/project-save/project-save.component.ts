@@ -10,47 +10,36 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class ProjectSaveComponent implements OnInit, OnDestroy {
 
-  private savedProject: Project;
   private currentProject: Project;
-
-  public changed = false;
 
   private subscription: Subscription = new Subscription();
 
   constructor(private projectService: ProjectService) { }
 
+  get hasChanges(): boolean{
+    return this.projectService.hasPendingChanges;
+  }
+
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.savedProject) {
-          this.savedProject = project.copy();
-          this.currentProject = project.copy();
-        } else {
-          if ( project.id !== this.savedProject.id ) {
-            this.savedProject = project.copy();
-            this.currentProject = project.copy();
-          } else {
-            this.currentProject = project.copy();
-          }
-        }
-        this.changed = !this.savedProject.equals(this.currentProject);
+        this.currentProject = project;
       })
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  onSave() {
+  onSave(): void {
     this.projectService.save(this.currentProject).then((project: Project) => {
-      this.savedProject = project.copy();
       this.projectService.project.next(project);
     });
   }
 
-  onRevert() {
-    this.projectService.project.next(this.savedProject.copy());
+  onRevert(): void {
+    this.projectService.discardPendingChanges();
   }
 
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ProjectService } from '../services/project.service';
 
 export interface ComponentCanDeactivate {
   canDeactivate: () => boolean | Observable<boolean>;
@@ -10,19 +11,24 @@ export interface ComponentCanDeactivate {
   providedIn: 'root'
 })
 export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
-  canDeactivate(): boolean | Observable<boolean> {
-    return confirm('WARNING: You have unsaved changes. Press Cancel to go back and save these changes, or OK to lose these changes.');
-  }
-    // if (component === null){
-      //   return confirm('WARNING: You have unsaved changes. Press Cancel to go back and save these changes, or OK to lose these changes.');
-      // }
-    // if there are no pending changes, just allow deactivation; else confirm first
-    // return component.canDeactivate() ? 
-      // true : 
-      // NOTE: this warning message will only be shown when navigating elsewhere within your angular app;
-      // when navigating away from your angular app, the browser will show a generic warning message
-      // see http://stackoverflow.com/a/42207299/7307355
-      
 
-  
+  constructor(private projectService: ProjectService){}
+
+  // should return true when the page is allowed to close itself and false in the other case
+  canDeactivate(): boolean | Observable<boolean> {
+    // if we have pending changes we ask the user if he really wants to close the page
+    if (this.projectService.hasPendingChanges) {
+      if (confirm('You made changes. Click OK to confirm that you want to leave without saving.')){
+        // if the user confirm, we discard the changes
+        this.projectService.discardPendingChanges();
+        return true;
+      } else {
+        // we return false and the navigating doesn't occur
+        return false;
+      }
+    }
+    else {
+      return true;
+    }
+  }
 }
