@@ -11,7 +11,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
 import { MsalModule } from '@azure/msal-angular';
 import { environment } from 'src/environments/environment';
-import { PendingChangesGuard } from './guards/pending-changes.guard';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 @NgModule({
@@ -58,7 +57,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       extraQueryParameters: {}
     })
   ],
-  providers: [DatePipe, PendingChangesGuard],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
