@@ -1,4 +1,4 @@
-<mat-card class="custom">
+<mat-card class="project">
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-country">
             <mat-icon class="{{projectOwner ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
@@ -30,10 +30,10 @@
             <div class="card-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : ( 'None' | translate )}}</div>
         </div>
     </mat-card-content>
-    <mat-card-actions align="end" class="mdm-button-group">
+    <mat-card-actions align="end" class="grp">
         <ng-container *ngIf="project.active">
-            <button mat-stroked-button (click)="onOpen()" class="customm">{{ 'Open' | translate }}</button>
-            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button"><mat-icon>expand_more</mat-icon></button>
+            <button mat-stroked-button (click)="onOpen()" class="open">{{ 'Open' | translate }}</button>
+            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand"><mat-icon>expand_more</mat-icon></button>
         </ng-container>
         <ng-container *ngIf="!project.active">
             <button mat-stroked-button (click)="onRestore()" class="mdm-button"><mat-icon>restore</mat-icon>{{ 'Restore' | translate }}</button>
