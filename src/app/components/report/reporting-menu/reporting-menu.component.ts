@@ -45,7 +45,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   createOptions(): void {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
-    
+
     if (numberOfParameters > 1){
       this.options.push({
         value: 'Computation',
@@ -57,7 +57,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       this.options.push({
         value: 'Collection Sites',
         action: this.collectionSitesOption
-      })
+      });
     }
 
     if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
@@ -83,7 +83,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
               this.options.push({
                 value: 'Years',
                 action: () => this.timeOption('year')
-              })
+              });
             }
           }
         }
@@ -201,7 +201,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       indicator: this.indicator,
       disaggregatedIndicators: [],
       splitByTime: time
-    })
+    });
   }
 
   closeIndicator = (): void => {

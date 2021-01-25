@@ -145,7 +145,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1){
         if (this.content[i].level === undefined){
-          this.content[i].level = this.content[i-1].level;
+          this.content[i].level = this.content[i - 1].level;
         }
       }
       this.rows.next(this.content);
@@ -223,7 +223,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return row;
   }
-  // Fetch the data of one especific row in function of project, content, filter and dimension 
+  // Fetch the data of one especific row in function of project, content, filter and dimension
   updateRowValues(row: InfoRow): InfoRow{
     const currentFilter = this.filter.value;
     const modifiedFilter = {
@@ -258,7 +258,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       }
     );
-    
+
     return row;
   }
 
@@ -279,7 +279,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               if (row.onChart){
                 this.updateChart();
               }
-            }  
+            }
           }
           return row;
         }
@@ -359,13 +359,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (info.splitBySites){
       const newIndicators = [];
       for (const entityId of this.filter.value.entity){
-        const customFilter = { 
+        const customFilter = {
           entity: [entityId]
-        }
+        };
 
         let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
-        
-        customIndicator.level = info.indicator.level + 1
+
+        customIndicator.level = info.indicator.level + 1;
         customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
@@ -376,7 +376,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
 
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
-      
+
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
     }
@@ -390,8 +390,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
       while (startTimeSlot !== endTimeSlot){
         let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
-        
-        customIndicator.level = info.indicator.level + 1
+
+        customIndicator.level = info.indicator.level + 1;
         // TO DO: add correct language here
         customIndicator.name = startTimeSlot.humanizeValue('en');
         customIndicator.values = {};
@@ -399,7 +399,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         if (!customIndicator.customFilter){
           customIndicator.customFilter = {};
         }
-        customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value]
+        customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
 
         customIndicator = this.updateRowValues(customIndicator);
         newIndicators.push(customIndicator);
@@ -407,14 +407,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         startTimeSlot = startTimeSlot.next();
       }
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
-      
+
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
     }
     else {
       for (const disaggregatedIndicator of info.disaggregatedIndicators){
         indicatorIndex += 1;
-  
+
         let newRow;
         if (currentIndicator.customFilter){
           newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
@@ -424,7 +424,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
-  
+
         this.content.splice(indicatorIndex, 0, newRow);
       }
       currentIndicator.open = !currentIndicator.open;
