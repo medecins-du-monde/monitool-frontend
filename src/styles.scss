@@ -3,8 +3,7 @@
 @import "./assets/theme/font_vars.scss";
 @include mat-core();
 
-$mdm-primary-colors: (
-  50 : #e0ecf8,
+$mdm-primary-colors: (50 : #e0ecf8,
   100 : #b3cfee,
   200 : #80afe2,
   300 : #4d8ed6,
@@ -18,8 +17,7 @@ $mdm-primary-colors: (
   A200 : #9bb1ff,
   A400 : #688aff,
   A700 : #4e76ff,
-  contrast: (
-    50 : #000000,
+  contrast: (50 : #000000,
     100 : #000000,
     200 : #000000,
     300 : #000000,
@@ -35,8 +33,7 @@ $mdm-primary-colors: (
     A700 : #ffffff,
   ));
 
-$mdm-accent-colors: (
-  50 : #ffece0,
+$mdm-accent-colors: (50 : #ffece0,
   100 : #ffcfb3,
   200 : #ffaf80,
   300 : #fe8e4d,
@@ -50,8 +47,7 @@ $mdm-accent-colors: (
   A200 : #fff2f1,
   A400 : #ffc6be,
   A700 : #ffb0a4,
-  contrast: (
-    50 : #000000,
+  contrast: (50 : #000000,
     100 : #000000,
     200 : #000000,
     300 : #000000,
@@ -191,6 +187,7 @@ body {
 mat-hint {
   font-size: $small_text;
   display: flex;
+  align-items: center;
   padding-top: 5px;
 }
 
@@ -249,6 +246,7 @@ mat-hint {
 
   .mat-icon {
     line-height: 20px;
+    font-size: $small_text;
   }
 }
 
@@ -585,6 +583,19 @@ mat-hint {
   }
 }
 
+// === Hints ===
+mat-hint {
+  mat-icon {
+    width: 25px !important;
+    height: 100% !important;
+    margin-right: 10px;
+
+    @media screen and (max-width: $breakpoint-sm) {
+      width: 35px;
+    }
+  }
+}
+
 // === FORMS ===
 
 .mdm-form {
@@ -685,12 +696,12 @@ mat-hint {
 
   label {
     font-size: inherit;
-    padding-bottom: 1.34375em;
+    padding-bottom: 5px;
   }
 
   .mdm-form-label {
     font-weight: bold;
-    flex: 0.3;
+    flex: 0.4;
   }
 
   .mdm-form-field {
@@ -705,4 +716,28 @@ mat-hint {
       }
     }
   }
+}
+
+.checkbox-form {
+  flex-direction: column;
+
+  div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  mat-hint {
+    padding-top: 8px;
+    align-self: center;
+
+    mat-icon {
+      font-size: $small_text;
+    }
+  }
+
+  .mdm-form-label {
+    margin-right: 100px;
+  }
+
+  margin-bottom: 8px;
 }

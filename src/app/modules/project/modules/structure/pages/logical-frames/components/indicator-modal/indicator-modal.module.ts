@@ -1,3 +1,4 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IndicatorModalComponent } from './indicator-modal.component';
@@ -13,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+
 
 @NgModule({
   declarations: [IndicatorModalComponent],
@@ -30,7 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatChipsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   exports: [IndicatorModalComponent]
 })
