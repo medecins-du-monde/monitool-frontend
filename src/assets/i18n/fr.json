@@ -1,5 +1,6 @@
 {
-    "AccountMDM": "Compte MDM",
+    "Loading": "Chargement...",
+    "AccountMDM": "Compte MdM",
     "AccountPartner": "Compte Partenaire",
     "Acronym": "Sigle",
     "Add": "Ajouter",
@@ -530,7 +531,7 @@
     "UserEdition": "Édition utilisateur",
     "Users": "Utilisateurs",
     "UseTrainingAccount":"Utiliser le compte de formation (admin)",
-    "UseMDMAccount": "Utiliser le compte MDM",
+    "UseMDMAccount": "Utiliser le compte MdM",
     "Valid": "Valide",
     "Visibility": "Visibilité",
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
