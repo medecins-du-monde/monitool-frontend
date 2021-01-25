@@ -1,12 +1,12 @@
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
-import { Indicator } from 'src/app/models/indicator.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ChartService } from 'src/app/services/chart.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-report',
