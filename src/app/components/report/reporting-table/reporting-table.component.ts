@@ -319,7 +319,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     for (const row of this.dataSource.data){
       if (row.onChart){
-        datasets.push(row.dataset);
+        datasets.push(Object.assign({}, row.dataset));
       }
     }
     const data = {
@@ -366,6 +366,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
 
         customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
         customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
