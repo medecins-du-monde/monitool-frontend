@@ -1,12 +1,12 @@
 <div class="progress-bar-triple">
     <div class="progress-container">
-        <div class="done progress" [ngStyle]="{'width': done + '%'}" matTooltip="{{done}}% {{ 'Done' | translate }}">
+        <div id="done" class="done progress" [ngStyle]="{'width': done + '%' }" matTooltip="{{done}}% {{ 'Done' | translate }}">
             {{done}}% {{ 'Done' | translate }}
         </div>
-        <div class="incomplete progress" [ngStyle]="{'width': ongoing + '%'}"
+        <div id="ongoing" class="incomplete progress" [ngStyle]="{'width': ongoing + '%'}"
             matTooltip="{{ongoing}}% {{ 'Ongoing' | translate }}">{{ongoing}}%
             {{ 'Ongoing' | translate }}</div>
-        <div class="missing progress" [ngStyle]="{'width': missing + '%'}"
+        <div id="missing" class="missing progress" [ngStyle]="{'width': missing + '%'}"
             matTooltip="{{missing}}% {{ 'Missing' | translate }}">{{missing}}%
             {{ 'Missing' | translate }}</div>
     </div>

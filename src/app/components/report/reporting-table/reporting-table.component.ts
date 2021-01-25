@@ -2,8 +2,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
-import { Project } from 'src/app/models/project.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
@@ -19,12 +19,14 @@ export interface SectionTitle{
   sectionId: number;
   open: boolean;
   click: (id: number) => void;
+  level: number;
 }
 
 export interface GroupTitle{
   icon: boolean;
   groupName: string;
   sectionId: number;
+  level: number;
 }
 
 export interface InfoRow {
@@ -39,8 +41,10 @@ export interface InfoRow {
   filterFlag: boolean;
   computation: any;
   originProject?: Project;
+  customFilter?: any;
   nextRow: Row;
   open: boolean;
+  level: number;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -155,6 +159,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         row.sectionId = id;
       }
 
+      this.content = this.content.map(this.convertToRow);
+      // defines the level of the first row as zero if it is undefined
+      if (this.content.length > 0){
+        if (this.content[0].level === undefined){
+          this.content[0].level = 0;
+        }
+      }
+      // if any row has the level undefined, it gets the level of the previous row
+      for (let i = 1; i < this.content.length; i += 1){
+        if (this.content[i].level === undefined){
+          this.content[i].level = this.content[i - 1].level;
+        }
+      }
       this.rows.next(this.content);
     }
   }
@@ -206,8 +223,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create row of the table from a ProjectIndicator
-  indicatorToRow(indicator: ProjectIndicator): InfoRow{
-    const row = {
+  indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow{
+    let row = {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
@@ -222,71 +239,72 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       open: true
     } as InfoRow;
 
+    if (customFilter){
+      row.customFilter = customFilter;
+    }
+
     if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
+      row = this.updateRowValues(row);
+    }
+    return row;
+  }
+  // Fetch the data of one especific row in function of project, content, filter and dimension
+  updateRowValues(row: InfoRow): InfoRow{
+    const currentFilter = this.filter.value;
+    const modifiedFilter = {
+      _start: currentFilter._start.toISOString().slice(0, 10),
+      _end: currentFilter._end.toISOString().slice(0, 10),
+      entity: currentFilter.entity
+    };
 
-      const currentFilter = this.filter.value;
-      const modifiedFilter = {
-        _start: currentFilter._start.toISOString().slice(0, 10),
-        _end: currentFilter._end.toISOString().slice(0, 10),
-        entity: currentFilter.entity
-      };
+    const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
+    if (row.customFilter){
+      Object.assign(customFilter, row.customFilter);
+    }
 
-      const currentProject = indicator.originProject ? indicator.originProject : this.project;
-
-      this.reportingService.fetchData(currentProject, indicator.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-        response => {
-
-          if (response) {
-            this.roundResponse(response);
-            const data = this.formatResponseToDataset(response);
-            row.dataset = {
-            label: indicator.display,
+    this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+      response => {
+        if (response) {
+          this.roundResponse(response);
+          const data = this.formatResponseToDataset(response);
+          row.dataset = {
+            label: row.name,
             data,
             labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
             borderColor: this.randomColor(),
             backgroundColor: this.randomColor(),
             fill: false
           };
-            row.values = response;
+          row.values = response;
+
+          if (row.onChart){
+            this.updateChart();
           }
         }
-      );
-    }
+      }
+    );
+
     return row;
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void{
-    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
-
-      const currentFilter = this.filter.value;
-      const modifiedFilter = {
-        _start: currentFilter._start.toISOString().slice(0, 10),
-        _end: currentFilter._end.toISOString().slice(0, 10),
-        entity: currentFilter.entity
-      };
+    if (this.tableContent && this.filter && this.dimensionIds ){
 
       if (isArray(this.content)) {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
-            const currentProject = row.originProject ? row.originProject : this.project;
-            this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , modifiedFilter, true, false).then(
-              response => {
-                if (response) {
-                  this.roundResponse(response);
-                  const data = this.formatResponseToDataset(response);
-                  row.dataset = {
-                    label: row.name,
-                    data,
-                    labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-                    borderColor: this.randomColor(),
-                    backgroundColor: this.randomColor(),
-                    fill: false
-                  };
-                  row.values = response;
-                }
+            if (this.dimensions.length > 0){
+              row = this.updateRowValues(row);
+            }
+            // this only happens when you group by collection sites or by group and you don't have any site or group in your project
+            else {
+              row.values = {};
+              row.dataset = {};
+              if (row.onChart){
+                this.updateChart();
               }
-            );
+            }
           }
           // this only happens when you group by collection sites or by group and you don't have any site or group in your project
           else {
@@ -334,7 +352,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     for (const row of this.dataSource.data){
       if (row.onChart){
-        datasets.push(row.dataset);
+        datasets.push(Object.assign({}, row.dataset));
       }
     }
     const data = {
@@ -369,17 +387,81 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
-    currentIndicator.open = !currentIndicator.open;
-
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
-    for (const disaggregatedIndicators of info.disaggregatedIndicators){
-      indicatorIndex += 1;
+    if (info.splitBySites){
+      const newIndicators = [];
+      for (const entityId of this.filter.value.entity){
+        const customFilter = {
+          entity: [entityId]
+        };
 
-      const newRow = this.indicatorToRow(disaggregatedIndicators);
-      newRow.sectionId = info.indicator.sectionId;
+        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
 
-      this.content.splice(indicatorIndex, 0, newRow);
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+
+        customIndicator = this.updateRowValues(customIndicator);
+
+        newIndicators.push(customIndicator);
+      }
+
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitByTime){
+      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[info.splitByTime]);
+      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[info.splitByTime]);
+      endTimeSlot = endTimeSlot.next();
+
+      const newIndicators = [];
+
+      while (startTimeSlot !== endTimeSlot){
+        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+
+        customIndicator.level = info.indicator.level + 1;
+        // TO DO: add correct language here
+        customIndicator.name = startTimeSlot.humanizeValue('en');
+        customIndicator.values = {};
+
+        if (!customIndicator.customFilter){
+          customIndicator.customFilter = {};
+        }
+        customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
+
+        customIndicator = this.updateRowValues(customIndicator);
+        newIndicators.push(customIndicator);
+
+        startTimeSlot = startTimeSlot.next();
+      }
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+    else {
+      for (const disaggregatedIndicator of info.disaggregatedIndicators){
+        indicatorIndex += 1;
+
+        let newRow;
+        if (currentIndicator.customFilter){
+          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
+        }
+        else{
+          newRow = this.indicatorToRow(disaggregatedIndicator);
+        }
+        newRow.sectionId = info.indicator.sectionId;
+        newRow.level = info.indicator.level + 1;
+
+        this.content.splice(indicatorIndex, 0, newRow);
+      }
+      currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
     }
   }
@@ -400,9 +482,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
 
+  calcPaddingLevel(element: Row): string{
+    if (element.level){
+      return `padding-left: ${element.level * 20 + 15}px;`;
+    }
+    return '';
+  }
+
   randomNumberLimit(limit: number): number {
     return Math.floor((Math.random() * limit) + 1);
   }
+
   randomColor(): string {
     const col = 'rgba(' + this.randomNumberLimit(255)
       + ',' + this.randomNumberLimit(255)

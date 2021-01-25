@@ -1,11 +1,11 @@
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import * as _ from 'lodash';
 import { forEach } from 'lodash';
-import { OutputElement } from 'src/app/models/output-element.model';
-import { Purpose } from 'src/app/models/purpose.model';
-import { Activity } from 'src/app/models/activity.model';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
-import { Theme } from 'src/app/models/theme.model';
+import { OutputElement } from 'src/app/models/classes/output-element.model';
+import { Purpose } from 'src/app/models/classes/purpose.model';
+import { Activity } from 'src/app/models/classes/activity.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 
 export default class FormGroupBuilder {
 
@@ -75,6 +75,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
@@ -85,8 +86,9 @@ export default class FormGroupBuilder {
     else {
       return new FormGroup({
         display: new FormControl(indicator.display, Validators.required),
-        baseline: new FormControl(indicator.baseline, Validators.required),
-        target: new FormControl(indicator.target, Validators.required),
+        baseline: new FormControl(indicator.baseline),
+        target: new FormControl(indicator.target),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),

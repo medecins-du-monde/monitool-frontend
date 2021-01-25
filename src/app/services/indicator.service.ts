@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Indicator } from '../models/indicator.model';
+import { Indicator } from '../models/classes/indicator.model';
 import { ApiService } from './api.service';
 import { ThemeService } from './theme.service';
 

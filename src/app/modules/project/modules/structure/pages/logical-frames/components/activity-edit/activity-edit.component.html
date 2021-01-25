@@ -3,6 +3,9 @@
         <div class="mdm-form-label">{{ 'Activity' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="description" placeholder="{{ 'Activity' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Activity-Activity-Result-SpecificObjective-Hint' | translate }}
+            </mat-hint>
         </mat-form-field>
     </div>
     <div class= "mdm-section">
@@ -14,6 +17,9 @@
                 </ng-container>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'AddIndicator-Activity-Result-SpecificObjective-Hint' | translate }}
+            </mat-hint>
         </div>
     </div>
 </div>

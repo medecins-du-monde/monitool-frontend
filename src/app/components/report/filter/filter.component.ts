@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter, Input, Output, OnDestroy} from '@angular/core';
 import {  FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Project } from 'src/app/models/project.model';
-import { ProjectService } from 'src/app/services/project.service';
-import { Entity } from 'src/app/models/entity.model';
 import { Subscription } from 'rxjs';
+import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
+import { Entity } from 'src/app/models/classes/entity.model';
 
 
 export interface Filter{

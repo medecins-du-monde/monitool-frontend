@@ -2,7 +2,7 @@ import { IndicatorService } from 'src/app/services/indicator.service';
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Indicator } from 'src/app/models/indicator.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
 
 @Component({
   selector: 'app-indicator',
