@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerService } from 'ngx-spinner';
 import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
@@ -16,9 +16,9 @@ timer: any;
   ngOnInit(): void {
     /** Subscribing to check if we are still loading */
     this.loadingService.loaded.subscribe(value => {
-      if (this.timer) { clearTimeout(this.timer)}
+      if (this.timer) { clearTimeout(this.timer); }
       if (value) {
-        // The spinner appears after one second so he doesn t have to appear when the page is loaded very quickly 
+        // The spinner appears after one second so he doesn t have to appear when the page is loaded very quickly
         this.timer = setTimeout(() => this.spinnerService.show(), 1000);
       }
       else { this.spinnerService.hide(); }

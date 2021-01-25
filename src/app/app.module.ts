@@ -62,7 +62,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     })
   ],
   providers: [
-    DatePipe, 
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,

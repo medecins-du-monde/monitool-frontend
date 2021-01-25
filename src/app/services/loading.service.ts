@@ -12,15 +12,15 @@ export class LoadingService {
   get loaded(): Observable<boolean> {
     return this.loading.asObservable();
   }
- 
+
   constructor() {
     this.loading = new BehaviorSubject(false);
   }
- 
+
   show(): void {
     this.loading.next(true);
   }
- 
+
   hide(): void {
     this.loading.next(false);
   }

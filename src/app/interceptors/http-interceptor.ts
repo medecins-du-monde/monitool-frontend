@@ -6,16 +6,16 @@ import { HttpHandler } from '@angular/common/http';
 import { HttpEvent } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { LoadingService } from '../services/loading.service';
- 
+
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
- 
+
      constructor(private loadingService: LoadingService) { }
- 
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         this.loadingService.show();
- 
+
         return next
             .handle(req)
             .pipe(
