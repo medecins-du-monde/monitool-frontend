@@ -1,10 +1,11 @@
 .card-header {
-  padding: 16px 16px 16px 16px;
+  padding: 16px;
   align-items: center;
- 
+
   .project-country {
     height: 24px;
     width: 24px;
+
     img {
       height: 100%;
     }
@@ -14,7 +15,7 @@
     margin-left: auto;
     margin-right: 4px;
     padding-top: 5px;
-    
+
   }
 }
 
@@ -24,14 +25,15 @@
 
 .icon-button {
   cursor: pointer;
-  
+
 }
 
 .icon-default {
   cursor: default;
-  
-  
+
+
 }
+
 .boton.mdm-button.mat-icon-button:not(.small-button) {
   height: 25px;
   width: 32px;
@@ -45,32 +47,43 @@
   position: relative;
   padding: 0px;
   border-radius: 4px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-  .mat-card-header {
-      align-items: center;
-      padding-bottom: 16px;
-      margin-bottom: 12px;
-      background-color: #ddd;
-   
+  .card-header {
+    align-items: center;
+    background-color: #ddd;
+    padding: 16px;
 
-      .mat-card-header-text {
-          margin: 0 0 0 16px;
+    .project-icon {
+      height: 24px;
+      width: 24px;
+
+      img {
+        height: 100%;
       }
+    }
 
-      .mat-card-title {
-          margin-bottom: 0;
-      }
+    .project-status {
+      margin-left: auto;
+    }
   }
 
-  .mat-card-actions:last-child {
-      margin-bottom: 0 !important;
-      padding: 16px 16px 16px 16px;
+  .mat-card-content {
+    flex: 1;
   }
+
+  .mat-card-actions {
+    flex: 0;
+    padding: 16px;
+  }
+
 }
 
 .mat-button-toggle-appearance-standard {
   .mat-button-toggle-label-content {
-      line-height: 38px;
+    line-height: 38px;
   }
 }
 
@@ -78,20 +91,23 @@
   line-height: 40px !important;
 }
 
-.mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+.mat-card-actions .mat-button,
+.mat-card-actions .mat-raised-button,
+.mat-card-actions .mat-stroked-button {
   &:last-child {
-      margin-left: 0;
+    margin-left: 0;
   }
 }
 
 .mat-chip {
   min-height: 24px !important;
   padding: 8px !important;
+
   &.mat-chip-selected {
-      &.mat-accent {
-          color: white !important;
-      }
-  }  
+    &.mat-accent {
+      color: white !important;
+    }
+  }
 }
 
 .open.mat-stroked-button {
@@ -110,7 +126,7 @@
   border-bottom-left-radius: 3px;
 }
 
- 
+
 .expand.mat-icon-button {
   padding: 0;
   min-width: 0;
@@ -119,10 +135,8 @@
   flex-shrink: 0;
   line-height: 26px;
   border-top-left-radius: 1px;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 1px;
-    border: 1px solid #c8c9cc !important;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 1px;
+  border: 1px solid #c8c9cc !important;
 }
-
-
