@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Entity } from 'src/app/models/entity.model';
-import { LogicalFrame } from 'src/app/models/logical-frame.model';
-import { Project } from 'src/app/models/project.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({

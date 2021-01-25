@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Entity } from 'src/app/models/entity.model';
-import { Form } from 'src/app/models/form.model';
-import { Project } from 'src/app/models/project.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({

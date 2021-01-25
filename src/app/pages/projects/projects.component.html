@@ -13,7 +13,10 @@
             </div>
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
-                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">{{ status.text | translate }}</mat-button-toggle>
+                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">
+                        {{ status.text | translate }} 
+                        ({{ status.count }})
+                    </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
         </div>

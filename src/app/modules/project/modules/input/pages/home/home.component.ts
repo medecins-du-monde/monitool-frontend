@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from 'src/app/models/form.model';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';

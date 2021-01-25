@@ -1,9 +1,9 @@
-import { Project } from './../../../../../../models/project.model';
+import { Project } from '../../../../../../models/classes/project.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 @Component({

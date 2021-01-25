@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MultiLanguage } from 'src/app/models/multi-language.model';
+import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
 
 
 export interface Task {

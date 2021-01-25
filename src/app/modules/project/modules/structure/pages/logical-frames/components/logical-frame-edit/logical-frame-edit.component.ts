@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
-import { Entity } from 'src/app/models/entity.model';
-import { Form } from 'src/app/models/form.model';
-import { LogicalFrame } from 'src/app/models/logical-frame.model';
-import { Purpose } from 'src/app/models/purpose.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { Form } from 'src/app/models/classes/form.model';
+import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
+import { Purpose } from 'src/app/models/classes/purpose.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 

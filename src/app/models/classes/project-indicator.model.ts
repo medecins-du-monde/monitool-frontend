@@ -1,5 +1,5 @@
 import { forEach } from 'lodash';
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
