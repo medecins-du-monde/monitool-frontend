@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -6,17 +7,21 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoadingService {
 
-  visibility: BehaviorSubject<boolean>;
+  loading: BehaviorSubject<boolean>;
+
+  get loaded(): Observable<boolean> {
+    return this.loading.asObservable();
+  }
  
   constructor() {
-    this.visibility = new BehaviorSubject(false);
+    this.loading = new BehaviorSubject(false);
   }
  
-  show() {
-    this.visibility.next(true);
+  show(): void {
+    this.loading.next(true);
   }
  
-  hide() {
-    this.visibility.next(false);
+  hide(): void {
+    this.loading.next(false);
   }
 }

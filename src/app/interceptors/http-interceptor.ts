@@ -13,7 +13,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
      constructor(private loadingService: LoadingService) { }
  
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
- 
+
         this.loadingService.show();
  
         return next
@@ -23,7 +23,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
                     if (event instanceof HttpResponse) {
                         this.loadingService.hide();
                     }
-                }, (error) => {
+                }, () => {
                     this.loadingService.hide();
                 })
             );
