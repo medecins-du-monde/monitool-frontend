@@ -257,12 +257,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       entity: currentFilter.entity
     };
 
+    const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
     if (row.customFilter){
       Object.assign(customFilter, row.customFilter);
     }
 
-    this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+    this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
       response => {
         if (response) {
           this.roundResponse(response);
@@ -387,20 +388,23 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
+    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites){
       const newIndicators = [];
-      for (const entityId of this.filter.value.entity){
+      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entity;
+
+      for (const entityId of entities){
         const customFilter = {
           entity: [entityId]
         };
 
-        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
-        customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
+        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
 
