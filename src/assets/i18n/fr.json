@@ -64,7 +64,8 @@
         "EndDatePlaceholder": "Idem fin du projet",
         "PeriodicityHint": "À quelle fréquence ces données remontent-elles? Attention, cette fréquence est complétement decorrelée de la fréquence à laquelle le projet doit fournir du reporting.",
         "StartDateHint": "Si cette source de données est plus récente que le début du projet, indiquez la date de début, sinon laisser la valeur par défaut",
-        "StartDatePlaceholder": "Idem début du projet"
+        "StartDatePlaceholder": "Idem début du projet",
+        "SameAsProject": "Égale au projet ({{date}})"
     },
     "DataSources": "Sources de données",
     "Date": "Date",

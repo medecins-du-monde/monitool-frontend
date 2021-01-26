@@ -65,7 +65,8 @@
         "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
         "StartDateHint": "Si esta fuente de datos fue creada despues del inicio del proyecto, especifique la fecha, sino deje el valor por defecto",
-        "StartDatePlaceholder": "Igual que el inicio del proyecto"
+        "StartDatePlaceholder": "Igual que el inicio del proyecto",
+        "SameAsProject": "Igual al proyecto ({{date}})"
     },
     "DataSources": "Fuente de datos",
     "Date": "Fecha",

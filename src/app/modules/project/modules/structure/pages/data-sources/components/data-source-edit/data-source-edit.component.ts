@@ -68,24 +68,28 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
-      this.changedStartDate = !DatesHelper.areEquals(new Date(value.start), new Date(this.project.start));
-      this.changedEndDate = !DatesHelper.areEquals(new Date(value.end), new Date(this.project.end));
       this.edit.emit(this.form.deserialize(value));
     });
     if (this.form.start) { this.changedStartDate = !DatesHelper.areEquals(new Date(this.form.start), new Date(this.project.start)); }
     if (this.form.end) { this.changedEndDate = !DatesHelper.areEquals(new Date(this.form.end), new Date(this.project.end)); }
   }
 
-  onEntityRemoved(entity: Entity) {
+  toggleCustomDate(event: any, selected: string): void {
+      if (event.value === 'false') {
+        this.dataSourceForm.get(selected).setValue(this.project[selected]);
+      }
+  }
+
+  onEntityRemoved(entity: Entity): void {
     const entities = this.dataSourceForm.controls.entities.value;
     this.dataSourceForm.controls.entities.setValue(entities.filter(x => x.id !== entity.id));
   }
 
-  onAddNewElement() {
+  onAddNewElement(): void {
     this.elements.push(this.newElement());
   }
 
-  onRemoveElement(i: number) {
+  onRemoveElement(i: number): void {
     this.elements.removeAt(i);
   }
 

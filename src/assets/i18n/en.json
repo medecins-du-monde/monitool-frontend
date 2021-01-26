@@ -63,7 +63,8 @@
         "EndDatePlaceholder": "Same as project's end",
         "PeriodicityHint": "How often is this data available? Take care, this is not the same thing as the frenquency of the reports that you need to provide.",
         "StartDateHint": "If this data source was created after the beginning of the project, enter here the date, otherwise, leave the default value",
-        "StartDatePlaceholder": "Same as project's start"
+        "StartDatePlaceholder": "Same as project's start",
+        "SameAsProject": "Same as project ({{date}})"
     },
     "DataSourceStructureTitle": "Structure",
     "DataSources": "Data sources",
