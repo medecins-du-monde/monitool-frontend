@@ -3,6 +3,7 @@ import { ProjectIndicator } from './project-indicator.model';
 import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
 import { Purpose } from './purpose.model';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 export class LogicalFrame implements Deserializable {
     id: string;
@@ -22,8 +23,8 @@ export class LogicalFrame implements Deserializable {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.purposes = ( input && input.purposes ) ? input.purposes.map(x => new Purpose(x)) : [];
-        this.start = ( input && input.start ) ? new Date(input.start)  : null;
-        this.end = ( input && input.end ) ? new Date(input.end) : null;
+        this.start = ( input && input.start ) ? DatesHelper.parseDate(input.start)  : null;
+        this.end = ( input && input.end ) ? DatesHelper.parseDate(input.end) : null;
         this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;
     }

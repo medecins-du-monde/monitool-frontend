@@ -8,6 +8,7 @@ import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
 import { Group } from './group.model';
 import { User } from './user.model';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 export class Project implements Deserializable {
     id: string;
@@ -71,8 +72,8 @@ export class Project implements Deserializable {
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
-        this.start = input ? new Date(input.start) : new Date();
-        this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
+        this.start = input ? DatesHelper.parseDate(input.start) : new Date();
+        this.end = input ? DatesHelper.parseDate(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
         this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
         this.groups = ( input && input.groups ) ? input.groups.map(x => {

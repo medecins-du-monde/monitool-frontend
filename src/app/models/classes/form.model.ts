@@ -2,6 +2,7 @@ import { Deserializable } from '../interfaces/deserializable.model';
 import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
 import { FormElement } from './form-element.model';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 export class Form implements Deserializable {
     id: string;
@@ -24,8 +25,8 @@ export class Form implements Deserializable {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.periodicity = ( input && input.periodicity ) ? input.periodicity : 'month';
-        this.start = ( input && input.start ) ? new Date(input.start) : null;
-        this.end = ( input && input.end ) ? new Date(input.end) : null;
+        this.start = ( input && input.start ) ? DatesHelper.parseDate(input.start) : null;
+        this.end = ( input && input.end ) ? DatesHelper.parseDate(input.end) : null;
         this.elements = ( input && input.elements ) ? input.elements.map(x => new FormElement(x)) : [];
         return this;
     }
