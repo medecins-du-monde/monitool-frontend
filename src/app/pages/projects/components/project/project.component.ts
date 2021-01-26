@@ -40,12 +40,27 @@ export class ProjectComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+   
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
-    });
+    })
+    //   this.projectService.list().then((projects: Project[]) => {
+    //   projects.map(w => {
+    //     if(w.status ==='Ongoing'){
+    //     document.getElementById('stat').style.backgroundColor = 'green';
+    //     }
+    //     else if(w.status ==='Finished'){
+    //       document.getElementById('stat').style.backgroundColor = 'white';
+    //       }
+    //       else if(w.status ==='Deleted'){
+    //         document.getElementById('stat').style.backgroundColor = 'red';
+    //         }
+ 
+    // })
+    // });
 
-  }
+ }
 
   async onOpen(): Promise<void> {
     this.projectService.get(this.project.id).then(() => {
