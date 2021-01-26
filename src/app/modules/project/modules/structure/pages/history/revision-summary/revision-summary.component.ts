@@ -119,21 +119,15 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
 
-    if (operation.op === 'add') {
+    if (operation.op === 'add') { 
       translationData['item'] = operation.value;
 
     }
     else if (operation.op === 'replace') {
       if (operation.value == null) { translationData['after'] = ['null'] }
       else { translationData['after'] = operation.value; }
-      // if (!before) {
-    
-      //   translationData['before'] = 'null';
-      // } else {
-      //   console.log('bbbbbbbbbbbbbbb');
-        translationData['before'] = before;
-        console.log(before);
-      
+      translationData['before'] = before;
+
 
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
@@ -205,7 +199,10 @@ export class RevisionSummaryComponent implements OnInit {
         });
       }
     }
-
+    if(typeof translationData["before"] === 'object')
+    {
+      translationData["before"] = 'null';
+    }
     return translationData;
 
   }
