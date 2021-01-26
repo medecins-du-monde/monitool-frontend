@@ -109,8 +109,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
       }
 
-
-      for (const partition of element.partitions) {
+      for (const partition of element?.partitions) {
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){

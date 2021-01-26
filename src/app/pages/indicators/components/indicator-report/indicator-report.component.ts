@@ -52,7 +52,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   buildIndicators(): void{
     const projects = this.relatedProjects.filter(project => project.status === 'Ongoing' || project.status === 'Finished');
 
-    const indicators = [];
+    const indicators: ProjectIndicator[] = [];
     for (const project of projects){
         const newIndicator = new ProjectIndicator(project.crossCutting[this.mainIndicator.id]);
         newIndicator.display = `${project.country} - ${project.name}`;
