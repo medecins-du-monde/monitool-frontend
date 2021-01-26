@@ -155,7 +155,7 @@
     "History": "History",
     "HistoryChanges": "Changes",
     "HistoryRevision": {
-        "active_replace": "Change deletion status from {{!before}} to {{!after}}",
+        "active_replace": "Change deletion status from {{before}} to {{after}}",
         "name_replace": "Rename the project from {{before}} to {{after}}",
         "start_replace": "Change the project start date of the project from {{before}} to {{after}}",
         "end_replace": "Change the project end date from {{before}} to {{after}}",
@@ -267,7 +267,7 @@
         "logicalFrames_indicators_add": "Add indicator {{item.display}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_move": "Move indicator {{item.display}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_remove": "Remove indicator {{item.display}} from logical framework {{logicalFrame.name}}",
-        "logicalFrames_indicators_baseline_replace": "Change baseline of indicator {{indicator.display}} from {{before}} vers {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_indicators_baseline_replace": "Change baseline of indicator {{indicator.display}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_target_replace": "Change target of indicator {{indicator.display}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_display_replace": "Rename indicator {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_colorize_replace": "Change indicator {{indicator.display}} colorization from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",

@@ -24,7 +24,7 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -124,8 +124,17 @@ export class RevisionSummaryComponent implements OnInit {
 
     }
     else if (operation.op === 'replace') {
-      translationData['after'] = operation.value;
-      translationData['before'] = before;
+      if (operation.value == null) { translationData['after'] = ['null'] }
+      else { translationData['after'] = operation.value; }
+      // if (!before) {
+    
+      //   translationData['before'] = 'null';
+      // } else {
+      //   console.log('bbbbbbbbbbbbbbb');
+        translationData['before'] = before;
+        console.log(before);
+      
+
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
         translationData['before'] = this.transformDate(translationData['before']);
@@ -163,7 +172,8 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = before.forms.find(e => {
 
           if (Array.isArray(translationData['item'])) {
-          return e.id === translationData['item'][0]; }
+            return e.id === translationData['item'][0];
+          }
           else {
             return e.id === translationData['item'];
           }
@@ -176,7 +186,7 @@ export class RevisionSummaryComponent implements OnInit {
 
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             }
+          }
           else {
             return e.id === translationData['item'];
           }
@@ -188,10 +198,11 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = translationData['partition']['elements'].find(e => {
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             }
+          }
           else {
             return e.id === translationData['item'];
-          } });
+          }
+        });
       }
     }
 
