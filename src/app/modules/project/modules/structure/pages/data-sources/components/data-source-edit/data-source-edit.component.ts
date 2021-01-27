@@ -86,6 +86,10 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       }
   }
 
+  isCustom(selected: string): boolean {
+    return !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
+  }
+
   onEntityRemoved(entity: Entity): void {
     const entities = this.dataSourceForm.controls.entities.value;
     this.dataSourceForm.controls.entities.setValue(entities.filter(x => x.id !== entity.id));
@@ -97,10 +101,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   onRemoveElement(i: number): void {
     this.elements.removeAt(i);
-  }
-
-  isCustom(selected: string): boolean {
-    return !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
   }
 
   private newElement(element?: FormElement): FormGroup {
