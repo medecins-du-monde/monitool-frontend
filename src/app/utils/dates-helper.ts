@@ -13,11 +13,19 @@ export default class DatesHelper {
     }
   }
 
-  // converts a string in the format YYYY-mm-dd to Date
-  // this format is used for every date in the database
-  static parseDate(dateString: string): Date {
-    const dateArgs = dateString.split('-');
-    return new Date(+dateArgs[0], (+dateArgs[1]) - 1, +dateArgs[2]);
+  static parseDate(date: string | Date): Date {
+
+    // converts a string in the format YYYY-mm-dd to Date
+    // this format is used for every date in the database
+    if (typeof date === 'string'){
+      const dateArgs = date.split('-');
+      return new Date(+dateArgs[0], (+dateArgs[1]) - 1, +dateArgs[2]);
+    }
+
+    // if the argument is already a Date, we don't need to convert anything
+    if (date instanceof Date){
+      return new Date(date);
+    }
   }
 
 }
