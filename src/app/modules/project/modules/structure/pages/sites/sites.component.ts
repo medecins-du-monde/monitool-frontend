@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { Entity } from 'src/app/models/classes/entity.model';
@@ -72,6 +72,7 @@ export class SitesComponent implements OnInit {
               groups.push(group);
             });
             value.groups = groups;
+            this.projectService.valid = this.sitesForm.valid;
             this.projectService.project.next(Object.assign(project, value));
           });
         }
