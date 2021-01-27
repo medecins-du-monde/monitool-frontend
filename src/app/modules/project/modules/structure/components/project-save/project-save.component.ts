@@ -14,6 +14,7 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   private currentProject: Project;
 
   public changed = false;
+  public valid = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -33,6 +34,7 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
             this.currentProject = project.copy();
           }
         }
+        this.valid = this.projectService.isValid;
         this.changed = !this.savedProject.equals(this.currentProject);
       })
     );
