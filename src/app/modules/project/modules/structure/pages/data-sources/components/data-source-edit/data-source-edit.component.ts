@@ -78,6 +78,9 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       if (event.value === 'false') {
         this.dataSourceForm.get(selected).setValue(this.project[selected]);
       }
+      else {
+        this.dataSourceForm.get(selected).setValue(null);
+      }
   }
 
   onEntityRemoved(entity: Entity): void {
@@ -91,6 +94,10 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   onRemoveElement(i: number): void {
     this.elements.removeAt(i);
+  }
+
+  isCustom(selected: string): boolean {
+    return !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
   }
 
   private newElement(element?: FormElement): FormGroup {

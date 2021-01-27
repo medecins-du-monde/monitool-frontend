@@ -718,3 +718,22 @@ mat-hint {
     
     margin-bottom: 8px;
 }
+
+.dateGroup {
+    flex: 1;
+    margin-bottom: 25px;
+  }
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: #005ec5; 
+}
+  
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color:#005ec5;
+    background-color:#005ec5;
+}
+
+.mat-radio-label {
+    white-space: normal !important;
+}
