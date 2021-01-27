@@ -523,6 +523,17 @@
             "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool."
         }
     },
+    "TooltipRoleHint": {
+        "PanelShow": "Mostrar ayuda para este campo",
+        "PanelHide": "Esconder ayuda para este campo",
+        "EditProjectsStructure": "Editar los datos y la estructura de proyecto donde se ha autorizado explicitamente",
+        "SeeAllProjectsReporting": "Ver los informes de todos los proyectos",
+        "CreateProjects": "Crear proyectos",
+        "CreateAndEditThematics": "Crear y editar temáticas",
+        "CreateAndEditCrossCutting": "Crear y editar indicadores transversales",
+        "EditOtherUsersRoles": "Editar las permisiones de los demás usuarios",
+        "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos"
+    },
     "Type": "Tipo",
     "ThematicEdition": "Editar temática",
     "Thematics": "Temáticas",

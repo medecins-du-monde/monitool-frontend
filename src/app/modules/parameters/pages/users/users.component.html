@@ -3,5 +3,5 @@
     <p>{{ 'SettingsUserInfo.1' | translate}}</p>
 </div>
 <div class="mdm-cards">
-    <app-user *ngFor="let user of users" [user]="user" (edit)="onEdit($event)" class="mdm-card"></app-user>
+    <app-user *ngFor="let user of users_data" [user]="user" (edit)="onEdit($event)" class="mdm-card"></app-user>
 </div>

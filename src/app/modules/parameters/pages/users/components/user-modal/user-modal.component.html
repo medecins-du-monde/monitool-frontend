@@ -31,9 +31,59 @@
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}
             </mat-hint>
-        </mat-form-field>
+        </mat-form-field>        
     </div>
-    <!-- TODO: add table below -->
+        <mat-accordion class="hint-panel" >
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        <mat-hint>
+                            <mat-icon>info</mat-icon>{{ panelOpenState ? ('TooltipRoleHint.PanelHide' | translate) : ('TooltipRoleHint.PanelShow' | translate) }}
+                        </mat-hint>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="untitled">
+                        <th mat-header-cell *matHeaderCellDef> </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.untitled | translate }} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="admin">
+                        <th mat-header-cell *matHeaderCellDef> {{ 'AdminRole' | translate }} </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <mat-icon class="{{element.admin == true ? 'green-icon' : 'red-icon' }}">
+                                {{ element.admin == true ? 'done' : 'clear' }}
+                            </mat-icon> 
+                        </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="project">
+                        <th mat-header-cell *matHeaderCellDef> {{ 'ProjectRole' | translate }} </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon class="{{element.project == true ? 'green-icon' : 'red-icon' }}">
+                                {{ element.project == true ? 'done' : 'clear' }}
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="common">
+                        <th mat-header-cell *matHeaderCellDef> {{ 'CommonRole' | translate }} </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon class="{{element.common == true ? 'green-icon' : 'red-icon' }}">
+                                {{ element.common == true ? 'done' : 'clear' }}
+                            </mat-icon>
+                        </td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>                                     
+                
+            </mat-expansion-panel>
+        </mat-accordion>   
+    <br>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-stroked-button (click)="onSubmit()" class="mdm-button" [disabled]="userForm.invalid">{{ 'SaveUser' | translate }}</button>
