@@ -722,6 +722,8 @@ mat-hint {
 .dateGroup {
     flex: 1;
     margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
   }
 
 
@@ -736,4 +738,5 @@ mat-hint {
 
 .mat-radio-label {
     white-space: normal !important;
+    margin-bottom: 10px;
 }

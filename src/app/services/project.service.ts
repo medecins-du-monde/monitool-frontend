@@ -13,8 +13,15 @@ export class ProjectService {
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
+  // TODO : set to false by default and control everywhere to know if it s valid or not
+  valid = true;
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
+  }
+
+  get isValid(): boolean {
+    return this.valid;
   }
 
   constructor(

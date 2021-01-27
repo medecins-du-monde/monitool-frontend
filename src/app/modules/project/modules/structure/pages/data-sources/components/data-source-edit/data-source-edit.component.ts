@@ -7,6 +7,7 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 
@@ -39,7 +40,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private projectService: ProjectService,
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +70,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      this.projectService.valid = this.dataSourceForm.valid;
       this.edit.emit(this.form.deserialize(value));
     });
     if (this.form.start) { this.changedStartDate = !DatesHelper.areEquals(new Date(this.form.start), new Date(this.project.start)); }
