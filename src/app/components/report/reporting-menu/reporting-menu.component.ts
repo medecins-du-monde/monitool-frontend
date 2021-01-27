@@ -174,7 +174,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: parameter,
         baseline: 0,
-        target: 0
+        target: 0,
+        originProject: this.indicator.originProject
       }));
     }
     this.addIndicatorsEvent.emit(
