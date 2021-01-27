@@ -719,6 +719,7 @@ mat-hint {
     margin-bottom: 8px;
 }
 
+// Management of dateGroups (custom dates and same as project)
 .dateGroup {
     flex: 1;
     margin-bottom: 25px;
@@ -727,6 +728,7 @@ mat-hint {
   }
 
 
+// Management of all radio buttons
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
     border-color: #005ec5; 
 }
@@ -739,4 +741,13 @@ mat-hint {
 .mat-radio-label {
     white-space: normal !important;
     margin-bottom: 10px;
+}
+
+// Management of invalid forms
+.mat-input-invalid .mat-input-placeholder {
+    color: red;
+}
+
+.mat-input-invalid .mat-input-ripple {
+    background-color: red;
 }
