@@ -44,7 +44,7 @@ export class ProjectComponent implements OnInit {
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
-    })
+    });
   }
 
   async onOpen(): Promise<void> {
