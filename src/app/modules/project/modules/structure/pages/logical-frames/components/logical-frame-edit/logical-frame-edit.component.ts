@@ -8,6 +8,7 @@ import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Purpose } from 'src/app/models/classes/purpose.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-logical-frame-edit',
@@ -106,6 +107,13 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    console.log('test');
+    this.purposes.controls[event.previousContainer.data.index]=event.container.data.item;
+    this.purposes.controls[event.container.data.index]=event.previousContainer.data.item;
+    event.currentIndex=0;
   }
 
 }

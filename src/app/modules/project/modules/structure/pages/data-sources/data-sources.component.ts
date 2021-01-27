@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -47,6 +48,13 @@ export class DataSourcesComponent implements OnInit {
 
   onDelete(form: Form) {
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
+    this.projectService.project.next(this.project);
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    this.forms[event.previousContainer.data.index]=event.container.data.item;
+    this.forms[event.container.data.index]=event.previousContainer.data.item;
+    event.currentIndex=0;
     this.projectService.project.next(this.project);
   }
 

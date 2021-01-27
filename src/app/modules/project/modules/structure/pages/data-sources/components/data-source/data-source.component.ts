@@ -15,6 +15,7 @@ export class DataSourceComponent implements OnInit {
   @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+  @Output() drag = new EventEmitter()
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;

@@ -246,6 +246,10 @@ mat-hint {
     margin-bottom: 68px;
     color: black;
 
+    .cdk-drag-handle {
+        cursor: move;
+    }
+
     .mat-icon{
         line-height: 20px;
         font-size: $small_text;
@@ -264,69 +268,91 @@ mat-hint {
     @media screen and (max-width: $breakpoint-xs) {
         margin: 24px 0 0;
     }
+}
 
-    .mdm-card {
-        width: calc(25% - 24px);
-        margin: 0 12px 24px;
+.mdm-card {
+    width: calc(25% - 24px);
+    margin: 0 12px 24px;
+    position: relative;
 
-        @media screen and (max-width: $breakpoint-sm) {
-            width: calc(50% - 24px);
-        }
-
-        @media screen and (max-width: $breakpoint-xs) {
-            width: 100%;
-            margin: 0 0 16px;
-        }
-    }
-
-    .card-header {
-        border-bottom: 1px solid rgba(144, 144, 144, 0.24);
-        padding: 16px 0px 16px 16px;
-    
+    .cdk-drag-handle {
+        position: absolute;
+        z-index: 100;
+        cursor: move;
+        right: 12px;
         
+        .mat-icon {
+            font-size: 24px !important;
+        }
     }
 
-    .card-info {
-        display: flex;
-        flex-direction: column;
-        font-size: $small_text;
-        margin-bottom: 8px;
-        padding: 0px 16px 16px 16px;
+    @media screen and (max-width: $breakpoint-sm) {
+        width: calc(50% - 24px);
+    }
 
-        .card-info-title {
-            width: 50%;
+    @media screen and (max-width: $breakpoint-xs) {
+        width: 100%;
+        margin: 0 0 16px;
+    }
+}
 
-            &:not(b) {
-                color: #909090;
-            }
+.card-header {
+    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
+    padding: 16px 0px 16px 16px;
+
+    
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    font-size: $small_text;
+    margin-bottom: 8px;
+    padding: 0px 16px 16px 16px;
+
+    .card-info-title {
+        width: 50%;
+
+        &:not(b) {
+            color: #909090;
         }
-        .card-info-value {
-            width: 30%;
+    }
+    .card-info-value {
+        width: 30%;
+    }
+
+    .computation {
+        &.valid {
+            color: #3c763d;
         }
 
-        .computation {
-            &.valid {
-                color: #3c763d;
-            }
+        &.invalid {
+            color: #a94442;
+        }
 
-            &.invalid {
-                color: #a94442;
-            }
-
-            mat-icon{
-                height: 14px;
-                width: 14px;
-                font-size: $small_text;
-                line-height: 14px;
-                vertical-align: middle;
-            }
+        mat-icon{
+            height: 14px;
+            width: 14px;
+            font-size: $small_text;
+            line-height: 14px;
+            vertical-align: middle;
         }
     }
 }
 
+.drag-handle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #ccc;
+    cursor: move;
+    width: 20px;
+    height: 20px;
+}
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+    position: relative;
 
     .mat-card-header {
         align-items: center;
@@ -370,6 +396,7 @@ mat-hint {
     font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
+    white-space: nowrap;
     &.mat-chip-selected {
         &.mat-accent {
             color: white !important;
@@ -446,54 +473,56 @@ mat-hint {
     margin-top: 15px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px #dddddd;
+}
 
-    tr {
-        td:not(:last-child),th:not(:last-child) {
-            border-right: 1px solid #dddddd;
-        }
+tr {
+    background: white;
 
-        td {
-            font-size: $small_text;
-        }
-
-        th {
-            font-size: $big_text;
-            font-weight: bold;
-            color: black;
-        }
+    td:not(:last-child),th:not(:last-child) {
+        border-right: 1px solid #dddddd;
     }
 
-    .mdm-form-field {
-        width: 100%;
+    td {
+        font-size: $small_text;
+    }
 
-        .mat-form-field-wrapper {
-            padding: 0 !important;
+    th {
+        font-size: $big_text;
+        font-weight: bold;
+        color: black;
+    }
+}
 
-            .mat-form-field-flex {
-                .mat-form-field-infix {
-                    width: auto;
-                }
+.mdm-form-field {
+    width: 100%;
+
+    .mat-form-field-wrapper {
+        padding: 0 !important;
+
+        .mat-form-field-flex {
+            .mat-form-field-infix {
+                width: auto;
             }
         }
     }
+}
 
-    th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-        padding: 8px 5px;
-    }
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding: 8px 5px;
+}
 
-    th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
-        padding: 8px 16px 8px 8px;
-    }
-    th.input-td.mat-header-cell:last-of-type, td.input-td.mat-cell:last-of-type, td.input-td.mat-footer-cell:last-of-type {
-        padding: 0px;
-    }
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
+    padding: 8px 16px 8px 8px;
+}
+th.input-td.mat-header-cell:last-of-type, td.input-td.mat-cell:last-of-type, td.input-td.mat-footer-cell:last-of-type {
+    padding: 0px;
+}
 
-    code{
-        padding: 2px 4px;
-        font-size: 90%;
-        color: #c7254e;
-        background-color: #f9f2f4;
-    }
+code{
+    padding: 2px 4px;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
 }
 
 .input-table{

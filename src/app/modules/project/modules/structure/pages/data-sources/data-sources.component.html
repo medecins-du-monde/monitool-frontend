@@ -4,9 +4,17 @@
     <p>{{ 'ProjectDataSourceInfo.2' | translate }}</p>
 </div>
 
-<div class="mdm-section" *ngIf="!edition">
+<div class="mdm-section" *ngIf="!edition" cdkDropListGroup>
     <div class="mdm-cards">
-        <app-data-source *ngFor="let form of forms" class="mdm-card" [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)"></app-data-source>
+        <ng-container *ngFor="let form of forms; let i=index">
+            <div class="mdm-card" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{item:form,index:i}" (cdkDropListDropped)="drop($event)">
+                <app-data-source cdkDrag [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)">
+                    <div cdkDragHandle>
+                        <mat-icon>drag_indicator</mat-icon>
+                    </div>
+                </app-data-source>
+            </div>
+        </ng-container>
     </div>
     <button mat-stroked-button class="mdm-button" (click)="onCreate()"><mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}</button>
 </div>

@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
@@ -52,6 +53,13 @@ export class LogicalFramesComponent implements OnInit {
 
   onDelete(logicalFrame: LogicalFrame) {
     this.project.logicalFrames = this.project.logicalFrames.filter(x => x.id !== logicalFrame.id);
+    this.projectService.project.next(this.project);
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    this.logicalFrames[event.previousContainer.data.index]=event.container.data.item;
+    this.logicalFrames[event.container.data.index]=event.previousContainer.data.item;
+    event.currentIndex=0;
     this.projectService.project.next(this.project);
   }
 

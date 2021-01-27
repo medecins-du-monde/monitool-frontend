@@ -3,10 +3,16 @@
     <p>{{ "ExtraIndicatorsInfo.1" | translate }}</p>
 </div>
 <div [formGroup]="extraIndicatorsForm" class="mdm-section">
-    <div class="indicators-list" formArrayName="indicators">
+    <div class="indicators-list" formArrayName="indicators" cdkDropListGroup>
         <div *ngIf="project.extraIndicators.length !== 0; else elseBlock" class="mdm-cards">
-            <ng-container class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
-                <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
+            <ng-container *ngFor="let indicator of indicators.controls; let i=index">
+                <div class="mdm-card" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{item:indicator,index:i}" (cdkDropListDropped)="drop($event)">
+                    <app-extra-indicator cdkDrag class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
+                        <div cdkDragHandle>
+                            <mat-icon>drag_indicator</mat-icon>
+                        </div>
+                    </app-extra-indicator>
+                </div>
             </ng-container>
         </div>
         <ng-template #elseBlock>

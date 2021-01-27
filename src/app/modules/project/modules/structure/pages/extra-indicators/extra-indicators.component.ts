@@ -6,6 +6,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-extra-indicators',
   templateUrl: './extra-indicators.component.html',
@@ -66,4 +67,12 @@ export class ExtraIndicatorsComponent implements OnInit {
       }
     });
   }
+
+  drop(event: CdkDragDrop<any>) {
+    this.indicators.controls[event.previousContainer.data.index]=event.container.data.item;
+    this.indicators.controls[event.container.data.index]=event.previousContainer.data.item;
+    event.currentIndex=0;
+    this.projectService.project.next(this.project);
+  }
+
 }

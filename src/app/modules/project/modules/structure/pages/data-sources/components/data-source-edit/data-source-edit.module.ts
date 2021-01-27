@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormElementEditModule } from '../form-element-edit/form-element-edit.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
@@ -30,7 +31,8 @@ import { FormElementEditModule } from '../form-element-edit/form-element-edit.mo
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
-    FormElementEditModule
+    FormElementEditModule,
+    DragDropModule
   ],
   exports: [DataSourceEditComponent]
 })

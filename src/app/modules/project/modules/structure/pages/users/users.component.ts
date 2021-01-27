@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-users',
@@ -60,6 +61,13 @@ export class UsersComponent implements OnInit {
         this.projectService.project.next(this.project);
       }
     });
+  }
+
+  drop(event: CdkDragDrop<any>) {
+    this.users[event.previousContainer.data.index]=event.container.data.item;
+    this.users[event.container.data.index]=event.previousContainer.data.item;
+    event.currentIndex=0;
+    this.projectService.project.next(this.project);
   }
 
 }
