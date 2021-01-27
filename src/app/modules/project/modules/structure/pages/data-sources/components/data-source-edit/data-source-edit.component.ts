@@ -22,8 +22,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   dataSourceForm: FormGroup;
   startDate: Date;
   endDate: Date;
-  changedStartDate = false;
-  changedEndDate = false;
 
   @Input() entities: Entity[];
   @Input() form: Form;
@@ -73,8 +71,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       this.projectService.valid = this.dataSourceForm.valid;
       this.edit.emit(this.form.deserialize(value));
     });
-    if (this.form.start) { this.changedStartDate = !DatesHelper.areEquals(new Date(this.form.start), new Date(this.project.start)); }
-    if (this.form.end) { this.changedEndDate = !DatesHelper.areEquals(new Date(this.form.end), new Date(this.project.end)); }
   }
 
   toggleCustomDate(event: any, selected: string): void {
