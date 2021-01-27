@@ -484,6 +484,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     this.updateTableContent();
+    this.updateChart();
   }
 
   calcPaddingLevel(element: Row): string{
