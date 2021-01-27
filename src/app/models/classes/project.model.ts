@@ -115,26 +115,26 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-      const serialized = {
+        const serialized = {
             active: this.active,
             country: this.country,
             crossCutting: this.formatCrossCutting(),
-            end: this.end ? this.end.toISOString().slice(0, 10) : null,
+            end: this.end ? DatesHelper.dateToString(this.end) : null,
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
             groups: this.groups.map(x => x.serialize()),
             name: this.name,
-            start: this.start ? this.start.toISOString().slice(0, 10) : null,
+            start: this.start ? DatesHelper.dateToString(this.start) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
             users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
             _id: this.id
         };
-      Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
-      return serialized;
+        Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
+        return serialized;
     }
 
     copy(): Project {

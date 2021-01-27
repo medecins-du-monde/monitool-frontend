@@ -14,7 +14,6 @@ export default class DatesHelper {
   }
 
   static parseDate(date: string | Date): Date {
-
     // converts a string in the format YYYY-mm-dd to Date
     // this format is used for every date in the database
     if (typeof date === 'string'){
@@ -28,5 +27,11 @@ export default class DatesHelper {
     }
   }
 
+  static dateToString(date: Date): string{
+    let time = date.getTime();
+    time = time - date.getTimezoneOffset() * 60000;
+    const dateWithoutTimezone = new Date(time);
+    return dateWithoutTimezone.toISOString().slice(0,10);
+  }
 }
 
