@@ -34,7 +34,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
 
-  createDynamicRevisionText() {
+  createDynamicRevisionText(): void {
     let before = this.patchProject(this.index + 1);
     let after = this.patchProject(this.index);
     after = jsonpatch.applyPatch(after, this.revisions[this.index].backwards as Operation[]).newDocument;
@@ -62,7 +62,7 @@ export class RevisionSummaryComponent implements OnInit {
     });
   }
 
-  getTranslationKey(operation) {
+  getTranslationKey(operation): string {
     let editedField = operation.path
       .substring(1) // Remove leading slash
       .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
@@ -119,12 +119,12 @@ export class RevisionSummaryComponent implements OnInit {
       }
     }
 
-    if (operation.op === 'add') { 
+    if (operation.op === 'add') {
       translationData['item'] = operation.value;
 
     }
     else if (operation.op === 'replace') {
-      if (operation.value == null) { translationData['after'] = ['null'] }
+      if (operation.value == null) { translationData['after'] = ['null']; }
       else { translationData['after'] = operation.value; }
       translationData['before'] = before;
 
@@ -199,15 +199,15 @@ export class RevisionSummaryComponent implements OnInit {
         });
       }
     }
-    if(typeof translationData["before"] === 'object')
+    if (typeof translationData['before'] === 'object')
     {
-      translationData["before"] = 'null';
+      translationData['before'] = 'null';
     }
     return translationData;
 
   }
 
-  patchProject(revisionIndex) {
+  patchProject(revisionIndex): Project {
     const revisedProject = _.cloneDeep(this.project);
     for (let i = 0; i < revisionIndex; i++) {
       try {
@@ -223,7 +223,7 @@ export class RevisionSummaryComponent implements OnInit {
     return revisedProject;
   }
 
-  transformDate(date) {
+  transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
