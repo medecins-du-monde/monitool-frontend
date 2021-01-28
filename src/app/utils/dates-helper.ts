@@ -20,10 +20,9 @@ export default class DatesHelper {
       const dateArgs = date.split('-');
       return new Date(+dateArgs[0], (+dateArgs[1]) - 1, +dateArgs[2]);
     }
-
     // if the argument is already a Date, we don't need to convert anything
-    if (date instanceof Date){
-      return new Date(date);
+    else {
+      return date;
     }
   }
 
@@ -31,7 +30,7 @@ export default class DatesHelper {
     let time = date.getTime();
     time = time - date.getTimezoneOffset() * 60000;
     const dateWithoutTimezone = new Date(time);
-    return dateWithoutTimezone.toISOString().slice(0,10);
+    return dateWithoutTimezone.toISOString().slice(0, 10);
   }
 }
 
