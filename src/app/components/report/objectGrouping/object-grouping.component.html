@@ -1,9 +1,9 @@
-<mat-grid-list cols="16" rowHeight="1.5:1">
-    <mat-grid-tile colspan="1">
+<mat-grid-list cols="23" rowHeight="50px">
+    <mat-grid-tile colspan="2">
         <mat-icon>filter_none</mat-icon>
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="12">
+    <mat-grid-tile colspan="15">
         <mat-form-field appearance="none" class="mdm-form-field" [formGroup]="dimensionForm">
             <mat-select formControlName="dimensionId" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}">
                 <mat-option *ngFor="let option of groupOptions" [value]="option.value">{{ option.viewValue }}
@@ -12,7 +12,7 @@
         </mat-form-field>
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="3">
+    <mat-grid-tile colspan="6">
         <button mat-stroked-button ><mat-icon>play_for_work</mat-icon> Download table</button>
     </mat-grid-tile>        
 

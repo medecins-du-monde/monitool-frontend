@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatRadioModule} from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -27,6 +28,7 @@ import { FormElementEditModule } from '../form-element-edit/form-element-edit.mo
     MatChipsModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatRadioModule,
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
