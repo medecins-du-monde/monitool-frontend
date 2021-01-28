@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import {  FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -9,20 +9,30 @@ import {  FormBuilder, FormGroup } from '@angular/forms';
 export class ObjectGroupingComponent implements OnInit {
 
   dimensionForm: FormGroup;
+  @Input() isCrosscuttingReport = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
+
+  groupOptions: { value: string; viewValue: string; }[];
 
   constructor(private fb: FormBuilder ) { }
 
-  groupOptions = [
-    {value: 'month', viewValue: 'Month'},
-    {value: 'quarter', viewValue: 'Quarter'},
-    {value: 'semester', viewValue: 'Semester'},
-    {value: 'year', viewValue: 'Year'},
-    {value: 'entity', viewValue: 'Collection Sites'},
-    {value: 'group', viewValue: 'Groups'}
-  ];
-
   ngOnInit(): void {
+    this.groupOptions = [
+      {value: 'month', viewValue: 'Month'},
+      {value: 'quarter', viewValue: 'Quarter'},
+      {value: 'semester', viewValue: 'Semester'},
+      {value: 'year', viewValue: 'Year'}
+    ];
+
+    if (!this.isCrosscuttingReport){
+      this.groupOptions = this.groupOptions.concat(
+        [
+          {value: 'entity', viewValue: 'Collection Sites'},
+          {value: 'group', viewValue: 'Groups'}
+        ]
+      );
+    }
+
     const initialValue = 'month';
     this.dimensionForm = this.fb.group({
       dimensionId: initialValue

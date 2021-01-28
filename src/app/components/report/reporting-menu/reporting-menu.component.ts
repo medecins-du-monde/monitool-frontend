@@ -1,4 +1,3 @@
-/* tslint:disable:no-string-literal */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -9,7 +8,9 @@ import { InfoRow } from '../reporting-table/reporting-table.component';
 
 export interface AddedIndicators {
   indicator: InfoRow;
-  disaggregatedIndicators: ProjectIndicator[];
+  disaggregatedIndicators?: ProjectIndicator[];
+  splitBySites?: boolean;
+  splitByTime?: string;
 }
 
 @Component({
@@ -19,8 +20,8 @@ export interface AddedIndicators {
 })
 export class ReportingMenuComponent implements OnInit, OnDestroy {
 
-  @Input() indicator;
-
+  @Input() indicator: InfoRow;
+  @Input() dimensionName: string;
   options: any[];
   open: boolean;
   @Output() addIndicatorsEvent: EventEmitter<AddedIndicators> = new EventEmitter<AddedIndicators>();
@@ -44,6 +45,50 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   createOptions(): void {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
+    const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
+    if (numberOfParameters > 1){
+      this.options.push({
+        value: 'Computation',
+        action: this.computationOption
+      });
+    }
+
+    if (this.dimensionName !== 'entity' && this.dimensionName !== 'group' && !this.indicator.customFilter){
+      this.options.push({
+        value: 'Collection Sites',
+        action: this.collectionSitesOption
+      });
+    }
+
+    if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
+      if (!this.indicator.customFilter?.month){
+        this.options.push({
+          value: 'Months',
+          action: () => this.timeOption('month')
+        });
+
+        if (!this.indicator.customFilter?.quarter){
+          this.options.push({
+            value: 'Quarters',
+            action: () => this.timeOption('quarter')
+          });
+
+          if (!this.indicator.customFilter?.semester){
+            this.options.push({
+              value: 'Semesters',
+              action: () => this.timeOption('semester')
+            });
+
+            if (!this.indicator.customFilter?.year){
+              this.options.push({
+                value: 'Years',
+                action: () => this.timeOption('year')
+              });
+            }
+          }
+        }
+      }
+    }
 
     if (numberOfParameters === 1){
       const parameterValue: any = Object.entries(this.indicator.computation.parameters)[0][1];
@@ -51,7 +96,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       let element;
 
       let found = false;
-      for (const f of this.project.forms) {
+      for (const f of currentProject.forms) {
         for (const e of f.elements) {
           if (parameterValue.elementId === e.id) {
             element = e;
@@ -64,7 +109,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
       }
 
-      for (const partition of element.partitions) {
+      for (const partition of element?.partitions) {
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
@@ -78,12 +123,6 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (numberOfParameters > 1){
-      this.options.push({
-        value: 'Computation',
-        action: this.computationOption
-      });
-    }
   }
 
   partitionOption = (partition: Partition): void => {
@@ -106,7 +145,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: partitionElement.name,
         baseline: 0,
-        target: 0
+        target: 0 ,
+        originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
       }));
     }
 
@@ -134,7 +174,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: parameter,
         baseline: 0,
-        target: 0
+        target: 0,
+        originProject: this.indicator.originProject
       }));
     }
     this.addIndicatorsEvent.emit(
@@ -143,6 +184,26 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         disaggregatedIndicators
       }
     );
+  }
+
+  collectionSitesOption = (): void => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit(
+      {
+        indicator: this.indicator,
+        disaggregatedIndicators: [],
+        splitBySites: true
+      } as AddedIndicators
+    );
+  }
+
+  timeOption = (time: string): void => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit({
+      indicator: this.indicator,
+      disaggregatedIndicators: [],
+      splitByTime: time
+    });
   }
 
   closeIndicator = (): void => {
