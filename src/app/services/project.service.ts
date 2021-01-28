@@ -102,4 +102,9 @@ export class ProjectService{
     const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, {params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
+
+  public async listByIndicator(indicatorId: string): Promise<Project[]>{
+    const response: any = await this.apiService.get(`/resources/project`, {params: { mode: 'crossCutting', indicatorId} });
+    return response.map(x => new Project(x));
+  }
 }

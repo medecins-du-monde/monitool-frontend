@@ -15,6 +15,6 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="end">
-        <button mat-stroked-button  class="mdm-button">{{ 'SeeReport' | translate }}</button>
+        <button mat-stroked-button (click)="onOpen()" class="mdm-button">{{ 'SeeReport' | translate }}</button>
     </mat-card-actions>
 </mat-card>

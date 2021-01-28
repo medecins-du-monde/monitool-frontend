@@ -11,6 +11,7 @@ import { isArray, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
+import { Filter } from 'src/app/components/report/filter/filter.component';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -39,6 +40,7 @@ export interface InfoRow {
   dataset?: any;
   filterFlag: boolean;
   computation: any;
+  originProject?: Project;
   customFilter?: any;
   nextRow: Row;
   open: boolean;
@@ -62,7 +64,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
-  @Input() filter: BehaviorSubject<any>;
+  @Input() filter: BehaviorSubject<Filter>;
   rows = new BehaviorSubject<Row[]>([]);
 
   dataSource = new MatTableDataSource([]);
@@ -73,7 +75,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
   dimensions: string[];
   columnsToDisplay: string[];
-  openedSections = {};
+  openedSections = {0: true};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
@@ -82,10 +84,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
   ngOnInit(): void {
-
     this.subscription.add(
       this.rows.subscribe(value => {
-        this.dataSource = new MatTableDataSource(value.filter(row => this.isSectionTitle(0, row) || this.openedSections[row.sectionId]));
+
+        const filteredRows = value.filter(row => {
+          if (this.isSectionTitle(0, row)){
+            return true;
+          }
+
+          if (this.openedSections[row.sectionId]){
+            if (this.isInfoRow(0, row)) {
+              if (row.originProject){
+                if (this.filter.value.finished){
+                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished';
+                } else {
+                  return row.originProject.status === 'Ongoing';
+                }
+              }
+            }
+            return true;
+          } else {
+            return false;
+          }
+        });
+        this.dataSource = new MatTableDataSource(filteredRows);
       })
     );
 
@@ -124,8 +146,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   updateTableContent(): void{
     // TODO: Check why this.tableContent and not this.content
-    if (this.project.id && this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
+    if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)){
       let id = 0;
+
+      this.content = this.content.map(this.convertToRow);
 
       for (const row of this.content){
         if (this.isSectionTitle(0, row)){
@@ -158,8 +182,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateTableContent();
   }
 
-  // Create new row if it is an indicator
-  convertToRow = (item: Row): Row => {
+  // Create new row if it s an indicator
+  convertToRow = (item: Row | ProjectIndicator): Row => {
     if (this.isProjectIndicator(item)){
       return this.indicatorToRow(item);
     }
@@ -211,6 +235,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       dataset: {},
       filterFlag: true,
       computation: indicator.computation,
+      originProject: indicator.originProject ? indicator.originProject : undefined,
       open: true
     } as InfoRow;
 
@@ -232,12 +257,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       entity: currentFilter.entity
     };
 
+    const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
     if (row.customFilter){
       Object.assign(customFilter, row.customFilter);
     }
 
-    this.reportingService.fetchData(this.project, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+    this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
       response => {
         if (response) {
           this.roundResponse(response);
@@ -281,10 +307,18 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               }
             }
           }
+          // this only happens when you group by collection sites or by group and you don't have any site or group in your project
+          else {
+            row.values = {};
+            row.dataset = {};
+            if (row.onChart){
+              this.updateChart();
+            }
+          }
           return row;
-        }
-        );
+        });
       }
+
     }
   }
 
@@ -354,20 +388,23 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     let indicatorIndex = this.content.indexOf(info.indicator);
 
     const currentIndicator = this.content[indicatorIndex];
+    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites){
       const newIndicators = [];
-      for (const entityId of this.filter.value.entity){
+      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entity;
+
+      for (const entityId of entities){
         const customFilter = {
           entity: [entityId]
         };
 
-        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
-        customIndicator.name = this.project.entities.find(x => x.id === entityId)?.name;
+        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
 
@@ -447,6 +484,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     this.updateTableContent();
+    this.updateChart();
   }
 
   calcPaddingLevel(element: Row): string{

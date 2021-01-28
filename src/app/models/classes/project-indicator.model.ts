@@ -1,6 +1,7 @@
 import { forEach } from 'lodash';
 import { Deserializable } from '../interfaces/deserializable.model';
 import { MultiLanguage } from './multi-language.model';
+import { Project } from './project.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
@@ -29,6 +30,7 @@ export class ProjectIndicator implements Deserializable {
   type = UNAVAIlABLE;
   typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
+  originProject?: Project;
 
   constructor(input?: any) {
     this.deserialize(input);

@@ -8,7 +8,9 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
+import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
+
 
 @Component({
   selector: 'app-general',
@@ -22,26 +24,23 @@ export class GeneralComponent implements OnInit {
               private themeService: ThemeService,
               private chartService: ChartService ) { }
 
-  protected project: Project;
-  grouping = '';
+  project: Project;
 
-  filter = new BehaviorSubject<any>({});
+  filter = new BehaviorSubject<Filter>({
+    _start: new Date(),
+    _end: new Date(),
+  });
 
   dimensionIds = new BehaviorSubject('');
 
   tableContent = new BehaviorSubject<any[]>([]);
 
-  themes: Theme[];
-
-  crosscutting: Indicator[];
-
-  multiThemesIndicators: Indicator[];
-
-  groups: { theme: Theme, indicators: Indicator[]}[] = [];
-
-
   options =  {fill: false};
-  data = {};
+
+  themes: Theme[];
+  crosscutting: Indicator[];
+  multiThemesIndicators: Indicator[];
+  groups: { theme: Theme, indicators: Indicator[]}[] = [];
 
   ngOnInit(): void {
     this.chartService.clearChart();
@@ -266,7 +265,6 @@ export class GeneralComponent implements OnInit {
 
   receiveDimension(value): void{
     this.dimensionIds.next(value);
-    this.grouping = value;
   }
 
 }

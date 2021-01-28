@@ -45,7 +45,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   createOptions(): void {
     this.options = [];
     const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
-
+    const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
     if (numberOfParameters > 1){
       this.options.push({
         value: 'Computation',
@@ -96,7 +96,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       let element;
 
       let found = false;
-      for (const f of this.project.forms) {
+      for (const f of currentProject.forms) {
         for (const e of f.elements) {
           if (parameterValue.elementId === e.id) {
             element = e;
@@ -109,7 +109,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
       }
 
-      for (const partition of element.partitions) {
+      for (const partition of element?.partitions) {
         if (parameterValue.filter &&
            (!(partition.id in parameterValue.filter) ||
              parameterValue.filter[partition.id]?.length === partition.elements?.length)){
@@ -145,7 +145,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: partitionElement.name,
         baseline: 0,
-        target: 0
+        target: 0 ,
+        originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
       }));
     }
 
@@ -173,7 +174,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         computation: newComputation,
         display: parameter,
         baseline: 0,
-        target: 0
+        target: 0,
+        originProject: this.indicator.originProject
       }));
     }
     this.addIndicatorsEvent.emit(
