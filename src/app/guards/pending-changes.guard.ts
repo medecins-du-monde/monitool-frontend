@@ -13,9 +13,9 @@ export interface ComponentCanDeactivate {
   providedIn: 'root'
 })
 export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
-  
+
   constructor(private projectService: ProjectService, private translateService: TranslateService){}
-  
+
   get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -28,10 +28,10 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
 
   // should return true when the page is allowed to close itself and false in the other case
   canDeactivate(component: ComponentCanDeactivate): boolean | Observable<boolean> {
-    // if we receive a component, we use its specific rule
+    // if we receive a component, we use his specific rule
     if (component !== null){
       return component.canDeactivate() ?
-        true : 
+        true :
         confirm(this.warnMessage[this.currentLang]);
     }
 

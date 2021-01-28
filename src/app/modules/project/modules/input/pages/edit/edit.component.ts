@@ -42,7 +42,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   input: Input;
   inputForm: FormGroup;
   previousInput: Input;
-  
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
     return !this.canBeSaved;

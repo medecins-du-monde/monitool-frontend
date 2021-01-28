@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/project.model';
 import { ThemeService } from './theme.service';
