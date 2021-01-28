@@ -132,6 +132,7 @@
         }
 
     },
+    "ErrorNoCollectionSiteAssociated": "This data source is not associated with any collection site.",
     "es": "Spanish",
     "EquivalentVersion" : "This version is equivalent to the current state of the project",
     "EveryMonth": "Every month",
