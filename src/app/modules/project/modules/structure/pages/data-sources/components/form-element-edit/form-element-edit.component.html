@@ -3,8 +3,8 @@
         <div class="mdm-form-label">{{ 'AddVariableName' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name" placeholder="{{ 'AddVariableNamePlaceholder' | translate }}">
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '...' } }} 
+            <mat-hint  class="highlight">
+                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint1' | translate}} <span class="align">{{dataSourceName ? dataSourceName : '...' }}</span> {{ 'AddVariableNameHint2' | translate}}
             </mat-hint>
         </mat-form-field>
     </div>
@@ -15,8 +15,8 @@
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
+            <mat-hint class="highlight">
+                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint1' | translate}} <span class="align">{{elementForm.value.name ? elementForm.value.name : '...'}}</span>{{ 'GeoAggregationHint2' | translate}}
             </mat-hint>
         </mat-form-field>
     </div>
@@ -27,8 +27,8 @@
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
+            <mat-hint class="highlight">
+                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint1' | translate}} <span class="align" >{{elementForm.value.name ? elementForm.value.name : '...' }}</span>{{ 'TimeAggregationHint2' | translate}} 
             </mat-hint>
         </mat-form-field>
     </div>
@@ -44,8 +44,8 @@
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
             <div class="hint">
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
+                <mat-hint class="highlight">
+                    <mat-icon>info</mat-icon>{{ 'PartitionsHint1' | translate}} <span class="align">{{elementForm.value.name ? elementForm.value.name : '...' }} </span>{{ 'PartitionsHint2' | translate}}
                 </mat-hint>
             </div>
         </div>
