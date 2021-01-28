@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Indicator } from 'src/app/models/indicator.model';
-import { Project } from 'src/app/models/project.model';
-import { Theme } from 'src/app/models/theme.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { Theme } from 'src/app/models/classes/theme.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { IndicatorModalComponent } from '../../pages/logical-frames/components/indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { ProjectIndicator } from 'src/app/models/project-indicator.model';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
   selector: 'app-cross-cutting',

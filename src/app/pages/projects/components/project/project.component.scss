@@ -1,5 +1,7 @@
+@import "src/assets/theme/size_vars.scss";
+
 .card-header {
-  .project-country {
+  .project-icon { 
     height: 24px;
     width: 24px;
 
@@ -10,6 +12,27 @@
 
   .project-status {
     margin-left: auto;
+  }
+
+  .project-title {
+    width: 60%;
+    @media screen and (max-width: 1200px) {
+      width: 45%;
+    }
+    @media screen and (max-width: $breakpoint-sm) {
+      width: 65%;
+    }
+    @media screen and (max-width: 770px) {
+      width: 50%;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 65%;
+    }
+    .mat-card-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -24,3 +47,4 @@
 .icon-default {
   cursor: default;
 }
+

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Indicator } from 'src/app/models/indicator.model';
+import { Indicator } from 'src/app/models/classes/indicator.model';
 
 @Component({
   selector: 'app-indicator',

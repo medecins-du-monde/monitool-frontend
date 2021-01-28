@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectSaveComponent implements OnInit, OnDestroy {
 
   private currentProject: Project;
+
+  public valid = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -24,6 +26,7 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.currentProject = project;
+        this.valid = this.projectService.valid;
       })
     );
   }

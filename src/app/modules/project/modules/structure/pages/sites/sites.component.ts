@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { Entity } from 'src/app/models/entity.model';
-import { Group } from 'src/app/models/group.model';
-import { Project } from 'src/app/models/project.model';
-import { ProjectService } from 'src/app/services/project.service';
+import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { Group } from 'src/app/models/classes/group.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
+import FormGroupBuilder from 'src/app/utils/form-group-builder';
+
 
 
 
@@ -24,7 +26,7 @@ export class SitesComponent implements OnInit {
 
   entitiesDataSource = new MatTableDataSource<AbstractControl>();
 
-  get entities() {
+  get entities(): FormArray {
     return this.sitesForm.get('entities') as FormArray;
   }
 
@@ -32,11 +34,11 @@ export class SitesComponent implements OnInit {
 
   groupsDataSource = new MatTableDataSource<AbstractControl>();
 
-  get groups() {
+  get groups(): FormArray {
     return this.sitesForm.get('groups') as FormArray;
   }
 
-  get selectedEntities() {
+  get selectedEntities(): FormArray {
     return this.groups.value.map(x => {
       return this.entities.value.filter(e => x.members.includes(e.id));
     });
@@ -55,8 +57,8 @@ export class SitesComponent implements OnInit {
         if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev) {
           this.project = project;
           this.sitesForm = this.fb.group({
-            entities: this.fb.array(this.project.entities.map(x => this.newEntity(x))),
-            groups: this.fb.array(this.project.groups.map(x => this.newGroup(x)))
+            entities: this.fb.array(this.project.entities.map(x => FormGroupBuilder.newEntity(project, x))),
+            groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))
           });
           this.entitiesDataSource.data = this.entities.controls;
           this.groupsDataSource.data = this.groups.controls;
@@ -70,6 +72,7 @@ export class SitesComponent implements OnInit {
               groups.push(group);
             });
             value.groups = groups;
+            this.projectService.valid = this.sitesForm.valid;
             this.projectService.project.next(Object.assign(project, value));
           });
         }
@@ -77,50 +80,28 @@ export class SitesComponent implements OnInit {
     );
   }
 
-  public onAddNewEntity() {
-    this.entities.push(this.newEntity());
+  public onAddNewEntity(): void {
+    this.entities.push(FormGroupBuilder.newEntity(this.project));
     this.entitiesDataSource.data = this.entities.controls;
   }
 
-  private newEntity(entity?: Entity): FormGroup {
-    if (!entity) {
-      entity = new Entity();
-    }
-    return this.fb.group({
-      id: [entity.id, Validators.required],
-      name: [entity.name, Validators.required],
-      start: [entity.start],
-      end: [entity.end]
-    });
-  }
-
-  public onRemoveEntity(index: number) {
+  public onRemoveEntity(index: number): void {
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
   }
 
-  onEntityRemoved(index: number, id: number) {
+  onEntityRemoved(index: number, id: number): void {
     const group = this.groups.controls[index] as FormGroup;
     const members = group.controls.members;
     members.setValue(members.value.filter(x => x !== id));
   }
 
-  public onAddNewGroup() {
-    this.groups.push(this.newGroup());
+  public onAddNewGroup(): void {
+    this.groups.push(FormGroupBuilder.newEntityGroup());
     this.groupsDataSource.data = this.groups.controls;
   }
 
-  private newGroup(group?: Group): FormGroup {
-    if (!group) {
-      group = new Group();
-    }
-    return this.fb.group({
-      name: [group.name, Validators.required],
-      members: [group.members.map(x => x.id)]
-    });
-  }
-
-  public onRemoveGroup(index: number) {
+  public onRemoveGroup(index: number): void {
     this.groups.removeAt(index);
     this.groupsDataSource.data = this.groups.controls;
   }

@@ -1,8 +1,4 @@
-import { Deserializable } from './deserializable.model';
-import { v4 as uuid } from 'uuid';
-import { Project } from './project.model';
-import { Entity } from './entity.model';
-import { Form } from './form.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 
 export class Input implements Deserializable {
     id: string;

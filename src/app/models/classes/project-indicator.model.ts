@@ -1,5 +1,5 @@
 import { forEach } from 'lodash';
-import { Deserializable } from './deserializable.model';
+import { Deserializable } from '../interfaces/deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
@@ -36,7 +36,6 @@ export class ProjectIndicator implements Deserializable {
 
   deserialize(input: any): this {
     Object.assign(this, input);
-    // TODO: manage the colorize to have it it the right case
     this.colorize = this.colorize ? this.colorize : true;
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
     if (input && input.computation) {
@@ -108,7 +107,7 @@ export class ProjectIndicator implements Deserializable {
   serialize(crossCuttingType = false) {
     const serializedIndicator = {
       baseline: this.baseline,
-      colorize: this.colorize,
+      colorize: (this.baseline && this.target) ? true : false,
       computation: this.formatComputation(this.computation),
       target: this.target,
     };

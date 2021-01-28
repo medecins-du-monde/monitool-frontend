@@ -1,13 +1,15 @@
 <mat-card>
     <mat-card-header class="card-header">
-        <div mat-card-avatar class="project-country">
+        <div mat-card-avatar class="project-icon">
             <mat-icon class="{{projectOwner ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
         </div>
-        <mat-card-title>
-            {{project.country}}
-        </mat-card-title>
+        <div class="project-title">
+            <mat-card-title>
+                {{project.country}}
+            </mat-card-title>
+        </div>
         <mat-chip-list class="project-status">
-            <mat-chip color="accent" selected>{{ project.status | translate }}</mat-chip>
+            <mat-chip [ngStyle]="{'background-color': (project.status == 'Ongoing') ? 'green' : (project.status == 'Finished') ? 'yellow' : 'red'}" selected>{{ project.status | translate }}</mat-chip>
         </mat-chip-list>
     </mat-card-header>
     <mat-card-content>
@@ -27,7 +29,7 @@
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
-            <div class="card-info-value">{{project.inputDate ? (project.inputDate | date: 'mediumDate') : ( 'None' | translate )}}</div>
+            <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | date: 'mediumDate')  }}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">

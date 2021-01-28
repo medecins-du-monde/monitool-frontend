@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
-import { Revision } from 'src/app/models/revision.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { Revision } from 'src/app/models/classes/revision.model';
 import { Operation } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
 import { isEqual } from 'lodash';
-import { Form } from 'src/app/models/form.model';
+import { Form } from 'src/app/models/classes/form.model';
 
 
 @Component({

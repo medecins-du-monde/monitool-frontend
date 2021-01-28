@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
-import { Project } from 'src/app/models/project.model';
+import { Project } from 'src/app/models/classes/project.model';
 import { Subscription } from 'rxjs';
 import TimeSlot from 'timeslot-dag';
-import { Form } from 'src/app/models/form.model';
+import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { InputService } from 'src/app/services/input.service';
