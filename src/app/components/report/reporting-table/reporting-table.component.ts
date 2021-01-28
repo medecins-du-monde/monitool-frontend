@@ -97,7 +97,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               if (row.originProject){
                 if (this.filter.value.finished){
                   return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished';
-                }else{
+                } else {
                   return row.originProject.status === 'Ongoing';
                 }
               }
