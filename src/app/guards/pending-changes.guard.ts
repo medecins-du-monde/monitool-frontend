@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { MultiLanguage } from '../models/multi-language.model';
+import { MultiLanguage } from '../models/classes/multi-language.model';
 import { ProjectService } from '../services/project.service';
 
 export interface ComponentCanDeactivate {
