@@ -27,7 +27,7 @@ export class ProjectComponent implements OnInit {
   projectOwner: boolean;
   lastEntry: string;
 
-  get currentLang(): string{
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -37,14 +37,14 @@ export class ProjectComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
     });
-
   }
 
   async onOpen(): Promise<void> {
@@ -53,19 +53,19 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  onDelete(): void{
+  onDelete(): void {
     this.delete.emit(this.project);
   }
 
-  onRestore(): void{
+  onRestore(): void {
     this.restore.emit(this.project);
   }
 
-  onClone(): void{
+  onClone(): void {
     const dialogRef = this.dialog.open(CloneProjectModalComponent);
 
     dialogRef.afterClosed().subscribe(res => {
-      if (res){
+      if (res) {
         this.clone.emit(this.project);
       }
     });
@@ -76,7 +76,7 @@ export class ProjectComponent implements OnInit {
       if (this.projectOwner) {
         return 'person';
       }
-      else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)){
+      else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
         return 'star';
       } else {
         return 'star_border';

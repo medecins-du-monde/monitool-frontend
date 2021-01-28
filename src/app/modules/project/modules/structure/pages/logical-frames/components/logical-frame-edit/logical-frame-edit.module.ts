@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 import { PurposeEditModule } from '../purpose-edit/purpose-edit.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
@@ -33,6 +34,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
+    MatRadioModule,
     PurposeEditModule,
     IndicatorModalModule,
     ExtraIndicatorModule,

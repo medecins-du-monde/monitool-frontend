@@ -8,6 +8,7 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 
@@ -22,8 +23,6 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   dataSourceForm: FormGroup;
   startDate: Date;
   endDate: Date;
-  changedStartDate = false;
-  changedEndDate = false;
 
   @Input() entities: Entity[];
   @Input() form: Form;
@@ -40,7 +39,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   }
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private projectService: ProjectService,
   ) { }
 
   ngOnInit(): void {
@@ -69,24 +69,34 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
-      this.changedStartDate = !DatesHelper.areEquals(new Date(value.start), new Date(this.project.start));
-      this.changedEndDate = !DatesHelper.areEquals(new Date(value.end), new Date(this.project.end));
+      this.projectService.valid = this.dataSourceForm.valid;
       this.edit.emit(this.form.deserialize(value));
     });
-    if (this.form.start) { this.changedStartDate = !DatesHelper.areEquals(new Date(this.form.start), new Date(this.project.start)); }
-    if (this.form.end) { this.changedEndDate = !DatesHelper.areEquals(new Date(this.form.end), new Date(this.project.end)); }
   }
 
-  onEntityRemoved(entity: Entity) {
+  toggleCustomDate(event: any, selected: string): void {
+      if (event.value === 'false') {
+        this.dataSourceForm.get(selected).setValue(this.project[selected]);
+      }
+      else {
+        this.dataSourceForm.get(selected).setValue(null);
+      }
+  }
+
+  isCustom(selected: string): boolean {
+    return !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
+  }
+
+  onEntityRemoved(entity: Entity): void {
     const entities = this.dataSourceForm.controls.entities.value;
     this.dataSourceForm.controls.entities.setValue(entities.filter(x => x.id !== entity.id));
   }
 
-  onAddNewElement() {
+  onAddNewElement(): void {
     this.elements.push(this.newElement());
   }
 
-  onRemoveElement(i: number) {
+  onRemoveElement(i: number): void {
     this.elements.removeAt(i);
   }
 

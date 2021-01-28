@@ -33,8 +33,6 @@ export class DataSourcesComponent implements OnInit {
 
   onCreate(): void {
     this.currentForm = new Form();
-    this.currentForm.start = this.project.start;
-    this.currentForm.end = this.project.end;
     this.project.forms.push(this.currentForm);
     this.projectService.project.next(this.project);
     this.edition = true;
