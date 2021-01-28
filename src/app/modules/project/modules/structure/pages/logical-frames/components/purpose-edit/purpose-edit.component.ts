@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-purpose-edit',
@@ -63,6 +64,18 @@ export class PurposeEditComponent implements OnInit {
         }
       }
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.outputs.at(event.previousIndex);
+    this.outputs.removeAt(event.previousIndex);
+    this.outputs.insert(event.currentIndex, selectedControl);
+  }
+
+  dropIndicators(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.indicators.at(event.previousIndex);
+    this.indicators.removeAt(event.previousIndex);
+    this.indicators.insert(event.currentIndex, selectedControl);
   }
 
 }

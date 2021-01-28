@@ -69,9 +69,10 @@ export class ExtraIndicatorsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-    this.indicators.controls[event.previousContainer.data.index]=event.container.data.item;
-    this.indicators.controls[event.container.data.index]=event.previousContainer.data.item;
-    event.currentIndex=0;
+    const selectedControl = this.indicators.at(event.previousIndex);
+    this.indicators.removeAt(event.previousIndex);
+    this.indicators.insert(event.currentIndex, selectedControl);
+    this.project.extraIndicators = this.indicators.value;
     this.projectService.project.next(this.project);
   }
 

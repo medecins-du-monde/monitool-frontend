@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-output-edit',
@@ -65,5 +66,17 @@ export class OutputEditComponent implements OnInit {
         }
       }
     });
+  }
+
+  dropIndicators(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.indicators.at(event.previousIndex);
+    this.indicators.removeAt(event.previousIndex);
+    this.indicators.insert(event.currentIndex, selectedControl);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.activities.at(event.previousIndex);
+    this.activities.removeAt(event.previousIndex);
+    this.activities.insert(event.currentIndex, selectedControl);
   }
 }

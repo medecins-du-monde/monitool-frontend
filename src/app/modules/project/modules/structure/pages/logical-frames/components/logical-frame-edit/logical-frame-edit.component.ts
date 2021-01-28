@@ -109,11 +109,17 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     });
   }
 
-  drop(event: CdkDragDrop<any>) {
-    console.log('test');
-    this.purposes.controls[event.previousContainer.data.index]=event.container.data.item;
-    this.purposes.controls[event.container.data.index]=event.previousContainer.data.item;
-    event.currentIndex=0;
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.purposes.at(event.previousIndex);
+    this.purposes.removeAt(event.previousIndex);
+    this.purposes.insert(event.currentIndex, selectedControl);
+  }
+
+  dropIndicators(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.indicators.at(event.previousIndex);
+    this.indicators.removeAt(event.previousIndex);
+    this.indicators.insert(event.currentIndex, selectedControl);
+    this.logicalFrame.indicators = this.indicators.value;
   }
 
 }

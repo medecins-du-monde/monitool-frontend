@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { PurposeEditModule } from '../purpose-edit/purpose-edit.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -34,7 +35,8 @@ import { ExtraIndicatorModule } from '../../../../components/extra-indicator/ext
     MatExpansionModule,
     PurposeEditModule,
     IndicatorModalModule,
-    ExtraIndicatorModule
+    ExtraIndicatorModule,
+    DragDropModule
   ],
   exports: [LogicalFrameEditComponent]
 })
