@@ -25,7 +25,7 @@ export class DataSourcesComponent implements OnInit {
       this.project = project;
       this.forms = project.forms;
       this.entities = project.entities;
-      if ( this.currentForm ) {
+      if (this.currentForm) {
         this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
       }
     });
@@ -52,9 +52,9 @@ export class DataSourcesComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-    this.forms[event.previousContainer.data.index]=event.container.data.item;
-    this.forms[event.container.data.index]=event.previousContainer.data.item;
-    event.currentIndex=0;
+    this.forms[event.previousContainer.data.index] = event.container.data.item;
+    this.forms[event.container.data.index] = event.previousContainer.data.item;
+    event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }
 
