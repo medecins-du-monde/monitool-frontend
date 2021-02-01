@@ -4,8 +4,8 @@
         <div class="card-info">
             <div class="card-info-title">{{ 'Date' | translate }}</div>
             <div class="card-info-value">
-                {{ logicalFrame.start ? logicalFrame.start : project.start  | date: 'mediumDate' }} -
-                {{ logicalFrame.end ? logicalFrame.end : project.end | date: 'mediumDate' }}</div>
+                {{ (logicalFrame.start ? logicalFrame.start : project.start ) | date: 'mediumDate' }} -
+                {{ (logicalFrame.end ? logicalFrame.end : project.end )| date: 'mediumDate' }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>

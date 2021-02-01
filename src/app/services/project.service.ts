@@ -9,18 +9,42 @@ import { Revision } from '../models/classes/revision.model';
   providedIn: 'root'
 })
 
-export class ProjectService {
+export class ProjectService{
+
+  private savedProject: Project;
+  private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+
+  // TODO : set to false by default and control everywhere to know if it s valid or not
+  valid = true;
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
   }
 
-  constructor(
-    private apiService: ApiService,
-    private themeService: ThemeService
-  ) {
+  get hasPendingChanges(): boolean{
+    return !this.savedProject.equals(this.currentProject);
+  }
+
+  constructor(private apiService: ApiService, private themeService: ThemeService) {
+    this.openedProject.subscribe( (project: Project) => {
+      if (!this.savedProject) {
+        this.savedProject = project.copy();
+        this.currentProject = project.copy();
+      } else {
+        if ( project.id !== this.savedProject.id ) {
+          this.savedProject = project.copy();
+          this.currentProject = project.copy();
+        } else {
+          this.currentProject = project.copy();
+        }
+      }
+    });
+  }
+
+  public discardPendingChanges(): void {
+    this.project.next(this.savedProject.copy());
   }
 
   public async list(): Promise<Project[]>{
@@ -52,6 +76,8 @@ export class ProjectService {
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
 
+    this.savedProject = savedProject.copy();
+    this.currentProject = savedProject.copy();
     return savedProject;
   }
 
@@ -75,5 +101,10 @@ export class ProjectService {
   public async listRevisions(id: string, limit: number): Promise<Revision[]>{
     const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, {params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
+  }
+
+  public async listByIndicator(indicatorId: string): Promise<Project[]>{
+    const response: any = await this.apiService.get(`/resources/project`, {params: { mode: 'crossCutting', indicatorId} });
+    return response.map(x => new Project(x));
   }
 }

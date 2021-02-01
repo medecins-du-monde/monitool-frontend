@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
+import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
+
 
 
 @Component({
@@ -19,7 +21,7 @@ import { Input } from 'src/app/models/classes/input.model';
   styleUrls: ['./edit.component.scss']
 })
 
-export class EditComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 // TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
   formId: string;
@@ -41,6 +43,11 @@ export class EditComponent implements OnInit, OnDestroy {
   input: Input;
   inputForm: FormGroup;
   previousInput: Input;
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean{
+    return !this.canBeSaved;
+  }
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;

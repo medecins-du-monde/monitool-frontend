@@ -50,6 +50,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.basicsForm.valueChanges.subscribe((value: any) => {
           const selectedThemes = value.themes;
           value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
+          this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
       })
