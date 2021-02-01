@@ -208,7 +208,7 @@ mat-hint {
 // === SECTIONS ===
 .info-section {
   background-color: #ececec;
-  font-size: $normal_text;
+  font-size: $small_text;
   padding: 10px;
   color: #777b7e;
   margin-bottom: 14px;
@@ -733,11 +733,44 @@ mat-hint {
     mat-icon {
       font-size: $small_text;
     }
-  }
 
-  .mdm-form-label {
-    margin-right: 100px;
-  }
+    .mdm-form-label {
+      margin-right: 100px;
+    }
 
-  margin-bottom: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+// Management of dateGroups (custom dates and same as project)
+.dateGroup {
+  flex: 1;
+  margin: 25px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+// Management of all radio buttons
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #005ec5;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  color: #005ec5;
+  background-color: #005ec5;
+}
+
+.mat-radio-label {
+  white-space: normal !important;
+  margin-bottom: 10px;
+}
+
+// Management of invalid forms
+.mat-input-invalid .mat-input-placeholder {
+  color: red;
+}
+
+.mat-input-invalid .mat-input-ripple {
+  background-color: red;
 }

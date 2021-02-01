@@ -25,8 +25,8 @@
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
             </div>
-                        
-            <div class="mdm-form-group">
+                  
+            <div *ngIf="filterForm.get('entity')" class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-select formControlName="entity" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple >
@@ -44,6 +44,11 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+
+            <div *ngIf="filterForm.get('finished')" class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'ShowFinishedProjects' | translate }}</div>
+                <mat-checkbox formControlName="finished"></mat-checkbox>
             </div>
 
         </td>
