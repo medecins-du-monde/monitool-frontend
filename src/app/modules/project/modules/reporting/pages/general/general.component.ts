@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ChartService } from 'src/app/services/chart.service';
-import { BehaviorSubject } from 'rxjs';
 import { GroupTitle, SectionTitle } from 'src/app/components/report/reporting-table/reporting-table.component';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
