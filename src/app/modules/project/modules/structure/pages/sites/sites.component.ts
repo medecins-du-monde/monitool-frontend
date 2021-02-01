@@ -54,8 +54,9 @@ export class SitesComponent implements OnInit {
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev) {
+        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
           this.project = project;
+          project.parsed = true; 
           this.sitesForm = this.fb.group({
             entities: this.fb.array(this.project.entities.map(x => FormGroupBuilder.newEntity(project, x))),
             groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))

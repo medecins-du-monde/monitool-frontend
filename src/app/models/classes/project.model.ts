@@ -29,6 +29,7 @@ export class Project implements Deserializable {
     forms: Form[] = [];
     users: User[];
     visibility: string;
+    parsed?: boolean;
 
     get status(): string{
         if ( this.active ) {
