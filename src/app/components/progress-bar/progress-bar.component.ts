@@ -11,12 +11,10 @@ export class ProgressBarComponent implements OnInit {
   @Input() total = 100;
   color: string;
 
-  constructor() { }
-
   ngOnInit(): void {
     this.progress = ( this.progress / this.total ) * 100;
 
-    switch (true) {
+    switch (true){
       case (this.progress > 0): {
         this.color = 'green';
         break;
