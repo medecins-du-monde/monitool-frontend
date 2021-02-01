@@ -217,7 +217,7 @@ mat-hint {
     color: #777b7e;
     margin-bottom: 14px;
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
 
     p {
         margin: 0;
@@ -696,10 +696,10 @@ mat-hint {
             }
         }
     }
-    
+
 }
 
-.checkbox-form { 
+.checkbox-form {
     flex-direction: column;
     div {
         display: flex;
@@ -715,6 +715,15 @@ mat-hint {
     .mdm-form-label {
         margin-right: 100px;
     }
-    
+
     margin-bottom: 8px;
+}
+
+code {
+  color: #fe5e00;
+  background-color: #fff6e6;
+  border-radius: 4px;
+  font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+  padding: 4px;
+  margin: 4px;
 }
