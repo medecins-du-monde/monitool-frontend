@@ -1,7 +1,6 @@
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
-    <div class="actions" [formGroup]="filtersForm">
-        <div class="actions-group">
+    <div class="actions-group" [formGroup]="filtersForm">
             <div class="action">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
@@ -19,8 +18,6 @@
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
-        </div>
-        <div class="actions-group">
             <div class="action-bar">
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
@@ -30,7 +27,6 @@
                     {{ 'CreateNewProject' | translate }}
                 </button>
             </div>
-        </div>
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"

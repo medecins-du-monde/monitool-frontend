@@ -1,48 +1,26 @@
 @import "src/assets/theme/size_vars.scss";
 
-.actions {
+.actions-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 24px;
 
-  .actions-group {
-    display: contents;
-    flex-direction: row;
-    flex-wrap: wrap;
+  div:nth-of-type(1) {
+    margin-right: 10px;
+  }
+  div:nth-of-type(3) {
+    flex: 30%;
+    margin: 0px 10px;
+  }
+    
+  @media screen and (max-width: $breakpoint-xs) {
+    flex-direction: column;
+    align-items: center;
 
-    @media screen and (min-width: $breakpoint-xs + 1px) {
-
-      flex: 1;
-
-      &:first-child {
-        .action:not(:last-child) {
-          margin-right: 16px;
-        }
-      }
-  
-      &:last-child {
-        flex: auto;
-        justify-content: flex-end;
-        .action:not(:first-child) {
-          margin-left: 16px;
-        }
-      }
-    }
-
-    @media screen and (max-width: $breakpoint-xs) {
-
-      width: 100%;
-      justify-content: space-between;
-
-      &:first-child {
-        margin-bottom: 24px;
-      }
-    }
-
-    .action-bar {
-      width:55%;
+    div:nth-of-type(2) {
+      padding-bottom: 1.34375em
     }
   }
 }
