@@ -25,7 +25,10 @@ export class DataSourcesComponent implements OnInit {
       this.forms = project.forms;
       this.entities = project.entities;
       if ( this.currentForm ) {
-        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
+        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);      
+        if (this.currentForm === undefined){
+          this.onCreate();
+        }
       }
     });
   }
@@ -37,13 +40,13 @@ export class DataSourcesComponent implements OnInit {
     this.edition = true;
   }
 
-  onEdit(form: Form) {
+  onEdit(form: Form): void {
     this.edition = true;
     this.currentForm = form;
     this.projectService.project.next(this.project);
   }
 
-  onDelete(form: Form) {
+  onDelete(form: Form): void {
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
     this.projectService.project.next(this.project);
   }
