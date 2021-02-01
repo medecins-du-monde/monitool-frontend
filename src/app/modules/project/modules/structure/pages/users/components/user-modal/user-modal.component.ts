@@ -57,7 +57,6 @@ export class UserModalComponent implements OnInit {
     this.userService.list().then( users => {
       this.users = users;
     });
-
   }
 
   onSubmit() {
