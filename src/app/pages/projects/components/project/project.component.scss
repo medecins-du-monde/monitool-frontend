@@ -1,3 +1,5 @@
+@import "src/assets/theme/size_vars.scss";
+
 .card-header {
   padding: 16px;
   align-items: center;
@@ -11,16 +13,56 @@
     }
   }
 
-  .project-status {
-    margin-left: auto;
-    margin-right: 4px;
-    padding-top: 5px;
-
+  .project-title {
+    width: 60%;
+    @media screen and (max-width: 1360px) {
+      width: 55%;
+    }
+    @media screen and (max-width: 1230px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 1130px) {
+      width: 45%;
+    }
+    @media screen and (max-width: 1050px) {
+      width: 40%;
+    }
+    @media screen and (max-width: $breakpoint-sm) {
+      width: 70%;
+    }
+    @media screen and (max-width: 910px) {
+      width: 65%;
+    }
+    @media screen and (max-width: 800px) {
+      width: 60%;
+    }
+    @media screen and (max-width: 720px) {
+      width: 55%;
+    }
+    @media screen and (max-width: 655px) {
+      width: 48%;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 75%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 430px) {
+      width: 65%;
+    }
+    @media screen and (max-width: 370px) {
+      width: 60%;
+    }
   }
 }
 
 .card-info {
   flex-direction: row;
+}
+
+.card-info-value {
+  width: 70% !important;
 }
 
 .icon-button {
@@ -54,7 +96,7 @@
   .card-header {
     align-items: center;
     background-color: #ddd;
-    padding: 16px;
+    padding: 16px 5px;
 
     .project-icon {
       height: 24px;
@@ -63,10 +105,6 @@
       img {
         height: 100%;
       }
-    }
-
-    .project-status {
-      margin-left: auto;
     }
   }
 
