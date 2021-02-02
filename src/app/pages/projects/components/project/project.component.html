@@ -19,7 +19,7 @@
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'Date' | translate }}</div>
-            <div class="card-info-value">{{project.start  | date: 'mediumDate'}} - {{project.end  | date: 'mediumDate'}}</div>
+            <div class="card-info-value">{{project.start  | localizedDate}} - {{project.end  | localizedDate}}</div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'Thematics' | translate }}</div>
@@ -29,7 +29,7 @@
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
-            <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | date: 'mediumDate')  }}</div>
+            <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | localizedDate)  }}</div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">

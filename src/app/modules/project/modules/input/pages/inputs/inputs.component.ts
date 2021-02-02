@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import TimeSlot from 'timeslot-dag';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 
@@ -38,7 +37,6 @@ export class InputsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    public datepipe: DatePipe,
     private inputService: InputService
   ) { }
 
