@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 
 export default class DatesHelper {
 
@@ -34,7 +34,7 @@ export default class DatesHelper {
     if (date instanceof moment ) {
       date = new Date(date.toString());
     }
-    
+
     let time = date.getTime();
     time = time - date.getTimezoneOffset() * 60000;
     const dateWithoutTimezone = new Date(time);

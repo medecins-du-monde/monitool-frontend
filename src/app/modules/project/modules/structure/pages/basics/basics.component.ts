@@ -19,12 +19,12 @@ import { DateService} from 'src/app/services/date.service';
     {
       provide: DateAdapter, useClass: MomentDateAdapter,
       deps: [
-        MAT_DATE_LOCALE, 
+        MAT_DATE_LOCALE,
         MAT_MOMENT_DATE_ADAPTER_OPTIONS
       ]
     },
     {
-      provide: MAT_DATE_FORMATS, 
+      provide: MAT_DATE_FORMATS,
       useValue: MY_DATE_FORMATS
     }
   ]
@@ -79,8 +79,8 @@ export class BasicsComponent implements OnInit, OnDestroy {
       this.themes = res;
     });
 
-    this.dateService.langValueObs$.subscribe(
-      lang=>{
+    this.dateService.currentLang.subscribe(
+      lang => {
         this.adapter.setLocale(lang);
       }
     );

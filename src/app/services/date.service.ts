@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DateService {
 
-  private _langValue = new BehaviorSubject(null);
-  langValueObs$ = this._langValue.asObservable();
+  private langValue = new BehaviorSubject(null);
 
-  constructor() { }
+  get currentLang(): Observable<string> {
+    return this.langValue.asObservable();
+  }
 
   setCurrentLang(lang: string){
-    this._langValue.next(lang);
+    this.langValue.next(lang);
   }
 
 }

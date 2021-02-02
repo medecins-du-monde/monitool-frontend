@@ -9,11 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormElementEditModule } from '../form-element-edit/form-element-edit.module';
+import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
@@ -32,7 +33,8 @@ import { FormElementEditModule } from '../form-element-edit/form-element-edit.mo
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
-    FormElementEditModule
+    FormElementEditModule,
+    LocalizedDatePipeModule,
   ],
   exports: [DataSourceEditComponent]
 })

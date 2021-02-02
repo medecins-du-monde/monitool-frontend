@@ -16,6 +16,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { PurposeEditModule } from '../purpose-edit/purpose-edit.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
+import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -36,7 +37,8 @@ import { ExtraIndicatorModule } from '../../../../components/extra-indicator/ext
     MatRadioModule,
     PurposeEditModule,
     IndicatorModalModule,
-    ExtraIndicatorModule
+    ExtraIndicatorModule,
+    LocalizedDatePipeModule
   ],
   exports: [LogicalFrameEditComponent]
 })
