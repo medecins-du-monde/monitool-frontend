@@ -19,12 +19,10 @@ export class ReportingService {
 
     // Missing information will return null for now. //
     if (!computation) {
-      console.log('computation unavailable');
       return null;
     }
 
     if (filter.length === 0) {
-      console.log('filter unavailable');
       return null;
     }
 
@@ -32,7 +30,6 @@ export class ReportingService {
     const periodicities = this.computeCompatiblePeriodicities(project, computation);
     dimensionIds.forEach(dimensionId => {
       if (this.TIME_PERIODICITIES.includes(dimensionId) && !periodicities.includes(dimensionId)) {
-        console.log('periodicity unavailable');
         return null;
       }
     });
@@ -59,9 +56,6 @@ export class ReportingService {
             ids.push(slotStart);
           }
           ids = ids.map(s => s._value);
-        }
-        else {
-          console.log('could not find elements for ' + dimId);
         }
         ids.forEach(id => newResult[id] = value);
         if (withTotals) {

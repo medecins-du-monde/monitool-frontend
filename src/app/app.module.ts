@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
@@ -14,6 +14,9 @@ import { environment } from 'src/environments/environment';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { CustomHttpInterceptor } from './interceptors/http-interceptor';
+import { LoadingBarModule } from './components/loading-bar/loading-bar.module';
+
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 @NgModule({
@@ -32,11 +35,13 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     BrowserModule,
     AppRoutingModule,
     HeaderModule,
+    LoadingBarModule,
     HttpClientModule,
     NoopAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule,
     LoginModule,
+    NoopAnimationsModule,
     MsalModule.forRoot({
       auth: {
         clientId: environment.clientId, // This is your client ID
@@ -66,7 +71,12 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     DatePipe,
     {
       provide: MAT_DATE_LOCALE, useValue: 'fr'
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

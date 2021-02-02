@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { v4 as uuid } from 'uuid';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, AfterViewChecked {
 
   countries = [];
   statuses = [
@@ -51,7 +51,8 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +70,10 @@ export class ProjectsComponent implements OnInit {
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   public getProjects() {

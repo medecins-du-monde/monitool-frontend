@@ -6,6 +6,10 @@ import { Purpose } from 'src/app/models/classes/purpose.model';
 import { Activity } from 'src/app/models/classes/activity.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { Entity } from 'src/app/models/classes/entity.model';
+import { Group } from 'src/app/models/classes/group.model';
+
 
 export default class FormGroupBuilder {
 
@@ -33,7 +37,7 @@ export default class FormGroupBuilder {
     });
   }
 
-  static newActivity(activity?: Activity) {
+  static newActivity(activity?: Activity): FormGroup {
     if (!activity) {
       activity = new Activity();
     }
@@ -75,6 +79,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
@@ -85,8 +90,9 @@ export default class FormGroupBuilder {
     else {
       return new FormGroup({
         display: new FormControl(indicator.display, Validators.required),
-        baseline: new FormControl(indicator.baseline, Validators.required),
-        target: new FormControl(indicator.target, Validators.required),
+        baseline: new FormControl(indicator.baseline),
+        target: new FormControl(indicator.target),
+        colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
@@ -118,6 +124,31 @@ export default class FormGroupBuilder {
     return new FormGroup({
       theme: this.newTheme(group.theme),
       indicators: new FormArray(group.indicators.map(indicator => this.newIndicator(indicator, true))),
+    });
+  }
+
+  static newEntity(currentProject: Project, entity?: Entity): FormGroup {
+    if (!entity) {
+      entity = new Entity();
+      entity.start = currentProject.start;
+      entity.end = currentProject.end;
+    }
+
+    return new FormGroup({
+      id: new FormControl(entity.id, Validators.required),
+      name: new FormControl(entity.name, Validators.required),
+      start: new FormControl(entity.start, Validators.required),
+      end: new FormControl(entity.end, Validators.required),
+    });
+  }
+
+  static newEntityGroup(group?: Group): FormGroup {
+    if (!group) {
+      group = new Group();
+    }
+    return new FormGroup({
+      name: new FormControl(group.name, Validators.required),
+      members: new FormControl(group.members.map(x => x.id), Validators.required),
     });
   }
 
