@@ -84,11 +84,13 @@ export class SitesComponent implements OnInit {
   public onAddNewEntity(): void {
     this.entities.push(FormGroupBuilder.newEntity(this.project));
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   public onRemoveEntity(index: number): void {
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   onEntityRemoved(index: number, id: number): void {
