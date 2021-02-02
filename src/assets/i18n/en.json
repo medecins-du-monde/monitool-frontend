@@ -529,6 +529,7 @@
             "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time."
         }
     },
+    "TooltipSearchByCountry": "We will be able to see the entire name of the country even if it s too big",
     "Type": "Type",
     "ThematicEdition": "Thematic edition",
     "Thematics": "Thematics",

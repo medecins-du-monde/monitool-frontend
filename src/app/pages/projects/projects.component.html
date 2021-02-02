@@ -8,6 +8,7 @@
                         <mat-option #allSelected (click)="onToggleAllCountries()" value="0">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
                         <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country">{{country}}</mat-option>
                     </mat-select>
+                    <mat-hint><mat-icon matChipRemove>info</mat-icon>{{ 'TooltipSearchByCountry' | translate }}</mat-hint>
                 </mat-form-field>
             </div>
             <div class="action">
