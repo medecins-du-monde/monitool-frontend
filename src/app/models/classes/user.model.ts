@@ -30,6 +30,58 @@ export class User implements Deserializable {
         this.deserialize(input);
     }
 
+    isNull(): boolean{
+        return (
+            (this.id === null) &&
+            (this.name === null) &&
+            (this.password === null) &&
+            (this.role === null) &&
+            (this.username === null)
+        );
+    }
+
+    isInternal(): boolean {
+        let returnValue = true;
+
+        if (this.name === null){
+            returnValue = false;
+        }
+        if (RegExp('^user:[a-z0-9\\.\\-\\_]+$').test(this.id) === false){
+            returnValue = false;
+        }
+        if (['owner', 'read'].includes(this.role) === false){
+            returnValue = false;
+        }
+        return returnValue;
+    }
+
+    isPartner(): boolean {
+        let returnValue = true;
+
+        if (this.name === null){
+            returnValue = false;
+        }else if (this.name.length < 1){
+            returnValue = false;
+        }
+
+        if (['owner', 'read'].includes(this.role) === false){
+            returnValue = false;
+        }
+
+        if (this.username === null){
+            returnValue = false;
+        }else if (this.username.length < 1){
+            returnValue = false;
+        }
+
+        if (this.password != null){
+            if (this.password.length < 6){
+                returnValue = false;
+            }
+        }
+        return true;
+    }
+
     deserialize(input: any): this {
       Object.assign(this, input);
 

@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
-import UsersHelper from 'src/app/utils/users.helper';
 
 @Component({
   selector: 'app-users',
@@ -57,9 +56,10 @@ export class UsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res && res.data){
-        if(['internal', 'partner'].includes(res.data.type)){
-          if((UsersHelper.isInternal(res.data) || UsersHelper.isPartner(res.data)) && (UsersHelper.isNull(res.data) == false)){
-            this.project.users.push(res.data);
+        const user = new User(res.data);
+        if (['internal', 'partner'].includes(user.type)){
+          if ((user.isInternal() || user.isPartner()) && (user.isNull() === false)){
+            this.project.users.push(user);
             this.projectService.project.next(this.project);
           }
         }
