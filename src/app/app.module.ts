@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './components/header/header.module';
@@ -68,9 +67,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     })
   ],
   providers: [
-    DatePipe,
     {
-      provide: MAT_DATE_LOCALE, useValue: 'fr'
+      provide: MAT_DATE_LOCALE, useValue: 'en'
     },
     {
       provide: HTTP_INTERCEPTORS,

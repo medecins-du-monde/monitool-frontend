@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
 
   switchLang(lang: string) {
     this.translateService.use(lang);
+    localStorage.setItem('language', lang);
     this.dateService.setCurrentLang(lang);
   }
 
