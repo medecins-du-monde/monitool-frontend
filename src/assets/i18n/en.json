@@ -404,6 +404,21 @@
             "Thematic": "Add a new thematic to the project"
         }
     },
+    "Placeholder": {
+        "Basic" : {
+            "Country": "For instance: CAR",
+            "Name" : "e.g. Access to quality care for people affected by the crisis",
+            "Thematics": "i.e. Primary health care"
+        },
+        "Sites": {
+            "NameEntity" : "For instance: Health center X, Hospital X, ...",
+            "NameGroup" : "ex: Regional hospitals, North of the country, ..."
+        },
+        "LogicalFrame": {
+            "Name": "e.g. ECHO",
+            "CollectionSites": "No element is selected"            
+        }
+    },
     "Periodicity": "Periodicity",
     "ProjectBasicsInfo": "Basics allow to file your project among the others of the NGO.",
     "ProjectDataSourceInfo": [
@@ -483,7 +498,7 @@
     "SaveConfirm": "Save to confirm reverting to this version",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",
-    "Search": "Search",
+    "Search": "Enter text here to filter the projects",
     "SearchHelp": "Search Name, Country and Thematics",
     "SeeReport": "See report",
     "SeeOlderDates": "See older dates",

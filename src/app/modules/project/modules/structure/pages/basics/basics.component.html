@@ -5,7 +5,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Country' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="country" placeholder="{{ 'Country' | translate }}">
+            <input matInput formControlName="country" placeholder="{{ 'Placeholder.Basic.Country' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
             </mat-hint>
@@ -14,7 +14,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+            <input matInput formControlName="name" placeholder="{{ 'Placeholder.Basic.Name' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
             </mat-hint>
@@ -23,7 +23,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="themes" placeholder="{{ 'Thematics' | translate }}" multiple>
+            <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
                         <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"

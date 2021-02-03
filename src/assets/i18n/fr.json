@@ -398,6 +398,21 @@
     "PartitionsHint": " Veut-t'on être capable de différencier {{name}} par age, sexe, prise en charge, motif de consultation, pathologie, tranche horaire, reférencement effectif, ...? Ne désagrégez pas ici par zone géographique ou site d'intervention: vos lieux de collecte ont déjà été renseignés dans la page prévu à cet effet.",
     "PartnerAuthentication": "Authentification des partenaires",
     "Password": "Mot de passe",
+    "Placeholder": {
+        "Basic" : {
+            "Country": "ex: RCA",
+            "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
+            "Thematics": "ex: Soins de santé primaire"
+        },
+        "Sites": {
+            "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
+            "NameGroup" : "ex: Hôpitaux régionaux, parti Nord du pays, ..."
+        },
+        "LogicalFrame": {
+            "Name": "e.x. ECHO",
+            "CollectionSites": "Aucun élément selectionné"            
+        }
+    },
     "Periodicity": "Périodicité",
     "ProjectBasicsInfo": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",
     "ProjectDataSourceInfo": [
@@ -477,7 +492,7 @@
     "SaveConfirm": "Sauvegardez pour confirmer de revenir à ce point",
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
-    "Search": "Chercher",
+    "Search": "Rentrez du texte pour filtrer les projets",
     "SearchHelp": "Chercher un nom, pays et thématique",
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",

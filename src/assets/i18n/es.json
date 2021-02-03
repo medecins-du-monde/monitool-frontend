@@ -19,6 +19,7 @@
     "AddVariableName": "Qué esta midiendo?",
     "AddVariableNameHint": "Nombre la variable que quiere extraer de {{name}}. ej: \"Número de diagnosticos\".",
     "AddVariablePlaceholder": "ej: Número de diagnosticos",
+    "AddVariableNamePlaceholder" : "ej: Número de diagnosticos",
     "Admin": "Administrador",
     "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
@@ -58,10 +59,10 @@
     "CustomDate" : "Fecha personalizada",
     "SameAsProject": "Igual al proyecto ({{date}})",
     "DataSourceEdit": {
-        "AddNameHint": "ej: Datos SNIS, Ficha de colecta ante-natal, Ficha sanidad primaria, ...",
-        "AddNamePlaceholder": "Cual es el nombre de la fuente de datos de la que quiere extraer datos? ej. \"Historiales clínicos electronicos\", \"Fichas de colecta\", \"Informe SNIS\", ...",
-        "CollectionSitesHint": "Ningún elemento esta seleccionado",
-        "CollectionSitesPlaceholder": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
+        "AddNamePlaceholder": "ej: Datos SNIS, Ficha de colecta ante-natal, Ficha sanidad primaria, ...",
+        "AddNameHint": "Cual es el nombre de la fuente de datos de la que quiere extraer datos? ej. \"Historiales clínicos electronicos\", \"Fichas de colecta\", \"Informe SNIS\", ...",
+        "CollectionSitesPlaceholder": "Ningún elemento esta seleccionado",
+        "CollectionSitesHint": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
         "EndDateHint": "Si esta fuente de datos terminara antes del fin del proyecto, o se ha reemplazado, entre la fecha aqui",
         "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
@@ -401,6 +402,21 @@
     "PartitionsHint": "¿Quiere poder diferenciar {{name}} por edad, sexo, tipo de consulta, motivo de consulta, patología, hora del dia, ...? No desagrege por zona geográfica: los lugares de colecta ya se rellenaron en la otra página.",
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
+    "Placeholder": {
+        "Basic" : {
+            "Country": "ej: República Centroafricana",
+            "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
+            "Thematics": "Selectione una o varias temáticas"
+        },
+        "Sites": {
+            "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
+            "NameGroup" : "ej: Hospitales regionales, parte Norte del país, ..."
+        },
+        "LogicalFrame": {
+            "Name": "ej. ECHO",
+            "CollectionSites": "Ningún elemento esta seleccionado"            
+        }
+    },
     "Periodicity": "Periodicidad",
     "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
     "ProjectDataSourceInfo": [
@@ -480,7 +496,7 @@
     "SaveConfirm": "Guarde para confirmar que desea volver a este punto",
     "SaveThematic": "Guardar la temática",
     "SaveUser": "Guardar usuario",
-    "Search": "Buscar",
+    "Search": "Entre texto para buscar proyectos",
     "SearchHelp": "Buscar Nombre, País y temática",
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",

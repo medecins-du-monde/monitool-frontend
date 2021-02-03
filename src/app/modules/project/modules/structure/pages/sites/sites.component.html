@@ -22,7 +22,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameEntity' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
@@ -92,7 +92,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameGroup' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
