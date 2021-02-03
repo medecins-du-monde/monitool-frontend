@@ -11,7 +11,7 @@
             <div class="card-info-title">{{ 'Role' | translate }}</div>
             <div class="card-info-value">
                 <mat-chip-list>
-                    <mat-chip>{{ user.roleDisplay | translate }}</mat-chip>
+                    <mat-chip class="chip-{{user.roleDisplay}}">{{ user.roleDisplay | translate }}</mat-chip>
                 </mat-chip-list>
             </div>
         </div>
