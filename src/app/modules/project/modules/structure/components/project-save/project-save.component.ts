@@ -8,9 +8,11 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './project-save.component.html',
   styleUrls: ['./project-save.component.scss']
 })
-export class ProjectSaveComponent {
+export class ProjectSaveComponent implements OnInit, OnDestroy {
 
   private currentProject: Project;
+
+  public valid = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -20,18 +22,27 @@ export class ProjectSaveComponent {
     return this.projectService.hasPendingChanges;
   }
 
-  get valid(): boolean{
-    return this.projectService.valid;
+  ngOnInit(): void {
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.currentProject = project;
+        this.valid = this.projectService.valid;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   onSave(): void {
-    this.projectService.saveCurrent().then((project: Project) => {
+    this.projectService.save(this.currentProject).then((project: Project) => {
       this.projectService.project.next(project);
     });
   }
 
   onRevert(): void {
-    this.projectService.revertChanges();
+    this.projectService.discardPendingChanges();
   }
 
 }

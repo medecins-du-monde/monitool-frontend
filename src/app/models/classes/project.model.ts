@@ -29,7 +29,6 @@ export class Project implements Deserializable {
     forms: Form[] = [];
     users: User[];
     visibility: string;
-    parsed?: boolean;
 
     get status(): string{
         if ( this.active ) {
@@ -143,24 +142,6 @@ export class Project implements Deserializable {
     }
 
     equals(project: Project): boolean {
-        const a = new Project();
-        const b = new Project();
-        if (this){
-            Object.assign(a, this);
-        }
-        if (project){
-            Object.assign(b, project);
-        }
-       
-        // the 'parsed' property shouldn't interfere in the check if two projects are equal
-        // so we can remove it for the test
-        if (a && 'parsed' in a){
-            delete a.parsed;
-        }
-        if (b && 'parsed' in b){
-            delete b.parsed;
-        }
-
-        return JSON.stringify(a) === JSON.stringify(b);
+        return JSON.stringify(this) === JSON.stringify(project);
     }
 }

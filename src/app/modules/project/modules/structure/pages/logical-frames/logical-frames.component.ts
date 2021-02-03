@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -10,7 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './logical-frames.component.html',
   styleUrls: ['./logical-frames.component.scss']
 })
-export class LogicalFramesComponent implements OnInit, OnDestroy {
+export class LogicalFramesComponent implements OnInit {
 
   project: Project;
   logicalFrames: LogicalFrame[] = [];
@@ -18,31 +17,23 @@ export class LogicalFramesComponent implements OnInit, OnDestroy {
   entities: Entity[];
   edition = false;
 
-  private subscription: Subscription = new Subscription();
-
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.logicalFrames = project.logicalFrames;
-        this.entities = project.entities;
-        if ( this.currentLogicalFrame ) {
-          this.currentLogicalFrame = this.logicalFrames.find(x => x.id === this.currentLogicalFrame.id);
-          if (this.currentLogicalFrame === undefined){
-            this.onCreate();
-          }
-        }
-      })
-    )
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
+      this.logicalFrames = project.logicalFrames;
+      this.entities = project.entities;
+      if ( this.currentLogicalFrame ) {
+        this.currentLogicalFrame = this.logicalFrames.find(x => x.id === this.currentLogicalFrame.id);
+      }
+    });
   }
 
   onCreate(): void {
     this.currentLogicalFrame = new LogicalFrame();
     this.project.logicalFrames.push(this.currentLogicalFrame);
     this.projectService.project.next(this.project);
-    this.projectService.valid = false;
     this.edition = true;
   }
 
@@ -64,7 +55,4 @@ export class LogicalFramesComponent implements OnInit, OnDestroy {
     this.projectService.project.next(this.project);
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
 }
