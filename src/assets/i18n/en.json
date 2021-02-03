@@ -1,30 +1,32 @@
 {
-    "Loading": "Loading...",
     "AccountMDM": "MdM account",
     "AccountPartner": "Partner account",
     "Acronym": "Acronym",
-    "Activity-Activity-Result-SpecificObjective-Hint" : "Activity realized by the NGO",
+    "Activity": "Activity",
+    "Activity-Activity-Result-SpecificObjective-Hint": "Activity realized by the NGO",
     "Add": "Add",
+    "AddActivity": "Add Activity",
     "AddIndicator": "Add Indicator",
-    "AddIndicator-GeneralObjective-Hint": "Enter here the indicators that allow to measure the general objective",
-    "AddIndicator-SpecificObjective-Hint": "Enter here the indicators that allow to measure the specific objective",
-    "AddIndicator-Result-SpecificObjective-Hint" : "Enter here the indicators that allow to measure the result",
     "AddIndicator-Activity-Result-SpecificObjective-Hint": "Enter here the indicators that allows to measure the activity progress",
-    "AddPurpose": "Add a new specific objective",
-    "AddOutput": "Add New Result",
-    "AddActivity" : "Add Activity",
+    "AddIndicator-GeneralObjective-Hint": "Enter here the indicators that allow to measure the general objective",
+    "AddIndicator-Result-SpecificObjective-Hint": "Enter here the indicators that allow to measure the result",
+    "AddIndicator-SpecificObjective-Hint": "Enter here the indicators that allow to measure the specific objective",
     "AddNewUser": "Add new user",
+    "AddOutput": "Add New Result",
     "AddPartition": "Add a disaggregation",
+    "AddPurpose": "Add a new specific objective",
     "AddVariable": "Add a variable",
-    "AddVariableName" : "What are your measuring?",
-    "AddVariableNameHint": " Name the variable that you want to extract from {{name}} . i.e. \"Number of diagnostics\".",
-    "AddVariableNamePlaceholder" : "ex. Number of diagnostics",
+    "AddVariableName": "What are your measuring?",
+    "AddVariableNameHint": " Name the variable that you want to extract from <code>{{name}}</code> . i.e. \"Number of diagnostics\".",
+    "AddVariableNamePlaceholder": "ex. Number of diagnostics",
     "AdminRole": "Administrator",
     "AllCountries": "All countries",
+    "ApplyChanges": "Apply Changes",
+    "Assumptions": "Assumptions",
+    "Assumptions-Result-SpecificObjective-Hint": "External factors that could jeopardize reaching the result",
     "Assumtions-SpecificObjective-Hint": "External factors that could jeopardize reaching the specific objective",
-    "Assumptions-Result-SpecificObjective-Hint" : "External factors that could jeopardize reaching the result",
     "Baseline": "Baseline",
-    "Colorize": "Colorize",
+    "Baseline-Hint": "What was the value of the indicator before the first activities? Tick the checkbox to specify. ",
     "Basics": "Basics",
     "Cancel": "Cancel",
     "Clone": "Clone",
@@ -32,16 +34,20 @@
     "CloneProjectInfo": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
     "CollectionSites": "Collection sites",
+    "CollectionSites-Hint": " Among sites identified in \"Collection sites\", which one are relevant for this logical framework?",
+    "Colorize": "Colorize",
+    "Colorize-Hint": "Do you wish to have colors (red, orange, green) on reporting for this indicator?",
     "CommonRole": "Common",
     "Computation": "Computation",
-    "Connect": "Connect",
+    "Computation-Hint": "How to compute this indicator from the variables that you collected in data sources?",
     "Confirm": "Confirm",
+    "Connect": "Connect",
     "Countries": "Countries",
     "Country": "Country",
     "CoveredPeriod": "Covered period",
     "Create": "Create",
+    "CreateLogicalFramework": "create a blank Logical Framework",
     "CreateNewDataSource": "Create a new data source",
-    "CreateLogicalFramework":"create a blank Logical Framework",
     "CreateNewIndicator": "Create a new indicator",
     "CreateNewProject": "Create a new project",
     "CreateNewThematic": "Create a new thematic",
@@ -50,12 +56,10 @@
         "Cross-cutting indicators are determined from the list of thematics in \"Basics\".",
         "This list contains all cross-cutting indicators that your project need to collect"
     ],
+    "CustomDate": "Custom date",
     "Data": "Data",
     "DataEntryUser": "Data entry",
     "DataSourceCalendarTitle": "Calendar",
-    "DataSourceStructureTitle": "Structure",
-    "CustomDate" : "Custom date",
-    "SameAsProject": "Same as project ({{date}})",
     "DataSourceEdit": {
         "AddNameHint": "What is the name of the data source that you want to extract data from? i.e. \"Electronic medical record\", \"Health center tally sheet\", \"NHIS report\", ...",
         "AddNamePlaceholder": "For instance: NHIS data, Ante-natal care tally sheet, PHC tally sheet, ...",
@@ -67,73 +71,73 @@
         "StartDateHint": "If this data source was created after the beginning of the project, enter here the date, otherwise, leave the default value",
         "StartDatePlaceholder": "Same as project's start"
     },
+    "DataSourceStructureTitle": "Structure",
     "DataSources": "Data sources",
     "Date": "Date",
     "Delete": "Delete",
     "Deleted": "Deleted",
     "DeletedPlural": "Deleted",
+    "Description": "Description",
     "Disaggregation": {
         "AddNameHint": "This name will appear on multiple reporting tables. It names the disaggregation that you want to create on your variable",
         "AddNamePlaceholder": "ex: Age group, gender, motive for consultation, pathology, referral status, ...",
         "AggregationHint": "How to find the total value by aggregating the elements described above?",
+        "Data": "Data",
+        "DisplayHint": "If you wish to print the forms in A4 format, prefer having the titles at the left of the tables, to shorten their width.",
+        "DisplayTitle": "Where should disaggregation elements be displayed on the forms?",
         "ElementsHint": "Elements from the disaggregation must be mutually exclusive, and it should be possible to find the total value by aggregating them.",
         "ElementsPlaceholder": "ex: Less than 12 years old, male, social consultation, flu, community referral, ...",
-        "Data" : "Data",
-        "DisplayTitle" : "Where should disaggregation elements be displayed on the forms?",
-        "DisplayHint": "If you wish to print the forms in A4 format, prefer having the titles at the left of the tables, to shorten their width.",
         "GroupsHint": "Groups allow making intermediary aggregations",
-        "OrderTitle": "In which order should the disaggregations be shown?",
         "OrderHint": "How do you wish to show the disaggregations on the input form?",
-        "Title" : "Titles"
+        "OrderTitle": "In which order should the disaggregations be shown?",
+        "Title": "Titles"
     },
-    "Description": "Description",
+    "Disaggregations": "Disaggregations",
     "Done": "Done",
     "DownloadPdfLandscape": "Download PDF (landscape)",
     "DownloadPdfPortrait": "Download PDF (portrait)",
+    "EMail-Hint": "Enter your e-mail address",
     "Edit": "Edit",
     "Email": "Email",
-    "en": "English",
     "EndDate": "End date",
     "Enum": {
         "Aggregation": {
-            "sum": "Sum",
-			"average": "Average",
-			"highest": "Take highest value",
-			"lowest": "Take lowest value",
-			"last": "Take last value",
-			"none": "It's not possible to compute this"
+            "average": "Average",
+            "highest": "Take highest value",
+            "last": "Take last value",
+            "lowest": "Take lowest value",
+            "none": "It's not possible to compute this",
+            "sum": "Sum"
+        },
+        "Computation": {
+            "copy": "Copy a value (from a data source)",
+            "fixed": "Use a constant value",
+            "formula": "Custom formula (from data sources)",
+            "percentage": "Percentage (from data sources)",
+            "permille": "Per thousands (from data sources)",
+            "unavailable": "It is not possible to compute this indicator"
+        },
+        "Formula": {
+            "copied": "Copied Value",
+            "denominator": "Denominator",
+            "numerator": "Numerator"
         },
         "Periodicity": {
             "day": "Every day",
+            "free": "Free",
+            "month": "Every month",
+            "month_week_mon": "Every weeks (monday to sunday / split by month)",
             "month_week_sat": "Every weeks (saturday to friday / split by month)",
             "month_week_sun": "Every weeks (sunday to saturday / split by month)",
-            "month_week_mon": "Every weeks (monday to sunday / split by month)",
-            "week_sat": "Every week (saturday to friday)",
-            "week_sun": "Every week (sunday to saturday)",
-            "week_mon": "Every week (monday to sunday)",
-            "month": "Every month",
             "quarter": "Every quarter",
             "semester": "Every semester",
-            "year": "Every year",
-            "free": "Free"
-        },
-        "Computation": {
-            "unavailable": "It is not possible to compute this indicator",
-            "fixed": "Use a constant value",
-            "copy": "Copy a value (from a data source)",
-            "percentage": "Percentage (from data sources)",
-            "permille": "Per thousands (from data sources)",
-            "formula": "Custom formula (from data sources)"
-        },
-        "Formula":{
-            "numerator": "Numerator",
-            "denominator": "Denominator",
-            "copied": "Copied Value"
+            "week_mon": "Every week (monday to sunday)",
+            "week_sat": "Every week (saturday to friday)",
+            "week_sun": "Every week (sunday to saturday)",
+            "year": "Every year"
         }
-
     },
-    "es": "Spanish",
-    "EquivalentVersion" : "This version is equivalent to the current state of the project",
+    "EquivalentVersion": "This version is equivalent to the current state of the project",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
     "ExtraIndicatorsInfo": [
@@ -141,216 +145,202 @@
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
     "FillThe": "Fill the",
-    "Fiters": "Filters",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
+    "Fiters": "Filters",
     "FormsOf": "forms of",
-    "fr": "French",
     "FullName": "Full name",
     "GeneralInformations": "General informations",
+    "GeneralObjective": "General objective",
+    "GeneralObjective-Hint": "Describe the project's contribution on a program or policy",
     "GeneralReporting": "General reporting",
-    "GeoAggregation" : "How to group entries from different sites?",
-    "GeoAggregationHint" : "In a project with two sites, if {{name}}  is 10 for the first and 20 for the second, what is the value for the complete project?",
+    "GeoAggregation": "How to group entries from different sites?",
+    "GeoAggregationHint": "In a project with two sites, if <code>{{name}}</code> is 10 for the first and 20 for the second, what is the value for the complete project?",
     "GoBack": "Go back",
     "GroupName": "Group name",
     "Groups": "Groups",
+    "Help": {
+        "Partition": "Which disaggregations are relevant?",
+        "Variable": "From which variable does this information comes from?"
+    },
     "History": "History",
     "HistoryChanges": "Changes",
     "HistoryRevision": {
         "active_replace": "Change deletion status from {{!before}} to {{!after}}",
-        "name_replace": "Rename the project from {{before}} to {{after}}",
-        "start_replace": "Change the project start date of the project from {{before}} to {{after}}",
-        "end_replace": "Change the project end date from {{before}} to {{after}}",
         "country_replace": "Change the project country from {{before}} to {{after}}",
-        "visibility_replace": "Change the project visibility from {{before}} vers {{after}}",
-
-        "themes_add": "Add a new thematic to the project",
-        "themes_move": "Reorder the project thematics",
-        "themes_remove": "Remove a thematic from the project",
-
+        "crossCutting_add": "Add a cross-cutting indicator",
+        "crossCutting_baseline_replace": "Change cross-cutting indicator baseline from {{before}} to {{after}}",
+        "crossCutting_colorize_replace": "Change cross-cutting indicator colorization from {{before}} to {{after}}",
+        "crossCutting_computation_replace": "Change cross-cutting indicator computation",
+        "crossCutting_remove": "Delete a cross-cutting indicator",
+        "crossCutting_target_replace": "Change cross-cutting indicator target from {{before}} to {{after}}",
+        "end_replace": "Change the project end date from {{before}} to {{after}}",
         "entities_add": "Add the new site {{item.name}}",
-        "entities_move": "Reorder the sites of the project",
-        "entities_remove": "Remove the site {{item.name}}",
-        "entities_name_replace": "Rename the site {{before}} to {{after}}",
-        "entities_start_replace": "Change the site begin date of {{entity.name}} from {{before}} to {{after}}",
         "entities_end_replace": "Change the site end date of {{entity.name}} from {{before}} to {{after}}",
-
-        "groups_add": "Create the group {{item.name}}",
-        "groups_move": "Reorder the project groups",
-        "groups_remove": "Remove the group {{item.name}}",
-        "groups_name_replace": "Rename the group {{before}} to {{after}}",
-        "groups_members_add": "Add the site {{item.name}} to the group {{group.name}}",
-        "groups_members_move": "Reorder the sites of the group {{group.name}}",
-        "groups_members_remove": "Remove the site {{item.name}} from the group {{group.name}}",
-
-        "users_add": "Add the user {{item.id}} to the project",
-        "users_move": "Reorder the project users",
-        "users_remove": "Remove the user {{item.id}} from the project",
-        "users_name_replace": "Rename the partner {{before}} to {{after}}",
-        "users_password_replace": "Change the password of the partner {{user.name}}",
-        "users_role_replace": "Change the role of  {{user.name}} from {{before}} to {{after}}",
-        "users_entities_add": "Allow {{user.name}} to input data on site {{item.name}}",
-        "users_entities_move": "Reorder the sites associated with user {{user.name}}",
-        "users_entities_remove": "Remove authorization to input on site {{item.name}} of user {{user.name}}",
-        "users_dataSources_add": "Allow {{user.name}} to input data on data source {{item.name}}",
-        "users_dataSources_move": "Reorders the data sources associated with the user {{user.name}}",
-        "users_dataSources_remove": "Remove authorization to input on data source {{item.name}} of user {{user.name}}",
-
+        "entities_move": "Reorder the sites of the project",
+        "entities_name_replace": "Rename the site {{before}} to {{after}}",
+        "entities_remove": "Remove the site {{item.name}}",
+        "entities_start_replace": "Change the site begin date of {{entity.name}} from {{before}} to {{after}}",
+        "extraIndicators_add": "Add extra indicator {{item.display}}",
+        "extraIndicators_baseline_replace": "Change baseline of extra indicator {{extraIndicator.display}} from {{before}} to {{after}}",
+        "extraIndicators_colorize_replace": "Change extra indicator {{extraIndicator.display}} colorization from {{before}} to {{after}}",
+        "extraIndicators_computation_replace": "Change extra indicator {{extraIndicator.display}} computation",
+        "extraIndicators_display_replace": "Rename extra indicator {{before}} to {{after}}",
+        "extraIndicators_move": "Reorder extra indicators",
+        "extraIndicators_remove": "Deletee extra indicator {{item.display}}",
+        "extraIndicators_target_replace": "Change target of extra indicator {{extraIndicator.display}} from {{before}} to {{after}}",
         "forms_add": "Create the data source {{item.name}}",
-        "forms_move": "Reorder the data sources of the project",
-        "forms_remove": "Delete the data source {{item.name}}",
-        "forms_name_replace": "Rename the data source {{before}} to {{after}}",
-        "forms_periodicity_replace": "Change the periodicity of the data source {{form.name}} from {{before}} to {{after}}",
-        "forms_start_replace": "Change the start date of the data source {{form.name}} from {{before}} to {{after}}",
-        "forms_end_replace": "Change the end date of the data source {{form.name}} from {{before}} to {{after}}",
-
-        "forms_entities_add": "Add the site {{item.name}} to the data source {{form.name}}",
-        "forms_entities_move": "Reorder the sites of the data source {{form.name}}",
-        "forms_entities_remove": "Remove the site {{item.name}} from the data source {{form.name}}",
-
         "forms_elements_add": "Add the variable {{item.name}} to {{form.name}}",
-        "forms_elements_move": "Reorder the variables of the data source {{form.name}}",
-        "forms_elements_remove": "Remove the variable {{item.name}} from {{form.name}}",
-        "forms_elements_name_replace": "Rename the variable {{before}} to {{after}}",
-        "forms_elements_geoAgg_replace": "Change the aggregation rule (location) of {{variable.name}} from {{before}} to {{after}}",
-        "forms_elements_timeAgg_replace": "Change the aggregation rule (time) of {{variable.name}} from {{before}} to {{after}}",
-        "forms_elements_order_replace": "Change the format of the input table of {{variable.name}}",
         "forms_elements_distribution_replace": "Change the format of the input table of {{variable.name}}",
-
+        "forms_elements_geoAgg_replace": "Change the aggregation rule (location) of {{variable.name}} from {{before}} to {{after}}",
+        "forms_elements_move": "Reorder the variables of the data source {{form.name}}",
+        "forms_elements_name_replace": "Rename the variable {{before}} to {{after}}",
+        "forms_elements_order_replace": "Change the format of the input table of {{variable.name}}",
         "forms_elements_partitions_add": "Create the disaggregation {{item.name}} in {{variable.name}}",
-        "forms_elements_partitions_move": "Reorder the disaggregations of {{variable.name}}",
-        "forms_elements_partitions_remove": "Delete the disaggregation {{item.name}} from {{variable.name}}",
-        "forms_elements_partitions_name_replace": "Rename the disaggregation {{before}} to {{after}} in variable {{variable.name}}",
         "forms_elements_partitions_aggregation_replace": "Change aggregation mode from {{before}} to {{after}} in disaggregation {{partition.name}} of variable {{variable.name}}",
-
         "forms_elements_partitions_elements_add": "Add element {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_elements_move": "Reorder elements of disaggregation {{partition.name}} of variable {{variable.name}}",
-        "forms_elements_partitions_elements_remove": "Delete element {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_elements_name_replace": "Rename element {{before}} to {{after}} in disaggregation {{partition.name}} of variable {{variable.name}}",
-
+        "forms_elements_partitions_elements_remove": "Delete element {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_groups_add": "Add group {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
-        "forms_elements_partitions_groups_move": "Reorder groups in {{partition.name}} of variable {{variable.name}}",
-        "forms_elements_partitions_groups_remove": "Delete group {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
-        "forms_elements_partitions_groups_name_replace": "Rename group {{before}} to {{after}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_groups_members_add": "Add {{item.name}} to group {{group.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_groups_members_move": "Reorder group members of {{group.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
         "forms_elements_partitions_groups_members_remove": "Remove {{item.name}} from group {{group.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
-
+        "forms_elements_partitions_groups_move": "Reorder groups in {{partition.name}} of variable {{variable.name}}",
+        "forms_elements_partitions_groups_name_replace": "Rename group {{before}} to {{after}} in disaggregation {{partition.name}} of variable {{variable.name}}",
+        "forms_elements_partitions_groups_remove": "Delete group {{item.name}} in disaggregation {{partition.name}} of variable {{variable.name}}",
+        "forms_elements_partitions_move": "Reorder the disaggregations of {{variable.name}}",
+        "forms_elements_partitions_name_replace": "Rename the disaggregation {{before}} to {{after}} in variable {{variable.name}}",
+        "forms_elements_partitions_remove": "Delete the disaggregation {{item.name}} from {{variable.name}}",
+        "forms_elements_remove": "Remove the variable {{item.name}} from {{form.name}}",
+        "forms_elements_timeAgg_replace": "Change the aggregation rule (time) of {{variable.name}} from {{before}} to {{after}}",
+        "forms_end_replace": "Change the end date of the data source {{form.name}} from {{before}} to {{after}}",
+        "forms_entities_add": "Add the site {{item.name}} to the data source {{form.name}}",
+        "forms_entities_move": "Reorder the sites of the data source {{form.name}}",
+        "forms_entities_remove": "Remove the site {{item.name}} from the data source {{form.name}}",
+        "forms_move": "Reorder the data sources of the project",
+        "forms_name_replace": "Rename the data source {{before}} to {{after}}",
+        "forms_periodicity_replace": "Change the periodicity of the data source {{form.name}} from {{before}} to {{after}}",
+        "forms_remove": "Delete the data source {{item.name}}",
+        "forms_start_replace": "Change the start date of the data source {{form.name}} from {{before}} to {{after}}",
+        "groups_add": "Create the group {{item.name}}",
+        "groups_members_add": "Add the site {{item.name}} to the group {{group.name}}",
+        "groups_members_move": "Reorder the sites of the group {{group.name}}",
+        "groups_members_remove": "Remove the site {{item.name}} from the group {{group.name}}",
+        "groups_move": "Reorder the project groups",
+        "groups_name_replace": "Rename the group {{before}} to {{after}}",
+        "groups_remove": "Remove the group {{item.name}}",
         "logicalFrames_add": "Create logical framework {{item.name}}",
-        "logicalFrames_move": "Reorder logical frameworks",
-        "logicalFrames_remove": "Remove logical framework {{item.name}}",
-
+        "logicalFrames_end_replace": "Change end date {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_entities_add": "Add the site {{item.name}} to the logical framework {{logicalFrame.name}}",
         "logicalFrames_entities_move": "Reorder the sites of the logical framework {{logicalFrame.name}}",
         "logicalFrames_entities_remove": "Remove the site {{item.name}} from the logical framework {{logicalFrame.name}}",
-
-        "logicalFrames_name_replace": "Rename logical framework {{before}} to {{after}}",
         "logicalFrames_goal_replace": "Change general objective {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_start_replace": "Change start date {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_end_replace": "Change end date {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-
-        "logicalFrames_purposes_add": "Add specific objective {{item.description}} to logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_move": "Reorder specific objectives of logical framwork {{logicalFrame.name}}",
-        "logicalFrames_purposes_remove": "Remove specific objective {{item.description}} from logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_description_replace": "Change description of specific objective {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_assumptions_replace": "Change assumptions of specific objective {{purpose.description}} de {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-
-        "logicalFrames_purposes_outputs_add": "Add result {{item.description}} to logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_move": "Reorder results in logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_remove": "Remove result {{item.description}} from logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_description_replace": "Change result description {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_assumptions_replace": "Change result assumptions {{output.description}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-
-        "logicalFrames_purposes_outputs_activities_add": "Add activity {{item.description}} to logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_activities_move": "Reorder activities in logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_activities_remove": "Remove activity {{item.description}} from logical framework {{logicalFrame.name}}",
-        "logicalFrames_purposes_outputs_activities_description_replace": "Change activity description {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-
         "logicalFrames_indicators_add": "Add indicator {{item.display}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_indicators_move": "Move indicator {{item.display}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_indicators_remove": "Remove indicator {{item.display}} from logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_baseline_replace": "Change baseline of indicator {{indicator.display}} from {{before}} vers {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_indicators_target_replace": "Change target of indicator {{indicator.display}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
-        "logicalFrames_indicators_display_replace": "Rename indicator {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_colorize_replace": "Change indicator {{indicator.display}} colorization from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
         "logicalFrames_indicators_computation_replace": "Change indicator {{indicator.display}} computation in logical framework {{logicalFrame.name}}",
-
-        "extraIndicators_add": "Add extra indicator {{item.display}}",
-        "extraIndicators_move": "Reorder extra indicators",
-        "extraIndicators_remove": "Deletee extra indicator {{item.display}}",
-        "extraIndicators_baseline_replace": "Change baseline of extra indicator {{extraIndicator.display}} from {{before}} to {{after}}",
-        "extraIndicators_target_replace": "Change target of extra indicator {{extraIndicator.display}} from {{before}} to {{after}}",
-        "extraIndicators_display_replace": "Rename extra indicator {{before}} to {{after}}",
-        "extraIndicators_colorize_replace": "Change extra indicator {{extraIndicator.display}} colorization from {{before}} to {{after}}",
-        "extraIndicators_computation_replace": "Change extra indicator {{extraIndicator.display}} computation",
-
-        "crossCutting_add": "Add a cross-cutting indicator",
-        "crossCutting_remove": "Delete a cross-cutting indicator",
-        "crossCutting_baseline_replace": "Change cross-cutting indicator baseline from {{before}} to {{after}}",
-        "crossCutting_target_replace": "Change cross-cutting indicator target from {{before}} to {{after}}",
-        "crossCutting_colorize_replace": "Change cross-cutting indicator colorization from {{before}} to {{after}}",
-        "crossCutting_computation_replace": "Change cross-cutting indicator computation"
+        "logicalFrames_indicators_display_replace": "Rename indicator {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_indicators_move": "Move indicator {{item.display}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_indicators_remove": "Remove indicator {{item.display}} from logical framework {{logicalFrame.name}}",
+        "logicalFrames_indicators_target_replace": "Change target of indicator {{indicator.display}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_move": "Reorder logical frameworks",
+        "logicalFrames_name_replace": "Rename logical framework {{before}} to {{after}}",
+        "logicalFrames_purposes_add": "Add specific objective {{item.description}} to logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_assumptions_replace": "Change assumptions of specific objective {{purpose.description}} de {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_description_replace": "Change description of specific objective {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_move": "Reorder specific objectives of logical framwork {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_activities_add": "Add activity {{item.description}} to logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_activities_description_replace": "Change activity description {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_activities_move": "Reorder activities in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_activities_remove": "Remove activity {{item.description}} from logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_add": "Add result {{item.description}} to logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_assumptions_replace": "Change result assumptions {{output.description}} from {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_description_replace": "Change result description {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_move": "Reorder results in logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_outputs_remove": "Remove result {{item.description}} from logical framework {{logicalFrame.name}}",
+        "logicalFrames_purposes_remove": "Remove specific objective {{item.description}} from logical framework {{logicalFrame.name}}",
+        "logicalFrames_remove": "Remove logical framework {{item.name}}",
+        "logicalFrames_start_replace": "Change start date {{before}} to {{after}} in logical framework {{logicalFrame.name}}",
+        "name_replace": "Rename the project from {{before}} to {{after}}",
+        "start_replace": "Change the project start date of the project from {{before}} to {{after}}",
+        "themes_add": "Add a new thematic to the project",
+        "themes_move": "Reorder the project thematics",
+        "themes_remove": "Remove a thematic from the project",
+        "users_add": "Add the user {{item.id}} to the project",
+        "users_dataSources_add": "Allow {{user.name}} to input data on data source {{item.name}}",
+        "users_dataSources_move": "Reorders the data sources associated with the user {{user.name}}",
+        "users_dataSources_remove": "Remove authorization to input on data source {{item.name}} of user {{user.name}}",
+        "users_entities_add": "Allow {{user.name}} to input data on site {{item.name}}",
+        "users_entities_move": "Reorder the sites associated with user {{user.name}}",
+        "users_entities_remove": "Remove authorization to input on site {{item.name}} of user {{user.name}}",
+        "users_move": "Reorder the project users",
+        "users_name_replace": "Rename the partner {{before}} to {{after}}",
+        "users_password_replace": "Change the password of the partner {{user.name}}",
+        "users_remove": "Remove the user {{item.id}} from the project",
+        "users_role_replace": "Change the role of  {{user.name}} from {{before}} to {{after}}",
+        "visibility_replace": "Change the project visibility from {{before}} vers {{after}}"
     },
     "Home": "Home",
     "HomeSections": {
+        "GettingStarted": {
+            "Cards": [
+                "<p>Design your reference project: logical framework with output and outcomes indicators, process indicators can be added if necessary</p>",
+                "<p>Use the Indicators summary tool to document all indicators from your reference project, and possibly donor's projects (if they are different)</p><ul><li>Why: How is each indicator going to help measuring the output or outcome that is expected from your activities? How do you plan on analysing it (graphs, tables, with which periodicity: you need to plan in advance how your data will be used for decision making)</li><li>How: identify all data and disagregations that will be needed to compute each one of your indicators</li><li>When, where, by and for whom?</li></ul>",
+                "<p>Build a dataflow chart from the indicator's summary to draw how data will flow in your project</p><ul><li>The data sources organized according to the project's structure</li><li>Detail collected data and precise disagregations</li><li>Organize your indicators by logical framework</li></ul>"
+            ],
+            "SubTitle": "Before setting your project up in Monitool, some preliminary steps can help you",
+            "Title": "Getting started"
+        },
+        "Guides": {
+            "Cards": [
+                "<ul><li><p><b>Healthcare project planning (2015)</b></p><p><a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Guides.aspx\">Healthcare project planning </a>  offers MdM project players a method of planning that is in line with the values reaffirmed and specified in that statement – to provide care and cure, to bear witness and advocate, and to support communities seeking social change.</p></li><li><p><b>Toolbox for healthcare project planning</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/doi/s2ap/biblio/Pages/Toolkit.aspx\">toolbox</a> contains multiple tools, mostly Excel-based in order to help you formalizing your project's planning.</p></li><li><p><b>DSP's Monitoring library</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Monitoring.aspx\">library</a>  contains fact sheets, training documents and position papers connected with monitoring and maintained by the DSP department.</p></li></ul>"
+            ],
+            "Title": "Guides & Documents supports"
+        },
+        "KeepInMind": {
+            "Cards": [
+                "<p>Monitool is all about monitoring.</p><p>It contributes to the ongoing, continuous and systematic monitoring of the situation and its evolution throughout the life of a project.</p><p>Its goal is to help taking decisions, thanks to the continuous follow-up of indicators that provide information on the progress of activities, and their contribution to the expected outputs and outcomes decided for your project.</p><p>Even if it can contribute to it, it's primary goal is not to do epidemiologic monitoring, or centralize morbidity sheets which are time-consuming and have little value in project management, specially for projects that support health structure (in opposition with providing direct care).</p>"
+            ],
+            "Title": "Keep in mind"
+        },
         "OnlinePlatform": {
-            "Title": "Why an online platform",
             "Cards": [
                 "<p><b>Structure</b> the project's monitoring system</p>",
                 "<p><b>Increase reliability</b></p><ul><li>Have consistency checks on data to limit entry errors</li><li>Limit mistakes in calculation</li></ul>",
                 "<p><b>Step back</b></p><ul><li>Encourage geographically remote projects to use the same indicators when measuring comparable events</li><li>Have mechanisms to compare the value of an indicator on a project, with the same value for all other that collected it</li></ul>",
                 "<p><b>Ease communication</b></p><ul><li>Provide direct access to project's data to all departments in the NGO (management, communication, ...)</li><li>Have single source of truth between headquarters and field project</li></ul>",
                 "<p><b>Standardize</b></p><ul><li>Ease turn-over by limiting the number of different tools used across projects</li><li>Reduce the learning curve required to consult data on a new project</li></ul>"
-            ]
-        },
-        "When": {
-            "Title": "When should you use Monitool",
-            "SubTitle": "Monitool plays a role during four stages of a project",
-            "Cards": [
-                {
-                    "Title": "Design of the logical frame",
-                    "Text": "Monitool provides all others projets logframes, with the list of used indicators and targets for each one of them"
-                },
-                {
-                    "Title": "Deployment of monitoring tools",
-                    "Text": "Explicitely write down the path followed by your data and attach deadlines on data collection"
-                },
-                {
-                    "Title": "Periodic follow-up",
-                    "Text": "Reporting graphs and tables of your choice are available and built with the most up-to-date data"
-                },
-                {
-                    "Title": "After closing",
-                    "Text": "Your project will be archived and available for future references"
-                }
-            ]
-        },
-        "KeepInMind": {
-            "Title": "Keep in mind",
-            "Cards": [
-                "<p>Monitool is all about monitoring.</p><p>It contributes to the ongoing, continuous and systematic monitoring of the situation and its evolution throughout the life of a project.</p><p>Its goal is to help taking decisions, thanks to the continuous follow-up of indicators that provide information on the progress of activities, and their contribution to the expected outputs and outcomes decided for your project.</p><p>Even if it can contribute to it, it's primary goal is not to do epidemiologic monitoring, or centralize morbidity sheets which are time-consuming and have little value in project management, specially for projects that support health structure (in opposition with providing direct care).</p>"
-            ]
-        },
-        "GettingStarted": {
-            "Title": "Getting started",
-            "SubTitle": "Before setting your project up in Monitool, some preliminary steps can help you",
-            "Cards": [
-                "<p>Design your reference project: logical framework with output and outcomes indicators, process indicators can be added if necessary</p>",
-                "<p>Use the Indicators summary tool to document all indicators from your reference project, and possibly donor's projects (if they are different)</p><ul><li>Why: How is each indicator going to help measuring the output or outcome that is expected from your activities? How do you plan on analysing it (graphs, tables, with which periodicity: you need to plan in advance how your data will be used for decision making)</li><li>How: identify all data and disagregations that will be needed to compute each one of your indicators</li><li>When, where, by and for whom?</li></ul>",
-                "<p>Build a dataflow chart from the indicator's summary to draw how data will flow in your project</p><ul><li>The data sources organized according to the project's structure</li><li>Detail collected data and precise disagregations</li><li>Organize your indicators by logical framework</li></ul>"
-            ]
-        },
-        "Guides": {
-            "Title": "Guides & Documents supports",
-            "Cards": [
-                "<ul><li><p><b>Healthcare project planning (2015)</b></p><p><a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Guides.aspx\">Healthcare project planning </a>  offers MdM project players a method of planning that is in line with the values reaffirmed and specified in that statement – to provide care and cure, to bear witness and advocate, and to support communities seeking social change.</p></li><li><p><b>Toolbox for healthcare project planning</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/doi/s2ap/biblio/Pages/Toolkit.aspx\">toolbox</a> contains multiple tools, mostly Excel-based in order to help you formalizing your project's planning.</p></li><li><p><b>DSP's Monitoring library</b></p><p>This <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/directions/dsp/SitePages/Monitoring.aspx\">library</a>  contains fact sheets, training documents and position papers connected with monitoring and maintained by the DSP department.</p></li></ul>"
-            ]
+            ],
+            "Title": "Why an online platform"
         },
         "OtherTools": {
-            "Title": "Other tools",
             "Cards": [
                 "<ul><li><p><b>Indicator's summary</b></p><p>Available in the <a target=\"_blank\" href=\"https://mdm1.sharepoint.com/:u:/r/directions/dsp/Documents%20partages/MdM_essential%20document%20MONITORING_EN.7z\">essentials documents for monitoring archive</a> , this tool centralize for all of your indicators the \"when\", \"how\", \"where\", \"by whom\" and \"for whom\" the data that you handle should be collected and analized.</p></li><li><p><b>Dataflow chart</b></p><p>In the same archive, this tool schematize the path that your data follows, from the form that was used to collect it, to the report or decision making that it enabled.</p></li></ul>"
-            ]
+            ],
+            "Title": "Other tools"
+        },
+        "When": {
+            "Cards": [
+                {
+                    "Text": "Monitool provides all others projets logframes, with the list of used indicators and targets for each one of them",
+                    "Title": "Design of the logical frame"
+                },
+                {
+                    "Text": "Explicitely write down the path followed by your data and attach deadlines on data collection",
+                    "Title": "Deployment of monitoring tools"
+                },
+                {
+                    "Text": "Reporting graphs and tables of your choice are available and built with the most up-to-date data",
+                    "Title": "Periodic follow-up"
+                },
+                {
+                    "Text": "Your project will be archived and available for future references",
+                    "Title": "After closing"
+                }
+            ],
+            "SubTitle": "Monitool plays a role during four stages of a project",
+            "Title": "When should you use Monitool"
         }
     },
     "IndicatorEdition": "Edit indicator",
@@ -359,12 +349,8 @@
         "Name": "Training volume"
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
+    "Indicators": "Indicators",
     "Input": "Input",
-    "InputsInfo": [
-        "This input calendar list all the inputs that were programmed for the data source ",
-        "To limit data entry errors, the preferred course is to do the data entry close from the site where the data is extracted, directly on monitool.",
-        "If not attainable, a PDF version of the form is provided."
-    ],
     "InputHomeInfo": [
         "This section's goal is providing the data that will allow to compute your indicators to Monitool.",
         "Each one of the data sources that were created during the structuration of the project results in a periodic form that need to be filled.",
@@ -373,30 +359,41 @@
         "A printable version of each forms is available.",
         "If you have several paper forms to enter (for example, one per social worker), and want to add them, you can enter sums in the entry boxes: \"1 + 2 + 3\""
     ],
+    "InputsInfo": [
+        "This input calendar list all the inputs that were programmed for the data source ",
+        "To limit data entry errors, the preferred course is to do the data entry close from the site where the data is extracted, directly on monitool.",
+        "If not attainable, a PDF version of the form is provided."
+    ],
+    "Invalid": "Invalid",
     "Language": "Language",
     "LastEntry": "Last entry",
     "LoadMoreRevisions": "Load more revisions",
+    "Loading": "Loading...",
+    "LogOut": "Log out",
     "LogicalFrameworks": "Logical frameworks",
-    "LogicalFrameworksPageDescription":{
-        "Line1":"A logical framework is a document that describe objectives, expected results, and actities to achieve them, as well as indicators to monitor the advancement of each of those elements",
+    "LogicalFrameworksPageDescription": {
+        "Line1": "A logical framework is a document that describe objectives, expected results, and actities to achieve them, as well as indicators to monitor the advancement of each of those elements",
         "Line2": "All indicators have to be computable from the data described in data sources"
     },
     "Login": "Login",
-    "LogOut": "Log out",
     "Members": "Members",
     "Missing": "Missing",
     "MultipleThematics": "Multiple thematics",
     "MyAccount": "My account",
     "Name": "Name",
+    "Name-Hint": "Indicate your Full Name",
+    "Name-Hint2": "Make sure you put the correct name for each language",
+    "NameLogicalFramework-Hint": "Name this logical framework to be able to identify it easily. For instance, with the name of the relevant donor",
     "NoExtraIndicator": "No extra indicator has been created yet. Click on \"Add indicator\" to create one!",
     "None": "None",
     "Ongoing": "On going",
     "OngoingPlural": "On going",
     "Open": "Open",
     "Owner": "Owner",
-    "PartitionEdition":"Disaggregation edition",
-    "Partitions" : "Which disaggregations should be used on this variable?",
-    "PartitionsHint" : "Do we want to be able to differenciate {{name}} by age, gender, type of care, consultation motive, pathology, hour of the day, referral type, ...? Do not disaggregate by location: your collection sites were already filled in the relevant page.",
+    "Parameter": "Parameter",
+    "PartitionEdition": "Disaggregation edition",
+    "Partitions": "Which disaggregations should be used on this variable?",
+    "PartitionsHint": "Do we want to be able to differenciate <code>{{name}}</code> by age, gender, type of care, consultation motive, pathology, hour of the day, referral type, ...? Do not disaggregate by location: your collection sites were already filled in the relevant page.",
     "PartnerAuthentication": "Partner authentication",
     "Password": "Password",
     "Patch": {
@@ -405,6 +402,7 @@
         }
     },
     "Periodicity": "Periodicity",
+    "Periodicity-Hint": "Please choose the appropriate periodicity",
     "ProjectBasicsInfo": "Basics allow to file your project among the others of the NGO.",
     "ProjectDataSourceInfo": [
         "The data sources are the different supports where the data needed for monitoring are available (tally sheets, medical records, excel files, ...).",
@@ -434,13 +432,13 @@
         "List your data collection tools (Excel, paper, ...) as well as other sources of data (NHIS, surveys ...) that you will use to calculate your indicators, by informing their periodicity and collection sites and their contents"
     ],
     "ProjectRole": "Project creation",
-    "Projects": "Projects",
     "ProjectSitesInfo": [
         "When a project have the same activities on different sites, those activities need to be followed-up by site, groups of sites, and at project level.",
         "Enter here:",
         "The list of sites where your project works (i.e. the list of health centers)",
         "Groups that will be used during monitoring (i.e. by region, or type of structure)"
     ],
+    "Projects": "Projects",
     "ProjectsUserInfo": [
         "Many people take part in setting-up and monitoring a project: coordination, M&E staff, data entry operators, partners, ...",
         "Enter here all users that need to have access to the monitoring of the project."
@@ -475,18 +473,20 @@
         "You can consult each logical framework or data source, which contains indicators, which you can then disaggregate by collection site, parameter that you used to calculate them, and other disaggregations according to the data structure that you collected (age range, sex, pathologies, training content, ...)."
     ],
     "ResetChanges": "Reset changes",
-    "Result-Result-SpecificObjective-Hint" : "Product or tangible service brought by the project ",
+    "Result": "Result",
+    "Result-Result-SpecificObjective-Hint": "Product or tangible service brought by the project ",
     "RevertToVersion": "Revert to this version",
     "Role": "Role",
+    "SameAsProject": "Same as project ({{date}})",
     "Save": "Save",
-    "SaveIndicator": "Save indicator",
     "SaveConfirm": "Save to confirm reverting to this version",
+    "SaveIndicator": "Save indicator",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",
     "Search": "Search",
     "SearchHelp": "Search Name, Country and Thematics",
-    "SeeReport": "See report",
     "SeeOlderDates": "See older dates",
+    "SeeReport": "See report",
     "Settings": "Settings",
     "SettingsIndicatorEdit": "This page allows changing the definition of a cross-cutting indicator. If you make changes, take care to update all languages.",
     "SettingsIndicatorsInfo": [
@@ -505,15 +505,19 @@
         "It is not needed to create new account for users that have a xxx@medecinsdumonde.net email address: they will automatically appear here once they connect once. For partners, it is possible to create account from the project management pages."
     ],
     "SpecificEndDate": "Specific end date",
-    "SpecificStartDate": "Specific start date",
+    "SpecificObjective": "Specific objective",
     "SpecificObjective-Hint": "Describe the tangible advantages that are provided to the beneficiaries",
+    "SpecificStartDate": "Specific start date",
     "StartDate": "Begin date",
     "State": "State",
     "Structure": "Structure",
     "Target": "Target",
+    "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
     "Task": "Task",
-    "TimeAggregation" : "How to group entries from different periods?",
-    "TimeAggregationHint" : "In a project collecting monthly data, if {{name}}  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
+    "ThematicEdition": "Thematic edition",
+    "Thematics": "Thematics",
+    "TimeAggregation": "How to group entries from different periods?",
+    "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",
@@ -530,50 +534,26 @@
         }
     },
     "Type": "Type",
-    "ThematicEdition": "Thematic edition",
-    "Thematics": "Thematics",
     "UpdateUser": "Update the user",
     "UseGroups": "Use groups",
+    "UseMDMAccount": "Use MDM Account",
     "UsePartnerAccount": "Use partner account",
+    "UseTrainingAccount": "Use training account (admin)",
     "User": "User",
     "UserEdition": "User edition",
     "Users": "Users",
-    "UseTrainingAccount":"Use training account (admin)",
-    "UseMDMAccount": "Use MDM Account",
     "Valid": "Valid",
+    "Variable": "Variable",
     "Visibility": "Visibility",
-    "VisibilityPublic": "Visible for all users (besides partners)",
     "VisibilityPrivate": "Visible only to members of this project",
-    "Invalid": "Invalid",
+    "VisibilityPublic": "Visible for all users (besides partners)",
     "WrongCredentials": "Wrong username or password. Please try again",
-    "EMail-Hint": "Enter your e-mail address",
-     "Name-Hint": "Indicate your Full Name",
-     "NameLogicalFramework-Hint": "Name this logical framework to be able to identify it easily. For instance, with the name of the relevant donor",
-     "CollectionSites-Hint": " Among sites identified in \"Collection sites\", which one are relevant for this logical framework?",
-     "Periodicity-Hint": "Please choose the appropriate periodicity",
-     "Colorize-Hint": "Do you wish to have colors (red, orange, green) on reporting for this indicator?",
-     "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value",
-     "specific-date-end": "If this logical framework is not valid up to the end of the project enter the date here, otherwise, leave the default value",
-     "Baseline-Hint": "What was the value of the indicator before the first activities? Tick the checkbox to specify. ",
-     "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
-     "Computation-Hint":"How to compute this indicator from the variables that you collected in data sources?",
-     "GeneralObjective":"General objective",
-     "Indicators":"Indicators",
-     "SpecificObjective":"Specific objective", 
-     "Assumptions":"Assumptions",
-     "Result":"Result",
-     "Activity":"Activity",
-     "GeneralObjective-Hint":"Describe the project's contribution on a program or policy",
-     "Name-Hint2":"Make sure you put the correct name for each language",
-     "description-Hint":"Make sure you put the correct description for each language",
-     "Parameter": "Parameter",
-     "Variable": "Variable",
-     "Help": {
-         "Variable": "From which variable does this information comes from?",
-         "Partition": "Which disaggregations are relevant?"
-     },
-     "Disaggregations": "Disaggregations",
-     "partitionElement": "partitionElement",
-     "ApplyChanges" : "Apply Changes",
-     "elementsymbol" :"sbanyouria"
+    "description-Hint": "Make sure you put the correct description for each language",
+    "elementsymbol": "sbanyouria",
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "partitionElement": "partitionElement",
+    "specific-date-end": "If this logical framework is not valid up to the end of the project enter the date here, otherwise, leave the default value",
+    "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value"
 }
