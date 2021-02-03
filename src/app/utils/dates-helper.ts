@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default class DatesHelper {
 
   static areEquals(date1: Date, date2: Date ): boolean {
@@ -27,6 +29,12 @@ export default class DatesHelper {
   }
 
   static dateToString(date: Date): string{
+
+    // If it s a moment type, we have to re create the date in order to have the method getTime after.
+    if (date instanceof moment ) {
+      date = new Date(date.toString());
+    }
+
     let time = date.getTime();
     time = time - date.getTimezoneOffset() * 60000;
     const dateWithoutTimezone = new Date(time);

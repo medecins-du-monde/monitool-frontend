@@ -289,9 +289,10 @@ mat-hint {
     flex-direction: column;
     font-size: $small_text;
     margin-bottom: 8px;
+    padding: 0px 16px 16px 16px;
 
     .card-info-title {
-      flex: 1;
+      width: 50%;
 
       &:not(b) {
         color: #909090;
@@ -299,7 +300,7 @@ mat-hint {
     }
 
     .card-info-value {
-      flex: 1;
+      width: 30%;
     }
 
     .computation {
@@ -332,7 +333,7 @@ mat-hint {
     margin-bottom: 12px;
 
     .mat-card-header-text {
-      margin: 0 0 0 16px;
+      margin-left: 16px;
     }
 
     .mat-card-title {
@@ -375,6 +376,7 @@ mat-hint {
     }
   }
 }
+
 
 // === BUTTONS ===
 .mdm-button {
@@ -716,7 +718,6 @@ mat-hint {
       }
     }
   }
-
 }
 
 .checkbox-form {
