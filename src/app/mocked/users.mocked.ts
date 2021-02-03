@@ -72,27 +72,3 @@ export let usersList: User[] = [
         _rev: '3-ddb19cb3e0a66887043ff731bd4885c5',
     }
 ];
-
-export let usersList2: User[] = [
-    {
-        id: "user:clemence.malet",
-        _rev: "7-ee27e9e4e5984068017d5ddef1e534c0",
-        type: "user",
-        name: "Clémence Malet",
-        role: "admin"
-    },
-    {   
-        id: "user:deputy-genco.myanmar",
-        _rev: "4-974c3653c2004058e64c4905fab75c8e",
-        type:"user",
-        name:"Deputy Genco MDM Myanmar",
-        role:"project"
-    },
-    {   
-        id: "user:burkina.faso",
-        _rev: "4-974c3653c2004058e64c1214s4905fab75c8e",
-        type:"user",
-        name:"Team Burkina-Faso",
-        role:"common"
-    }
-];
