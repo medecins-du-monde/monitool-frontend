@@ -133,7 +133,7 @@ body {
 body {
   margin: 0;
   font-family: $main-font;
-  font-size: $big_text;
+  font-size: $normal_text;
   color: var(--main);
 }
 
@@ -196,6 +196,8 @@ mat-hint {
   font-size: $big_text;
   color: #151515;
   line-height: 24px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .mdm-sub-title {
@@ -242,7 +244,7 @@ mat-hint {
 }
 
 .mdm-section {
-  margin-bottom: 68px;
+  margin-bottom: 20px;
   color: black;
 
   .mat-icon {
@@ -456,7 +458,7 @@ mat-hint {
     }
 
     th {
-      font-size: $big_text;
+      font-size: $normal_text;
       font-weight: bold;
       color: black;
     }
@@ -749,6 +751,8 @@ code {
   font-family: Menlo, Monaco, Consolas, Courier New, monospace;
   padding: 4px;
   margin: 4px;
+  font-size: $very_small_text;
+  line-height: 20px;
 }
 
 // Management of dateGroups (custom dates and same as project)
@@ -782,4 +786,37 @@ code {
 
 .mat-input-invalid .mat-input-ripple {
   background-color: red;
+}
+
+// Style of the mat expansion panels
+
+.mat-expansion-panel-header-description {
+  button {
+      margin-left: auto;
+  }
+}
+
+.mat-expansion-panel {
+  margin: 16px 0;
+}
+
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+  display: flex !important;
+  flex-grow: 1 !important;
+  margin-right: 16px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  align-self: center;
+}
+
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  cursor: pointer;
+}
+
+.mat-expansion-panel-content > .mat-expansion-panel-body{
+  margin-top: 10px;
+}
+
+.add-component {
+  margin-top: 20px !important;
 }

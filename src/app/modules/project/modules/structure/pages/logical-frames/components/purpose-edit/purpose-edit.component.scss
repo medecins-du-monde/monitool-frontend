@@ -1,12 +1,13 @@
-.mat-accordion {
-  padding-top: 20px;
+.mat-expansion-panel-header-description {
+  button {
+      color: #31708f;
+  }
 }
 
-.mat-expansion-panel {
-  margin: 20px 0px !important;
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+  color: #31708f;
 }
-.mdm-form-group .mdm-form-field {
-  flex: 1;
-  width: 100%;
-  margin-top: 9px !important;
+
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  background-color: #d9edf7 !important;
 }
