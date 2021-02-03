@@ -157,7 +157,7 @@
     "History": "History",
     "HistoryChanges": "Changes",
     "HistoryRevision": {
-        "active_replace": "Change deletion status from {{before}} to {{after}}",
+        "active_replace": "Change deletion status from {{!before}} to {{!after}}",
         "name_replace": "Rename the project from {{before}} to {{after}}",
         "start_replace": "Change the project start date of the project from {{before}} to {{after}}",
         "end_replace": "Change the project end date from {{before}} to {{after}}",
