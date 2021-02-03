@@ -356,7 +356,8 @@
     "IndicatorEdition": "Edit indicator",
     "IndicatorEditionPlaceholder": {
         "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
-        "Name": "Training volume"
+        "Name": "Training volume",
+        "Thematics": "i.e. Primary health care"
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Input": "Input",
@@ -416,7 +417,18 @@
         },
         "LogicalFrame": {
             "Name": "e.g. ECHO",
-            "CollectionSites": "No element is selected"            
+            "CollectionSites": "No element is selected",
+            "GeneralObjective" : "e.g. Reduce mortality and morbidity of the populations affected by the crisis",
+            "SpecificObjective" : "e.g. Improve access to health care for population affected by the crisis in the districts of Bimbo and Begoua"
+        },
+        "LogicalFrameIndicator": {
+            "Name": "i.e. ANC1 rate for the health centers",
+            "Computation": {
+                "Fixed": "Enter the constant value for the indicator (e.g. 12)"
+            }
+        },
+        "Themes" : {
+            "Name" : "i.e. Salud Sexual y reproductiva"
         }
     },
     "Periodicity": "Periodicity",

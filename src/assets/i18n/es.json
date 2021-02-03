@@ -359,7 +359,8 @@
     "IndicatorEdition": "Edición indicador",
     "IndicatorEditionPlaceholder": {
         "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
-        "Name": "Volumen de formación"
+        "Name": "Volumen de formación",
+        "Thematics": "Selectione una o varias temáticas"
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
@@ -414,7 +415,18 @@
         },
         "LogicalFrame": {
             "Name": "ej. ECHO",
-            "CollectionSites": "Ningún elemento esta seleccionado"            
+            "CollectionSites": "Ningún elemento esta seleccionado",
+            "GeneralObjective" : "ej. Reducir la mortalidad y la morbididad de la población afectada por la crisis",
+            "SpecificObjective" : "ej. Mejorar el acceso a la salud para la población afectada por la crisis en los districtos de Bimbo y Begoua"
+        },
+        "LogicalFrameIndicator": {
+            "Name": "ej: Tasa de consultaciones prenatales en las estructuras de salud",
+            "Computation": {
+                "Fixed": "Entre el valor constante del indicador (ej: 12)"
+            }
+        },
+        "Themes" : {
+            "Name" : "i.e. Salud Sexual y reproductiva"
         }
     },
     "Periodicity": "Periodicidad",

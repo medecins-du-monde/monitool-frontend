@@ -355,7 +355,8 @@
     "IndicatorEdition": "Édition indicateur",
     "IndicatorEditionPlaceholder": {
         "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
-        "Name": "Volume de formation"
+        "Name": "Volume de formation",
+        "Thematics": "ex: Soins de santé primaire"
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
@@ -410,7 +411,19 @@
         },
         "LogicalFrame": {
             "Name": "e.x. ECHO",
-            "CollectionSites": "Aucun élément selectionné"            
+            "CollectionSites": "Aucun élément selectionné",
+            "GeneralObjective": "ex: Réduire la mortalité et la morbidité des populations affectées par la crise",
+            "SpecificObjective": "ex: Améliorer l'accès aux soins des populations affectées par la crise dans les districts de Bimbo et Begoua"
+        }
+        ,
+        "LogicalFrameIndicator": {
+            "Name": "ex: Taux de CPN1 au sein des structures de santé",
+            "Computation": {
+                "Fixed": "Entrez ici la valeur fixe de l'indicateur"
+            }
+        },
+        "Themes" : {
+            "Name" : "ex: Salud Sexual y reproductiva"
         }
     },
     "Periodicity": "Périodicité",
