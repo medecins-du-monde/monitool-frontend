@@ -526,7 +526,6 @@
             "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool."
         }
     },
-    "TooltipSearchByCountry": "Podremos ver el nombre completo del país incluso si es demasiado grande.",
     "Type": "Tipo",
     "ThematicEdition": "Editar temática",
     "Thematics": "Temáticas",

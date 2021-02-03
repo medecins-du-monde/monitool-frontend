@@ -5,10 +5,9 @@
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
                     <mat-select formControlName="countries" multiple>
-                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
-                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country">{{country}}</mat-option>
+                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0" matTooltip="{{ 'AllCountries' | translate }} ({{countries.length}})">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
+                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country" matTooltip="{{country}}" matTooltipPosition="above">{{country}}</mat-option>
                     </mat-select>
-                    <mat-hint><mat-icon matChipRemove>info</mat-icon>{{ 'TooltipSearchByCountry' | translate }}</mat-hint>
                 </mat-form-field>
             </div>
             <div class="action">
