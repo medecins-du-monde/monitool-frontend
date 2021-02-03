@@ -135,10 +135,10 @@ export default class FormGroupBuilder {
     }
 
     return new FormGroup({
-      id: new FormControl(entity.id, Validators.required),
+      end: new FormControl(entity.end, Validators.required),
       name: new FormControl(entity.name, Validators.required),
       start: new FormControl(entity.start, Validators.required),
-      end: new FormControl(entity.end, Validators.required),
+      id: new FormControl(entity.id, Validators.required),
     });
   }
 

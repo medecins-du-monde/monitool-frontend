@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -9,7 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './data-sources.component.html',
   styleUrls: ['./data-sources.component.scss']
 })
-export class DataSourcesComponent implements OnInit {
+export class DataSourcesComponent implements OnInit, OnDestroy{
 
   project: Project;
   forms: Form[] = [];
@@ -17,35 +18,46 @@ export class DataSourcesComponent implements OnInit {
   entities: Entity[];
   edition = false;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.forms = project.forms;
-      this.entities = project.entities;
-      if ( this.currentForm ) {
-        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
-      }
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.forms = project.forms;
+        this.entities = project.entities;
+        if ( this.currentForm ) {
+          this.currentForm = this.forms.find(x => x.id === this.currentForm.id);      
+          if (this.currentForm === undefined){
+            this.onCreate();
+          }
+        }
+      })
+    )
   }
 
   onCreate(): void {
     this.currentForm = new Form();
     this.project.forms.push(this.currentForm);
     this.projectService.project.next(this.project);
+    this.projectService.valid = false;
     this.edition = true;
   }
 
-  onEdit(form: Form) {
+  onEdit(form: Form): void {
     this.edition = true;
     this.currentForm = form;
     this.projectService.project.next(this.project);
   }
 
-  onDelete(form: Form) {
+  onDelete(form: Form): void {
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
     this.projectService.project.next(this.project);
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
