@@ -8,14 +8,18 @@ table {
 
 .red-icon {
     color: red;
-}
-.red-icon svg {
-    fill: red;
+    svg {
+        fill: red;
+    }
 }
 
 .green-icon {
     color: green;
+    svg {
+        fill: green;
+    }
 }
-.green-icon svg {
-    fill: green;
+
+.centered {
+    text-align: center;
 }

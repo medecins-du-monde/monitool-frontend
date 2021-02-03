@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { HintUserElement } from 'src/app/models/interfaces/hintuser-element.model';
-import { HintUserData } from 'src/app/mocked/hintuser-element.mocked';
+import { HintUserData } from 'src/app/mocked/hint-user-element.mocked';
 import { User } from 'src/app/models/classes/user.model';
 
 @Component({

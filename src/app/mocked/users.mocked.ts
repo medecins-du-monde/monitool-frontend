@@ -1,6 +1,6 @@
 import { User } from 'src/app/modules/parameters/models/user';
 
-export let usersList: User[] = [
+export const usersList: User[] = [
     {
         name: 'Clémence Malet',
         role: 'Owner',
