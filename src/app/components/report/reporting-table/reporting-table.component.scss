@@ -4,6 +4,44 @@ table {
   width: 100%;
 }
 
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.mat-column-icon {
+  width: 50px;
+}
+.mat-column-name {
+  width: 300px;
+}
+
+th {
+  overflow: hidden;
+  width: 60px;
+  margin-right: 30px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mat-column {
+  width: 50px;
+}
+
+td {
+  font-size : $very_small_text;
+  text-align: center;
+}
+
+th.mat-header-cell {
+  font-size: $small_text;
+  margin: 0px 10px;
+}
+
+tr.mat-row {
+height: 30px !important;
+}
+
 tr.example-detail-row {
   height: 0;
 }
@@ -36,13 +74,26 @@ tr.example-element-row:not(.example-expanded-row):active {
   justify-content: space-between;
   padding: 0px 15px 0px 15px;
   height: 48px;
-  min-width: 200px;
+  div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
 }
 
 .groupName{
   padding-left: 15px;
   font-weight: bold;
+  font-size: $small_text;
+  text-align: left;
 }
+
 .title{
   font-weight: bold;
+  font-size: $small_text;
+  div {
+    display: flex;
+    align-items: center;
+  }
 }
