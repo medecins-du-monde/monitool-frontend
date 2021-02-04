@@ -6,7 +6,8 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-extra-indicators',
   templateUrl: './extra-indicators.component.html',
@@ -72,7 +73,6 @@ export class ExtraIndicatorsComponent implements OnInit {
     this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
     this.project.extraIndicators = this.indicators.value.map(x => new ProjectIndicator(x));
-    this.projectService.project.next(this.project);
   }
 
 }

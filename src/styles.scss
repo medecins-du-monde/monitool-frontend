@@ -273,13 +273,8 @@ mat-hint {
     position: relative;
 
     .cdk-drag-handle {
-        position: absolute;
-        z-index: 100;
-        cursor: move;
-        right: 12px;
-        
-        .mat-icon {
-            font-size: 24px !important;
+        mat-icon {
+            font-size: 20px !important;
         }
     }
 
@@ -293,11 +288,21 @@ mat-hint {
     }
 }
 
+.cdk-drag-handle {
+    position: absolute;
+    z-index: 100;
+    cursor: move;
+    right: 0px;
+    top: 5px;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
 .card-header {
     border-bottom: 1px solid rgba(144, 144, 144, 0.24);
-    padding: 16px 0px 16px 16px;
-
-    
+    padding: 16px 0px 16px 16px;   
 }
 
 .card-info {

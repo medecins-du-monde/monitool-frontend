@@ -20,12 +20,15 @@
     <div class= "mdm-section">
         <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
         <div class="indicators-list" formArrayName="indicators">
-            <div class="mdm-cards" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">
-                <app-extra-indicator *ngFor="let indicator of indicators.controls; let i=index" cdkDrag class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
-                    <div cdkDragHandle>
-                        <mat-icon>drag_indicator</mat-icon>
-                    </div>
-                </app-extra-indicator>
+            <div class="mdm-cards" cdkDropListGroup>
+                <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">
+                    <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
+                        <div *cdkDragPlaceholder></div>
+                        <div cdkDragHandle>
+                            <mat-icon>drag_indicator</mat-icon>
+                        </div>
+                    </app-extra-indicator>
+                </div>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
             <mat-hint>

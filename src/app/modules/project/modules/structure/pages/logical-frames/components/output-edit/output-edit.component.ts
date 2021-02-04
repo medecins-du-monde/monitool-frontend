@@ -68,10 +68,9 @@ export class OutputEditComponent implements OnInit {
     });
   }
 
-  dropIndicators(event: CdkDragDrop<string[]>) {
-    const selectedControl = this.indicators.at(event.previousIndex);
-    this.indicators.removeAt(event.previousIndex);
-    this.indicators.insert(event.currentIndex, selectedControl);
+  dropIndicators(event: CdkDragDrop<any>) {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
   }
 
   drop(event: CdkDragDrop<string[]>) {

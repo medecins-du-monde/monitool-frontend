@@ -3,17 +3,16 @@
     <p>{{'LogicalFrameworksPageDescription.Line2' | translate}}</p>
 </div>
 
-<div class="mdm-section" *ngIf="!edition" cdkDropListGroup>
-    <div class="mdm-cards">
-        <ng-container *ngFor="let logicalFrame of logicalFrames; let i=index">
-            <div class="mdm-card" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{item:logicalFrame,index:i}" (cdkDropListDropped)="drop($event)">
-                <app-logical-frame cdkDrag [project]="project" [logicalFrame]='logicalFrame' (clone)="onClone($event)" (edit)='onEdit($event)' (delete)="onDelete($event)">
-                    <div cdkDragHandle>
-                        <mat-icon>drag_indicator</mat-icon>
-                    </div>
-                </app-logical-frame>
-            </div>
-        </ng-container>
+<div class="mdm-section" *ngIf="!edition">
+    <div class="mdm-cards" cdkDropListGroup>
+        <div class="mdm-card" *ngFor="let logicalFrame of logicalFrames; let i=index" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{item:logicalFrame,index:i}" (cdkDropListDropped)="drop($event)">
+            <app-logical-frame cdkDrag cdkDragBoundary=".mdm-cards" [project]="project" [logicalFrame]='logicalFrame' (clone)="onClone($event)" (edit)='onEdit($event)' (delete)="onDelete($event)">
+                <div *cdkDragPlaceholder></div>
+                <div cdkDragHandle>
+                    <mat-icon>drag_indicator</mat-icon>
+                </div>
+            </app-logical-frame>
+        </div>
     </div>
     <button mat-stroked-button class="mdm-button" (click)="onCreate()">
         <mat-icon>add</mat-icon>

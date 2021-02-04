@@ -8,7 +8,8 @@
   <div class="mdm-cards" cdkDropListGroup>
     <div class="mdm-card" *ngFor="let form of forms; let i=index" cdkDropList cdkDropListOrientation="horizontal"
       [cdkDropListData]="{item:form,index:i}" (cdkDropListDropped)="drop($event)">
-      <app-data-source cdkDrag [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)">
+      <app-data-source cdkDrag cdkDragBoundary=".mdm-cards" [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)">
+        <div *cdkDragPlaceholder></div>
         <div cdkDragHandle>
           <mat-icon>drag_indicator</mat-icon>
         </div>
