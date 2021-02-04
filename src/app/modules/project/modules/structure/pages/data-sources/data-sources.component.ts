@@ -50,8 +50,8 @@ export class DataSourcesComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-    this.forms[event.previousContainer.data.index] = event.container.data.item;
-    this.forms[event.container.data.index] = event.previousContainer.data.item;
+    this.forms[event.previousContainer.data.index] = event.container.data.form;
+    this.forms[event.container.data.index] = event.previousContainer.data.form;
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }

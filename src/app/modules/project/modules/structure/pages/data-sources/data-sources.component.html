@@ -7,7 +7,7 @@
 <div class="mdm-section" *ngIf="!edition">
   <div class="mdm-cards" cdkDropListGroup>
     <div class="mdm-card" *ngFor="let form of forms; let i=index" cdkDropList cdkDropListOrientation="horizontal"
-      [cdkDropListData]="{item:form,index:i}" (cdkDropListDropped)="drop($event)">
+      [cdkDropListData]="{form:form,index:i}" (cdkDropListDropped)="drop($event)">
       <app-data-source cdkDrag cdkDragBoundary=".mdm-cards" [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)">
         <div *cdkDragPlaceholder></div>
         <div cdkDragHandle>
