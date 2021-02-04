@@ -1,0 +1,18 @@
+  .mdm-cards {
+    display: flex;
+    flex-wrap: wrap;   
+    div {
+      width: 23%;
+      margin: 0% 1%;
+    }
+  }
+
+  .mdm-card {
+    position:relative;
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  

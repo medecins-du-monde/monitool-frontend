@@ -246,12 +246,8 @@ mat-hint {
     margin-bottom: 68px;
     color: black;
 
-    .cdk-drag-handle {
-        cursor: move;
-    }
-
     .mat-icon{
-        cursor: pointer;
+        cursor: move;
         line-height: 20px;
         font-size: $small_text;
     }
