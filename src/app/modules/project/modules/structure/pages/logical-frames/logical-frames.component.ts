@@ -57,9 +57,9 @@ export class LogicalFramesComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-    this.logicalFrames[event.previousContainer.data.index]=event.container.data.item;
-    this.logicalFrames[event.container.data.index]=event.previousContainer.data.item;
-    event.currentIndex=0;
+    this.logicalFrames[event.previousContainer.data.index] = event.container.data.item;
+    this.logicalFrames[event.container.data.index] = event.previousContainer.data.item;
+    event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }
 

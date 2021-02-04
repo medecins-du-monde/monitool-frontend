@@ -40,17 +40,17 @@ export class ExtraIndicatorsComponent implements OnInit {
   onAddNewIndicator(): void {
     this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
-  onEditIndicator(indicator: FormGroup, index?: number) {
+  onEditIndicator(indicator: FormGroup, index?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
-  onDeleteIndicator(i: number) {
+  onDeleteIndicator(i: number): void {
     this.indicators.removeAt(i);
     this.project.extraIndicators.splice(i, 1);
     this.projectService.project.next(this.project);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -69,10 +69,11 @@ export class ExtraIndicatorsComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<any>) {
+  drop(event: CdkDragDrop<any>): void {
     this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
     this.project.extraIndicators = this.indicators.value.map(x => new ProjectIndicator(x));
+    this.projectService.project.next(this.project);
   }
 
 }

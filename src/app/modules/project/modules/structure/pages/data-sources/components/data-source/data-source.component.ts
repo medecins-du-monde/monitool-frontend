@@ -9,13 +9,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './data-source.component.html',
   styleUrls: ['./data-source.component.scss']
 })
-export class DataSourceComponent implements OnInit {
+export class DataSourceComponent {
 
   @Input() form: Form;
   @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
-  @Output() drag = new EventEmitter()
+
+  constructor(private translateService: TranslateService) { }
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -28,10 +29,6 @@ export class DataSourceComponent implements OnInit {
   get portraitPdfUrl() {
     return `${environment.API_URL}/resources/project/${this.project.id}/data-source/${this.form.id}.pdf?orientation=portrait&language=${this.currentLang}`;
   }
-
-  constructor(private translateService: TranslateService) { }
-
-  ngOnInit(): void {}
 
   onEdit() {
     this.edit.emit(this.form);
