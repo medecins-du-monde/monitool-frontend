@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
-
+import { Theme } from 'src/app/models/classes/theme.model';
 
 @Component({
   selector: 'app-indicators',
@@ -25,7 +25,7 @@ export class IndicatorsComponent implements OnInit {
 
   private getIndicators() {
     this.indicatorService.list().then((res: Indicator[]) => {
-      this.indicators = res;
+      this.indicators = res.sort((a,b) => (a.name.en > b.name.en)? 1: -1);      
     });
   }
 
