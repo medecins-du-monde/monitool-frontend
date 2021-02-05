@@ -29,7 +29,7 @@
         <div class="mdm-form-group" *ngFor="let language of languages">
             <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Name' | translate }}">
+                <input matInput [formControlName]="language" placeholder="{{ forceTranslate(language, 'IndicatorEditionPlaceholder.Name')}}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'Name-Hint2' | translate }}
                 </mat-hint>
@@ -40,7 +40,7 @@
         <div class="mdm-form-group" *ngFor="let language of languages">
             <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ 'IndicatorEditionPlaceholder.Description' | translate }}">
+                <input matInput [formControlName]="language" placeholder="{{ forceTranslate(language, 'IndicatorEditionPlaceholder.Description') }}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'description-Hint' | translate }}
                 </mat-hint>

@@ -4,7 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
+import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
+
+export interface ForceTranslationItem {
+  translations: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-indicator-modal',
@@ -18,6 +24,9 @@ export class IndicatorModalComponent implements OnInit {
   languages = ['fr', 'en', 'es'];
 
   themes: Theme[];
+  sampleVar: [];
+
+  testString: string = "testing forceTranslate";
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -30,6 +39,7 @@ export class IndicatorModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private translateService: TranslateService,
+    private forceTranslateService: ForceTranslateService,
     private themeService: ThemeService,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Indicator
@@ -56,7 +66,20 @@ export class IndicatorModalComponent implements OnInit {
       if (this.data) {
         this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
       }
+    });    
+    this.sampleVar = [];
+    this.forceTranslateService.getData('fr').subscribe( data => { this.sampleVar['fr'] = data; });
+    this.forceTranslateService.getData('en').subscribe( data => { this.sampleVar['en'] = data; });
+    this.forceTranslateService.getData('es').subscribe( data => { this.sampleVar['es'] = data; });
+  }
+
+  forceTranslate(lang: string, text:string){
+    let x = text.split('.');
+    let result = this.sampleVar[lang];
+    text.split('.').forEach(element => {
+      result = result[element];
     });
+    return result;
   }
 
   onSubmit() {
