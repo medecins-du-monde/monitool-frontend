@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { v4 as uuid } from 'uuid';
@@ -8,13 +8,14 @@ import { User } from 'src/app/models/classes/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit, AfterViewChecked {
+export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   countries = [];
   statuses = [
@@ -39,6 +40,8 @@ export class ProjectsComponent implements OnInit, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
+
+  private subscription: Subscription = new Subscription();
 
   @ViewChild('allSelected') private allSelected: MatOption;
 
@@ -67,9 +70,15 @@ export class ProjectsComponent implements OnInit, AfterViewChecked {
       this.onFilterChange();
     });
 
-    this.authService.currentUser.subscribe((user: User) => {
-      this.currentUser = new User(user);
-    });
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.currentUser = new User(user);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ngAfterViewChecked(): void {

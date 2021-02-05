@@ -13,6 +13,7 @@ export class User implements Deserializable {
     password: string;
     entities: Entity[];
     dataSources: Form[];
+    projectId?: string;
 
     get login() {
         return this.id.split(':')[1];
