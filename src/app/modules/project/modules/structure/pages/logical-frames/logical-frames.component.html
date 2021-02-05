@@ -5,7 +5,7 @@
 
 <div class="mdm-section" *ngIf="!edition">
     <div class="mdm-cards" cdkDropListGroup>
-        <div class="mdm-card" *ngFor="let logicalFrame of logicalFrames; let i=index" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{item:logicalFrame,index:i}" (cdkDropListDropped)="drop($event)">
+        <div class="mdm-card" *ngFor="let logicalFrame of logicalFrames; let i=index" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{logicalFrame:logicalFrame,index:i}" (cdkDropListDropped)="drop($event)">
             <app-logical-frame cdkDrag cdkDragBoundary=".mdm-cards" [project]="project" [logicalFrame]='logicalFrame' (clone)="onClone($event)" (edit)='onEdit($event)' (delete)="onDelete($event)">
                 <div *cdkDragPlaceholder></div>
                 <div cdkDragHandle>

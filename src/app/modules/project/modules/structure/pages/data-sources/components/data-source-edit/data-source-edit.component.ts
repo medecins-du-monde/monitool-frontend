@@ -145,7 +145,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.elements.at(event.previousIndex);
-    this.elements.removeAt(event.previousIndex);
-    this.elements.insert(event.currentIndex, selectedControl);
+    const newControls = this.elements.at(event.currentIndex);
+    this.elements.setControl(event.previousIndex, newControls);
+    this.elements.setControl(event.currentIndex, selectedControl);
   }
 }

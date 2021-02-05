@@ -128,8 +128,9 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.purposes.at(event.previousIndex);
-    this.purposes.removeAt(event.previousIndex);
-    this.purposes.insert(event.currentIndex, selectedControl);
+    const newControls = this.purposes.at(event.currentIndex);
+    this.purposes.setControl(event.previousIndex, newControls);
+    this.purposes.setControl(event.currentIndex, selectedControl);
   }
 
   dropIndicators(event: CdkDragDrop<any>) {

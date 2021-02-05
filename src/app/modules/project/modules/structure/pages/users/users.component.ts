@@ -64,8 +64,8 @@ export class UsersComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<any>) {
-    this.users[event.previousContainer.data.index] = event.container.data.item;
-    this.users[event.container.data.index] = event.previousContainer.data.item;
+    this.users[event.previousContainer.data.index] = event.container.data.user;
+    this.users[event.container.data.index] = event.previousContainer.data.user;
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }

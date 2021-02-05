@@ -75,7 +75,8 @@ export class OutputEditComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.activities.at(event.previousIndex);
-    this.activities.removeAt(event.previousIndex);
-    this.activities.insert(event.currentIndex, selectedControl);
+    const newControls = this.activities.at(event.currentIndex);
+    this.activities.setControl(event.previousIndex, newControls);
+    this.activities.setControl(event.currentIndex, selectedControl);
   }
 }

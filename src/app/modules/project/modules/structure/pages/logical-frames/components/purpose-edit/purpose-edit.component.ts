@@ -68,8 +68,9 @@ export class PurposeEditComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.outputs.at(event.previousIndex);
-    this.outputs.removeAt(event.previousIndex);
-    this.outputs.insert(event.currentIndex, selectedControl);
+    const newControls = this.outputs.at(event.currentIndex);
+    this.outputs.setControl(event.previousIndex, newControls);
+    this.outputs.setControl(event.currentIndex, selectedControl);
   }
 
   dropIndicators(event: CdkDragDrop<any>) {

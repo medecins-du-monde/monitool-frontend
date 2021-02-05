@@ -273,8 +273,14 @@ mat-hint {
     position: relative;
 
     .cdk-drag-handle {
-        mat-icon {
-            font-size: 20px !important;
+        position: absolute;
+        z-index: 100;
+        cursor: move;
+        right: 0px;
+        top: 5px;
+        
+        .mat-icon {
+            font-size: 24px !important;
         }
     }
 
@@ -286,14 +292,6 @@ mat-hint {
         width: 100%;
         margin: 0 0 16px;
     }
-}
-
-.cdk-drag-handle {
-    position: absolute;
-    z-index: 100;
-    cursor: move;
-    right: 0px;
-    top: 5px;
 }
 
 .cdk-drag-animating {
@@ -342,15 +340,6 @@ mat-hint {
     }
 }
 
-.drag-handle {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    color: #ccc;
-    cursor: move;
-    width: 20px;
-    height: 20px;
-}
 // === MATERIAL ===
 .mat-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
