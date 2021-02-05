@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeModalComponent } from '../theme-modal/theme-modal.component';
+import { ThemeAlertComponent } from '../theme-alert/theme-alert.component';
 
 @Component({
   selector: 'app-theme',
@@ -29,7 +30,12 @@ export class ThemeComponent implements OnInit {
   ngOnInit(): void { }
 
   onDelete(): void {
-    this.delete.emit(this.theme.id);
+    const dialogRef = this.dialog.open(ThemeAlertComponent, { data: this.theme });
+    dialogRef.afterClosed().subscribe(res =>{
+      if(res == true){
+        this.delete.emit(this.theme.id);
+      }
+    });
   }
 
   openDialog() {

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import { IndicatorAlertComponent } from '../indicator-alert/indicator-alert.component';
 
 @Component({
   selector: 'app-indicator',
@@ -29,7 +30,13 @@ export class IndicatorComponent implements OnInit {
   ngOnInit(): void {}
 
   onDelete(): void {
-    this.delete.emit(this.indicator.id);
+    const dialogRef = this.dialog.open(IndicatorAlertComponent, {data: this.indicator});
+
+    dialogRef.afterClosed().subscribe(res => {
+      if(res == true){
+        this.delete.emit(this.indicator.id);
+      }
+    });
   }
 
   openDialog() {

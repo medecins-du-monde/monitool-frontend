@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
+import { ThemeAlertComponent } from 'src/app/modules/parameters/pages/thematics/components/theme-alert/theme-alert.component';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -31,6 +32,7 @@ export class IndicatorModalComponent implements OnInit {
     private fb: FormBuilder,
     private translateService: TranslateService,
     private themeService: ThemeService,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Indicator
   ) { }
@@ -66,7 +68,13 @@ export class IndicatorModalComponent implements OnInit {
 
   onThemeRemoved(theme: Theme) {
     const themes = this.indicatorForm.controls.themes.value;
-    this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
+    const dialogRef = this.dialog.open(ThemeAlertComponent, { data: theme });
+    dialogRef.afterClosed().subscribe(res =>{
+      if(res == true){
+        this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
+      }
+    });
+
   }
 
 }
