@@ -428,6 +428,7 @@
         "Listez vos outils de collecte de donnée (Excel, papier, ...) ainsi que d'autres sources de données (SNIS, enquêtes...) que vous utiliserez pour calculer vos indicateurs, en renseignant leur periodicité et sites de collecte et leur contenu"
     ],
     "ProjectRole": "Création projets",
+    "Project": "Projet",
     "Projects": "Projets",
     "ProjectSitesInfo": [
         "Lorsqu'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles.",

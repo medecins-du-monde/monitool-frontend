@@ -9,10 +9,10 @@
                     <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ (user.type !== 'partner' ? 'Projects' : 'Project') | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
+                    <a class="toolbar-nav-link" [routerLink]="['indicators']" *ngIf="user.type !== 'partner'" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
                 </li>
             </ul>
         </nav>
@@ -34,9 +34,9 @@
                     <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
                 </li>
                 <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
+                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ (user.type !== 'partner' ? 'Projects' : 'Project') | translate }}</a>
                 </li>
-                <li class="toolbar-nav-item">
+                <li class="toolbar-nav-item" *ngIf="user.type !== 'partner'">
                     <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
                 </li>
             </ul>
@@ -45,7 +45,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['parameters']">{{ 'Settings' | translate }}</button>
+    <button mat-menu-item [routerLink]="['parameters']" *ngIf="user.type !== 'partner'">{{ 'Settings' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
     <button mat-menu-item (click)="disconnect()">{{ 'LogOut' | translate }}</button>
 </mat-menu>
