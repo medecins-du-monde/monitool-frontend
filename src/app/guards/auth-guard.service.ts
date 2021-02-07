@@ -18,11 +18,12 @@ export class AuthGuardService implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean>{
     if (await this.authService.isAuthenticated()){
-      console.log(state.url);
-      if (state.url === '/projects'){
-        if (this.user.type === 'partner'){
-          console.log(this.user);
+      if (this.user.type === 'partner'){
+        if (state.url.substring(0, 9) === '/projects'){
           this.route.navigate([`/project/${this.user.projectId}`])
+        }
+        if(state.url.substring(0, 11) === '/parameters' || state.url.substring(0, 11) === '/indicators'){
+         this.route.navigate(['/home']);
         }
       }
       return true;
