@@ -13,8 +13,8 @@ import { User } from 'src/app/models/classes/user.model';
 export class HeaderComponent implements OnInit {
 
   public isMobile: boolean;
-  private user: User;
-  
+  user: User;
+
   constructor(
     private translateService: TranslateService,
     private dateService: DateService,
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
     this.dateService.setCurrentLang(localStorage.getItem('language'));
     this.authService.currentUser.subscribe((user: User) => {
       this.user = user;
-    })
+    });
   }
 
   getLangs(): string[]{
