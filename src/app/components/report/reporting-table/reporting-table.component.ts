@@ -7,7 +7,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import { isArray, round } from 'lodash';
+import { isArray, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
@@ -366,7 +366,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // This allows to round all values
   roundResponse(response: unknown): unknown{
     for (const [key, value] of Object.entries(response)) {
-      response[key] = round(value as number);
+      response[key] = value === null ? null : round(value as number);
     }
     return response;
   }
@@ -505,9 +505,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return col;
   }
 
+  checkIfNaN(x: unknown): boolean{
+    return isNaN(x);
+  }
+  
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 }
-
-

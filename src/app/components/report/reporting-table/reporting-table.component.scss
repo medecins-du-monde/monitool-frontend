@@ -97,3 +97,8 @@ tr.example-element-row:not(.example-expanded-row):active {
     align-items: center;
   }
 }
+
+.mat-icon.NaN{
+  font-size: $very_small_text;
+  line-height: 24px;
+}
