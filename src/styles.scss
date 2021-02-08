@@ -276,12 +276,7 @@ mat-hint {
         position: absolute;
         z-index: 100;
         cursor: move;
-        right: 0px;
         top: 5px;
-        
-        .mat-icon {
-            font-size: 24px !important;
-        }
     }
 
     @media screen and (max-width: $breakpoint-sm) {
