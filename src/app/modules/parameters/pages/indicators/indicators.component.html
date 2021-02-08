@@ -3,10 +3,21 @@
     <p>{{ 'SettingsIndicatorsInfo.1' | translate }}</p>
     <p>{{ 'SettingsIndicatorsInfo.2' | translate }}</p>
 </div>
-<div class="mdm-cards">
-    <app-indicator *ngFor="let indicator of indicators" [indicator]="indicator" (delete)="onDelete($event)"
-        (edit)="onEdit($event)" class="mdm-card"></app-indicator>
-</div>
+
+<ng-container *ngFor="let theme of themes">
+    <div class="mdm-title">{{ 'Thematics' | translate }} : {{theme.shortName[currentLang]}}</div>
+    <div class="mdm-cards">
+    <ng-container *ngFor="let item of indicators">
+        <ng-container *ngFor="let item_theme of item.themes">
+            <ng-container *ngIf="theme.id == item_theme.id">
+                <app-indicator [indicator]="item" (delete)="onDelete($event)" 
+                (edit)="onEdit($event)" class="mdm-card"></app-indicator>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+    </div>
+</ng-container>
+
 <button mat-stroked-button (click)="openDialog()" class="mdm-button">
     <mat-icon>add</mat-icon>
     {{ 'CreateNewIndicator' | translate }}
