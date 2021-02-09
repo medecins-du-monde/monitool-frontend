@@ -21,9 +21,7 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
-                </mat-form-field>
+                <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
             </td>
         </ng-container>
 
@@ -31,12 +29,12 @@
         <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef>{{ 'SpecificStartDate' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="start" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
+                <div class="sites-row sites-date">
                     <input matInput [matDatepicker]="startPicker" formControlName="start"
                         placeholder="{{ 'StartDate' | translate }}">
                     <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker></mat-datepicker>
-                </mat-form-field>
+                </div>
             </td>
         </ng-container>
 
@@ -44,12 +42,12 @@
         <ng-container matColumnDef="end">
             <th mat-header-cell *matHeaderCellDef>{{ 'SpecificEndDate' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="end" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
+                <div class="sites-row sites-date">
                     <input matInput [matDatepicker]="endPicker" formControlName="end"
                         placeholder="{{ 'EndDate' | translate }}">
                     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
                     <mat-datepicker #endPicker></mat-datepicker>
-                </mat-form-field>
+                </div>
             </td>
         </ng-container>
 
@@ -57,9 +55,11 @@
         <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element; let i = index" id="delete">
-                <button mat-icon-button color="warn" (click)="onRemoveEntity(i)">
-                    <mat-icon>close</mat-icon>
-                </button>
+                <div class="sites-row">
+                    <button mat-icon-button color="warn" (click)="onRemoveEntity(i)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
             </td>
         </ng-container>
 
@@ -91,16 +91,16 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
+                <div class="sites-row">
                     <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
-                </mat-form-field>
+                </div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="sites">
             <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="sites" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
+                <div class="sites-row">
                     <mat-select formControlName="members" placeholder="{{ 'CollectionSites' | translate }}" multiple>
                         <mat-select-trigger>
                             <mat-chip-list>
@@ -114,7 +114,7 @@
                         <mat-option *ngFor="let entity of entities.value" [value]="entity.id">{{ entity.name }}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
+                </div>
             </td>
         </ng-container>
 
