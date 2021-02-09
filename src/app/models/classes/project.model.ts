@@ -151,7 +151,7 @@ export class Project implements Deserializable {
         if (project){
             Object.assign(b, project);
         }
-       
+
         // the 'parsed' property shouldn't interfere in the check if two projects are equal
         // so we can remove it for the test
         if (a && 'parsed' in a){

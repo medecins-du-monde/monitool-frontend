@@ -29,13 +29,13 @@ export class DataSourcesComponent implements OnInit, OnDestroy{
         this.forms = project.forms;
         this.entities = project.entities;
         if ( this.currentForm ) {
-          this.currentForm = this.forms.find(x => x.id === this.currentForm.id);      
+          this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
           if (this.currentForm === undefined){
             this.onCreate();
           }
         }
       })
-    )
+    );
   }
 
   onCreate(): void {

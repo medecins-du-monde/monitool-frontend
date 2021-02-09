@@ -35,7 +35,7 @@ export class LogicalFramesComponent implements OnInit, OnDestroy {
           }
         }
       })
-    )
+    );
   }
 
   onCreate(): void {
