@@ -559,7 +559,7 @@
      "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
      "Computation-Hint":"How to compute this indicator from the variables that you collected in data sources?",
      "GeneralObjective":"General objective",
-     "Indicator":"Indicator", 
+     "Indicator":"indicator", 
      "Indicators":"Indicators",
      "SpecificObjective":"Specific objective", 
      "Assumptions":"Assumptions",

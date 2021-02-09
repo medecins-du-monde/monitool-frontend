@@ -556,7 +556,7 @@
     "Target-Hint": "Cual es el objectivo para este indicador? Marque la casilla para especificar un valor.",
     "Computation-Hint": "Como se calcula este indicador a partir de las variables que ha colectado en fuentes de datos?",
     "GeneralObjective":"Objectivo global",
-    "Indicator":"Indicador", 
+    "Indicator":"indicador", 
     "Indicators":"Indicadores",
     "SpecificObjective":"Objectivo específico", 
     "Assumptions":"Hipotesis",

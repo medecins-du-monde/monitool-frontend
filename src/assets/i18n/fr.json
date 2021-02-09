@@ -552,7 +552,7 @@
     "Target-Hint":" Quel est l'objectif à atteindre sur cet indicateur? Cochez la case pour spécifier cette valeur.",
     "Computation-Hint":"Comment calculer cet indicateur à partir des données que vous avez collecté dans les sources de données?",
     "GeneralObjective":"Objectif général",
-    "Indicator":"Indicateur", 
+    "Indicator":"indicateur", 
     "Indicators":"Indicateurs", 
     "SpecificObjective":"Objectif Spécifique",
     "Assumptions":"Hypothèses",
