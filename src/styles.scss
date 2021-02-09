@@ -172,16 +172,19 @@ body {
 }
 
 .drawer-page {
-  overflow: auto;
   padding: 15px;
+  overflow: auto;
   flex: 1;
-  margin-bottom: 56px;
 
   @media screen and (max-width: $breakpoint-sm) {
     margin-top: 32px;
     overflow: auto;
     padding: 0;
   }
+}
+
+.with-margin {
+  margin-bottom: 56px;
 }
 
 mat-hint {
@@ -828,4 +831,8 @@ code {
 
 .add-component {
   margin-top: 20px !important;
+}
+
+.mat-tooltip {
+  font-size: $small_text;
 }

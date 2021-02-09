@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
@@ -10,16 +10,19 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, AfterViewChecked {
 
   public sidenav: Sidenav;
   project: Project;
 
   breadcrumbList: BreadcrumbItem[];
 
+  bigPage: boolean;
+  
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
 
@@ -28,6 +31,7 @@ export class ProjectComponent implements OnInit {
     this.route.params.subscribe(params => {
       const projectId = params.id;
       this.projectService.get(projectId).then((project: Project) => {
+        this.projectService.inBigPage.subscribe(value => this.bigPage = value);
         this.projectService.project.next(project);
         this.project = project;
         this.project.forms.forEach(form => {
@@ -39,20 +43,7 @@ export class ProjectComponent implements OnInit {
             }
           );
         });
-
-        this.breadcrumbList = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: this.project.country,
-          } as BreadcrumbItem,
-          {
-            value: this.project.name,
-          } as BreadcrumbItem,
-        ];
-
+        this.breadcrumbList = this.projectService.breadcrumbList;
       });
 
       const structure = {
@@ -143,6 +134,10 @@ export class ProjectComponent implements OnInit {
         ]
       };
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
 }

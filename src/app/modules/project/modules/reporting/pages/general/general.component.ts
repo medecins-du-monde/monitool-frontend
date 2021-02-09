@@ -43,8 +43,8 @@ export class GeneralComponent implements OnInit {
   groups: { theme: Theme, indicators: Indicator[]}[] = [];
 
   ngOnInit(): void {
+    this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
-
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
 
@@ -60,6 +60,8 @@ export class GeneralComponent implements OnInit {
       this.buildIndicators();
     });
   }
+
+ 
 
 
   buildIndicators(): void{

@@ -29,7 +29,7 @@ th {
 }
 
 td {
-  font-size : $very_small_text;
+  font-size : $small_text;
   text-align: center;
 }
 
@@ -96,4 +96,14 @@ tr.example-element-row:not(.example-expanded-row):active {
     display: flex;
     align-items: center;
   }
+}
+
+.mdm-button {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 10px !important;
 }
