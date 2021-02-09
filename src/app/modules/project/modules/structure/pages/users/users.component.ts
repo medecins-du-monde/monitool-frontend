@@ -63,6 +63,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>) {
     this.users[event.previousContainer.data.index] = event.container.data.user;
     this.users[event.container.data.index] = event.previousContainer.data.user;

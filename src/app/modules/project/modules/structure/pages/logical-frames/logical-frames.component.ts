@@ -56,6 +56,7 @@ export class LogicalFramesComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
+  // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>) {
     this.logicalFrames[event.previousContainer.data.index] = event.container.data.logicalFrame;
     this.logicalFrames[event.container.data.index] = event.previousContainer.data.logicalFrame;

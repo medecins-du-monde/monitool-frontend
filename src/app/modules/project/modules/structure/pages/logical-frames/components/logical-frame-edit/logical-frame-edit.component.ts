@@ -151,6 +151,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     });
   }
 
+  //drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.purposes.at(event.previousIndex);
     const newControls = this.purposes.at(event.currentIndex);
@@ -158,6 +159,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     this.purposes.setControl(event.currentIndex, selectedControl);
   }
 
+  //drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
     this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);

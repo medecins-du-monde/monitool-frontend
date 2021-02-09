@@ -168,6 +168,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
     });
   }
 
+  //drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.elements.at(event.previousIndex);
     const newControls = this.elements.at(event.currentIndex);
