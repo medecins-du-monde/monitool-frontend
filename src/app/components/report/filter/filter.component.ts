@@ -4,6 +4,10 @@ import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 
 export interface Filter{
@@ -16,7 +20,20 @@ export interface Filter{
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class FilterComponent implements OnInit, OnDestroy{
 
@@ -35,7 +52,9 @@ export class FilterComponent implements OnInit, OnDestroy{
 
   constructor(
     private fb: FormBuilder,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   onEntityRemoved(entity: Entity): void {
@@ -48,7 +67,11 @@ export class FilterComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
     // by default the end date is the last day of the current year
     // and the start date is the first day of the previous year
     let endDate = new Date((new Date()).getFullYear(), 11, 31);

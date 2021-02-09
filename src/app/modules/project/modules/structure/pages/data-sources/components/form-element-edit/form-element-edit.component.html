@@ -1,80 +1,86 @@
 <div [formGroup]="elementForm">
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'AddVariableName' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="name" placeholder="{{ 'AddVariableNamePlaceholder' | translate }}">
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '...' } }} 
-            </mat-hint>
-        </mat-form-field>
-    </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'GeoAggregation' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="geoAgg" placeholder="{{ 'MissingComputation' | translate }}">
-                <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
-                </mat-option>
-            </mat-select>
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
-            </mat-hint>
-        </mat-form-field>
-    </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'TimeAggregation' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="timeAgg" placeholder="{{ 'MissingComputation' | translate }}">
-                <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
-                </mat-option>
-            </mat-select>
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
-            </mat-hint>
-        </mat-form-field>
-    </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Partitions' | translate }}</div>
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'AddVariableName' | translate }}</div>
+      <mat-form-field appearance="outline" class="mdm-form-field">
+          <input matInput formControlName="name" placeholder="{{ 'AddVariableNamePlaceholder' | translate }}">
+          <mat-hint>
+              <mat-icon>info</mat-icon>
+              <span [innerHTML]="'AddVariableNameHint' | translate: { name: dataSourceName ? dataSourceName : '...' }"></span>
+          </mat-hint>
+      </mat-form-field>
+  </div>
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'GeoAggregation' | translate }}</div>
+      <mat-form-field appearance="outline" class="mdm-form-field">
+          <mat-select formControlName="geoAgg" placeholder="{{ 'MissingComputation' | translate }}">
+              <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
+              </mat-option>
+          </mat-select>
+          <mat-hint>
+              <mat-icon>info</mat-icon>
+              <span [innerHTML]="'GeoAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' }"></span>
+          </mat-hint>
+      </mat-form-field>
+  </div>
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'TimeAggregation' | translate }}</div>
+      <mat-form-field appearance="outline" class="mdm-form-field">
+          <mat-select formControlName="timeAgg" placeholder="{{ 'MissingComputation' | translate }}">
+              <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
+              </mat-option>
+          </mat-select>
+          <mat-hint>
+              <mat-icon>info</mat-icon>
+              <span [innerHTML]="'TimeAggregationHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' }"></span>
+          </mat-hint>
+      </mat-form-field>
+  </div>
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'Partitions' | translate }}</div>
 
-        <div class="partitions-list" formArrayName="partitions">
+      <div class="partitions-list" formArrayName="partitions">
 
-            <div class="partitions-buttons">
-                <ng-container *ngFor="let partition of partitions.controls; let i=index">
-                    <button mat-stroked-button class="mdm-button" (click)="openDialog(partition)"><mat-icon>create</mat-icon>{{partition.value.name}}</button>
-                </ng-container>
-            </div>
-            <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
-            <div class="hint">
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' } }}
-                </mat-hint>
-            </div>
-        </div>
+          <div class="partitions-buttons">
+              <ng-container *ngFor="let partition of partitions.controls; let i=index">
+                  <button mat-stroked-button class="mdm-button" (click)="openDialog(partition)"><mat-icon>create</mat-icon>{{partition.value.name}}</button>
+              </ng-container>
+          </div>
+          <button mat-stroked-button class="mdm-button" (click)="onAddNewPartition()"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
+          <div class="hint">
+              <mat-hint>
+                  <mat-icon>info</mat-icon>
+                  <span [innerHTML]="'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' }"></span>
+              </mat-hint>
+          </div>
+      </div>
 
-    </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Disaggregation.DisplayTitle' | translate }}</div>
-        <div class="partitions-list">     
-            <app-table-structure  [visualize]="true" [elementForm]="elementForm" (chosenStructure)="receiveStructure($event)" ></app-table-structure>
-            <mat-hint  class="hint">
-                <mat-icon>info</mat-icon>{{ 'Disaggregation.DisplayHint' | translate }}
-            </mat-hint>
-        </div>
-    </div>
+  </div>
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'Disaggregation.DisplayTitle' | translate }}</div>
+      <div class="partitions-list">
+          <app-table-structure  [visualize]="true" [elementForm]="elementForm" (chosenStructure)="receiveStructure($event)" ></app-table-structure>
+          <mat-hint  class="hint">
+              <mat-icon>info</mat-icon>
+              <span [innerHTML]="'Disaggregation.DisplayHint' | translate"></span>
+          </mat-hint>
+      </div>
+  </div>
 
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Disaggregation.OrderTitle' | translate }}</div>
-        <div class="partitions-list">
-            <table table class="display">
-                <td>
-                    <app-table-structure [visualize]="false" [elementForm]="elementForm" [tableStructure]="chosenStructure"></app-table-structure>
-                </td>
-            </table>
-            <mat-hint class="hint">
-                <mat-icon>info</mat-icon>{{ 'Disaggregation.OrderHint' | translate }}
-            </mat-hint>
-        </div>  
+  <div class="mdm-form-group">
+      <div class="mdm-form-label">{{ 'Disaggregation.OrderTitle' | translate }}</div>
+      <div class="partitions-list">
+          <table table class="display">
+              <td>
+                  <app-table-structure [visualize]="false" [elementForm]="elementForm" [tableStructure]="chosenStructure"></app-table-structure>
+              </td>
+          </table>
+          <mat-hint class="hint">
+              <mat-icon>info</mat-icon>
+              <span [innerHTML]="'Disaggregation.OrderHint' | translate"></span>
+          </mat-hint>
+      </div>
 
-    </div>
+  </div>
 
-    
+
 </div>

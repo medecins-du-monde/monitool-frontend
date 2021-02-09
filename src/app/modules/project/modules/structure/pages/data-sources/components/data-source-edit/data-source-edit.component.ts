@@ -10,12 +10,29 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 
 @Component({
   selector: 'app-data-source-edit',
   templateUrl: './data-source-edit.component.html',
-  styleUrls: ['./data-source-edit.component.scss']
+  styleUrls: ['./data-source-edit.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class DataSourceEditComponent implements OnInit, OnChanges {
 
@@ -39,6 +56,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
     private projectService: ProjectService,
   ) { }
 
@@ -51,6 +70,12 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
         display: `Enum.Periodicity.${value}`
       });
     }
+
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnChanges(): void {

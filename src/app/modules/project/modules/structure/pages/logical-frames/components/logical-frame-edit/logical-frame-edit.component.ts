@@ -10,11 +10,29 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-logical-frame-edit',
   templateUrl: './logical-frame-edit.component.html',
-  styleUrls: ['./logical-frame-edit.component.scss']
+  styleUrls: ['./logical-frame-edit.component.scss'],
+  // TODO: put the provided information in a shared component if possible
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
@@ -40,11 +58,18 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
     private projectService: ProjectService,
   ) { }
 
   ngOnInit(): void {
     this.setForm();
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnChanges(): void {
