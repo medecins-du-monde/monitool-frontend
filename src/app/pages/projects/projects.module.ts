@@ -13,7 +13,7 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CloneProjectModalModule } from './components/clone-project-modal/clone-project-modal.module';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [ProjectsComponent],
@@ -30,6 +30,7 @@ import { CloneProjectModalModule } from './components/clone-project-modal/clone-
         MatIconModule,
         MatButtonModule,
         MatButtonToggleModule,
+        MatTooltipModule,
         SearchbarModule,
         ProjectModule
     ]
