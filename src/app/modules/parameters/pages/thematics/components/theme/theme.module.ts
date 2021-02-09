@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ThemeModalModule } from '../theme-modal/theme-modal.module';
-import { ThemeAlertModule } from '../theme-alert/theme-alert.module';
+import { AlertModalModule } from 'src/app/components/alert-modal/alert-modal.module';
 
 @NgModule({
   declarations: [ThemeComponent],
@@ -23,7 +23,7 @@ import { ThemeAlertModule } from '../theme-alert/theme-alert.module';
     RouterModule,
     MatDialogModule,
     ThemeModalModule,
-    ThemeAlertModule
+    AlertModalModule
   ],
   exports: [ThemeComponent]
 })

@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
-import { IndicatorAlertComponent } from '../indicator-alert/indicator-alert.component';
+import { AlertModalComponent } from 'src/app/components/alert-modal/alert-modal.component';
 
 @Component({
   selector: 'app-indicator',
   templateUrl: './indicator.component.html',
   styleUrls: ['./indicator.component.scss']
 })
-export class IndicatorComponent implements OnInit {
+export class IndicatorComponent {
 
   @Input() indicator: Indicator;
 
@@ -18,7 +18,7 @@ export class IndicatorComponent implements OnInit {
 
   @Output() edit = new EventEmitter();
 
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -27,10 +27,8 @@ export class IndicatorComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void {}
-
   onDelete(): void {
-    const dialogRef = this.dialog.open(IndicatorAlertComponent, {data: this.indicator});
+    const dialogRef = this.dialog.open(AlertModalComponent, {data: {type: 'indicator', name: this.indicator.name[this.currentLang]}});
 
     dialogRef.afterClosed().subscribe(res => {
       if(res == true){

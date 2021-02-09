@@ -1,0 +1,12 @@
+.mat-dialog-actions {
+    justify-content: space-around;
+}
+
+.alert-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px !important;
+    h1 {
+        align-self: center;
+    }
+}

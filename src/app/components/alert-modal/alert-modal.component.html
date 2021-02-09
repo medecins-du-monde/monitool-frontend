@@ -1,0 +1,7 @@
+<div class="alert-container">
+  <h1 mat-dialog-title> {{ 'Delete' | translate }} {{ (data.type === 'indicator' ? 'Indicator' : 'Thematic') | translate }} {{data.name}} ? </h1>
+  <div mat-dialog-actions>
+    <button mat-stroked-button (click)=onClose(false)>{{ 'Cancel' | translate }}</button>
+    <button mat-stroked-button (click)=onClose(true) cdkFocusInitial>{{ 'Delete' | translate }}</button>
+  </div>
+</div>

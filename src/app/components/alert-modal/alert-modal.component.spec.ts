@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ThemeAlertComponent } from './theme-alert.component';
+import { AlertModalComponent } from './alert-modal.component';
 
-describe('ThemeAlertComponent', () => {
-  let component: ThemeAlertComponent;
-  let fixture: ComponentFixture<ThemeAlertComponent>;
+describe('AlertModalComponent', () => {
+  let component: AlertModalComponent;
+  let fixture: ComponentFixture<AlertModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThemeAlertComponent ]
+      declarations: [ AlertModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ThemeAlertComponent);
+    fixture = TestBed.createComponent(AlertModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

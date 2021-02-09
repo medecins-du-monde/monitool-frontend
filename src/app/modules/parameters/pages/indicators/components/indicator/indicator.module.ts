@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
-import { IndicatorAlertModule } from '../indicator-alert/indicator-alert.module';
+import { AlertModalModule } from 'src/app/components/alert-modal/alert-modal.module';
 
 @NgModule({
   declarations: [IndicatorComponent],
@@ -23,7 +23,7 @@ import { IndicatorAlertModule } from '../indicator-alert/indicator-alert.module'
     MatIconModule,
     RouterModule,
     IndicatorModalModule,
-    IndicatorAlertModule
+    AlertModalModule,
   ],
   exports: [IndicatorComponent]
 })

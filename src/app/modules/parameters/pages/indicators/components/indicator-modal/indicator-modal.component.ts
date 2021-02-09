@@ -5,7 +5,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
-import { ThemeAlertComponent } from 'src/app/modules/parameters/pages/thematics/components/theme-alert/theme-alert.component';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -20,7 +19,7 @@ export class IndicatorModalComponent implements OnInit {
 
   themes: Theme[];
 
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -68,13 +67,7 @@ export class IndicatorModalComponent implements OnInit {
 
   onThemeRemoved(theme: Theme) {
     const themes = this.indicatorForm.controls.themes.value;
-    const dialogRef = this.dialog.open(ThemeAlertComponent, { data: theme });
-    dialogRef.afterClosed().subscribe(res =>{
-      if(res == true){
-        this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
-      }
-    });
-
+    this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
   }
 
 }
