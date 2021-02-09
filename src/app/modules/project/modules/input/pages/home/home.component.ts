@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.projectService.inBigPage.next(true);
     this.subscription.add(
       this.projectService.openedProject.subscribe( async (project: Project) => {
         this.project = project;

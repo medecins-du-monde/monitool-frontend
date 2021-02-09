@@ -1,6 +1,6 @@
 <div *ngIf="options.length">
     <div *ngIf="open; else elseBlock">
-        <button [matMenuTriggerFor]="menu" class="mdm-button mat-icon-button">
+        <button [matMenuTriggerFor]="menu" class="mdm-button small-button mat-icon-button">
             <mat-icon>add</mat-icon>
         </button>
     
@@ -12,7 +12,7 @@
     </div>
     
     <ng-template #elseBlock>
-        <button class="mdm-button mat-icon-button" (click)="closeIndicator()">
+        <button class="mdm-button small-button mat-icon-button" (click)="closeIndicator()">
             <mat-icon>remove</mat-icon>
         </button>
     </ng-template>
