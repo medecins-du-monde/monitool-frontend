@@ -31,7 +31,7 @@ export class IndicatorComponent {
     const dialogRef = this.dialog.open(AlertModalComponent, {data: {type: 'indicator', name: this.indicator.name[this.currentLang]}});
 
     dialogRef.afterClosed().subscribe(res => {
-      if(res == true){
+      if (res === true){
         this.delete.emit(this.indicator.id);
       }
     });

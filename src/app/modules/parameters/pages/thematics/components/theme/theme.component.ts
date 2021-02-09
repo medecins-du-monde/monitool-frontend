@@ -29,8 +29,8 @@ export class ThemeComponent {
 
   onDelete(): void {
     const dialogRef = this.dialog.open(AlertModalComponent, { data: { type: 'theme', name: this.theme.name[this.currentLang]}  });
-    dialogRef.afterClosed().subscribe(res =>{
-      if(res == true){
+    dialogRef.afterClosed().subscribe(res => {
+      if (res === true){
         this.delete.emit(this.theme.id);
       }
     });
