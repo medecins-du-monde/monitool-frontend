@@ -7,7 +7,6 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/classes/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
@@ -57,13 +56,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    public datepipe: DatePipe,
     private fb: FormBuilder,
     private inputService: InputService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.projectService.inBigPage.next(false);
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;

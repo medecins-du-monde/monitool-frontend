@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { MatTableDataSource } from '@angular/material/table';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 
 
@@ -15,7 +19,20 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
 @Component({
   selector: 'app-sites',
   templateUrl: './sites.component.html',
-  styleUrls: ['./sites.component.scss']
+  styleUrls: ['./sites.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class SitesComponent implements OnInit {
 
@@ -49,7 +66,9 @@ export class SitesComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +97,12 @@ export class SitesComponent implements OnInit {
           });
         }
       })
+    );
+
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
     );
   }
 

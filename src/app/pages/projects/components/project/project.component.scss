@@ -1,20 +1,56 @@
+@import "src/assets/theme/size_vars.scss";
+
 .card-header {
-  padding: 16px 16px 16px 16px;
+  padding: 16px;
   align-items: center;
- 
+
   .project-country {
     height: 24px;
     width: 24px;
+
     img {
       height: 100%;
     }
   }
 
-  .project-status {
-    margin-left: auto;
-    margin-right: 4px;
-    padding-top: 5px;
-    
+  .project-title {
+    width: 58%;
+    @media screen and (max-width: 1360px) {
+      width: 54%;
+    }
+    @media screen and (max-width: 1230px) {
+      width: 62%;
+    }
+    @media screen and (max-width: 1130px) {
+      width: 58%;
+    }
+    @media screen and (max-width: 1050px) {
+      width: 45%;
+    }
+    // @media screen and (max-width: 910px) {
+    //   width: 62%;
+    // }
+    @media screen and (max-width: $breakpoint-xs-sm) {
+      width: 60%;
+    }
+    @media screen and (max-width: 720px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 655px) {
+      width: 48%;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 74%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 69%;
+    }
+    @media screen and (max-width: 430px) {
+      width: 64%;
+    }
+    @media screen and (max-width: 370px) {
+      width: 50%;
+    }
   }
 }
 
@@ -22,14 +58,120 @@
   flex-direction: row;
 }
 
+.card-info-value {
+  width: 70% !important;
+}
+
 .icon-button {
   cursor: pointer;
-  
+
 }
 
 .icon-default {
   cursor: default;
-  
-  
+
+
+}
+
+.boton.mdm-button.mat-icon-button:not(.small-button) {
+  height: 25px;
+  width: 32px;
+  line-height: 32px;
+}
+
+
+.project.mat-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  display: block;
+  position: relative;
+  padding: 0px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
+  .card-header {
+    align-items: center;
+    background-color: #ddd;
+    padding: 16px 5px;
+
+    .project-icon {
+      height: 24px;
+      width: 24px;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  .mat-card-content {
+    flex: 1;
+  }
+
+  .mat-card-actions {
+    flex: 0;
+    padding: 16px;
+  }
+
+}
+
+.mat-button-toggle-appearance-standard {
+  .mat-button-toggle-label-content {
+    line-height: 38px;
+  }
+}
+
+.mat-raised-button {
+  line-height: 40px !important;
+}
+
+.mat-card-actions .mat-button,
+.mat-card-actions .mat-raised-button,
+.mat-card-actions .mat-stroked-button {
+  &:last-child {
+    margin-left: 0;
+  }
+}
+
+.mat-chip {
+  min-height: 24px !important;
+  padding: 8px !important;
+
+  &.mat-chip-selected {
+    &.mat-accent {
+      color: white !important;
+    }
+  }
+}
+
+.open.mat-stroked-button {
+  border: 1px solid currentColor;
+  padding: 0 15px;
+  line-height: 27px !important;
+  background-color: white;
+  border: 1px solid #c8c9cc !important;
+  height: 26px;
+  padding: 0 12px !important;
+  margin-right: 0px;
+  margin-bottom: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+  border-bottom-left-radius: 3px;
+}
+
+
+.expand.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 27px;
+  height: 26px;
+  flex-shrink: 0;
+  line-height: 26px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 1px;
+  border: 1px solid #c8c9cc !important;
 }
 
