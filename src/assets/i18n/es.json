@@ -134,6 +134,7 @@
         }
 
     },
+    "ErrorNoCollectionSiteAssociated": "Esta fuente de datos no esta asociada a ningún lugar de colecta.",
     "es": "Español",
     "EquivalentVersion" : "Este punto es equivalente al estado actual del proyecto",
     "EveryMonth": "Cada mes",

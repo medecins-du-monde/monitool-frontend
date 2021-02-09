@@ -137,7 +137,8 @@
             "year": "Every year"
         }
     },
-    "EquivalentVersion": "This version is equivalent to the current state of the project",
+    "ErrorNoCollectionSiteAssociated": "This data source is not associated with any collection site.",
+    "EquivalentVersion" : "This version is equivalent to the current state of the project",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
     "ExtraIndicatorsInfo": [

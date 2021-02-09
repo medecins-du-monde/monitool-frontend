@@ -86,7 +86,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
-      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id)), Validators.required],
+      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start, Validators.required],
       end: [this.form.end, Validators.required],
