@@ -31,6 +31,14 @@ th {
 td {
   font-size : $very_small_text;
   text-align: center;
+  &.value-cell{
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgba(0, 0, 0, 0.12);
+    &.empty{
+      background-color: rgb(238, 238, 238);
+    }
+  }
 }
 
 th.mat-header-cell {
@@ -55,9 +63,9 @@ tr.example-element-row:not(.example-expanded-row):active {
   background: #efefef;
 }
 
-.example-element-row td {
-  border-bottom-width: 0;
-}
+// .example-element-row td {
+//   border-bottom-width: 0;
+// }
 
 .example-element-detail {
   overflow: hidden;
