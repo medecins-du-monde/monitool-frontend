@@ -4,7 +4,7 @@
             <div class="action">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
-                    <mat-select formControlName="countries" multiple>
+                    <mat-select [matTooltipShowDelay]="500" matTooltip="{{selectedCountries}}" formControlName="countries" multiple>
                         <mat-option #allSelected (click)="onToggleAllCountries()" value="0" [matTooltipShowDelay]="500" matTooltip="{{ 'AllCountries' | translate }} ({{countries.length}})">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
                         <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country" [matTooltipShowDelay]="500" matTooltip="{{country}}" matTooltipPosition="above">{{country}}</mat-option>
                     </mat-select>
