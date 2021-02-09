@@ -50,7 +50,7 @@ export class ProjectService{
           this.currentProject = project.copy();
         }
       }
-      this.breadcrumbList =[
+      this.breadcrumbList = [
         {
           value: 'Projects',
           link: './../../projects'

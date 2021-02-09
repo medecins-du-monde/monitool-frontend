@@ -18,7 +18,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
   breadcrumbList: BreadcrumbItem[];
 
   bigPage: boolean;
-  
+
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
