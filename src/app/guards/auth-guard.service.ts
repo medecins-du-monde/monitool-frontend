@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { User } from '../models/classes/user.model';
 import {AuthService} from '../services/auth.service';
 
@@ -16,21 +16,24 @@ export class AuthGuardService implements CanActivate {
     });
   }
 
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean>{
+  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean>{
     if (await this.authService.isAuthenticated()){
-      if (this.user.type === 'partner'){
-        if (state.url.substring(0, 9) === '/projects'){
-          this.route.navigate([`/project/${this.user.projectId}`]);
+      if (route.data.roles) {
+        if (this.authService.isAuthorised(route.data.roles)) {
+          return true;
         }
-        if (state.url.substring(0, 11) === '/parameters' || state.url.substring(0, 11) === '/indicators'){
-         this.route.navigate(['/home']);
+        else {
+          if (route.routeConfig.path === 'projects'){
+            this.route.navigate([`/project/${this.user.projectId}`]);
+          }
+          else {
+            this.route.navigate(['/home']);
+          }
         }
       }
       return true;
     }
-
     this.route.navigate(['login']);
-
     return false;
   }
 }
