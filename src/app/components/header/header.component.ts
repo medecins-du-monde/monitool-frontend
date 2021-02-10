@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   public isMobile: boolean;
   user: User;
 
+  headerLinkList = [];
+
   constructor(
     private translateService: TranslateService,
     private dateService: DateService,
@@ -26,7 +28,15 @@ export class HeaderComponent implements OnInit {
     window.onresize = () => this.isMobile = window.innerWidth < 600;
     this.dateService.setCurrentLang(localStorage.getItem('language'));
     this.authService.currentUser.subscribe((user: User) => {
+      this.headerLinkList = [{routerLink: 'home', text: 'Home'}];
       this.user = user;
+      if (user.type === 'user') {
+        this.headerLinkList.push({routerLink: 'projects', text: 'Projects'});
+        this.headerLinkList.push({routerLink: 'indicators', text: 'CrossCuttingIndicators'});
+      }
+      else {
+        this.headerLinkList.push({routerLink: `/project/${this.user.projectId}`, text: 'Project'});
+      }
     });
   }
 

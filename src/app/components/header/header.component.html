@@ -5,14 +5,8 @@
         </div>
         <nav class="toolbar-nav" *ngIf="!isMobile">
             <ul class="toolbar-nav-list">
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ (user.type !== 'partner' ? 'Projects' : 'Project') | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" *ngIf="user.type !== 'partner'" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
+                <li *ngFor='let link of headerLinkList' class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="[link.routerLink]" routerLinkActive="active-link">{{ link.text | translate }}</a>
                 </li>
             </ul>
         </nav>
@@ -24,14 +18,8 @@
     <mat-toolbar-row *ngIf="isMobile">
         <nav class="toolbar-nav">
             <ul class="toolbar-nav-list">
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ (user.type !== 'partner' ? 'Projects' : 'Project') | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item" *ngIf="user.type !== 'partner'">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
+                <li *ngFor='let link of headerLinkList' class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="[link.routerLink]" routerLinkActive="active-link">{{ link.name | translate }}</a>
                 </li>
             </ul>
         </nav>
