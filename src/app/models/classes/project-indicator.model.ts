@@ -38,7 +38,7 @@ export class ProjectIndicator implements Deserializable {
 
   deserialize(input: any): this {
     Object.assign(this, input);
-    this.colorize = this.colorize ? this.colorize : true;
+    this.colorize = this.colorize !== undefined ? this.colorize : true;
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
@@ -109,7 +109,7 @@ export class ProjectIndicator implements Deserializable {
   serialize(crossCuttingType = false) {
     const serializedIndicator = {
       baseline: this.baseline,
-      colorize: (this.baseline && this.target) ? true : false,
+      colorize: (this.baseline && this.target) ? this.colorize : false,
       computation: this.formatComputation(this.computation),
       target: this.target,
     };
