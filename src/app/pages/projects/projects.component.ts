@@ -50,7 +50,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   get selectedCountries(): [] {
-    return this.filtersForm.value.countries as [];
+    return this.filtersForm.value.countries.filter(countrie => countrie !== '0') as [];
   }
 
   constructor(
@@ -170,6 +170,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   onToggleAllCountries() {
     if (this.allSelected.selected) {
+      // TODO: Change this thing of the 0.
       this.filtersForm.controls.countries
         .setValue([...this.countries, '0']);
     } else {
