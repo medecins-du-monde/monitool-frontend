@@ -172,16 +172,19 @@ body {
 }
 
 .drawer-page {
+  padding: 15px;
   overflow: auto;
-  padding: 10px;
   flex: 1;
-  margin-bottom: 56px;
 
   @media screen and (max-width: $breakpoint-sm) {
     margin-top: 32px;
     overflow: auto;
     padding: 0;
   }
+}
+
+.with-margin {
+  margin-bottom: 56px;
 }
 
 mat-hint {
@@ -197,7 +200,6 @@ mat-hint {
   color: #151515;
   line-height: 24px;
   margin-bottom: 10px;
-  border-bottom: 1px solid #e5e5e5;
 }
 
 .mdm-sub-title {
@@ -267,16 +269,29 @@ mat-hint {
   }
 
   .mdm-card {
-    width: calc(25% - 24px);
-    margin: 0 12px 24px;
+    width: 22%;
+    margin: 0 1% 10px 1%;
 
-    @media screen and (max-width: $breakpoint-sm) {
-      width: calc(50% - 24px);
+    @media screen and (max-width: $breakpoint-md) {
+      width: 23%
+    }
+
+    @media screen and (max-width: $breakpoint-sm-md) {
+      width: 30%;
+      margin: 0 1.666% 10px 1.666%;
+    }
+
+    @media screen and (max-width: $breakpoint-xs-sm) {
+      width: 47%;
+      margin: 0 1.5% 10px 1.5%;
     }
 
     @media screen and (max-width: $breakpoint-xs) {
       width: 100%;
       margin: 0 0 16px;
+    }
+    .card-info-title {
+      min-width: 52%;
     }
   }
 
@@ -297,10 +312,6 @@ mat-hint {
       &:not(b) {
         color: #909090;
       }
-    }
-
-    .card-info-value {
-      width: 30%;
     }
 
     .computation {
@@ -798,7 +809,7 @@ code {
 }
 
 .mat-expansion-panel {
-  margin: 16px 0;
+  margin: 16px 0 !important;
 }
 
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
@@ -820,4 +831,8 @@ code {
 
 .add-component {
   margin-top: 20px !important;
+}
+
+.mat-tooltip {
+  font-size: $small_text;
 }

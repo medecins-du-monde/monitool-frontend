@@ -41,6 +41,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.projectService.inBigPage.next(true);
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;

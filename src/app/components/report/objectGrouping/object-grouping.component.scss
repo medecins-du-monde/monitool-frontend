@@ -18,11 +18,14 @@
 .mat-grid-tile {
   border: solid 1px #e7e7e7;
   background: white;
+  font-size: $small_text;
+  @media screen and (max-width: $breakpoint-xs) {
+    button {
+      font-size: 0;
+    }
+  }
 }
 
-.mat-grid-list {
-  padding: 2em 0em 2em 0em;
-}
 
 .mdm-form-field {
   width: 100%;

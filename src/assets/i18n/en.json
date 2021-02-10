@@ -137,7 +137,8 @@
             "year": "Every year"
         }
     },
-    "EquivalentVersion": "This version is equivalent to the current state of the project",
+    "ErrorNoCollectionSiteAssociated": "This data source is not associated with any collection site.",
+    "EquivalentVersion" : "This version is equivalent to the current state of the project",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
     "ExtraIndicatorsInfo": [
@@ -533,6 +534,17 @@
             "Type": "Choose \"MDM Account\" if the user has a xxx@medecinsdumonde.net email address. Choose \"Partner account\" otherwise.",
             "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time."
         }
+    },
+    "TooltipRoleHint": {
+        "PanelShow": "Show help for this field",
+        "PanelHide": "Hide help for this field",
+        "EditProjectsStructure": "Edit projects' structure and data where explicitely allowed",
+        "SeeAllProjectsReporting": "See all project's reporting",
+        "CreateProjects": "Create projects",
+        "CreateAndEditThematics": "Create and edit thematics",
+        "CreateAndEditCrossCutting": "Create and edit cross-cutting indicators",
+        "EditOtherUsersRoles": "Edit other users roles",
+        "EditAllProjectsStructureAndData": "Edit all projects structure and data"
     },
     "Type": "Type",
     "UpdateUser": "Update the user",

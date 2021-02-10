@@ -49,6 +49,10 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
+  get selectedCountries(): [] {
+    return this.filtersForm.value.countries as [];
+  }
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
