@@ -33,6 +33,7 @@ export interface InfoRow {
   icon: boolean;
   name: string;
   baseline: number | null;
+  colorize?: boolean;
   target: number | null;
   sectionId: number;
   values: any;
@@ -228,6 +229,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
+      colorize: indicator.colorize !== undefined ? indicator.colorize : false,
       target: indicator.target,
       sectionId: 0,
       values: {},
@@ -492,6 +494,62 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       return `padding-left: ${element.level * 20 + 15}px;`;
     }
     return '';
+  }
+
+  calcColor(element: InfoRow, column: string): string{
+    // the colors change in the following way:
+    // we start in the red: rgb(255, 128, 128)
+    // we go up increasing the value of the blue
+    // until we reach the yellow: rgb (255, 128, 128)
+    // after this we go down subtracting the value
+    // of the red until we get to the green: rgb (128, 255, 128)
+
+
+    // set color to gray if cell is empty
+    if (!element.values[column] && !this.checkIfNaN(element?.values[column])){
+      return 'rgb(238, 238, 238)';
+    }
+
+    // don't set any color if the row don't want colors or the value is NaN
+    if (!element.colorize || this.checkIfNaN(element?.values[column])){
+      return ''
+    }
+    
+    const distance = element.target - element.baseline;
+
+    let r = 255;
+    let g = 128;
+    const b = 128;
+  
+    // if the value is lower than the baseline, we choose red
+    if (element.values[column] <= element.baseline){
+      r = 255;
+      g = 128;
+    }
+    // if it is higher than the target, we choose green
+    else if (element.values[column] >= element.target){
+      g = 255;
+      r = 128;
+    }
+    // if it is somewhere in between, we calculate where and choose accordingly
+    else {
+      const myPosition = element.values[column] - element.baseline;
+      const normalizedDifference = (myPosition / distance) * 255;
+      if (normalizedDifference <= 127){
+        g += normalizedDifference;
+      }else{
+        g = 255;
+        r -= (normalizedDifference - 127);
+      }
+    }
+
+    if (distance < 0){
+      const aux = g;
+      g = r;
+      r = aux
+    }
+
+    return `rgb(${r}, ${g}, ${b})`;
   }
 
   randomNumberLimit(limit: number): number {

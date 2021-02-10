@@ -29,7 +29,7 @@
     
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions">
       <th mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
-      <td mat-cell class="value-cell" *matCellDef="let element" [ngClass]="{'empty': !element.values[column] && !checkIfNaN(element?.values[column])}">
+      <td mat-cell class="value-cell" *matCellDef="let element" [ngStyle]="{ 'backgroundColor': calcColor(element, column) }">
         <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
