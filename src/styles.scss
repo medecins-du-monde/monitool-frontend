@@ -268,36 +268,38 @@ mat-hint {
   @media screen and (max-width: $breakpoint-xs) {
     margin: 24px 0 0;
   }
+}
 
-  .mdm-card {
-    width: 22%;
-    margin: 0 1% 10px 1%;
+.mdm-card {
+  width: 22%;
+  margin: 0 1% 10px 1%;
 
-    .cdk-drag-handle {
-      position: absolute;
-      z-index: 100;
-      cursor: move;
-      top: 5px;
+  @media screen and (max-width: $breakpoint-md) {
+    width: 23%
   }
 
-    @media screen and (max-width: $breakpoint-md) {
-      width: 23%
-    }
+  @media screen and (max-width: $breakpoint-sm-md) {
+    width: 30%;
+    margin: 0 1.666% 10px 1.666%;
+  }
 
-    @media screen and (max-width: $breakpoint-sm-md) {
-      width: 30%;
-      margin: 0 1.666% 10px 1.666%;
-    }
+  @media screen and (max-width: $breakpoint-xs-sm) {
+    width: 47%;
+    margin: 0 1.5% 10px 1.5%;
+  }
 
-    @media screen and (max-width: $breakpoint-xs-sm) {
-      width: 47%;
-      margin: 0 1.5% 10px 1.5%;
-    }
+  @media screen and (max-width: $breakpoint-xs) {
+    width: 100%;
+    margin: 0 0 16px;
+  }
+}
 
-    @media screen and (max-width: $breakpoint-xs) {
-      width: 100%;
-      margin: 0 0 16px;
-    }
+.cdk-drag-handle {
+  position: absolute;
+  z-index: 100;
+  cursor: move;
+  top: 13px;
+  left: 8px;
 }
 
 .cdk-drag-animating {
@@ -309,60 +311,60 @@ mat-hint {
 }
 
 .card-info {
-    display: flex;
-    flex-direction: column;
-    font-size: $small_text;
-    margin-bottom: 8px;
-    padding: 0px 16px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  font-size: $small_text;
+  margin-bottom: 8px;
+  padding: 0px 16px 16px 16px;
 
-    .card-info-title {
-        width: 50%;
+  .card-info-title {
+      width: 50%;
 
-        &:not(b) {
-            color: #909090;
-        }
-    }
-    .card-info-value {
-        width: 30%;
-    }
+      &:not(b) {
+          color: #909090;
+      }
+  }
+  .card-info-value {
+      width: 30%;
+  }
 
-    .computation {
-        &.valid {
-            color: #3c763d;
-        }
-
-        &.invalid {
-            color: #a94442;
-        }
-
-        mat-icon{
-            height: 14px;
-            width: 14px;
-            font-size: $small_text;
-            line-height: 14px;
-            vertical-align: middle;
-        }
-    }
-
-    .computation {
+  .computation {
       &.valid {
-        color: #3c763d;
+          color: #3c763d;
       }
 
       &.invalid {
-        color: #a94442;
+          color: #a94442;
       }
 
-      mat-icon {
-        height: 14px;
-        width: 14px;
-        font-size: $small_text;
-        line-height: 14px;
-        vertical-align: middle;
+      mat-icon{
+          height: 14px;
+          width: 14px;
+          font-size: $small_text;
+          line-height: 14px;
+          vertical-align: middle;
       }
+  }
+
+  .computation {
+    &.valid {
+      color: #3c763d;
+    }
+
+    &.invalid {
+      color: #a94442;
+    }
+
+    mat-icon {
+      height: 14px;
+      width: 14px;
+      font-size: $small_text;
+      line-height: 14px;
+      vertical-align: middle;
     }
   }
 }
+
 
 // === MATERIAL ===
 .mat-card {
