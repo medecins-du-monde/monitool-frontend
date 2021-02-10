@@ -432,6 +432,7 @@
         "Enumere sus herramientas de recolección de datos (Excel, papel, ...) así como otras fuentes de datos (SNIS, encuestas ...) que usará para calcular sus indicadores, informando sus sitios de periodicidad y recolección y sus contenido"
     ],
     "ProjectRole": "Creador proyectos",
+    "Project": "Proyecto",
     "Projects": "Proyectos",
     "ProjectSitesInfo": [
         "Cuando un proyecto tiene las mismas actividades en varios lugares, se deben seguir por lugar, grupos de lugares y a nivel de proyecto.",

@@ -439,6 +439,7 @@
         "The list of sites where your project works (i.e. the list of health centers)",
         "Groups that will be used during monitoring (i.e. by region, or type of structure)"
     ],
+    "Project": "Project",
     "Projects": "Projects",
     "ProjectsUserInfo": [
         "Many people take part in setting-up and monitoring a project: coordination, M&E staff, data entry operators, partners, ...",

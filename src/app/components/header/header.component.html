@@ -5,14 +5,8 @@
         </div>
         <nav class="toolbar-nav" *ngIf="!isMobile">
             <ul class="toolbar-nav-list">
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
+                <li *ngFor='let link of headerLinkList' class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="[link.routerLink]" routerLinkActive="active-link">{{ link.text | translate }}</a>
                 </li>
             </ul>
         </nav>
@@ -24,14 +18,8 @@
     <mat-toolbar-row *ngIf="isMobile">
         <nav class="toolbar-nav">
             <ul class="toolbar-nav-list">
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['home']" routerLinkActive="active-link">{{ 'Home' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['projects']" routerLinkActive="active-link">{{ 'Projects' | translate }}</a>
-                </li>
-                <li class="toolbar-nav-item">
-                    <a class="toolbar-nav-link" [routerLink]="['indicators']" routerLinkActive="active-link">{{ 'CrossCuttingIndicators' | translate }}</a>
+                <li *ngFor='let link of headerLinkList' class="toolbar-nav-item">
+                    <a class="toolbar-nav-link" [routerLink]="[link.routerLink]" routerLinkActive="active-link">{{ link.text | translate }}</a>
                 </li>
             </ul>
         </nav>
@@ -39,7 +27,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['parameters']">{{ 'Settings' | translate }}</button>
+    <button mat-menu-item [routerLink]="['parameters']" *ngIf="user.type !== 'partner'">{{ 'Settings' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
     <button mat-menu-item (click)="disconnect()">{{ 'LogOut' | translate }}</button>
 </mat-menu>
