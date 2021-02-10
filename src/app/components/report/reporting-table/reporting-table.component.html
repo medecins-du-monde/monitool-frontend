@@ -27,6 +27,10 @@
       <td mat-cell *matCellDef="let element" class="gradient-background">{{element.target}}</td>
     </ng-container>
     
+    <ng-container matColumnDef="error">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">{{element.error}}</td>
+    </ng-container>
+
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions">
       <th mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
       <td mat-cell class="value-cell" *matCellDef="let element" [ngStyle]="{ 'backgroundColor': calcColor(element, column) }">
@@ -61,6 +65,7 @@
         (click)="openSection(element)"
     ></tr>
     
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRow"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRowNoError"></tr>
+    <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_ERROR; when: isInfoRowError"></tr>
     <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_GROUP; when: isGroupTitle"></tr>
   </table>

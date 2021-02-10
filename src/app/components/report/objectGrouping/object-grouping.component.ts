@@ -17,12 +17,24 @@ export class ObjectGroupingComponent implements OnInit {
   constructor(private fb: FormBuilder ) { }
 
   ngOnInit(): void {
-    this.groupOptions = [
-      {value: 'month', viewValue: 'Month'},
-      {value: 'quarter', viewValue: 'Quarter'},
-      {value: 'semester', viewValue: 'Semester'},
-      {value: 'year', viewValue: 'Year'}
-    ];
+
+    this.groupOptions = [];
+    
+    if (!this.isCrosscuttingReport){
+      this.groupOptions = this.groupOptions.concat(
+        [
+          {value: 'week_mon', viewValue: 'week_mon'}
+        ]
+      );
+    }
+    this.groupOptions = this.groupOptions.concat(
+      [
+        {value: 'month', viewValue: 'Month'},
+        {value: 'quarter', viewValue: 'Quarter'},
+        {value: 'semester', viewValue: 'Semester'},
+        {value: 'year', viewValue: 'Year'}
+      ]
+    );
 
     if (!this.isCrosscuttingReport){
       this.groupOptions = this.groupOptions.concat(

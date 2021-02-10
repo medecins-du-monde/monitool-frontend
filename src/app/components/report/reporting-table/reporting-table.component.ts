@@ -6,7 +6,7 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
-import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
 import { isArray, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
@@ -46,6 +46,7 @@ export interface InfoRow {
   nextRow: Row;
   open: boolean;
   level: number;
+  error?: string;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -78,11 +79,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[];
   openedSections = {0: true};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
+  COLUMNS_TO_DISPLAY_ERROR =  ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
   isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+
+  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined)
+  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined)
 
   ngOnInit(): void {
     this.subscription.add(
@@ -265,29 +270,43 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       Object.assign(customFilter, row.customFilter);
     }
 
-    this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
-      response => {
-        if (response) {
-          this.roundResponse(response);
-          const data = this.formatResponseToDataset(response);
-          row.dataset = {
-            label: row.name,
-            data,
-            labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-            borderColor: this.randomColor(),
-            backgroundColor: this.randomColor(),
-            fill: false
-          };
-          row.values = response;
-
-          if (row.onChart){
-            this.updateChart();
+    
+    if (this.checkPeriodicityIsValid(row)){
+      this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+        response => {
+          if (response) {
+            this.roundResponse(response);
+            const data = this.formatResponseToDataset(response);
+            row.dataset = {
+              label: row.name,
+              data,
+              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+              borderColor: this.randomColor(),
+              backgroundColor: this.randomColor(),
+              fill: false
+            };
+            row.values = response;
+  
+            if (row.onChart){
+              this.updateChart();
+            }
           }
         }
-      }
-    );
+      );
+    }
 
     return row;
+  }
+  checkPeriodicityIsValid(row: InfoRow): boolean{
+    if (!row.computation) {
+      row.error = 'Calculation is missing';
+      return false;
+    }
+
+    for (const [key, value] of Object.entries(row.computation.parameters)){
+      console.log(key, value);
+    }
+    return true;
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
