@@ -401,7 +401,6 @@
     "PartnerAuthentication": "Authentification des partenaires",
     "Password": "Mot de passe",
     "Periodicity": "Périodicité",
-    "ProjectBasicsInfo": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",
     "ProjectDataSourceInfo": [
         "Les sources de données sont les différents supports desquels les données nécessaires au monitoring du projet sont extraites (fiches de suivi, dossiers patient, fichiers Excel, ...)",
         "Au sein de monitool, on ne décrira pas l'intégralité des données existantes, mais uniquement la partie qui va être extraite pour le suivi du projet",

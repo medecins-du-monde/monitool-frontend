@@ -404,7 +404,6 @@
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
     "Periodicity": "Periodicidad",
-    "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
     "ProjectDataSourceInfo": [
         "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
         "En Monitool, no hace falta entrar todos los datos disponibles en las fuentes de datos: solo lo que es relevante",
