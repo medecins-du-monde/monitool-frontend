@@ -45,6 +45,7 @@
     "Countries": "Countries",
     "Country": "Country",
     "CoveredPeriod": "Covered period",
+    "Restore": "Restore",
     "Create": "Create",
     "CreateLogicalFramework": "create a blank Logical Framework",
     "CreateNewDataSource": "Create a new data source",
