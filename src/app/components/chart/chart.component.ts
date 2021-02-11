@@ -100,4 +100,8 @@ export class ChartComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
+
+  testDownload(): string{
+    return this.chart.toBase64Image();
+  }
 }

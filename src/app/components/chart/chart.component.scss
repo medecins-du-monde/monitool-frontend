@@ -11,6 +11,7 @@
     width: 98%;
     max-height: 500px;
   }
+  position: relative;
 }
 
 .chart-field {
@@ -23,4 +24,15 @@
 
 .hide-chart{
     display: none;
+}
+
+.floating-button{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  a{
+    .mat-icon{
+      margin-right: 0px;
+    }
+  }
 }
