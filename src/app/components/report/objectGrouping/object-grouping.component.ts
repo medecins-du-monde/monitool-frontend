@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import {  FormBuilder, FormGroup } from '@angular/forms';
+import { Project } from 'src/app/models/classes/project.model';
+import { DownloadService } from 'src/app/services/download.service';
 
 @Component({
   selector: 'app-object-grouping',
@@ -10,11 +12,12 @@ export class ObjectGroupingComponent implements OnInit {
 
   dimensionForm: FormGroup;
   @Input() isCrosscuttingReport = false;
+  @Input() project: Project;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
 
-  constructor(private fb: FormBuilder ) { }
+  constructor(private fb: FormBuilder, private downloadService: DownloadService ) { }
 
   ngOnInit(): void {
     this.groupOptions = [
@@ -42,6 +45,15 @@ export class ObjectGroupingComponent implements OnInit {
     this.dimensionForm.get('dimensionId').valueChanges.subscribe( value => {
       this.dimensionEvent.emit(value);
     });
+  }
+
+  downloadExcelFile() {
+    console.log('Downloading an excel file');
+    this.downloadService.downloadFile(this.project.shortId).then(result => {
+      console.log('result : ');
+      console.log(result);
+    })
+    // this.downloadService.test().then(result => console.log('done'));
   }
 
 }

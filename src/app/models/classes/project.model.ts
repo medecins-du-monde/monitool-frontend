@@ -37,6 +37,11 @@ export class Project implements Deserializable {
         return 'Deleted';
     }
 
+    // Return the id without the project: in front
+    get shortId(): string{
+        return this.id.split(':')[1];
+    }
+
     get percentages(){
         return {
             basics: ( this.name && this.country && this.themes.length > 0 ) ? 100 : 0,
