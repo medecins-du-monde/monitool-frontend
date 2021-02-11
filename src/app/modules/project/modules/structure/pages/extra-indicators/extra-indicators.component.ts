@@ -69,7 +69,7 @@ export class ExtraIndicatorsComponent implements OnInit {
     });
   }
 
-  //drag and drop function on a form array that can span accross multiple rows
+  // drag and drop function on a form array that can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
     this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
