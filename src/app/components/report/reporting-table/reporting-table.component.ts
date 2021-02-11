@@ -297,14 +297,52 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     return row;
   }
+
   checkPeriodicityIsValid(row: InfoRow): boolean{
+    row.error = undefined;
     if (!row.computation) {
       row.error = 'Calculation is missing';
       return false;
     }
 
-    for (const [key, value] of Object.entries(row.computation.parameters)){
-      console.log(key, value);
+    let currentProject: Project = new Project();
+    if (this.project){
+      currentProject = this.project;
+    }
+    if (row.originProject){
+      currentProject = row.originProject;
+    }
+
+    let highestPeriodicity = 'day';
+
+    for (const value of Object.values(row.computation.parameters)){
+      const varId = value['elementId'];
+      currentProject.forms.forEach(form => {
+        if (form.elements.find(element => element.id === varId)){
+          if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]){
+            highestPeriodicity = form.periodicity
+          }
+        }
+      });
+    }
+
+    // when the chosen periodicity and the row periodicity are both week-type,
+    // they only work togheter if they are the same
+
+    // this check if the chosen periodicity is one of the week-types
+    if (TimeSlotOrder[this.dimensionIds.value] > TimeSlotOrder.day && TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder.month &&
+        // this checks the same thing for the row periodicity
+        TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
+
+      if (this.dimensionIds.value !== highestPeriodicity){
+        row.error = `This data is available by ${highestPeriodicity}`;
+        return false;
+      }
+    }
+
+    if ( TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
+      row.error = `This data is available by ${highestPeriodicity}`;
+      return false;
     }
     return true;
   }
@@ -525,7 +563,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
 
     // set color to gray if cell is empty
-    if (!element.values[column] && !this.checkIfNaN(element?.values[column])){
+    if (element.values[column] === undefined && !this.checkIfNaN(element?.values[column])){
       return 'rgb(238, 238, 238)';
     }
 

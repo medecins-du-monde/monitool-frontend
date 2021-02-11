@@ -23,23 +23,29 @@ export class ObjectGroupingComponent implements OnInit {
     if (!this.isCrosscuttingReport){
       this.groupOptions = this.groupOptions.concat(
         [
-          {value: 'week_mon', viewValue: 'week_mon'}
+          {value: 'day', viewValue: 'TimePeriods.day'},
+          {value: 'month_week_sat', viewValue: 'TimePeriods.month_week_sat'},
+          {value: 'month_week_sun', viewValue: 'TimePeriods.month_week_sun'},
+          {value: 'month_week_mon', viewValue: 'TimePeriods.month_week_mon'},
+          {value: 'week_sat', viewValue: 'TimePeriods.week_sat'},
+          {value: 'week_sun', viewValue: 'TimePeriods.week_sun'},
+          {value: 'week_mon', viewValue: 'TimePeriods.week_mon'},
         ]
       );
     }
     this.groupOptions = this.groupOptions.concat(
       [
-        {value: 'month', viewValue: 'Month'},
-        {value: 'quarter', viewValue: 'Quarter'},
-        {value: 'semester', viewValue: 'Semester'},
-        {value: 'year', viewValue: 'Year'}
+        {value: 'month', viewValue: 'TimePeriods.month'},
+        {value: 'quarter', viewValue: 'TimePeriods.quarter'},
+        {value: 'semester', viewValue: 'TimePeriods.semester'},
+        {value: 'year', viewValue: 'TimePeriods.year'}
       ]
     );
 
     if (!this.isCrosscuttingReport){
       this.groupOptions = this.groupOptions.concat(
         [
-          {value: 'entity', viewValue: 'Collection Sites'},
+          {value: 'entity', viewValue: 'CollectionSites'},
           {value: 'group', viewValue: 'Groups'}
         ]
       );
