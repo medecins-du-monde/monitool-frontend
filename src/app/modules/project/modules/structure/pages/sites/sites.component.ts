@@ -8,6 +8,7 @@ import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
@@ -129,5 +130,22 @@ export class SitesComponent implements OnInit {
   public onRemoveGroup(index: number): void {
     this.groups.removeAt(index);
     this.groupsDataSource.data = this.groups.controls;
+  }
+
+  onListDrop(event: CdkDragDrop<string[]>, type: 'groups' | 'entities') {
+    // Swap the elements around
+    if (type !== 'entities' && type !== 'groups') {
+      return;
+    }
+    const selectedFormArray = this.sitesForm.get(type) as FormArray;
+    const selectedControl = selectedFormArray.at(event.previousIndex);
+    selectedFormArray.removeAt(event.previousIndex);
+    selectedFormArray.insert(event.currentIndex, selectedControl);
+
+    if (type === 'entities') {
+      this.entitiesDataSource.data = this.entities.controls;
+    } else {
+      this.groupsDataSource.data = this.groups.controls;
+    }
   }
 }

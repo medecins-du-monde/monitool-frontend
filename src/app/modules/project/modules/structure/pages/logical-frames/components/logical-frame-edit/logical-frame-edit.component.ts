@@ -10,6 +10,7 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
@@ -148,6 +149,20 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  //drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.purposes.at(event.previousIndex);
+    const newControls = this.purposes.at(event.currentIndex);
+    this.purposes.setControl(event.previousIndex, newControls);
+    this.purposes.setControl(event.currentIndex, selectedControl);
+  }
+
+  //drag and drop function on a form array that can span accross multiple rows
+  dropIndicators(event: CdkDragDrop<any>) {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
   }
 
 }

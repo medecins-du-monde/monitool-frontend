@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OutputEditModule } from '../output-edit/output-edit.module';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [PurposeEditComponent],
@@ -26,7 +27,8 @@ import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module'
     MatExpansionModule,
     OutputEditModule,
     IndicatorModalModule,
-    ExtraIndicatorModule
+    ExtraIndicatorModule,
+    DragDropModule
   ],
   exports: [PurposeEditComponent]
 })

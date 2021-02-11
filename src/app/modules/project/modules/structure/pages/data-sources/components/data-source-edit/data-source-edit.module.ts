@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormElementEditModule } from '../form-element-edit/form-element-edit.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
     MatButtonModule,
     MatExpansionModule,
     FormElementEditModule,
+    DragDropModule,
     LocalizedDatePipeModule,
   ],
   exports: [DataSourceEditComponent]

@@ -20,10 +20,15 @@
     <div class= "mdm-section">
         <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
         <div class="indicators-list" formArrayName="indicators">
-            <div class="mdm-cards">
-                <ng-container class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
-                    <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
-                </ng-container>
+            <div class="mdm-cards" cdkDropListGroup>
+                <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">
+                    <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
+                        <div *cdkDragPlaceholder></div>
+                        <div class="cards-draghandle" cdkDragHandle>
+                            <mat-icon>drag_indicator</mat-icon>
+                        </div>
+                    </app-extra-indicator>
+                </div>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
             <mat-hint>
@@ -31,18 +36,16 @@
             </mat-hint>
         </div>
     </div>
-    <mat-accordion formArrayName="outputs">
-        <ng-container *ngFor="let output of outputs.controls; let i=index">
-            <mat-expansion-panel [formGroupName]="i">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>{{ 'Result' | translate }} {{i + 1}}: {{output.value.description}}</mat-panel-title>
-                    <mat-panel-description>
-                        <button mat-stroked-button class="mdm-button" (click)="onRemoveOutput(i)"><mat-icon>delete</mat-icon>{{ 'RemoveOutput' | translate }}</button>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <app-output-edit [outputForm]="output" [forms]="forms"></app-output-edit>
-            </mat-expansion-panel>
-        </ng-container>
+    <mat-accordion formArrayName="outputs" cdkDropList (cdkDropListDropped)="drop($event)">
+        <mat-expansion-panel *ngFor="let output of outputs.controls; let i=index" [formGroupName]="i" cdkDrag>
+            <mat-expansion-panel-header>
+                <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'Result' | translate }} {{i + 1}}: {{output.value.description}}</mat-panel-title>
+                <mat-panel-description>
+                    <button mat-stroked-button class="mdm-button" (click)="onRemoveOutput(i)"><mat-icon>delete</mat-icon>{{ 'RemoveOutput' | translate }}</button>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <app-output-edit [outputForm]="output" [forms]="forms"></app-output-edit>
+        </mat-expansion-panel>
     </mat-accordion>
     <button mat-stroked-button class="mdm-button add-component" (click)="onAddNewOutput()"><mat-icon>add</mat-icon>{{ 'AddOutput' | translate }}</button>
 </div>

@@ -6,6 +6,8 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 @Component({
   selector: 'app-extra-indicators',
   templateUrl: './extra-indicators.component.html',
@@ -38,17 +40,17 @@ export class ExtraIndicatorsComponent implements OnInit {
   onAddNewIndicator(): void {
     this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
-  onEditIndicator(indicator: FormGroup, index?: number) {
+  onEditIndicator(indicator: FormGroup, index?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
-  onDeleteIndicator(i: number) {
+  onDeleteIndicator(i: number): void {
     this.indicators.removeAt(i);
     this.project.extraIndicators.splice(i, 1);
     this.projectService.project.next(this.project);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
+  openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
     dialogRef.afterClosed().subscribe(res => {
@@ -66,4 +68,13 @@ export class ExtraIndicatorsComponent implements OnInit {
       }
     });
   }
+
+  //drag and drop function on a form array that can span accross multiple rows
+  drop(event: CdkDragDrop<any>): void {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    this.project.extraIndicators = this.indicators.value.map(x => new ProjectIndicator(x));
+    this.projectService.project.next(this.project);
+  }
+
 }

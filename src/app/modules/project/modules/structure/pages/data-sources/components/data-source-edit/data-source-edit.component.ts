@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/classes/entity.model';
@@ -165,5 +166,13 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  //drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.elements.at(event.previousIndex);
+    const newControls = this.elements.at(event.currentIndex);
+    this.elements.setControl(event.previousIndex, newControls);
+    this.elements.setControl(event.currentIndex, selectedControl);
   }
 }

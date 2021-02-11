@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-output-edit',
@@ -65,5 +66,19 @@ export class OutputEditComponent implements OnInit {
         }
       }
     });
+  }
+
+  //drag and drop function on a form array that can span accross multiple rows
+  dropIndicators(event: CdkDragDrop<any>) {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+  }
+
+  //drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.activities.at(event.previousIndex);
+    const newControls = this.activities.at(event.currentIndex);
+    this.activities.setControl(event.previousIndex, newControls);
+    this.activities.setControl(event.currentIndex, selectedControl);
   }
 }
