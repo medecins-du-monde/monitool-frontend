@@ -15,7 +15,7 @@
                 <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
                     <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
                         <div *cdkDragPlaceholder></div>
-                        <div cdkDragHandle>
+                        <div class="cards-draghandle" cdkDragHandle>
                             <mat-icon>drag_indicator</mat-icon>
                         </div>
                     </app-extra-indicator>

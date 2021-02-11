@@ -294,7 +294,7 @@ mat-hint {
   }
 }
 
-.cdk-drag-handle {
+.cards-draghandle {
   position: absolute;
   z-index: 100;
   cursor: move;
@@ -492,63 +492,60 @@ mat-hint {
   margin-top: 15px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
   border: solid 1px #dddddd;
+}
 
-  tr {
+.mdm-form-field {
+  width: 100%;
 
-    td:not(:last-child),
-    th:not(:last-child) {
-      border-right: 1px solid #dddddd;
-    }
+  .mat-form-field-wrapper {
+    padding: 0 !important;
 
-    td {
-      font-size: $small_text;
-    }
-
-    th {
-      font-size: $normal_text;
-      font-weight: bold;
-      color: black;
-    }
-  }
-
-  .mdm-form-field {
-    width: 100%;
-
-    .mat-form-field-wrapper {
-      padding: 0 !important;
-
-      .mat-form-field-flex {
-        .mat-form-field-infix {
-          width: auto;
-        }
+    .mat-form-field-flex {
+      .mat-form-field-infix {
+        width: auto;
       }
     }
   }
+}
 
-  th.mat-header-cell:first-of-type,
-  td.mat-cell:first-of-type,
-  td.mat-footer-cell:first-of-type {
-    padding: 8px 5px;
-  }
+td:not(:last-child),
+th:not(:last-child) {
+  border-right: 1px solid #dddddd;
+}
 
-  th.mat-header-cell:last-of-type,
-  td.mat-cell:last-of-type,
-  td.mat-footer-cell:last-of-type {
-    padding: 8px 16px 8px 8px;
-  }
+td {
+  font-size: $small_text;
+}
 
-  th.input-td.mat-header-cell:last-of-type,
-  td.input-td.mat-cell:last-of-type,
-  td.input-td.mat-footer-cell:last-of-type {
-    padding: 0px;
-  }
+th {
+  font-size: $normal_text;
+  font-weight: bold;
+  color: black;
+}
 
-  code {
-    padding: 2px 4px;
-    font-size: 90%;
-    color: #c7254e;
-    background-color: #f9f2f4;
-  }
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding: 8px 5px;
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+  padding: 8px 16px 8px 8px;
+}
+
+th.input-td.mat-header-cell:last-of-type,
+td.input-td.mat-cell:last-of-type,
+td.input-td.mat-footer-cell:last-of-type {
+  padding: 0px;
+}
+
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #f9f2f4;
 }
 
 .input-table {
@@ -687,7 +684,7 @@ mat-hint {
   }
 
   input {
-    height: 23px !important;
+    height: 30px !important;
   }
 
   .mat-form-field-flex>.mat-form-field-infix {
