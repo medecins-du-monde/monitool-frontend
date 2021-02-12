@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -91,12 +91,21 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start, Validators.required],
       end: [this.form.end, Validators.required],
-      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
+      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     });
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
       this.edit.emit(this.form.deserialize(value));
     });
+  }
+
+  private minLengthArray(min: number): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } => {
+      if (c.value.length >= min) {
+        return null;
+      }
+      return { minLengthArray: true };
+    };
   }
 
   toggleCustomDate(event: any, selected: string): void {
