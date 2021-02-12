@@ -20,6 +20,9 @@ export class ObjectGroupingComponent implements OnInit {
 
     this.groupOptions = [];
     
+    // these options appear only in general-report 
+    // TO DO: right now they're static but they should be filtered to only show the options
+    // compatible with the indicators of the specific project
     if (!this.isCrosscuttingReport){
       this.groupOptions = this.groupOptions.concat(
         [
@@ -33,6 +36,7 @@ export class ObjectGroupingComponent implements OnInit {
         ]
       );
     }
+    // these options are static, they appear in general-report and in cross-cutting report
     this.groupOptions = this.groupOptions.concat(
       [
         {value: 'month', viewValue: 'TimePeriods.month'},
@@ -42,6 +46,7 @@ export class ObjectGroupingComponent implements OnInit {
       ]
     );
 
+    // these options only appear in the general-report
     if (!this.isCrosscuttingReport){
       this.groupOptions = this.groupOptions.concat(
         [

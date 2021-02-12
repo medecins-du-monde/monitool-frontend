@@ -101,7 +101,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  testDownload(): string{
+  get downloadChart(): string{
     return this.chart.toBase64Image();
   }
 }

@@ -298,6 +298,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return row;
   }
 
+  // checks if the current row is compatible with the time periodicity chosen
+  // normally, the row is compatible if: the row periodicity is smaller or equal to the global periodicity
+  // the week-type periods are a special case
   checkPeriodicityIsValid(row: InfoRow): boolean{
     row.error = undefined;
     if (!row.computation) {
@@ -313,6 +316,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       currentProject = row.originProject;
     }
 
+    // the periodicity that represents the row is the biggest periodicity of all the datasources that
+    // constitute the parameters to the computation
     let highestPeriodicity = 'day';
 
     for (const value of Object.values(row.computation.parameters)){
@@ -340,7 +345,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
     }
 
-    if ( TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
+    if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
       row.error = `This data is available by ${highestPeriodicity}`;
       return false;
     }
