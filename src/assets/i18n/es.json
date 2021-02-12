@@ -86,7 +86,10 @@
         "GroupsHint": "Los grupos permiten hacer agregaciones intermediarias",
         "OrderTitle": "En que ordén mostrar las desagregaciones en el formulario de colecta?",
         "OrderHint": "En que ordén quiere que aparescan la desagregaciones en las tablas de entrada de datos?",
-        "Title" : "Título"
+        "Title" : "Título",
+        "Placeholder" : {
+            "Name" : "ex: Menor de 12 años, hombre, consultación social, gripe, ..."
+        }
     },
     "Description": "Descripción",
     "DownloadPdfLandscape": "Descargar PDF (horizontal)",
@@ -417,7 +420,13 @@
             "Name": "ej. ECHO",
             "CollectionSites": "Ningún elemento esta seleccionado",
             "GeneralObjective" : "ej. Reducir la mortalidad y la morbididad de la población afectada por la crisis",
-            "SpecificObjective" : "ej. Mejorar el acceso a la salud para la población afectada por la crisis en los districtos de Bimbo y Begoua"
+            "SpecificObjective" : "ej. Mejorar el acceso a la salud para la población afectada por la crisis en los districtos de Bimbo y Begoua",
+            "Result" : {
+                "Description" : "ej. Mejorar la atención de salud primaria en los centros de salud de Bimbo y Begoua",
+                "Activity": {
+                    "Activity": "ej. Realizar sesiones de sensibilización sobre la transmision del VIH"
+                }
+            }
         },
         "LogicalFrameIndicator": {
             "Name": "ej: Tasa de consultaciones prenatales en las estructuras de salud",

@@ -84,7 +84,10 @@
         "GroupsHint": "Groups allow making intermediary aggregations",
         "OrderTitle": "In which order should the disaggregations be shown?",
         "OrderHint": "How do you wish to show the disaggregations on the input form?",
-        "Title" : "Titles"
+        "Title" : "Titles",
+        "Placeholder" : {
+            "Name" : "ex: Less than 12 years old, male, social consultation, flu, community referral, ..."
+        }
     },
     "Description": "Description",
     "Done": "Done",
@@ -419,7 +422,13 @@
             "Name": "e.g. ECHO",
             "CollectionSites": "No element is selected",
             "GeneralObjective" : "e.g. Reduce mortality and morbidity of the populations affected by the crisis",
-            "SpecificObjective" : "e.g. Improve access to health care for population affected by the crisis in the districts of Bimbo and Begoua"
+            "SpecificObjective" : "e.g. Improve access to health care for population affected by the crisis in the districts of Bimbo and Begoua",
+            "Result" : {
+                "Description": "e.g. Improve primary health care at Bimbo and Begoua health centers",
+                "Activity": {
+                    "Activity": "e.g. Awareness sessions on HIV transmission"
+                }
+            }
         },
         "LogicalFrameIndicator": {
             "Name": "i.e. ANC1 rate for the health centers",

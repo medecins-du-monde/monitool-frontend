@@ -84,7 +84,10 @@
         "GroupsHint": "Les groupes permettent de faire des aggrégations intermédiaires",
         "OrderTitle": "Dans quel ordre placer les intitulés des désagrégations dans les formulaires?",
         "OrderHint": "Dans quel ordre voulez vous placer vos désagrégations dans les différentes lignes et colonnes?",
-        "Title" : "Intitulés"
+        "Title" : "Intitulés",
+        "Placeholder" : {
+            "Name" : "ex: Moins de 12 ans, Homme, Consultation sociale, Grippe ou Réferencement communautaire, ..."
+        }
     },
     "Description": "Description",
     "Done": "Réalisé",
@@ -413,7 +416,13 @@
             "Name": "e.x. ECHO",
             "CollectionSites": "Aucun élément selectionné",
             "GeneralObjective": "ex: Réduire la mortalité et la morbidité des populations affectées par la crise",
-            "SpecificObjective": "ex: Améliorer l'accès aux soins des populations affectées par la crise dans les districts de Bimbo et Begoua"
+            "SpecificObjective": "ex: Améliorer l'accès aux soins des populations affectées par la crise dans les districts de Bimbo et Begoua",
+            "Result" : {
+                "Description" : "ex: Améliorer la qualité des soins de première ligne des centres de santé de Bimbo et Begoua",
+                "Activity": {
+                    "Activity": "ex: Réalisation de sessions de sensibilisation sur la transmission du VIH"
+                }
+            }
         }
         ,
         "LogicalFrameIndicator": {
