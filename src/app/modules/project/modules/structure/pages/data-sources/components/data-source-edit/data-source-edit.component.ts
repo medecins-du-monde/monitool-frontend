@@ -1,6 +1,11 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { combineLatest, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -8,14 +13,11 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
-import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateService} from 'src/app/services/date.service';
-
+import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -35,16 +37,15 @@ import { DateService} from 'src/app/services/date.service';
     }
   ]
 })
-export class DataSourceEditComponent implements OnInit, OnChanges {
+export class DataSourceEditComponent implements OnInit, OnDestroy {
 
   dataSourceForm: FormGroup;
   startDate: Date;
   endDate: Date;
 
-  @Input() entities: Entity[];
-  @Input() form: Form;
-  @Input() project: Project;
-  @Output() edit = new EventEmitter();
+  public entities: Entity[];
+  public form: Form;
+  public project: Project;
 
   public periodicities = [];
   get selectedEntities() {
@@ -55,17 +56,35 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
     return this.dataSourceForm.controls.elements as FormArray;
   }
 
+  private formSubscription: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
     private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.setForm();
+    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+      map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
+    ).subscribe((res: { project: Project, formId: string }) => {
+      this.project = res.project;
+      this.entities = res.project.entities;
+      if (!this.form) {
+        this.form = res.project.forms.find(x => x.id === res.formId);
+      }
+      if (!this.form) {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      }
+      if (!this.dataSourceForm) {
+        this.setForm();
+      }
+    });
 
-    for (const value of Object.values(TimeSlotPeriodicity)){
+    for (const value of Object.values(TimeSlotPeriodicity)) {
       this.periodicities.push({
         value,
         display: `Enum.Periodicity.${value}`
@@ -79,8 +98,10 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
     );
   }
 
-  ngOnChanges(): void {
-    this.setForm();
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   private setForm(): void {
@@ -93,19 +114,21 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       end: [this.form.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
     });
-    this.dataSourceForm.valueChanges.subscribe((value: any) => {
+
+    this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
-      this.edit.emit(this.form.deserialize(value));
+      this.form.deserialize(value);
+      this.projectService.project.next(this.project);
     });
   }
 
   toggleCustomDate(event: any, selected: string): void {
-      if (event.value === 'false') {
-        this.dataSourceForm.get(selected).setValue(this.project[selected]);
-      }
-      else {
-        this.dataSourceForm.get(selected).setValue(null);
-      }
+    if (event.value === 'false') {
+      this.dataSourceForm.get(selected).setValue(this.project[selected]);
+    }
+    else {
+      this.dataSourceForm.get(selected).setValue(null);
+    }
   }
 
   isCustom(selected: string): boolean {
@@ -169,7 +192,7 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
   }
 
   // drag and drop function on a form array displayed in one column
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>): void {
     const selectedControl = this.elements.at(event.previousIndex);
     const newControls = this.elements.at(event.currentIndex);
     this.elements.setControl(event.previousIndex, newControls);

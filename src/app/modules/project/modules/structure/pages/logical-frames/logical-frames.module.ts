@@ -1,27 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { CdkTableModule } from '@angular/cdk/table';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogicalFrameEditModule } from './components/logical-frame-edit/logical-frame-edit.module';
-import { LogicalFrameModule } from './components/logical-frame/logical-frame.module';
+import { LogicalFramesListModule } from './components/logical-frames-list/logical-frames-list.module';
 import { LogicalFramesRoutingModule } from './logical-frames-routing.module';
 import { LogicalFramesComponent } from './logical-frames.component';
 
 @NgModule({
-    declarations: [LogicalFramesComponent],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        LogicalFramesRoutingModule,
-        LogicalFrameModule,
-        LogicalFrameEditModule,
-        MatButtonModule,
-        MatIconModule,
-        DragDropModule,
-        CdkTableModule
-    ]
+  declarations: [LogicalFramesComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    LogicalFramesRoutingModule,
+    LogicalFramesListModule,
+    LogicalFrameEditModule,
+  ]
 })
 export class LogicalFramesModule { }
