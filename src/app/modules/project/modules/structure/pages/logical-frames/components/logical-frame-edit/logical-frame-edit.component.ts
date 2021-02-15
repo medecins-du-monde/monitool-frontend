@@ -1,12 +1,12 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
@@ -69,6 +69,11 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean{
+    return !this.projectService.hasPendingChanges;
+  }
 
   ngOnInit(): void {
     combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(

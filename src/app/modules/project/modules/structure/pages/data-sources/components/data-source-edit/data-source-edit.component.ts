@@ -1,11 +1,12 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -37,7 +38,7 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
     }
   ]
 })
-export class DataSourceEditComponent implements OnInit, OnDestroy {
+export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
 
   dataSourceForm: FormGroup;
   startDate: Date;
@@ -66,6 +67,11 @@ export class DataSourceEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean{
+    return !this.projectService.hasPendingChanges;
+  }
 
   ngOnInit(): void {
     combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
