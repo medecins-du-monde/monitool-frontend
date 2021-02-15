@@ -49,11 +49,10 @@ export class ObjectGroupingComponent implements OnInit {
 
   downloadExcelFile() {
     console.log('Downloading an excel file');
-    this.downloadService.downloadFile(this.project.shortId).then(result => {
+    this.downloadService.downloadFile(this.project.id).then(result => {
       console.log('result : ');
       console.log(result);
     })
-    // this.downloadService.test().then(result => console.log('done'));
   }
 
 }
