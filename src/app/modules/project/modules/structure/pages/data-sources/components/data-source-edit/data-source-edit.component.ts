@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -48,7 +48,7 @@ export class DataSourceEditComponent implements OnInit, OnDestroy {
   public project: Project;
 
   public periodicities = [];
-  get selectedEntities() {
+  get selectedEntities(): any[] {
     return this.dataSourceForm.controls.entities.value;
   }
 
@@ -112,7 +112,7 @@ export class DataSourceEditComponent implements OnInit, OnDestroy {
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start, Validators.required],
       end: [this.form.end, Validators.required],
-      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
+      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     });
 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
@@ -120,6 +120,15 @@ export class DataSourceEditComponent implements OnInit, OnDestroy {
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
     });
+  }
+
+  private minLengthArray(min: number): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } => {
+      if (c.value.length >= min) {
+        return null;
+      }
+      return { minLengthArray: true };
+    };
   }
 
   toggleCustomDate(event: any, selected: string): void {
