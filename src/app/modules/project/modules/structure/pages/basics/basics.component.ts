@@ -61,7 +61,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.basicsForm = this.fb.group({
           country: [project.country, Validators.required],
           name: [project.name, Validators.required],
-          themes: [project.themes.map(x => x.id), Validators.required],
+          themes: [project.themes.map(x => x.id)],
           start: [project.start, Validators.required],
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]

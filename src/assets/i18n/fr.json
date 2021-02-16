@@ -552,6 +552,7 @@
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
+    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
     "EMail-Hint":"Indiquez votre adresse e-mail",
     "Name-Hint":"Indiquez votre Nom complet",
     "NameLogicalFramework-Hint": "Nommez ce cadre logique de façon à l'identifier facilement. Par exemple avec le nom du bailleur auquel il est destiné",

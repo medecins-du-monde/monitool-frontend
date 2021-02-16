@@ -367,6 +367,7 @@
         "If not attainable, a PDF version of the form is provided."
     ],
     "Invalid": "Invalid",
+    "InvalidForm": "Some fields are invalid in the form, fix them in order to save",
     "Language": "Language",
     "LastEntry": "Last entry",
     "LoadMoreRevisions": "Load more revisions",
