@@ -492,21 +492,22 @@ mat-hint {
   margin-top: 15px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
   border: solid 1px #dddddd;
-}
-
-.mdm-form-field {
-  width: 100%;
-
-  .mat-form-field-wrapper {
-    padding: 0 !important;
-
-    .mat-form-field-flex {
-      .mat-form-field-infix {
-        width: auto;
+  
+  .mdm-form-field {
+    width: 100%;
+  
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+  
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
       }
     }
   }
 }
+
 
 td:not(:last-child),
 th:not(:last-child) {

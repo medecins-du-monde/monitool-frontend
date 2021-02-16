@@ -2,12 +2,13 @@
 
 .table-scroll {
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 
   table {
     width: 100%;
     table-layout: fixed;
     border: solid 1px #e7e7e7;
+    position: relative;
   }
   
   .mat-column-icon {
@@ -41,6 +42,7 @@
   
   tr.mat-row {
   height: 30px !important;
+  overflow: hidden;
   }
   
   tr.example-detail-row {
@@ -62,7 +64,6 @@
   
   .example-element-detail {
     overflow: hidden;
-    display: flex;
   }
   
   .gradient-background{
@@ -93,6 +94,7 @@
   .title{
     font-weight: bold;
     font-size: $small_text;
+    position: sticky;
     div {
       display: flex;
       align-items: center;
