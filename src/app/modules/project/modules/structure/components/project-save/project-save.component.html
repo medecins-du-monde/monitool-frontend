@@ -3,5 +3,5 @@
         <button mat-stroked-button class="mdm-button" (click)="onSave()" [disabled]="!hasChanges || !valid"><mat-icon>save</mat-icon>{{ 'Save' | translate }}</button>
         <button mat-stroked-button class="mdm-button" (click)="onRevert()" [disabled]=!hasChanges><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
     </div>
-    <div *ngIf="!valid" class="invalid-form"><mat-icon>info</mat-icon> {{ 'InvalidForm' | translate }}</div>
+    <div *ngIf="hasChanges && !valid" class="invalid-form"><mat-icon>info</mat-icon> {{ 'InvalidForm' | translate }}</div>
 </div>

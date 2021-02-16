@@ -88,6 +88,7 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
     });
+    this.projectService.valid = this.logicalFrameForm.valid && DatesHelper.validDates(this.logicalFrameForm.value.start, this.logicalFrameForm.value.end);
     this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.logicalFrameForm.valid;
       this.edit.emit(this.logicalFrame.deserialize(value));
