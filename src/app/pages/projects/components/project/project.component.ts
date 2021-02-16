@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
-import { ProjectService } from 'src/app/services/project.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
 import { User } from 'src/app/models/classes/user.model';
-
+import { AuthService } from 'src/app/services/auth.service';
+import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
 
 @Component({
   selector: 'app-project',
@@ -33,7 +31,6 @@ export class ProjectComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private projectService: ProjectService,
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
@@ -48,9 +45,7 @@ export class ProjectComponent implements OnInit {
   }
 
   async onOpen(): Promise<void> {
-    this.projectService.get(this.project.id).then(() => {
-      this.router.navigate(['/project', this.project.id]);
-    });
+    this.router.navigate(['/project', this.project.id]);
   }
 
   onDelete(): void {
@@ -71,7 +66,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  projectCardAvatar() {
+  projectCardAvatar(): string {
     if (this.project.users.length > 0) {
       if (this.projectOwner) {
         return 'person';
@@ -84,7 +79,7 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  toggleFavourite() {
+  toggleFavourite(): void {
     if (!this.projectOwner) {
       this.getProjects.emit();
       if (!localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
