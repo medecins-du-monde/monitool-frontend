@@ -555,6 +555,7 @@
     "VisibilityPublic": "Visible  para todos los usarios",
     "VisibilityPrivate": "Visible solo para miembros de este proyecto",
     "Invalid": "Invalido",
+    "InvalidForm": "Algunos campos del formulario no son validos, arreglelos para poder guardar.",
     "WrongCredentials": "El nombre de usuario o la contraseña es incorrecto. Por favor, vuelve a ponerlo",
     "EMail-Hint": "Ingrese su dirección de correo electrónico",
     "Name-Hint": "Indique su nombre completo",

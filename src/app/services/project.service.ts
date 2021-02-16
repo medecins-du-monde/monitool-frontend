@@ -17,8 +17,7 @@ export class ProjectService{
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
-  // TODO : set to false by default and control everywhere to know if it s valid or not
-  valid = true;
+  valid = false;
 
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
