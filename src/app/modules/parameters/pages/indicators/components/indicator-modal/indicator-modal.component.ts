@@ -7,11 +7,6 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
-export interface ForceTranslationItem {
-  translations: string;
-  text: string;
-}
-
 @Component({
   selector: 'app-indicator-modal',
   templateUrl: './indicator-modal.component.html',
@@ -24,7 +19,7 @@ export class IndicatorModalComponent implements OnInit {
   languages = ['fr', 'en', 'es'];
 
   themes: Theme[];
-  sampleVar: [];
+  dictionary: [];
 
   testString: string = "testing forceTranslate";
 
@@ -67,15 +62,15 @@ export class IndicatorModalComponent implements OnInit {
         this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
       }
     });    
-    this.sampleVar = [];
-    this.forceTranslateService.getData('fr').subscribe( data => { this.sampleVar['fr'] = data; });
-    this.forceTranslateService.getData('en').subscribe( data => { this.sampleVar['en'] = data; });
-    this.forceTranslateService.getData('es').subscribe( data => { this.sampleVar['es'] = data; });
+    this.dictionary = [];
+    this.forceTranslateService.getData('fr').subscribe( data => { this.dictionary['fr'] = data; });
+    this.forceTranslateService.getData('en').subscribe( data => { this.dictionary['en'] = data; });
+    this.forceTranslateService.getData('es').subscribe( data => { this.dictionary['es'] = data; });
   }
 
   forceTranslate(lang: string, text:string){
     let x = text.split('.');
-    let result = this.sampleVar[lang];
+    let result = this.dictionary[lang];
     text.split('.').forEach(element => {
       result = result[element];
     });

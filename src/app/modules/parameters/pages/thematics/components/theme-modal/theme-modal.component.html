@@ -17,16 +17,16 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'Acronym' | translate }}</th>
             <td mat-cell *matCellDef="let element" id="shortName" formGroupName="shortName"> 
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput maxlength="5" [formControlName]="element" placeholder="{{ 'Acronym' | translate }}">
+                    <input matInput maxlength="5" [formControlName]="element" placeholder="{{ forceTranslate(element, 'Acronym') }}">
                 </mat-form-field>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
-            <td mat-cell *matCellDef="let element" id="name" formGroupName="name"> 
+            <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }} </th>
+            <td mat-cell *matCellDef="let element" id="name" formGroupName="name">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput [formControlName]="element" placeholder="{{ 'Placeholder.Themes.Name' | translate }}">
+                    <input matInput [formControlName]="element" placeholder="{{ forceTranslate(element, 'Placeholder.Themes.Name')}}">
                 </mat-form-field>
             </td>
         </ng-container>
