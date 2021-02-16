@@ -86,8 +86,8 @@ export class SitesComponent implements OnInit {
           this.sitesForm.valueChanges.subscribe((value: any) => {
             let datesValid = true;
             value.entities = value.entities.map(x => {
-              if (!DatesHelper.validDates(x.start, x.end)) { datesValid = false}
-              return new Entity(x)
+              if (!DatesHelper.validDates(x.start, x.end)) { datesValid = false; }
+              return new Entity(x);
             });
             const groups = [];
             value.groups.forEach(x => {

@@ -93,7 +93,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       end: [this.form.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     });
-    this.projectService.valid = this.dataSourceForm.valid && DatesHelper.validDates(this.dataSourceForm.value.start, this.dataSourceForm.value.end);
+    this.projectService.valid = this.dataSourceForm.valid
+    && DatesHelper.validDates(this.dataSourceForm.value.start, this.dataSourceForm.value.end);
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid && DatesHelper.validDates(value.start, value.end);
       this.edit.emit(this.form.deserialize(value));
