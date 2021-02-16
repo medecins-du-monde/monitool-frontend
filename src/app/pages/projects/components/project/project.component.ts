@@ -45,7 +45,7 @@ export class ProjectComponent implements OnInit {
   }
 
   async onOpen(): Promise<void> {
-    this.router.navigate(['/project', this.project.id]);
+    this.router.navigate(['/projects', this.project.id]);
   }
 
   onDelete(): void {

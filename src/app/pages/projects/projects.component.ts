@@ -137,7 +137,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
     this.projectService.create(project);
-    this.router.navigate(['/project', project.id]);
+    this.router.navigate(['/projects', project.id]);
   }
 
   onDelete(project: Project): void {
