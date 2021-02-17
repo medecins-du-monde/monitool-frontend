@@ -16,6 +16,9 @@
   }
   .mat-column-name {
     width: 300px;
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 150px;
+    }
   }
   .mat-column-title, .mat-column.groupName {
     border-right: none;

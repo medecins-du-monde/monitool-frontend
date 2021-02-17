@@ -66,7 +66,7 @@ export class PurposeEditComponent implements OnInit {
     });
   }
 
-  //drag and drop function on a form array displayed in one column
+  // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
     const selectedControl = this.outputs.at(event.previousIndex);
     const newControls = this.outputs.at(event.currentIndex);
@@ -74,7 +74,7 @@ export class PurposeEditComponent implements OnInit {
     this.outputs.setControl(event.currentIndex, selectedControl);
   }
 
-  //drag and drop function on a form array that can span accross multiple rows
+  // drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
     this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
