@@ -59,3 +59,24 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+.mdm-table {
+    width: 100%;
+    margin-top: 15px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px #dddddd;
+}
+
+.mdm-form-field {
+    width: 100%;
+  
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+  
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
+      }
+    }
+  }

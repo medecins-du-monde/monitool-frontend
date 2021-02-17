@@ -492,6 +492,24 @@ mat-hint {
   margin-top: 15px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
   border: solid 1px #dddddd;
+
+  tr {
+
+    td:not(:last-child),
+    th:not(:last-child) {
+      border-right: 1px solid #dddddd;
+    }
+  
+    td {
+      font-size: $small_text;
+    }
+  
+    th {
+      font-size: $normal_text;
+      font-weight: bold;
+      color: black;
+    }
+  }
   
   .mdm-form-field {
     width: 100%;
@@ -506,22 +524,6 @@ mat-hint {
       }
     }
   }
-}
-
-
-td:not(:last-child),
-th:not(:last-child) {
-  border-right: 1px solid #dddddd;
-}
-
-td {
-  font-size: $small_text;
-}
-
-th {
-  font-size: $normal_text;
-  font-weight: bold;
-  color: black;
 }
 
 th.mat-header-cell:first-of-type,

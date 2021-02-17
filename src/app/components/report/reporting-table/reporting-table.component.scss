@@ -17,7 +17,10 @@
   .mat-column-name {
     width: 300px;
   }
-  
+  .mat-column-title, .mat-column.groupName {
+    border-right: none;
+    width: 100vw !important;
+  }
   th {
     overflow: hidden;
     width: 60px;
