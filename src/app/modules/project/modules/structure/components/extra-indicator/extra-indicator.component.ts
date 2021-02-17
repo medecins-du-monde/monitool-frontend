@@ -13,7 +13,9 @@ export class ExtraIndicatorComponent implements OnInit {
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('computation', this.extraIndicator.computation)
+  }
 
   onEdit() {
     this.edit.emit();
