@@ -20,9 +20,6 @@
                 <mat-option *ngFor="let theme of themes" [value]="theme">{{ theme.name[currentLang] + '-' + theme.shortName[currentLang] }}
                 </mat-option>
             </mat-select>
-            <mat-hint>
-                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
-            </mat-hint>
         </mat-form-field>
     </div>
     <ng-container formGroupName="name">
@@ -30,9 +27,6 @@
             <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Name : null}}">
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'Name-Hint2' | translate }}
-                </mat-hint>
             </mat-form-field>
         </div>
     </ng-container>
@@ -41,9 +35,6 @@
             <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}">
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'description-Hint' | translate }}
-                </mat-hint>
             </mat-form-field>
         </div>
     </ng-container>

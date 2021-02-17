@@ -13,16 +13,17 @@ export class User implements Deserializable {
     password: string;
     entities: Entity[];
     dataSources: Form[];
+    projectId?: string;
 
-    get login() {
+    get login(): string {
         return this.id.split(':')[1];
     }
 
-    get roleDisplay() {
+    get roleDisplay(): string {
         return this.role.charAt(0).toUpperCase() + this.role.slice(1) + 'Role';
     }
 
-    get email() {
+    get email(): string {
         return `${this.login}@medecinsdumonde.net`;
     }
 

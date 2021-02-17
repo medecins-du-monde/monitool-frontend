@@ -17,7 +17,7 @@
     "AddPartition": "Añadir una desagregación",
     "AddVariable": "Añadir una variable",
     "AddVariableName": "Qué esta midiendo?",
-    "AddVariableNameHint": "Nombre la variable que quiere extraer de {{name}}. ej: \"Número de diagnosticos\".",
+    "AddVariableNameHint": "Nombre la variable que quiere extraer de <code>{{name}}</code>. ej: \"Número de diagnosticos\".",
     "AddVariablePlaceholder": "ej: Número de diagnosticos",
     "AddVariableNamePlaceholder" : "ej: Número de diagnosticos",
     "Admin": "Administrador",
@@ -34,13 +34,14 @@
     "CloneProjectInfo": "Va a clonar este proyecto, y todas sus entradas de datos. Confirme para clonar.",
     "CollectionSiteName": "Nombre de la estructura o del lugar de intervención",
     "CollectionSites": "Lugares de colecta",
-    "Common": "Normal",
+    "CommonRole": "Normal",
     "Computation": "Cálculo",
     "Connect": "Conectar",
     "Confirm": "Confirmar",
     "Countries": "Países",
     "Country": "País",
     "CoveredPeriod": "Periodo cubierto",
+    "Restore": "Restaurar",
     "Create": "Crear",
     "CreateNewDataSource": "Crear una nueva fuente de datos",
     "CreateLogicalFramework":"Añadir un marco lógico en blanco",
@@ -138,6 +139,7 @@
         }
 
     },
+    "ErrorNoCollectionSiteAssociated": "Esta fuente de datos no esta asociada a ningún lugar de colecta.",
     "es": "Español",
     "EquivalentVersion" : "Este punto es equivalente al estado actual del proyecto",
     "EveryMonth": "Cada mes",
@@ -156,7 +158,7 @@
     "GeneralInformations": "Informaciones generales",
     "GeneralReporting": "Informe general",
     "GeoAggregation": "Como compilar entradas provenientes de diferentes lugares?",
-    "GeoAggregationHint": "En un proyecto que trabaja en dos lugares, si {{name}} vale 10 en el primero, y 20 en el segundo, cual es el valor para el proyecto entero?",
+    "GeoAggregationHint": "En un proyecto que trabaja en dos lugares, si <code>{{name}}</code> vale 10 en el primero, y 20 en el segundo, cual es el valor para el proyecto entero?",
     "GoBack": "Volver",
     "GroupName": "Nombre del grupo",
     "Groups": "Grupos",
@@ -403,7 +405,7 @@
     "Owner": "Proprietario",
     "PartitionEdition":"Edición desagregación",
     "Partitions" : "Que desagregaciones quiere usar en esta variable?",
-    "PartitionsHint": "¿Quiere poder diferenciar {{name}} por edad, sexo, tipo de consulta, motivo de consulta, patología, hora del dia, ...? No desagrege por zona geográfica: los lugares de colecta ya se rellenaron en la otra página.",
+    "PartitionsHint": "¿Quiere poder diferenciar <code>{{name}}</code> por edad, sexo, tipo de consulta, motivo de consulta, patología, hora del dia, ...? No desagrege por zona geográfica: los lugares de colecta ya se rellenaron en la otra página.",
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
     "Placeholder": {
@@ -439,7 +441,6 @@
         }
     },
     "Periodicity": "Periodicidad",
-    "ProjectBasicsInfo": "Los datos básicos permiten clasificar su proyecto entre los demas de la ONG.",
     "ProjectDataSourceInfo": [
         "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
         "En Monitool, no hace falta entrar todos los datos disponibles en las fuentes de datos: solo lo que es relevante",
@@ -468,6 +469,7 @@
         "Enumere sus herramientas de recolección de datos (Excel, papel, ...) así como otras fuentes de datos (SNIS, encuestas ...) que usará para calcular sus indicadores, informando sus sitios de periodicidad y recolección y sus contenido"
     ],
     "ProjectRole": "Creador proyectos",
+    "Project": "Proyecto",
     "Projects": "Proyectos",
     "ProjectSitesInfo": [
         "Cuando un proyecto tiene las mismas actividades en varios lugares, se deben seguir por lugar, grupos de lugares y a nivel de proyecto.",
@@ -547,7 +549,7 @@
     "Target": "Objectivo",
     "Task": "Tarea",
     "TimeAggregation": "Como compilar entradas provenientes de diferentes periodos?",
-    "TimeAggregationHint": "En un proyecto que colecta datos mensuales, si {{name}} vale 10 en enero, 20 en febrero y 30 en marzo, que vale para el trimer trimestre?",
+    "TimeAggregationHint": "En un proyecto que colecta datos mensuales, si <code>{{name}}</code> vale 10 en enero, 20 en febrero y 30 en marzo, que vale para el trimer trimestre?",
     "Tooltip": {
         "BasicsEdition": {
             "Country": "En que país tiene lugar su proyecto? Si es un proyecto regional, entre el nombre de la región.",
@@ -562,6 +564,17 @@
             "Type": "Elija \"Cuenta MDM\" si el usuario tiene una dirección email xxx@medecinsdumonde.net. Elija \"Cuenta partnerio\" sino.",
             "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool."
         }
+    },
+    "TooltipRoleHint": {
+        "PanelShow": "Mostrar ayuda para este campo",
+        "PanelHide": "Esconder ayuda para este campo",
+        "EditProjectsStructure": "Editar los datos y la estructura de proyecto donde se ha autorizado explicitamente",
+        "SeeAllProjectsReporting": "Ver los informes de todos los proyectos",
+        "CreateProjects": "Crear proyectos",
+        "CreateAndEditThematics": "Crear y editar temáticas",
+        "CreateAndEditCrossCutting": "Crear y editar indicadores transversales",
+        "EditOtherUsersRoles": "Editar las permisiones de los demás usuarios",
+        "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos"
     },
     "Type": "Tipo",
     "ThematicEdition": "Editar temática",
@@ -579,6 +592,7 @@
     "VisibilityPublic": "Visible  para todos los usarios",
     "VisibilityPrivate": "Visible solo para miembros de este proyecto",
     "Invalid": "Invalido",
+    "InvalidForm": "Algunos campos del formulario no son validos, arreglelos para poder guardar.",
     "WrongCredentials": "El nombre de usuario o la contraseña es incorrecto. Por favor, vuelve a ponerlo",
     "EMail-Hint": "Ingrese su dirección de correo electrónico",
     "Name-Hint": "Indique su nombre completo",
@@ -591,15 +605,13 @@
     "Baseline-Hint": "Cual era el valor del indicador antes de empezar la actividades? Marque la casilla para especificar un valor.inicial",
     "Target-Hint": "Cual es el objectivo para este indicador? Marque la casilla para especificar un valor.",
     "Computation-Hint": "Como se calcula este indicador a partir de las variables que ha colectado en fuentes de datos?",
-    "GeneralObjective":"Objectivo global", 
+    "GeneralObjective":"Objectivo global",
     "Indicators":"Indicadores",
-    "SpecificObjective":"Objectivo específico", 
+    "SpecificObjective":"Objectivo específico",
     "Assumptions":"Hipotesis",
     "Result":"Resultado",
     "Activity":"Actividad",
     "GeneralObjective-Hint": "Descripción de la contribución del proyecto a los objectivos (impacto) de una política o de un programa",
-    "Name-Hint2": "Asegúrese de poner el nombre correcto para cada idioma",
-    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma",
     "Parameter": "Parámetro",
     "Variable": "Variable",
     "Help": {

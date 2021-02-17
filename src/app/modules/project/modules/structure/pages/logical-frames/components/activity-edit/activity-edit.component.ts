@@ -3,6 +3,7 @@ import { FormGroup, Form, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-activity-edit',
@@ -51,6 +52,12 @@ export class ActivityEditComponent implements OnInit {
         }
       }
     });
+  }
+
+  // drag and drop function on a form array that can span accross multiple rows
+  drop(event: CdkDragDrop<any>) {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
   }
 
 }
