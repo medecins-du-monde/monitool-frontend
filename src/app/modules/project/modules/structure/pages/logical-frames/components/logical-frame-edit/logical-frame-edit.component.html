@@ -4,7 +4,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Name' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                <input matInput formControlName="name" placeholder="{{ 'Placeholder.LogicalFrame.Name' | translate }}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'NameLogicalFramework-Hint' | translate }}
                 </mat-hint>
@@ -13,7 +13,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                <mat-select formControlName="entities" placeholder="{{ 'Placeholder.LogicalFrame.CollectionSites' | translate }}" multiple>
                     <mat-select-trigger>
                         <mat-chip-list>
                             <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
@@ -71,7 +71,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'GeneralObjective' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput formControlName="goal" placeholder="{{ 'GeneralObjective' | translate }}">
+                <input matInput formControlName="goal" placeholder="{{ 'Placeholder.LogicalFrame.GeneralObjective' | translate }}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'GeneralObjective-Hint' | translate }}
                 </mat-hint>

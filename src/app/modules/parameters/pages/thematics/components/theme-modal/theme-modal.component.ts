@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Theme } from 'src/app/models/classes/theme.model';
+import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 
 @Component({
   selector: 'app-theme-modal',
@@ -15,9 +16,11 @@ export class ThemeModalComponent implements OnInit {
   displayedColumns = ['language', 'shortName', 'name'];
 
   languages = ['fr', 'en', 'es'];
+  dictionary = {};
 
   constructor(
     private fb: FormBuilder,
+    private forceTranslateService: ForceTranslateService,
     public dialogRef: MatDialogRef<ThemeModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Theme
   ) { }
@@ -37,11 +40,19 @@ export class ThemeModalComponent implements OnInit {
       }),
       _rev: this.data ? this.data.rev : null
     });
+
+    this.languages.forEach(language => this.forceTranslateService.getData(language).subscribe( data => {
+      this.dictionary[`${language}`] = data;
+    }));
   }
 
   onSubmit() {
     const theme = new Theme(this.themeForm.value);
     this.dialogRef.close({ data: theme });
+  }
+
+  getLanguageDictionary(language: string) {
+    return this.dictionary[`${language}`];
   }
 
 }

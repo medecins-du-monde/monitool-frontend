@@ -19,6 +19,7 @@
     "AddVariableName": "Qué esta midiendo?",
     "AddVariableNameHint": "Nombre la variable que quiere extraer de <code>{{name}}</code>. ej: \"Número de diagnosticos\".",
     "AddVariablePlaceholder": "ej: Número de diagnosticos",
+    "AddVariableNamePlaceholder" : "ej: Número de diagnosticos",
     "Admin": "Administrador",
     "AdminRole": "Administrador",
     "AllCountries": "Todos los países",
@@ -59,10 +60,10 @@
     "CustomDate" : "Fecha personalizada",
     "SameAsProject": "Igual al proyecto ({{date}})",
     "DataSourceEdit": {
-        "AddNameHint": "ej: Datos SNIS, Ficha de colecta ante-natal, Ficha sanidad primaria, ...",
-        "AddNamePlaceholder": "Cual es el nombre de la fuente de datos de la que quiere extraer datos? ej. \"Historiales clínicos electronicos\", \"Fichas de colecta\", \"Informe SNIS\", ...",
-        "CollectionSitesHint": "Ningún elemento esta seleccionado",
-        "CollectionSitesPlaceholder": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
+        "AddNamePlaceholder": "ej: Datos SNIS, Ficha de colecta ante-natal, Ficha sanidad primaria, ...",
+        "AddNameHint": "Cual es el nombre de la fuente de datos de la que quiere extraer datos? ej. \"Historiales clínicos electronicos\", \"Fichas de colecta\", \"Informe SNIS\", ...",
+        "CollectionSitesPlaceholder": "Ningún elemento esta seleccionado",
+        "CollectionSitesHint": "Entre los lugares identificados en \"Lugares de colecta\", cuales son los que colectan esta fuente de datos?",
         "EndDateHint": "Si esta fuente de datos terminara antes del fin del proyecto, o se ha reemplazado, entre la fecha aqui",
         "EndDatePlaceholder": "Igual que el final del proyecto",
         "PeriodicityHint": "Cada cuanto son disponibles estos datos? Tenga ciudado, no entre aqui la frecuencia a la que hace sus informes.",
@@ -86,7 +87,10 @@
         "GroupsHint": "Los grupos permiten hacer agregaciones intermediarias",
         "OrderTitle": "En que ordén mostrar las desagregaciones en el formulario de colecta?",
         "OrderHint": "En que ordén quiere que aparescan la desagregaciones en las tablas de entrada de datos?",
-        "Title" : "Título"
+        "Title" : "Título",
+        "Placeholder" : {
+            "Name" : "ex: Menor de 12 años, hombre, consultación social, gripe, ..."
+        }
     },
     "Description": "Descripción",
     "DownloadPdfLandscape": "Descargar PDF (horizontal)",
@@ -360,7 +364,8 @@
     "IndicatorEdition": "Edición indicador",
     "IndicatorEditionPlaceholder": {
         "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
-        "Name": "Volumen de formación"
+        "Name": "Volumen de formación",
+        "Thematics": "Selectione una o varias temáticas"
     },
     "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
     "Input": "Entrada",
@@ -403,6 +408,38 @@
     "PartitionsHint": "¿Quiere poder diferenciar <code>{{name}}</code> por edad, sexo, tipo de consulta, motivo de consulta, patología, hora del dia, ...? No desagrege por zona geográfica: los lugares de colecta ya se rellenaron en la otra página.",
     "PartnerAuthentication": "Autenticación de socios",
     "Password": "Contraseña",
+    "Placeholder": {
+        "Basic" : {
+            "Country": "ej: República Centroafricana",
+            "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
+            "Thematics": "Selectione una o varias temáticas"
+        },
+        "Sites": {
+            "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
+            "NameGroup" : "ej: Hospitales regionales, parte Norte del país, ..."
+        },
+        "LogicalFrame": {
+            "Name": "ej. ECHO",
+            "CollectionSites": "Ningún elemento esta seleccionado",
+            "GeneralObjective" : "ej. Reducir la mortalidad y la morbididad de la población afectada por la crisis",
+            "SpecificObjective" : "ej. Mejorar el acceso a la salud para la población afectada por la crisis en los districtos de Bimbo y Begoua",
+            "Result" : {
+                "Description" : "ej. Mejorar la atención de salud primaria en los centros de salud de Bimbo y Begoua",
+                "Activity": {
+                    "Activity": "ej. Realizar sesiones de sensibilización sobre la transmision del VIH"
+                }
+            }
+        },
+        "LogicalFrameIndicator": {
+            "Name": "ej: Tasa de consultaciones prenatales en las estructuras de salud",
+            "Computation": {
+                "Fixed": "Entre el valor constante del indicador (ej: 12)"
+            }
+        },
+        "Themes" : {
+            "Name" : "i.e. Salud Sexual y reproductiva"
+        }
+    },
     "Periodicity": "Periodicidad",
     "ProjectDataSourceInfo": [
         "Las fuentes de datos son los diferentes soportes donde se encuentran los datos necesarios para seguir el proyecto (fichas de colecta, historiales clínicos, ficheros excel, ...).",
@@ -482,7 +519,7 @@
     "SaveConfirm": "Guarde para confirmar que desea volver a este punto",
     "SaveThematic": "Guardar la temática",
     "SaveUser": "Guardar usuario",
-    "Search": "Buscar",
+    "Search": "Entre texto para buscar proyectos",
     "SearchHelp": "Buscar Nombre, País y temática",
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
@@ -575,8 +612,6 @@
     "Result":"Resultado",
     "Activity":"Actividad",
     "GeneralObjective-Hint": "Descripción de la contribución del proyecto a los objectivos (impacto) de una política o de un programa",
-    "Name-Hint2": "Asegúrese de poner el nombre correcto para cada idioma",
-    "description-Hint": "Asegúrese de poner la descripción correcta para cada idioma",
     "Parameter": "Parámetro",
     "Variable": "Variable",
     "Help": {

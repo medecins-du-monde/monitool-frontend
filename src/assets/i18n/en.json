@@ -90,8 +90,11 @@
         "ElementsPlaceholder": "ex: Less than 12 years old, male, social consultation, flu, community referral, ...",
         "GroupsHint": "Groups allow making intermediary aggregations",
         "OrderHint": "How do you wish to show the disaggregations on the input form?",
-        "OrderTitle": "In which order should the disaggregations be shown?",
-        "Title": "Titles"
+        "Title" : "Titles",
+        "Placeholder" : {
+            "Name" : "ex: Less than 12 years old, male, social consultation, flu, community referral, ..."
+        },
+        "OrderTitle": "In which order should the disaggregations be shown?"
     },
     "Disaggregations": "Disaggregations",
     "Done": "Done",
@@ -348,7 +351,8 @@
     "IndicatorEdition": "Edit indicator",
     "IndicatorEditionPlaceholder": {
         "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
-        "Name": "Training volume"
+        "Name": "Training volume",
+        "Thematics": "i.e. Primary health care"
     },
     "IndicatorMissingDescription": "The description of this indicator was not filled",
     "Indicators": "Indicators",
@@ -385,7 +389,6 @@
     "MyAccount": "My account",
     "Name": "Name",
     "Name-Hint": "Indicate your Full Name",
-    "Name-Hint2": "Make sure you put the correct name for each language",
     "NameLogicalFramework-Hint": "Name this logical framework to be able to identify it easily. For instance, with the name of the relevant donor",
     "NoExtraIndicator": "No extra indicator has been created yet. Click on \"Add indicator\" to create one!",
     "None": "None",
@@ -402,6 +405,38 @@
     "Patch": {
         "Add": {
             "Thematic": "Add a new thematic to the project"
+        }
+    },
+    "Placeholder": {
+        "Basic" : {
+            "Country": "For instance: CAR",
+            "Name" : "e.g. Access to quality care for people affected by the crisis",
+            "Thematics": "i.e. Primary health care"
+        },
+        "Sites": {
+            "NameEntity" : "For instance: Health center X, Hospital X, ...",
+            "NameGroup" : "ex: Regional hospitals, North of the country, ..."
+        },
+        "LogicalFrame": {
+            "Name": "e.g. ECHO",
+            "CollectionSites": "No element is selected",
+            "GeneralObjective" : "e.g. Reduce mortality and morbidity of the populations affected by the crisis",
+            "SpecificObjective" : "e.g. Improve access to health care for population affected by the crisis in the districts of Bimbo and Begoua",
+            "Result" : {
+                "Description": "e.g. Improve primary health care at Bimbo and Begoua health centers",
+                "Activity": {
+                    "Activity": "e.g. Awareness sessions on HIV transmission"
+                }
+            }
+        },
+        "LogicalFrameIndicator": {
+            "Name": "i.e. ANC1 rate for the health centers",
+            "Computation": {
+                "Fixed": "Enter the constant value for the indicator (e.g. 12)"
+            }
+        },
+        "Themes" : {
+            "Name" : "i.e. Sexual and Reproductive Health"
         }
     },
     "Periodicity": "Periodicity",
@@ -486,7 +521,7 @@
     "SaveIndicator": "Save indicator",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",
-    "Search": "Search",
+    "Search": "Enter text here to filter the projects",
     "SearchHelp": "Search Name, Country and Thematics",
     "SeeOlderDates": "See older dates",
     "SeeReport": "See report",
@@ -562,7 +597,6 @@
     "VisibilityPrivate": "Visible only to members of this project",
     "VisibilityPublic": "Visible for all users (besides partners)",
     "WrongCredentials": "Wrong username or password. Please try again",
-    "description-Hint": "Make sure you put the correct description for each language",
     "elementsymbol": "sbanyouria",
     "en": "English",
     "es": "Spanish",
