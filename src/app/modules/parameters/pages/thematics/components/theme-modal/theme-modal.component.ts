@@ -16,7 +16,7 @@ export class ThemeModalComponent implements OnInit {
   displayedColumns = ['language', 'shortName', 'name'];
 
   languages = ['fr', 'en', 'es'];
-  dictionary: [];
+  dictionary = {};
 
   constructor(
     private fb: FormBuilder,
@@ -40,11 +40,10 @@ export class ThemeModalComponent implements OnInit {
       }),
       _rev: this.data ? this.data.rev : null
     });
-    console.log(this.data);
-    this.dictionary = [];
-    this.forceTranslateService.getData('fr').subscribe( data => { this.dictionary['fr'] = data; });
-    this.forceTranslateService.getData('en').subscribe( data => { this.dictionary['en'] = data; });
-    this.forceTranslateService.getData('es').subscribe( data => { this.dictionary['es'] = data; });
+
+    this.languages.forEach(language => this.forceTranslateService.getData(language).subscribe( data => {
+      this.dictionary[`${language}`] = data;
+    }));
   }
 
   onSubmit() {
@@ -52,13 +51,8 @@ export class ThemeModalComponent implements OnInit {
     this.dialogRef.close({ data: theme });
   }
 
-  forceTranslate(lang: string, text:string){
-    let x = text.split('.');
-    let result = this.dictionary[lang];
-    text.split('.').forEach(element => {
-      result = result[element];
-    });
-    return result;
+  getLanguageDictionary(language: string) {
+    return this.dictionary[`${language}`];
   }
 
 }

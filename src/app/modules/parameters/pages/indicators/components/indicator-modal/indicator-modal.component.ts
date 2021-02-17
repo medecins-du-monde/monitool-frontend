@@ -19,9 +19,8 @@ export class IndicatorModalComponent implements OnInit {
   languages = ['fr', 'en', 'es'];
 
   themes: Theme[];
-  dictionary: [];
 
-  testString: string = "testing forceTranslate";
+  dictionary = {};
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -61,20 +60,15 @@ export class IndicatorModalComponent implements OnInit {
       if (this.data) {
         this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
       }
-    });    
-    this.dictionary = [];
-    this.forceTranslateService.getData('fr').subscribe( data => { this.dictionary['fr'] = data; });
-    this.forceTranslateService.getData('en').subscribe( data => { this.dictionary['en'] = data; });
-    this.forceTranslateService.getData('es').subscribe( data => { this.dictionary['es'] = data; });
+    });
+
+    this.languages.forEach(language => this.forceTranslateService.getData(language).subscribe( data => {
+      this.dictionary[`${language}`] = data;
+    }));
   }
 
-  forceTranslate(lang: string, text:string){
-    let x = text.split('.');
-    let result = this.dictionary[lang];
-    text.split('.').forEach(element => {
-      result = result[element];
-    });
-    return result;
+  getLanguageDictionary(language: string) {
+    return this.dictionary[`${language}`];
   }
 
   onSubmit() {
