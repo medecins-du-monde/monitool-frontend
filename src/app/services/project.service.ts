@@ -17,7 +17,8 @@ export class ProjectService{
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
-  valid = false;
+  // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
+  valid = true;
 
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
