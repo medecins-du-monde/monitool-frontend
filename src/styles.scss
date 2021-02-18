@@ -774,7 +774,6 @@ mat-hint {
   }
 
   mat-hint {
-    padding-top: 8px;
     align-self: center;
 
     mat-icon {
@@ -783,10 +782,9 @@ mat-hint {
   }
 
   .mdm-form-label {
-    margin-right: 100px;
+    margin-right: 50px;
   }
-
-  margin-bottom: 8px;
+  margin: 15px 0px;
 }
 
 // Variables highlighting
@@ -869,4 +867,16 @@ code {
 
 .mat-tooltip {
   font-size: $small_text;
+}
+
+// Style of the message for invalid forms
+.invalid-form {
+  display: flex;
+  align-items: center;
+  color: red;
+  margin-left: 2%;
+  font-size: $small_text;
+  mat-icon {
+    margin-right: 5px;
+  }
 }

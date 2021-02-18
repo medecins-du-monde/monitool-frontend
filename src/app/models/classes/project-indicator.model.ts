@@ -38,8 +38,18 @@ export class ProjectIndicator implements Deserializable {
 
   deserialize(input: any): this {
     Object.assign(this, input);
-    this.colorize = this.colorize ? this.colorize : true;
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
+
+    /*If at least one of the baseline and target is null,
+    we set the colorize to true so it directly appears as checked
+    when we put add the baseline and target in the form. */
+    this.colorize = (
+        this.baseline === undefined
+        || this.baseline === null
+      )
+      || (this.target === undefined
+        || this.target === null) ? true : this.colorize;
+
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
       this.computation.formula = input.computation.formula;
@@ -109,7 +119,13 @@ export class ProjectIndicator implements Deserializable {
   serialize(crossCuttingType = false) {
     const serializedIndicator = {
       baseline: this.baseline,
-      colorize: (this.baseline && this.target) ? true : false,
+      // Now we check if the colorize is still set to true and if the baseline and target are valid.
+      // In the case that the baseline and target are not valid, we set the colorize property to false again.
+      colorize: (
+        this.baseline !== null
+        && this.baseline !== undefined
+        && this.target !== null
+        && this.target !== undefined) ? this.colorize : false,
       computation: this.formatComputation(this.computation),
       target: this.target,
     };

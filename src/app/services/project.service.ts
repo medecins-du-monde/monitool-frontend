@@ -17,7 +17,7 @@ export class ProjectService{
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
-  // TODO : set to false by default and control everywhere to know if it s valid or not
+  // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
 
   // This parameter allows to extend the page

@@ -2,7 +2,7 @@
 
 .table-scroll {
   width: 100%;
-  height: 500px;
+  max-height: 500px;
   overflow: auto;
   border: solid 1px #e7e7e7;
 
@@ -15,16 +15,23 @@
   .mat-column-icon {
     width: 50px;
   }
+
   .mat-column-name {
     width: 300px;
     @media screen and (max-width: $breakpoint-xs) {
       width: 150px;
     }
   }
+
   .mat-column-title, .mat-column.groupName {
-    border-right: none;
+    border-right: none !important;
     width: 100vw !important;
   }
+
+  .mat-column-title_stick, .mat-column-group_stick {
+    border-left: none !important;
+  }
+
   th {
     overflow: hidden;
     width: 60px;
