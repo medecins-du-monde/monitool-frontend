@@ -445,9 +445,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   get canBeSaved(){
-    if (!this.input){
-      return true;
+    if (!this.input && this.initValue){
+      // If new values are differents from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
     }
+    // If the coming input it different from our form, we can return true
     if (this.inputForm && this.input){
       return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
     }
