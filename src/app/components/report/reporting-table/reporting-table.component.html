@@ -1,6 +1,6 @@
-
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-    <ng-container class="menu" matColumnDef="icon">
+<div class="table-scroll">
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+    <ng-container class="menu" matColumnDef="icon" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element"> 
         <button *ngIf="element.icon" class="mdm-button small-button mat-icon-button" (click)="updateChart(element)">
@@ -9,11 +9,13 @@
       </td>
     </ng-container>
   
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="name" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
-      <td class="menu" mat-cell *matCellDef="let element" [style]="calcPaddingLevel(element)">
-        <div matTooltip="{{element.name}}" [matTooltipShowDelay]="500">{{element.name}}</div>
-        <app-reporting-menu [indicator]="element" [dimensionName]="dimensionIds.value" (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"></app-reporting-menu>
+      <td mat-cell *matCellDef="let element" [style]="calcPaddingLevel(element)">
+        <div class="menu">
+          <div matTooltip="{{element.name}}" [matTooltipShowDelay]="500">{{element.name}}</div>
+          <app-reporting-menu [indicator]="element" [dimensionName]="dimensionIds.value" (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"></app-reporting-menu>
+        </div>
       </td>
     </ng-container>
   
@@ -28,12 +30,13 @@
     </ng-container>
     
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions">
-      <th mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
+      <th matTooltip="{{getSiteOrGroupName(column) | translate}}" [matTooltipShowDelay]="500" mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
       <td mat-cell *matCellDef="let element">{{ element.values ? element.values[column] : ''}}</td>
     </ng-container>
-  
-    <ng-container matColumnDef="title">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" class="title">
+
+    <!-- Sticky position doesnt work allow a dynamic column span so I had to set a static one-->
+    <ng-container matColumnDef="title" [sticky]="true">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="2" class="title">
         <div>
         <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
         <ng-template #elseOpen>
@@ -43,13 +46,22 @@
       </div>
       </td>
     </ng-container>
-  
-    <ng-container matColumnDef="groupName" >
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 1" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+
+    <!-- The rest of the row needs to be filled out to keep consistent styling -->
+    <ng-container matColumnDef="title_stick" *ngIf="columnsToDisplay.length > 2">
+      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length - 2"></td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: ['title']; when: isSectionTitle" 
+    <ng-container matColumnDef="groupName" [sticky]="true">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="1" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="group_stick" *ngIf="columnsToDisplay.length > 2">
+      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length - 2"></td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+    <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_TITLE; when: isSectionTitle" 
         class="example-element-row"
         (click)="openSection(element)"
     ></tr>
@@ -57,3 +69,4 @@
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRow"></tr>
     <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_GROUP; when: isGroupTitle"></tr>
   </table>
+</div>

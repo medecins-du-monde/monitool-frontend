@@ -172,7 +172,7 @@ body {
 }
 
 .drawer-page {
-  padding: 15px;
+  padding: 15px 15px 25px 15px;
   overflow: auto;
   flex: 1;
 
@@ -492,35 +492,38 @@ mat-hint {
   margin-top: 15px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
   border: solid 1px #dddddd;
-}
 
-.mdm-form-field {
-  width: 100%;
+  tr {
 
-  .mat-form-field-wrapper {
-    padding: 0 !important;
-
-    .mat-form-field-flex {
-      .mat-form-field-infix {
-        width: auto;
+    td:not(:last-child),
+    th:not(:last-child) {
+      border-right: 1px solid #dddddd;
+    }
+  
+    td {
+      font-size: $small_text;
+    }
+  
+    th {
+      font-size: $normal_text;
+      font-weight: bold;
+      color: black;
+    }
+  }
+  
+  .mdm-form-field {
+    width: 100%;
+  
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+  
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
       }
     }
   }
-}
-
-td:not(:last-child),
-th:not(:last-child) {
-  border-right: 1px solid #dddddd;
-}
-
-td {
-  font-size: $small_text;
-}
-
-th {
-  font-size: $normal_text;
-  font-weight: bold;
-  color: black;
 }
 
 th.mat-header-cell:first-of-type,
