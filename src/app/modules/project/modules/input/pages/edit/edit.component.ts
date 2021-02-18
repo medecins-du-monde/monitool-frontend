@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
+import * as _ from 'lodash';
 
 
 
@@ -43,6 +44,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   input: Input;
   inputForm: FormGroup;
   previousInput: Input;
+  private initValue: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
@@ -164,7 +166,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         );
       }else{
         valuesGroup[e.id] = this.fb.array(
-          Array.from({length: this.countInputCells(e)}, (_, i) => 0)
+          Array.from({length: this.countInputCells(e)}, () => 0)
         );
       }
     }
@@ -180,6 +182,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     };
 
     this.inputForm = this.fb.group(formGroup);
+    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
   }
 
   convertToNumber(val) {
@@ -421,6 +424,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     if (response){
       this.input = new Input(response);
       this.inputForm.get('rev').setValue(this.input.rev);
+      this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
     }
   }
 
@@ -457,7 +461,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   resetInput(){
-    this.inputForm.get('values').setValue(this.input.values);
+    this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
   }
 
   ngOnDestroy(){
