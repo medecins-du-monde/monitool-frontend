@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -40,15 +40,26 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 })
 export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
 
-  dataSourceForm: FormGroup;
+  dataSourceForm: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    entities: new FormControl(null),
+    periodicity: new FormControl(null, [Validators.required]),
+    start: new FormControl(null, [Validators.required]),
+    end: new FormControl(null, [Validators.required]),
+    elements: new FormArray([], [this.minLengthArray(1)])
+  });
+
   startDate: Date;
   endDate: Date;
 
   public entities: Entity[];
   public form: Form;
   public project: Project;
-
   public periodicities = [];
+
+  public expandedIndex: number = null;
+
   get selectedEntities(): any[] {
     return this.dataSourceForm.controls.entities.value;
   }
@@ -69,7 +80,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   ) { }
 
   @HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean{
+  canDeactivate(): Observable<boolean> | boolean {
     return !this.projectService.hasPendingChanges;
   }
 
@@ -79,13 +90,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     ).subscribe((res: { project: Project, formId: string }) => {
       this.project = res.project;
       this.entities = res.project.entities;
-      if (!this.form) {
-        this.form = res.project.forms.find(x => x.id === res.formId);
-      }
+      this.form = res.project.forms.find(x => x.id === res.formId);
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      }
-      if (!this.dataSourceForm) {
+      } else {
         this.setForm();
       }
     });
@@ -111,6 +119,9 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   private setForm(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
@@ -122,6 +133,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     });
 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      console.log('formchange', value);
       this.projectService.valid = this.dataSourceForm.valid;
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
@@ -147,7 +159,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   isCustom(selected: string): boolean {
-    return !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
+    return this.dataSourceForm.get(selected).value &&
+      !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
   }
 
   onEntityRemoved(entity: Entity): void {
@@ -204,6 +217,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  openPanel(index: number): void {
+    this.expandedIndex = (this.expandedIndex === index) ? null : index;
   }
 
   // drag and drop function on a form array displayed in one column

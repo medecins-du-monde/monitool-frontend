@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Project } from 'src/app/models/classes/project.model';
-import { ProjectService } from 'src/app/services/project.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
+import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 
 export interface Task {
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 

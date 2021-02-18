@@ -5,6 +5,7 @@ import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class ProjectService {
   private savedProject: Project;
   private currentProject: Project;
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  project: BehaviorSubject<Project> = new BehaviorSubject(null);
 
   // TODO : set to false by default and control everywhere to know if it s valid or not
   valid = true;
@@ -24,7 +25,7 @@ export class ProjectService {
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   get openedProject(): Observable<Project> {
-    return this.project.asObservable();
+    return this.project.asObservable().pipe(filter(p => !!p));
   }
 
   get bigPage(): Observable<boolean> {
@@ -32,7 +33,7 @@ export class ProjectService {
   }
 
   get hasPendingChanges(): boolean {
-    return !this.savedProject.equals(this.currentProject);
+    return this.currentProject && !this.savedProject.equals(this.currentProject);
   }
 
   breadcrumbList: BreadcrumbItem[];
@@ -47,6 +48,7 @@ export class ProjectService {
           this.savedProject = project.copy();
           this.currentProject = project.copy();
         } else {
+          console.log('change in same project');
           this.currentProject = project.copy();
         }
       }

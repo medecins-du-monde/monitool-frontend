@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -40,11 +40,23 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 })
 export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
-  logicalFrameForm: FormGroup;
+  logicalFrameForm: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    entities: new FormControl(null, [Validators.required]),
+    periodicity: new FormControl(null, [Validators.required]),
+    start: new FormControl(null, [Validators.required]),
+    end: new FormControl(null, [Validators.required]),
+    goal: new FormControl(null, [Validators.required]),
+    indicators:  new FormArray([]),
+    purposes:  new FormArray([])
+  });
 
   public project: Project;
   public entities: Entity[];
   public logicalFrame: LogicalFrame;
+
+  public expandedIndex: number = null;
 
   get selectedEntities() {
     return this.logicalFrameForm.controls.entities.value;
@@ -81,18 +93,14 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     ).subscribe((res: { project: Project, logicalFrameId: string }) => {
       this.project = res.project;
       this.entities = res.project.entities;
-      if (!this.logicalFrame) {
-        this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
-      }
+      this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      }
-      if (!this.logicalFrameForm) {
+      } else {
         this.setForm();
       }
     });
 
-    this.setForm();
     this.dateService.currentLang.subscribe(
       lang => {
         this.adapter.setLocale(lang);
@@ -107,6 +115,10 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   private setForm(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+
     this.logicalFrameForm = this.fb.group({
       id: [this.logicalFrame.id],
       name: [this.logicalFrame.name, Validators.required],
@@ -135,7 +147,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   isCustom(selected: string): boolean {
-    return !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
+    return this.logicalFrameForm.get(selected).value &&
+      !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
   }
 
   onEntityRemoved(entity: Entity): void {
@@ -180,6 +193,10 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  openPanel(index: number): void {
+    this.expandedIndex = (this.expandedIndex === index) ? null : index;
   }
 
   // drag and drop function on a form array displayed in one column
