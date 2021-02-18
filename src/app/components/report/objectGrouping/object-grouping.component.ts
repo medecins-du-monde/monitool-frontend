@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import {  FormBuilder, FormGroup } from '@angular/forms';
-import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
+import { Form } from 'src/app/models/classes/form.model';
 
 @Component({
   selector: 'app-object-grouping',
@@ -12,31 +13,36 @@ export class ObjectGroupingComponent implements OnInit {
 
   dimensionForm: FormGroup;
   @Input() isCrosscuttingReport = false;
-  @Input() project: Project;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
 
-  constructor(private fb: FormBuilder ) { }
+  constructor(private projectService: ProjectService,
+              private fb: FormBuilder ) { }
+
+  project: Project;
+  forms: Form[] = [];
+
 
   ngOnInit(): void {
     this.groupOptions = [];
-    
-    // these options appear only in general-report 
-    // TO DO: right now they're static but they should be filtered to only show the options
-    // compatible with the indicators of the specific project
-    if (!this.isCrosscuttingReport){
-      let periodicity = [];
-      for (const form of this.project.forms) {
-        if (form.periodicity !== 'month' && form.periodicity !== 'quarter' && form.periodicity !== 'semester' && form.periodicity !== 'year') {
-          let obj = {value: '', viewValue: ''};
-          obj.value = form.periodicity;
-          obj.viewValue = 'TimePeriods.' + form.periodicity
-          periodicity.push(obj);
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
+      this.forms = project.forms;
+      
+      if (!this.isCrosscuttingReport){
+        let periodicity = [];
+        for (const form of this.project.forms) {
+          if (form.periodicity !== 'month' && form.periodicity !== 'quarter' && form.periodicity !== 'semester' && form.periodicity !== 'year') {
+            let obj = {value: '', viewValue: ''};
+            obj.value = form.periodicity;
+            obj.viewValue = 'TimePeriods.' + form.periodicity
+            this.groupOptions.unshift(obj);
+          }
         }
       }
-      this.groupOptions = this.groupOptions.concat(periodicity);
-    }
+    });
+
     // these options are static, they appear in general-report and in cross-cutting report
     this.groupOptions = this.groupOptions.concat(
       [
@@ -56,6 +62,7 @@ export class ObjectGroupingComponent implements OnInit {
         ]
       );
     }
+
 
     const initialValue = 'month';
     this.dimensionForm = this.fb.group({
