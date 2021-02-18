@@ -2,12 +2,13 @@
 
 .table-scroll {
   width: 100%;
+  height: 500px;
   overflow: auto;
+  border: solid 1px #e7e7e7;
 
   table {
     width: 100%;
     table-layout: fixed;
-    border: solid 1px #e7e7e7;
     position: relative;
   }
   
@@ -30,6 +31,7 @@
     margin-right: 30px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    border: solid 1px #e7e7e7 !important;
   }
   
   .mat-column {
@@ -39,6 +41,7 @@
   td {
     font-size : $small_text;
     text-align: center;
+    border: solid 1px #e7e7e7 !important;
   }
   
   th.mat-header-cell {
