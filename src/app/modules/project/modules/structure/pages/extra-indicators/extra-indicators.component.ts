@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-extra-indicators',
@@ -47,6 +47,7 @@ export class ExtraIndicatorsComponent implements OnInit {
   onDeleteIndicator(i: number): void {
     this.indicators.removeAt(i);
     this.project.extraIndicators.splice(i, 1);
+    this.projectService.valid = this.extraIndicatorsForm.valid;
     this.projectService.project.next(this.project);
   }
 
@@ -58,11 +59,13 @@ export class ExtraIndicatorsComponent implements OnInit {
         if (add) {
           this.project.extraIndicators.push(new ProjectIndicator(res.indicator.value));
           this.indicators.push(res.indicator);
+          this.projectService.valid = this.extraIndicatorsForm.valid;
           this.projectService.project.next(this.project);
         }
         else if (index !== null) {
           this.project.extraIndicators[index] = new ProjectIndicator(res.indicator.value);
           this.indicators.setControl(index, res.indicator);
+          this.projectService.valid = this.extraIndicatorsForm.valid;
           this.projectService.project.next(this.project);
         }
       }
