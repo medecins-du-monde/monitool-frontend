@@ -771,7 +771,6 @@ mat-hint {
   }
 
   mat-hint {
-    padding-top: 8px;
     align-self: center;
 
     mat-icon {
@@ -780,10 +779,9 @@ mat-hint {
   }
 
   .mdm-form-label {
-    margin-right: 100px;
+    margin-right: 50px;
   }
-
-  margin-bottom: 8px;
+  margin: 15px 0px;
 }
 
 // Variables highlighting
