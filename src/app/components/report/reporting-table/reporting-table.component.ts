@@ -340,13 +340,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
 
       if (this.dimensionIds.value !== highestPeriodicity){
-        row.error = `This data is available by ${highestPeriodicity}`;
+        row.error = 'TimePeriods.' + highestPeriodicity;
         return false;
       }
     }
 
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
-      row.error = `This data is available by ${highestPeriodicity}`;
+      row.error = 'TimePeriods.' + highestPeriodicity;
       return false;
     }
     return true;
@@ -403,28 +403,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void{
-    if (element){
+    if (element && !element.error){
       element.onChart = !element.onChart;
     }
 
-    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
-      this.chartService.changeType('bar');
-    }else{
-      this.chartService.changeType('line');
-    }
-
-    const datasets = [];
-
-    for (const row of this.dataSource.data){
-      if (row.onChart){
-        datasets.push(Object.assign({}, row.dataset));
+    if (!element.error) {
+      if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+        this.chartService.changeType('bar');
+      }else{
+        this.chartService.changeType('line');
       }
+  
+      const datasets = [];
+  
+      for (const row of this.dataSource.data){
+        if (row.onChart){
+          datasets.push(Object.assign({}, row.dataset));
+        }
+      }
+      const data = {
+        labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+        datasets
+      };
+      this.chartService.addData(data);
     }
-    const data = {
-      labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
-      datasets
-    };
-    this.chartService.addData(data);
   }
 
   // This allows to round all values

@@ -31,7 +31,6 @@ export class ObjectGroupingComponent implements OnInit {
       this.forms = project.forms;
       
       if (!this.isCrosscuttingReport){
-        let periodicity = [];
         for (const form of this.project.forms) {
           if (form.periodicity !== 'month' && form.periodicity !== 'quarter' && form.periodicity !== 'semester' && form.periodicity !== 'year') {
             let obj = {value: '', viewValue: ''};

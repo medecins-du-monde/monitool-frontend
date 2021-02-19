@@ -28,7 +28,7 @@
     </ng-container>
     
     <ng-container matColumnDef="error">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">{{element.error}}</td>
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">{{element.error === 'Calculation is missing' ? element.error : ('This data is available by ' + (element.error | translate))}}</td>
     </ng-container>
 
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions">
