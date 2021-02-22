@@ -1,4 +1,5 @@
 // tslint:disable: variable-name
+// tslint:disable:no-string-literal
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -321,7 +322,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     let highestPeriodicity = 'day';
 
     for (const value of Object.values(row.computation.parameters)){
-      const varId = value.elementId;
+      const varId = value['elementId'];
       currentProject.forms.forEach(form => {
         if (form.elements.find(element => element.id === varId)){
           if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]){
