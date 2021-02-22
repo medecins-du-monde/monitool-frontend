@@ -463,6 +463,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   resetInput(){
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.updateTotals(this.inputForm.value);
   }
 
   ngOnDestroy(){
