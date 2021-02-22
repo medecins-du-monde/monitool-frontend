@@ -1,9 +1,10 @@
 <mat-card>
+    <ng-content></ng-content>
     <mat-card-header class="card-header">{{ form.name }}</mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <b class="card-info-title">{{ 'Date' | translate }}</b>
-            <div class="card-info-value">{{ form.start | date : 'mediumDate' }} - {{ form.end | date : 'mediumDate' }}</div>
+            <div class="card-info-value">{{ form.start | localizedDate }} - {{ form.end | localizedDate }}</div>
         </div>
         <div class="card-info">
             <b class="card-info-title">{{ 'Periodicity' | translate }}</b>

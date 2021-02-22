@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -61,6 +62,14 @@ export class LogicalFramesComponent implements OnInit, OnDestroy {
 
   onDelete(logicalFrame: LogicalFrame) {
     this.project.logicalFrames = this.project.logicalFrames.filter(x => x.id !== logicalFrame.id);
+    this.projectService.project.next(this.project);
+  }
+
+  // drag and drop function on a list than can span accross multiple rows
+  drop(event: CdkDragDrop<any>) {
+    this.logicalFrames[event.previousContainer.data.index] = event.container.data.logicalFrame;
+    this.logicalFrames[event.container.data.index] = event.previousContainer.data.logicalFrame;
+    event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }
 

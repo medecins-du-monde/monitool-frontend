@@ -77,7 +77,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[];
   openedSections = {0: true};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
-  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName'];
+  COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
+  COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;

@@ -4,6 +4,7 @@ import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,25 @@ export class ProjectService{
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
-  // TODO : set to false by default and control everywhere to know if it s valid or not
-  public valid = true;
+  // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
+  valid = true;
+
+  // This parameter allows to extend the page
+  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
   }
 
+  get bigPage(): Observable<boolean> {
+    return this.inBigPage.asObservable();
+  }
+
   get hasPendingChanges(): boolean{
     return !this.savedProject.equals(this.currentProject);
   }
+
+  breadcrumbList: BreadcrumbItem[];
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
     this.openedProject.subscribe( (project: Project) => {
@@ -40,6 +50,18 @@ export class ProjectService{
           this.currentProject = project.copy();
         }
       }
+      this.breadcrumbList = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+      ];
     });
   }
 

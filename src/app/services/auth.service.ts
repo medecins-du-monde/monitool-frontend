@@ -33,6 +33,10 @@ export class AuthService {
     return gotResponse;
   }
 
+  public isAuthorised(roles: string[]): boolean {
+    return roles.indexOf(this.user.getValue().type) >= 0;
+  }
+
   public async getCurrentUser(){
     return await this.apiService.get('/resources/myself');
   }

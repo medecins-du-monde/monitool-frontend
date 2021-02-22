@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [ActivityEditComponent],
@@ -22,7 +23,8 @@ import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module'
     MatIconModule,
     MatFormFieldModule,
     IndicatorModalModule,
-    ExtraIndicatorModule
+    ExtraIndicatorModule,
+    DragDropModule
   ],
   exports: [ActivityEditComponent]
 })

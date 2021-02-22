@@ -1,13 +1,12 @@
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
-    <div class="actions" [formGroup]="filtersForm">
-        <div class="actions-group">
+    <div class="actions-group" [formGroup]="filtersForm">
             <div class="action">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
-                    <mat-select formControlName="countries" multiple>
-                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
-                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country">{{country}}</mat-option>
+                    <mat-select [matTooltipShowDelay]="500" matTooltip="{{selectedCountries}}" formControlName="countries" multiple>
+                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0" [matTooltipShowDelay]="500" matTooltip="{{ 'AllCountries' | translate }} ({{countries.length}})">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
+                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country" [matTooltipShowDelay]="500" matTooltip="{{country}}" matTooltipPosition="above">{{country}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -19,9 +18,7 @@
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
-        </div>
-        <div class="actions-group">
-            <div class="action">
+            <div class="action-bar">
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
             <div class="action">
@@ -30,7 +27,6 @@
                     {{ 'CreateNewProject' | translate }}
                 </button>
             </div>
-        </div>
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"
