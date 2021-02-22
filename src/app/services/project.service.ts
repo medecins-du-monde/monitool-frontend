@@ -104,6 +104,7 @@ export class ProjectService{
   }
 
   public async delete(id: string): Promise<void>{
+    console.log('delete')
     const project: any = await this.apiService.get(`/resources/project/${id}`);
     project.active = false;
     await this.apiService.put(`/resources/project/${id}`, project);

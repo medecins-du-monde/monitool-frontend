@@ -117,6 +117,18 @@ export class SitesComponent implements OnInit {
   }
 
   public onRemoveEntity(index: number): void {
+    let entityId = this.entities.controls[index].value.id;
+    console.log('forms', this.project.forms);
+
+    // Remove the deleted entity from forms
+    // for (let i = 0; i < this.project.forms.length; i++) {
+    //   for (let j = 0; j < this.project.forms[i].entities.length; j++) {
+    //     if (this.project.forms[i].entities[j].id === entityId) {
+    //       this.project.forms[i].entities.splice(j, 1);
+    //     }
+    //   }
+    // }
+
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
   }
