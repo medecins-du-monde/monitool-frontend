@@ -8,6 +8,7 @@ import { LogicalFrame } from './logical-frame.model';
 import * as _ from 'lodash';
 import { Group } from './group.model';
 import { User } from './user.model';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 export class Project implements Deserializable {
     id: string;
@@ -28,6 +29,7 @@ export class Project implements Deserializable {
     forms: Form[] = [];
     users: User[];
     visibility: string;
+    parsed?: boolean;
 
     get status(): string{
         if ( this.active ) {
@@ -71,8 +73,8 @@ export class Project implements Deserializable {
         this.rev = (input && input._rev) ? input._rev : null;
         this.name = input ? input.name : null;
         this.active = input ? input.active : true;
-        this.start = input ? new Date(input.start) : new Date();
-        this.end = input ? new Date(input.end) : new Date(this.setDefaultEnd());
+        this.start = input ? DatesHelper.parseDate(input.start) : new Date();
+        this.end = input ? DatesHelper.parseDate(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
         this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
         this.groups = ( input && input.groups ) ? input.groups.map(x => {
@@ -114,26 +116,26 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-      const serialized = {
+        const serialized = {
             active: this.active,
             country: this.country,
             crossCutting: this.formatCrossCutting(),
-            end: this.end ? this.end.toISOString().slice(0, 10) : null,
+            end: this.end ? DatesHelper.dateToString(this.end) : null,
             entities: this.entities.map(x => x.serialize()),
             extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
             groups: this.groups.map(x => x.serialize()),
             name: this.name,
-            start: this.start ? this.start.toISOString().slice(0, 10) : null,
+            start: this.start ? DatesHelper.dateToString(this.start) : null,
             themes: this.themes.map(x => x.id),
             type: this.type,
             users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
             _id: this.id
         };
-      Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
-      return serialized;
+        Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
+        return serialized;
     }
 
     copy(): Project {
@@ -141,6 +143,24 @@ export class Project implements Deserializable {
     }
 
     equals(project: Project): boolean {
-        return JSON.stringify(this) === JSON.stringify(project);
+        const a = new Project();
+        const b = new Project();
+        if (this){
+            Object.assign(a, this);
+        }
+        if (project){
+            Object.assign(b, project);
+        }
+
+        // the 'parsed' property shouldn't interfere in the check if two projects are equal
+        // so we can remove it for the test
+        if (a && 'parsed' in a){
+            delete a.parsed;
+        }
+        if (b && 'parsed' in b){
+            delete b.parsed;
+        }
+
+        return JSON.stringify(a) === JSON.stringify(b);
     }
 }

@@ -1,7 +1,16 @@
+@import "src/assets/theme/size_vars.scss";
+
 #divChart {
   display: block;
-  width: 400px;
+  width: 60%;
   max-height: 400px;
+  @media screen and (max-width: $breakpoint-sm) {
+    width: 70%;
+  }
+  @media screen and (max-width: $breakpoint-xs) {
+    width: 98%;
+    max-height: 500px;
+  }
 }
 
 .chart-field {

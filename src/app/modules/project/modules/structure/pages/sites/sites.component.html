@@ -8,21 +8,21 @@
 </div>
 <div class="mdm-section" [formGroup]="sitesForm">
     <div class="mdm-title">{{ 'CollectionSites' | translate }}</div>
-    <table mat-table [dataSource]="entitiesDataSource" class="mdm-table" formArrayName="entities">
+    <table mat-table cdkDropList (cdkDropListDropped)="onListDrop($event, 'entities')" [dataSource]="entitiesDataSource" class="mdm-table" formArrayName="entities">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element" id="position">
+            <th mat-header-cell class="td-icon" *matHeaderCellDef></th>
+            <td class="td-icon" mat-cell cdkDragHandle *matCellDef="let element" id="position">
                 <mat-icon>unfold_more</mat-icon>
             </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
+            <th mat-header-cell class="column-title" *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameEntity' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
@@ -40,6 +40,7 @@
             </td>
         </ng-container>
 
+
         <!-- End Date Column -->
         <ng-container matColumnDef="end">
             <th mat-header-cell *matHeaderCellDef>{{ 'SpecificEndDate' | translate }}</th>
@@ -53,15 +54,17 @@
             </td>
         </ng-container>
 
+
         <!-- Delete Column -->
         <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element; let i = index" id="delete">
+            <th class="td-icon" mat-header-cell *matHeaderCellDef></th>
+            <td class="td-icon" mat-cell *matCellDef="let element; let i = index" id="delete">
                 <button mat-icon-button color="warn" (click)="onRemoveEntity(i)">
                     <mat-icon>close</mat-icon>
                 </button>
             </td>
         </ng-container>
+
 
         <ng-container matColumnDef="add">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="entitiesDisplayedColumns.length" class="add-row">
@@ -72,17 +75,17 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="entitiesDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: entitiesDisplayedColumns;"></tr>
+        <tr mat-row cdkDrag cdkDragBoundary=".mdm-table" *matRowDef="let row; columns: entitiesDisplayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="['add']"></tr>
     </table>
 </div>
 <div class="mdm-section" [formGroup]="sitesForm">
     <div class="mdm-title">{{ 'Groups' | translate }}</div>
-    <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
+    <table mat-table cdkDropList (cdkDropListDropped)="onListDrop($event, 'groups')" [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
         <!-- Position Column -->
         <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element" id="position">
+            <th mat-header-cell class="td-icon" *matHeaderCellDef></th>
+            <td class="td-icon" mat-cell cdkDragHandle *matCellDef="let element" id="position">
                 <mat-icon>unfold_more</mat-icon>
             </td>
         </ng-container>
@@ -92,7 +95,7 @@
             <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                    <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameGroup' | translate }}">
                 </mat-form-field>
             </td>
         </ng-container>
@@ -118,10 +121,11 @@
             </td>
         </ng-container>
 
+
         <!-- Delete Column -->
         <ng-container matColumnDef="delete">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element; let i = index" id="delete">
+            <th mat-header-cell class="td-icon" *matHeaderCellDef></th>
+            <td mat-cell class="td-icon" *matCellDef="let element; let i = index" id="delete">
                 <button mat-icon-button color="warn" (click)="onRemoveGroup(i)">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -137,7 +141,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="groupsDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: groupsDisplayedColumns;"></tr>
+        <tr mat-row cdkDrag cdkDragBoundary=".mdm-table" *matRowDef="let row; columns: groupsDisplayedColumns;"></tr>
         <tr mat-footer-row *matFooterRowDef="['add']"></tr>
     </table>
 </div>

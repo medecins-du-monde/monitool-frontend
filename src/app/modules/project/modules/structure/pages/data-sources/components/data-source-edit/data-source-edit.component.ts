@@ -1,5 +1,6 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -10,12 +11,29 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 
 @Component({
   selector: 'app-data-source-edit',
   templateUrl: './data-source-edit.component.html',
-  styleUrls: ['./data-source-edit.component.scss']
+  styleUrls: ['./data-source-edit.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class DataSourceEditComponent implements OnInit, OnChanges {
 
@@ -39,6 +57,8 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
     private projectService: ProjectService,
   ) { }
 
@@ -51,6 +71,12 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
         display: `Enum.Periodicity.${value}`
       });
     }
+
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnChanges(): void {
@@ -61,16 +87,27 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
-      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id)), Validators.required],
+      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start, Validators.required],
       end: [this.form.end, Validators.required],
-      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)))
+      elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     });
+    this.projectService.valid = this.dataSourceForm.valid
+    && DatesHelper.validDates(this.dataSourceForm.value.start, this.dataSourceForm.value.end);
     this.dataSourceForm.valueChanges.subscribe((value: any) => {
-      this.projectService.valid = this.dataSourceForm.valid;
+      this.projectService.valid = this.dataSourceForm.valid && DatesHelper.validDates(value.start, value.end);
       this.edit.emit(this.form.deserialize(value));
     });
+  }
+
+  private minLengthArray(min: number): ValidatorFn {
+    return (c: AbstractControl): { [key: string]: boolean } => {
+      if (c.value.length >= min) {
+        return null;
+      }
+      return { minLengthArray: true };
+    };
   }
 
   toggleCustomDate(event: any, selected: string): void {
@@ -140,5 +177,13 @@ export class DataSourceEditComponent implements OnInit, OnChanges {
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  // drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.elements.at(event.previousIndex);
+    const newControls = this.elements.at(event.currentIndex);
+    this.elements.setControl(event.previousIndex, newControls);
+    this.elements.setControl(event.currentIndex, selectedControl);
   }
 }

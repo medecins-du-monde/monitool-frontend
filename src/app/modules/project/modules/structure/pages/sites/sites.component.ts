@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { MatTableDataSource } from '@angular/material/table';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 
 
@@ -14,7 +20,20 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
 @Component({
   selector: 'app-sites',
   templateUrl: './sites.component.html',
-  styleUrls: ['./sites.component.scss']
+  styleUrls: ['./sites.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class SitesComponent implements OnInit {
 
@@ -48,14 +67,17 @@ export class SitesComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev) {
+        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
           this.project = project;
+          project.parsed = true;
           this.sitesForm = this.fb.group({
             entities: this.fb.array(this.project.entities.map(x => FormGroupBuilder.newEntity(project, x))),
             groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))
@@ -63,7 +85,11 @@ export class SitesComponent implements OnInit {
           this.entitiesDataSource.data = this.entities.controls;
           this.groupsDataSource.data = this.groups.controls;
           this.sitesForm.valueChanges.subscribe((value: any) => {
-            value.entities = value.entities.map(x => new Entity(x));
+            let datesValid = true;
+            value.entities = value.entities.map(x => {
+              if (!DatesHelper.validDates(x.start, x.end)) { datesValid = false; }
+              return new Entity(x);
+            });
             const groups = [];
             value.groups.forEach(x => {
               const group = new Group(x);
@@ -72,22 +98,30 @@ export class SitesComponent implements OnInit {
               groups.push(group);
             });
             value.groups = groups;
-            this.projectService.valid = this.sitesForm.valid;
+            this.projectService.valid = this.sitesForm.valid && datesValid;
             this.projectService.project.next(Object.assign(project, value));
           });
         }
       })
+    );
+
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
     );
   }
 
   public onAddNewEntity(): void {
     this.entities.push(FormGroupBuilder.newEntity(this.project));
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   public onRemoveEntity(index: number): void {
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   onEntityRemoved(index: number, id: number): void {
@@ -104,5 +138,22 @@ export class SitesComponent implements OnInit {
   public onRemoveGroup(index: number): void {
     this.groups.removeAt(index);
     this.groupsDataSource.data = this.groups.controls;
+  }
+
+  onListDrop(event: CdkDragDrop<string[]>, type: 'groups' | 'entities') {
+    // Swap the elements around
+    if (type !== 'entities' && type !== 'groups') {
+      return;
+    }
+    const selectedFormArray = this.sitesForm.get(type) as FormArray;
+    const selectedControl = selectedFormArray.at(event.previousIndex);
+    selectedFormArray.removeAt(event.previousIndex);
+    selectedFormArray.insert(event.currentIndex, selectedControl);
+
+    if (type === 'entities') {
+      this.entitiesDataSource.data = this.entities.controls;
+    } else {
+      this.groupsDataSource.data = this.groups.controls;
+    }
   }
 }

@@ -1,11 +1,12 @@
 <mat-card>
+    <ng-content></ng-content>
     <mat-card-header class="card-header">{{ logicalFrame.name }}</mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Date' | translate }}</div>
             <div class="card-info-value">
-                {{ logicalFrame.start ? logicalFrame.start : project.start  | date: 'mediumDate' }} -
-                {{ logicalFrame.end ? logicalFrame.end : project.end | date: 'mediumDate' }}</div>
+                {{ (logicalFrame.start ? logicalFrame.start : project.start ) | localizedDate }} -
+                {{ (logicalFrame.end ? logicalFrame.end : project.end )| localizedDate }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>

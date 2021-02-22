@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -21,7 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatChipsModule,
     MatIconModule,
     MatMenuModule,
-    RouterModule
+    RouterModule,
+    LocalizedDatePipeModule
   ],
   exports: [ProjectComponent]
 })

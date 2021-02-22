@@ -7,11 +7,11 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/classes/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
+import * as _ from 'lodash';
 
 
 
@@ -43,6 +43,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   input: Input;
   inputForm: FormGroup;
   previousInput: Input;
+  private initValue: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
@@ -57,13 +58,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    public datepipe: DatePipe,
     private fb: FormBuilder,
     private inputService: InputService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.projectService.inBigPage.next(false);
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
@@ -164,7 +165,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         );
       }else{
         valuesGroup[e.id] = this.fb.array(
-          Array.from({length: this.countInputCells(e)}, (_, i) => 0)
+          Array.from({length: this.countInputCells(e)}, () => 0)
         );
       }
     }
@@ -180,6 +181,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     };
 
     this.inputForm = this.fb.group(formGroup);
+    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
   }
 
   convertToNumber(val) {
@@ -421,6 +423,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     if (response){
       this.input = new Input(response);
       this.inputForm.get('rev').setValue(this.input.rev);
+      this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
     }
   }
 
@@ -441,9 +444,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   get canBeSaved(){
-    if (!this.input){
-      return true;
+    if (!this.input && this.initValue){
+      // If new values are differents from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
     }
+    // If the coming input it different from our form, we can return true
     if (this.inputForm && this.input){
       return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
     }
@@ -457,7 +462,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   resetInput(){
-    this.inputForm.get('values').setValue(this.input.values);
+    this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.updateTotals(this.inputForm.value);
   }
 
   ngOnDestroy(){

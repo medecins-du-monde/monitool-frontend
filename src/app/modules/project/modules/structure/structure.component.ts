@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-structure',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StructureComponent implements OnInit {
 
-  constructor() { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.inBigPage.next(false);
   }
 
 }

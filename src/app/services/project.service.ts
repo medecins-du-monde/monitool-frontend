@@ -4,6 +4,7 @@ import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +17,57 @@ export class ProjectService{
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
-  // TODO : set to false by default and control everywhere to know if it s valid or not
+  // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
+
+  // This parameter allows to extend the page
+  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
+  }
+
+  get bigPage(): Observable<boolean> {
+    return this.inBigPage.asObservable();
   }
 
   get hasPendingChanges(): boolean{
     return !this.savedProject.equals(this.currentProject);
   }
 
+  breadcrumbList: BreadcrumbItem[];
+
   constructor(private apiService: ApiService, private themeService: ThemeService) {
+    this.openedProject.subscribe( (project: Project) => {
+      if (!this.savedProject) {
+        this.savedProject = project.copy();
+        this.currentProject = project.copy();
+      } else {
+        if ( project.id !== this.savedProject.id ) {
+          this.savedProject = project.copy();
+          this.currentProject = project.copy();
+        } else {
+          this.currentProject = project.copy();
+        }
+      }
+      this.breadcrumbList = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+      ];
+    });
+  }
+
+  // used when changing pages and chosing to not save the changes
+  public discardPendingChanges(): void {
+    this.project = new BehaviorSubject(this.savedProject.copy());
     this.openedProject.subscribe( (project: Project) => {
       if (!this.savedProject) {
         this.savedProject = project.copy();
@@ -43,7 +83,8 @@ export class ProjectService{
     });
   }
 
-  public discardPendingChanges(): void {
+  // used when reverting changes and staying in the same page
+  public revertChanges(): void {
     this.project.next(this.savedProject.copy());
   }
 
@@ -71,6 +112,18 @@ export class ProjectService{
   }
 
   public async save(project: Project): Promise<Project>{
+    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
+    const themes = await this.themeService.list();
+    const savedProject = new Project(response);
+    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+
+    this.savedProject = savedProject.copy();
+    this.currentProject = savedProject.copy();
+    return savedProject;
+  }
+
+  public async saveCurrent(): Promise<Project>{
+    const project = this.currentProject;
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);

@@ -1,3 +1,8 @@
 .searchbar {
-    display: block;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-form-field div{
+    display: flex;
 }

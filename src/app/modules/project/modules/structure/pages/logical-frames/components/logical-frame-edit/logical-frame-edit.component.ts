@@ -10,11 +10,30 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { DateService} from 'src/app/services/date.service';
 
 @Component({
   selector: 'app-logical-frame-edit',
   templateUrl: './logical-frame-edit.component.html',
-  styleUrls: ['./logical-frame-edit.component.scss']
+  styleUrls: ['./logical-frame-edit.component.scss'],
+  // TODO: put the provided information in a shared component if possible
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class LogicalFrameEditComponent implements OnInit, OnChanges {
 
@@ -40,11 +59,18 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
     private projectService: ProjectService,
   ) { }
 
   ngOnInit(): void {
     this.setForm();
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
   }
 
   ngOnChanges(): void {
@@ -62,6 +88,8 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
     });
+    this.projectService.valid = this.logicalFrameForm.valid
+    && DatesHelper.validDates(this.logicalFrameForm.value.start, this.logicalFrameForm.value.end);
     this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.logicalFrameForm.valid;
       this.edit.emit(this.logicalFrame.deserialize(value));
@@ -123,6 +151,20 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  // drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop<string[]>) {
+    const selectedControl = this.purposes.at(event.previousIndex);
+    const newControls = this.purposes.at(event.currentIndex);
+    this.purposes.setControl(event.previousIndex, newControls);
+    this.purposes.setControl(event.currentIndex, selectedControl);
+  }
+
+  // drag and drop function on a form array that can span accross multiple rows
+  dropIndicators(event: CdkDragDrop<any>) {
+    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
+    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
   }
 
 }

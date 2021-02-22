@@ -26,18 +26,21 @@ const routes: Routes = [{
 },
 {
   path: 'projects',
+  data: { roles: ['user']  },
   loadChildren: () => import('./pages/projects/projects.module')
     .then(m => m.ProjectsModule),
   canActivate : [AuthGuard]
 },
 {
   path: 'parameters',
+  data: { roles: ['user']  },
   loadChildren: () => import('./modules/parameters/parameters.module')
     .then(m => m.ParametersModule),
  canActivate : [AuthGuard]
 },
 {
   path: 'indicators',
+  data: { roles: ['user']  },
   loadChildren: () => import('./pages/indicators/indicators.module')
     .then(m => m.IndicatorsModule),
   canActivate : [AuthGuard]

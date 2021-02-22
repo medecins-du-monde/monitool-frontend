@@ -2,8 +2,17 @@
     <p>{{ 'ProjectsUserInfo.0' | translate }}</p>
     <p>{{ 'ProjectsUserInfo.1' | translate }}</p>
 </div>
-<div class="mdm-cards">
-    <app-user *ngFor="let user of users" [user]="user" (delete)="onDelete($event)" (edit)="onEdit($event)" class="mdm-card"></app-user>
+<div class="mdm-section">
+    <div class="mdm-cards" cdkDropListGroup>
+        <div class="mdm-card" *ngFor="let user of users; let i=index" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{user:user,index:i}" (cdkDropListDropped)="drop($event)">
+            <app-user cdkDrag cdkDragBoundary=".mdm-cards" [user]="user" (delete)="onDelete($event)" (edit)="onEdit($event)">
+                <div *cdkDragPlaceholder></div>
+                <div cdkDragHandle>
+                    <mat-icon>drag_indicator</mat-icon>
+                </div>
+            </app-user>
+        </div>
+    </div>
 </div>
 <button mat-stroked-button (click)="openDialog()" class="mdm-button">
     <mat-icon>add</mat-icon>

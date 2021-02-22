@@ -44,7 +44,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   createOptions(): void {
     this.options = [];
-    const numberOfParameters = Object.entries(this.indicator.computation.parameters).length;
+    const numberOfParameters = this.indicator.computation ? Object.entries(this.indicator.computation.parameters).length : 0;
     const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
     if (numberOfParameters > 1){
       this.options.push({
@@ -91,36 +91,39 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     }
 
     if (numberOfParameters === 1){
-      const parameterValue: any = Object.entries(this.indicator.computation.parameters)[0][1];
+      const parameterValue: any = this.indicator.computation ? Object.entries(this.indicator.computation.parameters)[0][1] : null;
 
-      let element;
+      if (parameterValue) {
+        let element;
 
-      let found = false;
-      for (const f of currentProject.forms) {
-        for (const e of f.elements) {
-          if (parameterValue.elementId === e.id) {
-            element = e;
-            found = true;
+        let found = false;
+        for (const f of currentProject.forms) {
+          for (const e of f.elements) {
+            if (parameterValue.elementId === e.id) {
+              element = e;
+              found = true;
+              break;
+            }
+          }
+          if (found){
             break;
           }
         }
-        if (found){
-          break;
+
+        for (const partition of element?.partitions) {
+          if (parameterValue.filter &&
+             (!(partition.id in parameterValue.filter) ||
+               parameterValue.filter[partition.id]?.length === partition.elements?.length)){
+
+            this.options.push({
+              value: partition.name,
+              action: this.partitionOption,
+              partition
+            });
+          }
         }
       }
 
-      for (const partition of element?.partitions) {
-        if (parameterValue.filter &&
-           (!(partition.id in parameterValue.filter) ||
-             parameterValue.filter[partition.id]?.length === partition.elements?.length)){
-
-          this.options.push({
-            value: partition.name,
-            action: this.partitionOption,
-            partition
-          });
-        }
-      }
     }
 
   }
@@ -163,27 +166,30 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     const disaggregatedIndicators = [];
     let newComputation;
 
-    for (const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
-      newComputation = {
-        formula: parameter,
-        parameters: {}
-      };
-      newComputation.parameters[parameter] = value;
+    if (this.indicator.computation) {
+      for (const [parameter, value] of Object.entries(this.indicator.computation.parameters)){
+        newComputation = {
+          formula: parameter,
+          parameters: {}
+        };
+        newComputation.parameters[parameter] = value;
 
-      disaggregatedIndicators.push(new ProjectIndicator({
-        computation: newComputation,
-        display: parameter,
-        baseline: 0,
-        target: 0,
-        originProject: this.indicator.originProject
-      }));
-    }
-    this.addIndicatorsEvent.emit(
-      {
-        indicator: this.indicator,
-        disaggregatedIndicators
+        disaggregatedIndicators.push(new ProjectIndicator({
+          computation: newComputation,
+          display: parameter,
+          baseline: 0,
+          target: 0,
+          originProject: this.indicator.originProject
+        }));
       }
-    );
+      this.addIndicatorsEvent.emit(
+        {
+          indicator: this.indicator,
+          disaggregatedIndicators
+        }
+      );
+    }
+
   }
 
   collectionSitesOption = (): void => {

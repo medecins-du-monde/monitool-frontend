@@ -2,7 +2,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Activity' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="description" placeholder="{{ 'Activity' | translate }}">
+            <input matInput formControlName="description" placeholder="{{ 'Placeholder.LogicalFrame.Result.Activity.Activity' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Activity-Activity-Result-SpecificObjective-Hint' | translate }}
             </mat-hint>
@@ -11,10 +11,15 @@
     <div class= "mdm-section">
         <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
         <div class="indicators-list" formArrayName="indicators">
-            <div class="mdm-cards">
-                <ng-container class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
-                    <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
-                </ng-container>
+            <div class="mdm-cards" cdkDropListGroup>
+                <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
+                    <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
+                        <div *cdkDragPlaceholder></div>
+                        <div class="cards-draghandle" cdkDragHandle>
+                            <mat-icon>drag_indicator</mat-icon>
+                        </div>
+                    </app-extra-indicator>
+                </div>
             </div>
             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
             <mat-hint>

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './components/header/header.module';
@@ -11,6 +10,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
 import { MsalModule } from '@azure/msal-angular';
 import { environment } from 'src/environments/environment';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomHttpInterceptor } from './interceptors/http-interceptor';
 import { LoadingBarModule } from './components/loading-bar/loading-bar.module';
 
@@ -34,6 +36,9 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     HeaderModule,
     LoadingBarModule,
     HttpClientModule,
+    NoopAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     LoginModule,
     NoopAnimationsModule,
     MsalModule.forRoot({
@@ -62,7 +67,9 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     })
   ],
   providers: [
-    DatePipe,
+    {
+      provide: MAT_DATE_LOCALE, useValue: 'en'
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,

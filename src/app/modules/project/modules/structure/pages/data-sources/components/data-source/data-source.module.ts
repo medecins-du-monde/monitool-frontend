@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataSourceComponent } from './data-source.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { DataSourceComponent } from './data-source.component';
+import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
   declarations: [DataSourceComponent],
@@ -18,6 +19,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
     RouterModule,
     MatIconModule,
+    LocalizedDatePipeModule
   ],
   exports: [DataSourceComponent]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { v4 as uuid } from 'uuid';
@@ -8,13 +8,14 @@ import { User } from 'src/app/models/classes/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   countries = [];
   statuses = [
@@ -40,10 +41,16 @@ export class ProjectsComponent implements OnInit {
   allProjects: Project[];
   currentUser: User;
 
+  private subscription: Subscription = new Subscription();
+
   @ViewChild('allSelected') private allSelected: MatOption;
 
   get currentLang(): string{
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  get selectedCountries(): [] {
+    return this.filtersForm.value.countries.filter(countrie => countrie !== '0') as [];
   }
 
   constructor(
@@ -51,7 +58,8 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -66,9 +74,19 @@ export class ProjectsComponent implements OnInit {
       this.onFilterChange();
     });
 
-    this.authService.currentUser.subscribe((user: User) => {
-      this.currentUser = new User(user);
-    });
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.currentUser = new User(user);
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   public getProjects() {
@@ -152,6 +170,7 @@ export class ProjectsComponent implements OnInit {
 
   onToggleAllCountries() {
     if (this.allSelected.selected) {
+      // TODO: Change this thing of the 0.
       this.filtersForm.controls.countries
         .setValue([...this.countries, '0']);
     } else {

@@ -140,6 +140,7 @@ export class CrossCuttingComponent implements OnInit {
         else {
           this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
         }
+        // TODO: Add a control of validity here. Not really necessary for the moment because we will change the structure of this page soon.
         this.projectService.project.next(this.project);
         }
     });
