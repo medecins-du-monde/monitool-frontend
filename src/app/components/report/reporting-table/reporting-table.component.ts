@@ -86,8 +86,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
   isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
 
-  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined)
-  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined)
+  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
+  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
     this.subscription.add(
@@ -270,7 +270,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       Object.assign(customFilter, row.customFilter);
     }
 
-    
+
     if (this.checkPeriodicityIsValid(row)){
       this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
         response => {
@@ -286,7 +286,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               fill: false
             };
             row.values = response;
-  
+
             if (row.onChart){
               this.updateChart();
             }
@@ -321,11 +321,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     let highestPeriodicity = 'day';
 
     for (const value of Object.values(row.computation.parameters)){
-      const varId = value['elementId'];
+      const varId = value.elementId;
       currentProject.forms.forEach(form => {
         if (form.elements.find(element => element.id === varId)){
           if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]){
-            highestPeriodicity = form.periodicity
+            highestPeriodicity = form.periodicity;
           }
         }
       });
@@ -413,9 +413,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }else{
         this.chartService.changeType('line');
       }
-  
+
       const datasets = [];
-  
+
       for (const row of this.dataSource.data){
         if (row.onChart){
           datasets.push(Object.assign({}, row.dataset));
@@ -576,15 +576,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     // don't set any color if the row don't want colors or the value is NaN
     if (!element.colorize || this.checkIfNaN(element?.values[column])){
-      return ''
+      return '';
     }
-    
+
     const distance = element.target - element.baseline;
 
     let r = 255;
     let g = 128;
     const b = 128;
-  
+
     // if the value is lower than the baseline, we choose red
     if (element.values[column] <= element.baseline){
       r = 255;
@@ -610,7 +610,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (distance < 0){
       const aux = g;
       g = r;
-      r = aux
+      r = aux;
     }
 
     return `rgb(${r}, ${g}, ${b})`;
@@ -630,7 +630,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   checkIfNaN(x: unknown): boolean{
     return isNaN(x);
   }
-  
+
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }

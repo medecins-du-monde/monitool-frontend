@@ -29,13 +29,13 @@ export class ObjectGroupingComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.forms = project.forms;
-      
+
       if (!this.isCrosscuttingReport){
         for (const form of this.project.forms) {
           if (form.periodicity !== 'month' && form.periodicity !== 'quarter' && form.periodicity !== 'semester' && form.periodicity !== 'year') {
-            let obj = {value: '', viewValue: ''};
+            const obj = {value: '', viewValue: ''};
             obj.value = form.periodicity;
-            obj.viewValue = 'TimePeriods.' + form.periodicity
+            obj.viewValue = 'TimePeriods.' + form.periodicity;
             this.groupOptions.unshift(obj);
           }
         }
