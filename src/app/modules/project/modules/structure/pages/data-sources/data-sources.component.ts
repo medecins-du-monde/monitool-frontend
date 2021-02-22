@@ -57,7 +57,7 @@ export class DataSourcesComponent implements OnInit, OnDestroy{
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
     this.projectService.project.next(this.project);
   }
-  
+
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>) {
     this.forms[event.previousContainer.data.index] = event.container.data.form;
