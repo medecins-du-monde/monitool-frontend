@@ -1,4 +1,4 @@
 
 <ul>
-    <li *ngFor="let element of output">{{ element.translationKey | translate : element }}</li>
+    <li *ngFor="let element of output" [innerHTML]="element.translationKey | translate : element"></li>
 </ul>
