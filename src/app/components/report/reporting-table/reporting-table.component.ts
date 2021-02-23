@@ -408,7 +408,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       element.onChart = !element.onChart;
     }
 
-    if (!element.error) {
+    if (element && !element.error) {
       if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
         this.chartService.changeType('bar');
       }else{

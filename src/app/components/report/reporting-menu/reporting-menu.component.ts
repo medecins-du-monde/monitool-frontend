@@ -24,6 +24,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   @Input() dimensionName: string;
   options: any[];
   open: boolean;
+  hasEntities: boolean = true;
   @Output() addIndicatorsEvent: EventEmitter<AddedIndicators> = new EventEmitter<AddedIndicators>();
   @Output() collapseIndicatorsEvent: EventEmitter<{indicator: InfoRow}> = new EventEmitter<{indicator: InfoRow}>();
 
@@ -38,6 +39,11 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.createOptions();
+
+        if (!this.project.entities.length) {
+          this.hasEntities = false;
+        }
+
       })
     );
   }

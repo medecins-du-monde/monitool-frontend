@@ -3,6 +3,7 @@ import {  FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
+import { TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
 
 @Component({
   selector: 'app-object-grouping',
@@ -33,10 +34,38 @@ export class ObjectGroupingComponent implements OnInit {
       if (!this.isCrosscuttingReport){
         for (const form of this.project.forms) {
           if (form.periodicity !== 'month' && form.periodicity !== 'quarter' && form.periodicity !== 'semester' && form.periodicity !== 'year') {
-            const obj = {value: '', viewValue: ''};
-            obj.value = form.periodicity;
-            obj.viewValue = 'TimePeriods.' + form.periodicity;
-            this.groupOptions.unshift(obj);
+            if (form.periodicity === 'day') {
+              this.groupOptions = [
+                {value: 'day', viewValue: 'TimePeriods.day'},
+                {value: 'month_week_sat', viewValue: 'TimePeriods.month_week_sat'},
+                {value: 'month_week_sun', viewValue: 'TimePeriods.month_week_sun'},
+                {value: 'month_week_mon', viewValue: 'TimePeriods.month_week_mon'},
+                {value: 'week_sat', viewValue: 'TimePeriods.week_sat'},
+                {value: 'week_sun', viewValue: 'TimePeriods.week_sun'},
+                {value: 'week_mon', viewValue: 'TimePeriods.week_mon'},
+              ];
+              break;
+            } else if (form.periodicity === 'month_week_mon') {
+              this.groupOptions = this.groupOptions.concat([
+                {value: 'month_week_mon', viewValue: 'TimePeriods.month_week_mon'},
+                {value: 'week_mon', viewValue: 'TimePeriods.week_mon'}
+              ])
+            } else if (form.periodicity === 'month_week_sun') {
+              this.groupOptions = this.groupOptions.concat([
+                {value: 'month_week_sun', viewValue: 'TimePeriods.month_week_sun'},
+                {value: 'week_sun', viewValue: 'TimePeriods.week_sun'}
+              ])
+            } else if (form.periodicity === 'month_week_sat') {
+              this.groupOptions = this.groupOptions.concat([
+                {value: 'month_week_sat', viewValue: 'TimePeriods.month_week_sat'},
+                {value: 'week_sat', viewValue: 'TimePeriods.week_sat'}
+              ])
+            } else {
+              const obj = {value: '', viewValue: ''};
+              obj.value = form.periodicity;
+              obj.viewValue = 'TimePeriods.' + form.periodicity;
+              this.groupOptions.unshift(obj);
+            }
           }
         }
       }
