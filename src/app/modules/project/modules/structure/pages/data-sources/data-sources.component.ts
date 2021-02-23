@@ -44,7 +44,55 @@ export class DataSourcesComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
+  changeComputation(formVariables, obj: Object) {
+    //See if any variable id from the deleted datasource match an ID in the computation parameters
+    for (const val of Object.values(obj)) {
+      const matchingId = formVariables.filter( formVariable => formVariable === val['elementId']);
+      if (matchingId.length) {
+        return true
+      }
+    }
+  }
+
   onDelete(form: Form) {
+    //Get all the variables id from the deleted datasource
+    let formVariables = [];
+    form.elements.forEach(el => {
+      formVariables.push(el.id)
+    });
+
+    //Delete datasource from extra indicators computation
+    this.project.extraIndicators.map(extraIndicator => {
+      const params = extraIndicator.computation.parameters;
+      //If the deleted ddatasource was used in the computation of this indicator, set computation to null
+      if(this.changeComputation(formVariables, params)) {
+        extraIndicator.computation = null;
+      }
+    });
+
+    //Delete datasource from logical frames
+    this.project.logicalFrames.map(logicalFrame => {
+      console.log('logical frame', logicalFrame);
+
+      //Delete from purpose indicators
+      logicalFrame.purposes.forEach(purpose => {
+        purpose.indicators.forEach(indicator => {
+          const params = indicator.computation.parameters;
+          if(this.changeComputation(formVariables, params)) {
+            indicator.computation = null;
+          }
+        })
+      })
+
+      //Delete from indicators
+      logicalFrame.indicators.forEach(indicator => {
+        const params = indicator.computation.parameters;
+        if(this.changeComputation(formVariables, params)) {
+          indicator.computation = null;
+        }
+      })
+    });
+
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
     this.projectService.project.next(this.project);
   }

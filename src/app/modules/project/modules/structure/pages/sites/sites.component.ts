@@ -13,6 +13,7 @@ import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import DatesHelper from 'src/app/utils/dates-helper';
+import { update } from 'lodash';
 
 
 
@@ -118,16 +119,21 @@ export class SitesComponent implements OnInit {
 
   public onRemoveEntity(index: number): void {
     let entityId = this.entities.controls[index].value.id;
-    console.log('forms', this.project.forms);
+
+    //TODO
+    //Make sure it doesnt break the project when the deleted entity is part of a group
 
     // Remove the deleted entity from forms
-    // for (let i = 0; i < this.project.forms.length; i++) {
-    //   for (let j = 0; j < this.project.forms[i].entities.length; j++) {
-    //     if (this.project.forms[i].entities[j].id === entityId) {
-    //       this.project.forms[i].entities.splice(j, 1);
-    //     }
-    //   }
-    // }
+    this.project.forms.map(form => {
+      form.entities = form.entities.filter(entity => entity.id !== entityId);
+    })
+
+    //Remove the deleted entity from logicalFrames
+    this.project.logicalFrames.map(logicalFrame => {
+      logicalFrame.entities = logicalFrame.entities.filter(entity => entity.id !== entityId)
+    })
+
+    console.log('removed', this.project);
 
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
