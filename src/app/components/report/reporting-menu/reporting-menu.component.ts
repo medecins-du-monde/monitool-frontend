@@ -24,7 +24,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   @Input() dimensionName: string;
   options: any[];
   open: boolean;
-  hasEntities: boolean = true;
+  hasEntities = true;
   @Output() addIndicatorsEvent: EventEmitter<AddedIndicators> = new EventEmitter<AddedIndicators>();
   @Output() collapseIndicatorsEvent: EventEmitter<{indicator: InfoRow}> = new EventEmitter<{indicator: InfoRow}>();
 

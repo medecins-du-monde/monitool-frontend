@@ -49,17 +49,17 @@ export class ObjectGroupingComponent implements OnInit {
               this.groupOptions = this.groupOptions.concat([
                 {value: 'month_week_mon', viewValue: 'TimePeriods.month_week_mon'},
                 {value: 'week_mon', viewValue: 'TimePeriods.week_mon'}
-              ])
+              ]);
             } else if (form.periodicity === 'month_week_sun') {
               this.groupOptions = this.groupOptions.concat([
                 {value: 'month_week_sun', viewValue: 'TimePeriods.month_week_sun'},
                 {value: 'week_sun', viewValue: 'TimePeriods.week_sun'}
-              ])
+              ]);
             } else if (form.periodicity === 'month_week_sat') {
               this.groupOptions = this.groupOptions.concat([
                 {value: 'month_week_sat', viewValue: 'TimePeriods.month_week_sat'},
                 {value: 'week_sat', viewValue: 'TimePeriods.week_sat'}
-              ])
+              ]);
             } else {
               const obj = {value: '', viewValue: ''};
               obj.value = form.periodicity;
