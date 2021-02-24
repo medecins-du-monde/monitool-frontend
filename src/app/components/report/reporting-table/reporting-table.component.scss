@@ -36,19 +36,24 @@
     overflow: hidden;
     width: 85px;
     margin-right: 30px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     border: solid 1px #e7e7e7 !important;
   }
   
   .mat-column {
     width: 50px;
   }
-  
   td {
     font-size : $small_text;
     text-align: center;
     border: solid 1px #e7e7e7 !important;
+    &.value-cell{
+      border-left-width: 1px;
+      border-left-style: solid;
+      border-left-color: rgba(0, 0, 0, 0.12);
+      &.empty{
+        background-color: rgb(238, 238, 238);
+      }
+    }    
   }
   
   th.mat-header-cell {
@@ -74,9 +79,6 @@
     background: #efefef;
   }
   
-  .example-element-row td {
-    border-bottom-width: 0;
-  }
   
   .example-element-detail {
     overflow: hidden;
@@ -85,6 +87,15 @@
   .gradient-background{
     background-image: repeating-linear-gradient(-45deg, rgb(255, 255, 255), rgb(255, 255, 255) 3px, rgb(240, 240, 240) 0px, rgb(240, 240, 240) 6px);
   }
+
+  .error{
+    background-color: rgb(238, 238, 238);
+    text-align: left;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: rgba(0, 0, 0, 0.12);
+    padding-left: 5px;
+  } 
   
   .menu {
     display: flex;
@@ -98,6 +109,11 @@
       white-space: nowrap;
     }
     
+  }
+
+  .mat-icon.NaN{
+    font-size: $very_small_text;
+    line-height: 24px;
   }
   
   .groupName{

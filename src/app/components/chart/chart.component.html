@@ -2,5 +2,13 @@
 <div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
     <div id="divChart">
         <canvas id="currentChart"></canvas>
+        <div class="floating-button">
+            <a [href]="downloadChart" download="chart.png" class="mat-button mdm-button small-button">
+                <mat-icon>play_for_work</mat-icon>
+                <span>
+                    {{ 'DownloadPlot' | translate }}
+                </span>
+            </a>
+        </div>
     </div>
 </div>
