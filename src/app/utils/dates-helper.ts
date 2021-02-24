@@ -15,6 +15,13 @@ export default class DatesHelper {
     }
   }
 
+  // TODO: Create a custom validation helper for that
+  static validDates(startDate: Date, endDate: Date): boolean {
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    return startDate.getTime() < endDate.getTime();
+  }
+
   static parseDate(date: string | Date): Date {
     // converts a string in the format YYYY-mm-dd to Date
     // this format is used for every date in the database

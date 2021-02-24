@@ -4,7 +4,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Name' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
+                <input matInput formControlName="name" placeholder="{{ 'Placeholder.LogicalFrame.Name' | translate }}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'NameLogicalFramework-Hint' | translate }}
                 </mat-hint>
@@ -13,7 +13,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
+                <mat-select formControlName="entities" placeholder="{{ 'Placeholder.LogicalFrame.CollectionSites' | translate }}" multiple>
                     <mat-select-trigger>
                         <mat-chip-list>
                             <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
@@ -71,7 +71,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'GeneralObjective' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput formControlName="goal" placeholder="{{ 'GeneralObjective' | translate }}">
+                <input matInput formControlName="goal" placeholder="{{ 'Placeholder.LogicalFrame.GeneralObjective' | translate }}">
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'GeneralObjective-Hint' | translate }}
                 </mat-hint>
@@ -80,10 +80,15 @@
       <div class= "mdm-section" >
             <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
             <div class="indicators-list" formArrayName="indicators">
-                <div class="mdm-cards">
-                    <ng-container class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index">
-                        <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)"></app-extra-indicator>
-                    </ng-container>
+                <div class="mdm-cards" cdkDropListGroup>
+                    <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">
+                        <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
+                            <div *cdkDragPlaceholder></div>
+                            <div class="cards-draghandle" cdkDragHandle>
+                                <mat-icon>drag_indicator</mat-icon>
+                            </div>
+                        </app-extra-indicator>
+                    </div>
                 </div>
                 <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
                 <mat-hint>
@@ -96,18 +101,16 @@
 <div class="mdm-section">
     <div class="mdm-title">{{ 'SpecificObjective' | translate }}</div>
     <div [formGroup]="logicalFrameForm">
-        <mat-accordion formArrayName="purposes">
-            <ng-container *ngFor="let purpose of purposes.controls; let i=index;">
-                <mat-expansion-panel [formGroupName]="i">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>{{ 'SpecificObjective' | translate }} {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
-                        <mat-panel-description>
-                            <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <app-purpose-edit [purposeForm]="purpose" [forms]="project.forms" (edit)="onEditPurpose($event, i)"></app-purpose-edit>
-                </mat-expansion-panel>
-            </ng-container>
+        <mat-accordion formArrayName="purposes" cdkDropList (cdkDropListDropped)="drop($event)">
+            <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag>
+                <mat-expansion-panel-header>
+                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'SpecificObjective' | translate }} {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
+                    <mat-panel-description>
+                        <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <app-purpose-edit [purposeForm]="purpose" (edit)="onEditPurpose($event, i)"></app-purpose-edit>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>

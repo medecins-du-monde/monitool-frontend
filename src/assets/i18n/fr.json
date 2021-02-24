@@ -39,6 +39,7 @@
     "Countries": "Pays",
     "Country": "Pays",
     "CoveredPeriod": "Période couverte",
+    "Restore": "Restaurer",
     "Create": "Saisir",
     "CreateNewDataSource": "Créer une nouvelle source de données",
     "CreateLogicalFramework":"Créer un cadre logique vierge",
@@ -84,7 +85,10 @@
         "GroupsHint": "Les groupes permettent de faire des aggrégations intermédiaires",
         "OrderTitle": "Dans quel ordre placer les intitulés des désagrégations dans les formulaires?",
         "OrderHint": "Dans quel ordre voulez vous placer vos désagrégations dans les différentes lignes et colonnes?",
-        "Title" : "Intitulés"
+        "Title" : "Intitulés",
+        "Placeholder" : {
+            "Name" : "ex: Moins de 12 ans, Homme, Consultation sociale, Grippe ou Réferencement communautaire, ..."
+        }
     },
     "Description": "Description",
     "Done": "Réalisé",
@@ -133,6 +137,7 @@
         }
 
     },
+    "ErrorNoCollectionSiteAssociated": "Cette source de données n'est associé à aucun lieu de collecte.",
     "es": "Espagnol",
     "EquivalentVersion" : "Ce point est équivalent à l'état actuel du projet",
     "EveryMonth": "Tous les mois",
@@ -356,7 +361,8 @@
     "IndicatorEdition": "Édition indicateur",
     "IndicatorEditionPlaceholder": {
         "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
-        "Name": "Volume de formation"
+        "Name": "Volume de formation",
+        "Thematics": "ex: Soins de santé primaire"
     },
     "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
     "Input": "Saisir",
@@ -399,8 +405,40 @@
     "PartitionsHint": " Veut-t'on être capable de différencier <code>{{name}}</code> par age, sexe, prise en charge, motif de consultation, pathologie, tranche horaire, reférencement effectif, ...? Ne désagrégez pas ici par zone géographique ou site d'intervention: vos lieux de collecte ont déjà été renseignés dans la page prévu à cet effet.",
     "PartnerAuthentication": "Authentification des partenaires",
     "Password": "Mot de passe",
+    "Placeholder": {
+        "Basic" : {
+            "Country": "ex: RCA",
+            "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
+            "Thematics": "ex: Soins de santé primaire"
+        },
+        "Sites": {
+            "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
+            "NameGroup" : "ex: Hôpitaux régionaux, parti Nord du pays, ..."
+        },
+        "LogicalFrame": {
+            "Name": "e.x. ECHO",
+            "CollectionSites": "Aucun élément selectionné",
+            "GeneralObjective": "ex: Réduire la mortalité et la morbidité des populations affectées par la crise",
+            "SpecificObjective": "ex: Améliorer l'accès aux soins des populations affectées par la crise dans les districts de Bimbo et Begoua",
+            "Result" : {
+                "Description" : "ex: Améliorer la qualité des soins de première ligne des centres de santé de Bimbo et Begoua",
+                "Activity": {
+                    "Activity": "ex: Réalisation de sessions de sensibilisation sur la transmission du VIH"
+                }
+            }
+        }
+        ,
+        "LogicalFrameIndicator": {
+            "Name": "ex: Taux de CPN1 au sein des structures de santé",
+            "Computation": {
+                "Fixed": "Entrez ici la valeur fixe de l'indicateur"
+            }
+        },
+        "Themes" : {
+            "Name" : "i.e. Santé Sexuelle et Reproductive"
+        }
+    },
     "Periodicity": "Périodicité",
-    "ProjectBasicsInfo": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",
     "ProjectDataSourceInfo": [
         "Les sources de données sont les différents supports desquels les données nécessaires au monitoring du projet sont extraites (fiches de suivi, dossiers patient, fichiers Excel, ...)",
         "Au sein de monitool, on ne décrira pas l'intégralité des données existantes, mais uniquement la partie qui va être extraite pour le suivi du projet",
@@ -429,6 +467,7 @@
         "Listez vos outils de collecte de donnée (Excel, papier, ...) ainsi que d'autres sources de données (SNIS, enquêtes...) que vous utiliserez pour calculer vos indicateurs, en renseignant leur periodicité et sites de collecte et leur contenu"
     ],
     "ProjectRole": "Création projets",
+    "Project": "Projet",
     "Projects": "Projets",
     "ProjectSitesInfo": [
         "Lorsqu'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles.",
@@ -478,7 +517,7 @@
     "SaveConfirm": "Sauvegardez pour confirmer de revenir à ce point",
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
-    "Search": "Chercher",
+    "Search": "Rentrez du texte pour filtrer les projets",
     "SearchHelp": "Chercher un nom, pays et thématique",
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
@@ -565,6 +604,7 @@
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
+    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
     "EMail-Hint":"Indiquez votre adresse e-mail",
     "Name-Hint":"Indiquez votre Nom complet",
     "NameLogicalFramework-Hint": "Nommez ce cadre logique de façon à l'identifier facilement. Par exemple avec le nom du bailleur auquel il est destiné",
@@ -583,8 +623,6 @@
     "Result":"Résultat",
     "Activity":"Activité",
     "GeneralObjective-Hint":" Description de la contribution du projet aux objectifs (impact) d'une politique ou d'un programme",
-    "Name-Hint2":"Assurez-vous de mettre le bon nom pour chaque langue",
-    "description-Hint":"Assurez-vous de mettre la bonne description pour chaque langue",
     "WrongCredentials": "Le nom d'utilisateur ou le mot de passe est incorrect. S' il vous plaît, essayez encore",
     "Parameter": "Paramètre",
     "Variable": "Variable",

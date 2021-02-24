@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
+import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class IndicatorModalComponent implements OnInit {
 
   themes: Theme[];
 
+  dictionary = {};
+
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -30,6 +33,7 @@ export class IndicatorModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private translateService: TranslateService,
+    private forceTranslateService: ForceTranslateService,
     private themeService: ThemeService,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Indicator
@@ -57,6 +61,14 @@ export class IndicatorModalComponent implements OnInit {
         this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
       }
     });
+
+    this.languages.forEach(language => this.forceTranslateService.getData(language).subscribe( data => {
+      this.dictionary[`${language}`] = data;
+    }));
+  }
+
+  getLanguageDictionary(language: string) {
+    return this.dictionary[`${language}`];
   }
 
   onSubmit() {
