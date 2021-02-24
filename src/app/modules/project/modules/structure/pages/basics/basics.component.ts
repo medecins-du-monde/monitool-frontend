@@ -11,6 +11,8 @@ import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { DateService} from 'src/app/services/date.service';
 
+import DatesHelper from 'src/app/utils/dates-helper';
+
 @Component({
   selector: 'app-basics',
   templateUrl: './basics.component.html',
@@ -61,9 +63,9 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.basicsForm = this.fb.group({
           country: [project.country, Validators.required],
           name: [project.name, Validators.required],
-          themes: [project.themes.map(x => x.id), Validators.required],
+          themes: [project.themes.map(x => x.id)],
           start: [project.start, Validators.required],
-          end: [project.end, Validators.required],
+          end: [project.end, [Validators.required, DatesHelper.dateIsAfterControlValueValidator('start', this.basicsForm)]],
           visibility: [project.visibility, Validators.required]
         });
         this.basicsForm.valueChanges.subscribe((value: any) => {

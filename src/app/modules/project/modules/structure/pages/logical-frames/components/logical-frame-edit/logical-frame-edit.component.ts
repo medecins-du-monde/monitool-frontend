@@ -124,7 +124,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       name: [this.logicalFrame.name, Validators.required],
       entities: [this.entities.filter(x => this.logicalFrame.entities.map(e => e.id).includes(x.id)), Validators.required],
       start: [this.logicalFrame.start, Validators.required],
-      end: [this.logicalFrame.end, Validators.required],
+      end: [this.logicalFrame.end, [Validators.required, DatesHelper.dateIsAfterControlValueValidator('start', this.logicalFrameForm)]],
       goal: [this.logicalFrame.goal, Validators.required],
       indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
@@ -147,8 +147,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   isCustom(selected: string): boolean {
-    return this.logicalFrameForm.get(selected).value &&
-      !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
+    return this.project && this.logicalFrameForm
+      && !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
   }
 
   onEntityRemoved(entity: Entity): void {

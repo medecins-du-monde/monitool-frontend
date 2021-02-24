@@ -10,7 +10,7 @@
     <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="display" placeholder="{{ 'Name' | translate }}">
+            <input matInput formControlName="display" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Name' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
             </mat-hint>
@@ -57,7 +57,7 @@
     </div>
     <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput type="string" formControlName="formula" placeholder="{{ 'Enum.Computation.fixed' | translate }}">
+            <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
         </mat-form-field>
     </div>
 

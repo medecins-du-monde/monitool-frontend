@@ -6,14 +6,14 @@
             <div class="card-info-value"><b>{{ 'Description' | translate }}: </b>{{ extraIndicator.description ? extraIndicator.description.en : null }}</div>
         </div>
         <div class="card-info">
-            <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>{{ extraIndicator.baseline ? extraIndicator.baseline : '?' }}</div>
+            <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>{{ extraIndicator.baseline === null ? '?' : extraIndicator.baseline }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-value"><b>{{ 'Target' | translate }}: </b>{{ extraIndicator.target ? extraIndicator.target : '?' }}</div>
         </div>
         <div class="card-info">
             <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
-                <span *ngIf="extraIndicator.computation; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
+                <span *ngIf="extraIndicator.computation.formula; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
                 <ng-template #elseBlock><span class="computation invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>
             </div>
         </div>

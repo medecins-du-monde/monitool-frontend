@@ -18,7 +18,7 @@ export class ProjectService {
 
   project: BehaviorSubject<Project> = new BehaviorSubject(null);
 
-  // TODO : set to false by default and control everywhere to know if it s valid or not
+  // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
 
   // This parameter allows to extend the page
@@ -67,7 +67,26 @@ export class ProjectService {
     });
   }
 
+  // used when changing pages and chosing to not save the changes
   public discardPendingChanges(): void {
+    this.project = new BehaviorSubject(this.savedProject.copy());
+    this.openedProject.subscribe( (project: Project) => {
+      if (!this.savedProject) {
+        this.savedProject = project.copy();
+        this.currentProject = project.copy();
+      } else {
+        if ( project.id !== this.savedProject.id ) {
+          this.savedProject = project.copy();
+          this.currentProject = project.copy();
+        } else {
+          this.currentProject = project.copy();
+        }
+      }
+    });
+  }
+
+  // used when reverting changes and staying in the same page
+  public revertChanges(): void {
     this.project.next(this.savedProject.copy());
   }
 
@@ -108,7 +127,19 @@ export class ProjectService {
     return savedProject;
   }
 
-  public async delete(id: string): Promise<void> {
+  public async saveCurrent(): Promise<Project>{
+    const project = this.currentProject;
+    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
+    const themes = await this.themeService.list();
+    const savedProject = new Project(response);
+    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+
+    this.savedProject = savedProject.copy();
+    this.currentProject = savedProject.copy();
+    return savedProject;
+  }
+
+  public async delete(id: string): Promise<void>{
     const project: any = await this.apiService.get(`/resources/project/${id}`);
     project.active = false;
     await this.apiService.put(`/resources/project/${id}`, project);

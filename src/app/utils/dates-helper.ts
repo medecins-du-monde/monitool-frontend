@@ -1,3 +1,4 @@
+import { FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
 import moment from 'moment';
 
 export default class DatesHelper {
@@ -13,6 +14,29 @@ export default class DatesHelper {
     else {
       return false;
     }
+  }
+
+  static dateIsAfterControlValueValidator(controlName: string, formGroup: FormGroup): ValidatorFn {
+    return (control: AbstractControl) => {
+      if (!formGroup) {
+        return null;
+      }
+      const value: Date = formGroup.get(controlName).value ? new Date(formGroup.get(controlName).value) : null;
+      console.log('first', value);
+      console.log('then', new Date(control.value));
+      if (!value || !control.value || value.getTime() < new Date(control.value).getTime()) {
+        return null;
+      }
+
+      return { dateAfter: true };
+    };
+  }
+
+  // TODO: Create a custom validation helper for that
+  static validDates(startDate: Date, endDate: Date): boolean {
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    return startDate.getTime() < endDate.getTime();
   }
 
   static parseDate(date: string | Date): Date {
