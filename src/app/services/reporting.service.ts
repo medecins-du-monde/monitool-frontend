@@ -36,7 +36,7 @@ export class ReportingService {
 
     // No need to load if value is fixed.
     if (Object.keys(computation.parameters).length === 0) {
-      const value =  parseFloat(computation.formula);
+      const value = computation.formula === null ? null : parseFloat(computation.formula);
       let result = computation.formula;
       for (let i = dimensionIds.length - 1; i >= 0; --i) {
         const dimId = dimensionIds[i];

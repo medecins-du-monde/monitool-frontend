@@ -33,6 +33,8 @@
     "CloneProject": "Clone Project",
     "CloneProjectInfo": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
+    "DeleteProject": "Delete Project",
+    "DeleteProjectInfo": "Are you sure that you want to delete this project? Confirm to delete.",
     "CollectionSites": "Collection sites",
     "CollectionSites-Hint": " Among sites identified in \"Collection sites\", which one are relevant for this logical framework?",
     "Colorize": "Colorize",
@@ -100,6 +102,7 @@
     "Done": "Done",
     "DownloadPdfLandscape": "Download PDF (landscape)",
     "DownloadPdfPortrait": "Download PDF (portrait)",
+    "DownloadPlot": "Download",
     "EMail-Hint": "Enter your e-mail address",
     "Edit": "Edit",
     "Email": "Email",
@@ -556,6 +559,20 @@
     "Thematics": "Thematics",
     "TimeAggregation": "How to group entries from different periods?",
     "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
+    "TimePeriods": {
+        "day": "Day",
+        "month_week_mon": "Week (monday to sunday / split by month)",
+        "month_week_sat": "Week (saturday to friday / split by month)",
+        "month_week_sun": "Week (sunday to saturday / split by month)",
+        "week_mon": "Week (monday to sunday)",
+        "week_sat": "Week (saturday to friday)",
+        "week_sun": "Week (sunday to saturday)",
+        "month": "Month",
+        "quarter": "Quarter",
+        "semester": "Semester",
+        "year": "Year",
+        "free": "Free"
+    },
     "Tooltip": {
         "BasicsEdition": {
             "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",

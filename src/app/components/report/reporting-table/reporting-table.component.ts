@@ -1,4 +1,5 @@
 // tslint:disable: variable-name
+// tslint:disable:no-string-literal
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -6,8 +7,8 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
-import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import { isArray, round } from 'lodash';
+import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
+import { isArray, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
@@ -33,6 +34,7 @@ export interface InfoRow {
   icon: boolean;
   name: string;
   baseline: number | null;
+  colorize?: boolean;
   target: number | null;
   sectionId: number;
   values: any;
@@ -45,6 +47,7 @@ export interface InfoRow {
   nextRow: Row;
   open: boolean;
   level: number;
+  error?: string;
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -77,12 +80,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   columnsToDisplay: string[];
   openedSections = {0: true};
   COLUMNS_TO_DISPLAY =  ['icon', 'name', 'baseline', 'target'];
+  COLUMNS_TO_DISPLAY_ERROR =  ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
   isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+
+  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
+  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
     this.subscription.add(
@@ -229,6 +236,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
+      colorize: indicator.colorize !== undefined ? indicator.colorize : false,
       target: indicator.target,
       sectionId: 0,
       values: {},
@@ -264,29 +272,86 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       Object.assign(customFilter, row.customFilter);
     }
 
-    this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
-      response => {
-        if (response) {
-          this.roundResponse(response);
-          const data = this.formatResponseToDataset(response);
-          row.dataset = {
-            label: row.name,
-            data,
-            labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
-            borderColor: this.randomColor(),
-            backgroundColor: this.randomColor(),
-            fill: false
-          };
-          row.values = response;
 
-          if (row.onChart){
-            this.updateChart();
+    if (this.checkPeriodicityIsValid(row)){
+      this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
+        response => {
+          if (response) {
+            this.roundResponse(response);
+            const data = this.formatResponseToDataset(response);
+            row.dataset = {
+              label: row.name,
+              data,
+              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+              borderColor: this.randomColor(),
+              backgroundColor: this.randomColor(),
+              fill: false
+            };
+            row.values = response;
+
+            if (row.onChart){
+              this.updateChart();
+            }
           }
         }
-      }
-    );
+      );
+    }
 
     return row;
+  }
+
+  // checks if the current row is compatible with the time periodicity chosen
+  // normally, the row is compatible if: the row periodicity is smaller or equal to the global periodicity
+  // the week-type periods are a special case
+  checkPeriodicityIsValid(row: InfoRow): boolean{
+    row.error = undefined;
+    if (!row.computation) {
+      row.error = 'Calculation is missing';
+      return false;
+    }
+
+    let currentProject: Project = new Project();
+    if (this.project){
+      currentProject = this.project;
+    }
+    if (row.originProject){
+      currentProject = row.originProject;
+    }
+
+    // the periodicity that represents the row is the biggest periodicity of all the datasources that
+    // constitute the parameters to the computation
+    let highestPeriodicity = 'day';
+
+    for (const value of Object.values(row.computation.parameters)){
+      const varId = value['elementId'];
+      currentProject.forms.forEach(form => {
+        if (form.elements.find(element => element.id === varId)){
+          if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]){
+            highestPeriodicity = form.periodicity;
+          }
+        }
+      });
+    }
+
+    // when the chosen periodicity and the row periodicity are both week-type,
+    // they only work togheter if they are the same
+
+    // this check if the chosen periodicity is one of the week-types
+    if (TimeSlotOrder[this.dimensionIds.value] > TimeSlotOrder.day && TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder.month &&
+        // this checks the same thing for the row periodicity
+        TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
+
+      if (this.dimensionIds.value !== highestPeriodicity){
+        row.error = 'TimePeriods.' + highestPeriodicity;
+        return false;
+      }
+    }
+
+    if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
+      row.error = 'TimePeriods.' + highestPeriodicity;
+      return false;
+    }
+    return true;
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
@@ -340,34 +405,36 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void{
-    if (element){
+    if (element && !element.error){
       element.onChart = !element.onChart;
     }
 
-    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
-      this.chartService.changeType('bar');
-    }else{
-      this.chartService.changeType('line');
-    }
-
-    const datasets = [];
-
-    for (const row of this.dataSource.data){
-      if (row.onChart){
-        datasets.push(Object.assign({}, row.dataset));
+    if (element && !element.error) {
+      if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+        this.chartService.changeType('bar');
+      }else{
+        this.chartService.changeType('line');
       }
+
+      const datasets = [];
+
+      for (const row of this.dataSource.data){
+        if (row.onChart){
+          datasets.push(Object.assign({}, row.dataset));
+        }
+      }
+      const data = {
+        labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+        datasets
+      };
+      this.chartService.addData(data);
     }
-    const data = {
-      labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
-      datasets
-    };
-    this.chartService.addData(data);
   }
 
   // This allows to round all values
   roundResponse(response: unknown): unknown{
     for (const [key, value] of Object.entries(response)) {
-      response[key] = round(value as number);
+      response[key] = value === null ? null : round(value as number);
     }
     return response;
   }
@@ -495,6 +562,62 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return '';
   }
 
+  calcColor(element: InfoRow, column: string): string{
+    // the colors change in the following way:
+    // we start in the red: rgb(255, 128, 128)
+    // we go up increasing the value of the blue
+    // until we reach the yellow: rgb (255, 128, 128)
+    // after this we go down subtracting the value
+    // of the red until we get to the green: rgb (128, 255, 128)
+
+
+    // set color to gray if cell is empty
+    if (element.values[column] === undefined && !this.checkIfNaN(element?.values[column])){
+      return 'rgb(238, 238, 238)';
+    }
+
+    // don't set any color if the row don't want colors or the value is NaN
+    if (!element.colorize || this.checkIfNaN(element?.values[column])){
+      return '';
+    }
+
+    const distance = element.target - element.baseline;
+
+    let r = 255;
+    let g = 128;
+    const b = 128;
+
+    // if the value is lower than the baseline, we choose red
+    if (element.values[column] <= element.baseline){
+      r = 255;
+      g = 128;
+    }
+    // if it is higher than the target, we choose green
+    else if (element.values[column] >= element.target){
+      g = 255;
+      r = 128;
+    }
+    // if it is somewhere in between, we calculate where and choose accordingly
+    else {
+      const myPosition = element.values[column] - element.baseline;
+      const normalizedDifference = (myPosition / distance) * 255;
+      if (normalizedDifference <= 127){
+        g += normalizedDifference;
+      }else{
+        g = 255;
+        r -= (normalizedDifference - 127);
+      }
+    }
+
+    if (distance < 0){
+      const aux = g;
+      g = r;
+      r = aux;
+    }
+
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
   randomNumberLimit(limit: number): number {
     return Math.floor((Math.random() * limit) + 1);
   }
@@ -506,9 +629,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return col;
   }
 
+  checkIfNaN(x: unknown): boolean{
+    return isNaN(x);
+  }
+
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 }
-
-

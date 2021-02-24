@@ -1,4 +1,4 @@
-<div *ngIf="options.length">
+<div *ngIf="options.length && hasEntities">
     <div *ngIf="open; else elseBlock">
         <button [matMenuTriggerFor]="menu" class="mdm-button small-button mat-icon-button">
             <mat-icon>add</mat-icon>
