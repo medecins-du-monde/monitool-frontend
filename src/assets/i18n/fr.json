@@ -30,6 +30,8 @@
     "Clone": "Dupliquer",
     "CloneProject": "Dupliquer Project",
     "CloneProjectInfo": "Cette action va cloner ce projet et toutes ses saisies. Confimez pour cloner.",
+    "DeleteProject": "Supprimer Projet",
+    "DeleteProjectInfo": "Êtes-vous sûr de vouloir supprimer ce projet? Confirmez pour supprimer.",
     "CollectionSiteName": "Nom de la structure ou lieu d’intervention",
     "CollectionSites": "Lieux de collecte",
     "CommonRole": "Standard",

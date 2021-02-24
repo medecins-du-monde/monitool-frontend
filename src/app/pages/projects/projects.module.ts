@@ -12,14 +12,14 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { MatIconModule } from '@angular/material/icon';
-import { CloneProjectModalModule } from './components/clone-project-modal/clone-project-modal.module';
+import { ActionProjectModalModule } from './components/action-project-modal/action-project-modal.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [ProjectsComponent],
     imports: [
         CommonModule,
-        CloneProjectModalModule,
+        ActionProjectModalModule,
         TranslateModule,
         ProjectsRoutingModule,
         FormsModule,

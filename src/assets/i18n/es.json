@@ -32,6 +32,8 @@
     "Clone": "Clonar",
     "CloneProject": "Clonar Proyecto",
     "CloneProjectInfo": "Va a clonar este proyecto, y todas sus entradas de datos. Confirme para clonar.",
+    "DeleteProject": "Suprimir Proyecto",
+    "DeleteProjectInfo": "¿Esta seguro de querer suprimir este proyecto? Confirme para suprimir.",
     "CollectionSiteName": "Nombre de la estructura o del lugar de intervención",
     "CollectionSites": "Lugares de colecta",
     "CommonRole": "Normal",
