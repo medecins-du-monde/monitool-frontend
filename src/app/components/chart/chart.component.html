@@ -1,14 +1,20 @@
 <!-- these conditions hide the chart when there is no data -->
 <div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
-    <div id="divChart">
+    <div class="chart-section">
         <canvas id="currentChart"></canvas>
-        <div class="floating-button">
+        <div class="action-buttons">
             <a [href]="downloadChart" download="chart.png" class="mat-button mdm-button small-button">
                 <mat-icon>play_for_work</mat-icon>
                 <span>
                     {{ 'DownloadPlot' | translate }}
                 </span>
             </a>
+            <button class="mat-button mdm-button small-button">
+                <mat-icon >history</mat-icon>
+                <span>
+                    {{ 'ResetGraph' | translate }}
+                </span>
+            </button>
         </div>
     </div>
 </div>
