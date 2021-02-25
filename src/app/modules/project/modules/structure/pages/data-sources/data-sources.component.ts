@@ -17,6 +17,7 @@ export class DataSourcesComponent implements OnInit {
   currentForm: Form;
   entities: Entity[];
   edition = false;
+  deletedFormVaraibles = [];
 
   constructor(private projectService: ProjectService) { }
 
@@ -44,54 +45,67 @@ export class DataSourcesComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
-  changeComputation(formVariables, obj: Object) {
-    //See if any variable id from the deleted datasource match an ID in the computation parameters
+  changeComputation(obj: Object) {
+    //Check if any variable id from the deleted datasource match an ID in the computation parameters
     for (const val of Object.values(obj)) {
-      const matchingId = formVariables.filter( formVariable => formVariable === val['elementId']);
+      const matchingId = this.deletedFormVaraibles.filter( formVariable => formVariable === val['elementId']);
       if (matchingId.length) {
-        return true
+        return true;
       }
     }
   }
 
+  deleteDatasource(logicalFramesArr) {
+    //Iterate through all the logical frames
+    logicalFramesArr.map(data => {
+      //Iterate through one logicalFrame object
+      for (const key in data) {
+        //If there is an indicator key
+        if (key === 'indicators') {
+          if (data['indicators'].length) {
+            //Iterate through all the indicators
+            data['indicators'].forEach(indicator => {
+              //Check for computation
+              if (indicator.computation) {
+                const params = indicator.computation.parameters;
+                // If one of the paramaters uses the deleted datasource, set computation to null
+                if(this.changeComputation(params)) {
+                  indicator.computation = null;
+                  console.log('inside reccursion', this.project);
+                }
+              }
+            })
+          }
+        } else {
+          // If there is another array in the logicalFrames object, it might contain indicators 
+          // hence the recursion
+          if (data[key] instanceof Array) {
+            this.deleteDatasource(data[key]);
+          }
+        }
+      }
+    })
+  }
+
   onDelete(form: Form) {
     //Get all the variables id from the deleted datasource
-    let formVariables = [];
     form.elements.forEach(el => {
-      formVariables.push(el.id)
+      this.deletedFormVaraibles.push(el.id)
     });
 
     //Delete datasource from extra indicators computation
     this.project.extraIndicators.map(extraIndicator => {
-      const params = extraIndicator.computation.parameters;
-      //If the deleted ddatasource was used in the computation of this indicator, set computation to null
-      if(this.changeComputation(formVariables, params)) {
-        extraIndicator.computation = null;
+      if (extraIndicator.computation) {
+        const params = extraIndicator.computation.parameters;
+        //If the deleted datasource was used in the computation of this indicator, set computation to null
+        if(this.changeComputation(params)) {
+          extraIndicator.computation = null;
+        }
       }
     });
 
-    //Delete datasource from logical frames
-    this.project.logicalFrames.map(logicalFrame => {
-      console.log('logical frame', logicalFrame);
-
-      //Delete from purpose indicators
-      logicalFrame.purposes.forEach(purpose => {
-        purpose.indicators.forEach(indicator => {
-          const params = indicator.computation.parameters;
-          if(this.changeComputation(formVariables, params)) {
-            indicator.computation = null;
-          }
-        })
-      })
-
-      //Delete from indicators
-      logicalFrame.indicators.forEach(indicator => {
-        const params = indicator.computation.parameters;
-        if(this.changeComputation(formVariables, params)) {
-          indicator.computation = null;
-        }
-      })
-    });
+    //Delete the datasource from logicalFrames
+    this.deleteDatasource(this.project.logicalFrames);
 
     this.project.forms = this.project.forms.filter(x => x.id !== form.id);
     this.projectService.project.next(this.project);
