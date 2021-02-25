@@ -122,9 +122,6 @@ export class SitesComponent implements OnInit {
   public onRemoveEntity(index: number): void {
     let entityId = this.entities.controls[index].value.id;
 
-    //TODO
-    //Make sure it doesnt break the project when the deleted entity is part of a group
-
     // Remove the deleted entity from forms
     this.project.forms.map(form => {
       form.entities = form.entities.filter(entity => entity.id !== entityId);
@@ -134,8 +131,6 @@ export class SitesComponent implements OnInit {
     this.project.logicalFrames.map(logicalFrame => {
       logicalFrame.entities = logicalFrame.entities.filter(entity => entity.id !== entityId)
     })
-
-    console.log('removed', this.project);
 
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
