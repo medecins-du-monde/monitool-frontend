@@ -3,7 +3,7 @@
     <ng-container class="menu" matColumnDef="icon" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element"> 
-        <button *ngIf="element.icon" class="mdm-button small-button mat-icon-button" (click)="updateChart(element)">
+        <button *ngIf="element.icon" class="mdm-button small-button mat-icon-button {{element.onChart ? 'clicked' : null }}" (click)="updateChart(element)">
           <mat-icon>insights</mat-icon>
         </button>
       </td>
