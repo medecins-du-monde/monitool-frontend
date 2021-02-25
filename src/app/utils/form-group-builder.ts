@@ -18,7 +18,7 @@ export default class FormGroupBuilder {
       purpose = new Purpose();
     }
     return new FormGroup({
-      assumptions: new FormControl(purpose.assumptions, Validators.required),
+      assumptions: new FormControl(purpose.assumptions),
       description: new FormControl(purpose.description, Validators.required),
       outputs: new FormArray(purpose.outputs.map(x => this.newOutput(x))),
       indicators: new FormArray(purpose.indicators.map(x => this.newIndicator(x))),
@@ -30,7 +30,7 @@ export default class FormGroupBuilder {
       output = new OutputElement();
     }
     return new FormGroup({
-      assumptions: new FormControl(output.assumptions, Validators.required),
+      assumptions: new FormControl(output.assumptions),
       description: new FormControl(output.description, Validators.required),
       activities: new FormArray(output.activities.map(x => this.newActivity(x))),
       indicators: new FormArray(output.indicators.map(x => this.newIndicator(x))),
