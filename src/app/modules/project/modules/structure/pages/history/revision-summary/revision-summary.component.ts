@@ -24,7 +24,7 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -34,7 +34,7 @@ export class RevisionSummaryComponent implements OnInit {
   }
 
 
-  createDynamicRevisionText() {
+  createDynamicRevisionText(): void {
     let before = this.patchProject(this.index + 1);
     let after = this.patchProject(this.index);
     after = jsonpatch.applyPatch(after, this.revisions[this.index].backwards as Operation[]).newDocument;
@@ -62,7 +62,7 @@ export class RevisionSummaryComponent implements OnInit {
     });
   }
 
-  getTranslationKey(operation) {
+  getTranslationKey(operation): string {
     let editedField = operation.path
       .substring(1) // Remove leading slash
       .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
@@ -124,8 +124,11 @@ export class RevisionSummaryComponent implements OnInit {
 
     }
     else if (operation.op === 'replace') {
-      translationData['after'] = operation.value;
+      if (operation.value == null) { translationData['after'] = ['null']; }
+      else { translationData['after'] = operation.value; }
       translationData['before'] = before;
+
+
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
         translationData['before'] = this.transformDate(translationData['before']);
@@ -163,7 +166,8 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = before.forms.find(e => {
 
           if (Array.isArray(translationData['item'])) {
-          return e.id === translationData['item'][0]; }
+            return e.id === translationData['item'][0];
+          }
           else {
             return e.id === translationData['item'];
           }
@@ -176,7 +180,7 @@ export class RevisionSummaryComponent implements OnInit {
 
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             }
+          }
           else {
             return e.id === translationData['item'];
           }
@@ -188,18 +192,22 @@ export class RevisionSummaryComponent implements OnInit {
         translationData['item'] = translationData['partition']['elements'].find(e => {
           if (Array.isArray(translationData['item'])) {
             return e.id === translationData['item'][0];
-             }
+          }
           else {
             return e.id === translationData['item'];
-          } });
+          }
+        });
       }
     }
-
+    if (typeof translationData['before'] === 'object')
+    {
+      translationData['before'] = 'null';
+    }
     return translationData;
 
   }
 
-  patchProject(revisionIndex) {
+  patchProject(revisionIndex): Project {
     const revisedProject = _.cloneDeep(this.project);
     for (let i = 0; i < revisionIndex; i++) {
       try {
@@ -215,7 +223,7 @@ export class RevisionSummaryComponent implements OnInit {
     return revisedProject;
   }
 
-  transformDate(date) {
+  transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 

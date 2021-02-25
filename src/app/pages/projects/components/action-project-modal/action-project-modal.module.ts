@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CloneProjectModalComponent } from './clone-project-modal.component';
+import { ActionProjectModalComponent } from './action-project-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [CloneProjectModalComponent],
+  declarations: [ActionProjectModalComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -18,6 +18,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatDialogModule,
   ],
-  exports: [CloneProjectModalComponent]
+  exports: [ActionProjectModalComponent]
 })
-export class CloneProjectModalModule { }
+export class ActionProjectModalModule { }

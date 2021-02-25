@@ -5,7 +5,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CloneProjectModalComponent } from '../clone-project-modal/clone-project-modal.component';
+import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
 import { User } from 'src/app/models/classes/user.model';
 
 
@@ -54,7 +54,13 @@ export class ProjectComponent implements OnInit {
   }
 
   onDelete(): void {
-    this.delete.emit(this.project);
+    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'DeleteProject', infos: 'DeleteProjectInfo'} } );
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.delete.emit(this.project);
+      }
+    });
   }
 
   onRestore(): void {
@@ -62,7 +68,7 @@ export class ProjectComponent implements OnInit {
   }
 
   onClone(): void {
-    const dialogRef = this.dialog.open(CloneProjectModalComponent);
+    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfo'} } );
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {

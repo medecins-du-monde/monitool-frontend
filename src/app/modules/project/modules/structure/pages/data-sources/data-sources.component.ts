@@ -1,5 +1,6 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -10,7 +11,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './data-sources.component.html',
   styleUrls: ['./data-sources.component.scss']
 })
-export class DataSourcesComponent implements OnInit {
+export class DataSourcesComponent implements OnInit, OnDestroy{
 
   project: Project;
   forms: Form[] = [];
@@ -19,27 +20,35 @@ export class DataSourcesComponent implements OnInit {
   edition = false;
   deletedFormVaraibles = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.forms = project.forms;
-      this.entities = project.entities;
-      if (this.currentForm) {
-        this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
-      }
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.forms = project.forms;
+        this.entities = project.entities;
+        if ( this.currentForm ) {
+          this.currentForm = this.forms.find(x => x.id === this.currentForm.id);
+          if (this.currentForm === undefined){
+            this.onCreate();
+          }
+        }
+      })
+    );
   }
 
   onCreate(): void {
     this.currentForm = new Form();
     this.project.forms.push(this.currentForm);
     this.projectService.project.next(this.project);
+    this.projectService.valid = false;
     this.edition = true;
   }
 
-  onEdit(form: Form) {
+  onEdit(form: Form): void {
     this.edition = true;
     this.currentForm = form;
     this.projectService.project.next(this.project);
@@ -71,7 +80,6 @@ export class DataSourcesComponent implements OnInit {
                 // If one of the paramaters uses the deleted datasource, set computation to null
                 if(this.changeComputation(params)) {
                   indicator.computation = null;
-                  console.log('inside reccursion', this.project);
                 }
               }
             })
@@ -117,6 +125,10 @@ export class DataSourcesComponent implements OnInit {
     this.forms[event.container.data.index] = event.previousContainer.data.form;
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

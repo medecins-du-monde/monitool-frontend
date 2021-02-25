@@ -76,8 +76,9 @@ export class SitesComponent implements OnInit {
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev) {
+        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
           this.project = project;
+          project.parsed = true;
           this.sitesForm = this.fb.group({
             entities: this.fb.array(this.project.entities.map(x => FormGroupBuilder.newEntity(project, x))),
             groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))
@@ -115,6 +116,7 @@ export class SitesComponent implements OnInit {
   public onAddNewEntity(): void {
     this.entities.push(FormGroupBuilder.newEntity(this.project));
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   public onRemoveEntity(index: number): void {
@@ -137,6 +139,7 @@ export class SitesComponent implements OnInit {
 
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
+    this.projectService.valid = this.sitesForm.valid;
   }
 
   onEntityRemoved(index: number, id: number): void {

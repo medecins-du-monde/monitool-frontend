@@ -65,7 +65,26 @@ export class ProjectService{
     });
   }
 
+  // used when changing pages and chosing to not save the changes
   public discardPendingChanges(): void {
+    this.project = new BehaviorSubject(this.savedProject.copy());
+    this.openedProject.subscribe( (project: Project) => {
+      if (!this.savedProject) {
+        this.savedProject = project.copy();
+        this.currentProject = project.copy();
+      } else {
+        if ( project.id !== this.savedProject.id ) {
+          this.savedProject = project.copy();
+          this.currentProject = project.copy();
+        } else {
+          this.currentProject = project.copy();
+        }
+      }
+    });
+  }
+
+  // used when reverting changes and staying in the same page
+  public revertChanges(): void {
     this.project.next(this.savedProject.copy());
   }
 
@@ -93,6 +112,18 @@ export class ProjectService{
   }
 
   public async save(project: Project): Promise<Project>{
+    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
+    const themes = await this.themeService.list();
+    const savedProject = new Project(response);
+    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+
+    this.savedProject = savedProject.copy();
+    this.currentProject = savedProject.copy();
+    return savedProject;
+  }
+
+  public async saveCurrent(): Promise<Project>{
+    const project = this.currentProject;
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
