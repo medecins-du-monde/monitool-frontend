@@ -110,8 +110,13 @@ export class FilterComponent implements OnInit, OnDestroy{
           this.filterEvent.emit(this.filterForm.value);
 
           this.filterForm.valueChanges.subscribe(value => {
+            const filterChanges = {
+              entity: value.entity,
+              _end : value._end._d ? value._end._d : value._end,
+              _start: value._start._d ? value._start._d : value._start
+            }
             this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
-            this.filterEvent.emit(value as Filter);
+            this.filterEvent.emit(filterChanges as Filter);
           });
         })
       );
