@@ -415,6 +415,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         return group.name;
       }
     }
+    if (id === '_total') { return 'Total'; }
     return id;
   }
 

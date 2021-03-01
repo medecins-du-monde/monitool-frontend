@@ -19,12 +19,12 @@
       </td>
     </ng-container>
   
-    <ng-container matColumnDef="baseline">
+    <ng-container matColumnDef="baseline" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef >{{ 'Baseline' | translate }}</th>
       <td mat-cell *matCellDef="let element" class="gradient-background">{{ element.baseline }}</td>
     </ng-container>
   
-    <ng-container matColumnDef="target">
+    <ng-container matColumnDef="target" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Target' | translate }}</th>
       <td mat-cell *matCellDef="let element" class="gradient-background">{{element.target}}</td>
     </ng-container>
@@ -33,8 +33,8 @@
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">{{element.error === 'Calculation is missing' ? element.error : ('This data is available by ' + (element.error | translate))}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions">
-      <th matTooltip="{{getSiteOrGroupName(column) | translate}}" [matTooltipShowDelay]="500" mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions" [stickyEnd]="column === '_total'">
+      <th matTooltip="{{getSiteOrGroupName(column) | translate}}"  [matTooltipShowDelay]="500" mat-header-cell *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
       <td mat-cell class="value-cell" *matCellDef="let element" [ngStyle]="{ 'backgroundColor': calcColor(element, column) }">
         <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
