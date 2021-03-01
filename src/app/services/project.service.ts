@@ -21,7 +21,7 @@ export class ProjectService{
   valid = true;
 
   // This parameter allows to extend the page
-  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();

@@ -19,7 +19,7 @@ timer: any;
       if (this.timer) { clearTimeout(this.timer); }
       if (value) {
         // The spinner appears after one second so he doesn t have to appear when the page is loaded very quickly
-        this.timer = setTimeout(() => this.spinnerService.show(), 1000);
+        this.timer = setTimeout(() => this.spinnerService.show(), 750);
       }
       else { this.spinnerService.hide(); }
     });

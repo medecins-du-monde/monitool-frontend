@@ -150,6 +150,21 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         this.updateTableContent();
       })
     );
+
+    this.subscription.add(
+      this.chartService.reset.subscribe(() =>
+        {
+        const updatedRows = this.rows.getValue();
+        updatedRows.forEach(row => {
+          if (this.isInfoRow(0, row)) {
+            row.onChart = false;
+          }
+        }
+        );
+        this.rows.next(updatedRows);
+        }
+        )
+    );
   }
 
   updateTableContent(): void{
