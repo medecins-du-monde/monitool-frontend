@@ -112,6 +112,14 @@ export class DataSourcesComponent implements OnInit, OnDestroy{
       }
     });
 
+    //Delete datasource from cross-cutting indicators
+    for (const val of Object.values(this.project.crossCutting)) {
+      const params = val['computation']['parameters'];
+      if (this.changeComputation(params)) {
+        val['computation'] = null;
+      }
+    }
+
     //Delete the datasource from logicalFrames
     this.deleteDatasource(this.project.logicalFrames);
 
