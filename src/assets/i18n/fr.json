@@ -551,7 +551,7 @@
     "Task": "Tâche",
     "TimeAggregation": "Comment grouper les valeurs de plusieurs périodes?",
     "TimeAggregationHint": "Dans un projet qui collecte mensuellement, si <code>{{name}}</code> vaut 10 en janvier, et 20 en février et 30 en mars que vaut-il pour le premier trimestre?",
-    "TimePeriods": {
+    "Filter": {
         "day": "Jour",
         "month_week_sat": "Semaines (samedi à vendredi / coupées par mois)",
         "month_week_sun": "Semaines (dimanche à lundi / coupées par mois)",
@@ -563,7 +563,9 @@
         "quarter": "Trimestres",
         "semester": "Semestres",
         "year": "Année",
-        "free": "Libre"
+        "free": "Libre",
+        "entity": "Lieux de collecte",
+        "group": "Groupes"
     },
     "Tooltip": {
         "BasicsEdition": {

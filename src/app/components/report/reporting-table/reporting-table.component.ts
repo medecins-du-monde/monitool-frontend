@@ -13,6 +13,7 @@ import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 import { Filter } from 'src/app/components/report/filter/filter.component';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -231,8 +232,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }).map(x => x.id);
     }
     else {
-      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
-      const endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);
+      let startTimeSlot = TimeSlot.fromDate(
+        DatesHelper.dateToString(this.filter.value._start),
+        TimeSlotPeriodicity[this.dimensionIds.value]
+        );
+      const endTimeSlot = TimeSlot.fromDate(
+        DatesHelper.dateToString(this.filter.value._end),
+        TimeSlotPeriodicity[this.dimensionIds.value]
+        );
 
       this.dimensions = [];
       while (startTimeSlot !== endTimeSlot){
@@ -267,7 +274,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       row.customFilter = customFilter;
     }
 
-    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
+    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions && this.dimensions.length > 0){
       row = this.updateRowValues(row);
     }
     return row;
@@ -357,13 +364,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
 
       if (this.dimensionIds.value !== highestPeriodicity){
-        row.error = 'TimePeriods.' + highestPeriodicity;
+        row.error = 'Filter.' + highestPeriodicity;
         return false;
       }
     }
 
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
-      row.error = 'TimePeriods.' + highestPeriodicity;
+      row.error = 'Filter.' + highestPeriodicity;
       return false;
     }
     return true;
@@ -421,30 +428,32 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void{
+
+    // This element is set on the chart
     if (element && !element.error){
       element.onChart = !element.onChart;
     }
 
-    if (element && !element.error) {
-      if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
-        this.chartService.changeType('bar');
-      }else{
-        this.chartService.changeType('line');
-      }
+    // Update of the chart type in function of the dimension that we have selected
+    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+      this.chartService.changeType('bar');
+    }else{
+      this.chartService.changeType('line');
+    }
 
-      const datasets = [];
+    const datasets = [];
 
-      for (const row of this.dataSource.data){
-        if (row.onChart){
-          datasets.push(Object.assign({}, row.dataset));
-        }
+    // We take all the rows with the onChart attribute
+    for (const row of this.dataSource.data){
+      if (row.onChart){
+        datasets.push(Object.assign({}, row.dataset));
       }
-      const data = {
+    }
+    const data = {
         labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
         datasets
       };
-      this.chartService.addData(data);
-    }
+    this.chartService.addData(data);
   }
 
   // This allows to round all values

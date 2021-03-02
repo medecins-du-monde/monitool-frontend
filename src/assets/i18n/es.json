@@ -554,7 +554,7 @@
     "Task": "Tarea",
     "TimeAggregation": "Como compilar entradas provenientes de diferentes periodos?",
     "TimeAggregationHint": "En un proyecto que colecta datos mensuales, si <code>{{name}}</code> vale 10 en enero, 20 en febrero y 30 en marzo, que vale para el trimer trimestre?",
-    "TimePeriods": {
+    "Filter": {
         "day": "Dia",
         "month_week_sat": "Semana (sábado a viernes / cortado por mes)",
         "month_week_sun": "Semana (domingo a sábado / cortado por mes)",
@@ -566,7 +566,9 @@
         "quarter": "Trimestre",
         "semester": "Semestre",
         "year": "Año",
-        "free": "Libre"
+        "free": "Libre",
+        "entity": "Lugares de colecta",
+        "group": "Grupos"
     },
     "Tooltip": {
         "BasicsEdition": {
