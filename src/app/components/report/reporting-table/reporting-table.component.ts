@@ -331,7 +331,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // the week-type periods are a special case
   checkPeriodicityIsValid(row: InfoRow): boolean{
     row.error = undefined;
-    if (!row.computation) {
+    if (!row.computation || !row.computation.formula) {
       row.error = 'Calculation is missing';
       return false;
     }
