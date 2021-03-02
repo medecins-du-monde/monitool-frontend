@@ -641,5 +641,9 @@
     "Disaggregations": "Desagregaciones",
     "partitionElement": "elemento de partición",
     "ApplyChanges" : "Aplicar cambios",
-    "elementsymbol" :"sbanyour"
+    "elementsymbol" :"sbanyour",
+    "ReportingError": {
+        "DataNotAvailable": "Estos datos estan disponibles por mes",
+        "MissingCalculation": "Falta el cálculo"
+    }
 }

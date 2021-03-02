@@ -623,5 +623,9 @@
     "fr": "French",
     "partitionElement": "partitionElement",
     "specific-date-end": "If this logical framework is not valid up to the end of the project enter the date here, otherwise, leave the default value",
-    "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value"
+    "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value",
+    "ReportingError": {
+        "DataNotAvailable": "Data available by",
+        "MissingCalculation": "Calculation is missing"
+    }
 }

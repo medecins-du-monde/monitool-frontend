@@ -638,5 +638,9 @@
     "Disaggregations": "Désagrégations",
     "partitionElement": "Élément de partition",
     "ApplyChanges" : "Appliquer les modifications",
-    "elementsymbol" :"sbanyouraaaa"
+    "elementsymbol" :"sbanyouraaaa",
+    "ReportingError": {
+        "DataNotAvailable": "Ces données sont disponibles par",
+        "MissingCalculation": "Calcul absent"
+    }
 }
