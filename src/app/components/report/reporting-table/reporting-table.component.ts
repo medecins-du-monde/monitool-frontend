@@ -318,6 +318,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       );
     }
+    else if (row.onChart) {
+      row.onChart = !row.onChart;
+      this.updateChart();
+    }
 
     return row;
   }
@@ -357,17 +361,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     // when the chosen periodicity and the row periodicity are both week-type,
     // they only work togheter if they are the same
-
-    // this check if the chosen periodicity is one of the week-types
-    if (TimeSlotOrder[this.dimensionIds.value] > TimeSlotOrder.day && TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder.month &&
-        // this checks the same thing for the row periodicity
-        TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
-
-      if (this.dimensionIds.value !== highestPeriodicity){
-        row.error = 'Filter.' + highestPeriodicity;
-        return false;
-      }
-    }
 
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
       row.error = 'Filter.' + highestPeriodicity;
