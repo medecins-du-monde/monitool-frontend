@@ -109,7 +109,7 @@
                         <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-purpose-edit [purposeForm]="purpose" (edit)="onEditPurpose($event, i)"></app-purpose-edit>
+                <app-purpose-edit [purposeForm]="purpose" [forms]="project.forms" (edit)="onEditPurpose($event, i)"></app-purpose-edit>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
