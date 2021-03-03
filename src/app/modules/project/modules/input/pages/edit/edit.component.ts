@@ -423,14 +423,16 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     if (response){
       this.input = new Input(response);
       this.inputForm.get('rev').setValue(this.input.rev);
-      this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+      this.router.navigate(['./../../../'], {relativeTo: this.route});
     }
   }
 
   async deleteInput(){
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
-    this.router.navigate(['./../../../'], {relativeTo: this.route});
+    if (response) {
+      this.router.navigate(['./../../../'], {relativeTo: this.route});
+    }
   }
 
   async getInput(): Promise<any>{
@@ -464,6 +466,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   resetInput(){
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
     this.updateTotals(this.inputForm.value);
+    this.inputForm.valueChanges.subscribe(val => {
+      this.convertToNumber(val);
+      this.updateTotals(val);
+    });
   }
 
   ngOnDestroy(){
