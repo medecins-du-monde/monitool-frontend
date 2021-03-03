@@ -69,6 +69,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
+  @Input() isCrossCuttingReport = false;
   rows = new BehaviorSubject<Row[]>([]);
 
   dataSource = new MatTableDataSource([]);
@@ -120,14 +121,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.subscription.add(
-      this.projectService.openedProject.subscribe( (project: Project) => {
-        this.project = project;
-        this.updateDimensions();
-        this.refreshValues();
-        this.updateTableContent();
-      })
-    );
+    if (!this.isCrossCuttingReport) {
+      this.subscription.add(
+        this.projectService.openedProject.subscribe( (project: Project) => {
+          this.project = project;
+          this.updateDimensions();
+          this.refreshValues();
+          this.updateTableContent();
+        })
+      );
+    }
 
     this.subscription.add(
       this.dimensionIds.subscribe( () => {
