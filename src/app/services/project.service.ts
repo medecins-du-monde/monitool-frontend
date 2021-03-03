@@ -48,7 +48,6 @@ export class ProjectService {
           this.savedProject = project.copy();
           this.currentProject = project.copy();
         } else {
-          console.log('change in same project');
           this.currentProject = project.copy();
         }
       }

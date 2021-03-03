@@ -102,8 +102,8 @@
     <div class="mdm-title">{{ 'SpecificObjective' | translate }}</div>
     <div [formGroup]="logicalFrameForm">
         <mat-accordion formArrayName="purposes" cdkDropList (cdkDropListDropped)="drop($event)">
-            <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag [expanded]="i === expandedIndex">
-                <mat-expansion-panel-header (click)="openPanel(i)">
+            <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag>
+                <mat-expansion-panel-header>
                     <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'SpecificObjective' | translate }} {{i + 1}}: {{purpose.value.description}}</mat-panel-title>
                     <mat-panel-description>
                         <button mat-stroked-button class="mdm-button" (click)="onRemovePurpose(i)"><mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}</button>

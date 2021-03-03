@@ -56,8 +56,6 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   public entities: Entity[];
   public logicalFrame: LogicalFrame;
 
-  public expandedIndex: number = null;
-
   get selectedEntities() {
     return this.logicalFrameForm.controls.entities.value;
   }
@@ -93,10 +91,11 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     ).subscribe((res: { project: Project, logicalFrameId: string }) => {
       this.project = res.project;
       this.entities = res.project.entities;
+      const oldLogicalFrame = this.logicalFrame;
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      } else {
+      } else if (JSON.stringify(oldLogicalFrame) !== JSON.stringify(this.logicalFrame)) {
         this.setForm();
       }
     });
@@ -193,10 +192,6 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
         }
       }
     });
-  }
-
-  openPanel(index: number): void {
-    this.expandedIndex = (this.expandedIndex === index) ? null : index;
   }
 
   // drag and drop function on a form array displayed in one column

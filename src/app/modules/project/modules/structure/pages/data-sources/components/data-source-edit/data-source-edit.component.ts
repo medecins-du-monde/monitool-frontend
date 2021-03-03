@@ -58,8 +58,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public project: Project;
   public periodicities = [];
 
-  public expandedIndex: number = null;
-
   get selectedEntities(): any[] {
     return this.dataSourceForm.controls.entities.value;
   }
@@ -90,10 +88,11 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     ).subscribe((res: { project: Project, formId: string }) => {
       this.project = res.project;
       this.entities = res.project.entities;
+      const oldForm = this.form;
       this.form = res.project.forms.find(x => x.id === res.formId);
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      } else {
+      } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
         this.setForm();
       }
     });
@@ -217,10 +216,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
-  }
-
-  openPanel(index: number): void {
-    this.expandedIndex = (this.expandedIndex === index) ? null : index;
   }
 
   // drag and drop function on a form array displayed in one column
