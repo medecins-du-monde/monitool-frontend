@@ -560,19 +560,21 @@
     "Thematics": "Thematics",
     "TimeAggregation": "How to group entries from different periods?",
     "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
-    "TimePeriods": {
+    "Filter": {
         "day": "Day",
-        "month_week_mon": "Week (monday to sunday / split by month)",
         "month_week_sat": "Week (saturday to friday / split by month)",
         "month_week_sun": "Week (sunday to saturday / split by month)",
-        "week_mon": "Week (monday to sunday)",
+        "month_week_mon": "Week (monday to sunday / split by month)",
         "week_sat": "Week (saturday to friday)",
         "week_sun": "Week (sunday to saturday)",
+        "week_mon": "Week (monday to sunday)",
         "month": "Month",
         "quarter": "Quarter",
         "semester": "Semester",
         "year": "Year",
-        "free": "Free"
+        "free": "Free",
+        "entity": "Collection sites",
+        "group": "Groups"
     },
     "Tooltip": {
         "BasicsEdition": {
@@ -621,5 +623,9 @@
     "fr": "French",
     "partitionElement": "partitionElement",
     "specific-date-end": "If this logical framework is not valid up to the end of the project enter the date here, otherwise, leave the default value",
-    "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value"
+    "specific-date-start": "If this logical framework is not valid since the start of the project enter the date here, otherwise, leave the default value",
+    "ReportingError": {
+        "DataNotAvailable": "Data available by",
+        "MissingCalculation": "Calculation is missing"
+    }
 }
