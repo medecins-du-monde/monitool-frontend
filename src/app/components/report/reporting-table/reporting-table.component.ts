@@ -34,6 +34,7 @@ export interface GroupTitle{
 export interface InfoRow {
   icon: boolean;
   name: string;
+  unit?: string;
   baseline: number | null;
   colorize?: boolean;
   target: number | null;
@@ -263,6 +264,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       baseline: indicator.baseline,
       colorize: indicator.colorize !== undefined ? indicator.colorize : false,
       target: indicator.target,
+      unit: indicator.unit,
       sectionId: 0,
       values: {},
       onChart: false,
