@@ -22,8 +22,6 @@ export default class DatesHelper {
         return null;
       }
       const value: Date = formGroup.get(controlName).value ? new Date(formGroup.get(controlName).value) : null;
-      console.log('first', value);
-      console.log('then', new Date(control.value));
       if (!value || !control.value || value.getTime() < new Date(control.value).getTime()) {
         return null;
       }
