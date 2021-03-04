@@ -118,6 +118,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   private setForm(): void {
+    console.log('form', this.form);
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
     }
@@ -127,9 +128,11 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start, Validators.required],
-      end: [this.form.end, [Validators.required, DatesHelper.dateIsAfterControlValueValidator('start', this.dataSourceForm)]],
+      end: [this.form.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
-    });
+    }, { validators: [DatesHelper.orderedDates('start', 'end')] });
+
+    console.log(this.dataSourceForm.get('start').value);
 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
@@ -148,7 +151,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   toggleCustomDate(event: any, selected: string): void {
-    console.log('toggle', event, selected);
     if (event.value === 'false') {
       this.dataSourceForm.get(selected).setValue(this.project[selected]);
     }

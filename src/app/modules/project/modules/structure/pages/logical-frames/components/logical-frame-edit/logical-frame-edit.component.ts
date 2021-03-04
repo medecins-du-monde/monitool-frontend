@@ -48,8 +48,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     start: new FormControl(null, [Validators.required]),
     end: new FormControl(null, [Validators.required]),
     goal: new FormControl(null, [Validators.required]),
-    indicators:  new FormArray([]),
-    purposes:  new FormArray([])
+    indicators: new FormArray([]),
+    purposes: new FormArray([])
   });
 
   public project: Project;
@@ -81,7 +81,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   ) { }
 
   @HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean{
+  canDeactivate(): Observable<boolean> | boolean {
     return !this.projectService.hasPendingChanges;
   }
 
@@ -123,11 +123,11 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       name: [this.logicalFrame.name, Validators.required],
       entities: [this.entities.filter(x => this.logicalFrame.entities.map(e => e.id).includes(x.id)), Validators.required],
       start: [this.logicalFrame.start, Validators.required],
-      end: [this.logicalFrame.end, [Validators.required, DatesHelper.dateIsAfterControlValueValidator('start', this.logicalFrameForm)]],
+      end: [this.logicalFrame.end, Validators.required],
       goal: [this.logicalFrame.goal, Validators.required],
       indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
-    });
+    }, { validators: [DatesHelper.orderedDates('start', 'end')] });
 
     this.formSubscription = this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.logicalFrameForm.valid;

@@ -3,44 +3,35 @@ import moment from 'moment';
 
 export default class DatesHelper {
 
-  static areEquals(date1: Date, date2: Date ): boolean {
+  static areEquals(date1: Date, date2: Date): boolean {
     if (
       date1.getFullYear() === date2.getFullYear() &&
       date1.getMonth() === date2.getMonth() &&
       date1.getDate() === date2.getDate()
     ) {
       return true;
-      }
+    }
     else {
       return false;
     }
   }
 
-  static dateIsAfterControlValueValidator(controlName: string, formGroup: FormGroup): ValidatorFn {
-    return (control: AbstractControl) => {
-      if (!formGroup) {
-        return null;
-      }
-      const value: Date = formGroup.get(controlName).value ? new Date(formGroup.get(controlName).value) : null;
-      if (!value || !control.value || value.getTime() < new Date(control.value).getTime()) {
-        return null;
-      }
+  static orderedDates(before: string, after: string): ValidatorFn {
+    return (group: FormGroup) => {
+      const beforeValue: Date = group.get(before).value ? new Date(group.get(before).value) : null;
+      const afterValue: Date = group.get(after).value ? new Date(group.get(after).value) : null;
 
-      return { dateAfter: true };
+      if (!beforeValue || !afterValue || beforeValue.getTime() < afterValue.getTime()) {
+        return null;
+      }
+      return { wrongDates: true };
     };
-  }
-
-  // TODO: Create a custom validation helper for that
-  static validDates(startDate: Date, endDate: Date): boolean {
-    startDate = new Date(startDate);
-    endDate = new Date(endDate);
-    return startDate.getTime() < endDate.getTime();
   }
 
   static parseDate(date: string | Date): Date {
     // converts a string in the format YYYY-mm-dd to Date
     // this format is used for every date in the database
-    if (typeof date === 'string'){
+    if (typeof date === 'string') {
       const dateArgs = date.split('-');
       return new Date(+dateArgs[0], (+dateArgs[1]) - 1, +dateArgs[2]);
     }
@@ -50,10 +41,10 @@ export default class DatesHelper {
     }
   }
 
-  static dateToString(date: Date): string{
+  static dateToString(date: Date): string {
 
     // If it s a moment type, we have to re create the date in order to have the method getTime after.
-    if (date instanceof moment ) {
+    if (date instanceof moment) {
       date = new Date(date.toString());
     }
 
