@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PendingChangesGuard } from 'src/app/guards/pending-changes.guard';
 
 const routes: Routes = [
   {

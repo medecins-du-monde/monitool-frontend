@@ -29,10 +29,16 @@ export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate
   // should return true when the page is allowed to close itself and false in the other case
   canDeactivate(component: ComponentCanDeactivate): boolean | Observable<boolean> {
     // if we receive a component, we use his specific rule
-    if (component !== null){
-      return component.canDeactivate() ?
-        true :
-        confirm(this.warnMessage[this.currentLang]);
+    if (component !== null) {
+      if (component.canDeactivate()) {
+        return true;
+      } else {
+        const deactivate = confirm(this.warnMessage[this.currentLang]);
+        if (deactivate) {
+          this.projectService.discardPendingChanges();
+        }
+        return deactivate;
+      }
     }
 
     // if we have pending changes in the project we ask the user if he really wants to close the page
