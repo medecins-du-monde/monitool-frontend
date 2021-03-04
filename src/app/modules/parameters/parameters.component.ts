@@ -13,21 +13,25 @@ export class ParametersComponent implements OnInit {
       {
         title: 'Settings',
         collapsible: false,
+        disable: false,
         items: [
           {
             name: 'Users',
             routerLink: '../parameters/users',
-            icon: 'people'
+            icon: 'people',
+            disable: false
           },
           {
             name: 'Thematics',
             routerLink: '../parameters/themes',
-            icon: 'clipboard'
+            icon: 'clipboard',
+            disable: false
           },
           {
             name: 'CrossCuttingIndicators',
             routerLink: '../parameters/indicators',
-            icon: 'gauge'
+            icon: 'gauge',
+            disable: false
           }
         ]
       }

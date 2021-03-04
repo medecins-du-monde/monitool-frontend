@@ -23,12 +23,19 @@ export class ProjectService{
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  // Keep track of if the project has basics info filled out
+  basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
   }
 
   get bigPage(): Observable<boolean> {
     return this.inBigPage.asObservable();
+  }
+
+  get hasBasicsInfos(): Observable<boolean> {
+    return this.basicInfos.asObservable();
   }
 
   get hasPendingChanges(): boolean{
@@ -50,6 +57,14 @@ export class ProjectService{
           this.currentProject = project.copy();
         }
       }
+
+      // Check whether or not the project has its basics infos and display sidenav links accordingly
+      if (!project.country || !project.name) {
+        this.basicInfos.next(false);
+      } else {
+        this.basicInfos.next(true);
+      }
+
       this.breadcrumbList = [
         {
           value: 'Projects',
@@ -99,6 +114,7 @@ export class ProjectService{
   }
 
   public create(project: Project): void{
+    this.basicInfos.next(false);
     this.project.next(project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
@@ -128,6 +144,10 @@ export class ProjectService{
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+
+    if (!this.basicInfos) {
+      this.basicInfos.next(true);
+    }
 
     this.savedProject = savedProject.copy();
     this.currentProject = savedProject.copy();
