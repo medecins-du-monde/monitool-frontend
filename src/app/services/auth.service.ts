@@ -22,11 +22,13 @@ export class AuthService {
     await this.apiService.get('/resources/myself')
       .then((response) => {
         const currentUser = new User(response);
+        console.log('current user', currentUser);
         delete currentUser.id;
         this.user.next(currentUser);
         gotResponse = true;
       })
       .catch(() => {
+        console.log('catch');
         gotResponse = false;
       });
 
@@ -34,6 +36,7 @@ export class AuthService {
   }
 
   public isAuthorised(roles: string[]): boolean {
+    console.log('is authorised', this.user.getValue());
     return roles.indexOf(this.user.getValue().type) >= 0;
   }
 

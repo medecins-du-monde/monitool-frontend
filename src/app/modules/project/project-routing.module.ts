@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService as AuthGuard } from 'src/app/guards/auth-guard.service';
 import { ProjectComponent } from './project.component';
 
 const routes: Routes = [
@@ -24,8 +25,10 @@ const routes: Routes = [
       },
       {
         path: 'reporting',
+        data: { roles: ['read'] },
         loadChildren: () => import('./modules/reporting/reporting.module')
-        .then(m => m.ReportingModule)
+        .then(m => m.ReportingModule),
+        //  canActivate : [AuthGuard]
       }
     ]
   }
