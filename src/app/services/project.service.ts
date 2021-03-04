@@ -123,20 +123,9 @@ export class ProjectService{
     } else {
       this.basicInfos.next(true);
     }
-    
+
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     return project;
-  }
-
-  public async save(project: Project): Promise<Project>{
-    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
-    const themes = await this.themeService.list();
-    const savedProject = new Project(response);
-    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
-
-    this.savedProject = savedProject.copy();
-    this.currentProject = savedProject.copy();
-    return savedProject;
   }
 
   public async saveCurrent(): Promise<Project>{
@@ -145,11 +134,10 @@ export class ProjectService{
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
-
-    if (!this.basicInfos) {
+    // If there is a response, that means that at least the basics informations have been sent
+    if (response && !this.basicInfos.getValue()) {
       this.basicInfos.next(true);
     }
-
     this.savedProject = savedProject.copy();
     this.currentProject = savedProject.copy();
     return savedProject;

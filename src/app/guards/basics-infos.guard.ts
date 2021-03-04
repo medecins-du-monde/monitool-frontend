@@ -15,5 +15,5 @@ export class BasicsInfosGuard implements CanActivate {
   canActivate(): boolean | Observable<boolean> {
     return this.projectService.basicInfos.value;
   }
-  
+
 }
