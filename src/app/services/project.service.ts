@@ -24,7 +24,7 @@ export class ProjectService{
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   // Keep track of if the project has basics info filled out
-  basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable();
@@ -56,13 +56,6 @@ export class ProjectService{
         } else {
           this.currentProject = project.copy();
         }
-      }
-
-      // Check whether or not the project has its basics infos and display sidenav links accordingly
-      if (!project.country || !project.name) {
-        this.basicInfos.next(false);
-      } else {
-        this.basicInfos.next(true);
       }
 
       this.breadcrumbList = [
@@ -123,6 +116,14 @@ export class ProjectService{
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
+
+    // Check whether or not the project has its basics infos and display sidenav links accordingly
+    if (!project.country || !project.name) {
+      this.basicInfos.next(false);
+    } else {
+      this.basicInfos.next(true);
+    }
+    
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     return project;
   }
