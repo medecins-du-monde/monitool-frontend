@@ -118,7 +118,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   private setForm(): void {
-    console.log('form', this.form);
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
     }
@@ -131,8 +130,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       end: [this.form.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
-
-    console.log(this.dataSourceForm.get('start').value);
 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
