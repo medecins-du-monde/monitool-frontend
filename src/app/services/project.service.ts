@@ -110,8 +110,6 @@ export class ProjectService {
   public create(project: Project): void {
     this.basicInfos.next(false);
     this.project.next(project);
-    console.log('this.project :');
-    console.log(this.project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 

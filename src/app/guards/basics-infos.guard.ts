@@ -14,8 +14,16 @@ export class BasicsInfosGuard implements CanActivate {
 
   canActivate(): boolean {
     if (!this.projectService.basicInfos.value) {
-      this.route.navigate([`projects/${this.projectService.project.value.id}/structure/basics`]);
-      return false;
+      // It may be because no project have been loaded for the moment so we check that as well
+      const projectId = window.location.href.split('/')[4];
+      this.projectService.get(projectId).then(() => {
+        if (!this.projectService.basicInfos.value)
+        {
+          this.route.navigate([`projects/${projectId}/structure/basics`]);
+          return false;
+        }
+      });
+      return true;
     }
     return true;
   }

@@ -38,8 +38,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
             {
               name: form.name,
               routerLink: `../${projectId}/input/inputs/${form.id}`,
-              icon: 'edit',
-              disable: false
+              icon: 'edit'
             }
           );
         });
@@ -49,74 +48,62 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       const structure = {
             title: 'Structure',
             collapsible: true,
-            disable: false,
             items: [
               {
                 name: 'Home',
                 routerLink: `../${projectId}/structure/home`,
-                icon: 'home',
-                disable: false
+                icon: 'home'
               },
               {
                 name: 'Basics',
                 routerLink: `../${projectId}/structure/basics`,
-                icon: 'database',
-                disable: false
+                icon: 'database'
               },
               {
                 name: 'CollectionSites',
                 routerLink: `../${projectId}/structure/sites`,
-                icon: 'location',
-                disable: false
+                icon: 'location'
               },
               {
                 name: 'DataSources',
                 routerLink: `../${projectId}/structure/data-sources`,
-                icon: 'folder',
-                disable: false
+                icon: 'folder'
               },
               {
                 name: 'LogicalFrameworks',
                 routerLink: `../${projectId}/structure/logical-frames`,
-                icon: 'clipboard',
-                disable: false
+                icon: 'clipboard'
               },
               {
                 name: 'CrossCuttingIndicators',
                 routerLink: `../${projectId}/structure/cross-cutting`,
-                icon: 'gauge',
-                disable: false
+                icon: 'gauge'
               },
               {
                 name: 'ExtraIndicators',
                 routerLink: `../${projectId}/structure/extra-indicators`,
-                icon: 'gauge',
-                disable: false
+                icon: 'gauge'
               },
               {
                 name: 'Users',
                 routerLink: `../${projectId}/structure/users`,
-                icon: 'people',
-                disable: false
+                icon: 'people'
               },
               {
                 name: 'History',
                 routerLink: `../${projectId}/structure/history`,
-                icon: 'history',
-                disable: false
+                icon: 'history'
               }
             ]
       };
       const input = {
         title: 'Input',
         collapsible: true,
-        disable: false,
         items: [
           {
             name: 'Home',
             routerLink: `../${projectId}/input/home`,
-            icon: 'home',
-            disable: false
+            icon: 'home'
           }
         ]
       };
@@ -124,19 +111,16 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       const reporting = {
         title: 'Reporting',
         collapsible: true,
-        disable: false,
         items: [
           {
             name: 'Home',
             routerLink: `../${projectId}/reporting/home`,
-            icon: 'home',
-            disable: false
+            icon: 'home'
           },
           {
             name: 'GeneralReporting',
             routerLink: `../${projectId}/reporting/general`,
-            icon: 'clipboard',
-            disable: false
+            icon: 'clipboard'
           },
         ]
       };
