@@ -8,8 +8,10 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateService} from 'src/app/services/date.service';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateService } from 'src/app/services/date.service';
+
+import DatesHelper from 'src/app/utils/dates-helper';
 
 @Component({
   selector: 'app-basics',
@@ -61,11 +63,11 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.basicsForm = this.fb.group({
           country: [project.country, Validators.required],
           name: [project.name, Validators.required],
-          themes: [project.themes.map(x => x.id), Validators.required],
+          themes: [project.themes.map(x => x.id)],
           start: [project.start, Validators.required],
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
-        });
+        }, { validators: [DatesHelper.orderedDates('start', 'end')] });
         this.basicsForm.valueChanges.subscribe((value: any) => {
           const selectedThemes = value.themes;
           value.themes = this.themes.filter(x => selectedThemes.includes(x.id));

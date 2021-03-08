@@ -32,7 +32,6 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       const projectId = params.id;
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.inBigPage.subscribe(value => this.bigPage = value);
-        this.projectService.project.next(project);
         this.project = project;
         this.project.forms.forEach(form => {
           input.items.push(

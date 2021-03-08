@@ -66,4 +66,9 @@
       margin-bottom: 16px;
     }
   }
+
+  .disabledLink {
+    color: #a5a5a5 !important;
+    cursor: not-allowed !important;
+  }
 }

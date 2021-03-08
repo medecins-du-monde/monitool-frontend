@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CloneProjectModalComponent } from './clone-project-modal.component';
+import { DataSourcesListComponent } from './data-sources-list.component';
 
-describe('CloneProjectModalComponent', () => {
-  let component: CloneProjectModalComponent;
-  let fixture: ComponentFixture<CloneProjectModalComponent>;
+describe('DataSourcesListComponent', () => {
+  let component: DataSourcesListComponent;
+  let fixture: ComponentFixture<DataSourcesListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CloneProjectModalComponent ]
+      declarations: [ DataSourcesListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CloneProjectModalComponent);
+    fixture = TestBed.createComponent(DataSourcesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,6 +10,7 @@ export class ChartService {
   currentType = this.type.asObservable();
 
   data: BehaviorSubject<any> = new BehaviorSubject({});
+  reset: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentData = this.data.asObservable();
 
 

@@ -1,16 +1,50 @@
 @import "src/assets/theme/size_vars.scss";
 
-#divChart {
-  display: block;
-  width: 60%;
-  max-height: 400px;
-  @media screen and (max-width: $breakpoint-sm) {
-    width: 70%;
-  }
+.chart-section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   @media screen and (max-width: $breakpoint-xs) {
-    width: 98%;
-    max-height: 500px;
+    flex-direction: column;
   }
+  #currentChart {
+    display: block;
+    width: 85% !important;
+    max-height: 400px;
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 100% !important;
+      margin-bottom: 20px;
+    }
+    position: relative;
+  }
+  .action-buttons{
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    margin: 0px 0px 0px 3%;
+    justify-content: space-between;
+    align-self: center;
+    @media screen and (max-width: $breakpoint-xs-sm) {
+      margin: 0;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 100%;
+      margin: 15px 0px 0px 0px;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    a, button{
+      display: flex;
+      align-items: center;
+      .mat-icon{
+        margin-right: 0px;
+      }
+      span {
+        margin-left: 3px;
+      }
+    }
+  }
+  
 }
 
 .chart-field {

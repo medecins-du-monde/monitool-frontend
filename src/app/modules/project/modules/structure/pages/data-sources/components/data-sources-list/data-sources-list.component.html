@@ -1,0 +1,16 @@
+<div class="mdm-section">
+  <div class="mdm-cards" cdkDropListGroup>
+    <div class="mdm-card" *ngFor="let form of forms; let i=index" cdkDropList cdkDropListOrientation="horizontal"
+      [cdkDropListData]="{form:form,index:i}" (cdkDropListDropped)="drop($event)">
+      <app-data-source cdkDrag cdkDragBoundary=".mdm-cards" [project]="project" [form]="form" (edit)='onEdit($event)' (delete)="onDelete($event)">
+        <div *cdkDragPlaceholder></div>
+        <div cdkDragHandle class="cards-draghandle">
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
+      </app-data-source>
+    </div>
+  </div>
+  <button mat-stroked-button class="mdm-button" (click)="onCreate()">
+    <mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}
+  </button>
+</div>

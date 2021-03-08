@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Chart } from 'node_modules/chart.js';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
+import Chart from 'chart.js';
 
 @Component({
   selector: 'app-chart',
@@ -27,7 +27,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
   */
 
-  private chart;
+  private chart: Chart;
 
   @Input() options: any;
   @Input() data: any;
@@ -73,7 +73,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
 
-  addData(data) {
+  addData(data): void {
     if (this.chart){
       this.chart.data = data;
       this.chart.update();
@@ -81,12 +81,13 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.data = data;
   }
 
-  clearGraph() {
+  resetCharts(): void {
     this.chart.data.datasets = [];
     this.chart.update();
+    this.chartService.reset.next(true);
   }
 
-  changeChartType(type) {
+  changeChartType(type: string): void {
     if (this.chart){
       this.chart.destroy();
     }
@@ -94,7 +95,21 @@ export class ChartComponent implements OnInit, OnDestroy {
       type,
       data: this.data,
       options: this.options,
+      plugins: [{
+        afterRender: (c: Chart) => {
+          const ctx = c.ctx;
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.restore();
+        }
+      }]
     });
+  }
+
+  get downloadChart(): string{
+    return this.chart.toBase64Image();
   }
 
   ngOnDestroy(): void{

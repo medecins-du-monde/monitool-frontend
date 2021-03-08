@@ -18,7 +18,7 @@ export class IndicatorModalComponent implements OnInit {
   dataSource = new BehaviorSubject<any[]>([]);
   private initValue: any;
   private parser: Parser;
-  private symbols: any;
+  private symbols: string[];
   dataChanged = false;
   private initDataSource: any;
 
@@ -73,7 +73,8 @@ export class IndicatorModalComponent implements OnInit {
     this.parser = new Parser();
     this.parser.consts = {};
     try {
-      this.symbols = this.parser.parse(this.data.indicator.value.computation.formula).variables();
+      this.symbols = this.data.indicator.value.computation.formula ?
+      this.parser.parse(this.data.indicator.value.computation.formula).variables() : [];
       const newDataSource = [];
       this.symbols.forEach(symbol => {
         newDataSource.push({
