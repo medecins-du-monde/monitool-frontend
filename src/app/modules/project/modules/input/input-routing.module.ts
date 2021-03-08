@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BasicsInfosGuard } from 'src/app/guards/basics-infos.guard';
-import { PendingChangesGuard } from 'src/app/guards/pending-changes.guard';
 
 const routes: Routes = [
   {

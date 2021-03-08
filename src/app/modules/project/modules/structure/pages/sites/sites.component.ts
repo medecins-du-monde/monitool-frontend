@@ -12,7 +12,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import DatesHelper from 'src/app/utils/dates-helper';
 
 
 
@@ -39,7 +38,10 @@ export class SitesComponent implements OnInit {
 
   project: Project;
 
-  sitesForm: FormGroup;
+  sitesForm: FormGroup = new FormGroup({
+    entities: new FormArray([]),
+    groups: new FormArray([])
+  });
 
   entitiesDisplayedColumns: string[] = ['position', 'name', 'start', 'end', 'delete'];
 
@@ -85,11 +87,7 @@ export class SitesComponent implements OnInit {
           this.entitiesDataSource.data = this.entities.controls;
           this.groupsDataSource.data = this.groups.controls;
           this.sitesForm.valueChanges.subscribe((value: any) => {
-            let datesValid = true;
-            value.entities = value.entities.map(x => {
-              if (!DatesHelper.validDates(x.start, x.end)) { datesValid = false; }
-              return new Entity(x);
-            });
+            value.entities = value.entities.map(x => new Entity(x));
             const groups = [];
             value.groups.forEach(x => {
               const group = new Group(x);
@@ -98,7 +96,7 @@ export class SitesComponent implements OnInit {
               groups.push(group);
             });
             value.groups = groups;
-            this.projectService.valid = this.sitesForm.valid && datesValid;
+            this.projectService.valid = this.sitesForm.valid;
             this.projectService.project.next(Object.assign(project, value));
           });
         }

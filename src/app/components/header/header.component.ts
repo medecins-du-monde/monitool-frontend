@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
         this.headerLinkList.push({routerLink: 'indicators', text: 'CrossCuttingIndicators'});
       }
       else {
-        this.headerLinkList.push({routerLink: `/project/${this.user.projectId}`, text: 'Project'});
+        this.headerLinkList.push({routerLink: `/projects/${this.user.projectId}`, text: 'Project'});
       }
     });
   }

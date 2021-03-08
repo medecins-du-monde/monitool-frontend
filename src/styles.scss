@@ -298,8 +298,6 @@ mat-hint {
   position: absolute;
   z-index: 100;
   cursor: move;
-  top: 13px;
-  left: 8px;
 }
 
 .cdk-drag-animating {
@@ -307,7 +305,7 @@ mat-hint {
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(144, 144, 144, 0.24);   
+    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
 }
 
 .card-info {

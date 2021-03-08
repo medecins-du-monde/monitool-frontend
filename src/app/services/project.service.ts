@@ -5,29 +5,30 @@ import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ProjectService{
+export class ProjectService {
 
   private savedProject: Project;
   private currentProject: Project;
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  project: BehaviorSubject<Project> = new BehaviorSubject(null);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
 
   // This parameter allows to extend the page
-  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   get openedProject(): Observable<Project> {
-    return this.project.asObservable();
+    return this.project.asObservable().pipe(filter(p => !!p));
   }
 
   get bigPage(): Observable<boolean> {
@@ -38,19 +39,19 @@ export class ProjectService{
     return this.basicInfos.asObservable();
   }
 
-  get hasPendingChanges(): boolean{
-    return !this.savedProject.equals(this.currentProject);
+  get hasPendingChanges(): boolean {
+    return this.currentProject && !this.savedProject.equals(this.currentProject);
   }
 
   breadcrumbList: BreadcrumbItem[];
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
-    this.openedProject.subscribe( (project: Project) => {
+    this.openedProject.subscribe((project: Project) => {
       if (!this.savedProject) {
         this.savedProject = project.copy();
         this.currentProject = project.copy();
       } else {
-        if ( project.id !== this.savedProject.id ) {
+        if (project.id !== this.savedProject.id) {
           this.savedProject = project.copy();
           this.currentProject = project.copy();
         } else {
@@ -96,7 +97,7 @@ export class ProjectService{
     this.project.next(this.savedProject.copy());
   }
 
-  public async list(): Promise<Project[]>{
+  public async list(): Promise<Project[]> {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get('/resources/project/?mode=short');
     return response.map(x => {
@@ -106,13 +107,13 @@ export class ProjectService{
     });
   }
 
-  public create(project: Project): void{
+  public create(project: Project): void {
     this.basicInfos.next(false);
     this.project.next(project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
-  public async get(id: string): Promise<Project>{
+  public async get(id: string): Promise<Project> {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
@@ -123,8 +124,10 @@ export class ProjectService{
     } else {
       this.basicInfos.next(true);
     }
-
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+    this.project.next(project);
+    this.savedProject = project.copy();
+    this.currentProject = project.copy();
     return project;
   }
 
@@ -149,24 +152,24 @@ export class ProjectService{
     await this.apiService.put(`/resources/project/${id}`, project);
   }
 
-  public async restore(id: string): Promise<void>{
+  public async restore(id: string): Promise<void> {
     const project: any = await this.apiService.get(`/resources/project/${id}`);
     project.active = true;
     await this.apiService.put(`/resources/project/${id}`, project);
   }
 
-  public async clone(id: string): Promise<void>{
+  public async clone(id: string): Promise<void> {
     const project = new Project();
     await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 
-  public async listRevisions(id: string, limit: number): Promise<Revision[]>{
-    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, {params: { offset: 0, limit } });
+  public async listRevisions(id: string, limit: number): Promise<Revision[]> {
+    const response: any = await this.apiService.get(`/resources/project/${id}/revisions`, { params: { offset: 0, limit } });
     return response.map(x => new Revision(x));
   }
 
-  public async listByIndicator(indicatorId: string): Promise<Project[]>{
-    const response: any = await this.apiService.get(`/resources/project`, {params: { mode: 'crossCutting', indicatorId} });
+  public async listByIndicator(indicatorId: string): Promise<Project[]> {
+    const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId } });
     return response.map(x => new Project(x));
   }
 }

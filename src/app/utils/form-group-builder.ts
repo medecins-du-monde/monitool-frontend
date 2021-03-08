@@ -9,6 +9,7 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
+import DatesHelper from './dates-helper';
 
 
 export default class FormGroupBuilder {
@@ -79,6 +80,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
+        unit: new FormControl(indicator.unit),
         colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
@@ -92,6 +94,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display, Validators.required),
         baseline: new FormControl(indicator.baseline),
         target: new FormControl(indicator.target),
+        unit: new FormControl(indicator.unit),
         colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
@@ -139,7 +142,7 @@ export default class FormGroupBuilder {
       name: new FormControl(entity.name, Validators.required),
       start: new FormControl(entity.start, Validators.required),
       end: new FormControl(entity.end, Validators.required),
-    });
+    }, { validators: [DatesHelper.orderedDates('start', 'end')]});
   }
 
   static newEntityGroup(group?: Group): FormGroup {

@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DataSourcesListComponent } from './data-sources-list.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { DataSourceModule } from '../data-source/data-source.module';
+
+
+
+@NgModule({
+  declarations: [DataSourcesListComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    DataSourceModule,
+    MatButtonModule,
+    MatIconModule,
+    DragDropModule,
+    CdkTableModule
+  ],
+  exports: [DataSourcesListComponent]
+})
+export class DataSourcesListModule { }

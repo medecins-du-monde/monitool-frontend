@@ -44,7 +44,7 @@ export class FilterComponent implements OnInit, OnDestroy{
   sites: Entity[] = [];
   filterForm: FormGroup;
 
-  @Input() isCrosscuttingReport = false;
+  @Input() isCrossCuttingReport = false;
   @Input() project: Project;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
 
@@ -77,7 +77,7 @@ export class FilterComponent implements OnInit, OnDestroy{
     let endDate = new Date((new Date()).getFullYear(), 11, 31);
     let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
 
-    if (this.isCrosscuttingReport){
+    if (this.isCrossCuttingReport){
       this.filterForm = this.fb.group({
         _start: [startDate, Validators.required],
         _end: [endDate, Validators.required],
