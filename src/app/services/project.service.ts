@@ -16,7 +16,7 @@ export class ProjectService {
   private savedProject: Project;
   private currentProject: Project;
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(null);
+  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -24,12 +24,19 @@ export class ProjectService {
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
+  // Keep track of if the project has basics info filled out
+  basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
 
   get bigPage(): Observable<boolean> {
     return this.inBigPage.asObservable();
+  }
+
+  get hasBasicsInfos(): Observable<boolean> {
+    return this.basicInfos.asObservable();
   }
 
   get hasPendingChanges(): boolean {
@@ -51,6 +58,7 @@ export class ProjectService {
           this.currentProject = project.copy();
         }
       }
+
       this.breadcrumbList = [
         {
           value: 'Projects',
@@ -100,6 +108,7 @@ export class ProjectService {
   }
 
   public create(project: Project): void {
+    this.basicInfos.next(false);
     this.project.next(project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
@@ -108,22 +117,18 @@ export class ProjectService {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
+
+    // Check whether or not the project has its basics infos and display sidenav links accordingly
+    if (!project.country || !project.name) {
+      this.basicInfos.next(false);
+    } else {
+      this.basicInfos.next(true);
+    }
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     this.project.next(project);
     this.savedProject = project.copy();
     this.currentProject = project.copy();
     return project;
-  }
-
-  public async save(project: Project): Promise<Project> {
-    const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
-    const themes = await this.themeService.list();
-    const savedProject = new Project(response);
-    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
-
-    this.savedProject = savedProject.copy();
-    this.currentProject = savedProject.copy();
-    return savedProject;
   }
 
   public async saveCurrent(): Promise<Project>{
@@ -132,7 +137,10 @@ export class ProjectService {
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
     savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
-
+    // If there is a response, that means that at least the basics informations have been sent
+    if (response && !this.basicInfos.getValue()) {
+      this.basicInfos.next(true);
+    }
     this.savedProject = savedProject.copy();
     this.currentProject = savedProject.copy();
     return savedProject;
