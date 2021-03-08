@@ -6,10 +6,16 @@
             <div class="card-info-value"><b>{{ 'Description' | translate }}: </b>{{ extraIndicator.description ? extraIndicator.description.en : null }}</div>
         </div>
         <div class="card-info">
-            <div class="card-info-value"><b>{{ 'Baseline' | translate }}: </b>{{ extraIndicator.baseline === null ? '?' : extraIndicator.baseline }}</div>
+            <div class="card-info-value">
+                <b>{{ 'Baseline' | translate }}: </b>
+                {{ extraIndicator.baseline ? extraIndicator.baseline + (extraIndicator.unit ? extraIndicator.unit : null) : '?' }}
+            </div>
         </div>
         <div class="card-info">
-            <div class="card-info-value"><b>{{ 'Target' | translate }}: </b>{{ extraIndicator.target ? extraIndicator.target : '?' }}</div>
+            <div class="card-info-value">
+                <b>{{ 'Target' | translate }}: </b>
+                {{ extraIndicator.target ? extraIndicator.target + (extraIndicator.unit ? extraIndicator.unit : null): '?' }}
+            </div>
         </div>
         <div class="card-info">
             <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
