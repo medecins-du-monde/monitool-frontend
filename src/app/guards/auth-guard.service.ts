@@ -25,7 +25,7 @@ export class AuthGuardService implements CanActivate {
         }
         else {
           if (route.routeConfig.path === 'projects'){
-            this.route.navigate([`/project/${this.user.projectId}`]);
+            this.route.navigate([`/projects/${this.user.projectId}`]);
           }
           else {
             this.route.navigate(['/home']);

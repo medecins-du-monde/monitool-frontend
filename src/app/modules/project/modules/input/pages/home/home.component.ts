@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
           data.push({
             buttonIcon: 'edit',
             buttonText: form.name,
-            routerLink: `/project/${project.id}/input/inputs/${form.id}`,
+            routerLink: `/projects/${project.id}/input/inputs/${form.id}`,
             done,
             ongoing,
             missing,
