@@ -16,7 +16,7 @@ export class ProjectService {
   private savedProject: Project;
   private currentProject: Project;
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(null);
+  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -110,6 +110,8 @@ export class ProjectService {
   public create(project: Project): void {
     this.basicInfos.next(false);
     this.project.next(project);
+    console.log('this.project :');
+    console.log(this.project);
     this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 

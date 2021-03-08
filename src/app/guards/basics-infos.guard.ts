@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 
 
@@ -10,10 +9,15 @@ import { ProjectService } from 'src/app/services/project.service';
 export class BasicsInfosGuard implements CanActivate {
 
   constructor(
-    private projectService: ProjectService) {}
+    private projectService: ProjectService,
+    private route: Router) {}
 
-  canActivate(): boolean | Observable<boolean> {
-    return this.projectService.basicInfos.value;
+  canActivate(): boolean {
+    if (!this.projectService.basicInfos.value) {
+      this.route.navigate([`projects/${this.projectService.project.value.id}/structure/basics`]);
+      return false;
+    }
+    return true;
   }
 
 }
