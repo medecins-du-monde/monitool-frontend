@@ -13,7 +13,11 @@
     </mat-grid-tile>
 
     <mat-grid-tile colspan="6">
-        <button mat-stroked-button (click)="downloadExcelFile()" ><mat-icon>play_for_work</mat-icon> Download table</button>
+        <a mat-stroked-button type="button" class="mdm-button"
+        href="/api/export/project:21f0bad7-78e1-4f9d-814b-1b763ec3125d/quarter" target="_blank"
+        rel="noopener noreferrer">
+        <mat-icon>play_for_work</mat-icon>{{'DownloadTable' | translate}}
+        </a>
     </mat-grid-tile>        
 
 </mat-grid-list>

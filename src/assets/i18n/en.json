@@ -627,5 +627,6 @@
     "ReportingError": {
         "DataNotAvailable": "Data available by",
         "MissingCalculation": "Calculation is missing"
-    }
+    },
+    "DownloadTable": "Download table"
 }

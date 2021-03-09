@@ -3,7 +3,6 @@ import {  FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
-import { DownloadService } from 'src/app/services/download.service';
 
 @Component({
   selector: 'app-object-grouping',
@@ -38,8 +37,7 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   constructor(private projectService: ProjectService,
-              private fb: FormBuilder,
-              private downloadService: DownloadService ) { }
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.updateDimension(8, this.periodicitiesList);
@@ -103,14 +101,6 @@ export class ObjectGroupingComponent implements OnInit {
     this.dimensionForm.get('dimensionId').valueChanges.subscribe( value => {
       this.dimensionEvent.emit(value);
     });
-  }
-
-  downloadExcelFile() {
-    console.log('Downloading an excel file');
-    this.downloadService.downloadFile(this.project.id).then(result => {
-      console.log('result : ');
-      console.log(result);
-    })
   }
 
 }
