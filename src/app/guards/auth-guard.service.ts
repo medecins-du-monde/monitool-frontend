@@ -18,7 +18,6 @@ export class AuthGuardService implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean>{
     if (await this.authService.isAuthenticated()){
-      console.log('3', route);
       if (route.data.roles) {
         if (this.authService.isAuthorised(route.data.roles)) {
           return true;
@@ -32,7 +31,6 @@ export class AuthGuardService implements CanActivate {
           }
         }
       }
-      console.log('return true');
       return true;
     }
     this.route.navigate(['login']);

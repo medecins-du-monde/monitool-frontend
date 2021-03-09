@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { User } from 'src/app/models/classes/user.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-project',
@@ -14,6 +17,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
 
   public sidenav: Sidenav;
   project: Project;
+  user: User;
 
   breadcrumbList: BreadcrumbItem[];
 
@@ -21,6 +25,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private projectService: ProjectService,
     private changeDetectorRef: ChangeDetectorRef,
   ) { }
@@ -30,18 +35,32 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const projectId = params.id;
+      this.authService.currentUser.subscribe((user: User) => {
+        this.user = user;
+      });
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.inBigPage.subscribe(value => this.bigPage = value);
         this.project = project;
-        this.project.forms.forEach(form => {
-          input.items.push(
-            {
-              name: form.name,
-              routerLink: `../${projectId}/input/inputs/${form.id}`,
+        //If the user has a data entry roles, only display the datasource they can modify
+        if (this.user.role === 'input') {
+          this.user.dataSources.forEach(dataSource => {
+            input.items.push({
+              name: this.projectService.getNamefromId(dataSource, this.project.forms),
+              routerLink: `../${projectId}/input/inputs/${dataSource}`,
               icon: 'edit'
-            }
-          );
-        });
+            });
+          });
+        } else {
+          this.project.forms.forEach(form => {
+            input.items.push(
+              {
+                name: form.name,
+                routerLink: `../${projectId}/input/inputs/${form.id}`,
+                icon: 'edit'
+              }
+            );
+          });
+        }
         this.breadcrumbList = this.projectService.breadcrumbList;
       });
 
@@ -125,13 +144,28 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
         ]
       };
 
-      this.sidenav = {
-        groups: [
-          structure,
-          input,
-          reporting
-        ]
-      };
+      if (this.user.role === 'owner' || this.user.role === 'admin') {
+        this.sidenav = {
+          groups: [
+            structure,
+            input,
+            reporting
+          ]
+        };
+      } else if (this.user.role === 'input') {
+        this.sidenav = {
+          groups: [
+            input,
+            reporting
+          ]
+        };
+      } else {
+        this.sidenav = {
+          groups: [
+            reporting
+          ]
+        };
+      }
     });
   }
 

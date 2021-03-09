@@ -172,4 +172,15 @@ export class ProjectService {
     const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId } });
     return response.map(x => new Project(x));
   }
+
+  // Used when the user is a partner with a data entry role to display the name of datasource and entities from their ID
+  public getNamefromId(id, arr): string {
+    let name;
+    arr.forEach(x => {
+      if (x.id === id) {
+        name = x.name
+      }
+    });
+    return name;
+  }
 }

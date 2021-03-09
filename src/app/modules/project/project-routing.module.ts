@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardService as AuthGuard } from 'src/app/guards/auth-guard.service';
+import { PermissionsGuard } from 'src/app/guards/permissions.guard';
 import { ProjectComponent } from './project.component';
 
 const routes: Routes = [
@@ -16,19 +16,20 @@ const routes: Routes = [
       {
         path: 'structure',
         loadChildren: () => import('./modules/structure/structure.module')
-        .then(m => m.StructureModule)
+        .then(m => m.StructureModule),
+        canActivate : [PermissionsGuard]
       },
       {
         path: 'input',
         loadChildren: () => import('./modules/input/input.module')
-        .then(m => m.InputModule)
+        .then(m => m.InputModule),
+        canActivate : [PermissionsGuard]
       },
       {
         path: 'reporting',
-        data: { roles: ['read'] },
         loadChildren: () => import('./modules/reporting/reporting.module')
         .then(m => m.ReportingModule),
-        //  canActivate : [AuthGuard]
+        canActivate : [PermissionsGuard]
       }
     ]
   }
