@@ -4,7 +4,6 @@ import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
-import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -17,6 +16,7 @@ export class ProjectService {
   private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  breadCrumbs: BehaviorSubject<any[]> = new BehaviorSubject([]);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -43,7 +43,9 @@ export class ProjectService {
     return this.currentProject && !this.savedProject.equals(this.currentProject);
   }
 
-  breadcrumbList: BreadcrumbItem[];
+  get getBreadcrumbsList(): Observable<any[]> {
+    return this.breadCrumbs.asObservable();
+  }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
     this.openedProject.subscribe((project: Project) => {
@@ -58,19 +60,6 @@ export class ProjectService {
           this.currentProject = project.copy();
         }
       }
-
-      this.breadcrumbList = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-      ];
     });
   }
 
@@ -90,6 +79,11 @@ export class ProjectService {
         }
       }
     });
+  }
+
+  // Update the breadcrumbs list
+  public addBreadCrumbs(list) {
+    this.breadCrumbs.next(list);
   }
 
   // used when reverting changes and staying in the same page

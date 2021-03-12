@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [BreadcrumbComponent],
@@ -16,7 +17,8 @@ import { MatIconModule } from '@angular/material/icon';
         MatSelectModule,
         MatButtonModule,
         RouterModule,
-        MatIconModule
+        MatIconModule,
+        MatTooltipModule
     ]
 })
 export class BreadcrumbModule { }

@@ -10,6 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { IndicatorModalComponent } from '../../pages/logical-frames/components/indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-cross-cutting',
@@ -103,6 +104,22 @@ export class CrossCuttingComponent implements OnInit {
         this.setForm();
       });
 
+      const breadCrums = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure-Crosscutting',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.addBreadCrumbs(breadCrums);
     });
   }
 

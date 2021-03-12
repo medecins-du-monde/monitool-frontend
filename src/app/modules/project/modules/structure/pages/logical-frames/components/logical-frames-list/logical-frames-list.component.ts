@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -25,6 +26,23 @@ export class LogicalFramesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
+
+      const breadCrums = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure-Logicalframes',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.addBreadCrumbs(breadCrums);
     });
   }
 

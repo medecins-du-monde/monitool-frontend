@@ -12,6 +12,7 @@ import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Purpose } from 'src/app/models/classes/purpose.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
@@ -93,6 +94,29 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       this.entities = res.project.entities;
       const oldLogicalFrame = this.logicalFrame;
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
+
+      if (this.logicalFrame) {
+        const breadCrums = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: this.project.country,
+          } as BreadcrumbItem,
+          {
+            value: this.project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure-Logical Frame',
+            link: `./../../projects/${this.project.id}/structure/logical-frames`
+          } as BreadcrumbItem,
+          {
+            value: this.logicalFrame.name,
+          } as BreadcrumbItem,          
+        ];
+        this.projectService.addBreadCrumbs(breadCrums);
+      }
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
       } else if (JSON.stringify(oldLogicalFrame) !== JSON.stringify(this.logicalFrame)) {

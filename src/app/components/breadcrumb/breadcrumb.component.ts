@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -7,5 +8,13 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent {
-  @Input() items: BreadcrumbItem[] = [];
+  items: BreadcrumbItem[] = [];
+
+  constructor(private projectService: ProjectService) {}
+
+  ngOnInit(): void {
+    this.projectService.getBreadcrumbsList.subscribe(val => {
+      this.items = val;
+    })
+  }
 }

@@ -12,6 +12,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 
@@ -78,6 +79,22 @@ export class SitesComponent implements OnInit {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
+          const breadCrums = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: project.country,
+            } as BreadcrumbItem,
+            {
+              value: project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure-Sites',
+            } as BreadcrumbItem,
+          ];
+          this.projectService.addBreadCrumbs(breadCrums);
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({

@@ -10,6 +10,7 @@ import { Indicator } from 'src/app/models/classes/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 @Component({
@@ -47,6 +48,22 @@ export class GeneralComponent implements OnInit {
     this.chartService.clearChart();
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+      const breadCrums = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Reporting-General',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.addBreadCrumbs(breadCrums);
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {

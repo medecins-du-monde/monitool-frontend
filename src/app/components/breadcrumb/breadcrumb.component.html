@@ -6,7 +6,7 @@
                 <a [routerLink]="item.link" routerLinkActive="active-link">{{item.value | translate }}</a>
             </span>
             <ng-template #elseBlock>
-                <span class="item">{{ item.value | translate }}</span>
+                <span class="item" matTooltip="{{item.value | translate }}">{{ item.value | translate }}</span>
             </ng-template>
         </li>
     </ul>

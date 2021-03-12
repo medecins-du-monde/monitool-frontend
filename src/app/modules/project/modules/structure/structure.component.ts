@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({

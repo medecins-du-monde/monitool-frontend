@@ -14,6 +14,7 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
@@ -90,6 +91,29 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       this.entities = res.project.entities;
       const oldForm = this.form;
       this.form = res.project.forms.find(x => x.id === res.formId);
+
+      if (this.form) {
+        const breadCrums = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: this.project.country,
+          } as BreadcrumbItem,
+          {
+            value: this.project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure-Datasources',
+            link: `./../../projects/${this.project.id}/structure/data-sources`
+          } as BreadcrumbItem,
+          {
+            value: this.form.name,
+          } as BreadcrumbItem,          
+        ];
+        this.projectService.addBreadCrumbs(breadCrums);
+      }
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });
       } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
