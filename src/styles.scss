@@ -155,6 +155,7 @@ body {
 .drawer {
   display: flex;
   min-height: 100%;
+  position: relative;
 
   @media screen and (min-width: $breakpoint-sm + 1px) {
     height: 100%;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  informationIntro = {
+    title: 'Accueil rapport',
+    description: ''
+  } as InformationIntro;
+
+  informations = [];
+
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
 }

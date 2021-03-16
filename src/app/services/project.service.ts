@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { filter } from 'rxjs/operators';
+import InformationIntro from '../models/interfaces/information-intro';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class ProjectService {
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  // Handles information panels question
+  informations: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  informationIntro: BehaviorSubject<InformationIntro> = new BehaviorSubject({title: '', description: ''});
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
@@ -41,6 +46,14 @@ export class ProjectService {
 
   get hasPendingChanges(): boolean {
     return this.currentProject && !this.savedProject.equals(this.currentProject);
+  }
+
+  get informationsContent(): Observable<any[]> {
+    return this.informations.asObservable();
+  }
+
+  get informationIntroContent(): Observable<InformationIntro> {
+    return this.informationIntro.asObservable();
   }
 
   breadcrumbList: BreadcrumbItem[];
@@ -95,6 +108,14 @@ export class ProjectService {
   // used when reverting changes and staying in the same page
   public revertChanges(): void {
     this.project.next(this.savedProject.copy());
+  }
+
+  public updateInformationPanel(list) {
+    this.informations.next(list);
+  }
+
+  public updateInformationIntro(intro) {
+    this.informationIntro.next(intro);
   }
 
   public async list(): Promise<Project[]> {

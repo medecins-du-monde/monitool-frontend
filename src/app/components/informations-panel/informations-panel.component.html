@@ -1,0 +1,25 @@
+<div class="background" (click)="closeDisplay()" [ngClass]="firstDisplayed ? (displayed ? 'no-background' : '') : ''"></div>
+<div class="information-panel">
+    <div class="information-panel-toggle-btn" (click)="toggleDisplay()">
+        <mat-icon *ngIf="displayed">keyboard_arrow_right</mat-icon>
+        <mat-icon *ngIf="!displayed">keyboard_arrow_left</mat-icon>
+    </div>
+    <div class="information-panel-content" [ngClass]="firstDisplayed ? (displayed ? 'displayed' : 'not-displayed') : ''">
+        <div class="information-panel-title">
+            <h1>Questions fréquentes</h1>
+            <h2>{{ informationIntro.title }}</h2>
+            <p [innerHTML]="transform(informationIntro.description)"></p>
+        </div>
+        <mat-accordion *ngFor="let information of informations">
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                <mat-panel-title [innerHTML]="transform(information.question)">
+                </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="panel-answer" [innerHTML]="transform(information.response)"></div>
+            </mat-expansion-panel>
+            </mat-accordion>              
+    </div>
+</div>  
+  
+  

@@ -12,6 +12,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 
 
@@ -35,6 +37,26 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
   ]
 })
 export class SitesComponent implements OnInit {
+
+  informationIntro = {
+    title: 'Lieux de collecte',
+    description: 'Lorsqu\'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles. <br><br> Rentrez ici : <br><ul><li>La liste des lieux sur lesquels le projet travaille (par exemple: une liste des centres de santé)</li><li>Des groupements qui seront utilisé lors du suivi (par exemple: des régions, des types de structure)</li></ul>'
+  } as InformationIntro;
+
+  informations = [
+    {
+      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
+      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+    } as InformationItem,
+    {
+      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
+      response: 'En cas d\'erreur, cliquez sur <button>Annulez les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+    } as InformationItem,
+    {
+      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière ?',
+      response: 'Rendez-vous sur la page <button>Historique</button> la structure de votre projet. <br> Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+    } as InformationItem
+  ]
 
   project: Project;
 
@@ -108,6 +130,8 @@ export class SitesComponent implements OnInit {
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   public onAddNewEntity(): void {

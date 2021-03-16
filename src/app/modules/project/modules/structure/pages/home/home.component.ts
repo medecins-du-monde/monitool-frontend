@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
 import { Project } from 'src/app/models/classes/project.model';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import { ProjectService } from 'src/app/services/project.service';
 
 
@@ -28,6 +30,30 @@ export class HomeComponent implements OnInit {
   historyLink = '';
 
   dataSource: Task[];
+
+  informationIntro = {
+    title: 'Accueil configuration',
+    description: 'Visualisez votre avancement dans la configuration de votre projet.'
+  } as InformationIntro;
+
+  informations = [
+    {
+      question: 'Un projet dans monitool, c\'est quoi?',
+      response: 'Sur Monitool, on ne parle pas de base de données, de requêtes, de dimensions, de jointures... <br>Un projet, est un projet au sens entendu dans une organisation humanitaire, le même que celui pour lequel vous rédigez un proposal à votre bailleur de fonds.'
+    } as InformationItem,
+    {
+      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
+      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+    } as InformationItem,
+    {
+      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
+      response: ' En cas d\'erreur, cliquez sur <button>Annuler les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+    } as InformationItem,
+    {
+      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière?',
+      response: 'Rendez-vous sur la page la structure de votre projet. <br>Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+    } as InformationItem
+  ];
 
   constructor(
     private projectService: ProjectService,
@@ -218,5 +244,7 @@ export class HomeComponent implements OnInit {
         },
       ];
     });
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 }

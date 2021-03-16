@@ -8,6 +8,8 @@ import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 
 
@@ -17,6 +19,18 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
   styleUrls: ['./inputs.component.scss']
 })
 export class InputsComponent implements OnInit, OnDestroy {
+
+  informationIntro = {
+    title: 'Calendrier de saisie',
+    description: 'Le calendrier de saisie permet d\'accèder aux fiches de saisie du projet'
+  } as InformationIntro;
+
+  informations = [
+    {
+      question: 'À quoi correspondent les pourcentages indiqués sur chaque fiche ?',
+      response: 'Il s\'agit du pourcentage de variables qui ont été au moins partiellement saisies.'
+    } as InformationItem
+  ]
   // TODO: Check if possible to clean and make simplify this component
   displayedColumns = [];
   dataSource = [];
@@ -54,6 +68,8 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.updateData();
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   get currentLang() {

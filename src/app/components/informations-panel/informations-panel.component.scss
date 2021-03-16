@@ -1,0 +1,89 @@
+.background {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    z-index: 101;
+    display: none;
+}
+
+.no-background {
+    animation-name: darken-bg;
+    animation-duration: 0.7s;
+    opacity: 0.9;
+    display: block;
+
+    @keyframes darken-bg {
+        from {opacity: 0;}
+        to {opacity: 0.9;}
+    }
+}
+
+.information-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: auto;
+    display: flex;
+    background-color: white;
+    z-index: 102;
+
+    .information-panel-title {
+        text-align: justify;
+        h1 {
+            text-align: center;
+            color: black;
+        }
+        h2 {
+            text-align: center;
+        }
+    }
+
+    .information-panel-toggle-btn {
+        height: 100%;
+        width: 25px;
+        cursor: pointer;
+        background-color: #ddd;
+
+        mat-icon {
+            margin-top: 45vh;
+        }
+    }
+
+    .information-panel-content {
+        height: auto;
+        overflow: scroll;
+        margin-bottom: 20px;
+        text-align: justify;
+        display: none;
+    }
+
+    .not-displayed {
+        animation-name: slide-right;
+        animation-duration: 0.5s;
+        width: 0px;
+        display: block;
+
+        @keyframes slide-right {
+            from {width: 700px;}
+            to {width: 0px;}
+        }
+    }
+
+    .displayed {
+        animation-name: slide-left;
+        animation-duration: 0.7s;
+        display: block;
+        width: 700px;
+        padding: 20px;
+    
+        @keyframes slide-left {
+            from {width: 0px;}
+            to {width: 700px;}
+        }
+    }
+}
+
