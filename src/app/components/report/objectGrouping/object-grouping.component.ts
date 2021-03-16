@@ -39,6 +39,19 @@ export class ObjectGroupingComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private fb: FormBuilder) { }
 
+
+  get currentPeriodicity(){
+    let period = this.dimensionForm.get('dimensionId').value
+    if (period === 'entity' || period === 'group'){
+      return 'month';
+    }
+    return period;
+  }
+
+  get currentProjectId(){
+     return this.project.id;
+  }
+
   ngOnInit(): void {
     this.updateDimension(8, this.periodicitiesList);
     this.groupOptions = [];

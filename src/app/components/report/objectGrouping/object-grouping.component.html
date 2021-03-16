@@ -14,7 +14,7 @@
 
     <mat-grid-tile colspan="6">
         <a mat-stroked-button type="button" class="mdm-button"
-        href="/api/export/project:21f0bad7-78e1-4f9d-814b-1b763ec3125d/quarter" target="_blank"
+        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity" target="_blank"
         rel="noopener noreferrer">
         <mat-icon>play_for_work</mat-icon>{{'DownloadTable' | translate}}
         </a>
