@@ -55,7 +55,7 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.form = this.project.forms.find(x => x.id === this.formId);
   
         if (this.form && this.project) {
-          const breadCrums = [
+          const breadCrumbs = [
             {
               value: 'Projects',
               link: './../../projects'
@@ -70,7 +70,7 @@ export class InputsComponent implements OnInit, OnDestroy {
               value: this.form.name,
             } as BreadcrumbItem,          
           ];
-          this.projectService.addBreadCrumbs(breadCrums);
+          this.projectService.updateBreadCrumbs(breadCrumbs);
         }
         this.updateData();
       })

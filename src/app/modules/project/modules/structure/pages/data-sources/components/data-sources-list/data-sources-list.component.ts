@@ -44,7 +44,7 @@ export class DataSourcesListComponent implements OnInit {
           value: 'DataSources',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
   }
 

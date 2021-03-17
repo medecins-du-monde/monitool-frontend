@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit {
         this.project = project;
         this.users = this.project.users;
 
-        const breadCrums = [
+        const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
             value: 'Users',
           } as BreadcrumbItem,
         ];
-        this.projectService.addBreadCrumbs(breadCrums);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
   }

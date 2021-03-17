@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
             value: 'Home',
           } as BreadcrumbItem,
         ];
-        this.projectService.addBreadCrumbs(breadCrumbs);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
 
         const data = [];
         for (const form of this.project.forms){

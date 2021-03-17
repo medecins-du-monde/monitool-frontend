@@ -44,7 +44,7 @@ export class ExtraIndicatorsComponent implements OnInit {
           value: 'ExtraIndicators',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.setForm();
     });
   }

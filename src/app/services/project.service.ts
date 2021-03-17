@@ -5,6 +5,7 @@ import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
+import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ProjectService {
   private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
-  breadCrumbs: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -82,7 +83,7 @@ export class ProjectService {
   }
 
   // Update the breadcrumbs list
-  public addBreadCrumbs(list) {
+  public updateBreadCrumbs(list: BreadcrumbItem[]): void {
     this.breadCrumbs.next(list);
   }
 

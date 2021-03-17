@@ -75,7 +75,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
           this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
-        const breadCrums = [
+        const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
@@ -93,7 +93,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
             value: 'Basics',
           } as BreadcrumbItem,
         ];
-        this.projectService.addBreadCrumbs(breadCrums);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
 

@@ -45,7 +45,7 @@ export class LogicalFramesListComponent implements OnInit {
           value: 'LogicalFrameworks',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
   }
 

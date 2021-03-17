@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       const projectId = project.id;
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
           value: 'Home',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.historyLink = '/projects/' + projectId + '/structure/history';
       const percentages = project.percentages;
       this.dataSource = [

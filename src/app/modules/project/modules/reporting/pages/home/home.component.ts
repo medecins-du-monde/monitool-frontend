@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
           value: 'Reporting',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     })
   }
 

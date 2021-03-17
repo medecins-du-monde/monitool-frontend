@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 
@@ -20,7 +20,6 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private changeDetectorRef: ChangeDetectorRef,
-    private router : Router
   ) { }
 
 

@@ -122,7 +122,7 @@ export class CrossCuttingComponent implements OnInit {
           value: 'CrossCuttingIndicators',
         } as BreadcrumbItem
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
   }
 

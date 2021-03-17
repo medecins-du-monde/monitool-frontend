@@ -115,7 +115,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
             value: this.form.name,
           } as BreadcrumbItem,          
         ];
-        this.projectService.addBreadCrumbs(breadCrumbs);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       }
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });

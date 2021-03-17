@@ -118,7 +118,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
             value: this.logicalFrame.name,
           } as BreadcrumbItem,          
         ];
-        this.projectService.addBreadCrumbs(breadCrumbs);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       }
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });

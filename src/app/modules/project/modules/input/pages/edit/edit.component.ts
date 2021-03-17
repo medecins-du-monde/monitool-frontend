@@ -176,7 +176,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           value: this.timeSlotDate
         } as BreadcrumbItem
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     }
   }
 

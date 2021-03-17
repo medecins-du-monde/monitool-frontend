@@ -97,7 +97,7 @@ export class SitesComponent implements OnInit {
               value: 'CollectionSites',
             } as BreadcrumbItem,
           ];
-          this.projectService.addBreadCrumbs(breadCrumbs);
+          this.projectService.updateBreadCrumbs(breadCrumbs);
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({

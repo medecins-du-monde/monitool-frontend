@@ -41,7 +41,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -59,7 +59,7 @@ export class HistoryComponent implements OnInit {
           value: 'History',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.showLoadMore = true;
       this.projectId = project.id;
       this.project = project;

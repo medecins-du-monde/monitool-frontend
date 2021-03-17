@@ -66,7 +66,7 @@ export class GeneralComponent implements OnInit {
           value: 'General',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrumbs);
+      this.projectService.updateBreadCrumbs(breadCrumbs);
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {
