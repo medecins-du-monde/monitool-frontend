@@ -26,7 +26,7 @@ export class ExtraIndicatorsComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
 
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -38,10 +38,13 @@ export class ExtraIndicatorsComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-Extraindicators',
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'ExtraIndicators',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
       this.setForm();
     });
   }

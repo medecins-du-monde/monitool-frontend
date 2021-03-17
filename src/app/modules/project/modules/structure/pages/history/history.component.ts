@@ -53,7 +53,10 @@ export class HistoryComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-History',
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'History',
         } as BreadcrumbItem,
       ];
       this.projectService.addBreadCrumbs(breadCrums);

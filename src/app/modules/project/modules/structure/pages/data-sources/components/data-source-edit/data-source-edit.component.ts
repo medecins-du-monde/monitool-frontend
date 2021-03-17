@@ -93,7 +93,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       this.form = res.project.forms.find(x => x.id === res.formId);
 
       if (this.form) {
-        const breadCrums = [
+        const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
@@ -105,14 +105,17 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
             value: this.project.name,
           } as BreadcrumbItem,
           {
-            value: 'Structure-Datasources',
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'DataSources',
             link: `./../../projects/${this.project.id}/structure/data-sources`
           } as BreadcrumbItem,
           {
             value: this.form.name,
           } as BreadcrumbItem,          
         ];
-        this.projectService.addBreadCrumbs(breadCrums);
+        this.projectService.addBreadCrumbs(breadCrumbs);
       }
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });

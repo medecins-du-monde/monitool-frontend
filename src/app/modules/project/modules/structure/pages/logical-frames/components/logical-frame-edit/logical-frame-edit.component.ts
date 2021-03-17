@@ -96,7 +96,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
 
       if (this.logicalFrame) {
-        const breadCrums = [
+        const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
@@ -108,14 +108,17 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
             value: this.project.name,
           } as BreadcrumbItem,
           {
-            value: 'Structure-Logical Frame',
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'LogicalFrameworks',
             link: `./../../projects/${this.project.id}/structure/logical-frames`
           } as BreadcrumbItem,
           {
             value: this.logicalFrame.name,
           } as BreadcrumbItem,          
         ];
-        this.projectService.addBreadCrumbs(breadCrums);
+        this.projectService.addBreadCrumbs(breadCrumbs);
       }
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });

@@ -104,7 +104,7 @@ export class CrossCuttingComponent implements OnInit {
         this.setForm();
       });
 
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -116,10 +116,13 @@ export class CrossCuttingComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-Crosscutting',
+          value: 'Structure',
         } as BreadcrumbItem,
+        {
+          value: 'CrossCuttingIndicators',
+        } as BreadcrumbItem
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
     });
   }
 

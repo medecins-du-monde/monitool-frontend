@@ -87,7 +87,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
             value: project.name,
           } as BreadcrumbItem,
           {
-            value: 'Structure-Basics',
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Basics',
           } as BreadcrumbItem,
         ];
         this.projectService.addBreadCrumbs(breadCrums);

@@ -27,7 +27,7 @@ export class LogicalFramesListComponent implements OnInit {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
 
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -39,10 +39,13 @@ export class LogicalFramesListComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-Logicalframes',
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'LogicalFrameworks',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
     });
   }
 

@@ -48,7 +48,7 @@ export class GeneralComponent implements OnInit {
     this.chartService.clearChart();
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -60,10 +60,13 @@ export class GeneralComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Reporting-General',
+          value: 'Reporting',
+        } as BreadcrumbItem,
+        {
+          value: 'General',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {

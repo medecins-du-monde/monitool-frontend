@@ -54,7 +54,10 @@ export class HomeComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-Home',
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'Home',
         } as BreadcrumbItem,
       ];
       this.projectService.addBreadCrumbs(breadCrums);

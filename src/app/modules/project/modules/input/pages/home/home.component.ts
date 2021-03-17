@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
       this.projectService.openedProject.subscribe( async (project: Project) => {
         this.project = project;
 
-        const breadCrums = [
+        const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
@@ -59,10 +59,13 @@ export class HomeComponent implements OnInit {
             value: project.name,
           } as BreadcrumbItem,
           {
-            value: 'Input-Home',
+            value: 'Input',
+          } as BreadcrumbItem,
+          {
+            value: 'Home',
           } as BreadcrumbItem,
         ];
-        this.projectService.addBreadCrumbs(breadCrums);
+        this.projectService.addBreadCrumbs(breadCrumbs);
 
         const data = [];
         for (const form of this.project.forms){

@@ -45,7 +45,10 @@ export class UsersComponent implements OnInit {
             value: project.name,
           } as BreadcrumbItem,
           {
-            value: 'Structure-Users',
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Users',
           } as BreadcrumbItem,
         ];
         this.projectService.addBreadCrumbs(breadCrums);

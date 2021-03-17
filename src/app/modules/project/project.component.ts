@@ -3,7 +3,6 @@ import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
-import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-project',
@@ -41,37 +40,6 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
             }
           );
         });
-        const breadCrums = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: project.country,
-          } as BreadcrumbItem,
-          {
-            value: project.name,
-          } as BreadcrumbItem,
-        ];
-
-        // Handle breadcrumbs if the user reload the page from a children component
-        const urlList = this.router.url.split('/');
-
-        //  If the url length is 5, the user is in the structure or general reporting
-        if (urlList.length === 5) {
-          // Format from the URL to get the correct breadcrumb value
-          const val1 = urlList[3].charAt(0).toUpperCase() + urlList[3].slice(1);
-          const withouDash = urlList[4].replace(/-/g, '');
-          const val2 = withouDash.charAt(0).toUpperCase() + withouDash.slice(1);
-          const newValue = {value: `${val1}-${val2}`,} as BreadcrumbItem;
-          breadCrums.push(newValue)
-        } else if (urlList.length === 6) {
-          const formId = urlList[5];
-          const form = this.project.forms.find(x => x.id === formId);
-          const newValue = {value: form.name,} as BreadcrumbItem;
-          breadCrums.push(newValue)
-        }
-        this.projectService.addBreadCrumbs(breadCrums);
       });
 
       const structure = {

@@ -79,7 +79,7 @@ export class SitesComponent implements OnInit {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
-          const breadCrums = [
+          const breadCrumbs = [
             {
               value: 'Projects',
               link: './../../projects'
@@ -91,10 +91,13 @@ export class SitesComponent implements OnInit {
               value: project.name,
             } as BreadcrumbItem,
             {
-              value: 'Structure-Sites',
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'CollectionSites',
             } as BreadcrumbItem,
           ];
-          this.projectService.addBreadCrumbs(breadCrums);
+          this.projectService.addBreadCrumbs(breadCrumbs);
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({

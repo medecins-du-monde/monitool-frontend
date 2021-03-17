@@ -26,7 +26,7 @@ export class DataSourcesListComponent implements OnInit {
       this.project = project;
       this.forms = project.forms;
 
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -38,10 +38,13 @@ export class DataSourcesListComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Structure-Datasources',
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'DataSources',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
     });
   }
 

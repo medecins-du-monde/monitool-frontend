@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
-      const breadCrums = [
+      const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -26,10 +26,10 @@ export class HomeComponent implements OnInit {
           value: project.name,
         } as BreadcrumbItem,
         {
-          value: 'Reporting-Home',
+          value: 'Reporting',
         } as BreadcrumbItem,
       ];
-      this.projectService.addBreadCrumbs(breadCrums);
+      this.projectService.addBreadCrumbs(breadCrumbs);
     })
   }
 
