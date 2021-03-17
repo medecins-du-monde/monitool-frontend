@@ -8,6 +8,7 @@ import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 
@@ -51,6 +52,26 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.route.params.subscribe(params => {
         this.formId = params.formId;
+        this.form = this.project.forms.find(x => x.id === this.formId);
+
+        if (this.form && this.project) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: this.form.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
         this.updateData();
       })
     );

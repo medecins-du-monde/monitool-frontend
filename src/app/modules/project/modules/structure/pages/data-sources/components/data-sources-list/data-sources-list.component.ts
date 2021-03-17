@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -24,6 +25,26 @@ export class DataSourcesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.forms = project.forms;
+
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'DataSources',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
   }
 
