@@ -53,7 +53,7 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(params => {
         this.formId = params.formId;
         this.form = this.project.forms.find(x => x.id === this.formId);
-  
+
         if (this.form && this.project) {
           const breadCrumbs = [
             {
@@ -68,7 +68,7 @@ export class InputsComponent implements OnInit, OnDestroy {
             } as BreadcrumbItem,
             {
               value: this.form.name,
-            } as BreadcrumbItem,          
+            } as BreadcrumbItem,
           ];
           this.projectService.updateBreadCrumbs(breadCrumbs);
         }

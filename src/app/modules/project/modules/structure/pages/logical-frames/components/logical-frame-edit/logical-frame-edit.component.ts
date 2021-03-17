@@ -116,7 +116,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
           } as BreadcrumbItem,
           {
             value: this.logicalFrame.name,
-          } as BreadcrumbItem,          
+          } as BreadcrumbItem,
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
       }

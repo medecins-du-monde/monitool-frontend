@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
         } as BreadcrumbItem,
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
-    })
+    });
   }
 
 }
