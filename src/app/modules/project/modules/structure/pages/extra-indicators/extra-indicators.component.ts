@@ -34,11 +34,7 @@ export class ExtraIndicatorsComponent implements OnInit {
     {
       question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière?',
       response: 'Rendez-vous sur la page la structure de votre projet. <br>Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
-    } as InformationItem,
-    {
-      question: 'Comment est estimée la durée de saisie ?',
-      response: 'Cette indication est là pour donner un ordre de grandeur. <br>La formule utilisée considère qu\'il faut 10 secondes par case remplie.'
-    } as InformationItem,
+    } as InformationItem
   ];
 
 

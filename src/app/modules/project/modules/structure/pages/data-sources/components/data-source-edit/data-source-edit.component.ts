@@ -14,6 +14,8 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
@@ -39,6 +41,58 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
   ]
 })
 export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
+
+  informationIntro = {
+    title: 'Édition d\'une source de données',
+    description: ''
+  } as InformationIntro;
+
+  informations = [
+    {
+      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
+      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+    } as InformationItem,
+    {
+      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
+      response: 'En cas d\'erreur, cliquez sur <button>Annulez les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+    } as InformationItem,
+    {
+      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière ?',
+      response: 'Rendez-vous sur la page <button>Historique</button> la structure de votre projet. <br> Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+    } as InformationItem,
+    {
+      question: 'Mes équipes passent trop de temps à saisir des données, comment réduire?',
+      response: 'Réduisez la quantitée de données à collecter! <br>Par exemple, vous pouvez désactiver des variables ou des désagrégations que vous n\'analysez pas, ou bien réduire la périodicité de la saisie.'
+    } as InformationItem,
+    {
+      question: 'Je ne comprend pas les deux questions sur "Comment grouper les saisies"',
+      response: ' Monitool vous affiche des rapports selon l\'échelle de temps de votre choix (semaine, mois, trimestre...) et ne vous demande pas de saisir vos données autant de fois qu\'il y a d\'échelles de temps. <br>Pour cela, il est nécessaire de savoir comment aggréger les données qui sont saisies dans l\'outil, et ces règles dependent de la nature des données que vous saisissez.'
+    } as InformationItem,
+    {
+      question: 'Je veux changer la périodicité de collecte de ma source de données alors que j\'ai déjà réalisé des saisies',
+      response: 'Pas de soucis! <br>Vos rapports ne changeront pas: vous pourrez toujours consulter toutes vos données sans aucune perte de précision. <br><br>Cependant, attention! Si vous changez pour une periodicité plus longue (par exemple, hebdomadaire vers mensuelle), vous devrez faire attention à corriger les données de la dernière saisie qui sera sûrement incomplète et pourtant marquée comme "faite"! '
+    } as InformationItem,
+    {
+      question: 'Je veux ajouter une variable mais j\'ai déjà réalisé des saisies.',
+      response : ' Vous pouvez ajouter des variables à tout moment sans perte de données. <br>Vous aurez alors le choix de retourner saisir les données correspondantes rétroactivement, ou bien de laisser les saisies en l\'état, qui seront alors marquées comme "incomplètes" dans le tableau de bord du projet, sans autres conséquences. '
+    } as InformationItem,
+    {
+      question: 'Je veux arrêter de saisir une variable mais j\'ai déjà réalisé des saisies.',
+      response: 'Vous pouvez désactiver des variables à tout moment sans perte de données. <br>Les données rentrées précedement seront toujours accessibles dans vos rapports, mais toutes les nouvelles saisies seront alors marquées comme "incomplètes" dans le tableau de bord du projet, sans autres conséquences. <br>Lorsque vous n\'aurez plus usage de cette variable, vous pourrez alors la supprimer. '
+    } as InformationItem,
+    {
+      question: 'Je veux supprimer une variable mais j\'ai déjà réalisé des saisies.',
+      response: 'Elle disparaitra alors des formulaires de saisie, et rétroactivement de tous vos rapports. <br> <br>Tous les indicateurs qui en dépendent seront marqués comme "Impossible à calculer" jusqu\'à que vous corrigiez leur formule. <br>Vos données ne seront pas perdues, mais la seule manière de les récupérer consistera à vous rendre sur la page "Historique" pour annuler la modification.'
+    } as InformationItem,
+    {
+      question: 'Je veux ajouter une désagrégation mais j\'ai déjà réalisé des saisies',
+      response: 'Par exemple rajouter une désagrégation par sexe du patient sur un nombre de consultations médicales, alors que je ne les différenciait que par pathologie. <br><br>Vous pouvez rajouter des désagrégations à tout moment sans perte de données. <br>Lorsque vous consulterez vos rapports, les données des anciennes saisies qui ne contenaient pas cette désagrégation par sexe vont continuer à s\'afficher et ne changeront pas. <br><br>Pour vous permettre de comparer les anciennes données et les nouvelles, si vous choisissez de désagréger vos rapports par sexe, monitool va distribuer les anciennes données en faisant comme hypothèse qu\'il y avait autant de femmes que d\'hommes avant le changement. Afin de ne pas vous induire en erreur, ces données "interpolées" sont clairement indiquées dans les rapports car elles seront toutes précédées par le symbole ≈.'
+    } as InformationItem,
+    {
+      question: 'Je veux supprimer une désagrégation mais j\'ai déjà réalisé des saisies.',
+      response: 'Toutes les données qui ont étés saisies jusqu\'à ce jour vont être aggrégées, et la désagrégation va disparaitre rétroactivement des rapports. <br>Vous ne pourrez plus voir cette désagrégation dans les rapports, même sur les données saisies avant la modification. <br>Une alternative consiste à désactiver cette désagrégation.'
+    } as InformationItem
+  ]
 
   dataSourceForm: FormGroup = new FormGroup({
     id: new FormControl(null),
@@ -109,6 +163,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   ngOnDestroy(): void {

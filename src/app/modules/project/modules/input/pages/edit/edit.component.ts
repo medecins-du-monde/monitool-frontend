@@ -12,6 +12,8 @@ import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
+import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 
 
@@ -22,6 +24,36 @@ import * as _ from 'lodash';
 })
 
 export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
+
+  informationIntro = {
+    title: 'Edition d\'une saisie',
+    description: 'Vérifiez bien le lieu de collecte et la période couverte de la fiche de saisie avant de rentrer vos données'
+  } as InformationIntro;
+
+  informations = [
+    {
+      question: 'Comment passer rapidement d\'une case à l\'autre?',
+      response: 'Lors de la saisie de données, la touch Tab de votre clavier vous permet de naviguer entre les cases. <br>Pour revenir à la case précédente, utilisez Shift + Tab.'
+    } as InformationItem,
+    {
+      question: 'Je saisie à partir de fiches papier remontées par plusieurs intervenants par lieu de collecte. Comment saisir plus rapidement ?',
+      response: 'Si vous disposez de plusieurs formulaires papier à saisir par lieu (par exemple, un par travailleur social), et que désirez les additioner, vous pouvez rentrer des sommes dans les cases de saisies: "1+2+3".'
+    } as InformationItem,
+    {
+      question: 'À quoi sert le bouton "Remplir avec les données de la période précédente" ?',
+      response: ' À gagner du temps dans certains cas particuliers! Si votre projet suit des indicateur qui nécessitent des indicateurs qui varient peu dans le temps (nombre de structure soutenues, population de la zone ciblée, ...), il est souvent plus facile de copier les données de la saisie précédente et de corriger les différences, que de réaliser la saisie à partir de zéro.'
+    } as InformationItem,
+    {
+      question: 'À quoi sert le bouton "Remplacer les valeurs manquantes par zéro" ?',
+      response : 'À gagner du temps dans certains cas particuliers! <br>Pour certaines variables il peut arriver que la majorité des valeurs qui aient besoin d\'être saisies soient des zéros. Ceci se produit fréquement si plusieurs désagrégations sont utilisées sur la même variable.'
+    } as InformationItem,
+    {
+      question: 'Que se passe-t\'il si je laisse certaines cases en blanc?',
+      response : 'Attention! <br>Une case laissée blanche n\'est pas équivalente à une case qui contient un zéro. Les données non saisies apparaitront comme telles dans les rapports.'
+    } as InformationItem
+  ]
+
+
 // TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
   formId: string;
@@ -80,7 +112,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.updateData();
       })
     );
-
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
