@@ -3,10 +3,8 @@ import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
-import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
-import { DataSource } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-project',
@@ -18,8 +16,6 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
   public sidenav: Sidenav;
   project: Project;
   user: User;
-
-  breadcrumbList: BreadcrumbItem[];
 
   bigPage: boolean;
 
@@ -61,59 +57,58 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
             );
           });
         }
-        this.breadcrumbList = this.projectService.breadcrumbList;
       });
 
       const structure = {
-            title: 'Structure',
-            collapsible: true,
-            items: [
-              {
-                name: 'Home',
-                routerLink: `../${projectId}/structure/home`,
-                icon: 'home'
-              },
-              {
-                name: 'Basics',
-                routerLink: `../${projectId}/structure/basics`,
-                icon: 'database'
-              },
-              {
-                name: 'CollectionSites',
-                routerLink: `../${projectId}/structure/sites`,
-                icon: 'location'
-              },
-              {
-                name: 'DataSources',
-                routerLink: `../${projectId}/structure/data-sources`,
-                icon: 'folder'
-              },
-              {
-                name: 'LogicalFrameworks',
-                routerLink: `../${projectId}/structure/logical-frames`,
-                icon: 'clipboard'
-              },
-              {
-                name: 'CrossCuttingIndicators',
-                routerLink: `../${projectId}/structure/cross-cutting`,
-                icon: 'gauge'
-              },
-              {
-                name: 'ExtraIndicators',
-                routerLink: `../${projectId}/structure/extra-indicators`,
-                icon: 'gauge'
-              },
-              {
-                name: 'Users',
-                routerLink: `../${projectId}/structure/users`,
-                icon: 'people'
-              },
-              {
-                name: 'History',
-                routerLink: `../${projectId}/structure/history`,
-                icon: 'history'
-              }
-            ]
+        title: 'Structure',
+        collapsible: true,
+        items: [
+          {
+            name: 'Home',
+            routerLink: `../${projectId}/structure/home`,
+            icon: 'home'
+          },
+          {
+            name: 'Basics',
+            routerLink: `../${projectId}/structure/basics`,
+            icon: 'database'
+          },
+          {
+            name: 'CollectionSites',
+            routerLink: `../${projectId}/structure/sites`,
+            icon: 'location'
+          },
+          {
+            name: 'DataSources',
+            routerLink: `../${projectId}/structure/data-sources`,
+            icon: 'folder'
+          },
+          {
+            name: 'LogicalFrameworks',
+            routerLink: `../${projectId}/structure/logical-frames`,
+            icon: 'clipboard'
+          },
+          {
+            name: 'CrossCuttingIndicators',
+            routerLink: `../${projectId}/structure/cross-cutting`,
+            icon: 'gauge'
+          },
+          {
+            name: 'ExtraIndicators',
+            routerLink: `../${projectId}/structure/extra-indicators`,
+            icon: 'gauge'
+          },
+          {
+            name: 'Users',
+            routerLink: `../${projectId}/structure/users`,
+            icon: 'people'
+          },
+          {
+            name: 'History',
+            routerLink: `../${projectId}/structure/history`,
+            icon: 'history'
+          }
+        ]
       };
       const input = {
         title: 'Input',

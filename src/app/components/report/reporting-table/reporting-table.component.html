@@ -1,4 +1,4 @@
-<div class="table-scroll">
+<div class="table-scroll {{ isCrossCuttingReport ? 'big-table' : null }}">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
     <ng-container class="menu" matColumnDef="icon" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef></th>
