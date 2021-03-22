@@ -59,8 +59,11 @@ export class LogicalFramesListComponent implements OnInit {
 
   onClone(logicalFrame: LogicalFrame): void {
     const clonedLogicalFrame = new LogicalFrame(logicalFrame);
+
+    // we change the id and the name to not have the same in the clone
     clonedLogicalFrame.id = uuid();
     clonedLogicalFrame.name += ' (Copy)';
+
     this.project.logicalFrames.push(clonedLogicalFrame);
     this.projectService.project.next(this.project);
     this.router.navigate([`${this.router.url}/${clonedLogicalFrame.id}`]);
