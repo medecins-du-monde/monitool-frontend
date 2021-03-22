@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
 
   public isMobile: boolean;
   user: User;
+  public settingsVisible: boolean = true;
 
   headerLinkList = [];
 
@@ -33,8 +34,13 @@ export class HeaderComponent implements OnInit {
       if (user.type === 'user') {
         this.headerLinkList.push({routerLink: 'projects', text: 'Projects'});
         this.headerLinkList.push({routerLink: 'indicators', text: 'CrossCuttingIndicators'});
+
+        if (user.role !== 'admin') {
+          this.settingsVisible = false;
+        }
       }
       else {
+        this.settingsVisible = true;
         this.headerLinkList.push({routerLink: `/projects/${this.user.projectId}`, text: 'Project'});
       }
     });

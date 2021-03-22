@@ -40,6 +40,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
+  public disableCreateProject: boolean = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -78,6 +79,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {
         this.currentUser = new User(user);
+        if (this.currentUser.type === 'user' && this.currentUser.role === 'common') {
+          this.disableCreateProject = true;
+        }
       })
     );
   }

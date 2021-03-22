@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router, ActivatedRoute } from '@angular/router';
+import { Project } from '../models/classes/project.model';
 import { User } from '../models/classes/user.model';
 import { AuthService } from '../services/auth.service';
+import { ProjectService } from '../services/project.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,9 @@ export class PermissionsGuard implements CanActivate {
   user: User;
   userRole : string;
   userType: string;
+  project: Project;
 
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private authService: AuthService, private router: Router, private projectService: ProjectService) {
     this.authService.currentUser.subscribe((user: User) => {
       this.user = user;
       this.userRole = user.role;
@@ -29,6 +32,10 @@ export class PermissionsGuard implements CanActivate {
       case 'structure': 
         if (this.userRole === 'owner' || this.userRole === 'admin') {
           return true;
+        } 
+        else if (this.userRole === 'common' || this.userRole === 'project') {
+          this.router.navigate([`/projects/${this.project.id}/reporting/home`]);
+          return false;
         }
         this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
         return false;

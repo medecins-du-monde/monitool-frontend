@@ -37,14 +37,13 @@ export class ProjectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
     });
   }
 
-  async onOpen(): Promise<void> {
+  onOpen(): void {
     this.router.navigate(['/projects', this.project.id]);
   }
 
