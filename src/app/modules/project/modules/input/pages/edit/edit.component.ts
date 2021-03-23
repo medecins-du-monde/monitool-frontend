@@ -84,18 +84,25 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   }
 
-  onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
+  onPaste(event: ClipboardEvent, tableId: string, tablePos: number, i: number, j: number): void {
     const data = [];
     const rowData = event.clipboardData.getData('text').split('\n');
 
     rowData.forEach(row => {
-      row.split('\t').forEach(columnData => {
-        data.push(columnData);
-      });
-    });
-    for (let i = index; i < this.inputForm.value.values[`${tableId}`].length; i++) {
-      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i - index] ? data[i - index] : 0);
+      if (row !== ''){
+        data.push(row.split('\t'));
+      }
+    })
+
+    for (let dx = 0; dx < data.length; dx++) {
+      for (let dy = 0; dy < data[dx].length; dy++){
+        let myPos = this.isInputCell(tablePos, i+dx, j+dy);
+        if (myPos !== false){
+          this.inputForm.controls.values.get(`${tableId}`).get(`${myPos}`).setValue(data[dx][dy]);
+        }
+      }
     }
+
     // This is used to block the pasted text inside the input and insert everything from this method
     return event.preventDefault();
   }
@@ -252,6 +259,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   createTable(){
+    this.tables = [];
     for (const element of this.form.elements){
       const cols = [];
       const rows = [];
@@ -406,20 +414,21 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   isInputCell(tablePos, i, j){
     const rows = this.tables[tablePos].rows;
     const cols = this.tables[tablePos].cols;
-    const numberRows = this.tables[tablePos].numberRows;
-    const numberCols = this.tables[tablePos].numberCols;
+    let numberRows = this.tables[tablePos].numberRows;
+    let numberCols = this.tables[tablePos].numberCols;
 
-    if ( i >= cols.length && (rows.length === 0 || i < numberRows - 1) && j >= rows.length && (cols.length === 0 || j < numberCols - 1)){
-      let nRows = numberRows - cols.length - 1;
-      let nCols = numberCols - rows.length - 1;
+    // remove the 'Total' row from the count
+    if (rows.length !== 0){
+      numberRows -= 1;
+    }
+    // remove the 'Total' col from the count
+    if (cols.length !== 0){
+      numberCols -= 1;
+    }
 
-      if (cols.length === 0){
-        nCols += 1;
-      }
-      if (rows.length === 0){
-        nRows += 1;
-      }
-
+    if (i >= cols.length && i < numberRows && j >= rows.length && j < numberCols){
+      let nRows = numberRows - cols.length;
+      let nCols = numberCols - rows.length;
       i -= cols.length;
       j -= rows.length;
 
