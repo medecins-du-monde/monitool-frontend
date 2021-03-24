@@ -139,28 +139,30 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
         ]
       };
 
-      if (this.user.role === 'owner' || this.user.role === 'admin') {
-        this.sidenav = {
-          groups: [
-            structure,
-            input,
-            reporting
-          ]
-        };
-      } else if (this.user.role === 'input') {
-        this.sidenav = {
-          groups: [
-            input,
-            reporting
-          ]
-        };
-      } else {
-        this.sidenav = {
-          groups: [
-            reporting
-          ]
-        };
-      }
+      this.projectService.projectUserCreatingProject.subscribe(val => {
+        if (this.user.role === 'owner' || this.user.role === 'admin' || (this.user.role === 'project' && val)) {
+          this.sidenav = {
+            groups: [
+              structure,
+              input,
+              reporting
+            ]
+          };
+        } else if (this.user.role === 'input') {
+          this.sidenav = {
+            groups: [
+              input,
+              reporting
+            ]
+          };
+        } else {
+          this.sidenav = {
+            groups: [
+              reporting
+            ]
+          };
+        }
+      });
     });
   }
 

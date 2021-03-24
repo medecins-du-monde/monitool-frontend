@@ -17,19 +17,11 @@ export class SidenavComponent implements OnInit {
   public enableAllSidenavLink: boolean;
   user: User;
 
-  constructor(private projectService: ProjectService, private authService: AuthService) {}
+  constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe((user: User) => {
-      this.user = user;
-      if (this.user.type === 'user') {
-        this.enableAllSidenavLink = true;
-      } else {
-        // Check whether or not the project has his basics infos
-        this.projectService.hasBasicsInfos.subscribe(val => {
-          this.enableAllSidenavLink = this.structurePage ? val : true;
-        });
-      }
+    this.projectService.hasBasicsInfos.subscribe(val => {
+      this.enableAllSidenavLink = this.structurePage ? val : true;
     });
     this.activeGroup = this.sidenav.groups.length > 0 ? this.sidenav.groups[0].title : '';
   }

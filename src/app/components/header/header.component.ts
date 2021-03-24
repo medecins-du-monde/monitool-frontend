@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
 
   public isMobile: boolean;
   user: User;
+  // Remove settings from header when a user is not an admin
   public settingsVisible: boolean = true;
 
   headerLinkList = [];
@@ -31,16 +32,17 @@ export class HeaderComponent implements OnInit {
     this.authService.currentUser.subscribe((user: User) => {
       this.headerLinkList = [{routerLink: 'home', text: 'Home'}];
       this.user = user;
-      if (user.type === 'user') {
+      if (this.user.type === 'user') {
+        this.settingsVisible = true;
         this.headerLinkList.push({routerLink: 'projects', text: 'Projects'});
         this.headerLinkList.push({routerLink: 'indicators', text: 'CrossCuttingIndicators'});
 
-        if (user.role !== 'admin') {
+        if (this.user.role !== 'admin') {
           this.settingsVisible = false;
         }
       }
       else {
-        this.settingsVisible = true;
+        this.settingsVisible = false;
         this.headerLinkList.push({routerLink: `/projects/${this.user.projectId}`, text: 'Project'});
       }
     });

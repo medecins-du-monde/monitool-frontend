@@ -84,6 +84,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       })
     );
+    this.subscription.add(
+      this.projectService.revokeAccessForUserProject()
+    );
   }
 
   ngOnDestroy(): void {
@@ -145,6 +148,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     project.id = `project:${uuid()}`;
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
+    // Allow user with a project role to access to the structure page to create a project
+    this.projectService.giveAccessToCreateProject()
     this.projectService.create(project);
     this.router.navigate(['/projects', project.id]);
   }

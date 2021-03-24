@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
+import { nextTick } from 'process';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,12 @@ export class ProjectService {
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  // Get project id to redirect MDM Accounts
+  projectId: BehaviorSubject<string> = new BehaviorSubject('');
+
+  // Check if a project user is creating a new project
+  projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
@@ -46,6 +53,14 @@ export class ProjectService {
 
   get getBreadcrumbsList(): Observable<any[]> {
     return this.breadCrumbs.asObservable();
+  }
+
+  get hasProjectId(): Observable<string> {
+    return this.projectId.asObservable();
+  }
+
+  get projectUserCreatingProject(): Observable<boolean> {
+    return this.projectUserRoleCreateProject.asObservable()
   }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
@@ -90,6 +105,14 @@ export class ProjectService {
   // used when reverting changes and staying in the same page
   public revertChanges(): void {
     this.project.next(this.savedProject.copy());
+  }
+
+  public giveAccessToCreateProject(): void {
+    this.projectUserRoleCreateProject.next(true);
+  }
+
+  public revokeAccessForUserProject(): void {
+    this.projectUserRoleCreateProject.next(false);
   }
 
   public async list(): Promise<Project[]> {
@@ -177,5 +200,9 @@ export class ProjectService {
       }
     });
     return name;
+  }
+
+  public updateProjectId(id: string) {
+    this.projectId.next(id);
   }
 }
