@@ -66,7 +66,25 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     } as InformationItem,
     {
       question: 'Je ne comprend pas les deux questions sur "Comment grouper les saisies"',
-      response: ' Monitool vous affiche des rapports selon l\'échelle de temps de votre choix (semaine, mois, trimestre...) et ne vous demande pas de saisir vos données autant de fois qu\'il y a d\'échelles de temps. <br>Pour cela, il est nécessaire de savoir comment aggréger les données qui sont saisies dans l\'outil, et ces règles dependent de la nature des données que vous saisissez.'
+      response: `Monitool vous affiche des rapports selon l\'échelle de temps de votre choix (semaine, mois, trimestre...) et ne vous demande pas de saisir vos données autant de fois qu\'il y a d\'échelles de temps. 
+                <br>Pour cela, il est nécessaire de savoir comment aggréger les données qui sont saisies dans l\'outil, et ces règles dependent de la nature des données que vous saisissez.<br><br>
+                <table class="information-panel-table">
+                  <tr>
+                    <th class="information-panel-cell">Variable</th>
+                    <th class="information-panel-cell">Comment grouper dans le temps</th>
+                    <th class="information-panel-cell">Comment grouper entre site</th>
+                  </tr>
+                  <tr>
+                    <td class="information-panel-cell">Nombre de consultations médicales</td>
+                    <td class="information-panel-cell">Si 10 consultations sont réalisés par jour, cela fait 70 consulations par semaine, donc "Somme"</td>
+                    <td class="information-panel-cell">10 consultations à Paris et 10 consultations à Lilles font 20 consultations, donc "Somme" également</td>
+                  </tr>
+                  <tr>
+                    <td class="information-panel-cell">Nombre de structures soutenues</td>
+                    <td class="information-panel-cell">10 structures étaient soutenues en janvier, et 15 en février et 20 en mars, la valeur à garder pour le trimestre est 15, donc "Moyenne"</td>
+                    <td class="information-panel-cell">10 structures étaient soutenues à Paris, et 10 à Lilles, cela fait 20 structures, donc "Somme"</td>
+                  </tr>
+                </table>`
     } as InformationItem,
     {
       question: 'Je veux changer la périodicité de collecte de ma source de données alors que j\'ai déjà réalisé des saisies',

@@ -880,3 +880,19 @@ code {
     margin-right: 5px;
   }
 }
+
+//  Style for table inside information panel
+.information-panel-table{
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.information-panel-cell {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  font-family: "Neutra-Text", "Neutra", sans-serif;
+  font-size: 16px;
+  color: var(--main);
+}
