@@ -47,8 +47,14 @@
             <tr mat-header-row *matHeaderRowDef="table.displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: table.displayedColumns;"></tr>
         </table>
+
+        <hot-table [colHeaders]="false" [rowHeaders]="false" [data]="table.value" [observeChanges]="true"></hot-table>
+        <!-- <button (click)="testChangeData()">test</button> -->
     </div>
 </div>
+
+
+
 <div class="save-actions">
     <button mat-stroked-button class="mdm-button primary" [disabled]="!canBeSaved" (click)="saveInput()">
         <mat-icon>save</mat-icon>

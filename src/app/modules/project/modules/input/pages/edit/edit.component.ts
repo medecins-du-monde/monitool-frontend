@@ -45,6 +45,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   inputForm: FormGroup;
   previousInput: Input;
   private initValue: any;
+  dataset: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
@@ -82,7 +83,19 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       })
     );
 
+    this.dataset = [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ]
+
   }
+
+  // testChangeData(){
+  //   this.dataset.push(
+  //     [5, 5, 5]
+  //   )
+  // }
 
   onPaste(event: ClipboardEvent, tableId: string, tablePos: number, i: number, j: number): void {
     const data = [];

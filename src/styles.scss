@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import '~handsontable/dist/handsontable.full.css';
 @include mat-core();
 
 $mdm-primary-colors: (50 : #e0ecf8,
