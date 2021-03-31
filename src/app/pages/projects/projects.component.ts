@@ -40,7 +40,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
-  public disableCreateProject: boolean = false;
+  canCreateProject = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -80,13 +80,14 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.authService.currentUser.subscribe((user: User) => {
         this.currentUser = new User(user);
         if (this.currentUser.type === 'user' && this.currentUser.role === 'common') {
-          this.disableCreateProject = true;
+          this.canCreateProject = false;
         }
       })
     );
-    this.subscription.add(
-      this.projectService.revokeAccessForUserProject()
-    );
+    // Pourquoi ?
+    // this.subscription.add(
+    //   this.projectService.revokeAccessForUserProject()
+    // );
   }
 
   ngOnDestroy(): void {
@@ -149,7 +150,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
     // Allow user with a project role to access to the structure page to create a project
-    this.projectService.giveAccessToCreateProject()
+    this.projectService.giveAccessToCreateProject();
     this.projectService.create(project);
     this.router.navigate(['/projects', project.id]);
   }

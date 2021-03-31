@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Subscription } from 'rxjs';
@@ -52,7 +52,7 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.project = project;
         this.authService.currentUser.subscribe((user: User) => {
           this.user = user;
-        })
+        });
         this.updateData();
       })
     );

@@ -37,7 +37,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.inBigPage.subscribe(value => this.bigPage = value);
         this.project = project;
-        //If the user has a data entry roles, only display the datasource they can modify
+        // If the user has a data entry roles, only display the datasource they can modify
         if (this.user.role === 'input') {
           this.user.dataSources.forEach(dataSource => {
             input.items.push({
@@ -46,7 +46,9 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
               icon: 'edit'
             });
           });
-        } else {
+        }
+        // Otherwise, we take all the datasources of the project
+        else {
           this.project.forms.forEach(form => {
             input.items.push(
               {
@@ -140,6 +142,8 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       };
 
       this.projectService.projectUserCreatingProject.subscribe(val => {
+        // If user is owner of the project or admin or he has created the project
+        // Then he can see everything in the sidenav
         if (this.user.role === 'owner' || this.user.role === 'admin' || (this.user.role === 'project' && val)) {
           this.sidenav = {
             groups: [
@@ -148,14 +152,19 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
               reporting
             ]
           };
-        } else if (this.user.role === 'input') {
+        }
+        // If the user has just the input role
+        // Then he can just access the input functionnalities and the report in the sidenav
+        else if (this.user.role === 'input') {
           this.sidenav = {
             groups: [
               input,
               reporting
             ]
           };
-        } else {
+        }
+        // Otherwise, he can just access the general report.
+        else {
           this.sidenav = {
             groups: [
               reporting

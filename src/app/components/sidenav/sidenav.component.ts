@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'src/app/models/classes/user.model';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -15,11 +13,11 @@ export class SidenavComponent implements OnInit {
 
   public activeGroup: string;
   public enableAllSidenavLink: boolean;
-  user: User;
 
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
+    // Enable all the links of the sidenav if the project has all is basicsinfos
     this.projectService.hasBasicsInfos.subscribe(val => {
       this.enableAllSidenavLink = this.structurePage ? val : true;
     });

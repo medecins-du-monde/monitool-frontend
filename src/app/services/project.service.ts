@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
-import { nextTick } from 'process';
 
 @Injectable({
   providedIn: 'root'
@@ -55,12 +54,12 @@ export class ProjectService {
     return this.breadCrumbs.asObservable();
   }
 
-  get hasProjectId(): Observable<string> {
+  get getProjectId(): Observable<string> {
     return this.projectId.asObservable();
   }
 
   get projectUserCreatingProject(): Observable<boolean> {
-    return this.projectUserRoleCreateProject.asObservable()
+    return this.projectUserRoleCreateProject.asObservable();
   }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
@@ -111,9 +110,9 @@ export class ProjectService {
     this.projectUserRoleCreateProject.next(true);
   }
 
-  public revokeAccessForUserProject(): void {
-    this.projectUserRoleCreateProject.next(false);
-  }
+  // public revokeAccessForUserProject(): void {
+  //   this.projectUserRoleCreateProject.next(false);
+  // }
 
   public async list(): Promise<Project[]> {
     const themes = await this.themeService.list();
@@ -196,7 +195,7 @@ export class ProjectService {
     let name;
     arr.forEach(x => {
       if (x.id === id) {
-        name = x.name
+        name = x.name;
       }
     });
     return name;

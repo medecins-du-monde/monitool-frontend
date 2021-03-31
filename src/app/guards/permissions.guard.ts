@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router, ActivatedRoute } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { User } from '../models/classes/user.model';
 import { AuthService } from '../services/auth.service';
 import { ProjectService } from '../services/project.service';
@@ -9,7 +9,7 @@ import { ProjectService } from '../services/project.service';
 })
 export class PermissionsGuard implements CanActivate {
   user: User;
-  userRole : string;
+  userRole: string;
   userType: string;
   id: string;
   giveAccess: boolean;
@@ -21,7 +21,7 @@ export class PermissionsGuard implements CanActivate {
       this.userType = user.type;
     });
     // Make sure we have the correct project ID for MDM Accounts
-    this.projectService.hasProjectId.subscribe((id) => {
+    this.projectService.getProjectId.subscribe((id) => {
       this.id = id;
     });
     // Allow project role to go to structure when they create a project
@@ -35,31 +35,41 @@ export class PermissionsGuard implements CanActivate {
     // Get the route path
     const module = route.routeConfig.path;
 
-    //Redirect the user based on its role and the permission it gives them
+    // Redirect the user based on its role and the permission it gives them
     switch (module) {
+      // For the structure part
       case 'structure':
-        if (this.userRole === 'common' || (this.userRole === 'project' && !this.giveAccess)) {
+        // If the user has common role or project role without access to this one.
+        if ((this.userRole === 'common') || (this.userRole === 'project' && !this.giveAccess)) {
+          // Not authorized and redirection to the reporting home page
           this.projectService.get(this.id).then(() => {
             this.router.navigate([`/projects/${this.id}/reporting/home`]);
           });
           return false;
-        } else if (this.userRole === 'read' || this.userRole === 'input') {
+        }
+        // It the user has read role or input role
+        else if (this.userRole === 'read' || this.userRole === 'input') {
+          // Not authorized and redirection to reporting home
           this.projectService.get(this.user.projectId).then(() => {
             this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
           });
           return false;
         }
+        // Otherwise, he has access to all the structure
         return true;
       case 'input':
-        // Get formID and make sure the user has the permission to access it
-        const formId = route.children[0].params.formId;
+        // If the user has a partner account or has input role
         if (this.user.type === 'partner' && this.user.role === 'input') {
           this.user.dataSources.forEach(dataSource => {
-            if (dataSource !== formId) {
+            // Get formID of the current pageand make sure the user has the permission to access it
+            // Otherwise redirect him to the reporting home page
+            if (dataSource !== route.children[0].params.formId) {
               this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
             }
           });
         }
+        // If the user has just a read_only role
+        // Redirect him to the reporting home page
         if (this.userRole === 'read'){
           this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
         }
@@ -70,22 +80,22 @@ export class PermissionsGuard implements CanActivate {
         if (this.userRole === 'admin') {
           return true;
         }
-        this.router.navigate(['/projects'])
+        this.router.navigate(['/projects']);
         return false;
       case 'themes':
         if (this.userRole === 'admin') {
           return true;
         }
-        this.router.navigate(['/projects'])
+        this.router.navigate(['/projects']);
         return false;
       case 'indicators':
         if (this.userRole === 'admin') {
           return true;
         }
-        this.router.navigate(['/projects'])
+        this.router.navigate(['/projects']);
         return false;
     }
     return true;
   }
-  
+
 }
