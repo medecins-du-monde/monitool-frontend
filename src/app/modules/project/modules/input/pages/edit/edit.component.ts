@@ -13,6 +13,7 @@ import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { HotTableRegisterer } from '@handsontable/angular';
 
 
 
@@ -45,7 +46,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   inputForm: FormGroup;
   previousInput: Input;
   private initValue: any;
-  dataset: any;
+  private hotRegisterer = new HotTableRegisterer();
+  tableSettings: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
@@ -82,20 +84,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.updateData();
       })
     );
-
-    this.dataset = [
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9]
-    ]
-
   }
-
-  // testChangeData(){
-  //   this.dataset.push(
-  //     [5, 5, 5]
-  //   )
-  // }
 
   onPaste(event: ClipboardEvent, tableId: string, tablePos: number, i: number, j: number): void {
     const data = [];
@@ -236,6 +225,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   // TODO optimise this method
   updateTotals(val: any) {
+    console.log('update foi chamado');
     for (let i = 0; i < this.tables.length; i += 1){
       const table = this.tables[i];
       let x: number;
@@ -268,11 +258,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       if (total !== 0){
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
       }
+      console.log(table);
     }
   }
 
   createTable(){
     this.tables = [];
+    this.tableSettings = {};
     for (const element of this.form.elements){
       const cols = [];
       const rows = [];
@@ -280,6 +272,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       this.numberCols = 0;
       this.numberRows = 0;
 
+      // calculates the total number of rows and cols of the table based on the number of partitions
       let i = 0;
       for (i = 0; i < element.distribution; i += 1){
         rows.push(element.partitions[i]);
@@ -299,9 +292,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       for (i = 0; i < this.numberRows; i += 1){
         this.table.push([]);
         for (let j = 0; j < this.numberCols; j += 1 ){
+          // leave the cells on the top-left corner empty
           if (i < cols.length || j < rows.length){
             this.table[i].push('');
           }else{
+            // all the other cells are filled with 0
             this.table[i].push(0);
           }
         }
@@ -316,7 +311,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         currentCollumns.push(k.toString());
       }
 
-      this.tables.push({
+      let tableObj = {
         id: element.id,
         value: this.table,
         cols,
@@ -324,9 +319,52 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         numberCols: this.numberCols,
         numberRows: this.numberRows,
         displayedColumns: currentCollumns
-      });
+      }
 
+      tableObj = this.fillValues(element, tableObj);
+      
+      this.tables.push(tableObj);
+      this.tableSettings[element.id] = {
+        colHeaders: false,
+        rowHeaders: false,
+        observeChanges: true,
+        hotId: 'element.id',
+        beforeChange: (core, changes) => {
+          if (changes !== null){
+            for (let i = 0; i < changes.length; i+=1){
+              let change = changes[i];
+              let x = change[0];
+              let y = change[1];
+              let oldValue = +change[2];
+              let newValue = +change[3];
+              if (oldValue !== newValue){
+                const pos = this.isInputCell(-1, x, y, tableObj); 
+                if (pos !== false){
+                  change[3] = newValue;
+                  this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
+                }
+              }else{
+                // dont apply this change
+                changes[i] = null;
+              }
+            }
+          }
+          console.log(this.tables);
+        },
+      };
     }
+  }
+
+  fillValues(element, tableObj){
+    for (let x = 0; x < tableObj.numberRows; x+=1){
+      for (let y = 0; y < tableObj.numberCols; y+=1){
+        const pos = this.isInputCell(-1, x, y, tableObj);
+        if (pos !== false){
+          tableObj.value[x][y] = this.inputForm.get('values').get(element.id).get(`${pos}`).value
+        }
+      }    
+    }
+    return tableObj;
   }
 
   fillTotalLabels(rows, cols) {
@@ -353,6 +391,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     this.fillCurrentRowLabel(rows, cols, 0);
   }
 
+  // recursive function to fill in the labels of the rows
+  // this.x controls which row of the table we are
+  // this.y controls which col of the table we are
+  // the key to understanding this function is observing how the x and y variables are "global" and
+  // their value are being manipulated by the recursion
+  //
+  // the y is incremented before calling the recursion and
+  // decremented after, while the x is only incrementing 
   fillCurrentRowLabel(rows, cols, pos) {
     if (pos >= rows.length){ return; }
     if (pos === rows.length - 1){
@@ -424,11 +470,23 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
     return (i < cols.length || j < rows.length);
   }
-  isInputCell(tablePos, i, j){
-    const rows = this.tables[tablePos].rows;
-    const cols = this.tables[tablePos].cols;
-    let numberRows = this.tables[tablePos].numberRows;
-    let numberCols = this.tables[tablePos].numberCols;
+  isInputCell(tablePos: number, i: number, j: number, customTable=null){
+    let rows;
+    let cols;
+    let numberRows;
+    let numberCols;
+    
+    if (customTable === null){
+      rows = this.tables[tablePos].rows;
+      cols = this.tables[tablePos].cols;
+      numberRows = this.tables[tablePos].numberRows;
+      numberCols = this.tables[tablePos].numberCols;
+    }else{
+      rows = customTable.rows;
+      cols = customTable.cols;
+      numberRows = customTable.numberRows;
+      numberCols = customTable.numberCols;
+    }
 
     // remove the 'Total' row from the count
     if (rows.length !== 0){
