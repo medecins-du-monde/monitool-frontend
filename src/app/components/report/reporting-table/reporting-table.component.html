@@ -45,30 +45,104 @@
       </td>
     </ng-container>
 
-    <!-- Sticky position doesnt work allow a dynamic column span so I had to set a static one-->
+    <!-- Sticky position doesnt allow a dynamic column span so I had to set a static ones-->
     <ng-container matColumnDef="title" [sticky]="true">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="2" class="title">
-        <div>
-        <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-        <ng-template #elseOpen>
-          <mat-icon>remove_circle</mat-icon>
-        </ng-template>
-           {{ element['title'] }}
-      </div>
-      </td>
+      <ng-container *ngIf="columnsToDisplay.length === 4">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="3" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 5">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="4" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 6">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="5" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 7">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="6" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 8">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="7" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length >= 9">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="8" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
     </ng-container>
 
     <!-- The rest of the row needs to be filled out to keep consistent styling -->
-    <ng-container matColumnDef="title_stick" *ngIf="columnsToDisplay && columnsToDisplay.length > 2">
-      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay && columnsToDisplay.length - 2"></td>
+    <ng-container matColumnDef="title_stick" *ngIf="columnsToDisplay">
+      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length >= 9 ? columnsToDisplay.length - 8 : 0"></td>
     </ng-container>
   
     <ng-container matColumnDef="groupName" [sticky]="true">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="1" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      <ng-container *ngIf="columnsToDisplay.length === 4">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="2" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 5">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="3" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 6">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="4" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 7">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="5" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>   
+      <ng-container *ngIf="columnsToDisplay.length === 8">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="6" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length >= 9">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="7" [style]="calcPaddingLevel(element)" class="groupName">{{element.groupName}}</td>
+      </ng-container>
     </ng-container>
 
-    <ng-container matColumnDef="group_stick" *ngIf="columnsToDisplay && columnsToDisplay.length > 2">
-      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay && columnsToDisplay.length - 2"></td>
+    <ng-container matColumnDef="group_stick" *ngIf="columnsToDisplay">
+      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length >= 9 ? columnsToDisplay.length - 7 : 0"></td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
