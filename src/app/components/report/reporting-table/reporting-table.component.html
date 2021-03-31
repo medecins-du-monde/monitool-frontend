@@ -45,7 +45,7 @@
       </td>
     </ng-container>
 
-    <!-- Sticky position doesnt allow a dynamic column span so I had to set a static ones-->
+    <!-- Sticky position doesnt allow a dynamic column span so they have been set as static-->
     <ng-container matColumnDef="title" [sticky]="true">
       <ng-container *ngIf="columnsToDisplay.length === 4">
         <td mat-cell *matCellDef="let element" [attr.colspan]="3" class="title">
