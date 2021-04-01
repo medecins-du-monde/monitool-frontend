@@ -596,6 +596,16 @@ code {
   }
 }
 
+// === HANDSONTABLE ===
+hot-table {
+  width: 100%;
+  overflow: hidden;
+}
+
+.hot-header-cell{
+  background-color: #eeeeee !important;
+}
+
 // === MODALS ===
 .mat-dialog-container {
   position: relative;

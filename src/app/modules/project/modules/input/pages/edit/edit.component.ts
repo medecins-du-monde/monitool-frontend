@@ -327,8 +327,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       this.tableSettings[element.id] = {
         colHeaders: false,
         rowHeaders: false,
+        stretchH: 'all',
         observeChanges: true,
         hotId: 'element.id',
+        // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
           if (changes !== null){
             for (let i = 0; i < changes.length; i+=1){
@@ -351,6 +353,23 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           }
           console.log(this.tables);
         },
+        
+        cells: (row, col) => {
+          var cellProperties = {currentColClassName: 'currentColumn',};
+          if (this.isInputCell(-1, row, col, tableObj) !== false){
+            cellProperties['readOnly'] = false;
+          }else{
+            cellProperties['readOnly'] = true;
+          }
+          
+          if (this.isLabelCell(-1, row, col, tableObj)){
+            cellProperties['className'] = 'hot-header-cell';
+          }else{
+            cellProperties['className'] = 'hot-input-cell';
+          }
+
+          return cellProperties;
+        }
       };
     }
   }
@@ -464,9 +483,15 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return numberCols * numberRows;
   }
 
-  isLabelCell(tablePos, i, j){
-    const rows = this.tables[tablePos].rows;
-    const cols = this.tables[tablePos].cols;
+  isLabelCell(tablePos, i, j, customTable=null){
+    let rows, cols;
+    if (customTable === null){
+      rows = this.tables[tablePos].rows;
+      cols = this.tables[tablePos].cols;
+    }else{
+      rows = customTable.rows;
+      cols = customTable.cols;
+    }
 
     return (i < cols.length || j < rows.length);
   }
@@ -517,6 +542,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           this.inputForm.get('values').get(e.id).setValue(this.previousInput.values[e.id]);
         }
       }
+      this.createTable();
+      this.updateTotals(this.inputForm.value);
     }
 
   }
@@ -569,6 +596,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   resetInput(){
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.createTable();
     this.updateTotals(this.inputForm.value);
     this.inputForm.valueChanges.subscribe(val => {
       this.convertToNumber(val);
