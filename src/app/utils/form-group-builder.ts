@@ -133,15 +133,13 @@ export default class FormGroupBuilder {
   static newEntity(currentProject: Project, entity?: Entity): FormGroup {
     if (!entity) {
       entity = new Entity();
-      entity.start = currentProject.start;
-      entity.end = currentProject.end;
     }
 
     return new FormGroup({
       id: new FormControl(entity.id, Validators.required),
       name: new FormControl(entity.name, Validators.required),
-      start: new FormControl(entity.start, Validators.required),
-      end: new FormControl(entity.end, Validators.required),
+      start: new FormControl(entity.start ? entity.start : currentProject.start, Validators.required),
+      end: new FormControl(entity.end ? entity.end : currentProject.end, Validators.required),
     }, { validators: [DatesHelper.orderedDates('start', 'end')]});
   }
 
