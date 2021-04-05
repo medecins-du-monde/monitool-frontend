@@ -250,7 +250,7 @@ mat-hint {
   color: black;
 
     .mat-icon{
-        cursor: move;
+        cursor: pointer;
         line-height: 20px;
         font-size: $small_text;
     }
@@ -297,7 +297,7 @@ mat-hint {
 .cards-draghandle {
   position: absolute;
   z-index: 100;
-  cursor: move;
+  cursor: pointer;
 }
 
 .cdk-drag-animating {
@@ -411,7 +411,9 @@ mat-hint {
     font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
-    white-space: nowrap;
+    margin: 4px 5%;
+    display: flex;
+    align-items: center;
     &.mat-chip-selected {
         &.mat-accent {
             color: white !important;
@@ -419,6 +421,9 @@ mat-hint {
     }
 }
 
+.mat-chip-list-wrapper {
+  flex-wrap: nowrap !important;
+}
 
 
 // === BUTTONS ===
@@ -840,16 +845,25 @@ code {
 }
 
 .mat-expansion-panel {
+  display: flex;
   margin: 16px 0 !important;
 }
 
-.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+.mat-expansion-panel-header-title {
   display: flex !important;
-  flex-grow: 1 !important;
   margin-right: 16px !important;
   font-size: 16px !important;
   font-weight: bold !important;
-  align-self: center;
+  height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  align-items: center;
+  white-space: nowrap;
+  width: 80%;
+  mat-icon {
+    align-self: center;
+    margin-right: 10px;
+  }
 }
 
 .mat-expansion-panel-header:not([aria-disabled=true]) {
