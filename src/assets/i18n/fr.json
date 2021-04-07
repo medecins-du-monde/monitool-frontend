@@ -610,6 +610,8 @@
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
     "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
+    "PendingForm": "Vous avez réalisé des changements. N'oubliez pas de cliquer sur sauvegarder",
+    "SavedForm": "Vos données sont sauvegardées",
     "EMail-Hint":"Indiquez votre adresse e-mail",
     "Name-Hint":"Indiquez votre Nom complet",
     "NameLogicalFramework-Hint": "Nommez ce cadre logique de façon à l'identifier facilement. Par exemple avec le nom du bailleur auquel il est destiné",

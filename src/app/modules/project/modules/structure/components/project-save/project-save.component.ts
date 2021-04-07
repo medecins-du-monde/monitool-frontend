@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';;
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -9,10 +8,7 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./project-save.component.scss']
 })
 export class ProjectSaveComponent {
-
-  private currentProject: Project;
-
-  private subscription: Subscription = new Subscription();
+  projectSaved = false;
 
   constructor(private projectService: ProjectService) { }
 
@@ -27,6 +23,7 @@ export class ProjectSaveComponent {
   onSave(): void {
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
+      this.projectSaved = true;
     });
   }
 

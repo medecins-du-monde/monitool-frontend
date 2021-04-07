@@ -376,6 +376,8 @@
     ],
     "Invalid": "Invalid",
     "InvalidForm": "Some fields are invalid in the form, fix them in order to save",
+    "PendingForm": "You made changes. Don't forget to click on Save",
+    "SavedForm": "Your data is saved",
     "Language": "Language",
     "LastEntry": "Last entry",
     "LoadMoreRevisions": "Load more revisions",
