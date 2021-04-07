@@ -236,6 +236,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
+            if (isNaN(val.values[table.id][inputPos])){
+              continue;
+            }
             sum += val.values[table.id][inputPos];
           }
         }
@@ -249,6 +252,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         for (x = 0; x < table.numberRows; x += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== false){
+            if (isNaN(val.values[table.id][inputPos])){
+              continue;
+            }
             sum += +val.values[table.id][inputPos];
           }
         }
@@ -339,6 +345,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
               let y = change[1];
               let oldValue = +change[2];
               let newValue = +change[3];
+              if (isNaN(newValue)){
+                newValue = change[3];
+              }
               if (oldValue !== newValue){
                 const pos = this.isInputCell(-1, x, y, tableObj); 
                 if (pos !== false){
@@ -366,6 +375,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             cellProperties['className'] = 'hot-header-cell';
           }else{
             cellProperties['className'] = 'hot-input-cell';
+            cellProperties['validator'] = /^\d+$/;
           }
 
           return cellProperties;

@@ -29,7 +29,7 @@
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >
         <p>{{ form.elements[k].name }}</p>
-        <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
+        <!-- <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
             <ng-container *ngFor="let column of table.displayedColumns; let j = index" matColumnDef="{{ column }}">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <td mat-cell *matCellDef="let element; let i = index" (paste)="onPaste($event, table.id, k, i, j)" [ngClass]="{'tableLabel': isLabelCell(k, i, j)}" class="input-td">
@@ -46,7 +46,7 @@
             
             <tr mat-header-row *matHeaderRowDef="table.displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: table.displayedColumns;"></tr>
-        </table>
+        </table> -->
 
         <hot-table [settings]="tableSettings[table.id]" [data]="table.value"></hot-table>
     </div>
