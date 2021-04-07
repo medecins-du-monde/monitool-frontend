@@ -59,7 +59,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public project: Project;
   public periodicities = [];
 
-  get selectedEntities(): any[] {
+  get selectedEntities(): Entity[] {
     return this.dataSourceForm.controls.entities.value;
   }
 
@@ -88,7 +88,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
     ).subscribe((res: { project: Project, formId: string }) => {
       this.project = res.project;
-      this.entities = res.project.entities;
       const oldForm = this.form;
       this.form = res.project.forms.find(x => x.id === res.formId);
 
@@ -120,6 +119,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });
       } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
+        this.entities = res.project.entities;
         this.setForm();
       }
     });
@@ -153,11 +153,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [this.form.name, Validators.required],
       entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
       periodicity: [this.form.periodicity, Validators.required],
-      start: [this.form.start, Validators.required],
-      end: [this.form.end, Validators.required],
+      start: [this.form.start ? this.form.start : this.project.start, Validators.required],
+      end: [this.form.end ? this.form.end : this.project.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
-
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
       this.form.deserialize(value);
