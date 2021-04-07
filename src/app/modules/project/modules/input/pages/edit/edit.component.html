@@ -60,7 +60,7 @@
         {{ 'Save' | translate }}
     </button>
     
-    <button mat-stroked-button class="mdm-button" [disabled]="!canBeSaved" (click)="resetInput()">
+    <button mat-stroked-button class="mdm-button" [disabled]="!inputHasModification" (click)="resetInput()">
         <mat-icon>replay</mat-icon>
         {{ 'Reset changes' | translate }}
     </button>
