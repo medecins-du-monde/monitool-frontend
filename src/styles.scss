@@ -600,10 +600,29 @@ code {
 hot-table {
   width: 100%;
   overflow: hidden;
+  font-size: $small_text;
 }
 
-.hot-header-cell{
-  background-color: #eeeeee !important;
+.handsontable td:first-of-type{
+  padding-left: 32px;
+  padding-right: 13px;
+  border-left-color: rgba(0, 0, 0, 0.12);
+}
+
+.handsontable td{
+  padding: 8px;
+  vertical-align: inherit;
+  border-color: rgba(0, 0, 0, 0.12);
+  &.hot-header-cell{
+    background-color: #eeeeee;
+    color: rgba(0, 0, 0, 0.87)
+  }
+  // &.hot-input-cell{
+  // }
+}
+
+.handsontable tr{
+  height: 48px;
 }
 
 // === MODALS ===
