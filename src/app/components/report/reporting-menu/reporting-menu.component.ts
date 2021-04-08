@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -188,10 +189,31 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           parameters: {}
         };
         newComputation.parameters[parameter] = value;
+        
+        let currentProject: Project;
+        let originElement: FormElement;
+        if (this.project){
+          currentProject = this.project;
+        }else if (this.indicator.originProject){
+          currentProject = this.indicator.originProject;
+        }
+
+        let newDisplay = parameter;
+
+        for (let f of currentProject.forms){
+          originElement = f.elements.find((e: FormElement) => e.id === value['elementId']);
+          if (originElement !== undefined){
+            break;
+          }
+        }
+
+        if (originElement){
+          newDisplay = parameter + ` (${originElement.name})`;
+        }
 
         disaggregatedIndicators.push(new ProjectIndicator({
           computation: newComputation,
-          display: parameter,
+          display: newDisplay,
           baseline: 0,
           target: 0,
           originProject: this.indicator.originProject
