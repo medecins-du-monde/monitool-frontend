@@ -10,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LocalizedDatePipe implements PipeTransform {
   constructor(private translateService: TranslateService) { }
 
-  transform(value: any, pattern = 'mediumDate'): any {
+  transform(value: any, pattern = 'longDate'): any {
     const currentLang = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
     const datePipe: DatePipe = new DatePipe(currentLang);
     return datePipe.transform(value, pattern);

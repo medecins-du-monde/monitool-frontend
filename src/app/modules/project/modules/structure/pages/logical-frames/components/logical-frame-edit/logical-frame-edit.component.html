@@ -44,7 +44,7 @@
                         <mat-icon>info</mat-icon>{{ 'specific-date-start' | translate }}
                     </mat-hint>
                 </mat-form-field>
-                <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : {date: project ? project.start : null | localizedDate} }}</mat-radio-button>
+                <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : {date: project.start | localizedDate} }}</mat-radio-button>
              </mat-radio-group>
         </div>
         <div class="mdm-form-group">
@@ -60,7 +60,7 @@
                         <mat-icon>info</mat-icon>{{ 'specific-date-end' | translate }}
                     </mat-hint>
                 </mat-form-field>
-                <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : {date: project ? project.end : null | localizedDate} }}</mat-radio-button>
+                <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : {date: project.end | localizedDate} }}</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
