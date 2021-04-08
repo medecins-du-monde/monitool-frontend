@@ -603,16 +603,16 @@ hot-table {
   font-size: $small_text;
 }
 
-.handsontable td:first-of-type{
-  padding-left: 32px;
-  padding-right: 13px;
-  border-left-color: rgba(0, 0, 0, 0.12);
-}
+// .handsontable td:first-of-type{
+  // padding-left: 32px;
+  // padding-right: 13px;
+  // border-left-color: rgba(0, 0, 0, 0.12);
+// }
 
 .handsontable td{
-  padding: 8px;
-  vertical-align: inherit;
-  border-color: rgba(0, 0, 0, 0.12);
+  // padding: 8px;
+  // vertical-align: inherit;
+  // border-color: rgba(0, 0, 0, 0.12);
   &.hot-header-cell{
     background-color: #eeeeee;
     color: rgba(0, 0, 0, 0.87)
@@ -621,9 +621,9 @@ hot-table {
   // }
 }
 
-.handsontable tr{
-  height: 48px;
-}
+// .handsontable tr{
+//   height: 48px;
+// }
 
 // === MODALS ===
 .mat-dialog-container {
