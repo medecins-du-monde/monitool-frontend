@@ -613,6 +613,7 @@
     "VisibilityPrivate": "Visible solo para miembros de este proyecto",
     "Invalid": "Invalido",
     "InvalidForm": "Algunos campos del formulario no son validos, arreglelos para poder guardar.",
+    "ApplicationError": "La aplicación ha encontrado un problema. El proyecto no ha podido ser guardado",
     "PendingForm": "Ha realizado cambios. No olvide hacer click en Guardar.",
     "SavedForm": "Sus datos estan guardados",
     "WrongCredentials": "El nombre de usuario o la contraseña es incorrecto. Por favor, vuelve a ponerlo",

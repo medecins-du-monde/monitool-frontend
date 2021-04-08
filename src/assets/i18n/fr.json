@@ -610,6 +610,7 @@
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
     "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
+    "ApplicationError": "L'application a rencontré une erreur, le projet n'a pas pu être sauvegardé",
     "PendingForm": "Vous avez réalisé des changements. N'oubliez pas de cliquer sur sauvegarder",
     "SavedForm": "Vos données sont sauvegardées",
     "EMail-Hint":"Indiquez votre adresse e-mail",

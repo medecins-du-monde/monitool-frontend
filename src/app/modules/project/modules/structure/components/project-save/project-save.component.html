@@ -6,4 +6,5 @@
     <div *ngIf="projectSaved" class="information-form saved"><mat-icon>info</mat-icon> {{ 'SavedForm' | translate }}</div>
     <div *ngIf="hasChanges && valid" class="information-form pending"><mat-icon>info</mat-icon> {{ 'PendingForm' | translate }}</div>
     <div *ngIf="hasChanges && !valid" class="information-form invalid"><mat-icon>info</mat-icon> {{ 'InvalidForm' | translate }}</div>
+    <div *ngIf="errorWhileSaving" class="information-form invalid"><mat-icon>info</mat-icon> {{ 'ApplicationError' | translate }}</div>
 </div>
