@@ -48,7 +48,7 @@ export default class FormGroupBuilder {
       activity = new Activity();
     }
     return new FormGroup({
-      description: new FormControl(activity.description, Validators.required),
+      description: new FormControl(activity.description),
       indicators: new FormArray(activity.indicators.map(x => this.newIndicator(x))),
     });
   }
