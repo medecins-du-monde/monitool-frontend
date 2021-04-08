@@ -14,6 +14,11 @@ import DatesHelper from './dates-helper';
 
 export default class FormGroupBuilder {
 
+  // Please, add your new form group here
+
+
+/* ---------- Here are all the form groups needed for the logical frame part --------- */
+
   static newPurpose(purpose?: Purpose): FormGroup {
     if (!purpose) {
       purpose = new Purpose();

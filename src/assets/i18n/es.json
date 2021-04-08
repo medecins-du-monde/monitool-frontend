@@ -647,5 +647,6 @@
     "ReportingError": {
         "DataNotAvailable": "Estos datos estan disponibles por mes",
         "MissingCalculation": "Falta el cálculo"
-    }
+    },
+    "DownloadTable": "Descargar la tabla"
 }

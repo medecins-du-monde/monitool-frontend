@@ -106,8 +106,8 @@
         "Aggregation": {
             "sum": "Faire une somme",
             "average": "Faire une moyenne",
-            "highest": "Prendre la plus grande valeure",
-            "lowest": "Prendre la plus petite valeure",
+            "highest": "Prendre la plus grande valeur",
+            "lowest": "Prendre la plus petite valeur",
             "last": "Prendre la dernière valeur",
             "none": "Il n'est pas possible de faire ce calcul"
         },
@@ -644,5 +644,6 @@
     "ReportingError": {
         "DataNotAvailable": "Ces données sont disponibles par",
         "MissingCalculation": "Calcul absent"
-    }
+    },
+    "DownloadTable": "Télécharger le tableau"
 }

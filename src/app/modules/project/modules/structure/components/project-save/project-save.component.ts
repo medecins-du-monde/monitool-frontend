@@ -13,6 +13,9 @@ export class ProjectSaveComponent {
   constructor(private projectService: ProjectService) { }
 
   get hasChanges(): boolean{
+    // If the project has no changes anymore and has already been saved
+    // then we se the project save infos message to false
+    this.projectSaved = !this.projectService.hasPendingChanges &&  this.projectSaved;
     return this.projectService.hasPendingChanges;
   }
 
