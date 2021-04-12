@@ -16,6 +16,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
   public sidenav: Sidenav;
   project: Project;
   user: User;
+  projectUser = [];
 
   bigPage: boolean;
 
@@ -29,6 +30,10 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit(): void {
+    this.projectUser = [];
+    this.sidenav = {
+      groups: []
+    };
     this.route.params.subscribe(params => {
       const projectId = params.id;
       this.authService.currentUser.subscribe((user: User) => {
@@ -37,6 +42,9 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
       this.projectService.get(projectId).then((project: Project) => {
         this.projectService.inBigPage.subscribe(value => this.bigPage = value);
         this.project = project;
+        if (this.user.type === 'user') {
+          this.projectUser = project.users.filter(user => user.id === this.user['_id']);
+        }
         // If the user has a data entry roles, only display the datasource they can modify
         if (this.user.role === 'input') {
           this.user.dataSources.forEach(dataSource => {
@@ -46,6 +54,14 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
               icon: 'edit'
             });
           });
+        } else if (this.projectUser && this.projectUser.length > 0 && this.projectUser[0].role === 'input') {
+          this.projectUser[0].dataSources.forEach(dataSource => {
+            input.items.push({
+              name: dataSource.name,
+              routerLink: `../${projectId}/input/inputs/${dataSource.id}`,
+              icon: 'edit'
+            });
+          })
         }
         // Otherwise, we take all the datasources of the project
         else {
@@ -59,8 +75,68 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
             );
           });
         }
-      });
 
+        // Check if the user is part of the project and display the sidenav accordingly
+        if (this.projectUser && this.projectUser.length > 0) {
+          // If the user is owner, he can see all of the project
+          if (this.projectUser[0].role === 'owner') {
+            this.sidenav = {
+              groups: [
+                structure,
+                input,
+                reporting
+              ]
+            };
+          }
+          // If the user has just the input role
+          // Then he can just access the input functionnalities and the report in the sidenav
+          else if (this.projectUser[0].role === 'input') {
+            this.sidenav = {
+              groups: [
+                input,
+                reporting
+              ]
+            };
+          }
+          // If the user has a read only role, he can only access reporting
+          else if (this.projectUser[0].role === 'read'){
+            this.sidenav = {
+              groups: [
+                reporting
+              ]
+            };
+          }
+          // If the user does not have a particular role in a project, redirect according to their global roles
+        } else {
+          if (this.user.role === 'owner' || this.user.role === 'admin') {
+            this.sidenav = {
+              groups: [
+                structure,
+                input,
+                reporting
+              ]
+            };
+          }
+          // If the user has just the input role
+          // Then he can just access the input functionnalities and the report in the sidenav
+          else if (this.user.role === 'input') {
+            this.sidenav = {
+              groups: [
+                input,
+                reporting
+              ]
+            };
+          }
+          // Otherwise, he can just access the general report.
+          else if (this.user.role === 'read' || this.user.role === 'common' || this.user.role === 'project'){
+            this.sidenav = {
+              groups: [
+                reporting
+              ]
+            };
+          }
+        }
+      });
       const structure = {
         title: 'Structure',
         collapsible: true,
@@ -140,37 +216,21 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
           },
         ]
       };
-
-      this.projectService.projectUserCreatingProject.subscribe(val => {
-        // If user is owner of the project or admin or he has created the project
-        // Then he can see everything in the sidenav
-        if (this.user.role === 'owner' || this.user.role === 'admin' || (this.user.role === 'project' && val)) {
-          this.sidenav = {
-            groups: [
-              structure,
-              input,
-              reporting
-            ]
-          };
-        }
-        // If the user has just the input role
-        // Then he can just access the input functionnalities and the report in the sidenav
-        else if (this.user.role === 'input') {
-          this.sidenav = {
-            groups: [
-              input,
-              reporting
-            ]
-          };
-        }
-        // Otherwise, he can just access the general report.
-        else {
-          this.sidenav = {
-            groups: [
-              reporting
-            ]
-          };
-        }
+      // When a user creates a project, make sure the sidenav displays all the information, even when the page reloads
+      this.projectService.projectUserCreatingProject.subscribe(canCreateProject => {
+        // If a user has a project role but the project doesnt have its basics infos, it means it's being created
+        // The sidenav needs to be displayed accordingly
+        this.projectService.hasBasicsInfos.subscribe(hasBasicsInfos => {
+          if ((this.user.role === 'project' && canCreateProject) || (this.user.role === 'project' && !hasBasicsInfos) || this.user.role === 'admin') {
+            this.sidenav = {
+              groups: [
+                structure,
+                input,
+                reporting
+              ]
+            };
+          }
+        });
       });
     });
   }

@@ -94,6 +94,12 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.sites = this.form ? this.form.entities : [];
       if (this.user.type === 'partner' && this.user.role === 'input') {
         this.displayedColumns = ['Date'].concat(this.user.entities.map(x => this.projectService.getNamefromId(x, this.project.entities)));
+      } else if (this.user.type === 'user') {
+        const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+        this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+        if (projectUser.length > 0 && projectUser[0].role === 'input') {
+          this.displayedColumns = ['Date'].concat(projectUser[0].entities.map(x => x.name));
+        }
       } else {
         this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
       }

@@ -84,10 +84,6 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       })
     );
-    // Pourquoi ?
-    // this.subscription.add(
-    //   this.projectService.revokeAccessForUserProject()
-    // );
   }
 
   ngOnDestroy(): void {

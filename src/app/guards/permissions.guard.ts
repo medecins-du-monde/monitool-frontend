@@ -39,13 +39,27 @@ export class PermissionsGuard implements CanActivate {
     switch (module) {
       // For the structure part
       case 'structure':
-        // If the user has common role or project role without access to this one.
-        if ((this.userRole === 'common') || (this.userRole === 'project' && !this.giveAccess)) {
-          // Not authorized and redirection to the reporting home page
-          this.projectService.get(this.id).then(() => {
-            this.router.navigate([`/projects/${this.id}/reporting/home`]);
+        if (this.userType === 'user' && !this.giveAccess) {
+          // MDM accounts can have assigned role within the project that is different than their MDM account role
+          this.projectService.get(this.id).then((project) => {
+            // Get the project and check if the user is part of it
+            const projectUser = project.users.filter(user => user.id === this.user['_id']);
+            // If the MDM user is owner in a particular project, he can access everything
+            if (projectUser.length > 0 && projectUser[0].role === 'owner') {
+              return true;
+              // If the MDM user is not owner of the project, redirect them
+            } else if ((this.userRole === 'common') || (this.userRole === 'project' && !this.giveAccess)
+                      || (projectUser.length > 0 && projectUser[0].role === 'input')
+                      || (projectUser.length > 0 && projectUser[0].role === 'read')) {
+              // Not authorized and redirection to the reporting home page
+              this.projectService.get(this.id).then(() => {
+                this.router.navigate([`/projects/${this.id}/reporting/home`]);
+              });
+              return false;
+            }
           });
-          return false;
+        } else if (this.userType === 'user' && this.userRole === 'project' && this.giveAccess) {
+          return true;
         }
         // It the user has read role or input role
         else if (this.userRole === 'read' || this.userRole === 'input') {
@@ -60,11 +74,23 @@ export class PermissionsGuard implements CanActivate {
       case 'input':
         // If the user has a partner account or has input role
         if (this.user.type === 'partner' && this.user.role === 'input') {
-          this.user.dataSources.forEach(dataSource => {
             // Get formID of the current pageand make sure the user has the permission to access it
             // Otherwise redirect him to the reporting home page
-            if (dataSource !== route.children[0].params.formId) {
-              this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
+          if (!this.user.dataSources.includes(route.children[0].params.formId)) {
+            this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
+          }
+          return true;
+        } else if (this.userType === 'user') {
+          this.projectService.get(this.id).then((project) => {
+            // Check if the user is part of this project
+            const projectUser = project.users.filter(user => user.id === this.user['_id']);
+            if (projectUser[0].role === 'input') {
+              // If he does and has an input role, check which datasource he has access to and redirect accordingly
+              const hasAccessToDatasource = project.forms.some(form => form.id === route.children[0].params.formId);
+              if (!hasAccessToDatasource) {
+                this.router.navigate([`/projects/${this.id}/reporting/home`]);
+              }
+              return true;
             }
           });
         }
@@ -73,7 +99,6 @@ export class PermissionsGuard implements CanActivate {
         if (this.userRole === 'read'){
           this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
         }
-        return true;
       case 'reporting':
         return true;
       case 'users':

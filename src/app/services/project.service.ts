@@ -110,10 +110,6 @@ export class ProjectService {
     this.projectUserRoleCreateProject.next(true);
   }
 
-  // public revokeAccessForUserProject(): void {
-  //   this.projectUserRoleCreateProject.next(false);
-  // }
-
   public async list(): Promise<Project[]> {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get('/resources/project/?mode=short');
