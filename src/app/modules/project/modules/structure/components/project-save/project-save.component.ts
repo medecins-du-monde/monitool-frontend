@@ -19,13 +19,13 @@ export class ProjectSaveComponent {
     if (!this.projectService.hasPendingChanges && this.projectSaved) {
       this.projectSaved = false;
     }
-    
+
     // If the app has encountered an error but changes have been made
     // then we remove the message
     if (!this.projectService.hasPendingChanges && this.errorWhileSaving) {
       this.errorWhileSaving = false;
     }
-    
+
     return this.projectService.hasPendingChanges;
   }
 
@@ -40,7 +40,7 @@ export class ProjectSaveComponent {
         this.errorWhileSaving = false;
       }
       this.projectSaved = true;
-    }).catch(() => {this.errorWhileSaving = true});
+    }).catch(() => {this.errorWhileSaving = true; });
   }
 
   onRevert(): void {
