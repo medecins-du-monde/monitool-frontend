@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import "./assets/theme/color_vars.scss";
 @include mat-core();
 
 $mdm-primary-colors: (50 : #e0ecf8,
@@ -250,7 +251,7 @@ mat-hint {
   color: black;
 
     .mat-icon{
-        cursor: move;
+        cursor: pointer;
         line-height: 20px;
         font-size: $small_text;
     }
@@ -297,7 +298,7 @@ mat-hint {
 .cards-draghandle {
   position: absolute;
   z-index: 100;
-  cursor: move;
+  cursor: pointer;
 }
 
 .cdk-drag-animating {
@@ -323,7 +324,8 @@ mat-hint {
       }
   }
   .card-info-value {
-      width: 30%;
+      margin-left: 5%;
+      width: 95%;
   }
 
   .computation {
@@ -411,7 +413,9 @@ mat-hint {
     font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
-    white-space: nowrap;
+    margin: 4px 5%;
+    display: flex;
+    align-items: center;
     &.mat-chip-selected {
         &.mat-accent {
             color: white !important;
@@ -419,6 +423,9 @@ mat-hint {
     }
 }
 
+.mat-chip-list-wrapper {
+  flex-wrap: nowrap !important;
+}
 
 
 // === BUTTONS ===
@@ -840,16 +847,25 @@ code {
 }
 
 .mat-expansion-panel {
+  display: flex;
   margin: 16px 0 !important;
 }
 
-.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+.mat-expansion-panel-header-title {
   display: flex !important;
-  flex-grow: 1 !important;
   margin-right: 16px !important;
   font-size: 16px !important;
   font-weight: bold !important;
-  align-self: center;
+  height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  align-items: center;
+  white-space: nowrap;
+  width: 80%;
+  mat-icon {
+    align-self: center;
+    margin-right: 10px;
+  }
 }
 
 .mat-expansion-panel-header:not([aria-disabled=true]) {
@@ -868,14 +884,25 @@ code {
   font-size: $small_text;
 }
 
-// Style of the message for invalid forms
-.invalid-form {
+// Style of the message for information forms
+.information-form {
   display: flex;
   align-items: center;
-  color: red;
   margin-left: 2%;
   font-size: $small_text;
   mat-icon {
     margin-right: 5px;
   }
+  &.invalid {
+    color: $warning;
+  }
+  &.pending {
+    color: $info;
+  }
+  &.saved {
+    color: $success;
+  }
+
 }
+
+

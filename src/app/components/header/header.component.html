@@ -11,7 +11,7 @@
             </ul>
         </nav>
         <button mat-button [matMenuTriggerFor]="menu">
-            {{ 'MyAccount' | translate }}
+            {{ user ? user.name : 'MyAccount' | translate }}
             <mat-icon>expand_more</mat-icon>
         </button>
     </mat-toolbar-row>

@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -9,14 +8,24 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./project-save.component.scss']
 })
 export class ProjectSaveComponent {
-
-  private currentProject: Project;
-
-  private subscription: Subscription = new Subscription();
+  projectSaved = false;
+  errorWhileSaving = false;
 
   constructor(private projectService: ProjectService) { }
 
   get hasChanges(): boolean{
+    // If the project has no changes anymore and has already been saved
+    // then we remove the message
+    if (!this.projectService.hasPendingChanges && this.projectSaved) {
+      this.projectSaved = false;
+    }
+
+    // If the app has encountered an error but changes have been made
+    // then we remove the message
+    if (!this.projectService.hasPendingChanges && this.errorWhileSaving) {
+      this.errorWhileSaving = false;
+    }
+
     return this.projectService.hasPendingChanges;
   }
 
@@ -27,7 +36,11 @@ export class ProjectSaveComponent {
   onSave(): void {
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
-    });
+      if (this.errorWhileSaving) {
+        this.errorWhileSaving = false;
+      }
+      this.projectSaved = true;
+    }).catch(() => {this.errorWhileSaving = true; });
   }
 
   onRevert(): void {

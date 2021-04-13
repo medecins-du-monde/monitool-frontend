@@ -101,7 +101,7 @@ export class IndicatorModalComponent implements OnInit {
         const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
         listPartitionDataSource.forEach(partition => {
           const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
-          let filterValueList = filterForm.get(`${partition.id}`).value;
+          let filterValueList = filterForm.get(`${partition.id}`) ? filterForm.get(`${partition.id}`).value : [];
           const newList = [];
 
           // If not formated yet
