@@ -146,7 +146,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
     // Allow user with a project role to access to the structure page to create a project
-    this.projectService.giveAccessToCreateProject();
+    this.projectService.projectUserRoleCreateProject.next(true);
     this.projectService.create(project);
     this.router.navigate(['/projects', project.id]);
   }

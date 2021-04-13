@@ -106,10 +106,6 @@ export class ProjectService {
     this.project.next(this.savedProject.copy());
   }
 
-  public giveAccessToCreateProject(): void {
-    this.projectUserRoleCreateProject.next(true);
-  }
-
   public async list(): Promise<Project[]> {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get('/resources/project/?mode=short');
@@ -186,7 +182,8 @@ export class ProjectService {
     return response.map(x => new Project(x));
   }
 
-  // Used when the user is a partner with a data entry role to display the name of datasource and entities from their ID
+  // Used when the user is a partner with a data entry role to display the name
+  // of datasource and entities from their ID
   public getNamefromId(id, arr): string {
     let name;
     arr.forEach(x => {

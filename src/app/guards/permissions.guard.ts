@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { User } from '../models/classes/user.model';
@@ -39,7 +40,7 @@ export class PermissionsGuard implements CanActivate {
     switch (module) {
       // For the structure part
       case 'structure':
-        if (this.userType === 'user' && !this.giveAccess) {
+        if (this.userType === 'user' && !this.giveAccess && this.id !== '') {
           // MDM accounts can have assigned role within the project that is different than their MDM account role
           this.projectService.get(this.id).then((project) => {
             // Get the project and check if the user is part of it
@@ -62,7 +63,7 @@ export class PermissionsGuard implements CanActivate {
           return true;
         }
         // It the user has read role or input role
-        else if (this.userRole === 'read' || this.userRole === 'input') {
+        else if ((this.userRole === 'read' || this.userRole === 'input') && this.user.projectId !== '') {
           // Not authorized and redirection to reporting home
           this.projectService.get(this.user.projectId).then(() => {
             this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
@@ -80,7 +81,7 @@ export class PermissionsGuard implements CanActivate {
             this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
           }
           return true;
-        } else if (this.userType === 'user') {
+        } else if (this.userType === 'user' && this.id !== '') {
           this.projectService.get(this.id).then((project) => {
             // Check if the user is part of this project
             const projectUser = project.users.filter(user => user.id === this.user['_id']);
@@ -99,6 +100,7 @@ export class PermissionsGuard implements CanActivate {
         if (this.userRole === 'read'){
           this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
         }
+        break;
       case 'reporting':
         return true;
       case 'users':

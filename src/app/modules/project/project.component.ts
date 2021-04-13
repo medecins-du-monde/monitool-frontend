@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute } from '@angular/router';
@@ -61,7 +62,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
               routerLink: `../${projectId}/input/inputs/${dataSource.id}`,
               icon: 'edit'
             });
-          })
+          });
         }
         // Otherwise, we take all the datasources of the project
         else {
