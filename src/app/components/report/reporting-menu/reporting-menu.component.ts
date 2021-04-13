@@ -1,3 +1,4 @@
+// tslint:disable:no-string-literal
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormElement } from 'src/app/models/classes/form-element.model';
@@ -202,7 +203,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         let fullName = parameter;
 
         for (const form of currentProject.forms){
-          originElement = form.elements.find((e: FormElement) => e.id === value.elementId);
+          originElement = form.elements.find((e: FormElement) => e.id === value['elementId']);
           if (originElement !== undefined){
             break;
           }
