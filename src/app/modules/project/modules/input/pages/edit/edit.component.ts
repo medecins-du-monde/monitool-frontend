@@ -134,7 +134,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         // Options to get the first and last date
         const options: DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
         // Getting the first and last date for the table
-        // Are these options really working ?
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
         // Get the previousDate associated to this timeSlot
@@ -262,11 +261,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null){
-            if (isNaN(val.values[table.id][inputPos])){
-              // why does this continue is used ? Maybe we could put the sum inside
-              continue;
+            if (!isNaN(val.values[table.id][inputPos])){
+              sum += val.values[table.id][inputPos];
             }
-            sum += val.values[table.id][inputPos];
           }
         }
         table.value[x][table.numberCols - 1] = sum;
@@ -312,12 +309,18 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
       // calculates the total number of rows and cols of the table based on the number of partitions
       let i = 0;
-      // How do you manage the distribution here ? Let's explain it in a comment
+    
+      // element.distribution is the number of partitions that are going to form rows in the table
+      // the first partitions are rows, the last partitions are cols
+      // the number represented by element.distribution says how many of the first partitions are rows
+      
+      // we loop through the partitions that are going to be rows
       for (i = 0; i < element.distribution; i += 1){
         rows.push(element.partitions[i]);
         if (this.numberRows === 0) { this.numberRows = 1; }
         this.numberRows *= element.partitions[i].elements.length;
       }
+      // we loop through the remaining partition, they are going to form cols
       for (i = element.distribution; i < element.partitions.length; i += 1){
         cols.push(element.partitions[i]);
         if (this.numberCols === 0) { this.numberCols = 1; }
@@ -480,11 +483,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   fillCollumnLabels(rows, cols) {
     this.x = 0;
     this.y = rows.length;
-    this.fillCurrentColLabel(rows, cols, 0);
+    this.fillCurrentColLabel(cols, 0);
   }
 
-  // Is the rows parameter usefull anywhere ?
-  fillCurrentColLabel(rows, cols, pos){
+  fillCurrentColLabel(cols, pos){
     if (pos >= cols.length){ return; }
     if (pos === cols.length - 1){
       for (const e of cols[pos].elements){
@@ -497,7 +499,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     for (const e of cols[pos].elements){
       this.table[this.x][this.y] = e.name;
       this.x += 1;
-      this.fillCurrentColLabel(rows, cols, pos + 1);
+      this.fillCurrentColLabel(cols, pos + 1);
       this.x -= 1;
     }
   }
