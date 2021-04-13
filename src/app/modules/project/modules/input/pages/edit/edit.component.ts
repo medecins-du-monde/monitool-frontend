@@ -255,9 +255,12 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       let y: number;
       let total = 0;
 
-      // Update of the total for all columns
+      // Update of the total for all rows
+      // chose a row
       for (x = table.cols.length; x < table.numberRows - 1; x += 1){
+        // sum of the row
         let sum = 0;
+        // iterate over all collumns for the row chosen
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null){
@@ -266,12 +269,16 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             }
           }
         }
+        // set the total for the row 
         table.value[x][table.numberCols - 1] = sum;
         total += sum;
       }
+      // set the total of the table
+      // if the table doesnt have multiple rows, this will be final
+      // otherwise, this value will be overwritten
       table.value[table.numberRows - 1][table.numberCols - 1] = total;
 
-      // Update of the total for all rows
+      // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
       total = 0;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
@@ -279,15 +286,16 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         for (x = 0; x < table.numberRows; x += 1){
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null){
-            if (isNaN(val.values[table.id][inputPos])){
-              continue;
+            if (!isNaN(val.values[table.id][inputPos])){
+              sum += +val.values[table.id][inputPos];
             }
-            sum += +val.values[table.id][inputPos];
           }
         }
+        // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
         total += sum;
       }
+      // if the table has multiple rows and collums the total in the last cell needs to be updated
       if (total !== 0){
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
       }
