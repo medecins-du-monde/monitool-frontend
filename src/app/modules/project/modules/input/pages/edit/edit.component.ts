@@ -13,9 +13,7 @@ import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
-
-
-
+import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -55,7 +53,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  // Check is the form has any error
+  // Check if the form has any error
   get canBeSaved(): boolean{
     if (this.inputForm){
       let values: any[];
@@ -134,7 +132,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         // Format the timeSlot
         this.timeSlot = new TimeSlot(this.timeSlotDate);
         // Options to get the first and last date
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+        const options: DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
         // Getting the first and last date for the table
         // Are these options really working ?
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
