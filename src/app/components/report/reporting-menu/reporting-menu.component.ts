@@ -189,7 +189,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           parameters: {}
         };
         newComputation.parameters[parameter] = value;
-        
+
+        // Looking now for for the name of the variable in order to have the full name of the computation
         let currentProject: Project;
         let originElement: FormElement;
         if (this.project){
@@ -198,22 +199,22 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           currentProject = this.indicator.originProject;
         }
 
-        let newDisplay = parameter;
+        let fullName = parameter;
 
-        for (let f of currentProject.forms){
-          originElement = f.elements.find((e: FormElement) => e.id === value['elementId']);
+        for (const form of currentProject.forms){
+          originElement = form.elements.find((e: FormElement) => e.id === value.elementId);
           if (originElement !== undefined){
             break;
           }
         }
 
         if (originElement){
-          newDisplay = parameter + ` (${originElement.name})`;
+          fullName = parameter + ` (${originElement.name})`;
         }
 
         disaggregatedIndicators.push(new ProjectIndicator({
           computation: newComputation,
-          display: newDisplay,
+          display: fullName,
           baseline: 0,
           target: 0,
           originProject: this.indicator.originProject
