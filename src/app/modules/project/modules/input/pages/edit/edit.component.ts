@@ -1,3 +1,5 @@
+// tslint:disable:no-shadowed-variable
+// tslint:disable:one-variable-per-declaration
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +15,7 @@ import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
-
-
-
+import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -30,7 +30,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   project: Project;
   timeSlotDate: any;
   timeSlot: TimeSlot;
-  previousTimeSlot: TimeSlot;
   site: Entity = new Entity({name: ''});
   form: Form = new Form({ name: ''});
   firstDate = '';
@@ -45,14 +44,48 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   inputForm: FormGroup;
   previousInput: Input;
   private initValue: any;
+  tableSettings: any;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
     return !this.canBeSaved;
   }
 
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  // Check if the form has any error
+  get canBeSaved(): boolean{
+    if (this.inputForm){
+      let values: any[];
+      for (values of Object.values<Array<any>>(this.inputForm.get('values').value)){
+        if (values.findIndex(v => isNaN(v)) !== -1){
+          return false;
+        }
+      }
+    }
+    if (!this.input && this.initValue){
+      // If new values are different from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
+    }
+    // If the coming input is different from our form, we can return true
+    if (this.inputForm && this.input){
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+
+  // Check if the initial input got has any modification
+  get inputHasModification(): boolean{
+    if (!this.input && this.initValue){
+      // If new values are different from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
+    }
+    if (this.inputForm && this.input){
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
   }
 
   constructor(
@@ -65,7 +98,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   ) { }
 
   ngOnInit(): void {
+    // Set the page with the normal size
     this.projectService.inBigPage.next(false);
+
+    // Subscribe to the current project
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
@@ -73,6 +109,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       })
     );
 
+    // Subscribe to the parameters in the url
     this.subscription.add(
       this.route.params.subscribe(params => {
         this.formId = params.formId;
@@ -81,44 +118,31 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.updateData();
       })
     );
-
   }
 
-  onPaste(event: ClipboardEvent, tableId: string, index: number ): void {
-    const data = [];
-    const rowData = event.clipboardData.getData('text').split('\n');
-
-    rowData.forEach(row => {
-      row.split('\t').forEach(columnData => {
-        data.push(columnData);
-      });
-    });
-    for (let i = index; i < this.inputForm.value.values[`${tableId}`].length; i++) {
-      this.inputForm.controls.values.get(`${tableId}`).get(`${i}`).setValue(data[i - index] ? data[i - index] : 0);
-    }
-    // This is used to block the pasted text inside the input and insert everything from this method
-    return event.preventDefault();
-  }
-
-  async updateData(){
-    if (this.project){
-      if (this.formId){
+  async updateData(): Promise<void>{
+    // Check if we have a project, a formID, a siteID and a timeSlotDate in order to generate the table
+    if (this.project && this.formId && this.siteId && this.timeSlotDate){
+        // Get the form
         this.form = this.project.forms.find(x => x.id === this.formId);
-      }
-      if (this.siteId){
+
+      // Check if the form is not null
+        if (this.form){
+
+        // Get the site
         this.site = this.project.entities.find(x => x.id === this.siteId);
-      }
-      if (this.timeSlotDate && this.form){
+        // Format the timeSlot
         this.timeSlot = new TimeSlot(this.timeSlotDate);
-
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
-
+        // Options to get the first and last date
+        const options: DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' };
+        // Getting the first and last date for the table
         this.firstDate = this.timeSlot.firstDate.toLocaleDateString(this.currentLang, options);
         this.lastDate = this.timeSlot.lastDate.toLocaleDateString(this.currentLang, options);
+        // Get the previousDate associated to this timeSlot
+        const previousDate = this.timeSlot.previous().value;
 
-        this.previousTimeSlot = this.timeSlot.previous();
-        const previousDate = this.previousTimeSlot.value;
-
+        // Getting the previous input in order to be able
+        // to fill this new input with the data of the previous one
         this.inputService.get(
           this.project.id,
           this.site.id,
@@ -133,28 +157,35 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           }
         });
 
-      }
-    }
-
-
-    if (this.project && this.form && this.timeSlotDate){
-      let savedInput = await this.getInput();
-      if (savedInput && savedInput.length > 0){
+      // Get the saved input, if there is
+        let savedInput = await this.getInput();
+      // Check if there is one
+        if (savedInput && savedInput.length > 0){
         savedInput = savedInput.find(x => x.period === this.timeSlotDate);
+        // Why not just else
         if (savedInput !== undefined){
+          // If there is not, we create a new one
           this.input = new Input(savedInput);
         }
       }
-      this.createForm();
-      this.createTable();
-      this.updateTotals(this.inputForm.value);
 
-      this.inputForm.valueChanges.subscribe(val => {
+      // Creation of the form
+        this.createForm();
+      // Creation of the table
+        this.createTable();
+      // Update of the total cell of each row or column
+        this.updateTotals(this.inputForm.value);
+
+      // Subscribe to any changes in the form
+        this.inputForm.valueChanges.subscribe(val => {
+        // Convert the string input to a number
         this.convertToNumber(val);
+        // Update of the total cell of each row or column
         this.updateTotals(val);
       });
 
-      const breadCrumbs = [
+      // Update the breadcrumbs informations
+        const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -176,11 +207,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           value: this.timeSlotDate
         } as BreadcrumbItem
       ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      }
     }
   }
 
-  createForm() {
+  createForm(): void {
+    // Get all the values already in the current form
     const valuesGroup = {};
     for (const e of this.form.elements){
       if (this.input && this.input.values && this.input.values[e.id]){
@@ -194,7 +227,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       }
     }
 
-    const formGroup = {
+    // Create the formGroup
+    this.inputForm = this.fb.group({
       _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
       entity: this.site.id,
       form: this.form.id,
@@ -202,12 +236,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       project: this.project.id,
       rev: (this.input && this.input.rev) ? this.input.rev : null,
       values: this.fb.group(valuesGroup)
-    };
+    });
 
-    this.inputForm = this.fb.group(formGroup);
+    // Fill the init value with the current value in order to be able to reset
     this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
   }
 
+  // This method convert all the string inputs in a number
   convertToNumber(val) {
     for (const e of this.form.elements){
       val.values[e.id] = val.values[e.id].map(x => +x);
@@ -215,43 +250,66 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   // TODO optimise this method
-  updateTotals(val: any) {
+  updateTotals(val: any): void {
     for (let i = 0; i < this.tables.length; i += 1){
       const table = this.tables[i];
       let x: number;
       let y: number;
       let total = 0;
+
+      // Update of the total for all rows
+      // chose a row
       for (x = table.cols.length; x < table.numberRows - 1; x += 1){
+        // sum of the row
         let sum = 0;
+        // iterate over all collumns for the row chosen
         for (y = 0; y < table.numberCols; y += 1){
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== false){
-            sum += val.values[table.id][inputPos];
+          if (inputPos !== null){
+            if (!isNaN(val.values[table.id][inputPos])){
+              sum += val.values[table.id][inputPos];
+            }
           }
         }
+        // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
         total += sum;
       }
+      // set the total of the table
+      // if the table doesnt have multiple rows, this will be final
+      // otherwise, this value will be overwritten
       table.value[table.numberRows - 1][table.numberCols - 1] = total;
+
+      // Update of the total for all collumns
+      // Re-initialisation of the total after having used it for the columns
       total = 0;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
         let sum = 0;
         for (x = 0; x < table.numberRows; x += 1){
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== false){
-            sum += +val.values[table.id][inputPos];
+          if (inputPos !== null){
+            if (!isNaN(val.values[table.id][inputPos])){
+              sum += +val.values[table.id][inputPos];
+            }
           }
         }
+        // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
         total += sum;
       }
+      // if the table has multiple rows and collums the total in the last cell needs to be updated
       if (total !== 0){
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
       }
     }
   }
 
-  createTable(){
+  createTable(): void{
+    // Re-initiate table data and table
+    this.tables = [];
+    this.tableSettings = {};
+
+    // For every variable of the form
     for (const element of this.form.elements){
       const cols = [];
       const rows = [];
@@ -259,12 +317,20 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       this.numberCols = 0;
       this.numberRows = 0;
 
+      // calculates the total number of rows and cols of the table based on the number of partitions
       let i = 0;
+
+      // element.distribution is the number of partitions that are going to form rows in the table
+      // the first partitions are rows, the last partitions are cols
+      // the number represented by element.distribution says how many of the first partitions are rows
+
+      // we loop through the partitions that are going to be rows
       for (i = 0; i < element.distribution; i += 1){
         rows.push(element.partitions[i]);
         if (this.numberRows === 0) { this.numberRows = 1; }
         this.numberRows *= element.partitions[i].elements.length;
       }
+      // we loop through the remaining partition, they are going to form cols
       for (i = element.distribution; i < element.partitions.length; i += 1){
         cols.push(element.partitions[i]);
         if (this.numberCols === 0) { this.numberCols = 1; }
@@ -278,9 +344,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       for (i = 0; i < this.numberRows; i += 1){
         this.table.push([]);
         for (let j = 0; j < this.numberCols; j += 1 ){
+          // leave the cells on the top-left corner empty
           if (i < cols.length || j < rows.length){
             this.table[i].push('');
           }else{
+            // all the other cells are filled with 0
             this.table[i].push(0);
           }
         }
@@ -295,7 +363,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         currentCollumns.push(k.toString());
       }
 
-      this.tables.push({
+      let tableObj = {
         id: element.id,
         value: this.table,
         cols,
@@ -303,13 +371,77 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         numberCols: this.numberCols,
         numberRows: this.numberRows,
         displayedColumns: currentCollumns
-      });
+      };
 
+      tableObj = this.fillValues(element, tableObj);
+
+      this.tables.push(tableObj);
+      this.tableSettings[element.id] = {
+        colHeaders: false,
+        rowHeaders: false,
+        stretchH: 'all',
+        observeChanges: true,
+        hotId: 'element.id',
+        // updates the inputForm everytime we change something in the table
+        beforeChange: (core, changes) => {
+          if (changes !== null){
+            for (let i = 0; i < changes.length; i += 1){
+              const change = changes[i];
+              const x = change[0];
+              const y = change[1];
+              const oldValue = +change[2];
+              let newValue = +change[3];
+              if (isNaN(newValue)){
+                newValue = change[3];
+              }
+              if (oldValue !== newValue){
+                const pos = this.isInputCell(-1, x, y, tableObj);
+                if (pos !== null){
+                  change[3] = newValue;
+                  this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
+                }
+              }else{
+                // dont apply this change
+                changes[i] = null;
+              }
+            }
+          }
+        },
+
+        cells: (row, col) => {
+          const cellProperties = {currentColClassName: 'currentColumn', };
+          if (this.isInputCell(-1, row, col, tableObj) !== null){
+            cellProperties['readOnly'] = false;
+          }else{
+            cellProperties['readOnly'] = true;
+          }
+
+          if (this.isLabelCell(-1, row, col, tableObj)){
+            cellProperties['className'] = 'hot-header-cell';
+          }else{
+            cellProperties['className'] = 'hot-input-cell';
+            cellProperties['validator'] = /^\d+$/;
+          }
+
+          return cellProperties;
+        }
+      };
     }
   }
 
-  fillTotalLabels(rows, cols) {
-    const numOr0 = n => isNaN(n) ? 0 : n;
+  fillValues(element, tableObj){
+    for (let x = 0; x < tableObj.numberRows; x += 1){
+      for (let y = 0; y < tableObj.numberCols; y += 1){
+        const pos = this.isInputCell(-1, x, y, tableObj);
+        if (pos !== null){
+          tableObj.value[x][y] = this.inputForm.get('values').get(element.id).get(`${pos}`).value;
+        }
+      }
+    }
+    return tableObj;
+  }
+
+  fillTotalLabels(rows: any[], cols: any[]): void {
     if (cols.length > 0){
       const y = this.numberCols - 1;
       for (let x = 0; x < cols.length; x += 1){
@@ -328,10 +460,17 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   fillRowLabels(rows, cols) {
     this.x = cols.length;
     this.y = 0;
-
     this.fillCurrentRowLabel(rows, cols, 0);
   }
 
+  // recursive function to fill in the labels of the rows
+  // this.x controls which row of the table we are
+  // this.y controls which col of the table we are
+  // the key to understanding this function is observing how the x and y variables are "global" and
+  // their value are being manipulated by the recursion
+  //
+  // the y is incremented before calling the recursion and
+  // decremented after, while the x is only incrementing
   fillCurrentRowLabel(rows, cols, pos) {
     if (pos >= rows.length){ return; }
     if (pos === rows.length - 1){
@@ -354,11 +493,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   fillCollumnLabels(rows, cols) {
     this.x = 0;
     this.y = rows.length;
-
-    this.fillCurrentColLabel(rows, cols, 0);
+    this.fillCurrentColLabel(cols, 0);
   }
 
-  fillCurrentColLabel(rows, cols, pos){
+  fillCurrentColLabel(cols, pos){
     if (pos >= cols.length){ return; }
     if (pos === cols.length - 1){
       for (const e of cols[pos].elements){
@@ -371,7 +509,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     for (const e of cols[pos].elements){
       this.table[this.x][this.y] = e.name;
       this.x += 1;
-      this.fillCurrentColLabel(rows, cols, pos + 1);
+      this.fillCurrentColLabel(cols, pos + 1);
       this.x -= 1;
     }
   }
@@ -397,51 +535,75 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return numberCols * numberRows;
   }
 
-  isLabelCell(tablePos, i, j){
-    const rows = this.tables[tablePos].rows;
-    const cols = this.tables[tablePos].cols;
+  isLabelCell(tablePos, i, j, customTable= null): boolean{
+    let rows, cols;
+    if (customTable === null){
+      rows = this.tables[tablePos].rows;
+      cols = this.tables[tablePos].cols;
+    }else{
+      rows = customTable.rows;
+      cols = customTable.cols;
+    }
 
     return (i < cols.length || j < rows.length);
   }
-  isInputCell(tablePos, i, j){
-    const rows = this.tables[tablePos].rows;
-    const cols = this.tables[tablePos].cols;
-    const numberRows = this.tables[tablePos].numberRows;
-    const numberCols = this.tables[tablePos].numberCols;
 
-    if ( i >= cols.length && (rows.length === 0 || i < numberRows - 1) && j >= rows.length && (cols.length === 0 || j < numberCols - 1)){
-      let nRows = numberRows - cols.length - 1;
-      let nCols = numberCols - rows.length - 1;
+  isInputCell(tablePos: number, i: number, j: number, customTable= null): number{
+    let rows;
+    let cols;
+    let numberRows;
+    let numberCols;
 
-      if (cols.length === 0){
-        nCols += 1;
-      }
-      if (rows.length === 0){
-        nRows += 1;
-      }
+    if (customTable === null){
+      rows = this.tables[tablePos].rows;
+      cols = this.tables[tablePos].cols;
+      numberRows = this.tables[tablePos].numberRows;
+      numberCols = this.tables[tablePos].numberCols;
+    }else{
+      rows = customTable.rows;
+      cols = customTable.cols;
+      numberRows = customTable.numberRows;
+      numberCols = customTable.numberCols;
+    }
 
+    // remove the 'Total' row from the count
+    if (rows.length !== 0){
+      numberRows -= 1;
+    }
+    // remove the 'Total' col from the count
+    if (cols.length !== 0){
+      numberCols -= 1;
+    }
+
+    if (i >= cols.length && i < numberRows && j >= rows.length && j < numberCols){
+      // const nRows = numberRows - cols.length;
+      const nCols = numberCols - rows.length;
       i -= cols.length;
       j -= rows.length;
 
       const pos = i * nCols + j;
       return pos;
     }else{
-      return false;
+      return null;
     }
   }
 
-  fillWithPreviousData(){
+  // Fill the current input with the data of the previous one
+  fillWithPreviousData(): void{
     if (this.previousInput){
       for (const e of this.form.elements){
         if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]){
           this.inputForm.get('values').get(e.id).setValue(this.previousInput.values[e.id]);
         }
       }
+      this.createTable();
+      this.updateTotals(this.inputForm.value);
     }
 
   }
 
-  async saveInput(){
+  // Save the current input and redirect the user to the input home page
+  async saveInput(): Promise<void>{
     const inputToBeSaved = new Input(this.inputForm.value);
     const response = await this.inputService.save(inputToBeSaved);
     if (response){
@@ -451,7 +613,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     }
   }
 
-  async deleteInput(){
+  // Delete current input and redirect the user to input home page
+  async deleteInput(): Promise<void>{
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
     if (response) {
@@ -459,6 +622,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     }
   }
 
+  // Get an input in function of the project, collection site, form and timeslot
   async getInput(): Promise<any>{
     const response = await this.inputService.get(
       this.project.id,
@@ -469,26 +633,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return response;
   }
 
-  get canBeSaved(){
-    if (!this.input && this.initValue){
-      // If new values are differents from the initial ones, we can return true
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
-    }
-    // If the coming input it different from our form, we can return true
-    if (this.inputForm && this.input){
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-  get inputHasModification(){
-    if (this.inputForm && this.input){
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-
   resetInput(){
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.createTable();
     this.updateTotals(this.inputForm.value);
     this.inputForm.valueChanges.subscribe(val => {
       this.convertToNumber(val);

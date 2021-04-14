@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
 @include mat-core();
 
@@ -599,6 +600,20 @@ code {
         }
       }
     }
+  }
+}
+
+// === HANDSONTABLE ===
+hot-table {
+  width: 100%;
+  overflow: hidden;
+  font-size: $small_text;
+}
+
+.handsontable td{
+  &.hot-header-cell{
+    background-color: #eeeeee;
+    color: rgba(0, 0, 0, 0.87)
   }
 }
 
