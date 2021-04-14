@@ -1,3 +1,5 @@
+// tslint:disable:no-shadowed-variable
+// tslint:disable:one-variable-per-declaration
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -125,7 +127,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.form = this.project.forms.find(x => x.id === this.formId);
 
       // Check if the form is not null
-      if (this.form){
+        if (this.form){
 
         // Get the site
         this.site = this.project.entities.find(x => x.id === this.siteId);
@@ -156,9 +158,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         });
 
       // Get the saved input, if there is
-      let savedInput = await this.getInput();
+        let savedInput = await this.getInput();
       // Check if there is one
-      if (savedInput && savedInput.length > 0){
+        if (savedInput && savedInput.length > 0){
         savedInput = savedInput.find(x => x.period === this.timeSlotDate);
         // Why not just else
         if (savedInput !== undefined){
@@ -168,14 +170,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       }
 
       // Creation of the form
-      this.createForm();
+        this.createForm();
       // Creation of the table
-      this.createTable();
+        this.createTable();
       // Update of the total cell of each row or column
-      this.updateTotals(this.inputForm.value);
+        this.updateTotals(this.inputForm.value);
 
       // Subscribe to any changes in the form
-      this.inputForm.valueChanges.subscribe(val => {
+        this.inputForm.valueChanges.subscribe(val => {
         // Convert the string input to a number
         this.convertToNumber(val);
         // Update of the total cell of each row or column
@@ -183,7 +185,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       });
 
       // Update the breadcrumbs informations
-      const breadCrumbs = [
+        const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
@@ -205,7 +207,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           value: this.timeSlotDate
         } as BreadcrumbItem
       ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       }
     }
   }
@@ -269,7 +271,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             }
           }
         }
-        // set the total for the row 
+        // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
         total += sum;
       }
@@ -317,11 +319,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
       // calculates the total number of rows and cols of the table based on the number of partitions
       let i = 0;
-    
+
       // element.distribution is the number of partitions that are going to form rows in the table
       // the first partitions are rows, the last partitions are cols
       // the number represented by element.distribution says how many of the first partitions are rows
-      
+
       // we loop through the partitions that are going to be rows
       for (i = 0; i < element.distribution; i += 1){
         rows.push(element.partitions[i]);
@@ -369,10 +371,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         numberCols: this.numberCols,
         numberRows: this.numberRows,
         displayedColumns: currentCollumns
-      }
+      };
 
       tableObj = this.fillValues(element, tableObj);
-      
+
       this.tables.push(tableObj);
       this.tableSettings[element.id] = {
         colHeaders: false,
@@ -383,7 +385,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
           if (changes !== null){
-            for (let i = 0; i < changes.length; i+=1){
+            for (let i = 0; i < changes.length; i += 1){
               const change = changes[i];
               const x = change[0];
               const y = change[1];
@@ -393,7 +395,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
                 newValue = change[3];
               }
               if (oldValue !== newValue){
-                const pos = this.isInputCell(-1, x, y, tableObj); 
+                const pos = this.isInputCell(-1, x, y, tableObj);
                 if (pos !== null){
                   change[3] = newValue;
                   this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
@@ -405,15 +407,15 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             }
           }
         },
-        
+
         cells: (row, col) => {
-          const cellProperties = {currentColClassName: 'currentColumn',};
+          const cellProperties = {currentColClassName: 'currentColumn', };
           if (this.isInputCell(-1, row, col, tableObj) !== null){
             cellProperties['readOnly'] = false;
           }else{
             cellProperties['readOnly'] = true;
           }
-          
+
           if (this.isLabelCell(-1, row, col, tableObj)){
             cellProperties['className'] = 'hot-header-cell';
           }else{
@@ -428,13 +430,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   }
 
   fillValues(element, tableObj){
-    for (let x = 0; x < tableObj.numberRows; x+=1){
-      for (let y = 0; y < tableObj.numberCols; y+=1){
+    for (let x = 0; x < tableObj.numberRows; x += 1){
+      for (let y = 0; y < tableObj.numberCols; y += 1){
         const pos = this.isInputCell(-1, x, y, tableObj);
         if (pos !== null){
-          tableObj.value[x][y] = this.inputForm.get('values').get(element.id).get(`${pos}`).value
+          tableObj.value[x][y] = this.inputForm.get('values').get(element.id).get(`${pos}`).value;
         }
-      }    
+      }
     }
     return tableObj;
   }
@@ -468,7 +470,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   // their value are being manipulated by the recursion
   //
   // the y is incremented before calling the recursion and
-  // decremented after, while the x is only incrementing 
+  // decremented after, while the x is only incrementing
   fillCurrentRowLabel(rows, cols, pos) {
     if (pos >= rows.length){ return; }
     if (pos === rows.length - 1){
@@ -533,7 +535,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return numberCols * numberRows;
   }
 
-  isLabelCell(tablePos, i, j, customTable=null): boolean{
+  isLabelCell(tablePos, i, j, customTable= null): boolean{
     let rows, cols;
     if (customTable === null){
       rows = this.tables[tablePos].rows;
@@ -546,12 +548,12 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     return (i < cols.length || j < rows.length);
   }
 
-  isInputCell(tablePos: number, i: number, j: number, customTable=null): number{
+  isInputCell(tablePos: number, i: number, j: number, customTable= null): number{
     let rows;
     let cols;
     let numberRows;
     let numberCols;
-    
+
     if (customTable === null){
       rows = this.tables[tablePos].rows;
       cols = this.tables[tablePos].cols;
