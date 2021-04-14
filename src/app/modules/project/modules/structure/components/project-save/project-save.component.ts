@@ -35,7 +35,7 @@ export class ProjectSaveComponent {
       }
       this.projectSaved = true;
     }).catch(() => {
-      this.errorWhileSaving = true; 
+      this.errorWhileSaving = true;
     });
   }
 

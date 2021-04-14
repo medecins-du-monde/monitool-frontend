@@ -142,12 +142,12 @@ export class SitesComponent implements OnInit {
     // Remove the deleted entity from forms
     this.project.forms.map(form => {
       form.entities = form.entities.filter(entity => entity.id !== entityId);
-    })
+    });
 
-    //Remove the deleted entity from logicalFrames
+    // Remove the deleted entity from logicalFrames
     this.project.logicalFrames.map(logicalFrame => {
-      logicalFrame.entities = logicalFrame.entities.filter(entity => entity.id !== entityId)
-    })
+      logicalFrame.entities = logicalFrame.entities.filter(entity => entity.id !== entityId);
+    });
 
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
