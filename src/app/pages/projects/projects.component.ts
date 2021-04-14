@@ -40,6 +40,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
+  canCreateProject = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -78,6 +79,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {
         this.currentUser = new User(user);
+        if (this.currentUser.type === 'user' && this.currentUser.role === 'common') {
+          this.canCreateProject = false;
+        }
       })
     );
   }
@@ -141,6 +145,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     project.id = `project:${uuid()}`;
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
+    // Allow user with a project role to access to the structure page to create a project
+    this.projectService.projectUserRoleCreateProject.next(true);
     this.projectService.create(project);
     this.router.navigate(['/projects', project.id]);
   }

@@ -17,7 +17,7 @@ export class SidenavComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    // Check whether or not the project has his basics infos
+    // Enable all the links of the sidenav if the project has all is basicsinfos
     this.projectService.hasBasicsInfos.subscribe(val => {
       this.enableAllSidenavLink = this.structurePage ? val : true;
     });

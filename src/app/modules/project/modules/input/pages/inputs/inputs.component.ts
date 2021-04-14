@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
@@ -8,6 +9,8 @@ import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { User } from 'src/app/models/classes/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
@@ -30,12 +33,14 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   project: Project;
   form: Form;
+  user: User;
   thisYearDates: any[];
   allDates: any[];
   inputProgress: ArrayBuffer;
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private projectService: ProjectService,
     private translateService: TranslateService,
     private inputService: InputService
@@ -46,6 +51,9 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
+        this.authService.currentUser.subscribe((user: User) => {
+          this.user = user;
+        });
         this.updateData();
       })
     );
@@ -85,7 +93,18 @@ export class InputsComponent implements OnInit, OnDestroy {
     if (this.formId && this.project){
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
-      this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+      // We show only columns of data in which the current user has rights
+      if (this.user.type === 'partner' && this.user.role === 'input') {
+        this.displayedColumns = ['Date'].concat(this.user.entities.map(x => this.projectService.getNamefromId(x, this.project.entities)));
+      } else if (this.user.type === 'user') {
+        const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+        this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+        if (projectUser.length > 0 && projectUser[0].role === 'input') {
+          this.displayedColumns = ['Date'].concat(projectUser[0].entities.map(x => x.name));
+        }
+      } else {
+        this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+      }
     }
     this.thisYearDates = [];
     this.allDates = [];

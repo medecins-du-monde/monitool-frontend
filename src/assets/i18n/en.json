@@ -375,8 +375,8 @@
         "If not attainable, a PDF version of the form is provided."
     ],
     "Invalid": "Invalid",
-    "InvalidForm": "Some fields are invalid in the form, fix them in order to save",
-    "ApplicationError": "An error occurred while saving, this project hasn't been saved",
+    "InvalidForm": "Some fields are invalid or missing in the form, fix them in order to save",
+    "ApplicationError": "An error occurred while saving, this project hasn't been saved. Please refresh the page.",
     "PendingForm": "You made changes. Don't forget to click on Save",
     "SavedForm": "Your data is saved",
     "Language": "Language",

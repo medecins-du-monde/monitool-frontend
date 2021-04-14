@@ -594,14 +594,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // of the red until we get to the green: rgb (128, 255, 128)
 
 
-    // set color to gray if cell is empty
-    if (element.values[column] === undefined && !this.checkIfNaN(element?.values[column])){
-      return 'rgb(238, 238, 238)';
-    }
-
-    // don't set any color if the row don't want colors or the value is NaN
-    if (!element.colorize || this.checkIfNaN(element?.values[column])){
-      return '';
+    // Set background color to white if the row doesn't want colors
+    if (!element.colorize){
+      return 'white';
     }
 
     const distance = element.target - element.baseline;

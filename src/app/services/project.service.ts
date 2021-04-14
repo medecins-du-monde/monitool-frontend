@@ -28,6 +28,12 @@ export class ProjectService {
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  // Get project id to redirect MDM Accounts
+  projectId: BehaviorSubject<string> = new BehaviorSubject('');
+
+  // Check if a project user is creating a new project
+  projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
@@ -46,6 +52,14 @@ export class ProjectService {
 
   get getBreadcrumbsList(): Observable<any[]> {
     return this.breadCrumbs.asObservable();
+  }
+
+  get getProjectId(): Observable<string> {
+    return this.projectId.asObservable();
+  }
+
+  get projectUserCreatingProject(): Observable<boolean> {
+    return this.projectUserRoleCreateProject.asObservable();
   }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
@@ -166,5 +180,21 @@ export class ProjectService {
   public async listByIndicator(indicatorId: string): Promise<Project[]> {
     const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId } });
     return response.map(x => new Project(x));
+  }
+
+  // Used when the user is a partner with a data entry role to display the name
+  // of datasource and entities from their ID
+  public getNamefromId(id, arr): string {
+    let name;
+    arr.forEach(x => {
+      if (x.id === id) {
+        name = x.name;
+      }
+    });
+    return name;
+  }
+
+  public updateProjectId(id: string) {
+    this.projectId.next(id);
   }
 }

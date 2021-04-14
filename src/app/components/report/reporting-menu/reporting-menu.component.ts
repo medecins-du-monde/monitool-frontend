@@ -1,5 +1,7 @@
+// tslint:disable:no-string-literal
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -189,9 +191,31 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         };
         newComputation.parameters[parameter] = value;
 
+        // Looking now for for the name of the variable in order to have the full name of the computation
+        let currentProject: Project;
+        let originElement: FormElement;
+        if (this.project){
+          currentProject = this.project;
+        }else if (this.indicator.originProject){
+          currentProject = this.indicator.originProject;
+        }
+
+        let fullName = parameter;
+
+        for (const form of currentProject.forms){
+          originElement = form.elements.find((e: FormElement) => e.id === value['elementId']);
+          if (originElement !== undefined){
+            break;
+          }
+        }
+
+        if (originElement){
+          fullName = parameter + ` (${originElement.name})`;
+        }
+
         disaggregatedIndicators.push(new ProjectIndicator({
           computation: newComputation,
-          display: parameter,
+          display: fullName,
           baseline: 0,
           target: 0,
           originProject: this.indicator.originProject
