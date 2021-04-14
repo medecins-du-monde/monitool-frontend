@@ -17,7 +17,7 @@ export class DataSourcesListComponent implements OnInit {
 
   project: Project;
   forms: Form[] = [];
-  deletedFormVaraibles = [];
+  deletedFormVariables = [];
 
   constructor(
     private projectService: ProjectService,
@@ -66,7 +66,7 @@ export class DataSourcesListComponent implements OnInit {
   onDelete(form: Form): void {
     // Get all the variables id from the deleted datasource
     form.elements.forEach(el => {
-      this.deletedFormVaraibles.push(el.id);
+      this.deletedFormVariables.push(el.id);
     });
 
     // Delete datasource from extra indicators computation
@@ -106,7 +106,7 @@ export class DataSourcesListComponent implements OnInit {
   changeComputation(obj: Object) {
     // Check if any variable id from the deleted datasource match an ID in the computation parameters
     for (const val of Object.values(obj)) {
-      const matchingId = this.deletedFormVaraibles.filter( formVariable => formVariable === val.elementId);
+      const matchingId = this.deletedFormVariables.filter( formVariable => formVariable === val.elementId);
       if (matchingId.length) {
         return true;
       }
