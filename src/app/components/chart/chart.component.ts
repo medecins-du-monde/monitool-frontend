@@ -73,7 +73,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
 
-  addData(data) {
+  addData(data): void {
     if (this.chart){
       this.chart.data = data;
       this.chart.update();
@@ -81,12 +81,13 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.data = data;
   }
 
-  clearGraph() {
+  resetCharts(): void {
     this.chart.data.datasets = [];
     this.chart.update();
+    this.chartService.reset.next(true);
   }
 
-  changeChartType(type) {
+  changeChartType(type: string): void {
     if (this.chart){
       this.chart.destroy();
     }
@@ -107,11 +108,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void{
-    this.subscription.unsubscribe();
-  }
-
   get downloadChart(): string{
     return this.chart.toBase64Image();
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 }

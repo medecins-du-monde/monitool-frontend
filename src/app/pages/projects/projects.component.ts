@@ -40,6 +40,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
+  canCreateProject = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -65,18 +66,22 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit(): void {
     this.filtersForm = this.fb.group({
       search: '',
-      countries: [[]],
+      countries: [['0']],
       themes: [[]],
       statuses: [['Ongoing']]
     });
+
     this.getProjects();
     this.filtersForm.valueChanges.subscribe(() => {
-      this.onFilterChange();
+      this.loadFilteredProjects();
     });
 
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {
         this.currentUser = new User(user);
+        if (this.currentUser.type === 'user' && this.currentUser.role === 'common') {
+          this.canCreateProject = false;
+        }
       })
     );
   }
@@ -92,36 +97,40 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public getProjects() {
     this.projectService.list().then((res: Project[]) => {
       this.allProjects = res;
-      this.countries = [... new Set(res.map(x => x.country))];
-      this.filtersForm.controls.countries.setValue(this.countries.concat(['0']));
-      const listToReturn = this.projects.sort((a, b) => {
-        // If owner of at least one of both project
-        if (a.users.find(user => this.isOwner(user))
-        || b.users.find(user => this.isOwner(user))
-        ) {
-          // If owner of both project
+      this.loadFilteredProjects();
+      this.countries = [... new Set(res.map(x => x.country)
+        .sort((x: string, y: string) => x.toLocaleLowerCase().replace(/[\])}[{(]/g, '').localeCompare(y.toLocaleLowerCase().replace(/[\])}[{(]/g, ''))))];
+
+      if (this.projects) {
+        this.projects.sort((a, b) => {
+          // If owner of at least one of both project
           if (a.users.find(user => this.isOwner(user))
-          && b.users.find(user => this.isOwner(user))
+          || b.users.find(user => this.isOwner(user))
           ) {
-            // alphabetical order
-            return a.country.localeCompare(b.country);
-          } else if (a.users.find(user => this.isOwner(user))) {
-            return -1;
+            // If owner of both project
+            if (a.users.find(user => this.isOwner(user))
+            && b.users.find(user => this.isOwner(user))
+            ) {
+              // alphabetical order
+              return a.country.localeCompare(b.country);
+            } else if (a.users.find(user => this.isOwner(user))) {
+              return -1;
+            } else {
+              return 1;
+            }
+          } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
+            if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
+              return a.country.localeCompare(b.country);
+            } else {
+              return -1;
+            }
           } else {
             return 1;
           }
-        } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
-          if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
-            return a.country.localeCompare(b.country);
-          } else {
-            return -1;
-          }
-        } else {
-          return 1;
-        }
-      });
+        });
+      }
+
       this.setCountProjectStatus(res);
-      return listToReturn;
     });
   }
 
@@ -136,8 +145,10 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     project.id = `project:${uuid()}`;
     const user = new User({type: 'internal', role: 'owner', id: this.currentUser.id});
     project.users.push(user);
+    // Allow user with a project role to access to the structure page to create a project
+    this.projectService.projectUserRoleCreateProject.next(true);
     this.projectService.create(project);
-    this.router.navigate(['/project', project.id]);
+    this.router.navigate(['/projects', project.id]);
   }
 
   onDelete(project: Project): void {
@@ -172,7 +183,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (this.allSelected.selected) {
       // TODO: Change this thing of the 0.
       this.filtersForm.controls.countries
-        .setValue([...this.countries, '0']);
+        .setValue(['0']);
     } else {
       this.filtersForm.controls.countries.setValue([]);
     }
@@ -182,7 +193,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.filtersForm.controls.search.setValue(e);
   }
 
-  onFilterChange(): void {
+  loadFilteredProjects(): void {
     let filteredProjects = this.filterByText(this.allProjects);
     filteredProjects = this.filterByCountries(filteredProjects);
     filteredProjects = this.filterByStatuses(filteredProjects);
@@ -201,8 +212,14 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   private filterByCountries(projects: Project[]): Project[] {
     const countries = this.filtersForm.value.countries;
     if (countries.length > 0) {
-      return projects.filter(project => countries.includes(project.country));
-    } else {
+      if (countries.includes('0')) {
+        return projects;
+      }
+      else {
+        return projects.filter(project => countries.includes(project.country));
+      }
+    }
+    else {
       return [];
     }
   }

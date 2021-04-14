@@ -97,6 +97,7 @@
     "DownloadPdfLandscape": "Télécharger PDF (paysage)",
     "DownloadPdfPortrait": "Télécharger PDF (portrait)",
     "DownloadPlot": "Télécharger",
+    "ResetGraph": "Réinitialiser",
     "Edit": "Modifier",
     "Email": "Email",
     "en": "Anglais",
@@ -105,8 +106,8 @@
         "Aggregation": {
             "sum": "Faire une somme",
             "average": "Faire une moyenne",
-            "highest": "Prendre la plus grande valeure",
-            "lowest": "Prendre la plus petite valeure",
+            "highest": "Prendre la plus grande valeur",
+            "lowest": "Prendre la plus petite valeur",
             "last": "Prendre la dernière valeur",
             "none": "Il n'est pas possible de faire ce calcul"
         },
@@ -520,7 +521,7 @@
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
     "Search": "Rentrez du texte pour filtrer les projets",
-    "SearchHelp": "Chercher un nom, pays et thématique",
+    "SearchHelp": "Chercher un projet par nom de pays ou de projet ou de thématique.",
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
     "Settings": "Paramètres",
@@ -550,7 +551,7 @@
     "Task": "Tâche",
     "TimeAggregation": "Comment grouper les valeurs de plusieurs périodes?",
     "TimeAggregationHint": "Dans un projet qui collecte mensuellement, si <code>{{name}}</code> vaut 10 en janvier, et 20 en février et 30 en mars que vaut-il pour le premier trimestre?",
-    "TimePeriods": {
+    "Filter": {
         "day": "Jour",
         "month_week_sat": "Semaines (samedi à vendredi / coupées par mois)",
         "month_week_sun": "Semaines (dimanche à lundi / coupées par mois)",
@@ -562,7 +563,9 @@
         "quarter": "Trimestres",
         "semester": "Semestres",
         "year": "Année",
-        "free": "Libre"
+        "free": "Libre",
+        "entity": "Lieux de collecte",
+        "group": "Groupes"
     },
     "Tooltip": {
         "BasicsEdition": {
@@ -606,7 +609,10 @@
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
-    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
+    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur ou manquant, corrigez-les afin de pouvoir sauvegarder.",
+    "ApplicationError": "L'application a rencontré une erreur, le projet n'a pas pu être sauvegardé. Rafraîchissez la page svp.",
+    "PendingForm": "Vous avez réalisé des changements. N'oubliez pas de cliquer sur sauvegarder",
+    "SavedForm": "Vos données sont sauvegardées",
     "EMail-Hint":"Indiquez votre adresse e-mail",
     "Name-Hint":"Indiquez votre Nom complet",
     "NameLogicalFramework-Hint": "Nommez ce cadre logique de façon à l'identifier facilement. Par exemple avec le nom du bailleur auquel il est destiné",
@@ -635,5 +641,10 @@
     "Disaggregations": "Désagrégations",
     "partitionElement": "Élément de partition",
     "ApplyChanges" : "Appliquer les modifications",
-    "elementsymbol" :"sbanyouraaaa"
+    "elementsymbol" :"sbanyouraaaa",
+    "ReportingError": {
+        "DataNotAvailable": "Ces données sont disponibles par",
+        "MissingCalculation": "Calcul absent"
+    },
+    "DownloadTable": "Télécharger le tableau"
 }

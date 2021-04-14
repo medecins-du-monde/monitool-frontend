@@ -11,7 +11,7 @@
             </ul>
         </nav>
         <button mat-button [matMenuTriggerFor]="menu">
-            {{ 'MyAccount' | translate }}
+            {{ user ? user.name : 'MyAccount' | translate }}
             <mat-icon>expand_more</mat-icon>
         </button>
     </mat-toolbar-row>
@@ -27,7 +27,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['parameters']" *ngIf="user.type !== 'partner'">{{ 'Settings' | translate }}</button>
+    <button mat-menu-item [routerLink]="['parameters']" *ngIf="settingsVisible">{{ 'Settings' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
     <button mat-menu-item (click)="disconnect()">{{ 'LogOut' | translate }}</button>
 </mat-menu>

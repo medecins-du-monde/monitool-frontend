@@ -8,10 +8,11 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateService} from 'src/app/services/date.service';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateService } from 'src/app/services/date.service';
 
 import DatesHelper from 'src/app/utils/dates-helper';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-basics',
@@ -67,13 +68,32 @@ export class BasicsComponent implements OnInit, OnDestroy {
           start: [project.start, Validators.required],
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
-        });
+        }, { validators: [DatesHelper.orderedDates('start', 'end')] });
         this.basicsForm.valueChanges.subscribe((value: any) => {
           const selectedThemes = value.themes;
           value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
-          this.projectService.valid = this.basicsForm.valid && DatesHelper.validDates(value.start, value.end);
+          this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: project.country,
+          } as BreadcrumbItem,
+          {
+            value: project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Basics',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
 

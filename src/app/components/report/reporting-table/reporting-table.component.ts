@@ -13,6 +13,7 @@ import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 import { Filter } from 'src/app/components/report/filter/filter.component';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -33,6 +34,7 @@ export interface GroupTitle{
 export interface InfoRow {
   icon: boolean;
   name: string;
+  unit?: string;
   baseline: number | null;
   colorize?: boolean;
   target: number | null;
@@ -68,6 +70,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
+  @Input() isCrossCuttingReport = false;
   rows = new BehaviorSubject<Row[]>([]);
 
   dataSource = new MatTableDataSource([]);
@@ -119,14 +122,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.subscription.add(
-      this.projectService.openedProject.subscribe( (project: Project) => {
-        this.project = project;
-        this.updateDimensions();
-        this.refreshValues();
-        this.updateTableContent();
-      })
-    );
+    if (!this.isCrossCuttingReport) {
+      this.subscription.add(
+        this.projectService.openedProject.subscribe( (project: Project) => {
+          this.project = project;
+          this.updateDimensions();
+          this.refreshValues();
+          this.updateTableContent();
+        })
+      );
+    }
 
     this.subscription.add(
       this.dimensionIds.subscribe( () => {
@@ -149,6 +154,21 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         this.content = content;
         this.updateTableContent();
       })
+    );
+
+    this.subscription.add(
+      this.chartService.reset.subscribe(() =>
+        {
+        const updatedRows = this.rows.getValue();
+        updatedRows.forEach(row => {
+          if (this.isInfoRow(0, row)) {
+            row.onChart = false;
+          }
+        }
+        );
+        this.rows.next(updatedRows);
+        }
+        )
     );
   }
 
@@ -216,8 +236,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }).map(x => x.id);
     }
     else {
-      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[this.dimensionIds.value]);
-      const endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[this.dimensionIds.value]);
+      let startTimeSlot = TimeSlot.fromDate(
+        DatesHelper.dateToString(this.filter.value._start),
+        TimeSlotPeriodicity[this.dimensionIds.value]
+        );
+      const endTimeSlot = TimeSlot.fromDate(
+        DatesHelper.dateToString(this.filter.value._end),
+        TimeSlotPeriodicity[this.dimensionIds.value]
+        );
 
       this.dimensions = [];
       while (startTimeSlot !== endTimeSlot){
@@ -238,6 +264,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       baseline: indicator.baseline,
       colorize: indicator.colorize !== undefined ? indicator.colorize : false,
       target: indicator.target,
+      unit: indicator.unit,
       sectionId: 0,
       values: {},
       onChart: false,
@@ -252,7 +279,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       row.customFilter = customFilter;
     }
 
-    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions.length > 0){
+    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions && this.dimensions.length > 0){
       row = this.updateRowValues(row);
     }
     return row;
@@ -296,6 +323,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       );
     }
+    else if (row.onChart) {
+      row.onChart = !row.onChart;
+      this.updateChart();
+    }
 
     return row;
   }
@@ -305,7 +336,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // the week-type periods are a special case
   checkPeriodicityIsValid(row: InfoRow): boolean{
     row.error = undefined;
-    if (!row.computation) {
+    if (!row.computation || !row.computation.formula) {
       row.error = 'Calculation is missing';
       return false;
     }
@@ -336,19 +367,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // when the chosen periodicity and the row periodicity are both week-type,
     // they only work togheter if they are the same
 
-    // this check if the chosen periodicity is one of the week-types
-    if (TimeSlotOrder[this.dimensionIds.value] > TimeSlotOrder.day && TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder.month &&
-        // this checks the same thing for the row periodicity
-        TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day && TimeSlotOrder[highestPeriodicity] > TimeSlotOrder.day){
-
-      if (this.dimensionIds.value !== highestPeriodicity){
-        row.error = 'TimePeriods.' + highestPeriodicity;
-        return false;
-      }
-    }
-
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
-      row.error = 'TimePeriods.' + highestPeriodicity;
+      row.error = 'Filter.' + highestPeriodicity;
       return false;
     }
     return true;
@@ -400,35 +420,38 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         return group.name;
       }
     }
+    if (id === '_total') { return 'Total'; }
     return id;
   }
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void{
+
+    // This element is set on the chart
     if (element && !element.error){
       element.onChart = !element.onChart;
     }
 
-    if (element && !element.error) {
-      if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
-        this.chartService.changeType('bar');
-      }else{
-        this.chartService.changeType('line');
-      }
+    // Update of the chart type in function of the dimension that we have selected
+    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group'){
+      this.chartService.changeType('bar');
+    }else{
+      this.chartService.changeType('line');
+    }
 
-      const datasets = [];
+    const datasets = [];
 
-      for (const row of this.dataSource.data){
-        if (row.onChart){
-          datasets.push(Object.assign({}, row.dataset));
-        }
+    // We take all the rows with the onChart attribute
+    for (const row of this.dataSource.data){
+      if (row.onChart){
+        datasets.push(Object.assign({}, row.dataset));
       }
-      const data = {
+    }
+    const data = {
         labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
         datasets
       };
-      this.chartService.addData(data);
-    }
+    this.chartService.addData(data);
   }
 
   // This allows to round all values
@@ -571,14 +594,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // of the red until we get to the green: rgb (128, 255, 128)
 
 
-    // set color to gray if cell is empty
-    if (element.values[column] === undefined && !this.checkIfNaN(element?.values[column])){
-      return 'rgb(238, 238, 238)';
-    }
-
-    // don't set any color if the row don't want colors or the value is NaN
-    if (!element.colorize || this.checkIfNaN(element?.values[column])){
-      return '';
+    // Set background color to white if the row doesn't want colors
+    if (!element.colorize){
+      return 'white';
     }
 
     const distance = element.target - element.baseline;

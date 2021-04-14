@@ -1,20 +1,24 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import * as _ from 'lodash';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Purpose } from 'src/app/models/classes/purpose.model';
-import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { DateService} from 'src/app/services/date.service';
+import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 
 @Component({
   selector: 'app-logical-frame-edit',
@@ -35,14 +39,23 @@ import { DateService} from 'src/app/services/date.service';
     }
   ]
 })
-export class LogicalFrameEditComponent implements OnInit, OnChanges {
+export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
-  logicalFrameForm: FormGroup;
+  logicalFrameForm: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    entities: new FormControl(null, [Validators.required]),
+    periodicity: new FormControl(null, [Validators.required]),
+    start: new FormControl(null, [Validators.required]),
+    end: new FormControl(null, [Validators.required]),
+    goal: new FormControl(null, [Validators.required]),
+    indicators: new FormArray([]),
+    purposes: new FormArray([])
+  });
 
-  @Input() project: Project;
-  @Input() entities: Entity[];
-  @Input() logicalFrame: LogicalFrame;
-  @Output() edit = new EventEmitter();
+  public project: Project;
+  public entities: Entity[];
+  public logicalFrame: LogicalFrame;
 
   get selectedEntities() {
     return this.logicalFrameForm.controls.entities.value;
@@ -56,16 +69,64 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     return this.logicalFrameForm.controls.indicators as FormArray;
   }
 
+  private formSubscription: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
     private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.projectService.hasPendingChanges;
+  }
+
   ngOnInit(): void {
-    this.setForm();
+    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+      map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
+    ).subscribe((res: { project: Project, logicalFrameId: string }) => {
+      this.project = res.project;
+      this.entities = res.project.entities;
+      const oldLogicalFrame = this.logicalFrame;
+      this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
+
+      if (this.logicalFrame) {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: this.project.country,
+          } as BreadcrumbItem,
+          {
+            value: this.project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'LogicalFrameworks',
+            link: `./../../projects/${this.project.id}/structure/logical-frames`
+          } as BreadcrumbItem,
+          {
+            value: this.logicalFrame.name,
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      }
+      if (!this.logicalFrame) {
+        this.router.navigate(['..'], { relativeTo: this.route });
+      } else if (JSON.stringify(oldLogicalFrame) !== JSON.stringify(this.logicalFrame)) {
+        this.setForm();
+      }
+    });
+
     this.dateService.currentLang.subscribe(
       lang => {
         this.adapter.setLocale(lang);
@@ -73,11 +134,17 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
     );
   }
 
-  ngOnChanges(): void {
-    this.setForm();
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
   }
 
   private setForm(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+
     this.logicalFrameForm = this.fb.group({
       id: [this.logicalFrame.id],
       name: [this.logicalFrame.name, Validators.required],
@@ -87,12 +154,12 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
       goal: [this.logicalFrame.goal, Validators.required],
       indicators: this.fb.array(this.logicalFrame.indicators.map(x => FormGroupBuilder.newIndicator(x))),
       purposes: this.fb.array(this.logicalFrame.purposes.map(x => FormGroupBuilder.newPurpose(x)))
-    });
-    this.projectService.valid = this.logicalFrameForm.valid
-    && DatesHelper.validDates(this.logicalFrameForm.value.start, this.logicalFrameForm.value.end);
-    this.logicalFrameForm.valueChanges.subscribe((value: any) => {
+    }, { validators: [DatesHelper.orderedDates('start', 'end')] });
+
+    this.formSubscription = this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.logicalFrameForm.valid;
-      this.edit.emit(this.logicalFrame.deserialize(value));
+      this.logicalFrame.deserialize(value);
+      this.projectService.project.next(this.project);
     });
   }
 
@@ -106,7 +173,8 @@ export class LogicalFrameEditComponent implements OnInit, OnChanges {
   }
 
   isCustom(selected: string): boolean {
-    return !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
+    return this.project && this.logicalFrameForm
+      && !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
   }
 
   onEntityRemoved(entity: Entity): void {

@@ -1,10 +1,15 @@
 @import "src/assets/theme/size_vars.scss";
 
+.big-table {
+  max-height: 76vh !important;
+}
+
 .table-scroll {
   width: 100%;
-  max-height: 500px;
+  max-height: 71vh;
   overflow: auto;
   border: solid 1px #e7e7e7;
+
 
   table {
     width: 100%;
@@ -23,7 +28,7 @@
     }
   }
 
-  .mat-column-title, .mat-column.groupName {
+  .mat-column-title, .mat-column-groupName {
     border-right: none !important;
     width: 100vw !important;
   }
@@ -126,7 +131,6 @@
   .title{
     font-weight: bold;
     font-size: $small_text;
-    position: sticky;
     div {
       display: flex;
       align-items: center;
@@ -141,5 +145,13 @@
   
   th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
     padding-left: 10px !important;
+  }
+
+  .clicked {
+    background-color: #23e26f;
+  }
+
+  .disabled {
+    background-color: #908787 !important;
   }
 }

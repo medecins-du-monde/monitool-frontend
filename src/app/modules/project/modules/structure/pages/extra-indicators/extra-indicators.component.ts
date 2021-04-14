@@ -7,6 +7,7 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-extra-indicators',
@@ -24,6 +25,26 @@ export class ExtraIndicatorsComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'ExtraIndicators',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.setForm();
     });
   }

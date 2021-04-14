@@ -27,6 +27,7 @@ export class ProjectIndicator implements Deserializable {
     formula: null,
     parameters: {}
   };
+  unit: string;
   type = UNAVAIlABLE;
   typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
@@ -57,33 +58,29 @@ export class ProjectIndicator implements Deserializable {
         this.type = UNAVAIlABLE;
         this.computation.formula = '';
         this.computation.parameters = {};
-      }
-      else
-        if (input.computation.formula === COPY_FORMULA) {
+      } else if (input.computation.formula === COPY_FORMULA) {
           this.type = COPY;
           this.computation.formula = COPY_FORMULA;
           this.computation.parameters = input.computation.parameters;
         } else if (input.computation.formula === PERCENTAGE_FORMULA) {
           this.type = PERCENTAGE;
+          this.unit = '%';
           this.computation.formula = PERCENTAGE_FORMULA;
           this.computation.parameters = input.computation.parameters;
         } else if (input.computation.formula === PERMILLE_FORMULA) {
           this.type = PERMILLE;
+          this.unit = '‰';
           this.computation.formula = PERMILLE_FORMULA;
           this.computation.parameters = input.computation.parameters;
-        }
-
-        else if (input.computation.formula !== null && !isNaN(Number(input.computation.formula))) {
+        } else if (input.computation.formula !== null && !isNaN(Number(input.computation.formula))) {
           this.type = FIXED;
           this.computation.formula = input.computation.formula;
           this.computation.parameters = {};
-        }
-        else if (input.computation.formula !== null) {
+        } else if (input.computation.formula !== null) {
           this.type = FORMULA;
           this.computation.formula = input.computation.formula;
           this.computation.parameters = input.computation.parameters;
         }
-
     }
 
     if (!this.typeList.includes(this.type)) {
@@ -106,7 +103,13 @@ export class ProjectIndicator implements Deserializable {
               }
               else { elementList.push(element); }
             });
-            parameter.filter[`${key}`] = elementList;
+            // We create a filter only if somes have been selected in the list
+            if (elementList.length > 0) {
+              parameter.filter[`${key}`] = elementList;
+            }
+            else {
+              delete parameter.filter[`${key}`];
+            }
           });
         });
         return computation;

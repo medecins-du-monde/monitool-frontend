@@ -12,6 +12,7 @@ import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 
@@ -152,8 +153,31 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.convertToNumber(val);
         this.updateTotals(val);
       });
-    }
 
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: this.project.country,
+        } as BreadcrumbItem,
+        {
+          value: this.project.name,
+        } as BreadcrumbItem,
+        {
+          value: this.form.name,
+          link: `./../../projects/${this.project.id}/input/inputs/${this.form.id}`
+        } as BreadcrumbItem,
+        {
+          value: this.site.name
+        } as BreadcrumbItem,
+        {
+          value: this.timeSlotDate
+        } as BreadcrumbItem
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
+    }
   }
 
   createForm() {
@@ -423,14 +447,16 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     if (response){
       this.input = new Input(response);
       this.inputForm.get('rev').setValue(this.input.rev);
-      this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+      this.router.navigate(['./../../../'], {relativeTo: this.route});
     }
   }
 
   async deleteInput(){
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
-    this.router.navigate(['./../../../'], {relativeTo: this.route});
+    if (response) {
+      this.router.navigate(['./../../../'], {relativeTo: this.route});
+    }
   }
 
   async getInput(): Promise<any>{
@@ -464,6 +490,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   resetInput(){
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
     this.updateTotals(this.inputForm.value);
+    this.inputForm.valueChanges.subscribe(val => {
+      this.convertToNumber(val);
+      this.updateTotals(val);
+    });
   }
 
   ngOnDestroy(){

@@ -1,5 +1,7 @@
+// tslint:disable:no-string-literal
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -25,6 +27,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   options: any[];
   open: boolean;
   hasEntities = true;
+  @Input() isCrossCuttingReport = false;
   @Output() addIndicatorsEvent: EventEmitter<AddedIndicators> = new EventEmitter<AddedIndicators>();
   @Output() collapseIndicatorsEvent: EventEmitter<{indicator: InfoRow}> = new EventEmitter<{indicator: InfoRow}>();
 
@@ -35,17 +38,20 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.open = this.indicator.open;
-    this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.createOptions();
-
-        if (!this.project.entities.length) {
-          this.hasEntities = false;
-        }
-
-      })
-    );
+    if (!this.isCrossCuttingReport) {
+      this.subscription.add(
+        this.projectService.openedProject.subscribe((project: Project) => {
+          this.project = project;
+          this.createOptions();
+          if (!this.project.entities.length) {
+            this.hasEntities = false;
+          }
+        })
+      );
+    }
+    else {
+      this.createOptions();
+    }
   }
 
   createOptions(): void {
@@ -59,13 +65,19 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.dimensionName !== 'entity' && this.dimensionName !== 'group' && !this.indicator.customFilter){
+    /* We always put the collection site option if the current project has entities
+       and we didn t already choose the collection sites or groups filter */
+    if (this.dimensionName !== 'entity'
+        && this.dimensionName !== 'group'
+        && !this.indicator.customFilter
+        && currentProject.entities.length > 0){
       this.options.push({
         value: 'Collection Sites',
         action: this.collectionSitesOption
       });
     }
 
+    // This part is managing the options that we put when we select the entity or group filter
     if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
       if (!this.indicator.customFilter?.month){
         this.options.push({
@@ -131,7 +143,6 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       }
 
     }
-
   }
 
   partitionOption = (partition: Partition): void => {
@@ -180,9 +191,31 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         };
         newComputation.parameters[parameter] = value;
 
+        // Looking now for for the name of the variable in order to have the full name of the computation
+        let currentProject: Project;
+        let originElement: FormElement;
+        if (this.project){
+          currentProject = this.project;
+        }else if (this.indicator.originProject){
+          currentProject = this.indicator.originProject;
+        }
+
+        let fullName = parameter;
+
+        for (const form of currentProject.forms){
+          originElement = form.elements.find((e: FormElement) => e.id === value['elementId']);
+          if (originElement !== undefined){
+            break;
+          }
+        }
+
+        if (originElement){
+          fullName = parameter + ` (${originElement.name})`;
+        }
+
         disaggregatedIndicators.push(new ProjectIndicator({
           computation: newComputation,
-          display: parameter,
+          display: fullName,
           baseline: 0,
           target: 0,
           originProject: this.indicator.originProject

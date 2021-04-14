@@ -9,9 +9,15 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
+import DatesHelper from './dates-helper';
 
 
 export default class FormGroupBuilder {
+
+  // Please, add your new form group here
+
+
+/* ---------- Here are all the form groups needed for the logical frame part --------- */
 
   static newPurpose(purpose?: Purpose): FormGroup {
     if (!purpose) {
@@ -42,7 +48,7 @@ export default class FormGroupBuilder {
       activity = new Activity();
     }
     return new FormGroup({
-      description: new FormControl(activity.description, Validators.required),
+      description: new FormControl(activity.description),
       indicators: new FormArray(activity.indicators.map(x => this.newIndicator(x))),
     });
   }
@@ -79,6 +85,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display),
         baseline: new FormControl(indicator.baseline, Validators.required),
         target: new FormControl(indicator.target, Validators.required),
+        unit: new FormControl(indicator.unit),
         colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
@@ -92,6 +99,7 @@ export default class FormGroupBuilder {
         display: new FormControl(indicator.display, Validators.required),
         baseline: new FormControl(indicator.baseline),
         target: new FormControl(indicator.target),
+        unit: new FormControl(indicator.unit),
         colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
@@ -130,16 +138,14 @@ export default class FormGroupBuilder {
   static newEntity(currentProject: Project, entity?: Entity): FormGroup {
     if (!entity) {
       entity = new Entity();
-      entity.start = currentProject.start;
-      entity.end = currentProject.end;
     }
 
     return new FormGroup({
       id: new FormControl(entity.id, Validators.required),
       name: new FormControl(entity.name, Validators.required),
-      start: new FormControl(entity.start, Validators.required),
-      end: new FormControl(entity.end, Validators.required),
-    });
+      start: new FormControl(entity.start ? entity.start : currentProject.start, Validators.required),
+      end: new FormControl(entity.end ? entity.end : currentProject.end, Validators.required),
+    }, { validators: [DatesHelper.orderedDates('start', 'end')]});
   }
 
   static newEntityGroup(group?: Group): FormGroup {

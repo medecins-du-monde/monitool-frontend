@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
   templateUrl: './parameters.component.html',
   styleUrls: ['./parameters.component.scss']
 })
-export class ParametersComponent implements OnInit {
+export class ParametersComponent {
 
   public sidenav: Sidenav = {
     groups: [
@@ -17,25 +17,20 @@ export class ParametersComponent implements OnInit {
           {
             name: 'Users',
             routerLink: '../parameters/users',
-            icon: 'people'
+            icon: 'people',
           },
           {
             name: 'Thematics',
             routerLink: '../parameters/themes',
-            icon: 'clipboard'
+            icon: 'clipboard',
           },
           {
             name: 'CrossCuttingIndicators',
             routerLink: '../parameters/indicators',
-            icon: 'gauge'
+            icon: 'gauge',
           }
         ]
       }
     ]
   };
-
-  constructor() { }
-
-  ngOnInit(): void {}
-
 }
