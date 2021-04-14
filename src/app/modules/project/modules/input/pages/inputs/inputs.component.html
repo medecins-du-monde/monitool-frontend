@@ -30,7 +30,7 @@
                     </div>
                     <ng-template #elseBlock2>
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
-                            class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value }}%)</button>
+                            class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>
                     </ng-template>
                 </ng-template>
             </td>
