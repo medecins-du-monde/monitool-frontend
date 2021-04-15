@@ -1,4 +1,9 @@
 <div class="info-section blue">
+    <span>
+        <p>{{ 'InputsInfo.0' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>
+        <p>{{ 'InputsInfo.1' | translate }}</p>
+        <p>{{ 'InputsInfo.2' | translate }}</p>
+    </span>
     <div class="info-buttons">
         <a mat-stroked-button type="button" class="mdm-button"
             href="/api/resources/project/{{project.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"
@@ -11,11 +16,6 @@
         <mat-icon>note</mat-icon>{{'DownloadPdfLandscape' | translate}}
     </a>
     </div>
-    <span>
-        <p>{{ 'InputsInfo.0' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>
-        <p>{{ 'InputsInfo.1' | translate }}</p>
-        <p>{{ 'InputsInfo.2' | translate }}</p>
-    </span>
 </div>
 <div *ngIf="this.sites?.length > 0; else elseBlockError">
     <table mat-table [dataSource]="dataSource" class="mdm-table">
