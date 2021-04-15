@@ -103,13 +103,8 @@ export class ProjectIndicator implements Deserializable {
               }
               else { elementList.push(element); }
             });
-            // We create a filter only if somes have been selected in the list
-            if (elementList.length > 0) {
-              parameter.filter[`${key}`] = elementList;
-            }
-            else {
-              delete parameter.filter[`${key}`];
-            }
+            // We always add the array to the filter object
+            parameter.filter[`${key}`] = elementList;
           });
         });
         return computation;

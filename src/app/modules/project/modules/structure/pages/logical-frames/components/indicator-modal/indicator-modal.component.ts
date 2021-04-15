@@ -197,7 +197,7 @@ export class IndicatorModalComponent implements OnInit {
         data.filter = this.lookForVariable(this.data.forms, event.value);
 
         data.filter.partitions.forEach(partition => {
-          newFilter.addControl(`${partition.id}`, new FormControl([]));
+          newFilter.addControl(`${partition.id}`, new FormControl(partition.elements));
         });
       }
       // Adding this new filter
