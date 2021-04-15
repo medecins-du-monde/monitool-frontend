@@ -59,7 +59,7 @@
         <ng-container matColumnDef="delete">
             <th class="td-icon" mat-header-cell *matHeaderCellDef></th>
             <td class="td-icon" mat-cell *matCellDef="let element; let i = index" id="delete">
-                <button mat-icon-button color="warn" (click)="onRemoveEntity(i)">
+                <button mat-icon-button class="delete-button" color="warn" (click)="onRemoveEntity(i)">
                     <mat-icon>close</mat-icon>
                 </button>
             </td>
@@ -126,7 +126,7 @@
         <ng-container matColumnDef="delete">
             <th mat-header-cell class="td-icon" *matHeaderCellDef></th>
             <td mat-cell class="td-icon" *matCellDef="let element; let i = index" id="delete">
-                <button mat-icon-button color="warn" (click)="onRemoveGroup(i)">
+                <button mat-icon-button class="delete-button" color="warn" (click)="onRemoveGroup(i)">
                     <mat-icon>close</mat-icon>
                 </button>
             </td>

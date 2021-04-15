@@ -134,7 +134,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="data.indicator.invalid || !dataChanged">
+    <button mat-stroked-button class="mdm-button save-button" (click)="onSubmit()" [disabled]="data.indicator.invalid || !dataChanged">
         <mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}
     </button>
     <button mat-stroked-button class="mdm-button" (click)="onReset()" [disabled]="!dataChanged" >

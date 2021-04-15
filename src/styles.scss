@@ -917,7 +917,23 @@ code {
   &.saved {
     color: $success;
   }
-
 }
+
+.save-button:not([disabled]){
+  color: $save_text_color;
+  background-color: $save_background;
+  border-color: $save_border;
+}
+
+.delete-button:not([disabled]) {
+  color: $delete_text_color;
+  background-color: $delete_background;
+  border-color: $delete_border;
+}
+
+.delete {
+  color: $warning !important;
+}
+
 
 

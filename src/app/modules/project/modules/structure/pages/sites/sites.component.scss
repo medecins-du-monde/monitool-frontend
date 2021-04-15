@@ -16,8 +16,12 @@ th {
     font-weight: bold;
     color: black;
     flex: 1;
-    text-align: center !important;
-    padding-top: 15px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.mat-header-cell {
+        text-align: center;
+    }
 }
 
 tr {
@@ -43,7 +47,9 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 
 th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
     padding: 4px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 } 
 
 .cdk-drag-preview {
@@ -77,4 +83,19 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
         }
       }
     }
+  }
+
+  .mat-icon-button {
+      border-radius: 5px;
+      width: 40px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .mat-icon {
+      width: unset;
+      height: unset;
+      font-size: 16px;
   }
