@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
+import { User } from 'src/app/models/classes/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 
 @Component({
   selector: 'app-project-save',
@@ -10,8 +13,13 @@ import { ProjectService } from 'src/app/services/project.service';
 export class ProjectSaveComponent {
   projectSaved = false;
   errorWhileSaving = false;
+  currentUser: User;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private authService: AuthService,
+    private sidenavService: SidenavService,
+    ) { }
 
   get hasChanges(): boolean{
     // If the project has no changes anymore and has already been saved
@@ -30,6 +38,8 @@ export class ProjectSaveComponent {
   onSave(): void {
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
+      this.authService.currentUser.subscribe((user: User) => this.currentUser = user );
+      this.sidenavService.generateSidenav(this.currentUser, project);
       if (this.errorWhileSaving) {
         this.errorWhileSaving = false;
       }
