@@ -1,10 +1,12 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/classes/form.model';
+import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
@@ -21,6 +23,7 @@ export class IndicatorModalComponent implements OnInit {
   private symbols: string[];
   dataChanged = false;
   private initDataSource: any;
+  allOption: PartitionElement = new PartitionElement({id: '0', name:'All'});
 
   public computationTypes = [
     {
@@ -51,6 +54,8 @@ export class IndicatorModalComponent implements OnInit {
   get type() {
     return this.data.indicator.value.type;
   }
+  
+  @ViewChild('allSelected') private allSelected: MatOption;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
@@ -65,6 +70,23 @@ export class IndicatorModalComponent implements OnInit {
   }
 
   onSubmit() {
+    // on submitting the form we need to remove the 'allOption' if it is selected anywhere
+    for (let symbol of Object.keys(this.data.indicator.controls.computation.get('parameters').value)){
+      for (let partitionId of Object.keys(this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').value)){
+        this.data.indicator.controls.computation
+          .get('parameters')
+          .get(symbol)
+          .get('filter')
+          .get(partitionId)
+          .setValue(
+            this.data.indicator.controls.computation
+            .get('parameters')
+            .get(symbol)
+            .get('filter')
+            .get(partitionId).value.filter(element => element.id !== this.allOption.id)
+          )
+      }
+    }
     this.dialogRef.close({ indicator: this.data.indicator });
   }
 
@@ -116,6 +138,12 @@ export class IndicatorModalComponent implements OnInit {
               newList.push(partitionElement);
             }
           });
+
+          // if all partitions are selected we must add the 'allOption' to the list
+          if (newList.length === partition.elements.length){
+            newList.push(this.allOption);
+          }
+
           filterForm.setControl(`${partition.id}`, new FormControl(newList));
         });
       });
@@ -197,7 +225,8 @@ export class IndicatorModalComponent implements OnInit {
         data.filter = this.lookForVariable(this.data.forms, event.value);
 
         data.filter.partitions.forEach(partition => {
-          newFilter.addControl(`${partition.id}`, new FormControl(partition.elements));
+          // add all the partitions and the 'allOption' as default
+          newFilter.addControl(`${partition.id}`, new FormControl([...partition.elements, this.allOption]));
         });
       }
       // Adding this new filter
@@ -221,25 +250,69 @@ export class IndicatorModalComponent implements OnInit {
     return variable;
   }
 
+  //this is only used by the mat-chip-list
   getPartitions(symbol, partitionId) {
-    return this.data.indicator.controls.computation
+    let allPartitions = this.data.indicator.controls.computation
       .get('parameters')
       .get(`${symbol}`)
       .get('filter')
-      .get(`${partitionId}`).value
-      ;
+      .get(`${partitionId}`).value;
+
+    // if the 'allOption' is selected it should be the only one displayed
+    if (allPartitions.includes(this.allOption)){
+      return [this.allOption];
+    }
+
+    return allPartitions;
   }
 
   onPartitionElementRemoved(symbol, partitionId, partitionElementId) {
-    const partition = this.data.indicator.controls.computation
+    const partitionElements = this.data.indicator.controls.computation
       .get('parameters')
       .get(`${symbol}`)
       .get('filter')
-      .get(`${partitionId}`).value
-      ;
-    this.data.indicator.controls.computation
+      .get(`${partitionId}`).value;
+
+    // if we remove the 'allOption' we remove all the others too
+    if (partitionElementId === this.allOption.id){
+      this.data.indicator.controls.computation
       .get('parameters')
       .get(`${symbol}`)
-      .get('filter').get(`${partitionId}`).setValue(partition.filter(p => p.id !== partitionElementId));
+      .get('filter').get(`${partitionId}`).setValue([]);
+    }else{
+      // if we remove a normal option we dont remove any other
+      this.data.indicator.controls.computation
+      .get('parameters')
+      .get(`${symbol}`)
+      .get('filter').get(`${partitionId}`).setValue(partitionElements.filter(p => p.id !== partitionElementId));
+    }
+  }
+
+
+  toggleAllSelection(symbol, partition){
+    let currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
+
+    // when the 'all' option is selected we select all the others too
+    if (currentPartitions.value.includes(this.allOption)){
+      currentPartitions.setValue([...partition.elements, this.allOption]);
+    }
+    // when it its unselected we remove all the others
+    else{
+      currentPartitions.setValue([]);
+    }
+  }
+
+  toggleNormalOption(symbol, partition, partitionElement){
+    let currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
+    // this means it is selecting a new option
+    if (currentPartitions.value.includes(partitionElement)){
+      if (currentPartitions.value.length === partition.elements.length){
+        currentPartitions.setValue( [...currentPartitions.value, this.allOption])  
+      }
+    // this means we are deselecting an option
+    }else{
+      // if the 'allOption' is selected and we click on a normal option, we have to remove the 'allOption'
+      currentPartitions.setValue(currentPartitions.value.filter(p => p.id !== this.allOption.id));
+    }
   }
 }
