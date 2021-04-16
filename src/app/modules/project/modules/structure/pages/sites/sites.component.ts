@@ -39,22 +39,22 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 export class SitesComponent implements OnInit {
 
   informationIntro = {
-    title: 'Lieux de collecte',
-    description: 'Lorsqu\'un projet réalise les même activités dans plusieurs lieux, celles-ci doivent pouvoir être suivi individuellements, par groupes, et tous ensembles. <br><br> Rentrez ici : <br><ul><li>La liste des lieux sur lesquels le projet travaille (par exemple: une liste des centres de santé)</li><li>Des groupements qui seront utilisé lors du suivi (par exemple: des régions, des types de structure)</li></ul>'
+    title: 'InformationPanel.Collection_sites',
+    description: 'InformationPanel.Collection_sites_description'
   } as InformationIntro;
 
   informations = [
     {
-      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
-      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+      question: 'InformationPanel.General_Naming_convention_question',
+      response: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
-      response: 'En cas d\'erreur, cliquez sur <button>Annulez les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+      question: 'InformationPanel.General_accidental_delete_question',
+      response: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière ?',
-      response: 'Rendez-vous sur la page <button>Historique</button> la structure de votre projet. <br> Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+      question: 'InformationPanel.General_delete_saved_question',
+      response: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ]
 

@@ -19,23 +19,23 @@ export class LogicalFramesListComponent implements OnInit {
   logicalFrames: LogicalFrame[] = [];
 
   informationIntro = {
-    title: 'Liste des cadres logiques',
-    description: 'Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l\'avancement de chaque élément. Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données.'
+    title: 'InformationPanel.Logical_frames_list',
+    description: 'InformationPanel.Logical_frames_description'
   } as InformationIntro;
 
   informations = [
     {
-      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
-      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+      question: 'InformationPanel.General_Naming_convention_question',
+      response: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
-      response: ' En cas d\'erreur, cliquez sur <button>Annuler les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+      question: 'InformationPanel.General_accidental_delete_question',
+      response: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière?',
-      response: 'Rendez-vous sur la page la structure de votre projet. <br>Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
-    } as InformationItem,
+      question: 'InformationPanel.General_delete_saved_question',
+      response: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
   ]
 
   constructor(

@@ -6,9 +6,9 @@
     </div>
     <div class="information-panel-content" [ngClass]="firstDisplayed ? (displayed ? 'displayed' : 'not-displayed') : ''">
         <div class="information-panel-title">
-            <h1>Questions fréquentes</h1>
-            <h2>{{ informationIntro.title }}</h2>
-            <p [innerHTML]="transform(informationIntro.description)"></p>
+            <h1>{{ 'InformationPanel.FAQ' | translate }}</h1>
+            <h2>{{ informationIntro.title | translate }}</h2>
+            <p [innerHTML]="informationIntro.description | translate"></p>
         </div>
         <mat-accordion *ngFor="let information of informations">
             <mat-expansion-panel hideToggle>

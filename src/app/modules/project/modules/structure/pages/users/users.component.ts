@@ -17,22 +17,22 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 export class UsersComponent implements OnInit {
 
   informationIntro = {
-    title: 'Liste des utilisateurs',
-    description: 'Plusieurs types d\'utilisateurs interviennent dans la mise en place et dans le suivi d\'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ... <br>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet.'
+    title: 'InformationPanel.User_list',
+    description: 'InformationPanel.User_list_description'
   } as InformationIntro
 
   informations = [
     {
-      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
-      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+      question: 'InformationPanel.General_Naming_convention_question',
+      response: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
-      response: ' En cas d\'erreur, cliquez sur <button>Annuler les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+      question: 'InformationPanel.General_accidental_delete_question',
+      response: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière?',
-      response: 'Rendez-vous sur la page la structure de votre projet. <br>Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+      question: 'InformationPanel.General_delete_saved_question',
+      response: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ]
 

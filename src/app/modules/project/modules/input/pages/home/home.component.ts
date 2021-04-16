@@ -29,7 +29,7 @@ export interface Task {
 export class HomeComponent implements OnInit {
 
   informationIntro = {
-    title: 'Accueil saisies',
+    title: 'InformationPanel.Home_entry',
     description: ''
   } as InformationIntro;
 

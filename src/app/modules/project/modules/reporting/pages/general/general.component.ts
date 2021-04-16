@@ -23,42 +23,42 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 export class GeneralComponent implements OnInit {
 
   informationIntro = {
-    title: 'Rapport général',
-    description: 'Cette page vous permet d\'explorer vos données hierarchiquement en partant d\'une vision général de votre projet.'
+    title: 'InformationPanel.General_reporting',
+    description: 'InformationPanel.General_reporting_description'
   } as informationIntro;
 
   informations = [
     {
-      question: 'Comment afficher un graphique ?',
-      response: 'À gauche de chaque ligne, le symbole vous permet d\'afficher un graphique contenant les données de la ligne en cours.'
+      question: 'InformationPanel.General_reporting_question1',
+      response: 'InformationPanel.General_reporting_response1'
     } as InformationItem,
     {
-      question: 'Comment vérifier les données utilisées pour calculer un indicateur ?',
-      response: 'Sur chaque indicateur le symbole vous permet d\'accéder aux différentes composantes utilisées pour calculer chaque indicateur: choisissez "Calcul". <br>Cette option n\'est accessible que pour les indicateurs calculés à partir des sources de données.'
+      question: 'InformationPanel.General_reporting_question2',
+      response: 'InformationPanel.General_reporting_response2'
     } as InformationItem,
     {
-      question: 'Comment désagréger mes données par lieu de collecte?',
-      response: 'Sur chaque ligne le symbole vous permet de désagréger votre résultat par lieu de collecte.'
+      question: 'InformationPanel.General_reporting_question3',
+      response: 'InformationPanel.General_reporting_response3'
     } as InformationItem,
     {
-      question: 'Comment désagréger mes données par tranche d\'age, sexe, pathologie, contenu de formation, ...?',
-      response: 'Si vous avez utilisé des désagrégations lors de la collecte de vos données celles-ci apparaitront dans le menu qui est accessible sur chaque ligne en cliquant sur le symbole.<br> Pour les indicateurs calculés (cadres logiques, et indicateurs supplémentaires), il n\'est possible de désagréger les resultats que par lieu de collecte et par unité de temps.'
+      question: 'InformationPanel.General_reporting_question4',
+      response: 'InformationPanel.General_reporting_response4'
     } as InformationItem,
     {
-      question: 'Que signifie le symbole qui s\'affiche à la place de mes données?',
-      response: 'Ce symbole signifie que la saisie des données que vous essayez de consulter n\'a pas encore été réalisée.'
+      question: 'InformationPanel.General_reporting_question5',
+      response: 'InformationPanel.General_reporting_response5'
     } as InformationItem,
     {
-      question: 'Que signifie le symbole qui s\'affiche à la place de mes données?',
-      response: 'Ce symbole signifie qu\'une division par zéro à eu lieu! '
+      question: 'InformationPanel.General_reporting_question6',
+      response: 'InformationPanel.General_reporting_response6'
     } as InformationItem,
     {
-      question: 'Pourquoi certaines données sont précédées par le symbole ≈?',
-      response: 'Vous consultez ces données à un niveau d\'aggrégation qui est inférieur à celui auquel vous les avez collecté! <br>Par exemple, vous avez réalisé la collecte trimestriellement, mais consultez ces données sur un tableau qui les affiche mensuellement. <br> Dans ce cas, les données sont "interpolés" afin de vous permettre d\'avoir des ordres de grandeurs, et de pouvoir comparer des indicateurs que vous ne collectez pas avec les mêmes périodicités entre-eux. <br> Ceci se produit également si vous consultez un indicateur calculé, par exemple un pourcentage, mais que le numérateur et le dénominateur ne sont pas collectés avec les même périodicités. <br>Pour prendre un exemple, si vous avez collecté un nombre de naissances attendues dans une maternité par trimestre, mais que vous le consultez par mois, monitool va distribuer le nombre de naissances trimestrielles dans chaque mois, en corrigeant en fonction du nombre de jours qu\'ils comprennent. <br>Le symbole ≈ est donc affiché en permanence pour vous rappeler que les données que vous consultez sont des approximations grossières de la réalité, et qu\'elles ne peuvent servir qu\'à avoir des ordres de grandeurs.'
+      question: 'InformationPanel.General_reporting_question7',
+      response: 'InformationPanel.General_reporting_response7'
     } as InformationItem,
     {
-      question: 'Pourquoi certaines données sont affichées en <i>italique</i> ?',
-      response: 'Les données affichées en  <i>italique</i> n\'ont été que partiellement saisies. Le plus souvent, cela signifie que seules certains des lieux de collectes attendus ont été saisis. Le cas peut également se produire si vous consultez une version aggrégée (ex: par trimestre) de données collectés à une periodicité plus courte (ex: par mois) et que tous les mois du trimestre considéré n\'ont pas été saisis. <br>En désagrégant la ligne avec le bouton vous pourrez trouver facilement les saisies manquantes.'
+      question: 'InformationPanel.General_reporting_question8',
+      response: 'InformationPanel.General_reporting_response8'
     } as InformationItem
   ]
   

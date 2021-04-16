@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 export class HomeComponent implements OnInit {
 
   informationIntro = {
-    title: 'Accueil rapport',
+    title: 'InformationPanel.General_reporting_home',
     description: ''
   } as InformationIntro;
 

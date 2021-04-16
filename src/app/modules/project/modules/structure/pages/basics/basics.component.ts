@@ -40,30 +40,30 @@ export class BasicsComponent implements OnInit, OnDestroy {
   themes: Theme[] = [];
 
   informationIntro = {
-    title: 'Données de base',
-    description: 'Les données de bases permettent de classer votre projet parmi les autres de l\'ONG.'
+    title: 'InformationPanel.Basics',
+    description: 'InformationPanel.Basics_description'
   } as InformationIntro;
 
   informations = [
     {
-      question: 'Un projet dans Monitool, c\est quoi ?',
-      response: ' Sur Monitool, on ne parle pas de base de données, de requêtes, de dimensions, de jointures... <br>Un projet, est un projet au sens entendu dans une organisation humanitaire, le même que celui pour lequel vous rédigez un proposal à votre bailleur de fonds.'
+      question: 'InformationPanel.Project_definition_question',
+      response: 'InformationPanel.Project_definition_response'
     } as InformationItem,
     {
-      question: 'Comment choisir des noms adaptés pour les lieux de collecte, sources de données, variables et indicateurs ?',
-      response: 'Utilisez des noms courts pour nommer les différents composants de votre projet. <br>En évitant les acronymes vous améliorez la lisibilité de vos graphiques et tableaux et permettez une meilleur compréhension de votre projet par tous les acteurs concernés.'
+      question: 'InformationPanel.General_Naming_convention_question',
+      response: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'Je viens de supprimer quelque chose de mon projet par erreur, mais je n\'ai pas encore sauvegardé. Comment revenir en arrière?',
-      response: ' En cas d\'erreur, cliquez sur <button>Annuler les modifications</button> pour revenir à la dernière version sauvegardée de votre projet'
+      question: 'InformationPanel.General_accidental_delete_question',
+      response: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'J\'ai supprimé quelque chose de mon projet par erreur, et j\'ai sauvegardé ma modification. Comment revenir en arrière?',
-      response: 'Rendez-vous sur la page la structure de votre projet. <br>Vous pouvez consulter toutes les modifications qui ont été réalisées depuis la création du projet, et revenir au moment que vous désirez'
+      question: 'InformationPanel.General_delete_saved_question',
+      response: 'InformationPanel.General_delete_saved_response'
     } as InformationItem,
     {
-      question: 'Je ne connais pas la date de fin de mon projet',
-      response: 'Vous pourrez la modifier à tout instant, laissez la valeur par défaut (dans un an).'
+      question: 'InformationPanel.Basics_question1',
+      response: 'InformationPanel.Basics_response1'
     } as InformationItem
   ]
 

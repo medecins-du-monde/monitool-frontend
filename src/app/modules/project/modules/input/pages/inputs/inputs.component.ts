@@ -21,14 +21,14 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 export class InputsComponent implements OnInit, OnDestroy {
 
   informationIntro = {
-    title: 'Calendrier de saisie',
-    description: 'Le calendrier de saisie permet d\'accèder aux fiches de saisie du projet'
+    title: 'InformationPanel.Calendar_entry',
+    description: 'InformationPanel.Calendar_entry_description'
   } as InformationIntro;
 
   informations = [
     {
-      question: 'À quoi correspondent les pourcentages indiqués sur chaque fiche ?',
-      response: 'Il s\'agit du pourcentage de variables qui ont été au moins partiellement saisies.'
+      question: 'InformationPanel.Calendar_entry_question1',
+      response: 'InformationPanel.Calendar_entry_response1'
     } as InformationItem
   ]
   // TODO: Check if possible to clean and make simplify this component

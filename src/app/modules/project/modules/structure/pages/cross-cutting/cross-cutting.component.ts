@@ -20,7 +20,7 @@ import InformationIntro from 'src/app/models/interfaces/information-intro';
 export class CrossCuttingComponent implements OnInit {
 
   informationIntro = {
-    title: 'Liste des indicateurs transversaux',
+    title: 'InformationPanel.Crosscutting_indicators_list',
     description: ''
   } as InformationIntro;
 
