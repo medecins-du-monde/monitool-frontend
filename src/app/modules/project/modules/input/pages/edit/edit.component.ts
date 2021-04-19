@@ -412,6 +412,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           const cellProperties = {currentColClassName: 'currentColumn', };
           if (this.isInputCell(-1, row, col, tableObj) !== null){
             cellProperties['readOnly'] = false;
+            // Add here other cells properties if you want to change the type of the cell or anything else
           }else{
             cellProperties['readOnly'] = true;
           }

@@ -21,12 +21,12 @@
   
     <ng-container matColumnDef="baseline" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef >{{ 'Baseline' | translate }}</th>
-      <td mat-cell *matCellDef="let element" class="gradient-background">{{ element.baseline ? element.baseline : null }}{{ element.baseline ? element.unit : null}}</td>
+      <td mat-cell *matCellDef="let element" class="gradient-background">{{ element.baseline ? element.baseline.toLocaleString() : null }}{{ element.baseline ? element.unit : null}}</td>
     </ng-container>
   
     <ng-container matColumnDef="target" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Target' | translate }}</th>
-      <td mat-cell *matCellDef="let element" class="gradient-background">{{element.target ? element.target : null}}{{ element.target ? element.unit : null }}</td>
+      <td mat-cell *matCellDef="let element" class="gradient-background">{{element.target ? element.target.toLocaleString() : null}}{{ element.target ? element.unit : null }}</td>
     </ng-container>
     
     <ng-container matColumnDef="error">
@@ -40,7 +40,7 @@
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
         <ng-template #elseNumber>
-          {{ element.values[column] ? element.values[column] : null }}{{ (element.unit && element.values[column]) ? element.unit : null }}
+          {{ element.values[column] ? (element.values[column].toLocaleString() ) : null }}{{ (element.unit && element.values[column]) ? element.unit : null }}
         </ng-template>
       </td>
     </ng-container>
