@@ -553,6 +553,7 @@
     "SpecificObjective": "Specific objective",
     "SpecificObjective-Hint": "Describe the tangible advantages that are provided to the beneficiaries",
     "SpecificStartDate": "Specific start date",
+    "SpecificStartDate-Hint": "Si la date de début ou de fin de la source de donnée est différente de la date de début ou de fin du projet sélectionnée dans \"données de base\", alors cliquer sur le calendrier",
     "StartDate": "Begin date",
     "State": "State",
     "Structure": "Structure",
