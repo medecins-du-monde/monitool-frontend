@@ -76,15 +76,13 @@ export class ProjectComponent implements OnInit {
   }
 
   projectCardAvatar(): string {
-    if (this.project.users.length > 0) {
-      if (this.projectOwner) {
-        return 'person';
-      }
-      else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
-        return 'star';
-      } else {
-        return 'star_border';
-      }
+    if (this.projectOwner) {
+      return 'person';
+    }
+    else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
+      return 'star';
+    } else {
+      return 'star_border';
     }
   }
 
