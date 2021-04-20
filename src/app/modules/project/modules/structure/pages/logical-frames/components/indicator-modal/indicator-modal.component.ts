@@ -23,7 +23,7 @@ export class IndicatorModalComponent implements OnInit {
   private symbols: string[];
   dataChanged = false;
   private initDataSource: any;
-  allOption: PartitionElement = new PartitionElement({id: '0', name:'All'});
+  allOption: PartitionElement = new PartitionElement({id: '0', name: 'All'});
 
   public computationTypes = [
     {
@@ -54,7 +54,7 @@ export class IndicatorModalComponent implements OnInit {
   get type() {
     return this.data.indicator.value.type;
   }
-  
+
   @ViewChild('allSelected') private allSelected: MatOption;
   constructor(
     private fb: FormBuilder,
@@ -69,28 +69,7 @@ export class IndicatorModalComponent implements OnInit {
     this.initDataSource = this.dataSource.getValue();
   }
 
-  onSubmit() {
-    // on submitting the form we need to remove the 'allOption' if it is selected anywhere
-    for (let symbol of Object.keys(this.data.indicator.controls.computation.get('parameters').value)){
-      for (let partitionId of Object.keys(this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').value)){
-        this.data.indicator.controls.computation
-          .get('parameters')
-          .get(symbol)
-          .get('filter')
-          .get(partitionId)
-          .setValue(
-            this.data.indicator.controls.computation
-            .get('parameters')
-            .get(symbol)
-            .get('filter')
-            .get(partitionId).value.filter(element => element.id !== this.allOption.id)
-          )
-      }
-    }
-    this.dialogRef.close({ indicator: this.data.indicator });
-  }
-
-  loadData() {
+  loadData(): void {
     // Getting the formula and setting the symbols to update the parameter part in the DOM in case we already have a formula.
     this.parser = new Parser();
     this.parser.consts = {};
@@ -123,24 +102,28 @@ export class IndicatorModalComponent implements OnInit {
         const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
         listPartitionDataSource.forEach(partition => {
           const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
-          let filterValueList = filterForm.get(`${partition.id}`) ? filterForm.get(`${partition.id}`).value : [];
+          // If there is no value, we put an empty json.
+          let filterValueList = filterForm.get(`${partition.id}`) ? filterForm.get(`${partition.id}`).value : {};
           const newList = [];
 
-          // If not formated yet
+          // If not formated yet, we format everything
           const newListOfValue = [];
-          if (typeof (filterValueList[0]) !== 'string') {
+          // If filterValueList is not an array, this means that all element have been selected.
+          // We are sending the data in the backend in this way now, but as it was done before, it was
+          // the only way that we had in order to keep the old data in this new version
+          if ((filterValueList instanceof Array) && typeof (filterValueList[0]) !== 'string') {
             filterValueList.forEach(value => newListOfValue.push(value.id));
           }
           if (newListOfValue.length > 0) { filterValueList = newListOfValue; }
 
           partition.elements.forEach(partitionElement => {
-            if (filterValueList.indexOf(partitionElement.id) !== -1) {
+            if (!(filterValueList instanceof Array) || filterValueList.indexOf(partitionElement.id) !== -1) {
               newList.push(partitionElement);
             }
           });
 
           // if all partitions are selected we must add the 'allOption' to the list
-          if (newList.length === partition.elements.length){
+          if (newList.length === partition.elements.length || !(filterValueList instanceof Array)){
             newList.push(this.allOption);
           }
 
@@ -156,13 +139,13 @@ export class IndicatorModalComponent implements OnInit {
     });
   }
 
-  onReset() {
+  onReset(): void {
     this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
     this.dataSource.next(this.initDataSource);
     this.loadData();
   }
 
-  onTypeChange(type: any) {
+  onTypeChange(type: any): void {
     const computation = this.data.indicator.controls.computation as FormGroup;
     // Updating the formula in function of the type
     if (type.value === 'fixed' && isNaN(computation.value.formula)) {
@@ -181,7 +164,7 @@ export class IndicatorModalComponent implements OnInit {
     this.onFormulaChange();
   }
 
-  onFormulaChange() {
+  onFormulaChange(): void {
     // Getting the formula and setting the symbols to update the parameter part in the DOM.
     let newSymbols = [];
     try {
@@ -212,7 +195,7 @@ export class IndicatorModalComponent implements OnInit {
     this.dataSource.next(newDataSource);
   }
 
-  onVariableSelected(event, element) {
+  onVariableSelected(event, element): void {
     const newDataSource = this.dataSource.getValue();
 
     // Updating the disaggregation part
@@ -250,9 +233,9 @@ export class IndicatorModalComponent implements OnInit {
     return variable;
   }
 
-  //this is only used by the mat-chip-list
+  // this is only used by the mat-chip-list
   getPartitions(symbol, partitionId) {
-    let allPartitions = this.data.indicator.controls.computation
+    const allPartitions = this.data.indicator.controls.computation
       .get('parameters')
       .get(`${symbol}`)
       .get('filter')
@@ -266,7 +249,7 @@ export class IndicatorModalComponent implements OnInit {
     return allPartitions;
   }
 
-  onPartitionElementRemoved(symbol, partitionId, partitionElementId) {
+  onPartitionElementRemoved(symbol, partitionId, partitionElementId): void {
     const partitionElements = this.data.indicator.controls.computation
       .get('parameters')
       .get(`${symbol}`)
@@ -289,8 +272,8 @@ export class IndicatorModalComponent implements OnInit {
   }
 
 
-  toggleAllSelection(symbol, partition){
-    let currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
+  toggleAllSelection(symbol, partition): void{
+    const currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
 
     // when the 'all' option is selected we select all the others too
     if (currentPartitions.value.includes(this.allOption)){
@@ -302,17 +285,38 @@ export class IndicatorModalComponent implements OnInit {
     }
   }
 
-  toggleNormalOption(symbol, partition, partitionElement){
-    let currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
+  toggleNormalOption(symbol, partition, partitionElement): void{
+    const currentPartitions = this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').get(partition.id);
     // this means it is selecting a new option
     if (currentPartitions.value.includes(partitionElement)){
       if (currentPartitions.value.length === partition.elements.length){
-        currentPartitions.setValue( [...currentPartitions.value, this.allOption])  
+        currentPartitions.setValue( [...currentPartitions.value, this.allOption]);
       }
     // this means we are deselecting an option
     }else{
       // if the 'allOption' is selected and we click on a normal option, we have to remove the 'allOption'
       currentPartitions.setValue(currentPartitions.value.filter(p => p.id !== this.allOption.id));
     }
+  }
+
+  onSubmit(): void {
+    // on submitting the form we need to remove the 'allOption' if it is selected anywhere
+    for (const symbol of Object.keys(this.data.indicator.controls.computation.get('parameters').value)){
+      for (const partitionId of Object.keys(this.data.indicator.controls.computation.get('parameters').get(symbol).get('filter').value)){
+        this.data.indicator.controls.computation
+          .get('parameters')
+          .get(symbol)
+          .get('filter')
+          .get(partitionId)
+          .setValue(
+            this.data.indicator.controls.computation
+            .get('parameters')
+            .get(symbol)
+            .get('filter')
+            .get(partitionId).value.filter(element => element.id !== this.allOption.id)
+          );
+      }
+    }
+    this.dialogRef.close({ indicator: this.data.indicator });
   }
 }
