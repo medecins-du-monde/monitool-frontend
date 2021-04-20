@@ -1,9 +1,10 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .mdm-section{
     margin-top: 34px;
     padding: 16px;
-    background-color: #fafafa;
+    background-color: $mdm-section-background;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04) !important;
     border-radius: 4px;
     
@@ -34,7 +35,7 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    background-color: white;
+    background-color: $actions-background;
     width: calc(100% - 250px);
     box-sizing: border-box;
     padding: 12px 16px;
@@ -48,13 +49,13 @@
         margin-right: 8px;
         
         &.warn{
-            background-color: #f44336;
-            color: white;
+            background-color: $warning;
+            color: $save_text_color;
 
         }
         &.primary{
-            background-color: #337ab7;
-            color: white;
+            background-color: $save_background;
+            color: $save_text_color;
             &.mat-stroked-button.mat-button-disabled.mat-button-disabled{
                 opacity: .65;
             }
