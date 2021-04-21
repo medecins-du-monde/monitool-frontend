@@ -20,6 +20,7 @@
     "AddVariableNameHint": " Name the variable that you want to extract from <code>{{name}}</code> . i.e. \"Number of diagnostics\".",
     "AddVariableNamePlaceholder": "ex. Number of diagnostics",
     "AdminRole": "Administrator",
+    "All": "All",
     "AllCountries": "All countries",
     "ApplyChanges": "Apply Changes",
     "Assumptions": "Assumptions",

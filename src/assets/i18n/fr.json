@@ -20,6 +20,7 @@
     "AddVariableNameHint": "Nommez la variable que vous voulez extraire de/du <code>{{name}}</code>. Par exemple \"Nombre de diagnostics effectués\".",
     "AddVariableNamePlaceholder": "ex: Nombre de diagnostics effectués",
     "AdminRole": "Administrateur",
+    "All": "Tout",
     "AllCountries": "Tous les pays",
     "Assumtions-SpecificObjective-Hint": "Facteurs externes susceptibles de compromettre l’atteinte de l’objectif",
     "Assumptions-Result-SpecificObjective-Hint" : "Facteurs externes susceptibles de compromettre l’atteinte du résultat",

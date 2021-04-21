@@ -18,14 +18,15 @@
                         <mat-chip-list>
                             <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
                                 (removed)="onEntityRemoved(entity)" >
-                                {{ entity.name }}
+                                {{ entity.name | translate }}
                                 <mat-icon matChipRemove>cancel</mat-icon>
                             </mat-chip>
                         </mat-chip-list>
                     </mat-select-trigger>
 
-                    <mat-option *ngFor="let entity of entities" [value]="entity">{{ entity.name }}
-                    </mat-option>
+                    <mat-option (click)="toggleAllSelection()" [value]="allOption">{{ 'All' | translate }}</mat-option>
+                    <mat-option *ngFor="let group of groups" (click)="toggleGroupOption(group)" [value]=group>{{ group.name }}</mat-option>
+                    <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>
                 </mat-select>
                 <mat-hint>
                     <mat-icon>info</mat-icon>{{ 'DataSourceEdit.CollectionSitesHint' | translate }}
