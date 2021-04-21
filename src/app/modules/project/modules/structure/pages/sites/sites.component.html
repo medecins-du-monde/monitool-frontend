@@ -35,7 +35,7 @@
                 </div>
                 <div>
                     <mat-hint>
-                        <mat-icon>info</mat-icon>{{ 'SpecificStartDate-Hint' | translate }}
+                       <mat-icon (click)="toggleStartInfos()">info</mat-icon> <div [style.display]="displayInfos ? 'block' : 'none'">{{ 'SpecificStartDate-Hint' | translate }}</div>
                     </mat-hint>
                 </div>
             </th>
@@ -58,7 +58,7 @@
                 </div>
                 <div>
                     <mat-hint>
-                        <mat-icon>info</mat-icon>{{ 'SpecificStartDate-Hint' | translate }}
+                        <mat-icon (click)="toggleStartInfos()">info</mat-icon> <div [style.display]="displayInfos ? 'block' : 'none'">{{ 'SpecificEndDate-Hint' | translate }}</div>
                     </mat-hint>
                 </div>
             </th>

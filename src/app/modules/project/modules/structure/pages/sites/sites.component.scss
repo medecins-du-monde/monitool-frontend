@@ -12,7 +12,6 @@
 }
 
 th {
-    font-size: $small_text;
     font-weight: bold;
     color: black;
     flex: 1;
@@ -114,8 +113,8 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     display: block;
 }
 mat-hint {
-    font-size: $very_small_text;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding-top: 5px;
   }
