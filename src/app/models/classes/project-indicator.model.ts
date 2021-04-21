@@ -103,6 +103,7 @@ export class ProjectIndicator implements Deserializable {
               }
               else { elementList.push(element); }
             });
+            // We always add the array to the filter object
             parameter.filter[`${key}`] = elementList;
           });
         });

@@ -48,8 +48,8 @@
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'Clone' | translate }}</span>
     </button>
-    <button mat-menu-item (click)="onDelete()" *ngIf="project.active">
-        <mat-icon>delete</mat-icon>
+    <button mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active">
+        <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
 </mat-menu>

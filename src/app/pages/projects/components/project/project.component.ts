@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProjectService } from 'src/app/services/project.service';
 import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
 
 @Component({
@@ -34,17 +35,19 @@ export class ProjectComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private dialog: MatDialog,
+    private projectService: ProjectService,
   ) { }
 
   ngOnInit(): void {
-
     this.authService.currentUser.subscribe((user: User) => {
       this.currentUser = new User(user);
       this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
     });
   }
 
-  async onOpen(): Promise<void> {
+  onOpen(): void {
+    // Get the project id to redirect MDM Account properly if needed
+    this.projectService.updateProjectId(this.project.id);
     this.router.navigate(['/projects', this.project.id]);
   }
 
@@ -73,15 +76,13 @@ export class ProjectComponent implements OnInit {
   }
 
   projectCardAvatar(): string {
-    if (this.project.users.length > 0) {
-      if (this.projectOwner) {
-        return 'person';
-      }
-      else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
-        return 'star';
-      } else {
-        return 'star_border';
-      }
+    if (this.projectOwner) {
+      return 'person';
+    }
+    else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
+      return 'star';
+    } else {
+      return 'star_border';
     }
   }
 

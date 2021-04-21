@@ -106,8 +106,8 @@
                                   </mat-chip>
                               </mat-chip-list>
                           </mat-select-trigger>
-                          <mat-option *ngFor="let partitionElement of partition.elements" [value]="partitionElement">{{partitionElement.name }}
-                          </mat-option>
+                          <mat-option #allSelected (click)="toggleAllSelection(control.symbol, partition)" [value]="allOption">{{ 'All' | translate }} </mat-option>
+                          <mat-option *ngFor="let partitionElement of partition.elements" (click)="toggleNormalOption(control.symbol, partition, partitionElement)" [value]="partitionElement">{{partitionElement.name }}</mat-option>
                       </mat-select>
                     </mat-form-field>
                     <br />
@@ -134,7 +134,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button" (click)="onSubmit()" [disabled]="data.indicator.invalid || !dataChanged">
+    <button mat-stroked-button class="mdm-button save-button" (click)="onSubmit()" [disabled]="data.indicator.invalid || !dataChanged">
         <mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}
     </button>
     <button mat-stroked-button class="mdm-button" (click)="onReset()" [disabled]="!dataChanged" >

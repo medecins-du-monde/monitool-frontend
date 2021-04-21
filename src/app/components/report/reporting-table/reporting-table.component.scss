@@ -28,7 +28,7 @@
     }
   }
 
-  .mat-column-title, .mat-column.groupName {
+  .mat-column-title, .mat-column-groupName {
     border-right: none !important;
     width: 100vw !important;
   }
@@ -131,7 +131,6 @@
   .title{
     font-weight: bold;
     font-size: $small_text;
-    position: sticky;
     div {
       display: flex;
       align-items: center;

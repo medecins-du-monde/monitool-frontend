@@ -56,7 +56,7 @@
                             <mat-icon>info</mat-icon>{{ 'DataSourceEdit.StartDateHint' | translate }}
                         </mat-hint>
                     </mat-form-field>
-                    <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : {date: project ? project.start : null | localizedDate} }}</mat-radio-button>
+                    <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : { date: project.start | localizedDate} }}</mat-radio-button>
                 </mat-radio-group>
         </div>
         <div class="mdm-form-group">
@@ -71,7 +71,7 @@
                             <mat-icon>info</mat-icon>{{ 'DataSourceEdit.EndDateHint' | translate }}
                         </mat-hint>
                     </mat-form-field>
-                    <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : {date: project ? project.end : null | localizedDate} }}</mat-radio-button>
+                    <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : { date: project.end | localizedDate} }}</mat-radio-button>
                 </mat-radio-group>
         </div>
     </div>
@@ -84,7 +84,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> Variable {{i + 1}}: {{element.value.name}}</mat-panel-title>
                     <mat-panel-description>
-                        <button mat-stroked-button class="mdm-button" (click)="onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
+                        <button mat-stroked-button class="mdm-button delete-button" (click)="onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-form-element-edit [elementForm]="element" [dataSourceName]="dataSourceForm.value.name"></app-form-element-edit>

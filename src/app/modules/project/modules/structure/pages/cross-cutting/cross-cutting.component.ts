@@ -11,6 +11,7 @@ import { IndicatorModalComponent } from '../../pages/logical-frames/components/i
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-cross-cutting',
@@ -111,6 +112,25 @@ export class CrossCuttingComponent implements OnInit {
         this.setForm();
       });
 
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'CrossCuttingIndicators',
+        } as BreadcrumbItem
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
     this.projectService.updateInformationPanel(this.informations);
   }

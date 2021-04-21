@@ -8,6 +8,7 @@ import * as jsonpatch from 'fast-json-patch';
 import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 @Component({
@@ -69,6 +70,25 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'History',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.showLoadMore = true;
       this.projectId = project.id;
       this.project = project;

@@ -15,6 +15,7 @@ import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
@@ -110,7 +111,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public project: Project;
   public periodicities = [];
 
-  get selectedEntities(): any[] {
+  get selectedEntities(): Entity[] {
     return this.dataSourceForm.controls.entities.value;
   }
 
@@ -139,12 +140,38 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
     ).subscribe((res: { project: Project, formId: string }) => {
       this.project = res.project;
-      this.entities = res.project.entities;
       const oldForm = this.form;
       this.form = res.project.forms.find(x => x.id === res.formId);
+
+      if (this.form) {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: this.project.country,
+          } as BreadcrumbItem,
+          {
+            value: this.project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'DataSources',
+            link: `./../../projects/${this.project.id}/structure/data-sources`
+          } as BreadcrumbItem,
+          {
+            value: this.form.name,
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      }
       if (!this.form) {
         this.router.navigate(['..'], { relativeTo: this.route });
       } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
+        this.entities = res.project.entities;
         this.setForm();
       }
     });
@@ -179,11 +206,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [this.form.name, Validators.required],
       entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
       periodicity: [this.form.periodicity, Validators.required],
-      start: [this.form.start, Validators.required],
-      end: [this.form.end, Validators.required],
+      start: [this.form.start ? this.form.start : this.project.start, Validators.required],
+      end: [this.form.end ? this.form.end : this.project.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
-
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       this.projectService.valid = this.dataSourceForm.valid;
       this.form.deserialize(value);

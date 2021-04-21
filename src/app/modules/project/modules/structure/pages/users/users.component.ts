@@ -7,6 +7,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-users',
@@ -51,6 +52,26 @@ export class UsersComponent implements OnInit {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.users = this.project.users;
+
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: project.country,
+          } as BreadcrumbItem,
+          {
+            value: project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Users',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
     this.projectService.updateInformationPanel(this.informations);

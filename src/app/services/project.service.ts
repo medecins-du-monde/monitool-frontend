@@ -4,8 +4,8 @@ import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
-import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { filter } from 'rxjs/operators';
+import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class ProjectService {
   private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -29,6 +30,11 @@ export class ProjectService {
 
   // Handles information panels question
   informations: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  // Get project id to redirect MDM Accounts
+  projectId: BehaviorSubject<string> = new BehaviorSubject('');
+
+  // Check if a project user is creating a new project
+  projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
@@ -51,6 +57,17 @@ export class ProjectService {
   }
 
   breadcrumbList: BreadcrumbItem[];
+  get getBreadcrumbsList(): Observable<any[]> {
+    return this.breadCrumbs.asObservable();
+  }
+
+  get getProjectId(): Observable<string> {
+    return this.projectId.asObservable();
+  }
+
+  get projectUserCreatingProject(): Observable<boolean> {
+    return this.projectUserRoleCreateProject.asObservable();
+  }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
     this.openedProject.subscribe((project: Project) => {
@@ -65,19 +82,6 @@ export class ProjectService {
           this.currentProject = project.copy();
         }
       }
-
-      this.breadcrumbList = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-      ];
     });
   }
 
@@ -97,6 +101,11 @@ export class ProjectService {
         }
       }
     });
+  }
+
+  // Update the breadcrumbs list
+  public updateBreadCrumbs(list: BreadcrumbItem[]): void {
+    this.breadCrumbs.next(list);
   }
 
   // used when reverting changes and staying in the same page
@@ -182,5 +191,21 @@ export class ProjectService {
   public async listByIndicator(indicatorId: string): Promise<Project[]> {
     const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId } });
     return response.map(x => new Project(x));
+  }
+
+  // Used when the user is a partner with a data entry role to display the name
+  // of datasource and entities from their ID
+  public getNamefromId(id, arr): string {
+    let name;
+    arr.forEach(x => {
+      if (x.id === id) {
+        name = x.name;
+      }
+    });
+    return name;
+  }
+
+  public updateProjectId(id: string) {
+    this.projectId.next(id);
   }
 }

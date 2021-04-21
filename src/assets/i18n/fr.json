@@ -106,8 +106,8 @@
         "Aggregation": {
             "sum": "Faire une somme",
             "average": "Faire une moyenne",
-            "highest": "Prendre la plus grande valeure",
-            "lowest": "Prendre la plus petite valeure",
+            "highest": "Prendre la plus grande valeur",
+            "lowest": "Prendre la plus petite valeur",
             "last": "Prendre la dernière valeur",
             "none": "Il n'est pas possible de faire ce calcul"
         },
@@ -628,7 +628,7 @@
     "SaveThematic": "Sauvegarder la thématique",
     "SaveUser": "Sauvegarder l'utilisateur",
     "Search": "Rentrez du texte pour filtrer les projets",
-    "SearchHelp": "Chercher un nom, pays et thématique",
+    "SearchHelp": "Chercher un projet par nom de pays ou de projet ou de thématique.",
     "SeeReport": "Voir le rapport",
     "SeeOlderDates": "Voir les dates précedentes",
     "Settings": "Paramètres",
@@ -716,7 +716,10 @@
     "VisibilityPublic": "Visible par tous les utilisateurs (hors partenaires)",
     "VisibilityPrivate": "Visible uniquement par les membres de ce projet",
     "Invalid": "Invalide",
-    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur, corrigez-les afin de pouvoir sauvegarder.",
+    "InvalidForm" : "Un ou plusieurs champs du formulaire sont en erreur ou manquant, corrigez-les afin de pouvoir sauvegarder.",
+    "ApplicationError": "L'application a rencontré une erreur, le projet n'a pas pu être sauvegardé. Rafraîchissez la page svp.",
+    "PendingForm": "Vous avez réalisé des changements. N'oubliez pas de cliquer sur sauvegarder",
+    "SavedForm": "Vos données sont sauvegardées",
     "EMail-Hint":"Indiquez votre adresse e-mail",
     "Name-Hint":"Indiquez votre Nom complet",
     "NameLogicalFramework-Hint": "Nommez ce cadre logique de façon à l'identifier facilement. Par exemple avec le nom du bailleur auquel il est destiné",
@@ -749,5 +752,6 @@
     "ReportingError": {
         "DataNotAvailable": "Ces données sont disponibles par",
         "MissingCalculation": "Calcul absent"
-    }
+    },
+    "DownloadTable": "Télécharger le tableau"
 }
