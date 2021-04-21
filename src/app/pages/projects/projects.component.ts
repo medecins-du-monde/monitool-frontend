@@ -7,6 +7,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -59,6 +60,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,
+    private sidenavService: SidenavService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
@@ -148,6 +150,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Allow user with a project role to access to the structure page to create a project
     this.projectService.projectUserRoleCreateProject.next(true);
     this.projectService.create(project);
+    this.sidenavService.generateSidenav(this.currentUser, project);
     this.router.navigate(['/projects', project.id]);
   }
 

@@ -83,8 +83,8 @@ export default class FormGroupBuilder {
           fr: new FormControl(indicator.description.fr),
         }) : new FormControl(null),
         display: new FormControl(indicator.display),
-        baseline: new FormControl(indicator.baseline, Validators.required),
-        target: new FormControl(indicator.target, Validators.required),
+        baseline: new FormControl(indicator.baseline),
+        target: new FormControl(indicator.target),
         unit: new FormControl(indicator.unit),
         colorize: new FormControl(indicator.colorize),
         computation: new FormGroup({

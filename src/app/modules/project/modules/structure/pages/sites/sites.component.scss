@@ -13,7 +13,6 @@
 }
 
 th {
-    font-size: $small_text;
     font-weight: bold;
     flex: 1;
     display: flex;
@@ -28,6 +27,13 @@ tr {
     display: flex;
     width: 100%;
     background: $table_background_white;
+}
+tr.mat-header-row{
+    min-height: 56px;
+    height: auto !important;
+    th{
+        padding: 5px;
+    }
 }
 
 td {
@@ -98,4 +104,17 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
       width: unset;
       height: unset;
       font-size: $normal_text;
+  }
+
+.headerTitle{
+    width: 100%;
+}
+.dateHeader{
+    display: block;
+}
+mat-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
   }

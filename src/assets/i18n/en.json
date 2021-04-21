@@ -553,6 +553,8 @@
     "SpecificObjective": "Specific objective",
     "SpecificObjective-Hint": "Describe the tangible advantages that are provided to the beneficiaries",
     "SpecificStartDate": "Specific start date",
+    "SpecificStartDate-Hint": "If the start date of the collection site is different from the start date of the project selected in \"Basics\", then click on the calendar",
+    "SpecificEndDate-Hint": "If the end date of the collection site is different from the end date of the project selected in \"Basics\", then click on the calendar",
     "StartDate": "Begin date",
     "State": "State",
     "Structure": "Structure",

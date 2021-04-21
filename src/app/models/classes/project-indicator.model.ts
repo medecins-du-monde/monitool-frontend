@@ -37,6 +37,16 @@ export class ProjectIndicator implements Deserializable {
     this.deserialize(input);
   }
 
+  // Return true if the indicator can be considered as filled
+  get filled(): boolean {
+    if (this.computation.formula) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   deserialize(input: any): this {
     Object.assign(this, input);
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
@@ -103,13 +113,8 @@ export class ProjectIndicator implements Deserializable {
               }
               else { elementList.push(element); }
             });
-            // We create a filter only if somes have been selected in the list
-            if (elementList.length > 0) {
-              parameter.filter[`${key}`] = elementList;
-            }
-            else {
-              delete parameter.filter[`${key}`];
-            }
+            // We always add the array to the filter object
+            parameter.filter[`${key}`] = elementList;
           });
         });
         return computation;

@@ -545,8 +545,10 @@
         "No es necesario crear cuentas para usuario con una dirección de correo xxx@medecinsdumonde.net: apareceran automáticamente una vez se hayan conectado una vez. Para socios, es posible crear cuentas desde la páginas dedicadas a cada proyecto."
     ],
     "SpecificEndDate": "Fecha de final específica",
-    "SpecificStartDate": "Fecha de inicio específica",
     "SpecificObjective-Hint": "Describa las ventajas tangibles que se proporcionan a los beneficiarios",
+    "SpecificStartDate": "Fecha de inicio específica",
+    "SpecificStartDate-Hint": "Si la fecha de inicio del lugar de colecta es diferente de la fecha de inicio del proyecto que ha sido seleccionada en \"Datos de base\", hacer clic en el calendario",
+    "SpecificEndDate-Hint": "Si la fecha de finalización del lugar de colecta es diferente de la fecha de finalización del proyecto que ha sido seleccionada en \"Datos de base\", hacer clic en el calendario",
     "StartDate": "Fecha de inicio",
     "State": "Estado",
     "Structure": "Estructura",
