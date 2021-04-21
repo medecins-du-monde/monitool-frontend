@@ -74,7 +74,7 @@ export class DataSourcesListComponent implements OnInit {
       if (extraIndicator.computation) {
         const params = extraIndicator.computation.parameters;
         // If the deleted datasource was used in the computation of this indicator, set computation to null
-        if (this.changeComputation(params)) {
+        if (this.computationBroken(params)) {
           extraIndicator.computation = null;
         }
       }
@@ -82,9 +82,12 @@ export class DataSourcesListComponent implements OnInit {
 
     // Delete datasource from cross-cutting indicators
     for (const val of Object.values(this.project.crossCutting)) {
-      const params = val['computation']['parameters'];
-      if (this.changeComputation(params)) {
-        val['computation'] = null;
+      // Check for computation
+      if (val['computation']) {
+        const params = val['computation']['parameters'];
+        if (this.computationBroken(params)) {
+          val['computation'] = null;
+        }
       }
     }
 
@@ -103,7 +106,8 @@ export class DataSourcesListComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
-  changeComputation(obj: Object) {
+  // This method check if deleting a datasource has broken a computation
+  computationBroken(obj: Object) {
     // Check if any variable id from the deleted datasource match an ID in the computation parameters
     for (const val of Object.values(obj)) {
       const matchingId = this.deletedFormVariables.filter( formVariable => formVariable === val.elementId);
@@ -127,7 +131,7 @@ export class DataSourcesListComponent implements OnInit {
               if (indicator.computation) {
                 const params = indicator.computation.parameters;
                 // If one of the paramaters uses the deleted datasource, set computation to null
-                if (this.changeComputation(params)) {
+                if (this.computationBroken(params)) {
                   indicator.computation = null;
                 }
               }
