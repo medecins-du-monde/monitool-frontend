@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit {
       res1: 'InformationPanel.General_delete_saved_question',
       res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
-  ]
+  ];
 
   private subscription: Subscription = new Subscription();
 

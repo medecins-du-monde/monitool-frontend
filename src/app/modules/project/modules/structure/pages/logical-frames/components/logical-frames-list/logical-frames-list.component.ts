@@ -23,7 +23,7 @@ export class LogicalFramesListComponent implements OnInit {
     {
       res1: 'InformationPanel.Logical_frames_list',
       res2: 'InformationPanel.Logical_frames_description'
-    } as InformationItem,  
+    } as InformationItem,
     {
       res1: 'InformationPanel.General_Naming_convention_question',
       res2: 'InformationPanel.General_Naming_convention_response'
@@ -36,7 +36,7 @@ export class LogicalFramesListComponent implements OnInit {
       res1: 'InformationPanel.General_delete_saved_question',
       res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
-  ]
+  ];
 
   constructor(
     private projectService: ProjectService,

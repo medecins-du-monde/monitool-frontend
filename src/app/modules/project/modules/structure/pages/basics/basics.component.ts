@@ -64,7 +64,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
       res1: 'InformationPanel.Basics_question1',
       res2: 'InformationPanel.Basics_response1'
     } as InformationItem
-  ]
+  ];
 
   private subscription: Subscription = new Subscription();
 

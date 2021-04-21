@@ -11,14 +11,14 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class InformationsPanelComponent implements OnInit {
 
-  displayed: boolean = false;
-  firstDisplayed: boolean = false;
+  displayed = false;
+  firstDisplayed = false;
   informations: InformationItem[] = [];
 
   constructor(private projectService: ProjectService, private domSanitizer: DomSanitizer, private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.projectService.informationsContent.subscribe(val => {
+    this.projectService.panelInformations.subscribe(val => {
       this.informations = val;
     });
   }

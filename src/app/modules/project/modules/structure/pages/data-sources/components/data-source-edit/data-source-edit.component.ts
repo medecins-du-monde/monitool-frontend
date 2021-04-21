@@ -91,7 +91,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       res1: 'InformationPanel.Datasource_edit_question8',
       res2: 'InformationPanel.Datasource_edit_response8'
     } as InformationItem
-  ]
+  ];
 
   dataSourceForm: FormGroup = new FormGroup({
     id: new FormControl(null),

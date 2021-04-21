@@ -42,7 +42,7 @@ export class SitesComponent implements OnInit {
     {
       res1: 'InformationPanel.Collection_sites',
       res2: 'InformationPanel.Collection_sites_description'
-    } as InformationItem,  
+    } as InformationItem,
     {
       res1: 'InformationPanel.General_Naming_convention_question',
       res2: 'InformationPanel.General_Naming_convention_response'
@@ -55,7 +55,7 @@ export class SitesComponent implements OnInit {
       res1: 'InformationPanel.General_delete_saved_question',
       res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
-  ]
+  ];
 
   project: Project;
 
@@ -149,7 +149,7 @@ export class SitesComponent implements OnInit {
       }
     );
     this.projectService.updateInformationPanel(this.informations);
-    
+
   }
 
   public onAddNewEntity(): void {

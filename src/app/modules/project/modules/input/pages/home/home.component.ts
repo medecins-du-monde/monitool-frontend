@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
       res1: 'InformationPanel.Home_entry',
       res2: ''
     } as InformationItem
-  ]
+  ];
 
   displayedColumns: string[] = ['task', 'status'];
   dataSource: Task[];

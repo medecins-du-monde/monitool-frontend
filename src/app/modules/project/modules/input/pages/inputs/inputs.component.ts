@@ -32,7 +32,7 @@ export class InputsComponent implements OnInit, OnDestroy {
       res1: 'InformationPanel.Calendar_entry_question1',
       res2: 'InformationPanel.Calendar_entry_response1'
     } as InformationItem
-  ]
+  ];
   // TODO: Check if possible to clean and make simplify this component
   displayedColumns = [];
   dataSource = [];

@@ -30,7 +30,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     {
       res1: 'InformationPanel.Edit_data',
       res2: 'InformationPanel.Edit_data_description'
-    } as InformationItem,  
+    } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question1',
       res2: 'InformationPanel.Edit_data_response1'
@@ -51,7 +51,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       res1: 'InformationPanel.Edit_data_question5',
       res2 : 'InformationPanel.Edit_data_response5'
     } as InformationItem
-  ]
+  ];
 
 
 // TODO: Check if we can make this component cleaner and simplier

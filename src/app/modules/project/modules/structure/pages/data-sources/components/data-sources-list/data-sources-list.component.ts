@@ -41,7 +41,7 @@ export class DataSourcesListComponent implements OnInit {
       res1: 'InformationPanel.Datasources_question2',
       res2: 'InformationPanel.Datasources_response2'
     } as InformationItem
-  ]
+  ];
 
   project: Project;
   forms: Form[] = [];

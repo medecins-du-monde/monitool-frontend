@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
+import InformationItem from '../models/interfaces/information-item';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,8 @@ export class ProjectService {
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   // Handles information panels question
-  informations: BehaviorSubject<any[]> = new BehaviorSubject([]);
+  informations: BehaviorSubject<InformationItem[]> = new BehaviorSubject([]);
+
   // Get project id to redirect MDM Accounts
   projectId: BehaviorSubject<string> = new BehaviorSubject('');
 
@@ -52,7 +54,7 @@ export class ProjectService {
     return this.currentProject && !this.savedProject.equals(this.currentProject);
   }
 
-  get informationsContent(): Observable<any[]> {
+  get panelInformations(): Observable<InformationItem[]> {
     return this.informations.asObservable();
   }
 
@@ -113,7 +115,7 @@ export class ProjectService {
     this.project.next(this.savedProject.copy());
   }
 
-  public updateInformationPanel(list) {
+  public updateInformationPanel(list: InformationItem[]): void {
     this.informations.next(list);
   }
 

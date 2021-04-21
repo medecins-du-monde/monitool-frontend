@@ -59,8 +59,8 @@ export class GeneralComponent implements OnInit {
       res1: 'InformationPanel.General_reporting_question8',
       res2: 'InformationPanel.General_reporting_response8'
     } as InformationItem
-  ]
-  
+  ];
+
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
               private themeService: ThemeService,
