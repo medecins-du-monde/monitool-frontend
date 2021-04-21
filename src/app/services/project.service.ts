@@ -117,9 +117,9 @@ export class ProjectService {
   }
 
   public create(project: Project): void {
+    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
     this.basicInfos.next(false);
     this.project.next(project);
-    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
   public async get(id: string): Promise<Project> {
