@@ -39,6 +39,8 @@ export class SitesComponent implements OnInit {
 
   project: Project;
 
+  displayInfos = true;
+
   sitesForm: FormGroup = new FormGroup({
     entities: new FormArray([]),
     groups: new FormArray([])
@@ -185,5 +187,9 @@ export class SitesComponent implements OnInit {
     } else {
       this.groupsDataSource.data = this.groups.controls;
     }
+  }
+
+  toggleStartInfos(): void {
+    this.displayInfos = !this.displayInfos;
   }
 }

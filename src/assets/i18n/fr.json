@@ -542,8 +542,10 @@
         "Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il est possible de créer des comptes partenaires depuis l'interface de gestion des projets."
     ],
     "SpecificEndDate": "Date de fin spécifique",
-    "SpecificStartDate": "Date de début spécifique",
     "SpecificObjective-Hint": " Description des avantages directs destinés au(x) groupe(s) cible(s)",
+    "SpecificStartDate": "Date de début spécifique",
+    "SpecificStartDate-Hint": "Si la date de début du site de collecte est différente de la date de début du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
+    "SpecificEndDate-Hint": "Si la date de fin du site de collecte est différente de la date de fin du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
     "StartDate": "Date de lancement",
     "State": "État",
     "Structure": "Structure",
