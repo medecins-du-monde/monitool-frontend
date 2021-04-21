@@ -319,15 +319,30 @@ mat-hint {
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
+  align-items: center;
+  background-color: $card_header_background;
+  padding: 16px 5px;
+
+  .project-icon {
+    height: 24px;
+    width: 24px;
+
+    img {
+      height: 100%;
+    }
+  }
 }
 
 .card-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-size: $small_text;
   margin-bottom: 8px;
   padding: 0px 16px 16px 16px;
+
+  &.column {
+    flex-direction: column;
+  }
 
   .card-info-title {
       width: 50%;
@@ -337,8 +352,8 @@ mat-hint {
       }
   }
   .card-info-value {
-      margin-left: 5%;
-      width: 95%;
+    margin-left: 10px;
+    width: 100%;
   }
 
   .computation {
@@ -380,9 +395,34 @@ mat-hint {
 
 
 // === MATERIAL ===
+
+.cards-draghandle .mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mat-card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
-    position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  position: relative;
+  color: $black;
+
+  // This is the way we should use it for the mat-card in general if we have a header
+  &.with-header {
+    padding: 0 !important;
+
+    .mat-card-content {
+      flex: 1;
+    }
+  
+    .mat-card-actions {
+      padding: 16px !important;
+    }
+
+    .card-header {
+      padding: 16px;
+    }
+  }
 
   .mat-card-header {
     align-items: center;
