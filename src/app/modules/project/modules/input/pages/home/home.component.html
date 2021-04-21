@@ -1,38 +1,36 @@
-<div class="input-container">
-    <div class="info-section">
-        <p>{{ 'InputHomeInfo.0' | translate }}</p>
-        <p>{{ 'InputHomeInfo.1' | translate }}</p>
-    </div>
-    <div class="info-section blue">
-        <p>{{ 'InputHomeInfo.2' | translate }}</p>
-        <p>{{ 'InputHomeInfo.3' | translate }}</p>
-    </div>
-    <div class="info-section blue">
-        <p>{{ 'InputHomeInfo.4' | translate }}</p>
-        <p>{{ 'InputHomeInfo.5' | translate }}</p>
-    </div>
-
-    <table mat-table [dataSource]="taskDataSource" class="mdm-table">
-        <!-- Task Column -->
-        <ng-container matColumnDef="task">
-            <th mat-header-cell *matHeaderCellDef>{{ 'Task' | translate }}</th>
-            <td mat-cell *matCellDef="let element" id="task"> 
-                <span>{{'FillThe' | translate}} </span>
-                <span>{{ element.total }}</span>
-                <span> {{'FormsOf' | translate}} </span>
-                <span><button mat-stroked-button class="mdm-button small-button" [routerLink]="element.routerLink"><mat-icon svgIcon="{{ element.buttonIcon }}"></mat-icon>{{ element.buttonText }}</button></span>
-            </td>
-        </ng-container>
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>{{ 'State' | translate }}</th>
-            <td mat-cell *matCellDef="let element" id="status"> 
-                <app-progress-bar-triple [done]="element.done" [ongoing]="element.ongoing" [missing]="element.missing" [total]="element.total"></app-progress-bar-triple>
-            </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+<div class="info-section">
+    <p>{{ 'InputHomeInfo.0' | translate }}</p>
+    <p>{{ 'InputHomeInfo.1' | translate }}</p>
 </div>
+<div class="info-section blue">
+    <p>{{ 'InputHomeInfo.2' | translate }}</p>
+    <p>{{ 'InputHomeInfo.3' | translate }}</p>
+</div>
+<div class="info-section blue">
+    <p>{{ 'InputHomeInfo.4' | translate }}</p>
+    <p>{{ 'InputHomeInfo.5' | translate }}</p>
+</div>
+
+<table mat-table [dataSource]="taskDataSource" class="mdm-table">
+    <!-- Task Column -->
+    <ng-container matColumnDef="task">
+        <th mat-header-cell *matHeaderCellDef>{{ 'Task' | translate }}</th>
+        <td mat-cell *matCellDef="let element" id="task"> 
+            <span>{{'FillThe' | translate}} </span>
+            <span>{{ element.total }}</span>
+            <span> {{'FormsOf' | translate}} </span>
+            <span><button mat-stroked-button class="mdm-button small-button" [routerLink]="element.routerLink"><mat-icon svgIcon="{{ element.buttonIcon }}"></mat-icon>{{ element.buttonText }}</button></span>
+        </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>{{ 'State' | translate }}</th>
+        <td mat-cell *matCellDef="let element" id="status"> 
+            <app-progress-bar-triple [done]="element.done" [ongoing]="element.ongoing" [missing]="element.missing" [total]="element.total"></app-progress-bar-triple>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

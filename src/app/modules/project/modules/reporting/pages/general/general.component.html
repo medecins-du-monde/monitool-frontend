@@ -1,5 +1,3 @@
-<div class="reporting-container">
-
     <app-object-grouping (dimensionEvent)="receiveDimension($event)"></app-object-grouping>
 
     <app-filter (filterEvent)="receiveFilter($event)" [project]="project"></app-filter>
@@ -8,4 +6,3 @@
 
     <app-reporting-table [dimensionIds]="dimensionIds" [filter]="filter" [tableContent]=tableContent ></app-reporting-table>
     
-</div>

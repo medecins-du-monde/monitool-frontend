@@ -177,6 +177,7 @@ body {
 .drawer-page {
   padding: 15px 15px 25px 15px;
   overflow: auto;
+  margin-right: 10px;
   flex: 1;
 
   @media screen and (max-width: $breakpoint-sm) {
@@ -942,9 +943,6 @@ code {
   color: var(--main);
 }
 
-.content-container {
-  margin-right: 15px;
-}
 .delete-button:not([disabled]) {
   color: $delete_text_color;
   background-color: $delete_background;
