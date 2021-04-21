@@ -8,7 +8,6 @@ import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 
@@ -20,15 +19,14 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 })
 export class InputsComponent implements OnInit, OnDestroy {
 
-  informationIntro = {
-    title: 'InformationPanel.Calendar_entry',
-    description: 'InformationPanel.Calendar_entry_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.Calendar_entry_question1',
-      response: 'InformationPanel.Calendar_entry_response1'
+      res1: 'InformationPanel.Calendar_entry',
+      res2: 'InformationPanel.Calendar_entry_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Calendar_entry_question1',
+      res2: 'InformationPanel.Calendar_entry_response1'
     } as InformationItem
   ]
   // TODO: Check if possible to clean and make simplify this component
@@ -69,7 +67,6 @@ export class InputsComponent implements OnInit, OnDestroy {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   get currentLang() {

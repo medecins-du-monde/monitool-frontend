@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { IndicatorModalComponent } from '../../pages/logical-frames/components/indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 @Component({
   selector: 'app-cross-cutting',
@@ -19,12 +19,12 @@ import InformationIntro from 'src/app/models/interfaces/information-intro';
 })
 export class CrossCuttingComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.Crosscutting_indicators_list',
-    description: ''
-  } as InformationIntro;
-
-  informations = [];
+  informations = [
+    {
+      res1: 'InformationPanel.Crosscutting_indicators_list',
+      res2: ''
+    } as InformationItem
+  ];
 
   project: Project;
   indicators: ProjectIndicator[] = [];
@@ -113,7 +113,6 @@ export class CrossCuttingComponent implements OnInit {
 
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   private setForm(): void {

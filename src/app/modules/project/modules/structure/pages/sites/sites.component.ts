@@ -12,7 +12,6 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 
@@ -38,23 +37,22 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 })
 export class SitesComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.Collection_sites',
-    description: 'InformationPanel.Collection_sites_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.Collection_sites',
+      res2: 'InformationPanel.Collection_sites_description'
+    } as InformationItem,  
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ]
 
@@ -131,7 +129,7 @@ export class SitesComponent implements OnInit {
       }
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
+    
   }
 
   public onAddNewEntity(): void {

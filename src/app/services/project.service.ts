@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { filter } from 'rxjs/operators';
-import InformationIntro from '../models/interfaces/information-intro';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +29,6 @@ export class ProjectService {
 
   // Handles information panels question
   informations: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  informationIntro: BehaviorSubject<InformationIntro> = new BehaviorSubject({title: '', description: ''});
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
@@ -50,10 +48,6 @@ export class ProjectService {
 
   get informationsContent(): Observable<any[]> {
     return this.informations.asObservable();
-  }
-
-  get informationIntroContent(): Observable<InformationIntro> {
-    return this.informationIntro.asObservable();
   }
 
   breadcrumbList: BreadcrumbItem[];
@@ -112,10 +106,6 @@ export class ProjectService {
 
   public updateInformationPanel(list) {
     this.informations.next(list);
-  }
-
-  public updateInformationIntro(intro) {
-    this.informationIntro.next(intro);
   }
 
   public async list(): Promise<Project[]> {

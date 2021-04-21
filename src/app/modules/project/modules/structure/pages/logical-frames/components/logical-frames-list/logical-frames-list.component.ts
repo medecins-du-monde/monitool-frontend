@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -18,23 +17,22 @@ export class LogicalFramesListComponent implements OnInit {
   project: Project;
   logicalFrames: LogicalFrame[] = [];
 
-  informationIntro = {
-    title: 'InformationPanel.Logical_frames_list',
-    description: 'InformationPanel.Logical_frames_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.Logical_frames_list',
+      res2: 'InformationPanel.Logical_frames_description'
+    } as InformationItem,  
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ]
 
@@ -49,7 +47,6 @@ export class LogicalFramesListComponent implements OnInit {
       this.logicalFrames = project.logicalFrames;
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   onCreate(): void {

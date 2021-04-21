@@ -10,7 +10,6 @@ import { Indicator } from 'src/app/models/classes/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
-import informationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 
@@ -22,43 +21,42 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 
 export class GeneralComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.General_reporting',
-    description: 'InformationPanel.General_reporting_description'
-  } as informationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.General_reporting_question1',
-      response: 'InformationPanel.General_reporting_response1'
+      res1: 'InformationPanel.General_reporting',
+      res2: 'InformationPanel.General_reporting_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question2',
-      response: 'InformationPanel.General_reporting_response2'
+      res1: 'InformationPanel.General_reporting_question1',
+      res2: 'InformationPanel.General_reporting_response1'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question3',
-      response: 'InformationPanel.General_reporting_response3'
+      res1: 'InformationPanel.General_reporting_question2',
+      res2: 'InformationPanel.General_reporting_response2'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question4',
-      response: 'InformationPanel.General_reporting_response4'
+      res1: 'InformationPanel.General_reporting_question3',
+      res2: 'InformationPanel.General_reporting_response3'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question5',
-      response: 'InformationPanel.General_reporting_response5'
+      res1: 'InformationPanel.General_reporting_question4',
+      res2: 'InformationPanel.General_reporting_response4'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question6',
-      response: 'InformationPanel.General_reporting_response6'
+      res1: 'InformationPanel.General_reporting_question5',
+      res2: 'InformationPanel.General_reporting_response5'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question7',
-      response: 'InformationPanel.General_reporting_response7'
+      res1: 'InformationPanel.General_reporting_question6',
+      res2: 'InformationPanel.General_reporting_response6'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_reporting_question8',
-      response: 'InformationPanel.General_reporting_response8'
+      res1: 'InformationPanel.General_reporting_question7',
+      res2: 'InformationPanel.General_reporting_response7'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question8',
+      res2: 'InformationPanel.General_reporting_response8'
     } as InformationItem
   ]
   
@@ -103,7 +101,6 @@ export class GeneralComponent implements OnInit {
       this.buildIndicators();
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
 

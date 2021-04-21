@@ -470,10 +470,10 @@
         "Project_list_response6": "Pas de panique! <br> Plusieurs explications sont possibles: <br><ul><li>Votre projet ne correspond pas au filtre que vous avez rentré. Videz la barre de saisie de texte en haut de la page</li><li>Votre projet vient de terminer. Cliquez sur <button>Afficher les projets terminés</button> . Vous pouvez éditeur sa date de fin pour le prolonger.</li><li>Vous avez archivé votre projet. Cliquez sur <button>Afficher les projets archivés</button> puis sur <button>Archiver</button></li></ul><br> Si votre projet est toujours manquant, il est possible que vous ne soyez pas connecté avec le même compte que celui que vous avez utilisé pour créer votre projet.<br> Cliquez sur <button>Deconnecter</button> puis connectez-vous avec le compte que vous avez utilisé pour créer votre projet. Si vous le désirez, vous pourrez transférer le projet sur votre nouveau compte.",
         "Project_list_question7": "Combien de temps mon projet va-t'il rester stocké sur Monitool?",
         "Project_list_response7": "Pendant toute la durée de vie de l'outil: les coûts de stockage des projets sont faibles par rapport aux coûts de développement et d'hébergement de la plateforme. <br>Il ne nous est donc pas nécessaire de supprimer les anciens projets pour « faire de la place ». <br>Si votre ONG dispose de règles au sujet de l'archivage électronique pour les projet terminés, vous pouvez télécharger toutes les données saisies par projet depuis la page 'Rapport Général'.",
-        "User_list": "Liste des utilisateurs",
-        "User_list_description": "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ... <br>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet.",
         "Structure_home": "Accueil configuration",
-        "Structure_home_description": "Visualisez votre avancement dans la configuration de votre projet."
+        "Structure_home_description": "Visualisez votre avancement dans la configuration de votre projet.",
+        "User_list": "Liste des utilisateurs",
+        "User_list_description": "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ... <br>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
     },
     "Input": "Saisir",
     "InputsInfo": [

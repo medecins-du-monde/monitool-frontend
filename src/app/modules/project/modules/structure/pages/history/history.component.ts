@@ -7,7 +7,6 @@ import { Operation } from 'fast-json-patch';
 import * as jsonpatch from 'fast-json-patch';
 import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 
@@ -25,31 +24,30 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 })
 export class HistoryComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.History',
-    description: 'InformationPanel.History_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.History',
+      res2: 'InformationPanel.History_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.History_question1',
-      response: 'InformationPanel.History_response1'
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.History_question2',
-      response: 'InformationPanel.History_response2'
+      res1: 'InformationPanel.History_question1',
+      res2: 'InformationPanel.History_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.History_question2',
+      res2: 'InformationPanel.History_response2'
     } as InformationItem
   ];
 
@@ -83,7 +81,6 @@ export class HistoryComponent implements OnInit {
       }
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   mouseOver(element){

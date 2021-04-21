@@ -12,7 +12,6 @@ import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 
@@ -25,31 +24,30 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 
 export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
-  informationIntro = {
-    title: 'InformationPanel.Edit_data',
-    description: 'InformationPanel.Edit_data_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.Edit_data_question1',
-      response: 'InformationPanel.Edit_data_response1'
+      res1: 'InformationPanel.Edit_data',
+      res2: 'InformationPanel.Edit_data_description'
+    } as InformationItem,  
+    {
+      res1: 'InformationPanel.Edit_data_question1',
+      res2: 'InformationPanel.Edit_data_response1'
     } as InformationItem,
     {
-      question: 'InformationPanel.Edit_data_question2',
-      response: 'InformationPanel.Edit_data_response2'
+      res1: 'InformationPanel.Edit_data_question2',
+      res2: 'InformationPanel.Edit_data_response2'
     } as InformationItem,
     {
-      question: 'InformationPanel.Edit_data_question3',
-      response: 'InformationPanel.Edit_data_response3'
+      res1: 'InformationPanel.Edit_data_question3',
+      res2: 'InformationPanel.Edit_data_response3'
     } as InformationItem,
     {
-      question: 'InformationPanel.Edit_data_question4',
-      response : 'InformationPanel.Edit_data_response4'
+      res1: 'InformationPanel.Edit_data_question4',
+      res2 : 'InformationPanel.Edit_data_response4'
     } as InformationItem,
     {
-      question: 'InformationPanel.Edit_data_question5',
-      response : 'InformationPanel.Edit_data_response5'
+      res1: 'InformationPanel.Edit_data_question5',
+      res2 : 'InformationPanel.Edit_data_response5'
     } as InformationItem
   ]
 
@@ -113,7 +111,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       })
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   onPaste(event: ClipboardEvent, tableId: string, index: number ): void {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
 import { Project } from 'src/app/models/classes/project.model';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -31,27 +30,26 @@ export class HomeComponent implements OnInit {
 
   dataSource: Task[];
 
-  informationIntro = {
-    title: 'InformationPanel.Structure_home',
-    description: 'InformationPanel.Structure_home_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.Project_definition_question',
-      response: 'InformationPanel.Project_definition_response'
+      res1: 'InformationPanel.Structure_home',
+      res2: 'InformationPanel.Structure_home_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.Project_definition_question',
+      res2: 'InformationPanel.Project_definition_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ];
 
@@ -245,6 +243,5 @@ export class HomeComponent implements OnInit {
       ];
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 }

@@ -474,7 +474,9 @@
         "Project_list_question7": "¿Cuánto tiempo permanecerá guardado mi proyecto en Monitool?",
         "Project_list_response7": "A lo largo de la vida útil de la herramienta: los costos de almacenamiento del proyecto son bajos en comparación con el desarrollo de la plataforma y los costos de alojamiento. <br> Por lo tanto, no es necesario que eliminemos proyectos antiguos para 'hacer espacio'. <br> Si su ONG tiene reglas sobre el archivo electrónico de proyectos terminados, puede descargar todos los datos ingresados ​​por proyecto desde la página 'Informe general'.",
         "Structure_home": "Inicio Estructura",
-        "Structure_home_description": "Visualice su progreso en la configuración de su proyecto."
+        "Structure_home_description": "Visualice su progreso en la configuración de su proyecto.",
+        "User_list": "Lista de usuarios",
+        "User_list_description": "Varios tipos de usuarios están involucrados en la configuración y seguimiento de un proyecto: coordinación, personal de M&E, operadores de entrada de datos, socios, ... <br> Enumere aquí todos los usuarios que deben tener acceso al seguimiento de este proyecto."
     },
     "Input": "Entrada",
     "InputsInfo": [

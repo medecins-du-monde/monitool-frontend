@@ -7,7 +7,6 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 @Component({
@@ -17,23 +16,22 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 })
 export class ExtraIndicatorsComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.Extra_indicators',
-    description: 'InformationPanel.Extra_indicators_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.Extra_indicators',
+      res2: 'InformationPanel.Extra_indicators_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ];
 
@@ -51,7 +49,6 @@ export class ExtraIndicatorsComponent implements OnInit {
       this.setForm();
     });
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   get indicators(): FormArray {

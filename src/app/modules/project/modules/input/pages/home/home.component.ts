@@ -6,9 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InputService } from 'src/app/services/input.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
-
-
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 export interface Task {
   buttonText: string;
@@ -28,12 +26,12 @@ export interface Task {
 
 export class HomeComponent implements OnInit {
 
-  informationIntro = {
-    title: 'InformationPanel.Home_entry',
-    description: ''
-  } as InformationIntro;
-
-  informations = [];
+  informations = [
+    {
+      res1: 'InformationPanel.Home_entry',
+      res2: ''
+    } as InformationItem
+  ]
 
   displayedColumns: string[] = ['task', 'status'];
   dataSource: Task[];
@@ -96,7 +94,6 @@ export class HomeComponent implements OnInit {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
 }

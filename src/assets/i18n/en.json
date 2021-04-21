@@ -444,8 +444,6 @@
         "Home_entry": "Home data entry",
         "Logical_frames_list": "Logical frames list",
         "Logical_frames_description": "A logical frame is a document describing the objectives, expected results, and the implemented activities to get there, as well as the indicators necessary to follow how the element is progressing. All the indicators in the logical frames need to be calculable based on the data sources.",
-        "Structure_home": "Structure home",
-        "Structure_home_description": "Check how far along you are in the project's structure",
         "Project_definition_question": "What's a project in Monitool?",
         "Project_definition_response": "On Monitool, we don't have requests, database or doimensions...<br>We're talking project in NGO's term, the same one you were writing proposal about for your donors.",
         "Project_list": "Project list",
@@ -464,7 +462,10 @@
         "Project_list_response6": "Don't panic!<br> There are multiple explanation:<br><ul><li>Your project doesn't match the filter you've chosen. Empty the search bar at the top of the page</li><li>Your project is over. Click on <button>Show finished projects</button>. You can edit its end date to prolong it.</li><li>You've archived your project. Click on <button>Show archived projects</button> then on <button>Archive</button></li></ul><br> If your project's still missing, you might not be connected with the account you used to create said project.<br> Click on <button>Logout</button> then log back on with the account you used to create the project. If you want to, you can transfer your project in another account.",
         "Project_list_question7": "How long will my project be stored on Monitool?",
         "Project_list_response7": "As long as the platform still exists: storing projects doesn't cost much compared to development and hosting. <br>We don't really need to delete project to free some space. <br>If you NGO has rules about online storage of finished project, you can download all of your project's data from the General Reporting page.",
-        "User_list": "User list"
+        "Structure_home": "Structure home",
+        "Structure_home_description": "Check how far along you are in the project's structure",
+        "User_list": "Users list",
+        "User_list_description": "Several types of users are involved in setting up and monitoring a project: coordination, M&E staff, data entry operators, partners, ... <br> List here all the users who must have access to the monitoring of this project."
     },
     "Input": "Input",
     "InputHomeInfo": [

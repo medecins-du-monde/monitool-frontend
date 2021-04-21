@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import InformationItem from 'src/app/models/interfaces/information-item';
-import informationIntro from 'src/app/models/interfaces/information-intro';
 
 @Component({
   selector: 'app-projects',
@@ -38,43 +37,42 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   ];
 
-  informationIntro = {
-      title: 'InformationPanel.Project_list',
-      description: 'InformationPanel.Project_list_description'
-    } as informationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.Project_definition_question',
-      response : 'InformationPanel.Project_definition_response'
+      res1: 'InformationPanel.Project_list',
+      res2: 'InformationPanel.Project_list_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question1',
-      response: 'InformationPanel.Project_list_response1'
+      res1: 'InformationPanel.Project_definition_question',
+      res2: 'InformationPanel.Project_definition_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question2',
-      response: 'InformationPanel.Project_list_response2'
+      res1: 'InformationPanel.Project_list_question1',
+      res2: 'InformationPanel.Project_list_response1'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question3',
-      response: 'InformationPanel.Project_list_response3'
+      res1: 'InformationPanel.Project_list_question2',
+      res2: 'InformationPanel.Project_list_response2'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question4',
-      response: 'InformationPanel.Project_list_response4'
+      res1: 'InformationPanel.Project_list_question3',
+      res2: 'InformationPanel.Project_list_response3'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question5',
-      response: 'InformationPanel.Project_list_response5'
+      res1: 'InformationPanel.Project_list_question4',
+      res2: 'InformationPanel.Project_list_response4'
     } as InformationItem,
     {
-      question: 'InformationPanel.Project_list_question6',
-      response: 'Information.Project_list_response6'
+      res1: 'InformationPanel.Project_list_question5',
+      res2: 'InformationPanel.Project_list_response5'
     } as InformationItem,
     {
-      question: 'Information.Project_list_question7',
-      response: 'InformationPanel.Project_list_response7'
+      res1: 'InformationPanel.Project_list_question6',
+      res2: 'Information.Project_list_response6'
+    } as InformationItem,
+    {
+      res1: 'Information.Project_list_question7',
+      res2: 'InformationPanel.Project_list_response7'
     } as InformationItem
   ];
 
@@ -122,7 +120,6 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   ngOnDestroy(): void {

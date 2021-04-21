@@ -12,7 +12,6 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { DateService } from 'src/app/services/date.service';
 
 import DatesHelper from 'src/app/utils/dates-helper';
-import InformationIntro from 'src/app/models/interfaces/information-intro';
 import InformationItem from 'src/app/models/interfaces/information-item';
 
 @Component({
@@ -39,31 +38,30 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   themes: Theme[] = [];
 
-  informationIntro = {
-    title: 'InformationPanel.Basics',
-    description: 'InformationPanel.Basics_description'
-  } as InformationIntro;
-
   informations = [
     {
-      question: 'InformationPanel.Project_definition_question',
-      response: 'InformationPanel.Project_definition_response'
+      res1: 'InformationPanel.Basics',
+      res2: 'InformationPanel.Basics_description'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_Naming_convention_question',
-      response: 'InformationPanel.General_Naming_convention_response'
+      res1: 'InformationPanel.Project_definition_question',
+      res2: 'InformationPanel.Project_definition_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_accidental_delete_question',
-      response: 'InformationPanel.General_accidental_delete_response'
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.General_delete_saved_question',
-      response: 'InformationPanel.General_delete_saved_response'
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
     } as InformationItem,
     {
-      question: 'InformationPanel.Basics_question1',
-      response: 'InformationPanel.Basics_response1'
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Basics_question1',
+      res2: 'InformationPanel.Basics_response1'
     } as InformationItem
   ]
 
@@ -117,7 +115,6 @@ export class BasicsComponent implements OnInit, OnDestroy {
       }
     );
     this.projectService.updateInformationPanel(this.informations);
-    this.projectService.updateInformationIntro(this.informationIntro);
   }
 
   ngOnDestroy() {

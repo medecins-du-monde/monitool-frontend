@@ -1,4 +1,4 @@
 export default interface InformationItem{
-    question: string;
-    response: string;
+    res1: string;
+    res2: string;
   }
