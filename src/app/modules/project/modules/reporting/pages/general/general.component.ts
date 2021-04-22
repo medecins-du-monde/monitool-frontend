@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ChartService } from 'src/app/services/chart.service';
@@ -64,7 +65,8 @@ export class GeneralComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
               private themeService: ThemeService,
-              private chartService: ChartService ) { }
+              private chartService: ChartService,
+              private translateService: TranslateService ) { }
 
   project: Project;
 
@@ -87,27 +89,13 @@ export class GeneralComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
+    this.translateService.onLangChange.subscribe(() => {
+      this.updateBreadcrumbs();
+      this.buildIndicators();
+    });
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Reporting',
-        } as BreadcrumbItem,
-        {
-          value: 'General',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
+      this.updateBreadcrumbs();
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {
@@ -137,7 +125,7 @@ export class GeneralComponent implements OnInit {
     if (this.project.logicalFrames){
       for (const logicalFrame of this.project.logicalFrames){
         rows.push({
-          title: `Logical framework: ${logicalFrame.name}`,
+          title: `${this.translateService.instant('LogicalFramework')}: ${logicalFrame.name}`,
           sectionId: id,
           open: false,
           level
@@ -145,7 +133,7 @@ export class GeneralComponent implements OnInit {
 
         rows.push({
           icon: false,
-          groupName: `General objective: ${logicalFrame.goal}`,
+          groupName: `${this.translateService.instant('GeneralObjective')}: ${logicalFrame.goal}`,
           sectionId: id,
           level
         } as GroupTitle);
@@ -156,7 +144,7 @@ export class GeneralComponent implements OnInit {
         for (const purpose of logicalFrame.purposes){
           rows.push({
             icon: false,
-            groupName: `Specific objective: ${purpose.description}`,
+            groupName: `${this.translateService.instant('SpecificObjective')}: ${purpose.description}`,
             sectionId: id,
             level
           } as GroupTitle);
@@ -167,7 +155,7 @@ export class GeneralComponent implements OnInit {
           for (const output of purpose.outputs){
             rows.push({
               icon: false,
-              groupName: `Result: ${output.description}`,
+              groupName: `${this.translateService.instant('Result')}: ${output.description}`,
               sectionId: id,
               level
             } as GroupTitle);
@@ -178,7 +166,7 @@ export class GeneralComponent implements OnInit {
             for (const activity of output.activities){
               rows.push({
                 icon: false,
-                groupName: `Activity: ${activity.description}`,
+                groupName: `${this.translateService.instant('Activity')}: ${activity.description}`,
                 sectionId: id,
                 level
               } as GroupTitle);
@@ -199,7 +187,7 @@ export class GeneralComponent implements OnInit {
       this.buildCrossCuttingIndicators();
 
       rows.push({
-        title: 'Cross-cutting indicators',
+        title: `${this.translateService.instant('CrossCuttingIndicators')}`,
         sectionId: id,
         open: false,
         level
@@ -208,7 +196,7 @@ export class GeneralComponent implements OnInit {
       if (this.multiThemesIndicators.length > 0){
         rows.push({
           icon: false,
-          groupName: 'Multiple thematics',
+          groupName: `${this.translateService.instant('MultipleThematics')}`,
           sectionId: id,
           level
         } as GroupTitle);
@@ -254,7 +242,7 @@ export class GeneralComponent implements OnInit {
 
     if (this.project.extraIndicators){
       rows.push({
-        title: 'Extra indicators',
+        title: `${this.translateService.instant('ExtraIndicators')}`,
         sectionId: id,
         open: false,
         level: 0
@@ -267,13 +255,14 @@ export class GeneralComponent implements OnInit {
     if (this.project.forms){
       for (const form of this.project.forms){
         rows.push({
-          title: `Data source: ${form.name}`,
+          title: `${this.translateService.instant('DataSource')}: ${form.name}`,
           sectionId: id,
           open: false,
           level
         } as SectionTitle);
 
         for (const element of form.elements){
+          // TODO: Replace the a by another thing
           const computation =  {
             formula: 'a',
             parameters: {
@@ -331,6 +320,27 @@ export class GeneralComponent implements OnInit {
     this.dimensionIds.next(value);
   }
 
+  updateBreadcrumbs(): void {
+    const breadCrumbs = [
+      {
+        value: `${this.translateService.instant('Projects')}`,
+        link: './../../projects'
+      } as BreadcrumbItem,
+      {
+        value: this.project.country,
+      } as BreadcrumbItem,
+      {
+        value: this.project.name,
+      } as BreadcrumbItem,
+      {
+        value: 'Reporting',
+      } as BreadcrumbItem,
+      {
+        value: 'General',
+      } as BreadcrumbItem,
+    ];
+    this.projectService.updateBreadCrumbs(breadCrumbs);
+  }
 }
 
 

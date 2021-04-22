@@ -76,6 +76,7 @@
     },
     "DataSourceStructureTitle": "Structure",
     "DataSources": "Data sources",
+    "DataSource": "Data sources",
     "Date": "Date",
     "Delete": "Delete",
     "Deleted": "Deleted",
@@ -492,6 +493,7 @@
     "Loading": "Loading...",
     "LogOut": "Log out",
     "LogicalFrameworks": "Logical frameworks",
+    "LogicalFramework": "Logical framework",
     "LogicalFrameworksPageDescription": {
         "Line1": "A logical framework is a document that describe objectives, expected results, and actities to achieve them, as well as indicators to monitor the advancement of each of those elements",
         "Line2": "All indicators have to be computable from the data described in data sources"
@@ -660,6 +662,8 @@
     "SpecificObjective": "Specific objective",
     "SpecificObjective-Hint": "Describe the tangible advantages that are provided to the beneficiaries",
     "SpecificStartDate": "Specific start date",
+    "SpecificStartDate-Hint": "If the start date of the collection site is different from the start date of the project selected in \"Basics\", then click on the calendar",
+    "SpecificEndDate-Hint": "If the end date of the collection site is different from the end date of the project selected in \"Basics\", then click on the calendar",
     "StartDate": "Begin date",
     "State": "State",
     "Structure": "Structure",
@@ -739,4 +743,5 @@
         "MissingCalculation": "Calculation is missing"
     },
     "DownloadTable": "Download Table"
+
 }

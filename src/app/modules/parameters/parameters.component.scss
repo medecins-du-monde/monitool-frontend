@@ -1,0 +1,7 @@
+@import "src/assets/theme/size_vars.scss";
+
+.drawer-page {
+    @media screen and (max-width: $breakpoint-sm) {
+        overflow: unset !important;
+    }
+}

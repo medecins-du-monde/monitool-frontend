@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 
-// This service is used when we need to have a translation in a language different than the current one
+// This service is used when we need to have a translation in a language different than the current one.
+// So we can have different languages in a page without changing the current language.
 export class ForceTranslateService {
 
     constructor(private http: HttpClient) { }

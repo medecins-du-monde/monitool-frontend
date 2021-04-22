@@ -73,6 +73,7 @@
         "StartDatePlaceholder": "Igual que el inicio del proyecto"
     },
     "DataSources": "Fuente de datos",
+    "DataSource": "Fuente de datos",
     "Date": "Fecha",
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
@@ -497,6 +498,7 @@
     "LastEntry": "Última entrada",
     "LoadMoreRevisions": "Ver cambios mas antigos",
     "LogicalFrameworks": "Marcos lógicos",
+    "LogicalFramework": "Marco lógico",
     "LogicalFrameworksPageDescription":{
         "Line1":"Un marco lógico es un documento que describe los objectivos, resultados y actividades de un proyecto, asi como indicadores para seguir el progreso de cada uno de ellos",
         "Line2": "Todos los indicadores deben ser calculables a partir de los datos describidos en las fuentes de datos"
@@ -652,8 +654,10 @@
         "No es necesario crear cuentas para usuario con una dirección de correo xxx@medecinsdumonde.net: apareceran automáticamente una vez se hayan conectado una vez. Para socios, es posible crear cuentas desde la páginas dedicadas a cada proyecto."
     ],
     "SpecificEndDate": "Fecha de final específica",
-    "SpecificStartDate": "Fecha de inicio específica",
     "SpecificObjective-Hint": "Describa las ventajas tangibles que se proporcionan a los beneficiarios",
+    "SpecificStartDate": "Fecha de inicio específica",
+    "SpecificStartDate-Hint": "Si la fecha de inicio del lugar de colecta es diferente de la fecha de inicio del proyecto que ha sido seleccionada en \"Datos de base\", hacer clic en el calendario",
+    "SpecificEndDate-Hint": "Si la fecha de finalización del lugar de colecta es diferente de la fecha de finalización del proyecto que ha sido seleccionada en \"Datos de base\", hacer clic en el calendario",
     "StartDate": "Fecha de inicio",
     "State": "Estado",
     "Structure": "Estructura",

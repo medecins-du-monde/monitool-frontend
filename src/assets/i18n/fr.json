@@ -71,6 +71,7 @@
         "StartDatePlaceholder": "Idem début du projet"
     },
     "DataSources": "Sources de données",
+    "DataSource": "Source de données",
     "Date": "Date",
     "Delete": "Supprimer",
     "Deleted": "Supprimé",
@@ -493,6 +494,7 @@
     "LastEntry": "Dernière saisie",
     "LoadMoreRevisions": "Voir plus de modifications",
     "LogicalFrameworks": "Cadres logiques",
+    "LogicalFramework": "Cadre logique",
     "LogicalFrameworksPageDescription":{
         "Line1":"Un cadre logique est un document qui décrit les objectifs, les résultats attendus, et les activités misent en oeuvre pour y parvenir, ainsi que les indicateurs qui permette de suivre l'avancement de chaque élément",
         "Line2": "Tous les indicateurs présents dans les cadres logiques doivent être calculables à partir des données décrites dans les sources de données"
@@ -649,8 +651,10 @@
         "Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il est possible de créer des comptes partenaires depuis l'interface de gestion des projets."
     ],
     "SpecificEndDate": "Date de fin spécifique",
-    "SpecificStartDate": "Date de début spécifique",
     "SpecificObjective-Hint": " Description des avantages directs destinés au(x) groupe(s) cible(s)",
+    "SpecificStartDate": "Date de début spécifique",
+    "SpecificStartDate-Hint": "Si la date de début du site de collecte est différente de la date de début du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
+    "SpecificEndDate-Hint": "Si la date de fin du site de collecte est différente de la date de fin du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
     "StartDate": "Date de lancement",
     "State": "État",
     "Structure": "Structure",

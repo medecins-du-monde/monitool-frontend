@@ -1,7 +1,15 @@
 @import "src/assets/theme/size_vars";
+@import "src/assets/theme/color_vars";
 
 .mdm-table {
     tr {
+
+        td:first-child {
+            font-size: $normal_text;
+            font-weight: bold;
+            color: $title_black;
+          }
+
         th {
             text-align: center;
         }
@@ -15,6 +23,10 @@
                     width: 100%;
                 }
             }
+        }
+        th:first-child {
+            width: 100px !important;
+            padding-left: 0 !important;
         }
         th, td {
             width: 60px !important;

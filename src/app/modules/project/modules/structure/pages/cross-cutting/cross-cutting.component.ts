@@ -48,6 +48,7 @@ export class CrossCuttingComponent implements OnInit {
     return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as FormArray;
   }
 
+  // TODO: Remove this method if not used
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }

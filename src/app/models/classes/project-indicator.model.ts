@@ -37,6 +37,16 @@ export class ProjectIndicator implements Deserializable {
     this.deserialize(input);
   }
 
+  // Return true if the indicator can be considered as filled
+  get filled(): boolean {
+    if (this.computation && this.computation.formula) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   deserialize(input: any): this {
     Object.assign(this, input);
     this.display = input ? input.display || (input.name ? input.name.en : null) : null;
