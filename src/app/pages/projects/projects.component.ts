@@ -68,10 +68,10 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     } as InformationItem,
     {
       res1: 'InformationPanel.Project_list_question6',
-      res2: 'Information.Project_list_response6'
+      res2: 'InformationPanel.Project_list_response6'
     } as InformationItem,
     {
-      res1: 'Information.Project_list_question7',
+      res1: 'InformationPanel.Project_list_question7',
       res2: 'InformationPanel.Project_list_response7'
     } as InformationItem
   ];

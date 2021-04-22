@@ -67,14 +67,22 @@
         display: none;
 
         .mat-expansion-panel-header {
+            height: 40px !important;
+            margin-top: 10px;
+
+            .panel-title {
+                font-size: 16px;
+                font-weight: bold;
+                color: black;
+            }
+    
             @media screen and (max-width: $breakpoint-xs-sm) {             
                 padding: 2px 16px !important;
-                display: block !important;
-                height: auto;
+                height: auto !important;
+                margin-top: 0px;
 
-                .mat-expansion-panel-header-title {
-                    font-size: 14px !important;
-                    display: block !important;
+                .panel-title {
+                    font-size: 15px !important;
                 }
             }
         }

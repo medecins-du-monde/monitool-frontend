@@ -13,8 +13,8 @@
         <mat-accordion *ngFor="let information of informations  | slice:1; let i = index">
             <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
-                <mat-panel-title [innerHTML]="transform(information.res1)">
-                </mat-panel-title>
+                <p class="panel-title" [innerHTML]="transform(information.res1)">
+                </p>
                 </mat-expansion-panel-header>
                 <div class="panel-answer" [innerHTML]="transform(information.res2)"></div>
             </mat-expansion-panel>

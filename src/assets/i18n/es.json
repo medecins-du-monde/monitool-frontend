@@ -426,6 +426,7 @@
         "General_accidental_delete_response": "En caso de error, haga clic en <button>Descartar los cambios</button> para volver a la última versión guardada de su proyecto.",
         "General_delete_saved_question": "Eliminé algo de mi proyecto por error y guardé mi cambio. Como volver.",
         "General_delete_saved_response": "Ve a la estructura de tu proyecto. <br>Desde allí, puede ver todas las modificaciones realizadas al proyecto y volver a donde desee.",
+        "General_Naming_convention_question": "¿Cómo elegir nombres adecuados para sitios de recolección, fuentes de datos, variables e indicadores?",
         "General_Naming_convention_response": "Utilice nombres cortos para nombrar los diferentes componentes de su proyecto.<br>Al evitar los acrónimos, mejora la legibilidad de sus gráficos y tablas y permite una mejor comprensión de su proyecto por parte de todos los interesados.",
         "General_reporting": "Informe general",
         "General_reporting_description": "Esta página le permite explorar sus datos jerárquicamente a partir de una visión general de su proyecto.",
