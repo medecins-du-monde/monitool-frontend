@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     logicalFrames: 0,
     logicalFramesOther: 0,
     extraIndicators: 0,
-    logicalFramesUpdate: 0,
+    datasource: 0,
     crossCuttingUpdate: 0,
     extraIndicatorsUpdate: 0
   });
@@ -90,17 +90,22 @@ export class HomeComponent implements OnInit {
 
         const listCrossCutting = Object.keys(project.crossCutting).map(x => project.crossCutting[x]);
         const newPercentages = {
+          // Check if we have
           basics: ( project.name && project.country && project.themes.length > 0 ) ? 100 : 0,
           sites: ( project.entities.length > 0 ) ? 100 : 0,
+          // Check if we have at least one logical frame
           logicalFrames: ( project.logicalFrames.length > 0 ) ? 100 : 0,
+          // Check if we have more than one
           logicalFramesOther: ( project.logicalFrames.length > 1 ) ? 100 : 0,
+          // Check if we have extra indicators
           extraIndicators: ( project.extraIndicators.length > 0 ) ? 100 : 0,
-          logicalFramesUpdate: ( project.forms.length > 0 ) ? 100 : 0,
+          // Check if we have one form created
+          datasource: ( project.forms.length > 0 ) ? 100 : 0,
           // If there is no indicator available, we consider that they are all filled
-          crossCuttingUpdate: indicators.length > 0 ? (listCrossCutting.length / indicators.length) * 100 : 100,
+          crossCuttingUpdate: indicators.length > 0 ? ((listCrossCutting.length / indicators.length) * 100).toFixed(0) : 100,
           // Same here
           extraIndicatorsUpdate: project.extraIndicators.length > 0 ?
-          (project.extraIndicators.filter(indicator => indicator.filled).length / project.extraIndicators.length) * 100 : 100
+          ((project.extraIndicators.filter(indicator => indicator.filled).length / project.extraIndicators.length) * 100).toFixed(0) : 100
         };
         this.percentages.next(newPercentages);
       });
@@ -234,7 +239,7 @@ export class HomeComponent implements OnInit {
               es: ' de donde extraerá los datos necesarios para calcular los indicadores de todos sus marcos lógicos. A medida que avance, actualice las fórmulas para calcular sus indicadores en ',
               fr: ' dont vous allez extraire les données nécessaires au calculs des indicateurs de tous vos cadres logiques. À mesure de votre avancement, mettez à jour les formules de calcul de vos indicateurs dans ',
             }),
-            status: percentages.logicalFramesUpdate,
+            status: percentages.datasource,
             buttonIcon2: 'clipboard',
             buttonText2: new MultiLanguage({
               en: 'Logical frameworks',
