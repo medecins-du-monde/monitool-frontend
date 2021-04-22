@@ -1,4 +1,5 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .background {
     position: absolute;
@@ -6,7 +7,7 @@
     top: 0;
     height: 100%;
     width: 100%;
-    background: black;
+    background: $black;
     z-index: 101;
     display: none;
 
@@ -34,14 +35,14 @@
     height: 100%;
     width: auto;
     display: flex;
-    background-color: white;
+    background-color: $white;
     z-index: 102;
 
     .information-panel-title {
         text-align: justify;
         h1 {
             text-align: center;
-            color: black;
+            color: $black;
         }
         h2 {
             text-align: center;
@@ -52,7 +53,7 @@
         height: 100%;
         width: 25px;
         cursor: pointer;
-        background-color: #ddd;
+        background-color: $card_header_background;
 
         mat-icon {
             margin-top: 45vh;
@@ -71,18 +72,17 @@
             margin-top: 10px;
 
             .panel-title {
-                font-size: 16px;
-                font-weight: bold;
-                color: black;
+                font-size: $normal_text;
+                color: $black;
             }
     
             @media screen and (max-width: $breakpoint-xs-sm) {             
                 padding: 2px 16px !important;
                 height: auto !important;
-                margin-top: 0px;
+                margin-top: 10px;
 
                 .panel-title {
-                    font-size: 15px !important;
+                    font-size: $normal_text !important;
                 }
             }
         }

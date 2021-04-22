@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
       res2: 'InformationPanel.General_delete_saved_response'
     } as InformationItem
   ];
-  
+
   percentages: BehaviorSubject<any> = new BehaviorSubject({
     basics: 0,
     sites: 0,

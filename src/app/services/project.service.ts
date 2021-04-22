@@ -58,7 +58,6 @@ export class ProjectService {
     return this.informations.asObservable();
   }
 
-  breadcrumbList: BreadcrumbItem[];
   get getBreadcrumbsList(): Observable<any[]> {
     return this.breadCrumbs.asObservable();
   }
