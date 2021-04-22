@@ -73,6 +73,7 @@
         "StartDatePlaceholder": "Igual que el inicio del proyecto"
     },
     "DataSources": "Fuente de datos",
+    "DataSource": "Fuente de datos",
     "Date": "Fecha",
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
@@ -390,6 +391,7 @@
     "LastEntry": "Última entrada",
     "LoadMoreRevisions": "Ver cambios mas antigos",
     "LogicalFrameworks": "Marcos lógicos",
+    "LogicalFramework": "Marco lógico",
     "LogicalFrameworksPageDescription":{
         "Line1":"Un marco lógico es un documento que describe los objectivos, resultados y actividades de un proyecto, asi como indicadores para seguir el progreso de cada uno de ellos",
         "Line2": "Todos los indicadores deben ser calculables a partir de los datos describidos en las fuentes de datos"
