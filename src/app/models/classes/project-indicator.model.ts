@@ -39,7 +39,7 @@ export class ProjectIndicator implements Deserializable {
 
   // Return true if the indicator can be considered as filled
   get filled(): boolean {
-    if (this.computation.formula) {
+    if (this.computation && this.computation.formula) {
       return true;
     }
     else {
