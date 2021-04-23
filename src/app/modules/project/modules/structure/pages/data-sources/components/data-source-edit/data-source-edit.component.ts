@@ -167,25 +167,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     }
   }
 
-  private getGroupedEntities(){
-    // if all entities are selected, just return all the options selected
-    if (this.form.entities.length === this.entities.length){
-      return [...this.entities, ...this.groups, this.allOption]
-    }
-  
-    // get the groups that have all members selected
-    let groups = this.groups.filter(g => {
-      for(let member of g.members){
-        if (!this.form.entities.includes(member) ){
-          return false;
-        }
-      }
-      return true;
-    })
-
-    return [ ...groups, ...this.form.entities ];
-  }
-
   private setForm(): void {
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
@@ -193,7 +174,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
-      entities: [this.getGroupedEntities()],
+      entities: [this.form.entities],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start ? this.form.start : this.project.start, Validators.required],
       end: [this.form.end ? this.form.end : this.project.end, Validators.required],
@@ -231,32 +212,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       && !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
   }
 
-  onEntityRemoved(entity): void {
-    let currentEntities = this.dataSourceForm.controls.entities;
-    const entities = this.dataSourceForm.controls.entities.value;
-    if (entity === this.allOption){
-      this.dataSourceForm.controls.entities.setValue([])  
-    }else if (this.groups.find(g => g.id === entity.id)){
-      let newValue = currentEntities.value.filter(x => x.id !== entity.id);
-      let entitiesBelongingToGroups = [];
-      for (let group of newValue){
-        if (group instanceof Group){
-          for (let member of group.members){
-            if (!entitiesBelongingToGroups.includes(member)){
-              entitiesBelongingToGroups.push(member);
-            }
-          }
-        }
-      }
-
-      currentEntities.setValue(
-        newValue.filter(e => e.id !== this.allOption.id && !(e instanceof Entity && entity.members.includes(e) && !entitiesBelongingToGroups.includes(e)))
-      )
-    }
-    else{
-      this.dataSourceForm.controls.entities.setValue(currentEntities.value.filter(x => x.id !== entity.id));
-    }
-  }
 
   onAddNewElement(): void {
     this.elements.push(this.newElement());
@@ -317,96 +272,4 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.elements.setControl(event.currentIndex, selectedControl);
   }
 
-  toggleAllSelection(): void{
-    let currentEntities = this.dataSourceForm.controls.entities;
-
-    // when the 'all' option is selected we select all the others too
-    if (currentEntities.value.includes(this.allOption)){
-      currentEntities.setValue([...this.entities, ...this.groups, this.allOption]);
-    }
-    // when it its unselected we remove all the others
-    else{
-      currentEntities.setValue([]);
-    }
-  }
-
-  toggleNormalOption(entityClicked: Entity){
-    let currentEntities = this.dataSourceForm.controls.entities;
-    // this means it is selecting a new option
-    if (currentEntities.value.includes(entityClicked)){
-      // if selecting this option make we have all entities selected we must add the 'allOption' and all the groups
-      if (currentEntities.value.filter(e => e instanceof Entity).length === this.entities.length){
-        currentEntities.setValue([...currentEntities.value, ...this.groups, this.allOption]);
-      }else{
-        // we need to add all the groups that have all members selected
-        currentEntities.setValue([...currentEntities.value, ...this.groups.filter(g => !currentEntities.value.includes(g)).filter(g => {
-          for (let member of g.members){
-            // if one member is not present we can return false and the group won't be selected
-            if (!currentEntities.value.includes(member)){
-              return false;
-            }
-          }
-          return true;
-        })])
-      }
-    }
-    // this means we are deselecting an option
-    else{
-      // if the 'allOption' is selected and we click on a normal option, we have to remove the 'allOption'
-      let newOptions = currentEntities.value.filter((e) => {
-        return e.id !== this.allOption.id &&
-        // and also remove the groups that have that option as a member
-        !(e instanceof Group && e.members.includes(entityClicked))
-      });
-      currentEntities.setValue(newOptions);
-    }
-  }
-
-  toggleGroupOption(group: Group){
-    let currentEntities = this.dataSourceForm.controls.entities;
-    
-    // adding a new group
-    if (currentEntities.value.includes(group)){
-      // add all members of that group that are not selected already
-      let entitiesToBeAdded = this.entities.filter((e:Entity) => group.members.includes(e));
-
-      // add allOption if necessary
-      let newValues = currentEntities.value.concat(entitiesToBeAdded.filter(e => !currentEntities.value.includes(e)));
-      if (newValues.filter(e => this.entities.includes(e)).length === this.entities.length){
-        newValues = [...this.entities, ...this.groups, this.allOption]
-      }
-      else{
-        // add all the groups that have all members selected
-        let newGroups = this.groups.filter(g => {
-          if (newValues.includes(g)){
-            return false;
-          }
-          for (let member of g.members){
-            if (!newValues.includes(member)){
-              return false;
-            }
-          }
-          return true;
-        });
-        newValues = newValues.concat(newGroups);
-      }
-      currentEntities.setValue(newValues);
-    }
-    // removing a group
-    else{
-      let entitiesBelongingToGroups = [];
-      for (let group of currentEntities.value){
-        if (group instanceof Group){
-          for (let member of group.members){
-            if (!entitiesBelongingToGroups.includes(member)){
-              entitiesBelongingToGroups.push(member);
-            }
-          }
-        }
-      }
-      currentEntities.setValue(
-        currentEntities.value.filter(e => e.id !== this.allOption.id && !(e instanceof Entity && group.members.includes(e) && !entitiesBelongingToGroups.includes(e)))
-      )
-    }
-  }
 }
