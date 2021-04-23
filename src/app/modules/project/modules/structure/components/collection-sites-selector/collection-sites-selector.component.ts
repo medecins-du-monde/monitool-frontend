@@ -70,7 +70,7 @@ export class CollectionSitesSelectorComponent implements OnInit, OnDestroy {
       }
     }
 
-    return entities
+    return entities;
   }
   
   onEntityRemoved(entity): void {

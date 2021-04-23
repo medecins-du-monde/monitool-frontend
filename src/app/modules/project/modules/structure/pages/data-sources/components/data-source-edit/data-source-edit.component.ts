@@ -62,29 +62,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public periodicities = [];
   public allOption: Entity = new Entity({id:'all', name: 'All'})
   
-  // this is only used by the mat-chip-list
-  get selectedEntities(): Entity[] {
-    if (this.dataSourceForm.controls.entities.value === null){
-      return [];
-    }
-
-    let entities = [...this.dataSourceForm.controls.entities.value];
-
-    // if the 'allOption' is selected it should be the only one displayed
-    if (entities && entities.includes(this.allOption)){
-      return [this.allOption]
-    }
-
-    // we a group is selected, we don't show it's members
-    for (let group of entities){
-      if (group instanceof Group){
-        entities = entities.filter(e => !group.members.includes(e));
-      }
-    }
-
-    return entities
-  }
-
   get elements(): FormArray {
     return this.dataSourceForm.controls.elements as FormArray;
   }
