@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { Group } from 'src/app/models/classes/group.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Purpose } from 'src/app/models/classes/purpose.model';
@@ -55,6 +56,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   public project: Project;
   public entities: Entity[];
+  public groups: Group[];
   public logicalFrame: LogicalFrame;
 
   get selectedEntities() {
@@ -92,6 +94,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     ).subscribe((res: { project: Project, logicalFrameId: string }) => {
       this.project = res.project;
       this.entities = res.project.entities;
+      this.groups = res.project.groups;
       const oldLogicalFrame = this.logicalFrame;
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
 

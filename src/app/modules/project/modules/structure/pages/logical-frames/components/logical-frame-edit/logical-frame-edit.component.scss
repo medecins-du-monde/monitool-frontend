@@ -10,3 +10,8 @@
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   background-color: #337ab7 !important;
 }
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}
