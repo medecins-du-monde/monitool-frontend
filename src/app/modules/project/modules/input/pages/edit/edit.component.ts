@@ -291,7 +291,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
       // Update of the total for all rows
       // chose a row
-      for (x = table.cols.length; x < table.numberRows - 1; x += 1){
+      for (x = table.cols.length; x < (table.numberRows - 1); x += 1){
         // sum of the row
         let sum = 0;
         // iterate over all collumns for the row chosen
@@ -309,8 +309,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
-      // otherwise, this value will be overwritten
-      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      // otherwise, this value will be overwritten after
+      if (table.numberRows > 1 || table.numberCols > 1){
+        table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      }
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
