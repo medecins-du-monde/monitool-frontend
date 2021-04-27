@@ -119,7 +119,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       }
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      } else if (JSON.stringify(oldLogicalFrame) !== JSON.stringify(this.logicalFrame)) {
+      } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
         this.entities = res.project.entities;
         this.groups = res.project.groups;
         this.setForm();
