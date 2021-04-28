@@ -45,12 +45,14 @@
     border: solid 0.5px $table_border !important;
     color: $title_black;
     font-weight: bold;
+    text-align: center;
   }
   
   .mat-column {
     width: 50px;
   }
   td {
+    padding: 0 !important;
     font-size : $small_text;
     text-align: center;
     border: solid 1px $table_border !important;
@@ -110,7 +112,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 15px 0px 15px;
-    height: 48px;
+    height: 30px;
     div {
       overflow: hidden;
       text-overflow: ellipsis;
