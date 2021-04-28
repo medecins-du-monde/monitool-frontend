@@ -11,7 +11,8 @@
         <div class="card-info">
             <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>
             <div class="card-info-value">
-                <div *ngFor="let entity of logicalFrame.entities">{{ entity.name }}</div>
+                <div *ngFor="let group of groups">{{ group.name | translate }}</div>
+                <div *ngFor="let entity of entities">{{ entity.name }}</div>
             </div>
         </div>
     </mat-card-content>

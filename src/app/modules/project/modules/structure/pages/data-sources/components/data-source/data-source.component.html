@@ -13,7 +13,8 @@
         <div class="card-info">
             <b class="card-info-title">{{ 'CollectionSites' | translate }}</b>
             <div class="card-info-value">
-                <div *ngFor="let entity of form.entities">{{ entity.name }}</div>
+                <div *ngFor="let group of groups">{{ group.name | translate }}</div>
+                <div *ngFor="let entity of entities">{{ entity.name }}</div>
             </div>
         </div>
     </mat-card-content>
