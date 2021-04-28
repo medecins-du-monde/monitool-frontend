@@ -9,7 +9,7 @@
             <div class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'Start' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-label>Choose a startdate</mat-label>
+                    <mat-label>{{ 'ChooseStartDate' | translate }}</mat-label>
                     <input matInput [matDatepicker]="start" formControlName="_start">
                     <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
@@ -19,7 +19,7 @@
             <div class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'End' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-label>Choose an enddate</mat-label>
+                    <mat-label>{{ 'ChooseEndDate' | translate }}</mat-label>
                     <input matInput [matDatepicker]="end" formControlName="_end">
                     <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
