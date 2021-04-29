@@ -13,7 +13,7 @@
         <mat-option *ngFor="let group of groups" (click)="toggleGroupOption(group)" [value]=group><mat-icon>arrow_circle_down</mat-icon>{{ group.name }}</mat-option>
         <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>
     </mat-select>
-    <mat-hint>
+    <mat-hint *ngIf="hint">
         <mat-icon>info</mat-icon>{{ 'DataSourceEdit.CollectionSitesHint' | translate }}
     </mat-hint>
 </mat-form-field>

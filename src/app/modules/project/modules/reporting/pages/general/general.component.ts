@@ -11,6 +11,7 @@ import { ThemeService } from 'src/app/services/theme.service';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { Entity } from 'src/app/models/classes/entity.model';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class GeneralComponent implements OnInit {
   });
 
   dimensionIds = new BehaviorSubject('');
-
+  entities: Entity[];
   tableContent = new BehaviorSubject<any[]>([]);
 
   options =  {fill: false};
@@ -48,6 +49,7 @@ export class GeneralComponent implements OnInit {
     this.chartService.clearChart();
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+      this.entities = this.project.entities;
       const breadCrumbs = [
         {
           value: 'Projects',
@@ -282,6 +284,7 @@ export class GeneralComponent implements OnInit {
   }
 
   receiveFilter(value): void{
+    value.entities = value.entities.filter(e => this.entities.includes(e)).map(e => e.id);
     this.filter.next(value);
   }
 

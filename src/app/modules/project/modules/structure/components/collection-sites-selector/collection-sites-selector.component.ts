@@ -14,8 +14,9 @@ export class CollectionSitesSelectorComponent implements OnInit, OnDestroy {
   public allOption: Entity = new Entity({id:'all', name: 'All'})
   
   @Input() form: FormGroup;
-  @Input() entities = []
-  @Input() groups = []
+  @Input() entities = [];
+  @Input() groups = [];
+  @Input() hint = true;
 
   private subscription: Subscription = new Subscription();
   constructor() { }
