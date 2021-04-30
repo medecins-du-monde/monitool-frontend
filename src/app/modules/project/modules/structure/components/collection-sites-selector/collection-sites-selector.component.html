@@ -14,6 +14,6 @@
         <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>
     </mat-select>
     <mat-hint *ngIf="hint">
-        <mat-icon>info</mat-icon>{{ 'DataSourceEdit.CollectionSitesHint' | translate }}
+        <mat-icon>info</mat-icon>{{ hint | translate }}
     </mat-hint>
 </mat-form-field>

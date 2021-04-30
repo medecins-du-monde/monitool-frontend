@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Form } from 'src/app/models/classes/form.model';
+import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -24,7 +25,8 @@ export class UserModalComponent implements OnInit {
   roles: any[];
   project: Project;
   dataSources: Form[];
-  collectionSites: Entity[];
+  entities: Entity[];
+  groups: Group[];
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +37,7 @@ export class UserModalComponent implements OnInit {
   ) { }
 
   get selectedSites(): Entity[] {
-    return this.userForm ? this.collectionSites.filter(x => this.userForm.controls.entities.value.includes(x)) : [];
+    return this.userForm ? this.entities.filter(x => this.userForm.controls.entities.value.includes(x)) : [];
   }
 
   get selectedDataSources(): Form[] {
@@ -47,7 +49,8 @@ export class UserModalComponent implements OnInit {
     this.roles = rolesList;
     this.projectService.openedProject.subscribe(project => {
       this.project = project;
-      this.collectionSites = project.entities;
+      this.entities = project.entities;
+      this.groups = project.groups;
       this.dataSources = project.forms;
 
       this.resetChanges();
@@ -61,7 +64,9 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const user = new User(this.userForm.value);
+    let formValue = this.userForm.value;
+    formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
+    const user = new User(formValue);
     this.dialogRef.close({ data: user });
   }
 

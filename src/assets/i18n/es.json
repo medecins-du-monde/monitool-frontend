@@ -583,7 +583,9 @@
         "UserEdition": {
             "Role": "Este campo determina que podra hacer este usuario: los proprietarios pueden cambiar la estructura de los proyectos, los operadores de entrada solo entrar datos.",
             "Type": "Elija \"Cuenta MDM\" si el usuario tiene una dirección email xxx@medecinsdumonde.net. Elija \"Cuenta partnerio\" sino.",
-            "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool."
+            "User": "Quien es el usuario MDM que desea añadir? Si el usuario no esta en la lista, pidale que se conecte al menos una vez a Monitool.",
+            "CollectionSites": "Para que lugares podra este usuario entrar datos?",
+            "DataSources": "Para que fuentes de datos podra este usuario entrar datos?"
         }
     },
     "TooltipRoleHint": {

@@ -592,7 +592,9 @@
         "UserEdition": {
             "Role": "This field determines what will this user be allowed to do: owners can change the project's structure, data entry officers can only do data input.",
             "Type": "Choose \"MDM Account\" if the user has a xxx@medecinsdumonde.net email address. Choose \"Partner account\" otherwise.",
-            "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time."
+            "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time.",
+            "CollectionSites": "For which sites will this user enter data?",
+            "DataSources": "For which data sources will this user enter data?"
         }
     },
     "TooltipRoleHint": {
