@@ -11,35 +11,35 @@ import { environment } from 'src/environments/environment';
   templateUrl: './data-source.component.html',
   styleUrls: ['./data-source.component.scss']
 })
-export class DataSourceComponent {
+export class DataSourceComponent implements OnInit {
 
   @Input() form: Form;
   @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
-  public allOption: Group = new Group({id:'all', name: 'All'})
+  public allOption: Group = new Group({id: 'all', name: 'All'});
   groups: Group[];
   entities: Entity[];
 
-  private getGroupsSelected(){ 
+  private getGroupsSelected(){
     if (this.form === null || this.form.entities === null){
       return [];
     }
-    
+
     // if all entities are selected, just return the allOption
     if (this.form.entities.length === this.project.entities.length){
       return [this.allOption];
     }
-  
+
     // get the groups that have all members selected
-    let groups = this.project.groups.filter(g => {
-      for(let member of g.members){
+    const groups = this.project.groups.filter(g => {
+      for (const member of g.members){
         if (!this.form.entities.includes(member) ){
           return false;
         }
       }
       return true;
-    })
+    });
 
     return groups;
   }
@@ -47,10 +47,10 @@ export class DataSourceComponent {
   private filterEntities(): Entity[] {
     let entities = [...this.form.entities];
 
-    for (let group of this.groups){
+    for (const group of this.groups){
       entities = entities.filter( e => !group.members.includes(e) );
     }
-    
+
     return entities;
   }
 
@@ -59,7 +59,7 @@ export class DataSourceComponent {
   ngOnInit(): void {
     this.allOption.members = this.form.entities;
     this.groups = this.getGroupsSelected();
-    this.entities = this.filterEntities()
+    this.entities = this.filterEntities();
   }
 
   get currentLang() {

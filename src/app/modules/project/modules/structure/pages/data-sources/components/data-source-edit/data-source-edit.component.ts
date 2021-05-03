@@ -56,12 +56,12 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   endDate: Date;
 
   public entities: Entity[];
-  public groups: Group[]
+  public groups: Group[];
   public form: Form;
   public project: Project;
   public periodicities = [];
-  public allOption: Entity = new Entity({id:'all', name: 'All'})
-  
+  public allOption: Entity = new Entity({id: 'all', name: 'All'});
+
   get elements(): FormArray {
     return this.dataSourceForm.controls.elements as FormArray;
   }

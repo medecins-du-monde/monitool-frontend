@@ -133,14 +133,14 @@ export class ProjectIndicator implements Deserializable {
         && this.target !== undefined) ? this.colorize : false,
       computation: this.formatComputation(this.computation),
     };
-    
-    if (!crossCuttingType) { 
+
+    if (!crossCuttingType) {
       serializedIndicator = {
         display: this.display,
         ...serializedIndicator
-      }
+      };
     }
-      
+
     return serializedIndicator;
   }
 

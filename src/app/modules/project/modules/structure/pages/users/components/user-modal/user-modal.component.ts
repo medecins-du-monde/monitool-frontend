@@ -64,7 +64,7 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let formValue = this.userForm.value;
+    const formValue = this.userForm.value;
     formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
     const user = new User(formValue);
     this.dialogRef.close({ data: user });
