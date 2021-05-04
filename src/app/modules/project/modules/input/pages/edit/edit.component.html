@@ -16,7 +16,7 @@
 <div class="title">
     <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()">
         <mat-icon>edit</mat-icon>
-        Fill with data from the previous entry
+        {{ 'FillWithPreviousData' | translate }}
     </button>
     <div class="mdm-title">
         {{ 'Data' | translate }}
@@ -36,7 +36,7 @@
     
     <button mat-stroked-button class="mdm-button" [disabled]="!inputHasModification" (click)="resetInput()">
         <mat-icon>replay</mat-icon>
-        {{ 'Reset changes' | translate }}
+        {{ 'ResetChanges' | translate }}
     </button>
 
     <button mat-stroked-button class="mdm-button warn" *ngIf="input" (click)="deleteInput()">

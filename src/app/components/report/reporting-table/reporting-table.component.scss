@@ -22,6 +22,10 @@
     width: 50px;
   }
 
+  .mat-column-baseline, .mat-column-target {
+    width: 65px;
+  }
+
   .mat-column-name {
     width: 300px;
     @media screen and (max-width: $breakpoint-xs) {
@@ -41,11 +45,12 @@
   th {
     overflow: hidden;
     width: 85px;
-    margin-right: 30px;
     border: solid 0.5px $table_border !important;
-    color: $title_black;
+    color: $grey;
     font-weight: bold;
     text-align: center;
+    font-size: $small_text;
+    padding: 0 !important
   }
   
   .mat-column {
@@ -55,6 +60,7 @@
     padding: 0 !important;
     font-size : $small_text;
     text-align: center;
+    color: $grey;
     border: solid 1px $table_border !important;
     word-break: break-word;
     &.value-cell{
@@ -66,11 +72,7 @@
       }
     }    
   }
-  
-  th.mat-header-cell {
-    font-size: $small_text;
-    margin: 0px 10px;
-  }
+
   
   tr.mat-row {
   height: 30px !important;
@@ -135,6 +137,7 @@
   .title{
     font-weight: bold;
     font-size: $small_text;
+    color: $grey; 
     div {
       display: flex;
       align-items: center;
@@ -145,6 +148,7 @@
     display: flex !important;
     justify-content: center;
     align-items: center;
+    color: $grey;
   }
   
   th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {

@@ -678,6 +678,7 @@
     "Thematics": "Thematics",
     "TimeAggregation": "How to group entries from different periods?",
     "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
+    "Filters": "Filters",
     "Filter": {
         "day": "Day",
         "month_week_sat": "Week (saturday to friday / split by month)",
@@ -746,6 +747,7 @@
         "DataNotAvailable": "Data available by",
         "MissingCalculation": "Calculation is missing"
     },
-    "DownloadTable": "Download Table"
-
+    "DownloadTable": "Download Table",
+    "FillWithPreviousData": "Fill with data from the previous entry",
+    "ShowFinishedProjects": "Show finished projects"
 }

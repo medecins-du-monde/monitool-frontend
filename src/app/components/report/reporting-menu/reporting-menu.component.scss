@@ -1,5 +1,12 @@
+@import "src/assets/theme/color_vars.scss";
+
 .mdm-button {
   display: flex !important;
   justify-content: center;
   align-items: center;
+  color: $grey;
+}
+
+span {
+  color: $grey;
 }

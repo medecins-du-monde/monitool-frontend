@@ -40,3 +40,14 @@ h2 {
 .mat-icon {
   padding: 2px;
 }
+
+.mdm-form-group:last-child {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+width: 300px;
+  .mdm-form-label {
+    flex: 0.7;
+  }
+}

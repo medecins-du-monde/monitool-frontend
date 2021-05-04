@@ -39,6 +39,10 @@
   padding-left: 20px;
 }
 
+.mat-option {
+  color: $grey;
+}
+
 button {
   width: 98%;
   height: 90%;
@@ -46,4 +50,7 @@ button {
     font-size: $extra_small_text;
   }
   font-size: $normal_text;
+  mat-icon {
+    margin-bottom: 3px;
+  }
 }

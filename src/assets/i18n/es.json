@@ -669,6 +669,7 @@
     "Task": "Tarea",
     "TimeAggregation": "Como compilar entradas provenientes de diferentes periodos?",
     "TimeAggregationHint": "En un proyecto que colecta datos mensuales, si <code>{{name}}</code> vale 10 en enero, 20 en febrero y 30 en marzo, que vale para el trimer trimestre?",
+    "Filters": "Filtros",
     "Filter": {
         "day": "Dia",
         "month_week_sat": "Semana (sábado a viernes / cortado por mes)",
@@ -764,5 +765,7 @@
         "DataNotAvailable": "Estos datos estan disponibles por mes",
         "MissingCalculation": "Falta el cálculo"
     },
-    "DownloadTable": "Descargar la tabla"
+    "DownloadTable": "Descargar la tabla",
+    "FillWithPreviousData": "Rellenar con los datos de la última entrada",
+    "ShowFinishedProjects": "Mostrar proyectos terminados"
 }
