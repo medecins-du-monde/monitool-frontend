@@ -218,7 +218,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return item;
   }
 
-  // table after dimension change
+  // Update all the table headers with the new dimensions
   updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
       this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
