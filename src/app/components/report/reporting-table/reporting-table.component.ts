@@ -427,7 +427,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
     }
     if (id === '_total') { return 'Total'; }
-    if (this.dimensionIds.value === 'month'){
+    if (this.dimensionIds.value !== 'entity' && this.dimensionIds.value !== 'group'){
       let timeSlotAux = new TimeSlot(id);
       return timeSlotAux.humanizeValue(this.currentLang);
     }
