@@ -34,14 +34,16 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group checkbox-form" *ngIf="data.indicator.value.target && data.indicator.value.baseline">
-        <div>
-            <div class="mdm-form-label">{{ 'Colorize' | translate }}</div>
-            <mat-checkbox formControlName="colorize"  ></mat-checkbox>
+    <div class="mdm-form-group checkbox-form" *ngIf="data.indicator.value.target !== null && data.indicator.value.baseline !== null">
+        <div class="mdm-form-label">{{ 'Colorize' | translate }}</div>
+        <div class="mat-form-field mdm-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-can-float mat-form-field-should-float ng-untouched ng-pristine ng-valid _mat-animation-noopable">
+            <div class="mat-form-field-wrapper">
+                <mat-checkbox formControlName="colorize" ></mat-checkbox>
+                <mat-hint>
+                    <mat-icon class="icon-style">info</mat-icon>{{ 'Colorize-Hint' | translate }}
+                </mat-hint> 
+            </div>
         </div>
-        <mat-hint>
-            <mat-icon class="icon-style">info</mat-icon>{{ 'Colorize-Hint' | translate }}
-        </mat-hint>      
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
