@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { ProjectService } from './services/project.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,13 @@ export class AppComponent {
   title = 'MDM-monitool-Frontend';
   preferredLanguage: string;
 
+  inProjectListPage: Boolean = false;
+
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private projectService: ProjectService
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
@@ -123,5 +127,7 @@ export class AppComponent {
       'edit',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/edit.svg')
     );
+
+    this.projectService.listPage.subscribe(val => this.inProjectListPage = val);
   }
 }

@@ -26,6 +26,8 @@ export class ProjectService {
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
+  inProjectsListPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -44,6 +46,10 @@ export class ProjectService {
 
   get bigPage(): Observable<boolean> {
     return this.inBigPage.asObservable();
+  }
+
+  get listPage(): Observable<boolean> {
+    return this.inProjectsListPage.asObservable();
   }
 
   get hasBasicsInfos(): Observable<boolean> {
