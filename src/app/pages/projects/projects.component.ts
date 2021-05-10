@@ -127,9 +127,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
+    this.projectService.needsInfosPanelSpace.next(true);
   }
 
   ngOnDestroy(): void {
+    this.projectService.needsInfosPanelSpace.next(false);
     this.subscription.unsubscribe();
   }
 
