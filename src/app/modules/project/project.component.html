@@ -1,8 +1,9 @@
 
 <div class="drawer">
     <app-sidenav [sidenav]="sidenav" [structurePage]="true"></app-sidenav>
-    <div class="drawer-page {{!bigPage ? 'with-margin' : null}}">
+    <div class="drawer-page {{!bigPage ? 'with-margin' : null}} info-panel-space">
         <app-breadcrumb></app-breadcrumb>
         <router-outlet></router-outlet>
     </div>
+    <app-informations-panel></app-informations-panel>
 </div>

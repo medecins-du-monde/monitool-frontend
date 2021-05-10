@@ -15,6 +15,7 @@ import { PartitionElement } from 'src/app/models/classes/partition-element.model
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { Project } from 'src/app/models/classes/project.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { DateService } from 'src/app/services/date.service';
 import { ProjectService } from 'src/app/services/project.service';
@@ -41,6 +42,57 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
   ]
 })
 export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Datasource_edit',
+      res2: ''
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question1',
+      res2: 'InformationPanel.Datasource_edit_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question2',
+      res2: 'InformationPanel.Datasource_edit_response2'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question3',
+      res2: 'InformationPanel.Datasource_edit_response3'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question4',
+      res2 : 'InformationPanel.Datasource_edit_response4'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question5',
+      res2: 'InformationPanel.Datasource_edit_response5'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question6',
+      res2: 'InformationPanel.Datasource_edit_response6'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question7',
+      res2: 'InformationPanel.Datasource_edit_response7'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasource_edit_question8',
+      res2: 'InformationPanel.Datasource_edit_response8'
+    } as InformationItem
+  ];
 
   dataSourceForm: FormGroup = new FormGroup({
     id: new FormControl(null),
@@ -136,6 +188,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   ngOnDestroy(): void {

@@ -14,8 +14,10 @@ import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import * as _ from 'lodash';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -23,6 +25,35 @@ import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptio
 })
 
 export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
+
+  informations = [
+    {
+      res1: 'InformationPanel.Edit_data',
+      res2: 'InformationPanel.Edit_data_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Edit_data_question1',
+      res2: 'InformationPanel.Edit_data_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Edit_data_question2',
+      res2: 'InformationPanel.Edit_data_response2'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Edit_data_question3',
+      res2: 'InformationPanel.Edit_data_response3'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Edit_data_question4',
+      res2 : 'InformationPanel.Edit_data_response4'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Edit_data_question5',
+      res2 : 'InformationPanel.Edit_data_response5'
+    } as InformationItem
+  ];
+
+
 // TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
   formId: string;
@@ -118,6 +149,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.updateData();
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   async updateData(): Promise<void>{
@@ -259,7 +291,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
       // Update of the total for all rows
       // chose a row
-      for (x = table.cols.length; x < table.numberRows - 1; x += 1){
+      for (x = table.cols.length; x < (table.numberRows - 1); x += 1){
         // sum of the row
         let sum = 0;
         // iterate over all collumns for the row chosen
@@ -277,8 +309,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
-      // otherwise, this value will be overwritten
-      table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      // otherwise, this value will be overwritten after
+      if (table.numberRows > 1 || table.numberCols > 1){
+        table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      }
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns

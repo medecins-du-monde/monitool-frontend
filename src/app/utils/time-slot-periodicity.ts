@@ -1,5 +1,5 @@
 export enum TimeSlotPeriodicity {
-    free = 'all',
+    free = 'free',
     day = 'day',
     month_week_sat = 'month_week_sat',
     month_week_sun = 'month_week_sun',

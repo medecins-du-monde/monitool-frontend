@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -14,6 +15,33 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./data-sources-list.component.scss']
 })
 export class DataSourcesListComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Datasources_list',
+      res2: 'InformationPanel.Datasources_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasources_question1',
+      res2: 'InformationPanel.Datasources_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Datasources_question2',
+      res2: 'InformationPanel.Datasources_response2'
+    } as InformationItem
+  ];
 
   project: Project;
   forms: Form[] = [];
@@ -49,6 +77,7 @@ export class DataSourcesListComponent implements OnInit {
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   onCreate(): void {
@@ -74,7 +103,7 @@ export class DataSourcesListComponent implements OnInit {
       if (extraIndicator.computation) {
         const params = extraIndicator.computation.parameters;
         // If the deleted datasource was used in the computation of this indicator, set computation to null
-        if (this.changeComputation(params)) {
+        if (this.computationBroken(params)) {
           extraIndicator.computation = null;
         }
       }
@@ -82,9 +111,12 @@ export class DataSourcesListComponent implements OnInit {
 
     // Delete datasource from cross-cutting indicators
     for (const val of Object.values(this.project.crossCutting)) {
-      const params = val['computation']['parameters'];
-      if (this.changeComputation(params)) {
-        val['computation'] = null;
+      // Check for computation
+      if (val['computation']) {
+        const params = val['computation']['parameters'];
+        if (this.computationBroken(params)) {
+          val['computation'] = null;
+        }
       }
     }
 
@@ -103,7 +135,8 @@ export class DataSourcesListComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
-  changeComputation(obj: Object) {
+  // This method check if deleting a datasource has broken a computation
+  computationBroken(obj: Object) {
     // Check if any variable id from the deleted datasource match an ID in the computation parameters
     for (const val of Object.values(obj)) {
       const matchingId = this.deletedFormVariables.filter( formVariable => formVariable === val.elementId);
@@ -127,7 +160,7 @@ export class DataSourcesListComponent implements OnInit {
               if (indicator.computation) {
                 const params = indicator.computation.parameters;
                 // If one of the paramaters uses the deleted datasource, set computation to null
-                if (this.changeComputation(params)) {
+                if (this.computationBroken(params)) {
                   indicator.computation = null;
                 }
               }

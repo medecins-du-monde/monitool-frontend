@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { v4 as uuid } from 'uuid';
@@ -17,6 +18,25 @@ export class LogicalFramesListComponent implements OnInit {
 
   project: Project;
   logicalFrames: LogicalFrame[] = [];
+
+  informations = [
+    {
+      res1: 'InformationPanel.Logical_frames_list',
+      res2: 'InformationPanel.Logical_frames_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
+  ];
 
   constructor(
     private projectService: ProjectService,
@@ -48,6 +68,7 @@ export class LogicalFramesListComponent implements OnInit {
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   onCreate(): void {

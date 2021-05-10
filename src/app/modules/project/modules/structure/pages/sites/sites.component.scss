@@ -1,4 +1,5 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .add-row {
     text-align: center;
@@ -8,13 +9,11 @@
     width: 100%;
     margin-top: 15px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px #dddddd;
+    border: solid 1px $table_border;
 }
 
 th {
-    font-size: $small_text;
     font-weight: bold;
-    color: black;
     flex: 1;
     display: flex;
     align-items: center;
@@ -27,7 +26,14 @@ th {
 tr {
     display: flex;
     width: 100%;
-    background: white;
+    background: $table_background_white;
+}
+tr.mat-header-row{
+    min-height: 56px;
+    height: auto !important;
+    th{
+        padding: 5px;
+    }
 }
 
 td {
@@ -68,7 +74,7 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     width: 100%;
     margin-top: 15px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px #dddddd;
+    border: solid 1px $table_border;
 }
 
 .mdm-form-field {
@@ -97,5 +103,18 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
   .mat-icon {
       width: unset;
       height: unset;
-      font-size: 16px;
+      font-size: $normal_text;
+  }
+
+.headerTitle{
+    width: 100%;
+}
+.dateHeader{
+    display: block;
+}
+mat-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
   }

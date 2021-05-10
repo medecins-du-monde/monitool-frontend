@@ -9,6 +9,7 @@ import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
@@ -21,6 +22,17 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
   styleUrls: ['./inputs.component.scss']
 })
 export class InputsComponent implements OnInit, OnDestroy {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Calendar_entry',
+      res2: 'InformationPanel.Calendar_entry_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Calendar_entry_question1',
+      res2: 'InformationPanel.Calendar_entry_response1'
+    } as InformationItem
+  ];
   // TODO: Check if possible to clean and make simplify this component
   displayedColumns = [];
   dataSource = [];
@@ -83,6 +95,7 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.updateData();
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   get currentLang() {

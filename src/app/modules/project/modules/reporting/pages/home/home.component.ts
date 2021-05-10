@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -9,6 +10,13 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.General_reporting_home',
+      res2: ''
+    } as InformationItem
+  ];
 
   constructor(private projectService: ProjectService) { }
 
@@ -31,6 +39,7 @@ export class HomeComponent implements OnInit {
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
 }

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="with-header">
     <mat-card-header class="card-header">
         <mat-card-title>{{indicator.name[currentLang]}}</mat-card-title>
     </mat-card-header>
@@ -9,7 +9,7 @@
                 <div *ngFor="let theme of indicator.themes">{{theme.shortName[currentLang]}}</div>
             </div>
         </div>
-        <div class="card-info">
+        <div class="card-info column">
             <div class="card-info-title">{{ 'Description' | translate }}</div>
             <div class="card-info-value">{{indicator.description[currentLang] ? indicator.description[currentLang] : ('IndicatorMissingDescription' | translate )}}</div>
         </div>

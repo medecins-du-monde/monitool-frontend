@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ChartService } from 'src/app/services/chart.service';
@@ -10,6 +11,7 @@ import { Indicator } from 'src/app/models/classes/indicator.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { Entity } from 'src/app/models/classes/entity.model';
 
@@ -21,10 +23,51 @@ import { Entity } from 'src/app/models/classes/entity.model';
 })
 
 export class GeneralComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.General_reporting',
+      res2: 'InformationPanel.General_reporting_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question1',
+      res2: 'InformationPanel.General_reporting_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question2',
+      res2: 'InformationPanel.General_reporting_response2'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question3',
+      res2: 'InformationPanel.General_reporting_response3'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question4',
+      res2: 'InformationPanel.General_reporting_response4'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question5',
+      res2: 'InformationPanel.General_reporting_response5'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question6',
+      res2: 'InformationPanel.General_reporting_response6'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question7',
+      res2: 'InformationPanel.General_reporting_response7'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question8',
+      res2: 'InformationPanel.General_reporting_response8'
+    } as InformationItem
+  ];
+
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
               private themeService: ThemeService,
-              private chartService: ChartService ) { }
+              private chartService: ChartService,
+              private translateService: TranslateService ) { }
 
   project: Project;
 
@@ -47,28 +90,14 @@ export class GeneralComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
+    this.translateService.onLangChange.subscribe(() => {
+      this.updateBreadcrumbs();
+      this.buildIndicators();
+    });
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.entities = this.project.entities;
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Reporting',
-        } as BreadcrumbItem,
-        {
-          value: 'General',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
+      this.updateBreadcrumbs();
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {
@@ -81,6 +110,7 @@ export class GeneralComponent implements OnInit {
       this.themes = themes;
       this.buildIndicators();
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
 
@@ -97,7 +127,7 @@ export class GeneralComponent implements OnInit {
     if (this.project.logicalFrames){
       for (const logicalFrame of this.project.logicalFrames){
         rows.push({
-          title: `Logical framework: ${logicalFrame.name}`,
+          title: `${this.translateService.instant('LogicalFramework')}: ${logicalFrame.name}`,
           sectionId: id,
           open: false,
           level
@@ -105,7 +135,7 @@ export class GeneralComponent implements OnInit {
 
         rows.push({
           icon: false,
-          groupName: `General objective: ${logicalFrame.goal}`,
+          groupName: `${this.translateService.instant('GeneralObjective')}: ${logicalFrame.goal}`,
           sectionId: id,
           level
         } as GroupTitle);
@@ -116,7 +146,7 @@ export class GeneralComponent implements OnInit {
         for (const purpose of logicalFrame.purposes){
           rows.push({
             icon: false,
-            groupName: `Specific objective: ${purpose.description}`,
+            groupName: `${this.translateService.instant('SpecificObjective')}: ${purpose.description}`,
             sectionId: id,
             level
           } as GroupTitle);
@@ -127,7 +157,7 @@ export class GeneralComponent implements OnInit {
           for (const output of purpose.outputs){
             rows.push({
               icon: false,
-              groupName: `Result: ${output.description}`,
+              groupName: `${this.translateService.instant('Result')}: ${output.description}`,
               sectionId: id,
               level
             } as GroupTitle);
@@ -138,7 +168,7 @@ export class GeneralComponent implements OnInit {
             for (const activity of output.activities){
               rows.push({
                 icon: false,
-                groupName: `Activity: ${activity.description}`,
+                groupName: `${this.translateService.instant('Activity')}: ${activity.description}`,
                 sectionId: id,
                 level
               } as GroupTitle);
@@ -159,7 +189,7 @@ export class GeneralComponent implements OnInit {
       this.buildCrossCuttingIndicators();
 
       rows.push({
-        title: 'Cross-cutting indicators',
+        title: `${this.translateService.instant('CrossCuttingIndicators')}`,
         sectionId: id,
         open: false,
         level
@@ -168,7 +198,7 @@ export class GeneralComponent implements OnInit {
       if (this.multiThemesIndicators.length > 0){
         rows.push({
           icon: false,
-          groupName: 'Multiple thematics',
+          groupName: `${this.translateService.instant('MultipleThematics')}`,
           sectionId: id,
           level
         } as GroupTitle);
@@ -214,7 +244,7 @@ export class GeneralComponent implements OnInit {
 
     if (this.project.extraIndicators){
       rows.push({
-        title: 'Extra indicators',
+        title: `${this.translateService.instant('ExtraIndicators')}`,
         sectionId: id,
         open: false,
         level: 0
@@ -227,13 +257,14 @@ export class GeneralComponent implements OnInit {
     if (this.project.forms){
       for (const form of this.project.forms){
         rows.push({
-          title: `Data source: ${form.name}`,
+          title: `${this.translateService.instant('DataSource')}: ${form.name}`,
           sectionId: id,
           open: false,
           level
         } as SectionTitle);
 
         for (const element of form.elements){
+          // TODO: Replace the a by another thing
           const computation =  {
             formula: 'a',
             parameters: {
@@ -292,6 +323,27 @@ export class GeneralComponent implements OnInit {
     this.dimensionIds.next(value);
   }
 
+  updateBreadcrumbs(): void {
+    const breadCrumbs = [
+      {
+        value: `${this.translateService.instant('Projects')}`,
+        link: './../../projects'
+      } as BreadcrumbItem,
+      {
+        value: this.project.country,
+      } as BreadcrumbItem,
+      {
+        value: this.project.name,
+      } as BreadcrumbItem,
+      {
+        value: 'Reporting',
+      } as BreadcrumbItem,
+      {
+        value: 'General',
+      } as BreadcrumbItem,
+    ];
+    this.projectService.updateBreadCrumbs(breadCrumbs);
+  }
 }
 
 

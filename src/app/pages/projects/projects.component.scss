@@ -1,5 +1,9 @@
 @import "src/assets/theme/size_vars.scss";
 
+.information-container {
+  position: relative;
+}
+
 .actions-group {
   display: flex;
   flex-direction: row;

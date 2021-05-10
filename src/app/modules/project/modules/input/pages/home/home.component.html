@@ -30,7 +30,7 @@
             <app-progress-bar-triple [done]="element.done" [ongoing]="element.ongoing" [missing]="element.missing" [total]="element.total"></app-progress-bar-triple>
         </td>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+</table>

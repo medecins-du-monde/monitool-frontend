@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
+import InformationItem from '../models/interfaces/information-item';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,13 @@ export class ProjectService {
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
+  needsInfosPanelSpace: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  // Handles information panels question
+  informations: BehaviorSubject<InformationItem[]> = new BehaviorSubject([]);
 
   // Get project id to redirect MDM Accounts
   projectId: BehaviorSubject<string> = new BehaviorSubject('');
@@ -42,12 +48,22 @@ export class ProjectService {
     return this.inBigPage.asObservable();
   }
 
+  // This is used to know if we need an extra space because we have the info panel.
+  // It will be removed when the infos panel will be everywhere and the app will be uniform
+  get infosPanelSpace(): Observable<boolean> {
+    return this.needsInfosPanelSpace.asObservable();
+  }
+
   get hasBasicsInfos(): Observable<boolean> {
     return this.basicInfos.asObservable();
   }
 
   get hasPendingChanges(): boolean {
     return this.currentProject && !this.savedProject.equals(this.currentProject);
+  }
+
+  get panelInformations(): Observable<InformationItem[]> {
+    return this.informations.asObservable();
   }
 
   get getBreadcrumbsList(): Observable<any[]> {
@@ -106,6 +122,10 @@ export class ProjectService {
     this.project.next(this.savedProject.copy());
   }
 
+  public updateInformationPanel(list: InformationItem[]): void {
+    this.informations.next(list);
+  }
+
   public async list(): Promise<Project[]> {
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get('/resources/project/?mode=short');
@@ -117,9 +137,9 @@ export class ProjectService {
   }
 
   public create(project: Project): void {
+    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
     this.basicInfos.next(false);
     this.project.next(project);
-    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
   public async get(id: string): Promise<Project> {

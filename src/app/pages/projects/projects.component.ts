@@ -7,8 +7,10 @@ import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 @Component({
   selector: 'app-projects',
@@ -36,6 +38,45 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   ];
 
+  informations = [
+    {
+      res1: 'InformationPanel.Project_list',
+      res2: 'InformationPanel.Project_list_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_definition_question',
+      res2: 'InformationPanel.Project_definition_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question1',
+      res2: 'InformationPanel.Project_list_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question2',
+      res2: 'InformationPanel.Project_list_response2'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question3',
+      res2: 'InformationPanel.Project_list_response3'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question4',
+      res2: 'InformationPanel.Project_list_response4'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question5',
+      res2: 'InformationPanel.Project_list_response5'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question6',
+      res2: 'InformationPanel.Project_list_response6'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_list_question7',
+      res2: 'InformationPanel.Project_list_response7'
+    } as InformationItem
+  ];
+
   filtersForm: FormGroup;
   projects: Project[];
   allProjects: Project[];
@@ -59,6 +100,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,
+    private sidenavService: SidenavService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
@@ -84,9 +126,12 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
+    this.projectService.needsInfosPanelSpace.next(true);
   }
 
   ngOnDestroy(): void {
+    this.projectService.needsInfosPanelSpace.next(false);
     this.subscription.unsubscribe();
   }
 
@@ -148,6 +193,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     // Allow user with a project role to access to the structure page to create a project
     this.projectService.projectUserRoleCreateProject.next(true);
     this.projectService.create(project);
+    this.sidenavService.generateSidenav(this.currentUser, project);
     this.router.navigate(['/projects', project.id]);
   }
 

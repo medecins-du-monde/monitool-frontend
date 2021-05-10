@@ -1,5 +1,6 @@
 // tslint:disable:no-string-literal
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -34,10 +35,16 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   project: Project;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private translateService: TranslateService
+    ) { }
 
   ngOnInit(): void {
     this.open = this.indicator.open;
+    this.translateService.onLangChange.subscribe(() => {
+      this.createOptions();
+    });
     if (!this.isCrossCuttingReport) {
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
@@ -60,7 +67,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
     if (numberOfParameters > 1){
       this.options.push({
-        value: 'Computation',
+        value: `${this.translateService.instant('Computation')}`,
         action: this.computationOption
       });
     }
@@ -72,7 +79,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         && !this.indicator.customFilter
         && currentProject.entities.length > 0){
       this.options.push({
-        value: 'Collection Sites',
+        value: `${this.translateService.instant('CollectionSites')}`,
         action: this.collectionSitesOption
       });
     }
@@ -81,25 +88,25 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
       if (!this.indicator.customFilter?.month){
         this.options.push({
-          value: 'Months',
+          value: `${this.translateService.instant('Filter.month')}`,
           action: () => this.timeOption('month')
         });
 
         if (!this.indicator.customFilter?.quarter){
           this.options.push({
-            value: 'Quarters',
+            value: `${this.translateService.instant('Filter.quarter')}`,
             action: () => this.timeOption('quarter')
           });
 
           if (!this.indicator.customFilter?.semester){
             this.options.push({
-              value: 'Semesters',
+              value: `${this.translateService.instant('Filter.semester')}`,
               action: () => this.timeOption('semester')
             });
 
             if (!this.indicator.customFilter?.year){
               this.options.push({
-                value: 'Years',
+                value: `${this.translateService.instant('Filter.year')}`,
                 action: () => this.timeOption('year')
               });
             }

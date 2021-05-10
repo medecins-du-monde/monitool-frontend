@@ -1,24 +1,28 @@
-<mat-card>
+<mat-card class="with-header">
     <ng-content></ng-content>
     <mat-card-header class="card-header">{{ extraIndicator.display }}</mat-card-header>
     <mat-card-content>
-        <div *ngIf="extraIndicator.crossCutting" class="card-info">
-            <div class="card-info-value"><b>{{ 'Description' | translate }}: </b>{{ extraIndicator.description ? extraIndicator.description.en : null }}</div>
-        </div>
-        <div class="card-info">
+        <div *ngIf="extraIndicator.crossCutting" class="card-info column">
+            <div class=card-info-title>{{ 'Description' | translate }}: </div>
             <div class="card-info-value">
-                <b>{{ 'Baseline' | translate }}: </b>
-                {{ extraIndicator.baseline ? extraIndicator.baseline + (extraIndicator.unit ? extraIndicator.unit : null) : '?' }}
+                {{ extraIndicator.description ? extraIndicator.description.en : null }}
             </div>
         </div>
         <div class="card-info">
+            <div class="card-info-title">{{ 'Baseline' | translate }}: </div>
             <div class="card-info-value">
-                <b>{{ 'Target' | translate }}: </b>
-                {{ extraIndicator.target ? extraIndicator.target + (extraIndicator.unit ? extraIndicator.unit : null): '?' }}
+                {{ extraIndicator.baseline !== null ? extraIndicator.baseline + (extraIndicator.unit ? extraIndicator.unit : null) : '?' }}
             </div>
         </div>
         <div class="card-info">
-            <div class="card-info-value"><b>{{ 'Computation' | translate }}: </b>
+            <div class="card-info-title">{{ 'Target' | translate }}: </div>
+            <div class="card-info-value">
+                {{ extraIndicator.target !== null ? extraIndicator.target + (extraIndicator.unit ? extraIndicator.unit : null): '?' }}
+            </div>
+        </div>
+        <div class="card-info">
+            <div class="card-info-title">{{ 'Computation' | translate }}: </div>
+            <div class="card-info-value">
                 <span *ngIf="extraIndicator.computation.formula; else elseBlock" class="computation valid">{{ 'Valid' | translate }} <mat-icon>link</mat-icon> </span>
                 <ng-template #elseBlock><span class="computation invalid">{{ 'Invalid' | translate }} <mat-icon>link_off</mat-icon> </span></ng-template>
             </div>

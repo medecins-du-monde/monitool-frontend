@@ -12,6 +12,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
@@ -37,7 +38,28 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 })
 export class SitesComponent implements OnInit {
 
+  informations = [
+    {
+      res1: 'InformationPanel.Collection_sites',
+      res2: 'InformationPanel.Collection_sites_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
+  ];
+
   project: Project;
+
+  displayInfos = true;
 
   sitesForm: FormGroup = new FormGroup({
     entities: new FormArray([]),
@@ -128,6 +150,8 @@ export class SitesComponent implements OnInit {
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
+
   }
 
   public onAddNewEntity(): void {
@@ -185,5 +209,9 @@ export class SitesComponent implements OnInit {
     } else {
       this.groupsDataSource.data = this.groups.controls;
     }
+  }
+
+  toggleStartInfos(): void {
+    this.displayInfos = !this.displayInfos;
   }
 }
