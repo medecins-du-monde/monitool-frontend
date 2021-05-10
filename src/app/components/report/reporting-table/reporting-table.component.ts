@@ -595,7 +595,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
 
     // Set background color to white if the row doesn't want colors
-    if (!element.colorize){
+    if (!element.colorize
+        || element.target === null
+        || element.baseline === null){
       return 'white';
     }
 

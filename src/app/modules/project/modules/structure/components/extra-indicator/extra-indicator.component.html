@@ -11,13 +11,13 @@
         <div class="card-info">
             <div class="card-info-title">{{ 'Baseline' | translate }}: </div>
             <div class="card-info-value">
-                {{ extraIndicator.baseline ? extraIndicator.baseline + (extraIndicator.unit ? extraIndicator.unit : null) : '?' }}
+                {{ extraIndicator.baseline !== null ? extraIndicator.baseline + (extraIndicator.unit ? extraIndicator.unit : null) : '?' }}
             </div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'Target' | translate }}: </div>
             <div class="card-info-value">
-                {{ extraIndicator.target ? extraIndicator.target + (extraIndicator.unit ? extraIndicator.unit : null): '?' }}
+                {{ extraIndicator.target !== null ? extraIndicator.target + (extraIndicator.unit ? extraIndicator.unit : null): '?' }}
             </div>
         </div>
         <div class="card-info">

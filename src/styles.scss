@@ -855,27 +855,7 @@ mat-hint {
   }
 }
 
-.checkbox-form {
-  flex-direction: column;
 
-  div {
-    display: flex;
-    flex-direction: row;
-  }
-
-  mat-hint {
-    align-self: center;
-
-    mat-icon {
-      font-size: $small_text;
-    }
-  }
-
-  .mdm-form-label {
-    margin-right: 50px;
-  }
-  margin: 15px 0px;
-}
 
 // Variables highlighting
 code {
