@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,17 +9,18 @@ import { ProjectService } from './services/project.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   title = 'MDM-monitool-Frontend';
   preferredLanguage: string;
 
-  inProjectListPage: Boolean = false;
+  needsInfosPanelSpace = false;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private translateService: TranslateService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
@@ -128,6 +129,10 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/edit.svg')
     );
 
-    this.projectService.listPage.subscribe(val => this.inProjectListPage = val);
+    this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val);
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 }

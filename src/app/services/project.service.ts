@@ -26,7 +26,7 @@ export class ProjectService {
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  inProjectsListPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  needsInfosPanelSpace: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -48,8 +48,10 @@ export class ProjectService {
     return this.inBigPage.asObservable();
   }
 
-  get listPage(): Observable<boolean> {
-    return this.inProjectsListPage.asObservable();
+  // This is used to know if we need an extra space because we have the info panel.
+  // It will be removed when the infos panel will be everywhere and the app will be uniform
+  get infosPanelSpace(): Observable<boolean> {
+    return this.needsInfosPanelSpace.asObservable();
   }
 
   get hasBasicsInfos(): Observable<boolean> {
