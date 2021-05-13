@@ -43,8 +43,27 @@
                 </ng-template>
             </td>
         </ng-container>
+
+        <ng-container *ngFor="let column of footerColumns" matColumnDef="{{column}}">
+            <td mat-footer-cell *matFooterCellDef>
+                <div *ngIf="column === 'footerDate'; else elseBlockFooter">
+                    <mat-form-field appearance="outline" class="mdm-form-field">
+                        <input matInput [matDatepicker]="startPicker" [formControl]="dateForm">
+                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startPicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <ng-template #elseBlockFooter>
+                    <button mat-stroked-button [routerLink]=" './edit/' + column + '/' + currentDate"
+                        class="mdm-button small-button create-newdate-button">
+                        {{ 'Create (new date)' | translate }}
+                    </button>
+                </ng-template>
+            </td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
         <tr mat-footer-row *matFooterRowDef="['expandedDates']"></tr>
     </table>
 </div>

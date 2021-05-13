@@ -7,6 +7,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +22,10 @@ import { TranslateModule } from '@ngx-translate/core';
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    ReactiveFormsModule
   ]
 })
 export class InputsModule { }

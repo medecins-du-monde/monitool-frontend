@@ -13,13 +13,32 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { FormControl } from '@angular/forms';
+import DatesHelper from 'src/app/utils/dates-helper';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
+import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
+import { DateService } from 'src/app/services/date.service';
 
 
 
 @Component({
   selector: 'app-inputs',
   templateUrl: './inputs.component.html',
-  styleUrls: ['./inputs.component.scss']
+  styleUrls: ['./inputs.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
 })
 export class InputsComponent implements OnInit, OnDestroy {
 
@@ -49,17 +68,35 @@ export class InputsComponent implements OnInit, OnDestroy {
   thisYearDates: any[];
   allDates: any[];
   inputProgress: ArrayBuffer;
+  allowedEntities: any[];
+  footerColumns: string[] = [];
+  dateForm: FormControl;
+
+
+  get currentDate(){
+    return DatesHelper.dateToString(this.dateForm.value);
+  }
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    private inputService: InputService
+    private inputService: InputService,
+    private adapter: DateAdapter<any>,
+    private dateService: DateService,
   ) { }
 
   ngOnInit(): void {
+    this.dateForm = new FormControl(new Date());
     this.projectService.inBigPage.next(true);
+
+    this.dateService.currentLang.subscribe(
+      lang => {
+        this.adapter.setLocale(lang);
+      }
+    );
+
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
@@ -106,18 +143,22 @@ export class InputsComponent implements OnInit, OnDestroy {
     if (this.formId && this.project){
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
+      
+      this.allowedEntities = [];
       // We show only columns of data in which the current user has rights
       if (this.user.type === 'partner' && this.user.role === 'input') {
-        this.displayedColumns = ['Date'].concat(this.user.entities.map(x => this.projectService.getNamefromId(x, this.project.entities)));
+        this.allowedEntities = this.sites.filter(e => this.user?.entities.find((id: any) => id === e.id));
       } else if (this.user.type === 'user') {
         const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
-        this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+        this.allowedEntities = this.sites;
         if (projectUser.length > 0 && projectUser[0].role === 'input') {
-          this.displayedColumns = ['Date'].concat(projectUser[0].entities.map(x => x.name));
+          this.allowedEntities = projectUser[0].entities;
         }
       } else {
-        this.displayedColumns = ['Date'].concat(this.sites.map(x => x.name));
+        this.allowedEntities = this.sites;
       }
+      this.displayedColumns = ['Date'].concat(this.allowedEntities.map(x => x.name));
+      this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
     }
     this.thisYearDates = [];
     this.allDates = [];
@@ -127,25 +168,41 @@ export class InputsComponent implements OnInit, OnDestroy {
         firstDate = this.form.end;
       }
       const currentYear = firstDate.getFullYear().toString();
-      // this represents the most recent available time slot of the form
-      let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
 
-      // this is the oldest date of the form
-      const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+      if (this.form.periodicity !== 'free'){
+        // this represents the most recent available time slot of the form
+        let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
 
-      if (slotStart === slotEnd){
-        this.thisYearDates = [
-          {
-            humanValue: slotStart.humanizeValue(this.currentLang),
-            value: slotStart.value
+        // this is the oldest date of the form
+        const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+
+        if (slotStart === slotEnd){
+          this.thisYearDates = [
+            {
+              humanValue: slotStart.humanizeValue(this.currentLang),
+              value: slotStart.value
+            }
+          ];
+          this.allDates = [{
+           humanValue: slotStart.humanizeValue(this.currentLang),
+           value: slotStart.value
+          }];
+        }else{
+          while (slotStart !== slotEnd){
+            if (currentYear === slotStart.value.slice(0, 4)){
+              this.thisYearDates.push({
+                humanValue: slotStart.humanizeValue(this.currentLang),
+                value: slotStart.value
+              });
+            }
+            this.allDates.push({
+              humanValue: slotStart.humanizeValue(this.currentLang),
+              value: slotStart.value
+            });
+            let test = slotStart.value;
+            
+            slotStart = slotStart.previous();
           }
-        ];
-        this.allDates = [{
-         humanValue: slotStart.humanizeValue(this.currentLang),
-         value: slotStart.value
-        }];
-      }else{
-        while (slotStart !== slotEnd){
           if (currentYear === slotStart.value.slice(0, 4)){
             this.thisYearDates.push({
               humanValue: slotStart.humanizeValue(this.currentLang),
@@ -156,18 +213,7 @@ export class InputsComponent implements OnInit, OnDestroy {
             humanValue: slotStart.humanizeValue(this.currentLang),
             value: slotStart.value
           });
-          slotStart = slotStart.previous();
         }
-        if (currentYear === slotStart.value.slice(0, 4)){
-          this.thisYearDates.push({
-            humanValue: slotStart.humanizeValue(this.currentLang),
-            value: slotStart.value
-          });
-        }
-        this.allDates.push({
-          humanValue: slotStart.humanizeValue(this.currentLang),
-          value: slotStart.value
-        });
       }
     }
 
@@ -175,8 +221,24 @@ export class InputsComponent implements OnInit, OnDestroy {
 
       this.inputProgress = await this.inputService.list(this.project.id, this.formId);
 
-      const inputId = `input:${this.project.id}:${this.formId}`;
       const newDataSource = [];
+      if (this.form.periodicity === 'free'){
+        let datesSet = new Set();
+        for (const key of Object.keys(this.inputProgress)){
+          let [ , , , , , inputDateStr] = key.split(':');
+          datesSet.add(inputDateStr)
+        }
+        this.thisYearDates = Array.from(datesSet).map((inputDateStr: string) => {
+          let dayAsString = 'day';
+          let dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString])
+          return {
+            humanValue: dateSlot.humanizeValue(this.currentLang),
+            value:  dateSlot.value
+          }
+        });
+    
+      }
+      const inputId = `input:${this.project.id}:${this.formId}`;
       for (const date of this.thisYearDates){
         const current = { Date: date.humanValue };
 
