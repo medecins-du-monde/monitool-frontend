@@ -234,6 +234,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
         return false;
       }).map(x => x.id);
+      this.dimensions.push('_total');
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(
