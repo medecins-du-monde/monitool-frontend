@@ -14,6 +14,7 @@ import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import DatesHelper from 'src/app/utils/dates-helper';
+import { TranslateService } from '@ngx-translate/core';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -63,7 +64,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
-              private chartService: ChartService) { }
+              private chartService: ChartService,
+              private translateService: TranslateService) { }
 
   content: any[];
 
@@ -75,6 +77,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   dataSource = new MatTableDataSource([]);
 
+
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   private subscription: Subscription = new Subscription();
 
@@ -421,6 +427,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
     }
     if (id === '_total') { return 'Total'; }
+    if (this.dimensionIds.value !== 'entity' && this.dimensionIds.value !== 'group'){
+      const timeSlotAux = new TimeSlot(id);
+      return timeSlotAux.humanizeValue(this.currentLang);
+    }
     return id;
   }
 
