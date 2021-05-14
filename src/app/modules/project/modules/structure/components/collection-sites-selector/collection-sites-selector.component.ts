@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 
@@ -9,7 +8,7 @@ import { Group } from 'src/app/models/classes/group.model';
   templateUrl: './collection-sites-selector.component.html',
   styleUrls: ['./collection-sites-selector.component.scss']
 })
-export class CollectionSitesSelectorComponent implements OnInit, OnDestroy {
+export class CollectionSitesSelectorComponent implements OnInit {
 
   public allOption: Entity = new Entity({id: 'all', name: 'All'});
 
@@ -17,41 +16,9 @@ export class CollectionSitesSelectorComponent implements OnInit, OnDestroy {
   @Input() entities = [];
   @Input() groups = [];
   @Input() hint = '';
+  updatedForm: FormGroup;
 
-  private subscription: Subscription = new Subscription();
-  constructor() { }
-
-
-  private getGroupedEntities(){
-    if (this.form === null || this.form.controls.entities.value === null){
-      return [];
-    }
-    // if all entities are selected, just return all the options selected
-    if (this.form.controls.entities.value.length === this.entities.length){
-      return [...this.entities, ...this.groups, this.allOption];
-    }
-
-    // get the groups that have all members selected
-    const groups = this.groups.filter(g => {
-      for (const member of g.members){
-        if (!this.form.controls.entities.value.includes(member) ){
-          return false;
-        }
-      }
-      return true;
-    });
-
-    return [ ...groups, ...this.form.controls.entities.value ];
-  }
-
-  ngOnInit(): void {
-    this.form.controls.entities.setValue(this.getGroupedEntities());
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
+  // This method check which data will be displayed, Example : all, groups, entity
   get selectedEntities(): Entity[] {
     if (this.form.controls.entities.value === null){
       return [];
@@ -74,12 +41,41 @@ export class CollectionSitesSelectorComponent implements OnInit, OnDestroy {
     return entities;
   }
 
+  ngOnInit(): void {
+    this.form.controls.entities.setValue(this.getGroupedEntities());
+  }
+
+  // This method check which group and entities have already been selected
+  // and update the form
+  private getGroupedEntities(){
+    if (this.form === null || this.form.controls.entities.value === null){
+      return [];
+    }
+    // if all entities are selected, just return all the options selected
+    if (this.form.controls.entities.value.length === this.entities.length){
+      return [...this.entities, ...this.groups, this.allOption];
+    }
+
+    // get the groups that have all members selected
+    const groups = this.groups.filter(g => {
+      for (const member of g.members){
+        if (!this.form.controls.entities.value.includes(member) ){
+          return false;
+        }
+      }
+      return true;
+    });
+
+    return [ ...groups, ...this.form.controls.entities.value ];
+  }
+
   onEntityRemoved(entity): void {
     const currentEntities = this.form.controls.entities;
-    const entities = this.form.controls.entities.value;
     if (entity === this.allOption){
       this.form.controls.entities.setValue([]);
-    }else if (this.groups.find(g => g.id === entity.id)){
+    }
+    // Checking if a group has been removed
+    else if (this.groups.find(g => g.id === entity.id)){
       const newValue = currentEntities.value.filter(x => x.id !== entity.id);
       const entitiesBelongingToGroups = [];
       for (const group of newValue){
