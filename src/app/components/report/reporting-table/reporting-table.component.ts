@@ -590,7 +590,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   calcPaddingLevel(element: Row): string{
     if (element.level){
-      return `padding-left: ${element.level * 20 + 15}px;`;
+      return `padding-left: ${element.level * 20}px;`;
     }
     return '';
   }
