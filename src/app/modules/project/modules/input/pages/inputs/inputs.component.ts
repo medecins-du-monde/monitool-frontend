@@ -77,6 +77,10 @@ export class InputsComponent implements OnInit, OnDestroy {
     return DatesHelper.dateToString(this.dateForm.value);
   }
 
+  get periodicityIsFree(){
+    return this.form?.periodicity === 'free';
+  }
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,

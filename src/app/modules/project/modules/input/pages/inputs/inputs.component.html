@@ -45,7 +45,7 @@
         </ng-container>
 
         <ng-container *ngFor="let column of footerColumns" matColumnDef="{{column}}">
-            <td mat-footer-cell *matFooterCellDef>
+            <td mat-footer-cell *matFooterCellDef [ngClass]="column === 'footerDate'? 'datepicker-cell':''">
                 <div *ngIf="column === 'footerDate'; else elseBlockFooter">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput [matDatepicker]="startPicker" [formControl]="dateForm">
@@ -63,7 +63,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
+        <tr mat-footer-row *matFooterRowDef="footerColumns" [ngClass]="!periodicityIsFree ? 'hidden' : ''"></tr>
         <tr mat-footer-row *matFooterRowDef="['expandedDates']"></tr>
     </table>
 </div>
