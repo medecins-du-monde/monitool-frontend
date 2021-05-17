@@ -62,6 +62,13 @@ export class ProjectIndicator implements Deserializable {
         || this.target === null) ? true : this.colorize;
 
     this.unit = null;
+
+    if (input?.computation === null){
+      this.computation = {
+        formula: null,
+        parameters: {}
+      };
+    }
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
       this.computation.formula = input.computation.formula;
