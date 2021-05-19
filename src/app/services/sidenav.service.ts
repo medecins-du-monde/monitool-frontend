@@ -109,7 +109,7 @@ export class SidenavService {
     };
 
     if (user.type === 'user') {
-       projectUser = project.users.filter(userProject => user.id === userProject['_id'])[0];
+      projectUser = project.users.filter(userProject => userProject.id === user['_id'])[0];
     }
 
     // If the user has a data entry roles, only display the datasource they can modify
