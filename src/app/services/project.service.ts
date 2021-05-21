@@ -17,7 +17,7 @@ export class ProjectService {
   private savedProject: Project;
   private currentProject: Project;
 
-  project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  project: BehaviorSubject<Project> = new BehaviorSubject(null);
   breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop

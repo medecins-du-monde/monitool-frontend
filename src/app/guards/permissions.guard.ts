@@ -90,8 +90,13 @@ export class PermissionsGuard implements CanActivate {
               const hasAccessToDatasource = project.forms.some(form => form.id === route.children[0].params.formId);
               if (!hasAccessToDatasource) {
                 this.router.navigate([`/projects/${this.id}/reporting/home`]);
+                return false;
               }
               return true;
+            }
+            else if(projectUser.length === 0 && this.user.role === 'common'){
+              this.router.navigate([`/projects/${this.id}/reporting/home`]);
+              return false;
             }
           });
         }
