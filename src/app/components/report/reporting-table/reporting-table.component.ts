@@ -227,11 +227,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // Update all the table headers with the new dimensions
   updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
+      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entities));
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      const entities = this.filter.value.entity;
+      const entities = this.filter.value.entities;
       this.dimensions = this.project.groups.filter(group => {
         for (const e of group.members){
           if (entities.includes(e.id)){
@@ -240,6 +240,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
         return false;
       }).map(x => x.id);
+      this.dimensions.push('_total');
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(
@@ -296,7 +297,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
       _end: currentFilter._end.toISOString().slice(0, 10),
-      entity: currentFilter.entity
+      entity: currentFilter.entities
     };
 
     const currentProject = row.originProject ? row.originProject : this.project;
@@ -494,7 +495,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     if (info.splitBySites){
       const newIndicators = [];
-      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entity;
+      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
       for (const entityId of entities){
         const customFilter = {

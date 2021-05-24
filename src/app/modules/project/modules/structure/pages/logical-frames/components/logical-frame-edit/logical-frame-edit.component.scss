@@ -12,3 +12,8 @@
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   background-color: $specific_obj_panel_background !important;
 }
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}

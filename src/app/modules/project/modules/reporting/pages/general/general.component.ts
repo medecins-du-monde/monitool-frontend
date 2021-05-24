@@ -13,6 +13,7 @@ import { Filter } from 'src/app/components/report/filter/filter.component';
 import { Theme } from 'src/app/models/classes/theme.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { Entity } from 'src/app/models/classes/entity.model';
 
 
 @Component({
@@ -76,7 +77,7 @@ export class GeneralComponent implements OnInit {
   });
 
   dimensionIds = new BehaviorSubject('');
-
+  entities: Entity[];
   tableContent = new BehaviorSubject<any[]>([]);
 
   options =  {fill: false};
@@ -95,6 +96,7 @@ export class GeneralComponent implements OnInit {
     });
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+      this.entities = this.project.entities;
       this.updateBreadcrumbs();
 
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
@@ -313,6 +315,7 @@ export class GeneralComponent implements OnInit {
   }
 
   receiveFilter(value): void{
+    value.entities = value.entities.filter(e => this.entities.includes(e)).map(e => e.id);
     this.filter.next(value);
   }
 

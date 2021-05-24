@@ -20,6 +20,7 @@
     "AddVariableNameHint": "Nommez la variable que vous voulez extraire de/du <code>{{name}}</code>. Par exemple \"Nombre de diagnostics effectués\".",
     "AddVariableNamePlaceholder": "ex: Nombre de diagnostics effectués",
     "AdminRole": "Administrateur",
+    "All": "Tout",
     "AllCountries": "Tous les pays",
     "Assumtions-SpecificObjective-Hint": "Facteurs externes susceptibles de compromettre l’atteinte de l’objectif",
     "Assumptions-Result-SpecificObjective-Hint" : "Facteurs externes susceptibles de compromettre l’atteinte du résultat",
@@ -695,7 +696,9 @@
         "UserEdition": {
             "Role": "Ce champs determine les modifications que pourra réaliser cet utilisateur sur le projet: les propriétaires peuvent changer la structure du projet, les saisisseurs, uniquement rentrer des données.",
             "Type": "Choisissez \"Compte MDM\" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.",
-            "User": "De quel utilisateur MDM s'agit-il? Si l'utilisateur que vous voulez ajouter n'est pas disponible dans la liste, demandez lui de se connecter à Monitool une première fois."
+            "User": "De quel utilisateur MDM s'agit-il? Si l'utilisateur que vous voulez ajouter n'est pas disponible dans la liste, demandez lui de se connecter à Monitool une première fois.",
+            "CollectionSites": " Sur quels lieux de collecte cet utilisateur pourra-t'il saisir?",
+            "DataSources": "Sur quels sources de données cet utilisateur pourra-t'il saisir?"
         }
     },
     "TooltipRoleHint": {

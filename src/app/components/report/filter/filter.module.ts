@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CollectionSitesSelectorModule } from 'src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.module';
 
 
 
@@ -21,6 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     exports: [FilterComponent],
     imports: [
         CommonModule,
+        CollectionSitesSelectorModule,
         TranslateModule,
         MatSelectModule,
         MatIconModule,

@@ -8,12 +8,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { DateService} from 'src/app/services/date.service';
+import { Group } from 'src/app/models/classes/group.model';
 
 
 export interface Filter{
   _start: Date;
   _end: Date;
-  entity?: string[];
+  entities?: string[];
   finished?: boolean;
 }
 
@@ -49,6 +50,8 @@ export class FilterComponent implements OnInit, OnDestroy{
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
 
   private subscription: Subscription = new Subscription();
+  entities: Entity[];
+  groups: Group[];
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +62,7 @@ export class FilterComponent implements OnInit, OnDestroy{
 
   onEntityRemoved(entity: Entity): void {
     this.selectedSites = this.selectedSites.filter(site => site.id !== entity.id);
-    this.filterForm.get('entity').setValue(this.selectedSites.map(x => x.id));
+    this.filterForm.get('entities').setValue(this.selectedSites.map(x => x.id));
   }
 
   toggleCollapsed(): void {
@@ -86,7 +89,7 @@ export class FilterComponent implements OnInit, OnDestroy{
       this.filterEvent.emit(this.filterForm.value);
 
       this.filterForm.valueChanges.subscribe(value => {
-        this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
+        this.selectedSites = this.sites.filter( site => value.entities.includes(site.id) );
         this.filterEvent.emit(value as Filter);
       });
     } else {
@@ -96,6 +99,8 @@ export class FilterComponent implements OnInit, OnDestroy{
 
           if (this.project){
             this.sites = this.project.entities;
+            this.entities = this.project.entities;
+            this.groups = this.project.groups;
             endDate = this.project.end;
             startDate = this.project.start;
 
@@ -105,12 +110,12 @@ export class FilterComponent implements OnInit, OnDestroy{
           this.filterForm = this.fb.group({
             _start: [startDate, Validators.required],
             _end: [endDate, Validators.required ],
-            entity: [this.project.entities.map(x => x.id), Validators.required]
+            entities: [this.project.entities, Validators.required]
           });
           this.filterEvent.emit(this.filterForm.value);
 
           this.filterForm.valueChanges.subscribe(value => {
-            this.selectedSites = this.sites.filter( site => value.entity.includes(site.id) );
+            this.selectedSites = this.sites.filter( site => value.entities.includes(site) );
             this.filterEvent.emit(value as Filter);
           });
         })

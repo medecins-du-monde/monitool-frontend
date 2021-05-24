@@ -12,24 +12,12 @@
         </div>
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
-            <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="entities" placeholder="{{ 'Placeholder.LogicalFrame.CollectionSites' | translate }}" multiple>
-                    <mat-select-trigger>
-                        <mat-chip-list>
-                            <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
-                                (removed)="onEntityRemoved(entity)">
-                                {{ entity.name }}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                        </mat-chip-list>
-                    </mat-select-trigger>
-                    <mat-option *ngFor="let entity of entities" [value]="entity">{{ entity.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'CollectionSites-Hint' | translate }}
-                </mat-hint>
-            </mat-form-field>
+            <app-collection-sites-selector
+                [form]="logicalFrameForm"
+                [entities]="entities"
+                [groups]="groups"
+                [hint]="'CollectionSites-Hint'">
+            </app-collection-sites-selector>
         </div>
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'SpecificStartDate' | translate }}</div>

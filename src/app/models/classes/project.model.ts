@@ -157,6 +157,6 @@ export class Project implements Deserializable {
             delete b.parsed;
         }
 
-        return JSON.stringify(a) === JSON.stringify(b);
+        return _.isEqual(a, b);
     }
 }
