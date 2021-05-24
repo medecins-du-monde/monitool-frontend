@@ -94,6 +94,11 @@ export class PermissionsGuard implements CanActivate {
               }
               return true;
             }
+            // If the user is not in the project users but he has a common role
+            else if (projectUser.length === 0 && this.user.role === 'common'){
+              this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
+              return false;
+            }
           });
         }
         // If the user has just a read_only role
