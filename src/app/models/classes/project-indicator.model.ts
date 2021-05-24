@@ -24,7 +24,7 @@ export class ProjectIndicator implements Deserializable {
   target: number;
   colorize: boolean;
   computation = {
-    formula: "",
+    formula: '',
     parameters: {}
   };
   unit: string;
@@ -65,7 +65,7 @@ export class ProjectIndicator implements Deserializable {
 
     if (input?.computation === null){
       this.computation = {
-        formula: "",
+        formula: '',
         parameters: {}
       };
     }
