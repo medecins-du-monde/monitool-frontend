@@ -4,6 +4,7 @@
             <mat-chip-list>
                 <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
                     (removed)="onEntityRemoved(entity)" >
+                    <mat-icon class="chip" *ngIf="checkIfGroup(entity)">arrow_circle_down</mat-icon>
                     {{ entity.name | translate }}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>

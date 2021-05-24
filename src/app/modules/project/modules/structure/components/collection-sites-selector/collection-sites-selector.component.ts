@@ -41,6 +41,10 @@ export class CollectionSitesSelectorComponent implements OnInit {
     return entities;
   }
 
+  checkIfGroup(entity){
+    return entity instanceof Group || entity.id === this.allOption.id;
+  }
+
   ngOnInit(): void {
     this.form.controls.entities.setValue(this.getGroupedEntities());
   }

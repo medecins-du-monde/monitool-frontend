@@ -7,3 +7,13 @@ mat-icon.option{
     margin-right: 5px !important;
     transform: rotate(-90deg);
 }
+
+mat-icon.chip{
+    transform: rotate(-90deg);
+    height: 14px;
+    width: 14px;
+    font-size: $small_text;
+    line-height: 12px;
+    margin-right: 5px !important;
+    margin-bottom: 2px;
+}
