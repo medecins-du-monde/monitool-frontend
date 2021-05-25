@@ -168,7 +168,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.allDates = [];
     if (this.form){
       let firstDate = new Date();
-      if (firstDate > this.form.end){
+      if (firstDate > this.form.end && this.form.end){
         firstDate = this.form.end;
       }
       const currentYear = firstDate.getFullYear().toString();
