@@ -12,23 +12,44 @@ export class ProgressBarTripleComponent implements OnInit {
 
   @Input() total = 100;
 
+  // This method allow to show or not the text in the progress bar in function of the
+  // size of the screen and the value of the item.
+  getStyle(element?: string): string {
+    switch (element) {
+      case 'done': {
+        if ((window.innerWidth > 600 && this.done > 20) ||
+            (window.innerWidth > 400 && window.innerWidth < 600 && this.done > 50 )) {
+          return '14px';
+        }
+        else {
+          return '0';
+        }
+      }
+      case 'ongoing': {
+        if ((window.innerWidth > 600 && this.ongoing > 25) ||
+            (window.innerWidth > 400 && window.innerWidth < 600 && this.ongoing > 50 )) {
+          return '14px';
+        }
+        else {
+          return '0';
+        }
+      }
+      case 'missing': {
+        if ((window.innerWidth > 600 && this.missing > 25) ||
+            (window.innerWidth > 400 && window.innerWidth < 600 && this.missing > 50 )) {
+          return '14px';
+        }
+        else {
+          return '0';
+        }
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.done = Math.round( (this.done / this.total) * 100);
     this.ongoing = Math.round((this.ongoing / this.total) * 100);
     this.missing = Math.round((this.missing / this.total) * 100);
-
-    // Managing the visibility or not of the font
-    if (window.innerWidth > 400 && window.innerWidth < 600) {
-      document.getElementById('done').style.setProperty('font-size', this.done > 50 ? '12px' : '0' );
-      document.getElementById('ongoing').style.setProperty('font-size', this.ongoing > 50 ? '12px' : '0');
-      document.getElementById('missing').style.setProperty('font-size', this.missing > 50 ? '12px' : '0');
-    }
-    else if (window.innerWidth > 600) {
-      document.getElementById('done').style.setProperty('font-size', this.done > 20 ? '12px' : '0' );
-      document.getElementById('ongoing').style.setProperty('font-size', this.ongoing > 25 ? '12px' : '0');
-      document.getElementById('missing').style.setProperty('font-size', this.missing > 20 ? '12px' : '0');
-    }
-
   }
 
 }

@@ -9,6 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class SidenavComponent implements OnInit {
   @Input() sidenav: Sidenav;
+  @Input() structurePage: boolean;
 
   public activeGroup: string;
   public enableAllSidenavLink: boolean;
@@ -16,9 +17,9 @@ export class SidenavComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    // Check whether or not the project has his basics infos
+    // Enable all the links of the sidenav if the project has all is basicsinfos
     this.projectService.hasBasicsInfos.subscribe(val => {
-      this.enableAllSidenavLink = val;
+      this.enableAllSidenavLink = this.structurePage ? val : true;
     });
     this.activeGroup = this.sidenav.groups.length > 0 ? this.sidenav.groups[0].title : '';
   }

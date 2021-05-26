@@ -18,11 +18,13 @@ import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module'
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
   imports: [
     CommonModule,
+    CollectionSitesSelectorModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,

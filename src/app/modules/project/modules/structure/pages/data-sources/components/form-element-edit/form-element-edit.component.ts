@@ -55,9 +55,6 @@ export class FormElementEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.chosenStructure = this.elementForm.value.distribution;
-
-    this.elementForm.valueChanges.subscribe((value: any) => {
-    });
   }
 
   onAddNewPartition() {

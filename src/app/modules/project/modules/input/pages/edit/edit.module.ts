@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { HotTableModule } from '@handsontable/angular';
 
 @NgModule({
   declarations: [EditComponent],
@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     CommonModule,
     EditRoutingModule,
     FormsModule,
+    HotTableModule,
     TranslateModule,
     MatTableModule,
     MatButtonModule,

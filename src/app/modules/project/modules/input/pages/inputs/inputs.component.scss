@@ -1,11 +1,21 @@
+@import "src/assets/theme/size_vars";
+@import "src/assets/theme/color_vars";
+
 .mdm-table {
     tr {
+
+        td:first-child {
+            font-size: $normal_text;
+            font-weight: bold;
+            color: $title_black;
+          }
+
         th {
             text-align: center;
         }
         td{
             height: 100%;
-            padding: 4px;
+            padding: 2px;
             text-align: center;
 
             &:not(.expand-row) {
@@ -14,6 +24,13 @@
                 }
             }
         }
+        th:first-child {
+            width: 100px !important;
+            padding-left: 0 !important;
+        }
+        th, td {
+            width: 60px !important;
+        }
     }
 }
 
@@ -21,4 +38,21 @@
     color: white;
     background-color: rgb(49, 112, 143);
     border-color: rgb(49, 112, 143) !important;
+}
+
+.info-section {
+    flex-direction: row;
+    span {
+        margin-right: 10px;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+        flex-direction: column;
+        span {
+            margin: 0px 0px 10px 0px;
+        }
+        .info-buttons {
+            width: 80%;
+            align-self: center;
+        }
+    }
 }

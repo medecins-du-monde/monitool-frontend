@@ -1,5 +1,8 @@
+// tslint:disable:no-string-literal
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -32,10 +35,16 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   project: Project;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(
+    private projectService: ProjectService,
+    private translateService: TranslateService
+    ) { }
 
   ngOnInit(): void {
     this.open = this.indicator.open;
+    this.translateService.onLangChange.subscribe(() => {
+      this.createOptions();
+    });
     if (!this.isCrossCuttingReport) {
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
@@ -58,7 +67,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     const currentProject = this.indicator.originProject ? this.indicator.originProject : this.project;
     if (numberOfParameters > 1){
       this.options.push({
-        value: 'Computation',
+        value: `${this.translateService.instant('Computation')}`,
         action: this.computationOption
       });
     }
@@ -70,7 +79,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         && !this.indicator.customFilter
         && currentProject.entities.length > 0){
       this.options.push({
-        value: 'Collection Sites',
+        value: `${this.translateService.instant('CollectionSites')}`,
         action: this.collectionSitesOption
       });
     }
@@ -79,25 +88,25 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
       if (!this.indicator.customFilter?.month){
         this.options.push({
-          value: 'Months',
+          value: `${this.translateService.instant('Filter.month')}`,
           action: () => this.timeOption('month')
         });
 
         if (!this.indicator.customFilter?.quarter){
           this.options.push({
-            value: 'Quarters',
+            value: `${this.translateService.instant('Filter.quarter')}`,
             action: () => this.timeOption('quarter')
           });
 
           if (!this.indicator.customFilter?.semester){
             this.options.push({
-              value: 'Semesters',
+              value: `${this.translateService.instant('Filter.semester')}`,
               action: () => this.timeOption('semester')
             });
 
             if (!this.indicator.customFilter?.year){
               this.options.push({
-                value: 'Years',
+                value: `${this.translateService.instant('Filter.year')}`,
                 action: () => this.timeOption('year')
               });
             }
@@ -189,9 +198,31 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         };
         newComputation.parameters[parameter] = value;
 
+        // Looking now for for the name of the variable in order to have the full name of the computation
+        let currentProject: Project;
+        let originElement: FormElement;
+        if (this.project){
+          currentProject = this.project;
+        }else if (this.indicator.originProject){
+          currentProject = this.indicator.originProject;
+        }
+
+        let fullName = parameter;
+
+        for (const form of currentProject.forms){
+          originElement = form.elements.find((e: FormElement) => e.id === value['elementId']);
+          if (originElement !== undefined){
+            break;
+          }
+        }
+
+        if (originElement){
+          fullName = parameter + ` (${originElement.name})`;
+        }
+
         disaggregatedIndicators.push(new ProjectIndicator({
           computation: newComputation,
-          display: parameter,
+          display: fullName,
           baseline: 0,
           target: 0,
           originProject: this.indicator.originProject

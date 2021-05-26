@@ -1,0 +1,25 @@
+<div class="background" (click)="closeDisplay()" [ngClass]="firstDisplayed ? (displayed ? 'no-background' : '') : ''"></div>
+<div class="information-panel">
+    <div class="information-panel-toggle-btn" (click)="toggleDisplay()">
+        <mat-icon *ngIf="displayed">keyboard_arrow_right</mat-icon>
+        <mat-icon *ngIf="!displayed">keyboard_arrow_left</mat-icon>
+    </div>
+    <div class="information-panel-content" [ngClass]="firstDisplayed ? (displayed ? 'displayed' : 'not-displayed') : ''">
+        <div class="information-panel-title">
+            <h1>{{ 'InformationPanel.FAQ' | translate }}</h1>
+            <h2>{{ informations[0].res1 | translate }}</h2>
+            <p [innerHTML]="informations[0].res2 | translate"></p>
+        </div>
+        <mat-accordion *ngFor="let information of informations  | slice:1; let i = index">
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                <p class="panel-title" [innerHTML]="transform(information.res1)">
+                </p>
+                </mat-expansion-panel-header>
+                <div class="panel-answer" [innerHTML]="transform(information.res2)"></div>
+            </mat-expansion-panel>
+            </mat-accordion>              
+    </div>
+</div>  
+  
+  

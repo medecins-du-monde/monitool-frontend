@@ -13,40 +13,19 @@
         <div class="info-value">{{ this.timeSlot ? this.timeSlot.humanizeValue(this.currentLang) : '' }} ({{ this.firstDate }} - {{ this.lastDate }})</div>
     </div>
 </div>
-
-
 <div class="title">
-    <button *ngIf="previousInput" mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()">
+    <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()">
         <mat-icon>edit</mat-icon>
-        Fill with data from the previous entry
+        {{ 'FillWithPreviousData' | translate }}
     </button>
     <div class="mdm-title">
         {{ 'Data' | translate }}
-    </div>
-    
+    </div> 
 </div>
-
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >
         <p>{{ form.elements[k].name }}</p>
-        <table mat-table [dataSource]="table.value" class="mdm-table input-table" [formArrayName]="table.id">
-            <ng-container *ngFor="let column of table.displayedColumns; let j = index" matColumnDef="{{ column }}">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <td mat-cell *matCellDef="let element; let i = index" (paste)="onPaste($event, table.id, j)" [ngClass]="{'tableLabel': isLabelCell(k, i, j)}" class="input-td">
-                    <div class="input-div" *ngIf="isInputCell(k, i, j) !== false; else elseBlock">
-                        <input matInput type="number" [formControl]="inputForm.get('values').get(table.id)['controls'][isInputCell(k, i, j)]" />
-                    </div>
-                    <ng-template #elseBlock>
-                        <div class="table-value">
-                            {{ element[column] }}
-                        </div>
-                    </ng-template>
-                </td>
-            </ng-container>
-            
-            <tr mat-header-row *matHeaderRowDef="table.displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: table.displayedColumns;"></tr>
-        </table>
+        <hot-table [settings]="tableSettings[table.id]" [data]="table.value"></hot-table>
     </div>
 </div>
 <div class="save-actions">
@@ -55,9 +34,9 @@
         {{ 'Save' | translate }}
     </button>
     
-    <button mat-stroked-button class="mdm-button" [disabled]="!canBeSaved" (click)="resetInput()">
+    <button mat-stroked-button class="mdm-button" [disabled]="!inputHasModification" (click)="resetInput()">
         <mat-icon>replay</mat-icon>
-        {{ 'Reset changes' | translate }}
+        {{ 'ResetChanges' | translate }}
     </button>
 
     <button mat-stroked-button class="mdm-button warn" *ngIf="input" (click)="deleteInput()">

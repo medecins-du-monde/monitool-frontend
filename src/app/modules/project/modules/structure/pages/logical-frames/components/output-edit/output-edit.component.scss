@@ -1,12 +1,14 @@
+@import "src/assets/theme/color_vars.scss";
+
 .mat-expansion-panel-header-description {
   button {
-      color: black;
+      color: $activity_panel_button_color;
   }
 }
 
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
-  color: black;
+  color: $activity_panel_color;
 }
 .mat-expansion-panel-header:not([aria-disabled=true]) {
-  background-color: #f5f5f5 !important;
+  background-color: $activity_panel_background !important;
 }

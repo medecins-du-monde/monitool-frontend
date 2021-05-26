@@ -76,8 +76,14 @@ export class ReportingService {
       withGroups
     };
 
-    const response: any = await this.apiService.post(url, data);
-    return response;
+    try {
+      const response: any = await this.apiService.post(url, data);
+      return response;
+    } catch {
+      return null;
+    }
+
+
   }
 
 

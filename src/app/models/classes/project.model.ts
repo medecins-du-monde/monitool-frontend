@@ -43,19 +43,6 @@ export class Project implements Deserializable {
         return this.id.split(':')[1];
     }
 
-    get percentages(){
-        return {
-            basics: ( this.name && this.country && this.themes.length > 0 ) ? 100 : 0,
-            sites: ( this.entities.length > 0 ) ? 100 : 0,
-            logicalFrames: ( this.logicalFrames.length > 0 ) ? 100 : 0,
-            logicalFramesOther: ( this.logicalFrames.length > 1 ) ? 100 : 0,
-            extraIndicators: ( this.extraIndicators.length > 0 ) ? 100 : 0,
-            logicalFramesUpdate: 0,
-            crossCuttingUpdate: 0,
-            extraIndicatorsUpdate: 0
-        };
-    }
-
     get countryImage(): string{
         if ( this.country === 'Burkina Faso' ) {
             return 'assets/images/burkina-flag.png';
@@ -81,7 +68,11 @@ export class Project implements Deserializable {
         this.start = input ? DatesHelper.parseDate(input.start) : new Date();
         this.end = input ? DatesHelper.parseDate(input.end) : new Date(this.setDefaultEnd());
         this.visibility = input ? input.visibility : 'public';
-        this.entities = ( input && input.entities ) ? input.entities.map(x => new Entity(x)) : [];
+        this.entities = ( input && input.entities ) ? input.entities.map(x => {
+            if (!x.start) { x.start = this.start; }
+            if (!x.end) { x.end = this.end; }
+            return new Entity(x);
+        }) : [];
         this.groups = ( input && input.groups ) ? input.groups.map(x => {
             const group = new Group(x);
             group.members = this.entities.filter(e => x.members.indexOf(e.id) >= 0);
@@ -89,11 +80,15 @@ export class Project implements Deserializable {
         }) : [];
         this.extraIndicators = ( input && input.extraIndicators ) ? input.extraIndicators.map(x => new ProjectIndicator(x)) : [];
         this.forms = ( input && input.forms ) ? input.forms.map(x => {
+            if (!x.start) { x.start = this.start; }
+            if (!x.end) { x.end = this.end; }
             const form = new Form(x);
             form.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
             return form;
         }) : [];
         this.logicalFrames = ( input && input.logicalFrames ) ? input.logicalFrames.map(x => {
+            if (!x.start) { x.start = this.start; }
+            if (!x.end) { x.end = this.end; }
             const logicalFrame = new LogicalFrame(x);
             logicalFrame.entities = this.entities.filter(e => x.entities.indexOf(e.id) >= 0);
             return logicalFrame;
@@ -166,6 +161,6 @@ export class Project implements Deserializable {
             delete b.parsed;
         }
 
-        return JSON.stringify(a) === JSON.stringify(b);
+        return _.isEqual(a, b);
     }
 }

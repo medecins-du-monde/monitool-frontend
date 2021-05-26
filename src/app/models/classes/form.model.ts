@@ -17,7 +17,7 @@ export class Form implements Deserializable {
         this.deserialize(input);
     }
 
-    get periodicityDisplay() {
+    get periodicityDisplay(): string {
         return `Enum.Periodicity.${this.periodicity}`;
     }
 

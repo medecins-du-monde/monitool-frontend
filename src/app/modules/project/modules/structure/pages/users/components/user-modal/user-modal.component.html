@@ -57,23 +57,12 @@
     <div *ngIf="userForm.value.role === roles[1].value">
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
-            <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="entities" placeholder="{{ 'CollectionSites' | translate }}" multiple>
-                    <mat-select-trigger>
-                        <mat-chip-list>
-                            <mat-chip *ngFor="let site of selectedSites" [removable]="true"
-                                (removed)="onSiteRemoved(site)">
-                                {{ site.name }}
-                                <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
-                        </mat-chip-list>
-                    </mat-select-trigger>
-                    <mat-option *ngFor="let site of collectionSites" [value]="site">{{ site.name }}</mat-option>
-                </mat-select>
-                <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
-                </mat-hint>
-            </mat-form-field>
+            <app-collection-sites-selector
+                [form]="userForm"
+                [entities]="entities"
+                [groups]="groups"
+                [hint]="'Tooltip.UserEdition.CollectionSites'">
+            </app-collection-sites-selector>
         </div>
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'DataSources' | translate }}</div>
@@ -91,13 +80,13 @@
                     <mat-option *ngFor="let dataSource of dataSources" [value]="dataSource">{{ dataSource.name }}</mat-option>
                 </mat-select>
                 <mat-hint>
-                    <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}
+                    <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.DataSources' | translate }}
                 </mat-hint>
             </mat-form-field>
         </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button (click)="onSubmit()" class="mdm-button">{{ 'UpdateUser' | translate }}</button>
+    <button mat-stroked-button (click)="onSubmit()" class="mdm-button save-button">{{ 'UpdateUser' | translate }}</button>
     <button mat-stroked-button (click)="resetChanges()" class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
 </mat-dialog-actions>

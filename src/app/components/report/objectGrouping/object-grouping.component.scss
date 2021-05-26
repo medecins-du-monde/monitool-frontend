@@ -1,4 +1,5 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .form-field-group {
   display: flex;
@@ -16,14 +17,9 @@
 }
 
 .mat-grid-tile {
-  border: solid 1px #e7e7e7;
-  background: white;
+  border: solid 1px $table_border;
+  background: $filters_background;
   font-size: $small_text;
-  @media screen and (max-width: $breakpoint-xs) {
-    button {
-      font-size: 0;
-    }
-  }
 }
 
 
@@ -44,8 +40,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: $breakpoint-xs) {
-    font-size: $extra_small_text;
-  }
   font-size: $small_text;
+  @media screen and (max-width: $breakpoint-xs) {
+    font-size: 0;
+  }
+  mat-icon {
+    color: $grey;
+  }
+}
+.mat-option {
+  color: $grey;
 }

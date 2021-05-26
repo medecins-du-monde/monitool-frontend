@@ -1,21 +1,21 @@
 <div class="info-section blue">
-    <div class="info-buttons">
-        <a mat-stroked-button type="button" class="mdm-button"
-            href="/api/resources/project/{{project.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"
-            rel="noopener noreferrer">
-            <mat-icon>insert_drive_file</mat-icon>{{'DownloadPdfPortrait' | translate}}
-        </a>
-        <a mat-stroked-button type="button" class="mdm-button"
-        href="/api/resources/project/{{project.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"
-        rel="noopener noreferrer">
-        <mat-icon>note</mat-icon>{{'DownloadPdfLandscape' | translate}}
-    </a>
-    </div>
     <span>
         <p>{{ 'InputsInfo.0' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>
         <p>{{ 'InputsInfo.1' | translate }}</p>
         <p>{{ 'InputsInfo.2' | translate }}</p>
     </span>
+    <div class="info-buttons">
+        <a mat-stroked-button type="button" class="mdm-button"
+            href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"
+            rel="noopener noreferrer">
+            <mat-icon>insert_drive_file</mat-icon>{{'DownloadPdfPortrait' | translate}}
+        </a>
+        <a mat-stroked-button type="button" class="mdm-button"
+        href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"
+        rel="noopener noreferrer">
+        <mat-icon>note</mat-icon>{{'DownloadPdfLandscape' | translate}}
+    </a>
+    </div>
 </div>
 <div *ngIf="this.sites?.length > 0; else elseBlockError">
     <table mat-table [dataSource]="dataSource" class="mdm-table">
@@ -30,7 +30,7 @@
                     </div>
                     <ng-template #elseBlock2>
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
-                            class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value }}%)</button>
+                            class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>
                     </ng-template>
                 </ng-template>
             </td>
@@ -51,3 +51,4 @@
 <ng-template #elseBlockError>
     {{ 'ErrorNoCollectionSiteAssociated' | translate }}
 </ng-template>
+

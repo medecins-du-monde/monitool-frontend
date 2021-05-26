@@ -16,11 +16,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { FormElementEditModule } from '../form-element-edit/form-element-edit.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
   imports: [
     CommonModule,
+    CollectionSitesSelectorModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,

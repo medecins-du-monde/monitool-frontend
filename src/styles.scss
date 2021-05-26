@@ -1,6 +1,8 @@
 @import '~@angular/material/theming';
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import '~handsontable/dist/handsontable.full.css';
+@import "./assets/theme/color_vars.scss";
 @include mat-core();
 
 $mdm-primary-colors: (50 : #e0ecf8,
@@ -155,6 +157,7 @@ body {
 .drawer {
   display: flex;
   min-height: 100%;
+  position: relative;
 
   @media screen and (min-width: $breakpoint-sm + 1px) {
     height: 100%;
@@ -174,6 +177,7 @@ body {
 .drawer-page {
   padding: 15px 15px 25px 15px;
   overflow: auto;
+  margin-right: 0px;
   flex: 1;
 
   @media screen and (max-width: $breakpoint-sm) {
@@ -187,6 +191,10 @@ body {
   margin-bottom: 56px;
 }
 
+.info-panel-space{
+  margin-right: 25px;
+}
+
 mat-hint {
   font-size: $small_text;
   display: flex;
@@ -194,27 +202,31 @@ mat-hint {
   padding-top: 5px;
 }
 
+.mat-select-value {
+  color: $grey;
+}
+
 // === TEXT ===
 .mdm-title {
   font-size: $big_text;
-  color: #151515;
+  color: $title_black;
   line-height: 24px;
   margin-bottom: 10px;
 }
 
 .mdm-sub-title {
   font-size: $small_text;
-  color: #777777;
+  color: $grey;
   line-height: 16px;
   padding-left: 8px;
 }
 
 // === SECTIONS ===
 .info-section {
-  background-color: #ececec;
+  background-color: $info_grey_background;
   font-size: $small_text;
   padding: 10px;
-  color: #777b7e;
+  color: $grey;
   margin-bottom: 14px;
   display: flex;
   flex-direction: column;
@@ -228,9 +240,17 @@ mat-hint {
     margin-top: 16px;
   }
 
+  .mdm-button {
+    color: $grey;
+  }
+
   &.blue {
-    background-color: #d9edf7;
-    color: #31708f;
+    background-color: $info_blue_background;
+    color: $info_blue_color;
+
+    .mdm-button {
+      color: $info_blue_color;
+    }
   }
 
   .info-buttons {
@@ -247,10 +267,10 @@ mat-hint {
 
 .mdm-section {
   margin-bottom: 20px;
-  color: black;
+  color: $grey !important;
 
     .mat-icon{
-        cursor: move;
+        cursor: pointer;
         line-height: 20px;
         font-size: $small_text;
     }
@@ -297,7 +317,7 @@ mat-hint {
 .cards-draghandle {
   position: absolute;
   z-index: 100;
-  cursor: move;
+  cursor: pointer;
 }
 
 .cdk-drag-animating {
@@ -305,34 +325,50 @@ mat-hint {
 }
 
 .card-header {
-    border-bottom: 1px solid rgba(144, 144, 144, 0.24);
+  align-items: center;
+  background-color: $card_header_background;
+  padding: 16px 5px;
+
+  .project-icon {
+    height: 24px;
+    width: 24px;
+
+    img {
+      height: 100%;
+    }
+  }
 }
 
 .card-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-size: $small_text;
   margin-bottom: 8px;
   padding: 0px 16px 16px 16px;
+
+  &.column {
+    flex-direction: column;
+  }
 
   .card-info-title {
       width: 50%;
 
       &:not(b) {
-          color: #909090;
+          color: $grey;
       }
   }
   .card-info-value {
-      width: 30%;
+    margin-left: 10px;
+    width: 100%;
   }
 
   .computation {
       &.valid {
-          color: #3c763d;
+          color: $success;
       }
 
       &.invalid {
-          color: #a94442;
+          color: $warning;
       }
 
       mat-icon{
@@ -346,11 +382,11 @@ mat-hint {
 
   .computation {
     &.valid {
-      color: #3c763d;
+      color: $success;
     }
 
     &.invalid {
-      color: #a94442;
+      color: $warning;
     }
 
     mat-icon {
@@ -365,9 +401,34 @@ mat-hint {
 
 
 // === MATERIAL ===
+
+.cards-draghandle .mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mat-card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
-    position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  position: relative;
+  color: $black;
+
+  // This is the way we should use it for the mat-card in general if we have a header
+  &.with-header {
+    padding: 0 !important;
+
+    .mat-card-content {
+      flex: 1;
+    }
+  
+    .mat-card-actions {
+      padding: 16px !important;
+    }
+
+    .card-header {
+      padding: 16px;
+    }
+  }
 
   .mat-card-header {
     align-items: center;
@@ -411,23 +472,38 @@ mat-hint {
     font-size: $very_small_text;
     min-height: 24px !important;
     padding: 8px !important;
-    white-space: nowrap;
+    margin: 4px 5%;
+    display: flex;
+    align-items: center;
     &.mat-chip-selected {
         &.mat-accent {
-            color: white !important;
+            color: $mat_chip_color !important;
         }
     }
 }
 
+.mat-chip-list-wrapper {
+  flex-wrap: nowrap !important;
+}
 
 
 // === BUTTONS ===
 .mdm-button {
-  background-color: white;
-  border: 1px solid #c8c9cc !important;
+  background-color: $button_background;
+  border: 1px solid $button_border !important;
   height: 32px;
   padding: 0 12px !important;
   font-size: $small_text;
+  color: $black;
+
+  &.grey {
+    color: $grey;
+  }
+
+  &.grey-background {
+    background-color: $disaggregation_structure_background;
+    border-color: $disaggregation_structure_border;
+  }
 
   mat-icon {
     line-height: 20px;
@@ -489,23 +565,24 @@ mat-hint {
   width: 100%;
   margin-top: 15px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-  border: solid 1px #dddddd;
+  border: solid 1px $table_border;
 
   tr {
 
     td:not(:last-child),
     th:not(:last-child) {
-      border-right: 1px solid #dddddd;
+      border-right: 1px solid $table_border;
     }
   
     td {
+      color: $grey;
       font-size: $small_text;
     }
   
     th {
       font-size: $normal_text;
       font-weight: bold;
-      color: black;
+      color: $title_black;
     }
   }
   
@@ -546,8 +623,8 @@ td.input-td.mat-footer-cell:last-of-type {
 code {
   padding: 2px 4px;
   font-size: 90%;
-  color: #c7254e;
-  background-color: #f9f2f4;
+  color: $code_color;
+  background-color: $code_background;
 }
 
 .input-table {
@@ -563,7 +640,7 @@ code {
         position: relative;
 
         &.tableLabel {
-          background-color: #eeeeee;
+          background-color: $table_background;
 
           .table-value {
             color: inherit;
@@ -588,10 +665,24 @@ code {
 
         .table-value {
           padding: 8px;
-          color: #777777;
+          color: $grey;
         }
       }
     }
+  }
+}
+
+// === HANDSONTABLE ===
+hot-table {
+  width: 100%;
+  overflow: hidden;
+  font-size: $small_text;
+}
+
+.handsontable td{
+  &.hot-header-cell{
+    background-color: $table_background;
+    color: $table_color !important;
   }
 }
 
@@ -646,7 +737,7 @@ mat-hint {
 
 .mdm-form {
   padding: 24px 16px;
-  background-color: white;
+  background-color: $form_background;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -671,7 +762,7 @@ mat-hint {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
         border-radius: 4px;
-        background: white;
+        background: $form_background;
       }
     }
   }
@@ -680,7 +771,7 @@ mat-hint {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
         border-radius: 4px;
-        background: #e9e9e9;
+        background: $searchbar_background;
       }
     }
   }
@@ -764,32 +855,12 @@ mat-hint {
   }
 }
 
-.checkbox-form {
-  flex-direction: column;
 
-  div {
-    display: flex;
-    flex-direction: row;
-  }
-
-  mat-hint {
-    align-self: center;
-
-    mat-icon {
-      font-size: $small_text;
-    }
-  }
-
-  .mdm-form-label {
-    margin-right: 50px;
-  }
-  margin: 15px 0px;
-}
 
 // Variables highlighting
 code {
-  color: #fe5e00;
-  background-color: #fff6e6;
+  color: $highlighted_code_color;
+  background-color: $highlighted_code_background;
   border-radius: 4px;
   font-family: Menlo, Monaco, Consolas, Courier New, monospace;
   padding: 4px;
@@ -809,12 +880,12 @@ code {
 
 // Management of all radio buttons
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: #005ec5;
+  border-color: $radio_button_border;
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  color: #005ec5;
-  background-color: #005ec5;
+  color: $radio_button_color;
+  background-color: $radio_button_background;
 }
 
 .mat-radio-label {
@@ -824,11 +895,11 @@ code {
 
 // Management of invalid forms
 .mat-input-invalid .mat-input-placeholder {
-  color: red;
+  color: $warning;
 }
 
 .mat-input-invalid .mat-input-ripple {
-  background-color: red;
+  background-color: $warning;
 }
 
 // Style of the mat expansion panels
@@ -840,16 +911,26 @@ code {
 }
 
 .mat-expansion-panel {
+  display: flex;
   margin: 16px 0 !important;
+  color: $grey !important;
 }
 
-.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+.mat-expansion-panel-header-title {
   display: flex !important;
-  flex-grow: 1 !important;
   margin-right: 16px !important;
   font-size: 16px !important;
   font-weight: bold !important;
-  align-self: center;
+  height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  align-items: center;
+  white-space: nowrap;
+  width: 80%;
+  mat-icon {
+    align-self: center;
+    margin-right: 10px;
+  }
 }
 
 .mat-expansion-panel-header:not([aria-disabled=true]) {
@@ -868,14 +949,55 @@ code {
   font-size: $small_text;
 }
 
-// Style of the message for invalid forms
-.invalid-form {
+// Style of the message for information forms
+.information-form {
   display: flex;
   align-items: center;
-  color: red;
   margin-left: 2%;
   font-size: $small_text;
   mat-icon {
     margin-right: 5px;
   }
+  &.invalid {
+    color: $warning;
+  }
+  &.pending {
+    color: $info;
+  }
+  &.saved {
+    color: $success;
+  }
 }
+
+.save-button:not([disabled]){
+  color: $save_text_color;
+  background-color: $save_background;
+  border-color: $save_border;
+}
+
+.delete-button:not([disabled]) {
+  color: $delete_text_color;
+  background-color: $delete_background;
+  border-color: $delete_border;
+}
+
+.delete {
+  color: $warning !important;
+}
+
+
+//  Style for table inside information panel
+.information-panel-table{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.information-panel-cell {
+  border: 1px solid $table_border;
+  text-align: left;
+  padding: 8px;
+  font-size: $normal_text;
+  color: var(--main);
+}
+
+

@@ -12,6 +12,8 @@ import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/mat
 import { DateService } from 'src/app/services/date.service';
 
 import DatesHelper from 'src/app/utils/dates-helper';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-basics',
@@ -36,6 +38,33 @@ export class BasicsComponent implements OnInit, OnDestroy {
   basicsForm: FormGroup;
 
   themes: Theme[] = [];
+
+  informations = [
+    {
+      res1: 'InformationPanel.Basics',
+      res2: 'InformationPanel.Basics_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Project_definition_question',
+      res2: 'InformationPanel.Project_definition_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Basics_question1',
+      res2: 'InformationPanel.Basics_response1'
+    } as InformationItem
+  ];
 
   private subscription: Subscription = new Subscription();
 
@@ -74,6 +103,25 @@ export class BasicsComponent implements OnInit, OnDestroy {
           this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: project.country,
+          } as BreadcrumbItem,
+          {
+            value: project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Basics',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
 
@@ -86,6 +134,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   ngOnDestroy() {

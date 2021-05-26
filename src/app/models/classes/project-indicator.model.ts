@@ -24,7 +24,7 @@ export class ProjectIndicator implements Deserializable {
   target: number;
   colorize: boolean;
   computation = {
-    formula: null,
+    formula: '',
     parameters: {}
   };
   unit: string;
@@ -35,6 +35,16 @@ export class ProjectIndicator implements Deserializable {
 
   constructor(input?: any) {
     this.deserialize(input);
+  }
+
+  // Return true if the indicator can be considered as filled
+  get filled(): boolean {
+    if (this.computation && this.computation.formula) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   deserialize(input: any): this {
@@ -51,6 +61,14 @@ export class ProjectIndicator implements Deserializable {
       || (this.target === undefined
         || this.target === null) ? true : this.colorize;
 
+    this.unit = null;
+
+    if (input?.computation === null){
+      this.computation = {
+        formula: '',
+        parameters: {}
+      };
+    }
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
       this.computation.formula = input.computation.formula;
@@ -103,6 +121,7 @@ export class ProjectIndicator implements Deserializable {
               }
               else { elementList.push(element); }
             });
+            // We always add the array to the filter object
             parameter.filter[`${key}`] = elementList;
           });
         });
@@ -114,8 +133,9 @@ export class ProjectIndicator implements Deserializable {
 
 
   serialize(crossCuttingType = false) {
-    const serializedIndicator = {
+    let serializedIndicator: any = {
       baseline: this.baseline,
+      target: this.target,
       // Now we check if the colorize is still set to true and if the baseline and target are valid.
       // In the case that the baseline and target are not valid, we set the colorize property to false again.
       colorize: (
@@ -124,10 +144,15 @@ export class ProjectIndicator implements Deserializable {
         && this.target !== null
         && this.target !== undefined) ? this.colorize : false,
       computation: this.formatComputation(this.computation),
-      target: this.target,
     };
-    // tslint:disable-next-line: no-string-literal
-    if (!crossCuttingType) { serializedIndicator['display'] = this.display; }
+
+    if (!crossCuttingType) {
+      serializedIndicator = {
+        display: this.display,
+        ...serializedIndicator
+      };
+    }
+
     return serializedIndicator;
   }
 

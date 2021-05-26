@@ -12,6 +12,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService} from 'src/app/services/date.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 
@@ -36,7 +38,28 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
 })
 export class SitesComponent implements OnInit {
 
+  informations = [
+    {
+      res1: 'InformationPanel.Collection_sites',
+      res2: 'InformationPanel.Collection_sites_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
+  ];
+
   project: Project;
+
+  displayInfos = true;
 
   sitesForm: FormGroup = new FormGroup({
     entities: new FormArray([]),
@@ -78,6 +101,25 @@ export class SitesComponent implements OnInit {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: project.country,
+            } as BreadcrumbItem,
+            {
+              value: project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'CollectionSites',
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({
@@ -108,6 +150,8 @@ export class SitesComponent implements OnInit {
         this.adapter.setLocale(lang);
       }
     );
+    this.projectService.updateInformationPanel(this.informations);
+
   }
 
   public onAddNewEntity(): void {
@@ -117,6 +161,18 @@ export class SitesComponent implements OnInit {
   }
 
   public onRemoveEntity(index: number): void {
+    const entityId = this.entities.controls[index].value.id;
+
+    // Remove the deleted entity from forms
+    this.project.forms.map(form => {
+      form.entities = form.entities.filter(entity => entity.id !== entityId);
+    });
+
+    // Remove the deleted entity from logicalFrames
+    this.project.logicalFrames.map(logicalFrame => {
+      logicalFrame.entities = logicalFrame.entities.filter(entity => entity.id !== entityId);
+    });
+
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
     this.projectService.valid = this.sitesForm.valid;
@@ -153,5 +209,9 @@ export class SitesComponent implements OnInit {
     } else {
       this.groupsDataSource.data = this.groups.controls;
     }
+  }
+
+  toggleStartInfos(): void {
+    this.displayInfos = !this.displayInfos;
   }
 }

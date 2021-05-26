@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { Entity } from './entity.model';
 import { Purpose } from './purpose.model';
 import DatesHelper from 'src/app/utils/dates-helper';
+import _ from 'lodash';
 
 export class LogicalFrame implements Deserializable {
     id: string;
@@ -41,4 +42,8 @@ export class LogicalFrame implements Deserializable {
             indicators: this.indicators.map(x => x.serialize()),
         };
     }
+
+  equals(other: LogicalFrame): boolean{
+    return _.isEqual(this, other);
+  }
 }

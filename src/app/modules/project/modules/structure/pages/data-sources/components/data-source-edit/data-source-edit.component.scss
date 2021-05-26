@@ -1,3 +1,5 @@
+@import "src/assets/theme/color_vars.scss";
+
 .mat-expansion-panel-header-description {
   button {
     margin-left: auto;
@@ -9,13 +11,19 @@
 }
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
   display: flex !important;
+  align-items: center;
   flex-grow: 1 !important;
   margin-right: 16px !important;
   font-size: 16px !important;
   font-weight: bold !important;
-  color: #31708f;
+  color: $variable_expansion_panel_color;
 }
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   cursor: pointer;
-  background-color: #d9edf7 !important;
+  background-color: $variable_expansion_panel_background !important;
+}
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
 }

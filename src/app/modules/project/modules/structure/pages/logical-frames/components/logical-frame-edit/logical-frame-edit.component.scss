@@ -1,12 +1,19 @@
+@import "src/assets/theme/color_vars.scss";
+
 .mat-expansion-panel-header-description {
   button {
-      color: #31708f;
+      color: $specific_obj_panel_button_color;
   }
 }
 
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
-  color: white;
+  color: $specific_obj_panel_color;
 }
 .mat-expansion-panel-header:not([aria-disabled=true]) {
-  background-color: #337ab7 !important;
+  background-color: $specific_obj_panel_background !important;
+}
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
 }

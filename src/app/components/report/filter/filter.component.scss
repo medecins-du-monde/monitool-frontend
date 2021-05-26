@@ -1,4 +1,5 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .hover {
   cursor: pointer;
@@ -12,8 +13,8 @@ table {
 }
 
 td {
-  border: solid 1px #e7e7e7 !important;
-  background: white;
+  border: solid 1px $table_border !important;
+  background: $filters_background;
 }
 
 .mdm-form-group:first-child {
@@ -38,4 +39,19 @@ h2 {
 
 .mat-icon {
   padding: 2px;
+}
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}
+.finished-projects {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+width: 300px;
+  .mdm-form-label {
+    flex: 0.7;
+  }
 }

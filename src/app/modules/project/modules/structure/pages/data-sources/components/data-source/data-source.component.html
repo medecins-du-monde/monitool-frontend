@@ -1,19 +1,20 @@
-<mat-card>
+<mat-card class="with-header">
     <ng-content></ng-content>
     <mat-card-header class="card-header">{{ form.name }}</mat-card-header>
     <mat-card-content>
         <div class="card-info">
-            <b class="card-info-title">{{ 'Date' | translate }}</b>
+            <div class="card-info-title">{{ 'Date' | translate }}</div>
             <div class="card-info-value">{{ form.start | localizedDate }} - {{ form.end | localizedDate }}</div>
         </div>
         <div class="card-info">
-            <b class="card-info-title">{{ 'Periodicity' | translate }}</b>
+            <div class="card-info-title">{{ 'Periodicity' | translate }}</div>
             <div class="card-info-value">{{ form.periodicityDisplay | translate }}</div>
         </div>
         <div class="card-info">
-            <b class="card-info-title">{{ 'CollectionSites' | translate }}</b>
+            <div class="card-info-title">{{ 'CollectionSites' | translate }}</div>
             <div class="card-info-value">
-                <div *ngFor="let entity of form.entities">{{ entity.name }}</div>
+                <div *ngFor="let group of groups">{{ group.name | translate }}</div>
+                <div *ngFor="let entity of entities">{{ entity.name }}</div>
             </div>
         </div>
     </mat-card-content>

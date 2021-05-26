@@ -6,6 +6,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-users',
@@ -13,6 +15,25 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.User_list',
+      res2: 'InformationPanel.User_list_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
+  ];
 
   private subscription: Subscription = new Subscription();
 
@@ -31,8 +52,29 @@ export class UsersComponent implements OnInit {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.users = this.project.users;
+
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: project.country,
+          } as BreadcrumbItem,
+          {
+            value: project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'Users',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   onDelete(id: string) {

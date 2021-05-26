@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { InputService } from 'src/app/services/input.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 
 
@@ -26,6 +28,14 @@ export interface Task {
 })
 
 export class HomeComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Home_entry',
+      res2: ''
+    } as InformationItem
+  ];
+
   displayedColumns: string[] = ['task', 'status'];
   dataSource: Task[];
 
@@ -45,6 +55,26 @@ export class HomeComponent implements OnInit {
     this.subscription.add(
       this.projectService.openedProject.subscribe( async (project: Project) => {
         this.project = project;
+
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: project.country,
+          } as BreadcrumbItem,
+          {
+            value: project.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Input',
+          } as BreadcrumbItem,
+          {
+            value: 'Home',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
 
         const data = [];
         for (const form of this.project.forms){
@@ -86,6 +116,7 @@ export class HomeComponent implements OnInit {
         this.taskDataSource.data = data;
       })
     );
+    this.projectService.updateInformationPanel(this.informations);
   }
 
 }

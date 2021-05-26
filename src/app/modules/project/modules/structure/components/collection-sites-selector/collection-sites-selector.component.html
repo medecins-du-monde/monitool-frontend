@@ -1,0 +1,20 @@
+<mat-form-field [formGroup]="form" appearance="outline" class="mdm-form-field">
+    <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple>
+        <mat-select-trigger>
+            <mat-chip-list>
+                <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
+                    (removed)="onEntityRemoved(entity)" >
+                    <mat-icon class="chip" *ngIf="checkIfGroup(entity)">arrow_circle_down</mat-icon>
+                    {{ entity.name | translate }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
+        <mat-option *ngFor="let group of groups" (click)="toggleGroupOption(group)" [value]=group><mat-icon class="option">arrow_circle_down</mat-icon>{{ group.name }}</mat-option>
+        <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>
+    </mat-select>
+    <mat-hint *ngIf="hint">
+        <mat-icon>info</mat-icon>{{ hint | translate }}
+    </mat-hint>
+</mat-form-field>

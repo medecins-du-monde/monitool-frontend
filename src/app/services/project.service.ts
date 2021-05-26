@@ -4,8 +4,9 @@ import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
-import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { filter } from 'rxjs/operators';
+import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
+import InformationItem from '../models/interfaces/information-item';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ProjectService {
   private currentProject: Project;
 
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
+  breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
@@ -24,8 +26,19 @@ export class ProjectService {
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
+  needsInfosPanelSpace: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   // Keep track of if the project has basics info filled out
   basicInfos: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  // Handles information panels question
+  informations: BehaviorSubject<InformationItem[]> = new BehaviorSubject([]);
+
+  // Get project id to redirect MDM Accounts
+  projectId: BehaviorSubject<string> = new BehaviorSubject('');
+
+  // Check if a project user is creating a new project
+  projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
@@ -33,6 +46,12 @@ export class ProjectService {
 
   get bigPage(): Observable<boolean> {
     return this.inBigPage.asObservable();
+  }
+
+  // This is used to know if we need an extra space because we have the info panel.
+  // It will be removed when the infos panel will be everywhere and the app will be uniform
+  get infosPanelSpace(): Observable<boolean> {
+    return this.needsInfosPanelSpace.asObservable();
   }
 
   get hasBasicsInfos(): Observable<boolean> {
@@ -43,7 +62,21 @@ export class ProjectService {
     return this.currentProject && !this.savedProject.equals(this.currentProject);
   }
 
-  breadcrumbList: BreadcrumbItem[];
+  get panelInformations(): Observable<InformationItem[]> {
+    return this.informations.asObservable();
+  }
+
+  get getBreadcrumbsList(): Observable<any[]> {
+    return this.breadCrumbs.asObservable();
+  }
+
+  get getProjectId(): Observable<string> {
+    return this.projectId.asObservable();
+  }
+
+  get projectUserCreatingProject(): Observable<boolean> {
+    return this.projectUserRoleCreateProject.asObservable();
+  }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
     this.openedProject.subscribe((project: Project) => {
@@ -58,19 +91,6 @@ export class ProjectService {
           this.currentProject = project.copy();
         }
       }
-
-      this.breadcrumbList = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-      ];
     });
   }
 
@@ -92,9 +112,18 @@ export class ProjectService {
     });
   }
 
+  // Update the breadcrumbs list
+  public updateBreadCrumbs(list: BreadcrumbItem[]): void {
+    this.breadCrumbs.next(list);
+  }
+
   // used when reverting changes and staying in the same page
   public revertChanges(): void {
     this.project.next(this.savedProject.copy());
+  }
+
+  public updateInformationPanel(list: InformationItem[]): void {
+    this.informations.next(list);
   }
 
   public async list(): Promise<Project[]> {
@@ -108,9 +137,9 @@ export class ProjectService {
   }
 
   public create(project: Project): void {
+    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
     this.basicInfos.next(false);
     this.project.next(project);
-    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
   }
 
   public async get(id: string): Promise<Project> {
@@ -171,5 +200,21 @@ export class ProjectService {
   public async listByIndicator(indicatorId: string): Promise<Project[]> {
     const response: any = await this.apiService.get(`/resources/project`, { params: { mode: 'crossCutting', indicatorId } });
     return response.map(x => new Project(x));
+  }
+
+  // Used when the user is a partner with a data entry role to display the name
+  // of datasource and entities from their ID
+  public getNamefromId(id, arr): string {
+    let name;
+    arr.forEach(x => {
+      if (x.id === id) {
+        name = x.name;
+      }
+    });
+    return name;
+  }
+
+  public updateProjectId(id: string) {
+    this.projectId.next(id);
   }
 }

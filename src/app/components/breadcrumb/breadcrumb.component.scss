@@ -1,8 +1,12 @@
 @import "src/assets/theme/size_vars.scss";
 
 ul li{
-    font-size: $normal_text;
-    display: inline;
+    font-size: 15px;
+    max-width: 22% !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     mat-icon{
         vertical-align: middle;
         line-height: 22px;
@@ -18,4 +22,7 @@ ul li{
 
 ul {
     margin: 0px 0px 5px 0px;
+    padding-left: 0px;
+    display: flex;
+    flex-direction: row;
 }

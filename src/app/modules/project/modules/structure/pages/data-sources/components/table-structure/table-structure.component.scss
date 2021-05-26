@@ -1,24 +1,22 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 .collapse {
   border-collapse: collapse !important;
 }
 
 .title {
-  border: 1px solid #c4c4c4;
+  border: 1px solid $disaggregation_structure_border;
   border-collapse: collapse;
-  background-color: #e1e1e1;
-  font-weight: 520;
+  background-color: $disaggregation_structure_background;
   padding: 5px;
 }
 
 .empty {
-  border: 1px solid #c4c4c4;
+  border: 1px solid $disaggregation_structure_border;
   border-collapse: collapse !important;
-  background-color: #e1e1e1;
-  font-weight: 520;
+  background-color: $disaggregation_structure_background;
   padding: 5px;
-  color: #e1e1e1;
 }
 
 .data {

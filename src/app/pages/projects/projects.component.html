@@ -21,7 +21,7 @@
             <div class="action-bar">
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
-            <div class="action">
+            <div class="action" *ngIf="canCreateProject">
                 <button mat-raised-button color="primary" (click)="onCreate()">
                     <mat-icon svgIcon="add-folder"></mat-icon>
                     {{ 'CreateNewProject' | translate }}
@@ -34,3 +34,4 @@
         ></app-project>
     </div>
 </div>
+<app-informations-panel></app-informations-panel>

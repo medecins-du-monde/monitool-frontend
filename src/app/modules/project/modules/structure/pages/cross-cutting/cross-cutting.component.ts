@@ -10,6 +10,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import { IndicatorModalComponent } from '../../pages/logical-frames/components/indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-cross-cutting',
@@ -17,6 +19,13 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
   styleUrls: ['./cross-cutting.component.scss']
 })
 export class CrossCuttingComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Crosscutting_indicators_list',
+      res2: ''
+    } as InformationItem
+  ];
 
   project: Project;
   indicators: ProjectIndicator[] = [];
@@ -39,6 +48,7 @@ export class CrossCuttingComponent implements OnInit {
     return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as FormArray;
   }
 
+  // TODO: Remove this method if not used
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -103,7 +113,27 @@ export class CrossCuttingComponent implements OnInit {
         this.setForm();
       });
 
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'CrossCuttingIndicators',
+        } as BreadcrumbItem
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   private setForm(): void {

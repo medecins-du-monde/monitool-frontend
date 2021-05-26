@@ -7,6 +7,8 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-extra-indicators',
@@ -14,6 +16,27 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
   styleUrls: ['./extra-indicators.component.scss']
 })
 export class ExtraIndicatorsComponent implements OnInit {
+
+  informations = [
+    {
+      res1: 'InformationPanel.Extra_indicators',
+      res2: 'InformationPanel.Extra_indicators_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_Naming_convention_question',
+      res2: 'InformationPanel.General_Naming_convention_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_accidental_delete_question',
+      res2: 'InformationPanel.General_accidental_delete_response'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_delete_saved_question',
+      res2: 'InformationPanel.General_delete_saved_response'
+    } as InformationItem
+  ];
+
+
   extraIndicatorsForm: FormGroup;
 
   extraIndicators: ProjectIndicator[] = [];
@@ -24,8 +47,29 @@ export class ExtraIndicatorsComponent implements OnInit {
   ngOnInit(): void {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
+
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: project.country,
+        } as BreadcrumbItem,
+        {
+          value: project.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'ExtraIndicators',
+        } as BreadcrumbItem,
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
       this.setForm();
     });
+    this.projectService.updateInformationPanel(this.informations);
   }
 
   get indicators(): FormArray {

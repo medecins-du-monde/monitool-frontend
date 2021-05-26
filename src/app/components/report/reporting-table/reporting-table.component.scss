@@ -1,10 +1,16 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
+
+.big-table {
+  max-height: 76vh !important;
+}
 
 .table-scroll {
   width: 100%;
-  max-height: 500px;
+  max-height: 71vh;
   overflow: auto;
-  border: solid 1px #e7e7e7;
+  border: solid 0.5px $table_border;
+
 
   table {
     width: 100%;
@@ -16,6 +22,10 @@
     width: 50px;
   }
 
+  .mat-column-baseline, .mat-column-target {
+    width: 65px;
+  }
+
   .mat-column-name {
     width: 300px;
     @media screen and (max-width: $breakpoint-xs) {
@@ -23,7 +33,7 @@
     }
   }
 
-  .mat-column-title, .mat-column.groupName {
+  .mat-column-title, .mat-column-groupName {
     border-right: none !important;
     width: 100vw !important;
   }
@@ -35,31 +45,34 @@
   th {
     overflow: hidden;
     width: 85px;
-    margin-right: 30px;
-    border: solid 1px #e7e7e7 !important;
+    border: solid 0.5px $table_border !important;
+    color: $grey;
+    font-weight: bold;
+    text-align: center;
+    font-size: $small_text;
+    padding: 0 !important
   }
   
   .mat-column {
     width: 50px;
   }
   td {
+    padding: 0;
     font-size : $small_text;
     text-align: center;
-    border: solid 1px #e7e7e7 !important;
+    color: $grey;
+    border: solid 1px $table_border !important;
+    word-break: break-word;
     &.value-cell{
-      border-left-width: 1px;
+      border-left-width: 0.5px;
       border-left-style: solid;
-      border-left-color: rgba(0, 0, 0, 0.12);
+      border-left-color: $table_report_border_left_color;
       &.empty{
-        background-color: rgb(238, 238, 238);
+        background-color: $table_report_empty_cell_background;
       }
     }    
   }
-  
-  th.mat-header-cell {
-    font-size: $small_text;
-    margin: 0px 10px;
-  }
+
   
   tr.mat-row {
   height: 30px !important;
@@ -71,12 +84,12 @@
   }
   
   tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
+    background: $table_hover_background;
     cursor: pointer;
   }
   
   tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+    background: $table_report_background;
   }
   
   
@@ -89,11 +102,11 @@
   }
 
   .error{
-    background-color: rgb(238, 238, 238);
+    background-color: $table_report_error_background;
     text-align: left;
-    border-left-width: 1px;
+    border-left-width: 0.5px;
     border-left-style: solid;
-    border-left-color: rgba(0, 0, 0, 0.12);
+    border-left-color: $table_report_border_left_color;
     padding-left: 5px;
   } 
   
@@ -102,7 +115,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0px 15px 0px 15px;
-    height: 48px;
+    height: 30px;
     div {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -118,15 +131,13 @@
   
   .groupName{
     padding-left: 15px;
-    font-weight: bold;
-    font-size: $small_text;
     text-align: left;
   }
   
   .title{
     font-weight: bold;
     font-size: $small_text;
-    position: sticky;
+    color: $grey; 
     div {
       display: flex;
       align-items: center;
@@ -137,6 +148,7 @@
     display: flex !important;
     justify-content: center;
     align-items: center;
+    color: $grey;
   }
   
   th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
@@ -144,10 +156,10 @@
   }
 
   .clicked {
-    background-color: #23e26f;
+    background-color: $report_button_clicked_graph_background;
   }
 
   .disabled {
-    background-color: #908787 !important;
+    background-color: $report_button_disabled_graph_background !important;
   }
 }

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="with-header">
     <ng-content></ng-content>
     <mat-card-header class="card-header">{{ logicalFrame.name }}</mat-card-header>
     <mat-card-content>
@@ -11,14 +11,15 @@
         <div class="card-info">
             <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>
             <div class="card-info-value">
-                <div *ngFor="let entity of logicalFrame.entities">{{ entity.name }}</div>
+                <div *ngFor="let group of groups">{{ group.name | translate }}</div>
+                <div *ngFor="let entity of entities">{{ entity.name }}</div>
             </div>
         </div>
     </mat-card-content>
 
     <mat-card-actions align="end" class="mdm-button-group">
-        <button mat-stroked-button class="mdm-button" (click)="onEdit()">{{ 'Edit' | translate }}</button>
-        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button">
+        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()">{{ 'Edit' | translate }}</button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button">
             <mat-icon>expand_more</mat-icon>
         </button>
     </mat-card-actions>
@@ -31,11 +32,11 @@
     </button>
     <a mat-menu-item [href]="portraitPdfUrl" target="_blank">
         <mat-icon>insert_drive_file</mat-icon>
-        <span>{{ 'Download' | translate }} PDF ( {{'Portrait' | translate}} )</span>
+        <span>{{ 'DownloadPdfPortrait' | translate }}</span>
     </a>
     <a mat-menu-item [href]="landscapePdfUrl" target="_blank">
         <mat-icon>note</mat-icon>
-        <span>{{ 'Download' | translate }} PDF ( {{'Landscape' | translate}} )</span>
+        <span>{{ 'DownloadPdfLandscape' | translate }}</span>
     </a>
     <button mat-menu-item (click)="onDelete()">
         <mat-icon>delete</mat-icon>

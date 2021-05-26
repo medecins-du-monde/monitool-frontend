@@ -14,6 +14,7 @@ import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/components/report/reporting-menu/reporting-menu.component';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import DatesHelper from 'src/app/utils/dates-helper';
+import { TranslateService } from '@ngx-translate/core';
 
 // TODO: Stock these interfaces in their own file
 export interface SectionTitle{
@@ -63,7 +64,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
-              private chartService: ChartService) { }
+              private chartService: ChartService,
+              private translateService: TranslateService) { }
 
   content: any[];
 
@@ -75,6 +77,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   dataSource = new MatTableDataSource([]);
 
+
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   private subscription: Subscription = new Subscription();
 
@@ -218,14 +224,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return item;
   }
 
-  // table after dimension change
+  // Update all the table headers with the new dimensions
   updateDimensions(): void {
     if (this.dimensionIds.value === 'entity'){
-      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entity));
+      this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entities));
       this.dimensions.push('_total');
     }
     else if (this.dimensionIds.value === 'group'){
-      const entities = this.filter.value.entity;
+      const entities = this.filter.value.entities;
       this.dimensions = this.project.groups.filter(group => {
         for (const e of group.members){
           if (entities.includes(e.id)){
@@ -234,6 +240,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
         return false;
       }).map(x => x.id);
+      this.dimensions.push('_total');
     }
     else {
       let startTimeSlot = TimeSlot.fromDate(
@@ -290,7 +297,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     const modifiedFilter = {
       _start: currentFilter._start.toISOString().slice(0, 10),
       _end: currentFilter._end.toISOString().slice(0, 10),
-      entity: currentFilter.entity
+      entity: currentFilter.entities
     };
 
     const currentProject = row.originProject ? row.originProject : this.project;
@@ -421,6 +428,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       }
     }
     if (id === '_total') { return 'Total'; }
+    if (this.dimensionIds.value !== 'entity' && this.dimensionIds.value !== 'group'){
+      const timeSlotAux = new TimeSlot(id);
+      return timeSlotAux.humanizeValue(this.currentLang);
+    }
     return id;
   }
 
@@ -484,7 +495,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     if (info.splitBySites){
       const newIndicators = [];
-      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entity;
+      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
       for (const entityId of entities){
         const customFilter = {
@@ -580,7 +591,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   calcPaddingLevel(element: Row): string{
     if (element.level){
-      return `padding-left: ${element.level * 20 + 15}px;`;
+      return `padding-left: ${element.level * 20}px;`;
     }
     return '';
   }
@@ -594,14 +605,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // of the red until we get to the green: rgb (128, 255, 128)
 
 
-    // set color to gray if cell is empty
-    if (element.values[column] === undefined && !this.checkIfNaN(element?.values[column])){
-      return 'rgb(238, 238, 238)';
-    }
-
-    // don't set any color if the row don't want colors or the value is NaN
-    if (!element.colorize || this.checkIfNaN(element?.values[column])){
-      return '';
+    // Set background color to white if the row doesn't want colors
+    if (!element.colorize
+        || element.target === null
+        || element.baseline === null){
+      return 'white';
     }
 
     const distance = element.target - element.baseline;
