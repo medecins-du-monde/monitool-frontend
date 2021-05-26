@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Partition } from 'src/app/models/classes/partition.model';
+import { ExistingPartitionModalComponent } from '../existing-partition-modal/existing-partition-modal.component';
 import { PartitionModalComponent } from '../partition-modal/partition-modal.component';
 
 
@@ -62,6 +63,10 @@ export class FormElementEditComponent implements OnInit {
     this.openDialog(partition);
   }
 
+  onUseExistingPartition(){
+    this.openExistingPartitionDialog()
+  }
+
   onRemovePartition(i: number) {
     this.partitions.removeAt(i);
   }
@@ -76,6 +81,10 @@ export class FormElementEditComponent implements OnInit {
       useGroups: [partition.useGroups],
       groups: this.fb.array([])
     });
+  }
+
+  openExistingPartitionDialog(){
+    const dialogRef = this.dialog.open(ExistingPartitionModalComponent);
   }
 
   openDialog(partition: FormGroup) {
