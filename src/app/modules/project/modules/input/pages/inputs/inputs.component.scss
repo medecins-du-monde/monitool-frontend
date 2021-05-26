@@ -8,6 +8,7 @@
             font-size: $normal_text;
             font-weight: bold;
             color: $title_black;
+            width: 150px;
           }
 
         th {
@@ -15,7 +16,6 @@
         }
         td{
             text-align: center;
-
             &:not(.expand-row) {
                 div, button{
                     width: 100%;

@@ -147,7 +147,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     if (this.formId && this.project){
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
-      
+
       this.allowedEntities = [];
       // We show only columns of data in which the current user has rights
       if (this.user.type === 'partner' && this.user.role === 'input') {
@@ -203,8 +203,6 @@ export class InputsComponent implements OnInit, OnDestroy {
               humanValue: slotStart.humanizeValue(this.currentLang),
               value: slotStart.value
             });
-            let test = slotStart.value;
-            
             slotStart = slotStart.previous();
           }
           if (currentYear === slotStart.value.slice(0, 4)){
@@ -227,20 +225,20 @@ export class InputsComponent implements OnInit, OnDestroy {
 
       const newDataSource = [];
       if (this.form.periodicity === 'free'){
-        let datesSet = new Set();
+        const datesSet = new Set();
         for (const key of Object.keys(this.inputProgress)){
-          let [ , , , , , inputDateStr] = key.split(':');
-          datesSet.add(inputDateStr)
+          const [ , , , , , inputDateStr] = key.split(':');
+          datesSet.add(inputDateStr);
         }
         this.thisYearDates = Array.from(datesSet).map((inputDateStr: string) => {
-          let dayAsString = 'day';
-          let dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString])
+          const dayAsString = 'day';
+          const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString]);
           return {
             humanValue: dateSlot.humanizeValue(this.currentLang),
             value:  dateSlot.value
-          }
+          };
         });
-    
+
       }
       const inputId = `input:${this.project.id}:${this.formId}`;
       for (const date of this.thisYearDates){

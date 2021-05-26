@@ -640,6 +640,7 @@
     "Search": "Enter text here to filter the projects",
     "SearchHelp": "Search a project by name of country or project or thematic.",
     "SeeOlderDates": "See older dates",
+    "CreateNewDate": "Create (new date)",
     "SeeReport": "See report",
     "Settings": "Settings",
     "SettingsIndicatorEdit": "This page allows changing the definition of a cross-cutting indicator. If you make changes, take care to update all languages.",

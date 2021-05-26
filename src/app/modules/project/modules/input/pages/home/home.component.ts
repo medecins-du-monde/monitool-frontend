@@ -79,14 +79,17 @@ export class HomeComponent implements OnInit {
         const data = [];
         for (const form of this.project.forms){
           const inputs = await this.inputService.list(this.project.id, form.id);
+          let done = 0;
+          let ongoing = 0;
+          let missing = 0;
+          let total = 0;
 
           if (form.periodicity === 'free'){
-            
-            let done = 0;
-            let ongoing = 0;
-            let differentDays = new Set();
-            for (let [inputInfo, inputVal] of Object.entries(inputs)){
-              let day = inputInfo.split(':')[5];
+            done = 0;
+            ongoing = 0;
+            const differentDays = new Set();
+            for (const [inputInfo, inputVal] of Object.entries(inputs)){
+              const day = inputInfo.split(':')[5];
               differentDays.add(day);
               if (inputVal === 1){
                 done += 1;
@@ -95,53 +98,41 @@ export class HomeComponent implements OnInit {
               }
             }
 
-            const total = differentDays.size * form.entities.length;
-            const missing = total - done - ongoing;
-
-            data.push({
-              buttonIcon: 'edit',
-              buttonText: form.name,
-              routerLink: `/projects/${project.id}/input/inputs/${form.id}`,
-              done,
-              ongoing,
-              missing,
-              total
-            });
-          }else{
+            total = differentDays.size * form.entities.length;
+            missing = total - done - ongoing;
+          } else {
             const max = (a: Date, b: Date) => a >= b ? a : b;
             const min = (a: Date, b: Date) => a >= b ? b : a;
-  
+
             // gets the first date that is inside the interval of the project and of the form at the same time
             const startDate: Date = max(form.start, this.project.start);
             // gets the last date that is inside the interval of the project and of the form at the same time
             const endDate: Date = min(form.end, min(this.project.end, new Date()));
-  
+
             let startTimeSlot = TimeSlot.fromDate(startDate.toISOString(), TimeSlotPeriodicity[form.periodicity]);
             const endTimeSlot = TimeSlot.fromDate(endDate.toISOString(), TimeSlotPeriodicity[form.periodicity]);
-  
+
             const periods = [];
             while (startTimeSlot !== endTimeSlot){
               periods.push(startTimeSlot.value);
               startTimeSlot = startTimeSlot.next();
             }
             periods.push(endTimeSlot.value);
-  
-            const total = periods.length * form.entities.length;
-            const done = Object.values(inputs).filter(x => x === 1).length;
-            const ongoing = Object.values(inputs).filter(x => x !== 1).length;
-            const missing = total - done - ongoing;
-  
-            data.push({
-              buttonIcon: 'edit',
-              buttonText: form.name,
-              routerLink: `/projects/${project.id}/input/inputs/${form.id}`,
-              done,
-              ongoing,
-              missing,
-              total
-            });
-          }
 
+            total = periods.length * form.entities.length;
+            done = Object.values(inputs).filter(x => x === 1).length;
+            ongoing = Object.values(inputs).filter(x => x !== 1).length;
+            missing = total - done - ongoing;
+          }
+          data.push({
+            buttonIcon: 'edit',
+            buttonText: form.name,
+            routerLink: `/projects/${project.id}/input/inputs/${form.id}`,
+            done,
+            ongoing,
+            missing,
+            total
+          });
         }
         this.taskDataSource.data = data;
       })
