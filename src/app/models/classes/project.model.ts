@@ -38,11 +38,6 @@ export class Project implements Deserializable {
         return 'Deleted';
     }
 
-    // Return the id without the project: in front
-    get shortId(): string{
-        return this.id.split(':')[1];
-    }
-
     get countryImage(): string{
         if ( this.country === 'Burkina Faso' ) {
             return 'assets/images/burkina-flag.png';

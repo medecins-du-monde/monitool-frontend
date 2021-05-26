@@ -41,7 +41,7 @@ export class ObjectGroupingComponent implements OnInit {
 
 
   get currentPeriodicity(){
-    let period = this.dimensionForm.get('dimensionId').value
+    const period = this.dimensionForm.get('dimensionId').value;
     if (period === 'entity' || period === 'group'){
       return 'month';
     }
