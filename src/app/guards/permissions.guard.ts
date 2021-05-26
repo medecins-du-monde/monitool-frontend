@@ -53,9 +53,7 @@ export class PermissionsGuard implements CanActivate {
                       || (projectUser.length > 0 && projectUser[0].role === 'input')
                       || (projectUser.length > 0 && projectUser[0].role === 'read')) {
               // Not authorized and redirection to the reporting home page
-              this.projectService.get(this.id).then(() => {
-                this.router.navigate([`/projects/${this.id}/reporting/home`]);
-              });
+              this.router.navigate([`/projects/${this.id}/reporting/home`]);
               return false;
             }
           });

@@ -37,7 +37,7 @@
         </ng-container>
         <ng-container matColumnDef="expandedDates">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
-                <ng-template [ngIf]="seeOlderDatesFlag">
+                <ng-template [ngIf]="!endDateReached">
                     <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ 'SeeOlderDates'
                         | translate }}</button>
                 </ng-template>

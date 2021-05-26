@@ -56,7 +56,6 @@ export class InputsComponent implements OnInit, OnDestroy {
   displayedColumns = [];
   dataSource = [];
 
-  seeOlderDatesFlag = true;
   formId: any;
 
   sites = [];
@@ -65,12 +64,15 @@ export class InputsComponent implements OnInit, OnDestroy {
   project: Project;
   form: Form;
   user: User;
-  thisYearDates: any[];
   allDates: any[];
   inputProgress: ArrayBuffer;
   allowedEntities: any[];
   footerColumns: string[] = [];
   dateForm: FormControl;
+  slotStart: TimeSlot;
+  slotEnd: TimeSlot;
+  differentInputDates: { humanValue: string; value: string; }[] = [];
+  endDateReached = false;
 
 
   get currentDate(){
@@ -104,16 +106,21 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
-        this.authService.currentUser.subscribe((user: User) => {
-          this.user = user;
-        });
         this.updateData();
+      })
+    );
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.user = user;
       })
     );
     this.subscription.add(
       this.route.params.subscribe(params => {
         this.formId = params.formId;
         this.form = this.project.forms.find(x => x.id === this.formId);
+
+        this.dataSource = [];
+        this.endDateReached = false;
 
         if (this.form && this.project) {
           const breadCrumbs = [
@@ -143,8 +150,8 @@ export class InputsComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  async updateData(){
-    if (this.formId && this.project){
+  updateData(){
+    if (this.formId && this.project && this.user){
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
 
@@ -164,111 +171,68 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.displayedColumns = ['Date'].concat(this.allowedEntities.map(x => x.name));
       this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
     }
-    this.thisYearDates = [];
-    this.allDates = [];
-    if (this.form){
-      let firstDate = new Date();
-      if (firstDate > this.form.end && this.form.end){
-        firstDate = this.form.end;
-      }
-      const currentYear = firstDate.getFullYear().toString();
-
-      if (this.form.periodicity !== 'free'){
-        // this represents the most recent available time slot of the form
-        let slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
-
-        // this is the oldest date of the form
-        const slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
-
-        if (slotStart === slotEnd){
-          this.thisYearDates = [
-            {
-              humanValue: slotStart.humanizeValue(this.currentLang),
-              value: slotStart.value
-            }
-          ];
-          this.allDates = [{
-           humanValue: slotStart.humanizeValue(this.currentLang),
-           value: slotStart.value
-          }];
-        }else{
-          while (slotStart !== slotEnd){
-            if (currentYear === slotStart.value.slice(0, 4)){
-              this.thisYearDates.push({
-                humanValue: slotStart.humanizeValue(this.currentLang),
-                value: slotStart.value
-              });
-            }
-            this.allDates.push({
-              humanValue: slotStart.humanizeValue(this.currentLang),
-              value: slotStart.value
-            });
-            slotStart = slotStart.previous();
-          }
-          if (currentYear === slotStart.value.slice(0, 4)){
-            this.thisYearDates.push({
-              humanValue: slotStart.humanizeValue(this.currentLang),
-              value: slotStart.value
-            });
-          }
-          this.allDates.push({
-            humanValue: slotStart.humanizeValue(this.currentLang),
-            value: slotStart.value
-          });
-        }
-      }
-    }
 
     if (this.project && this.form){
+      // get the inputs from the backend
+      this.inputService.list(this.project.id, this.formId).then(input => {
+        this.inputProgress = input;
 
-      this.inputProgress = await this.inputService.list(this.project.id, this.formId);
-
-      const newDataSource = [];
-      if (this.form.periodicity === 'free'){
-        const datesSet = new Set();
-        for (const key of Object.keys(this.inputProgress)){
-          const [ , , , , , inputDateStr] = key.split(':');
-          datesSet.add(inputDateStr);
+        // get the date of today and compares it with the end date of the form to see which one happens first
+        this.allDates = [];
+        let firstDate = new Date();
+        if (firstDate > this.form.end && this.form.end){
+          firstDate = this.form.end;
         }
-        this.thisYearDates = Array.from(datesSet).map((inputDateStr: string) => {
-          const dayAsString = 'day';
-          const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString]);
-          return {
-            humanValue: dateSlot.humanizeValue(this.currentLang),
-            value:  dateSlot.value
-          };
-        });
 
-      }
-      const inputId = `input:${this.project.id}:${this.formId}`;
-      for (const date of this.thisYearDates){
-        const current = { Date: date.humanValue };
+        if (this.form.periodicity !== 'free'){
+          // this represents the most recent available time slot of the form
+          this.slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
 
-        for (const site of this.sites){
+          // this is the oldest date of the form
+          this.slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+        }
 
-          if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
-            current[site.name] = {
-              value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
-              routerLink: `./edit/${site.id}/${date.value}`
-            };
-          }else{
-            current[site.name] = {
-              value: -1,
-              routerLink: `./edit/${site.id}/${date.value}`
-            };
+        // in this case we can't use timeSlots to give us all dates
+        // we take all the dates already existent in the inputs saved
+        // and remove the duplicates by adding them to a set
+        if (this.form.periodicity === 'free'){
+
+          // if we dont have anything saved we just return
+          if (Object.keys(this.inputProgress).length === 0){
+            this.endDateReached = true;
+            return;
           }
+
+          // remove duplicate dates
+          const datesSet = new Set();
+          for (const key of Object.keys(this.inputProgress)){
+            const [ , , , , , inputDateStr] = key.split(':');
+            datesSet.add(inputDateStr);
+          }
+          
+          // sort the dates and store them in an array in the timeSlot format
+          this.differentInputDates = Array.from(datesSet).sort((a: string, b:string) => b.localeCompare(a)).map((inputDateStr: string) => {
+            let dayAsString = 'day';
+            const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString]);
+            return {
+              humanValue: dateSlot.humanizeValue(this.currentLang),
+              value:  dateSlot.value
+            };
+          });
         }
-        newDataSource.push(current);
-      }
-      this.dataSource = newDataSource;
+        this.seeOlderDates();
+      });
     }
   }
 
+  // add new rows to the table
   seeOlderDates(){
+    const nextDates = this.getNext10dates();
+    this.allDates = this.allDates.concat(nextDates);
 
     const inputId = `input:${this.project.id}:${this.formId}`;
     const newDataSource = [];
-    for (const date of this.allDates){
+    for (const date of nextDates){
       const current = { Date: date.humanValue };
 
       for (const site of this.sites){
@@ -277,8 +241,7 @@ export class InputsComponent implements OnInit, OnDestroy {
             value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
             routerLink: `./edit/${site.id}/${date.value}`
           };
-        }
-        else{
+        }else{
           current[site.name] = {
             value: -1,
             routerLink: `./edit/${site.id}/${date.value}`
@@ -287,10 +250,45 @@ export class InputsComponent implements OnInit, OnDestroy {
       }
       newDataSource.push(current);
     }
-    this.dataSource = newDataSource;
-
-    this.seeOlderDatesFlag = false;
+    this.dataSource = this.dataSource.concat(newDataSource);
   }
+
+  // get the next 10 valid dates for the form
+  getNext10dates(){
+    let dates = [];
+    if (this.form.periodicity !== 'free'){
+      let datesAdded = 0;
+      
+      while (datesAdded < 10 && !this.endDateReached){
+        dates.push({
+          humanValue: this.slotStart.humanizeValue(this.currentLang),
+          value: this.slotStart.value
+        })
+
+        if (this.slotStart === this.slotEnd){
+          this.endDateReached = true;
+        }else{
+          this.slotStart = this.slotStart.previous();
+        }
+        datesAdded += 1;
+      }
+
+    }else{
+      let datesAdded = 0;
+
+      while(datesAdded < 10 && !this.endDateReached){
+        dates.push(this.differentInputDates.shift())
+
+        if (this.differentInputDates.length === 0){
+          this.endDateReached = true;
+        }
+        datesAdded += 1;
+      }
+
+    }
+    return dates;
+  }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
