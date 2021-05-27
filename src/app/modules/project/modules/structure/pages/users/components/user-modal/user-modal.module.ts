@@ -10,12 +10,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
+import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 
 
 @NgModule({
   declarations: [UserModalComponent],
   imports: [
     CommonModule,
+    CollectionSitesSelectorModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,

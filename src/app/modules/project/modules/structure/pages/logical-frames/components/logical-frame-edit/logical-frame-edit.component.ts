@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { Group } from 'src/app/models/classes/group.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { Purpose } from 'src/app/models/classes/purpose.model';
@@ -55,11 +56,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   public project: Project;
   public entities: Entity[];
+  public groups: Group[];
   public logicalFrame: LogicalFrame;
-
-  get selectedEntities() {
-    return this.logicalFrameForm.controls.entities.value;
-  }
 
   get purposes(): FormArray {
     return this.logicalFrameForm.controls.purposes as FormArray;
@@ -91,7 +89,6 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
     ).subscribe((res: { project: Project, logicalFrameId: string }) => {
       this.project = res.project;
-      this.entities = res.project.entities;
       const oldLogicalFrame = this.logicalFrame;
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
 
@@ -122,7 +119,9 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       }
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
-      } else if (JSON.stringify(oldLogicalFrame) !== JSON.stringify(this.logicalFrame)) {
+      } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
+        this.entities = res.project.entities;
+        this.groups = res.project.groups;
         this.setForm();
       }
     });
@@ -148,7 +147,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.logicalFrameForm = this.fb.group({
       id: [this.logicalFrame.id],
       name: [this.logicalFrame.name, Validators.required],
-      entities: [this.entities.filter(x => this.logicalFrame.entities.map(e => e.id).includes(x.id)), Validators.required],
+      entities: [this.entities.filter(x => this.logicalFrame.entities.map(e => e.id).includes(x.id))],
       start: [this.logicalFrame.start, Validators.required],
       end: [this.logicalFrame.end, Validators.required],
       goal: [this.logicalFrame.goal, Validators.required],
@@ -157,6 +156,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
 
     this.formSubscription = this.logicalFrameForm.valueChanges.subscribe((value: any) => {
+      // preventing 'allOption' and groups from being saved inside the project
+      value.entities = value.entities.filter(e => this.entities.includes(e));
       this.projectService.valid = this.logicalFrameForm.valid;
       this.logicalFrame.deserialize(value);
       this.projectService.project.next(this.project);

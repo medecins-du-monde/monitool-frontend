@@ -10,6 +10,7 @@ import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
+import { Group } from 'src/app/models/classes/group.model';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -107,13 +108,11 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   endDate: Date;
 
   public entities: Entity[];
+  public groups: Group[];
   public form: Form;
   public project: Project;
   public periodicities = [];
-
-  get selectedEntities(): Entity[] {
-    return this.dataSourceForm.controls.entities.value;
-  }
+  public allOption: Entity = new Entity({id: 'all', name: 'All'});
 
   get elements(): FormArray {
     return this.dataSourceForm.controls.elements as FormArray;
@@ -172,6 +171,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
         this.router.navigate(['..'], { relativeTo: this.route });
       } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
         this.entities = res.project.entities;
+        this.groups = res.project.groups;
         this.setForm();
       }
     });
@@ -204,13 +204,15 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.dataSourceForm = this.fb.group({
       id: [this.form.id],
       name: [this.form.name, Validators.required],
-      entities: [this.entities.filter(x => this.form.entities.map(e => e.id).includes(x.id))],
+      entities: [this.form.entities],
       periodicity: [this.form.periodicity, Validators.required],
       start: [this.form.start ? this.form.start : this.project.start, Validators.required],
       end: [this.form.end ? this.form.end : this.project.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      // preventing 'allOption' and groups from being saved inside the project
+      value.entities = value.entities.filter(e => this.entities.includes(e));
       this.projectService.valid = this.dataSourceForm.valid;
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
@@ -240,10 +242,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       && !DatesHelper.areEquals(new Date(this.dataSourceForm.get(selected).value), new Date(this.project[selected]));
   }
 
-  onEntityRemoved(entity: Entity): void {
-    const entities = this.dataSourceForm.controls.entities.value;
-    this.dataSourceForm.controls.entities.setValue(entities.filter(x => x.id !== entity.id));
-  }
 
   onAddNewElement(): void {
     this.elements.push(this.newElement());
@@ -303,4 +301,5 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.elements.setControl(event.previousIndex, newControls);
     this.elements.setControl(event.currentIndex, selectedControl);
   }
+
 }

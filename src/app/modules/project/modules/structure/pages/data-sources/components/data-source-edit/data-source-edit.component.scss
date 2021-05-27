@@ -22,3 +22,8 @@
   cursor: pointer;
   background-color: $variable_expansion_panel_background !important;
 }
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}

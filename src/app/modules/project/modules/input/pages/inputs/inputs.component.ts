@@ -117,7 +117,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.route.params.subscribe(params => {
         this.formId = params.formId;
-        this.form = this.project.forms.find(x => x.id === this.formId);
+        this.form = this.project?.forms.find(x => x.id === this.formId);
 
         this.dataSource = [];
         this.endDateReached = false;
@@ -212,7 +212,8 @@ export class InputsComponent implements OnInit, OnDestroy {
 
           // sort the dates and store them in an array in the timeSlot format
           this.differentInputDates = Array.from(datesSet).sort((a: string, b: string) => b.localeCompare(a)).map((inputDateStr: string) => {
-            const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity['day']);
+            const dayPeriodicity = TimeSlotPeriodicity['day'];
+            const dateSlot = TimeSlot.fromDate(inputDateStr, dayPeriodicity as any);
             return {
               humanValue: dateSlot.humanizeValue(this.currentLang),
               value:  dateSlot.value

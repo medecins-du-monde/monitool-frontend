@@ -73,8 +73,10 @@ export default class FormGroupBuilder {
       });
     }
     // TODO: Review to have a way to do it cleaner
+
+    let resultFormGroup;
     if (crossCutting) {
-      return new FormGroup({
+      resultFormGroup = new FormGroup({
         crossCutting: new FormControl(true, Validators.required),
         id: new FormControl(indicator.id, Validators.required),
         description: indicator.description ? new FormGroup({
@@ -95,7 +97,7 @@ export default class FormGroupBuilder {
       });
     }
     else {
-      return new FormGroup({
+      resultFormGroup = new FormGroup({
         display: new FormControl(indicator.display, Validators.required),
         baseline: new FormControl(indicator.baseline),
         target: new FormControl(indicator.target),
@@ -108,6 +110,7 @@ export default class FormGroupBuilder {
         type: new FormControl(indicator.type)
       });
     }
+    return resultFormGroup;
   }
 
   static newTheme(theme?: Theme): FormGroup {

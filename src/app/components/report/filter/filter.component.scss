@@ -41,6 +41,10 @@ h2 {
   padding: 2px;
 }
 
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}
 .finished-projects {
 display: flex;
 flex-direction: row;
