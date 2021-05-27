@@ -68,7 +68,6 @@ export class InputsComponent implements OnInit, OnDestroy {
   inputProgress: ArrayBuffer;
   allowedEntities: any[];
   footerColumns: string[] = [];
-  // TODO: change formControl to date, the formControl is useless.
   dateForm: FormControl;
   slotStart: TimeSlot;
   slotEnd: TimeSlot;
@@ -76,11 +75,11 @@ export class InputsComponent implements OnInit, OnDestroy {
   endDateReached = false;
 
 
-  get currentDate(){
+  get currentDate(): string {
     return DatesHelper.dateToString(this.dateForm.value);
   }
 
-  get periodicityIsFree(){
+  get periodicityIsFree(): boolean{
     return this.form?.periodicity === 'free';
   }
 
@@ -147,7 +146,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -213,9 +212,7 @@ export class InputsComponent implements OnInit, OnDestroy {
 
           // sort the dates and store them in an array in the timeSlot format
           this.differentInputDates = Array.from(datesSet).sort((a: string, b: string) => b.localeCompare(a)).map((inputDateStr: string) => {
-            const dayAsString = 'day';
-            // TODO: Use 'day' directly instead of a variable dayAsString
-            const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString]);
+            const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity['day']);
             return {
               humanValue: dateSlot.humanizeValue(this.currentLang),
               value:  dateSlot.value
@@ -228,7 +225,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   }
 
   // add new rows to the table
-  seeOlderDates(){
+  seeOlderDates(): void{
     const nextDates = this.getNext10dates();
     this.allDates = this.allDates.concat(nextDates);
 
