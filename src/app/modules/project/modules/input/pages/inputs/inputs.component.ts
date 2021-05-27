@@ -220,6 +220,8 @@ export class InputsComponent implements OnInit, OnDestroy {
             };
           });
         }
+        this.allDates = [];
+        this.dataSource = [];
         this.seeOlderDates();
       });
     }
