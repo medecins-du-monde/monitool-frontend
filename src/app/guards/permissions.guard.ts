@@ -61,12 +61,10 @@ export class PermissionsGuard implements CanActivate {
           return true;
         }
         // It the user has read role or input role
-        else if ((this.userRole === 'read' || this.userRole === 'input') && this.user.projectId !== '') {
+        else if ((this.userRole === 'read' || this.userRole === 'input') && this.id !== '') {
           // Not authorized and redirection to reporting home
-          this.projectService.get(this.user.projectId).then(() => {
-            this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
-          });
-          return false;
+            this.router.navigate([`/projects/${this.id}/reporting/home`]);
+            return false;
         }
         // Otherwise, he has access to all the structure
         return true;

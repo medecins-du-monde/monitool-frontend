@@ -68,6 +68,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   inputProgress: ArrayBuffer;
   allowedEntities: any[];
   footerColumns: string[] = [];
+  // TODO: change formControl to date, the formControl is useless.
   dateForm: FormControl;
   slotStart: TimeSlot;
   slotEnd: TimeSlot;
@@ -209,10 +210,11 @@ export class InputsComponent implements OnInit, OnDestroy {
             const [ , , , , , inputDateStr] = key.split(':');
             datesSet.add(inputDateStr);
           }
-          
+
           // sort the dates and store them in an array in the timeSlot format
-          this.differentInputDates = Array.from(datesSet).sort((a: string, b:string) => b.localeCompare(a)).map((inputDateStr: string) => {
-            let dayAsString = 'day';
+          this.differentInputDates = Array.from(datesSet).sort((a: string, b: string) => b.localeCompare(a)).map((inputDateStr: string) => {
+            const dayAsString = 'day';
+            // TODO: Use 'day' directly instead of a variable dayAsString
             const dateSlot = TimeSlot.fromDate(inputDateStr, TimeSlotPeriodicity[dayAsString]);
             return {
               humanValue: dateSlot.humanizeValue(this.currentLang),
@@ -255,15 +257,15 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   // get the next 10 valid dates for the form
   getNext10dates(){
-    let dates = [];
+    const dates = [];
     if (this.form.periodicity !== 'free'){
       let datesAdded = 0;
-      
+
       while (datesAdded < 10 && !this.endDateReached){
         dates.push({
           humanValue: this.slotStart.humanizeValue(this.currentLang),
           value: this.slotStart.value
-        })
+        });
 
         if (this.slotStart === this.slotEnd){
           this.endDateReached = true;
@@ -276,8 +278,8 @@ export class InputsComponent implements OnInit, OnDestroy {
     }else{
       let datesAdded = 0;
 
-      while(datesAdded < 10 && !this.endDateReached){
-        dates.push(this.differentInputDates.shift())
+      while (datesAdded < 10 && !this.endDateReached){
+        dates.push(this.differentInputDates.shift());
 
         if (this.differentInputDates.length === 0){
           this.endDateReached = true;

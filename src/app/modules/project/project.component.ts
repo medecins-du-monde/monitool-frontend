@@ -40,11 +40,11 @@ export class ProjectComponent implements OnInit, AfterViewChecked {
         this.user = user;
       });
       this.sidenavService.sidenavData.subscribe( (sidenav: Sidenav) => this.sidenav = sidenav );
-      this.projectService.openedProject.subscribe((project: Project) => {
+      this.projectService.get(projectId).then((project: Project) => {
         this.projectService.inBigPage.subscribe(value => this.bigPage = value);
         this.project = project;
         this.sidenavService.generateSidenav(this.user, this.project);
-      })
+      });
     });
   }
 
