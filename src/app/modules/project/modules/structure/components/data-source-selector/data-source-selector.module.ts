@@ -9,11 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
-import { CollectionSitesSelectorComponent } from './collection-sites-selector.component';
+import { DataSourceSelectorComponent } from './data-source-selector.component';
+
 
 
 @NgModule({
-  declarations: [CollectionSitesSelectorComponent],
+  declarations: [DataSourceSelectorComponent],
   imports: [
     CommonModule,
     TranslateModule,
@@ -27,6 +28,6 @@ import { CollectionSitesSelectorComponent } from './collection-sites-selector.co
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [CollectionSitesSelectorComponent]
+  exports: [DataSourceSelectorComponent]
 })
-export class CollectionSitesSelectorModule { }
+export class DataSourceSelectorModule { }
