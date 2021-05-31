@@ -19,6 +19,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService } from 'src/app/services/date.service';
+import _ from 'lodash';
 
 
 
@@ -73,6 +74,8 @@ export class InputsComponent implements OnInit, OnDestroy {
   slotEnd: TimeSlot;
   differentInputDates: { humanValue: string; value: string; }[] = [];
   endDateReached = false;
+  currentTimeSlot: TimeSlot;
+  currentFreeDateIndex: number;
 
 
   get currentDate(): string {
@@ -173,6 +176,9 @@ export class InputsComponent implements OnInit, OnDestroy {
     }
 
     if (this.project && this.form){
+      this.allDates = [];
+      this.dataSource = [];
+
       // get the inputs from the backend
       this.inputService.list(this.project.id, this.formId).then(input => {
         this.inputProgress = input;
@@ -187,15 +193,18 @@ export class InputsComponent implements OnInit, OnDestroy {
         if (this.form.periodicity !== 'free'){
           // this represents the most recent available time slot of the form
           this.slotStart = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
+          this.currentTimeSlot = TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
 
           // this is the oldest date of the form
           this.slotEnd = TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+
+          this.seeOlderDates(this.currentTimeSlot);
         }
 
         // in this case we can't use timeSlots to give us all dates
         // we take all the dates already existent in the inputs saved
         // and remove the duplicates by adding them to a set
-        if (this.form.periodicity === 'free'){
+        else if (this.form.periodicity === 'free'){
 
           // if we dont have anything saved we just return
           if (Object.keys(this.inputProgress).length === 0){
@@ -219,17 +228,17 @@ export class InputsComponent implements OnInit, OnDestroy {
               value:  dateSlot.value
             };
           });
+
+          this.currentFreeDateIndex = 0;
+          this.seeOlderDates(this.currentFreeDateIndex);
         }
-        this.allDates = [];
-        this.dataSource = [];
-        this.seeOlderDates();
       });
     }
   }
 
   // add new rows to the table
-  seeOlderDates(): void{
-    const nextDates = this.getNext10dates();
+  seeOlderDates(initialDate = null): void{
+    const nextDates = this.getNext10dates(initialDate);
     this.allDates = this.allDates.concat(nextDates);
 
     const inputId = `input:${this.project.id}:${this.formId}`;
@@ -252,41 +261,63 @@ export class InputsComponent implements OnInit, OnDestroy {
       }
       newDataSource.push(current);
     }
-    this.dataSource = this.dataSource.concat(newDataSource);
+    if (initialDate){
+      this.dataSource = newDataSource;
+    }else{
+      this.dataSource = this.dataSource.concat(newDataSource);
+    }
   }
 
   // get the next 10 valid dates for the form
-  getNext10dates(){
+  getNext10dates(initialDate = null){
     const dates = [];
     if (this.form.periodicity !== 'free'){
       let datesAdded = 0;
 
+      let current;
+      if (initialDate){
+        current = initialDate
+      }
+      else{
+        current = _.clone(this.currentTimeSlot);
+      }
+      
       while (datesAdded < 10 && !this.endDateReached){
         dates.push({
-          humanValue: this.slotStart.humanizeValue(this.currentLang),
+          humanValue: current.humanizeValue(this.currentLang),
           value: this.slotStart.value
         });
 
         if (this.slotStart === this.slotEnd){
           this.endDateReached = true;
         }else{
-          this.slotStart = this.slotStart.previous();
+          current = current.previous();
         }
         datesAdded += 1;
       }
+
+      this.currentTimeSlot = current;
 
     }else{
       let datesAdded = 0;
 
-      while (datesAdded < 10 && !this.endDateReached){
-        dates.push(this.differentInputDates.shift());
+      let index;
+      if (initialDate){
+        index = initialDate;
+      }else{
+        index = this.currentFreeDateIndex;
+      }
 
-        if (this.differentInputDates.length === 0){
+      while (datesAdded < 10 && !this.endDateReached){
+        dates.push(this.differentInputDates[index]);
+        index += 1;
+
+        if (index === this.differentInputDates.length){
           this.endDateReached = true;
         }
         datesAdded += 1;
       }
-
+      this.currentFreeDateIndex = index;
     }
     return dates;
   }
