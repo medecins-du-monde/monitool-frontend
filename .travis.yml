@@ -16,8 +16,7 @@ jobs:
     - stage: test
       before_script: npm i
       script: npm run lint
-      fast_finish: true
-      
+      fast_finish: true      
     - stage: deploy
       if: branch = dev
       install:
@@ -35,7 +34,6 @@ jobs:
       script:
         - npm run build -- --beta
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapps@92.243.25.191:/var/www/html/mdm-monitool-frontend
-
       # if: branch = uat
       # install:
       #   # Decrypt the git_deploy_key.enc key into /tmp/monitoolbackuat
@@ -49,7 +47,6 @@ jobs:
       #   # Add the key to the authentication agent
       #   - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolbackuat </dev/null
       # script: ./CI/deploy-uat.sh /tmp/monitoolbackuat
-
       - stage: deploy
       if: branch = master
       install:
