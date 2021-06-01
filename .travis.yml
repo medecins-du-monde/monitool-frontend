@@ -19,7 +19,7 @@ jobs:
       fast_finish: true
     - stage: deploy
       if: branch = dev
-      install:
+      before_install:
         # Decrypt the git_deploy_key.enc key into /tmp/monitoolbackdev
         - openssl aes-256-cbc -K $encrypted_bea0181439c1_key -iv $encrypted_bea0181439c1_iv -in keys/monitoolfrontdev.enc -out /tmp/monitoolfrontdev -d
         # Make sure only the current user can read the private key
@@ -36,7 +36,7 @@ jobs:
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapps@92.243.25.191:/var/www/html/mdm-monitool-frontend
     - stage: deploy
       if: branch = uat
-      install:
+      before_install:
         # Decrypt the git_deploy_key.enc key into /tmp/monitoolbackuat
         - openssl aes-256-cbc -K $encrypted_bea0181439c1_key -iv $encrypted_bea0181439c1_iv -in keys/monitoolfrontuat.enc -out /tmp/monitoolfrontuat -d
         # Make sure only the current user can read the private key
@@ -53,7 +53,7 @@ jobs:
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
     - stage: deploy
       if: branch = master
-      install:
+      before_install:
         # Decrypt the git_deploy_key.enc key into /tmp/monitoolbackuat
         - openssl aes-256-cbc -K $encrypted_bea0181439c1_key -iv $encrypted_bea0181439c1_iv -in keys/monitoolfrontprod.enc -out /tmp/monitoolfrontprod -d
         # Make sure only the current user can read the private key
