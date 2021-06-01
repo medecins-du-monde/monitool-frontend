@@ -5,10 +5,11 @@ node_js:
 install:
   - npm install -g @angular/cli
   - npm install
-  
+
 jobs:
   include:
     - stage: test
+      before_script: npm i
       script: npm run lint
       fast_finish: true
     # - stage: deploy
@@ -54,6 +55,7 @@ jobs:
         # Add the key to the authentication agent
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontprod </dev/null
       # script: ./CI/deploy-prod.sh /tmp/monitoolfrontprod
+      before_script: npm i 
       script:
         - npm run build -- --prod
         - rsync -e "ssh -i /tmp/monitoolfrontprod" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@monitool.medecinsdumonde.net:/var/www/html/mdm-monitool-frontend
