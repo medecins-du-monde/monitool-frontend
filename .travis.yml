@@ -32,7 +32,7 @@ jobs:
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontdev </dev/null
       before_script: npm i 
       script:
-        - npm run build -- --beta
+        - npm run build --configuration=beta
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapps@92.243.25.191:/var/www/html/mdm-monitool-frontend
     - stage: deploy
       if: branch = uat
@@ -49,7 +49,7 @@ jobs:
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontuat </dev/null
       before_script: npm i 
       script:
-        - npm run build -- --uat
+        - npm run build --configuration=uat
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
     - stage: deploy
       if: branch = master
