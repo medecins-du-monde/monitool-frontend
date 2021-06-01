@@ -47,7 +47,10 @@ jobs:
         - eval "$(ssh-agent -s)"
         # Add the key to the authentication agent
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontuat </dev/null
-      script: ./CI/deploy-uat.sh /tmp/monitoolfrontuat
+      before_script: npm i 
+      script:
+        - npm run build -- --uat
+        - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
     - stage: deploy
       if: branch = master
       install:
@@ -61,7 +64,6 @@ jobs:
         - eval "$(ssh-agent -s)"
         # Add the key to the authentication agent
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontprod </dev/null
-      # script: ./CI/deploy-prod.sh /tmp/monitoolfrontprod
       before_script: npm i 
       script:
         - npm run build -- --prod
