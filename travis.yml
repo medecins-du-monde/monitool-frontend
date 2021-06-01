@@ -6,7 +6,10 @@ cache: npm
 
 install:
   - npm install -g @angular/cli
-  - npm install
+
+stage:
+- test
+- deploy
 
 jobs:
   include:
