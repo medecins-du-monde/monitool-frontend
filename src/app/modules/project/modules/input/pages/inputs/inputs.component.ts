@@ -11,6 +11,7 @@ import { InputService } from 'src/app/services/input.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import { User } from 'src/app/models/classes/user.model';
+import { Entity } from 'src/app/models/classes/entity.model';
 import { AuthService } from 'src/app/services/auth.service';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { FormControl } from '@angular/forms';
@@ -152,21 +153,24 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   updateData(){
     if (this.formId && this.project && this.user){
+
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
 
       this.allowedEntities = [];
+
       // We show only columns of data in which the current user has rights
-      if (this.user.type === 'partner' && this.user.role === 'input') {
-        this.allowedEntities = this.sites.filter(e => this.user?.entities.find((id: any) => id === e.id));
-      } else if (this.user.type === 'user') {
-        const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
-        this.allowedEntities = this.sites;
-        if (projectUser.length > 0 && projectUser[0].role === 'input') {
-          this.allowedEntities = projectUser[0].entities;
+      const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+      if (projectUser.length > 0) {
+        if (projectUser[0].role === 'input') {
+          this.allowedEntities = this.sites.filter(e => projectUser[0].entities.find((entity: Entity) => entity.id === e.id));
         }
-      } else {
-        this.allowedEntities = this.sites;
+        else if (projectUser[0].role === 'read') {
+          this.allowedEntities =  [];
+        }
+        else {
+          this.allowedEntities = this.sites;
+        }
       }
       this.displayedColumns = ['Date'].concat(this.allowedEntities.map(x => x.name));
       this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
