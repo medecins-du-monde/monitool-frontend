@@ -5,7 +5,7 @@
 <div class="mdm-section">
     <div class="mdm-cards" cdkDropListGroup>
         <div class="mdm-card" *ngFor="let user of users; let i=index" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListData]="{user:user,index:i}" (cdkDropListDropped)="drop($event)">
-            <app-user cdkDrag cdkDragBoundary=".mdm-cards" [user]="user" (delete)="onDelete($event)" (edit)="onEdit($event)">
+            <app-user cdkDrag cdkDragBoundary=".mdm-cards" [user]="user" [project]="project" (delete)="onDelete($event)" (edit)="onEdit($event)">
                 <div *cdkDragPlaceholder></div>
                 <div cdkDragHandle class="cards-draghandle">
                     <mat-icon>drag_indicator</mat-icon>
