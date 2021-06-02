@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
+    "build:uat": "ng build --configuration=uat",
+    "build:beta": "ng build --configuration=beta",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
