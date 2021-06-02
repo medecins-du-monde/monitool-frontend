@@ -1,9 +1,13 @@
-app-collection-sites-selector{
+@import "src/assets/theme/size_vars.scss";
+
+app-collection-sites-selector, app-data-source-selector{
   flex: 1;
   display: flex;
+  width: 100%;
 }
 
-app-data-source-selector{
-  flex: 1;
-  display: flex;
+@media screen and (max-width: $breakpoint-xs) {
+  .mat-dialog-actions {
+    justify-content: center;
+  }
 }

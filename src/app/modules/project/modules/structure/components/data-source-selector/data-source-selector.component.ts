@@ -9,39 +9,31 @@ import { Form } from 'src/app/models/classes/form.model';
 })
 export class DataSourceSelectorComponent implements OnInit {
 
-  public allOption: Form = new Form({id: 'all', name: 'All'})
+  public allOption: Form = new Form({id: 'all', name: 'All'});
 
-  @Input() form: FormGroup;
-  @Input() dataSources: Form[]
-
-  constructor() { }
-
+  @Input() userForm: FormGroup;
+  @Input() dataSources: Form[];
 
   // used to generate the list of chips
-  get selectedDataSources(){
+  get selectedDataSources() {
     // if the allOption is selected, we only return one chip
-    if (this.form.get('dataSources').value.includes(this.allOption)){
-      return [this.allOption]
+    if (this.userForm.get('dataSources').value.includes(this.allOption)){
+      return [this.allOption];
     }
     else{
-      return this.form.get('dataSources').value;
+      return this.userForm.get('dataSources').value;
     }
-  }
-
-  checkIfAllOption(dataSource){
-    return dataSource === this.allOption;
   }
 
   ngOnInit(): void {
-    const currentForms = this.form.get('dataSources');
-    console.log(currentForms.value)
+    const currentForms = this.userForm.get('dataSources');
     if (currentForms.value.length === this.dataSources.length){
       currentForms.setValue([...this.dataSources, this.allOption]);
     }
   }
 
-  onDataSourceRemoved(dataSource){
-    const currentForms = this.form.get('dataSources');
+  onDataSourceRemoved(dataSource): void{
+    const currentForms = this.userForm.get('dataSources');
     // if we're removing the allOption we deselect everything
     if (dataSource === this.allOption){
       currentForms.setValue([]) ;
@@ -53,7 +45,7 @@ export class DataSourceSelectorComponent implements OnInit {
   }
 
   toggleAllSelection(): void{
-    const currentForms = this.form.get('dataSources');
+    const currentForms = this.userForm.get('dataSources');
     // selecting the allOption we just add everything
     if (currentForms.value.includes(this.allOption)){
       currentForms.setValue([...this.dataSources, this.allOption]);
@@ -63,15 +55,15 @@ export class DataSourceSelectorComponent implements OnInit {
       currentForms.setValue([]);
     }
   }
-  
-  toggleNormalOption(dataSourceClicked: Form){
-    const currentForms = this.form.get('dataSources');
+
+  toggleNormalOption(dataSourceClicked: Form): void{
+    const currentForms = this.userForm.get('dataSources');
 
     // this means it is selecting a new option
     if (currentForms.value.includes(dataSourceClicked)){
       // if selecting this option make we have all dataSources selected we must add the 'allOption'
       if (currentForms.value.length === this.dataSources.length){
-        currentForms.setValue([...this.dataSources, this.allOption])
+        currentForms.setValue([...this.dataSources, this.allOption]);
       }
     }
     // this means we are deselecting an option
@@ -79,6 +71,10 @@ export class DataSourceSelectorComponent implements OnInit {
       // filter the allOption out of the form
       currentForms.setValue(currentForms.value.filter(d => d.id !== this.allOption.id));
     }
+  }
+
+  checkIfAllOption(dataSource): boolean{
+    return dataSource === this.allOption;
   }
 
 }
