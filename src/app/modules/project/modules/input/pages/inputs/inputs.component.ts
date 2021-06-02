@@ -172,7 +172,7 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
     }
 
-    if (this.project && this.form){
+    if (this.form){
       // get the inputs from the backend
       this.inputService.list(this.project.id, this.formId).then(input => {
         this.inputProgress = input;
@@ -220,6 +220,7 @@ export class InputsComponent implements OnInit, OnDestroy {
             };
           });
         }
+        this.dataSource = [];
         this.seeOlderDates();
       });
     }
