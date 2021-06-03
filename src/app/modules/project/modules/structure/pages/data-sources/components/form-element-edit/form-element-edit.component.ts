@@ -84,7 +84,7 @@ export class FormElementEditComponent implements OnInit {
   }
 
   openExistingPartitionDialog(){
-    const dialogRef = this.dialog.open(ExistingPartitionModalComponent);
+    const dialogRef = this.dialog.open(ExistingPartitionModalComponent, { data: this.elementForm });
   }
 
   openDialog(partition: FormGroup) {
