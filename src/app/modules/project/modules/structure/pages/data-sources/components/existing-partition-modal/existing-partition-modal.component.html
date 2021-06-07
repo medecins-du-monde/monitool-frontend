@@ -1,2 +1,12 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 <h2 mat-dialog-title>{{ 'UseExistingDisaggregation' | translate }}</h2>
+<mat-dialog-content [formGroup]="partitionsForm" class="mdm-dialog">
+    <div class="mdm-form-group">
+        <mat-checkbox *ngFor="let partition of allPartitions" [formControl]="partitionsForm.get(partition.id)">
+            {{ partition.name }}
+        </mat-checkbox>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onSubmit()" class="mdm-button save-button">{{ 'ApplyChanges' | translate }}</button>
+</mat-dialog-actions>

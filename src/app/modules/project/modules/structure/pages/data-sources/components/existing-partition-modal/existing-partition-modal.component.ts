@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -15,12 +15,19 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   project: Project;
   allPartitions: Partition[]
   private subscription: Subscription = new Subscription();
+  partitionsForm: FormGroup;
 
   get element(): FormElement{
     return this.data.value;
   }
+
+  get formElementPartitions(): FormArray{
+    return this.data.get('partitions') as FormArray;
+  }
   constructor(
     private projectService: ProjectService,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<ExistingPartitionModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FormGroup
   ) { 
     console.log(this.data);
@@ -42,6 +49,8 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
 
   createOptions(): void {
+    this.partitionsForm = new FormGroup({});
+
     this.allPartitions = [];
     if (this.project){
       for (const form of this.project.forms){
@@ -49,11 +58,22 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
           if (element.id !== this.element.id){
             for (const partition of element.partitions){
               this.allPartitions.push(partition);
+              this.partitionsForm.addControl(partition.id, new FormControl(false));
             }
           }
         }
       }
     }
+  }
+
+  onSubmit(): void {
+    console.log(this.partitionsForm.value);
+    for (const partition of this.allPartitions){
+      if (this.partitionsForm.get(partition.id).value){
+        this.formElementPartitions.push(this.fb.control(partition))
+      }
+    }
+    this.dialogRef.close();
   }
 
 }
