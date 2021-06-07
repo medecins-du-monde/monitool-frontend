@@ -637,6 +637,7 @@
     "SearchHelp": "Buscar proyecto por nombre de país, del proyecto o de la temática.",
     "SeeReport": "Ver el informe",
     "SeeOlderDates": "Ver la fechas anteriores",
+    "CreateNewDate": "Crear (nueva fecha)",
     "Settings": "Configuración",
     "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si have cambios, tenga cuidado en poner todos los idiomas a día.",
     "SettingsIndicatorsInfo": [
