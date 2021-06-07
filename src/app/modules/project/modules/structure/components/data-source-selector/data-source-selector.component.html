@@ -1,0 +1,19 @@
+<mat-form-field [formGroup]="userForm" appearance="outline" class="mdm-form-field">
+    <mat-select formControlName="dataSources" placeholder="{{ 'DataSources' | translate }}" multiple>
+        <mat-select-trigger>
+            <mat-chip-list>
+                <mat-chip *ngFor="let dataSource of selectedDataSources" [removable]="true"
+                    (removed)="onDataSourceRemoved(dataSource)">
+                    <mat-icon class="chip" *ngIf="checkIfAllOption(dataSource)">arrow_circle_down</mat-icon>
+                    {{ dataSource.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
+        <mat-option *ngFor="let dataSource of dataSources" (click)="toggleNormalOption(dataSource)" [value]="dataSource">{{ dataSource.name }}</mat-option>
+    </mat-select>
+    <mat-hint>
+        <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.DataSources' | translate }}
+    </mat-hint>
+</mat-form-field>

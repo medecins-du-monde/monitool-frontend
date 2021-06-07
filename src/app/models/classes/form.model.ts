@@ -25,8 +25,8 @@ export class Form implements Deserializable {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.periodicity = ( input && input.periodicity ) ? input.periodicity : 'month';
-        this.start = ( input && input.start ) ? DatesHelper.parseDate(input.start) : null;
-        this.end = ( input && input.end ) ? DatesHelper.parseDate(input.end) : null;
+        this.start = ( input && input.start && this.periodicity !== 'free') ? DatesHelper.parseDate(input.start) : null;
+        this.end = ( input && input.end && this.periodicity !== 'free') ? DatesHelper.parseDate(input.end) : null;
         this.elements = ( input && input.elements ) ? input.elements.map(x => new FormElement(x)) : [];
         return this;
     }

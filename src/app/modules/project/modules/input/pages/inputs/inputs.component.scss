@@ -8,28 +8,19 @@
             font-size: $normal_text;
             font-weight: bold;
             color: $title_black;
+            width: 150px;
           }
 
         th {
             text-align: center;
         }
         td{
-            height: 100%;
-            padding: 2px;
             text-align: center;
-
             &:not(.expand-row) {
-                button{
+                div, button{
                     width: 100%;
                 }
             }
-        }
-        th:first-child {
-            width: 100px !important;
-            padding-left: 0 !important;
-        }
-        th, td {
-            width: 60px !important;
         }
     }
 }
@@ -38,6 +29,12 @@
     color: white;
     background-color: rgb(49, 112, 143);
     border-color: rgb(49, 112, 143) !important;
+}
+
+.create-newdate-button{
+    color: white;
+    background-color: #5cb85c;
+    border-color: #4cae4c !important;
 }
 
 .info-section {
@@ -55,4 +52,67 @@
             align-self: center;
         }
     }
+}
+
+.mdm-form-field {
+    width: 100%;
+  
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+  
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
+      }
+    }
+}
+
+th {
+    font-weight: bold;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.mat-header-cell {
+        padding: 0px !important;
+        text-align: center;
+    }
+}
+td {
+    flex: 1;
+}
+tr {
+    display: flex;
+    width: 100%;
+    background: $table_background_white;
+    &.mat-row{
+        height: auto;
+    }
+}
+td.mat-cell, td.mat-footer-cell{
+    padding: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.datepicker-cell{
+        align-items: baseline;
+    }
+    
+}
+
+.tr.mat-footer-row{
+    height: 48px;
+}
+
+.hidden{
+    display: none;
+}
+
+
+.mdm-table {
+    width: 100%;
+    margin-top: 15px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px $table_border;
 }

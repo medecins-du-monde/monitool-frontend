@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
+import { DataSourceSelectorModule } from '../../../../components/data-source-selector/data-source-selector.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { CollectionSitesSelectorModule } from '../../../../components/collection
   imports: [
     CommonModule,
     CollectionSitesSelectorModule,
+    DataSourceSelectorModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,

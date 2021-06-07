@@ -19,6 +19,7 @@ export class InputService {
 
   public async delete(input: Input) {
     const response: any = await this.apiService.delete(`/resources/input/${input.id}`);
+    // TODO: Convert it to an object to not have to manage arrayBuffer.
     return response;
   }
 
@@ -32,6 +33,7 @@ export class InputService {
         }
       }
     );
+    // TODO: Convert it to an object to not have to manage arrayBuffer.
     return response;
   }
 
@@ -47,7 +49,7 @@ export class InputService {
         }
       }
     );
-
+// TODO: Convert it to an object to not have to manage arrayBuffer.
     return response;
   }
 }

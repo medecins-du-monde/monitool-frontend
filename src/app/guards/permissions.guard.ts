@@ -10,7 +10,9 @@ import { ProjectService } from '../services/project.service';
 })
 export class PermissionsGuard implements CanActivate {
   user: User;
+  // TODO: To be replaced by the user.role
   userRole: string;
+  // TODO: To be replaced by the user.type
   userType: string;
   currentProjectId: string;
   giveAccess: boolean;
@@ -81,7 +83,7 @@ export class PermissionsGuard implements CanActivate {
             this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
           }
           return true;
-        } else if (this.userType === 'user' && this.currentProjectId !== '') {
+        } else if (this.user.type === 'user' && this.currentProjectId !== '') {
           this.projectService.get(this.currentProjectId).then((project) => {
             // Check if the user is part of this project
             const projectUser = project.users.filter(user => user.id === this.user['_id']);
@@ -93,6 +95,10 @@ export class PermissionsGuard implements CanActivate {
                 return false;
               }
               return true;
+            }
+            else if (projectUser[0].role === 'read') {
+              this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
+              return false;
             }
             // If the user is not in the project users but he has a common role
             else if (projectUser.length === 0 && this.user.role === 'common'){
