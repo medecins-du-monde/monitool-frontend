@@ -68,12 +68,14 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     console.log(this.partitionsForm.value);
+
+    const selectedPartitions = [];
     for (const partition of this.allPartitions){
       if (this.partitionsForm.get(partition.id).value){
-        this.formElementPartitions.push(this.fb.control(partition))
+        selectedPartitions.push(partition);
       }
     }
-    this.dialogRef.close();
+    this.dialogRef.close({selectedPartitions});
   }
 
 }
