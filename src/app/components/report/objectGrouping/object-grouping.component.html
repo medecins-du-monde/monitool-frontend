@@ -13,7 +13,11 @@
     </mat-grid-tile>
 
     <mat-grid-tile colspan="6">
-        <button mat-stroked-button ><mat-icon>insert_drive_file</mat-icon> {{ 'DownloadTable' | translate }}</button>
+        <a mat-stroked-button type="button" class="mdm-button"
+        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity" target="_blank"
+        rel="noopener noreferrer">
+        <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
+        </a>
     </mat-grid-tile>        
 
 </mat-grid-list>
