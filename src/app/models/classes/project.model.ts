@@ -38,7 +38,6 @@ export class Project implements Deserializable {
         return 'Deleted';
     }
 
-
     get countryImage(): string{
         if ( this.country === 'Burkina Faso' ) {
             return 'assets/images/burkina-flag.png';
