@@ -40,7 +40,7 @@ export class ObjectGroupingComponent implements OnInit {
               private fb: FormBuilder) { }
 
 
-  get currentPeriodicity(){
+  get currentPeriodicity(): string {
     const period = this.dimensionForm.get('dimensionId').value;
     if (period === 'entity' || period === 'group'){
       return 'month';
@@ -48,7 +48,7 @@ export class ObjectGroupingComponent implements OnInit {
     return period;
   }
 
-  get currentProjectId(){
+  get currentProjectId(): string {
      return this.project.id;
   }
 
