@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-
+// TODO: Check why the method getHeaders doesn t do anything
   constructor(private http: HttpClient) { }
 
   get(path: string, options?: any): Promise<ArrayBuffer> {

@@ -13,11 +13,11 @@ export class ObjectGroupingComponent implements OnInit {
 
   dimensionForm: FormGroup;
   @Input() isCrossCuttingReport = false;
+  @Input() project: Project;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
 
-  project: Project;
   forms: Form[] = [];
   periodicitiesList = [
   'free',
@@ -37,7 +37,20 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   constructor(private projectService: ProjectService,
-              private fb: FormBuilder ) { }
+              private fb: FormBuilder) { }
+
+
+  get currentPeriodicity(): string {
+    const period = this.dimensionForm.get('dimensionId').value;
+    if (period === 'entity' || period === 'group'){
+      return 'month';
+    }
+    return period;
+  }
+
+  get currentProjectId(): string {
+     return this.project.id;
+  }
 
   ngOnInit(): void {
     this.updateDimension(8, this.periodicitiesList);
