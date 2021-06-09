@@ -9,6 +9,8 @@ import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { DateService} from 'src/app/services/date.service';
 import { Group } from 'src/app/models/classes/group.model';
+import _ from 'lodash';
+import DatesHelper from 'src/app/utils/dates-helper';
 
 
 export interface Filter{
@@ -103,7 +105,6 @@ export class FilterComponent implements OnInit, OnDestroy{
             this.groups = this.project.groups;
             endDate = this.project.end;
             startDate = this.project.start;
-
             this.selectedSites = this.project.entities.map(entity => entity);
           }
 
@@ -112,11 +113,22 @@ export class FilterComponent implements OnInit, OnDestroy{
             _end: [endDate, Validators.required ],
             entities: [this.project.entities, Validators.required]
           });
+
           this.filterEvent.emit(this.filterForm.value);
 
-          this.filterForm.valueChanges.subscribe(value => {
-            this.selectedSites = this.sites.filter( site => value.entities.includes(site) );
-            this.filterEvent.emit(value as Filter);
+          let oldFilterFormValue = _.cloneDeep(this.filterForm).value;
+
+          this.filterForm.valueChanges.subscribe(newFilterValue => {
+            if (!DatesHelper.areEquals(oldFilterFormValue._start, newFilterValue._start)
+                || !DatesHelper.areEquals(oldFilterFormValue._end, newFilterValue._end)
+                || JSON.stringify(oldFilterFormValue.entities)
+                  !== JSON.stringify(newFilterValue.entities.filter(
+                    element => element instanceof Entity && element.id !== 'all')
+                    .map(entity => entity.id))) {
+                this.selectedSites = this.sites.filter( site => newFilterValue.entities.includes(site) );
+                oldFilterFormValue = newFilterValue;
+                this.filterEvent.emit(newFilterValue as Filter);
+            }
           });
         })
       );
