@@ -16,6 +16,7 @@ export class BasicsInfosGuard implements CanActivate {
     if (!this.projectService.basicInfos.value) {
       // It may be because no project have been loaded for the moment so we check that as well
       const projectId = window.location.href.split('/')[4];
+      // TODO: Do it in a way that we don't need to load again the project
       this.projectService.get(projectId).then(() => {
         if (!this.projectService.basicInfos.value)
         {
