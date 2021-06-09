@@ -157,21 +157,21 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.form = this.project.forms.find(x => x.id === this.formId);
       this.sites = this.form ? this.form.entities : [];
 
-      this.allowedEntities = [];
+      this.allowedEntities = this.sites;
 
       // We show only columns of data in which the current user has rights
       const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
-      if (projectUser.length > 0) {
-        if (projectUser[0].role === 'input') {
-          this.allowedEntities = this.sites.filter(e => projectUser[0].entities.find((entity: Entity) => entity.id === e.id));
-        }
-        else if (projectUser[0].role === 'read') {
-          this.allowedEntities =  [];
-        }
-        else {
-          this.allowedEntities = this.sites;
+      if (this.user.role !== 'admin') {
+        if (projectUser.length > 0) {
+          if (projectUser[0].role === 'input') {
+            this.allowedEntities = this.sites.filter(e => projectUser[0].entities.find((entity: Entity) => entity.id === e.id));
+          }
+          else if (projectUser[0].role === 'read') {
+            this.allowedEntities =  [];
+          }
         }
       }
+
       this.displayedColumns = ['Date'].concat(this.allowedEntities.map(x => x.name));
       this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
     }
