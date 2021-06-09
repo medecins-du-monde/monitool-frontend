@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { ExistingPartitionModalComponent } from './existing-partition-modal.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [ExistingPartitionModalComponent],
@@ -29,6 +30,7 @@ import { ExistingPartitionModalComponent } from './existing-partition-modal.comp
     MatInputModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatExpansionModule,
   ],
   exports: [ExistingPartitionModalComponent]
 })

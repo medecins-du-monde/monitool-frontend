@@ -2,9 +2,40 @@
 <h2 mat-dialog-title>{{ 'UseExistingDisaggregation' | translate }}</h2>
 <mat-dialog-content [formGroup]="partitionsForm" class="mdm-dialog">
     <div class="mdm-form-group">
-        <mat-checkbox *ngFor="let partition of allPartitions" [formControl]="partitionsForm.get(partition.id)">
-            {{ partition.name }}
-        </mat-checkbox>
+        <div *ngFor="let partition of allPartitions" class="check-panel">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-checkbox [formControl]="partitionsForm.get(partition.id)">
+                                {{ partition.name }}
+                            </mat-checkbox>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{ 'Details' | translate }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div class="check-panel-section">
+                        <h2>{{ 'Elements' | translate }}</h2>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let element of partition.elements">{{ element.name }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="check-panel-section">
+                        <h2>{{ 'Aggregation' | translate }}</h2>
+                        <mat-chip-list>
+                            <mat-chip>{{ partition.aggregation }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="check-panel-section">
+                        <h2 *ngIf="partition.groups.length">{{ 'Groups' | translate }}</h2>
+                        <mat-chip-list>
+                            <mat-chip *ngFor="let group of partition.groups">{{ group.name }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
