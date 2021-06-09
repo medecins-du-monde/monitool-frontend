@@ -214,7 +214,7 @@ export class ProjectService {
     return name;
   }
 
-  //TODO: Check if this is really usefull
+  // TODO: Check if this is really usefull
   public updateProjectId(id: string) {
     this.projectId.next(id);
   }

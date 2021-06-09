@@ -24,7 +24,7 @@ export class PermissionsGuard implements CanActivate {
 
     combineLatest([this.projectService.openedProject, this.authService.currentUser]).pipe(
       map(results => ({ currentProject: results[0] as Project, currentUser: results[1] as User}))
-    ).subscribe((res: {currentProject: Project, currentUser: User}) => { 
+    ).subscribe((res: {currentProject: Project, currentUser: User}) => {
       this.activeUser = res.currentUser;
       this.currentProjectUser = res.currentProject.users.find(user => {
         if ((res.currentUser['_id'] && user.id === res.currentUser['_id'])
@@ -63,7 +63,7 @@ export class PermissionsGuard implements CanActivate {
         if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')
             && !this.giveAccess && this.currentProjectId !== '') {
           return true;
-        } 
+        }
         else {
           this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
           return false;
@@ -79,7 +79,7 @@ export class PermissionsGuard implements CanActivate {
           // If we have formId in the url but the user doesn't have access to this form
           // then he is redirected to the input home page
           if (route.children[0].params.formId
-            && !this.currentProjectUser.dataSources.find(datasource => datasource.id === route.children[0].params.formId)) {     
+            && !this.currentProjectUser.dataSources.find(datasource => datasource.id === route.children[0].params.formId)) {
             this.router.navigate([`/projects/${this.currentProjectId}/input/home`]);
             return false;
           }

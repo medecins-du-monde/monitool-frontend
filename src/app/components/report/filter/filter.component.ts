@@ -121,8 +121,10 @@ export class FilterComponent implements OnInit, OnDestroy{
           this.filterForm.valueChanges.subscribe(newFilterValue => {
             if (!DatesHelper.areEquals(oldFilterFormValue._start, newFilterValue._start)
                 || !DatesHelper.areEquals(oldFilterFormValue._end, newFilterValue._end)
-                || JSON.stringify(oldFilterFormValue.entities) 
-                  !== JSON.stringify(newFilterValue.entities.filter(element => element instanceof Entity && element.id !== 'all').map(entity => entity.id))) {
+                || JSON.stringify(oldFilterFormValue.entities)
+                  !== JSON.stringify(newFilterValue.entities.filter(
+                    element => element instanceof Entity && element.id !== 'all')
+                    .map(entity => entity.id))) {
                 this.selectedSites = this.sites.filter( site => newFilterValue.entities.includes(site) );
                 oldFilterFormValue = newFilterValue;
                 this.filterEvent.emit(newFilterValue as Filter);
