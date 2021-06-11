@@ -1,3 +1,5 @@
+@import "src/assets/theme/size_vars.scss";
+
 // make the panels larger
 .check-panel{
     width: 100%;
@@ -5,5 +7,23 @@
 }
 
 .check-panel-section{
-    margin: 10px 30px;
+    margin: 10px 0px;
+    &.elements-section{
+        width: 50%;
+    }
+    &.aggregations-section{
+        width: 25%;
+    }
+    &.aggregations-section:last-child{
+        width: 50%;
+    }
+    &.groups-section{
+        width: 25%;
+    }
+
+    .mat-chip{
+        font-size: $normal_text;
+        border-radius: 4px;
+    }
 }
+
