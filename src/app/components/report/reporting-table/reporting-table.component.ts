@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
@@ -77,8 +77,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   dataSource = new MatTableDataSource([]);
 
+  innerWidth: number;
+  colsThatFitInTheScreen: number;
 
-  get currentLang() {
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void{
+    this.calculateOptimalColspan();
+  }
+  
+  get optimalColspanForGroupName(): number{
+    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen)
+  }
+
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -101,6 +112,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
+    this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
 
@@ -261,6 +273,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
+    this.calculateOptimalColspan();
   }
 
   // Create row of the table from a ProjectIndicator
@@ -662,6 +675,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   checkIfNaN(x: unknown): boolean{
     return isNaN(x);
+  }
+
+  calculateOptimalColspan(): void{
+    this.innerWidth = window.innerWidth;
+    
+    if (this.innerWidth < 640){
+      this.colsThatFitInTheScreen = 3;
+    }
+    else if (this.innerWidth < 1024){
+      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 640) / 85);
+    }
+    else{
+      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
+    }
   }
 
   ngOnDestroy(): void{
