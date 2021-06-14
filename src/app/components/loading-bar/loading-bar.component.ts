@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-loading-bar',
   templateUrl: './loading-bar.component.html',
   styleUrls: ['./loading-bar.component.scss']
 })
-export class LoadingBarComponent implements OnInit {
+export class LoadingBarComponent {
 
-timer: any;
+@Input() loadingComponent = false;
+@Input() httpLoading = false;
 
-  constructor(private spinnerService: NgxSpinnerService, private loadingService: LoadingService) {}
+  constructor(private spinnerService: NgxSpinnerService) {}
 
-  ngOnInit(): void {
-    /** Subscribing to check if we are still loading */
-    this.loadingService.loaded.subscribe(value => {
-      if (this.timer) { clearTimeout(this.timer); }
-      if (value) {
-        // The spinner appears after one second so he doesn t have to appear when the page is loaded very quickly
-        this.timer = setTimeout(() => this.spinnerService.show(), 750);
-      }
-      else { this.spinnerService.hide(); }
-    });
+  ngOnChanges(): void {
+    if (this.loadingComponent || this.httpLoading) {
+      this.spinnerService.show();
+    }
+    else {
+      this.spinnerService.hide();
+    }
   }
 
 }
