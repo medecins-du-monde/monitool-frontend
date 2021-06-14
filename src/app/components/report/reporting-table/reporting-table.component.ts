@@ -331,7 +331,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             row.dataset = {
               label: row.name,
               data,
-              labels: Object.keys(response).map(x => this.getSiteOrGroupName(x)),
+              labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
               borderColor: this.randomColor(),
               backgroundColor: this.randomColor(),
               fill: false
@@ -490,14 +490,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   formatResponseToDataset(response: unknown): {x: string, y: number}[]{
     const data = [];
-    for (const [key, value] of Object.entries(response)) {
-      if (key !== '_total'){
-        data.push({
-          y: value,
-          x: key
-        });
-      }
+    for (const dimension of this.dimensions.filter(x => x !== '_total')){
+      data.push({
+        y: response[dimension],
+        x: this.getSiteOrGroupName(dimension)
+      })
     }
+
     return data;
   }
 
