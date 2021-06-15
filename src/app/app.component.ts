@@ -1,7 +1,9 @@
-import { Component, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewChecked, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadingService } from './services/loading.service';
 import { ProjectService } from './services/project.service';
 
 @Component({
@@ -9,18 +11,23 @@ import { ProjectService } from './services/project.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked {
   title = 'MDM-monitool-Frontend';
   preferredLanguage: string;
 
   needsInfosPanelSpace = false;
+
+  loadingComponent = false;
+  httpLoading = false;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private translateService: TranslateService,
     private projectService: ProjectService,
+    private loadingService: LoadingService,
     private changeDetectorRef: ChangeDetectorRef,
+    private route: Router
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
@@ -130,6 +137,35 @@ export class AppComponent implements AfterViewChecked {
     );
 
     this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val);
+  }
+
+  ngOnInit(): void {
+    this.route.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        setTimeout(() => {
+          this.loadingComponent = true;
+        });
+
+      }
+      else if (event instanceof NavigationEnd) {
+        setTimeout(() => {
+          this.loadingComponent = false;
+        });
+
+      }
+    },
+    error => {
+      setTimeout(() => {
+        this.loadingComponent = false;
+      });
+      console.log('error while loading : ' + error);
+    });
+
+    this.loadingService.loaded.subscribe( isLoading => {
+      setTimeout(() => {
+        this.httpLoading = isLoading;
+      }, 300);
+    });
   }
 
   ngAfterViewChecked(): void {

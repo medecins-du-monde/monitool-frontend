@@ -91,14 +91,15 @@ export class GeneralComponent implements OnInit {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
     this.translateService.onLangChange.subscribe(() => {
-      this.updateBreadcrumbs();
+      this.updateBreadcrumbs(this.project);
       this.buildIndicators();
+    });
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+      this.updateBreadcrumbs(savedProject);
     });
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.entities = this.project.entities;
-      this.updateBreadcrumbs();
-
       this.indicatorService.listForProject(this.project.themes.map(x => x.id))
         .then((crosscutting: Indicator[]) => {
           this.crosscutting = crosscutting;
@@ -323,17 +324,17 @@ export class GeneralComponent implements OnInit {
     this.dimensionIds.next(value);
   }
 
-  updateBreadcrumbs(): void {
+  updateBreadcrumbs(project: Project): void {
     const breadCrumbs = [
       {
         value: `${this.translateService.instant('Projects')}`,
         link: './../../projects'
       } as BreadcrumbItem,
       {
-        value: this.project.country,
+        value: project.country,
       } as BreadcrumbItem,
       {
-        value: this.project.name,
+        value: project.name,
       } as BreadcrumbItem,
       {
         value: 'Reporting',

@@ -99,27 +99,32 @@ export class SitesComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'CollectionSites',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
+
+    this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
-          const breadCrumbs = [
-            {
-              value: 'Projects',
-              link: './../../projects'
-            } as BreadcrumbItem,
-            {
-              value: project.country,
-            } as BreadcrumbItem,
-            {
-              value: project.name,
-            } as BreadcrumbItem,
-            {
-              value: 'Structure',
-            } as BreadcrumbItem,
-            {
-              value: 'CollectionSites',
-            } as BreadcrumbItem,
-          ];
-          this.projectService.updateBreadCrumbs(breadCrumbs);
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({

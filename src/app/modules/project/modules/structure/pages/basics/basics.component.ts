@@ -103,16 +103,21 @@ export class BasicsComponent implements OnInit, OnDestroy {
           this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
+      })
+    );
+
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe(savedProject => {
         const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: project.country,
+            value: savedProject.country,
           } as BreadcrumbItem,
           {
-            value: project.name,
+            value: savedProject.name,
           } as BreadcrumbItem,
           {
             value: 'Structure',

@@ -43,12 +43,6 @@ export class PermissionsGuard implements CanActivate {
     this.projectService.getProjectId.subscribe((id) => {
       this.currentProjectId = id;
     });
-
-    // TODO: Check if this is usefull
-    // Allow project role to go to structure when they create a project
-    this.projectService.projectUserCreatingProject.subscribe(val => {
-       this.giveAccess = val;
-    });
   }
 
   async canActivate(
@@ -60,8 +54,9 @@ export class PermissionsGuard implements CanActivate {
     switch (module) {
       // For the structure part
       case 'structure':
-        if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')
-            && !this.giveAccess && this.currentProjectId !== '') {
+        // No need to check the project role because as soon as a user create a project
+        // he has the owner role on this project
+        if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')) {
           return true;
         }
         else {
@@ -96,7 +91,8 @@ export class PermissionsGuard implements CanActivate {
             || this.currentProjectUser.role === 'common'
             || this.currentProjectUser.role === 'owner'
             || this.currentProjectUser.role === 'input'
-            || this.currentProjectUser.role === 'read') {
+            || this.currentProjectUser.role === 'read'
+            || this.currentProjectUser.role === 'project') {
               return true;
             }
         this.router.navigate(['/projects']);
