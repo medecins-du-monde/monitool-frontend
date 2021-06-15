@@ -15,7 +15,7 @@
                 <mat-expansion-panel [expanded]="panelStates[i]" (opened)="openPanel(i)" (closed)="closePanel(i)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <mat-checkbox [formControl]="partitionsForm.get(partition.id)">
+                            <mat-checkbox [formControl]="partitionsForm.get(partition.id)" (click)="togglePanel(i)">
                                 {{ partition.name }}
                             </mat-checkbox>
                         </mat-panel-title>

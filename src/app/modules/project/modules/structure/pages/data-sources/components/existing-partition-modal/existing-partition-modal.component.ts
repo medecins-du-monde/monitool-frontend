@@ -99,6 +99,10 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
     this.panelStates[i] = false;
   }
 
+  togglePanel(i: number): void{
+    this.panelStates[i] = !this.panelStates[i];
+  }
+
   minimizePanels(): void{
     for (let i = 0; i < this.panelStates.length; i+=1){
       this.panelStates[i] = false;
