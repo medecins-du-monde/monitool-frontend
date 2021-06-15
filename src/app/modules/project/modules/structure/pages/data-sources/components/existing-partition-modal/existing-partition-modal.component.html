@@ -1,10 +1,18 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 <h2 mat-dialog-title>{{ 'UseExistingDisaggregation' | translate }}</h2>
 <mat-dialog-content [formGroup]="partitionsForm" class="mdm-dialog">
+    <div class='minimize-button-section'>
+        <h3>{{ 'Disaggregations' | translate }}:</h3>
+        <button mat-stroked-button class="mdm-button" *ngIf="allPanelsAreClosed; else elseBlock" (click)="maximizePanels()">{{ 'Maximize' | translate }}<mat-icon>add</mat-icon></button>
+        <ng-template #elseBlock>
+            <button mat-stroked-button class="mdm-button" (click)="minimizePanels()">{{ 'Minimize' | translate }}<mat-icon>remove</mat-icon></button>
+        </ng-template>
+
+    </div>
     <div class="mdm-form-group">
-        <div *ngFor="let partition of allPartitions" class="check-panel">
+        <div *ngFor="let partition of allPartitions; let i = index" class="check-panel">
             <mat-accordion>
-                <mat-expansion-panel>
+                <mat-expansion-panel [expanded]="panelStates[i]" (opened)="openPanel(i)" (closed)="closePanel(i)">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <mat-checkbox [formControl]="partitionsForm.get(partition.id)">

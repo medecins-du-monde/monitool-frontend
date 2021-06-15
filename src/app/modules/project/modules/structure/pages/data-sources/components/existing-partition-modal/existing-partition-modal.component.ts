@@ -16,9 +16,19 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   allPartitions: Partition[]
   private subscription: Subscription = new Subscription();
   partitionsForm: FormGroup;
+  panelStates: Array<boolean> = [];
 
   get element(): FormElement{
     return this.data.value;
+  }
+
+  get allPanelsAreClosed(): boolean{
+    for (const panel of this.panelStates){
+      if (panel === true){
+        return false;
+      }
+    }
+    return true;
   }
 
   get formElementPartitions(): FormArray{
@@ -50,14 +60,16 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
   createOptions(): void {
     this.partitionsForm = new FormGroup({});
-
+    
     this.allPartitions = [];
+    this.panelStates = [];
     if (this.project){
       for (const form of this.project.forms){
         for (const element of form.elements){
           if (element.id !== this.element.id){
             for (const partition of element.partitions){
               this.allPartitions.push(partition);
+              this.panelStates.push(true);
               this.partitionsForm.addControl(partition.id, new FormControl(false));
             }
           }
@@ -76,6 +88,27 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
       }
     }
     this.dialogRef.close({selectedPartitions});
+  }
+
+
+  openPanel(i: number): void{
+    this.panelStates[i] = true;
+  }
+
+  closePanel(i: number): void{
+    this.panelStates[i] = false;
+  }
+
+  minimizePanels(): void{
+    for (let i = 0; i < this.panelStates.length; i+=1){
+      this.panelStates[i] = false;
+    }
+  }
+
+  maximizePanels(): void{
+    for (let i = 0; i < this.panelStates.length; i+=1){
+      this.panelStates[i] = true;
+    }
   }
 
 }
