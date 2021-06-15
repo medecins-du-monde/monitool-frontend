@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef, AfterViewChecked, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from './services/loading.service';
 import { ProjectService } from './services/project.service';
@@ -145,13 +145,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
         setTimeout(() => {
           this.loadingComponent = true;
         });
-
       }
-      else if (event instanceof NavigationEnd) {
+      else if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
         setTimeout(() => {
           this.loadingComponent = false;
         });
-
       }
     },
     error => {
