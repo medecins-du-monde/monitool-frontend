@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './loading-bar.component.html',
   styleUrls: ['./loading-bar.component.scss']
 })
-export class LoadingBarComponent {
+export class LoadingBarComponent implements OnChanges {
 
 @Input() loadingComponent = false;
 @Input() httpLoading = false;

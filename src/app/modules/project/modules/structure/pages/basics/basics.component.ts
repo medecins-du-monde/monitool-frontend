@@ -128,7 +128,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
       })
-    )
+    );
 
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;

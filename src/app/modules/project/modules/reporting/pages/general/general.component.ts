@@ -96,7 +96,7 @@ export class GeneralComponent implements OnInit {
     });
     this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
       this.updateBreadcrumbs(savedProject);
-    })
+    });
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.entities = this.project.entities;

@@ -14,10 +14,10 @@ import InformationItem from '../models/interfaces/information-item';
 
 export class ProjectService {
 
-  
+
   private currentProject: Project;
-  
-  savedProject: BehaviorSubject<Project> = new BehaviorSubject(new Project());;
+
+  savedProject: BehaviorSubject<Project> = new BehaviorSubject(new Project());
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
   breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
@@ -45,6 +45,8 @@ export class ProjectService {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
 
+  // TODO: Try to replace as much as possible sur subscription to openedProject by
+  // subscription to lastSavedVersion in order to improve the performances
   get lastSavedVersion(): Observable<Project> {
     return this.savedProject.asObservable().pipe(filter(p => !!p));
   }

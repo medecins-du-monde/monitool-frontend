@@ -146,13 +146,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
         setTimeout(() => {
           this.loadingComponent = true;
         });
-        
+
       }
       else if (event instanceof NavigationEnd) {
         setTimeout(() => {
           this.loadingComponent = false;
         });
-        
+
       }
     },
     error => {
@@ -164,9 +164,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     this.loadingService.loaded.subscribe( isLoading => {
       setTimeout(() => {
-        this.httpLoading = isLoading; 
+        this.httpLoading = isLoading;
       }, 300);
-    })
+    });
   }
 
   ngAfterViewChecked(): void {

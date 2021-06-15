@@ -106,9 +106,9 @@ export class HomeComponent implements OnInit {
           } as BreadcrumbItem,
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
-        
+
         this.historyLink = '/projects/' + savedProject.id + '/structure/history';
-      
+
         this.indicatorService
           .listForProject(Object.keys(savedProject.themes)
           .map(x => savedProject.themes[x].id))
@@ -130,11 +130,13 @@ export class HomeComponent implements OnInit {
             crossCuttingUpdate: indicators.length > 0 ? ((listCrossCutting.length / indicators.length) * 100).toFixed(0) : 100,
             // Same here
             extraIndicatorsUpdate: savedProject.extraIndicators.length > 0 ?
-            ((savedProject.extraIndicators.filter(indicator => indicator.filled).length / savedProject.extraIndicators.length) * 100).toFixed(0) : 100
+            ((savedProject.extraIndicators
+              .filter(indicator => indicator.filled).length / savedProject.extraIndicators.length) * 100)
+              .toFixed(0) : 100
           };
           this.percentages.next(newPercentages);
         });
-  
+
         // TODO: Do the translation of these element with a proper way of doing it, adding
         // the translations in the en.json, es.json and fr.json file and calling the
         // translate pipe after
@@ -314,8 +316,8 @@ export class HomeComponent implements OnInit {
             },
           ];
         });
-      })
-    
-    this.projectService.updateInformationPanel(this.informations);
+      });
+
+      this.projectService.updateInformationPanel(this.informations);
   }
 }

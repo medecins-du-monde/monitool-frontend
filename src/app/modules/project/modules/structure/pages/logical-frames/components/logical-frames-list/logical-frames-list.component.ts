@@ -70,7 +70,7 @@ export class LogicalFramesListComponent implements OnInit {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
     });
-    
+
     this.projectService.updateInformationPanel(this.informations);
   }
 

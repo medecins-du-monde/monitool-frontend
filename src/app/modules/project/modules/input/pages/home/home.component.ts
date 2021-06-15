@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
       })
-    )
+    );
 
     this.subscription.add(
       this.projectService.openedProject.subscribe( async (project: Project) => {

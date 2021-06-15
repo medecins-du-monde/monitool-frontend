@@ -84,7 +84,7 @@ export class CrossCuttingComponent implements OnInit {
         } as BreadcrumbItem
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
-    })
+    });
 
     this.projectService.openedProject.subscribe((project: Project) => {
       // CrossCutting already in the project
