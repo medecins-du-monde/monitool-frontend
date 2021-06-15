@@ -52,20 +52,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
-    this.subscription.add(
-      this.projectService.openedProject.subscribe( async (project: Project) => {
-        this.project = project;
 
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe(savedProject => {
         const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: project.country,
+            value: savedProject.country,
           } as BreadcrumbItem,
           {
-            value: project.name,
+            value: savedProject.name,
           } as BreadcrumbItem,
           {
             value: 'Input',
@@ -75,6 +74,12 @@ export class HomeComponent implements OnInit {
           } as BreadcrumbItem,
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    )
+
+    this.subscription.add(
+      this.projectService.openedProject.subscribe( async (project: Project) => {
+        this.project = project;
 
         const data = [];
         for (const form of this.project.forms){

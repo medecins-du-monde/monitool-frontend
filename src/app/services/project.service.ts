@@ -14,9 +14,10 @@ import InformationItem from '../models/interfaces/information-item';
 
 export class ProjectService {
 
-  private savedProject: Project;
+  
   private currentProject: Project;
-
+  
+  savedProject: BehaviorSubject<Project> = new BehaviorSubject(new Project());;
   project: BehaviorSubject<Project> = new BehaviorSubject(new Project());
   breadCrumbs: BehaviorSubject<BreadcrumbItem[]> = new BehaviorSubject([]);
 
@@ -44,6 +45,10 @@ export class ProjectService {
     return this.project.asObservable().pipe(filter(p => !!p));
   }
 
+  get lastSavedVersion(): Observable<Project> {
+    return this.savedProject.asObservable().pipe(filter(p => !!p));
+  }
+
   get bigPage(): Observable<boolean> {
     return this.inBigPage.asObservable();
   }
@@ -59,7 +64,7 @@ export class ProjectService {
   }
 
   get hasPendingChanges(): boolean {
-    return this.currentProject && !this.savedProject.equals(this.currentProject);
+    return this.currentProject && !this.savedProject.value.equals(this.currentProject);
   }
 
   get panelInformations(): Observable<InformationItem[]> {
@@ -81,11 +86,11 @@ export class ProjectService {
   constructor(private apiService: ApiService, private themeService: ThemeService) {
     this.openedProject.subscribe((project: Project) => {
       if (!this.savedProject) {
-        this.savedProject = project.copy();
+        this.savedProject.next(project.copy());
         this.currentProject = project.copy();
       } else {
-        if (project.id !== this.savedProject.id) {
-          this.savedProject = project.copy();
+        if (project.id !== this.savedProject.value.id) {
+          this.savedProject.next(project.copy());
           this.currentProject = project.copy();
         } else {
           this.currentProject = project.copy();
@@ -96,14 +101,14 @@ export class ProjectService {
 
   // used when changing pages and chosing to not save the changes
   public discardPendingChanges(): void {
-    this.project = new BehaviorSubject(this.savedProject.copy());
+    this.project = new BehaviorSubject(this.savedProject.value.copy());
     this.openedProject.subscribe( (project: Project) => {
       if (!this.savedProject) {
-        this.savedProject = project.copy();
+        this.savedProject.next(project.copy());
         this.currentProject = project.copy();
       } else {
-        if ( project.id !== this.savedProject.id ) {
-          this.savedProject = project.copy();
+        if ( project.id !== this.savedProject.value.id ) {
+          this.savedProject.next(project.copy());
           this.currentProject = project.copy();
         } else {
           this.currentProject = project.copy();
@@ -114,12 +119,13 @@ export class ProjectService {
 
   // Update the breadcrumbs list
   public updateBreadCrumbs(list: BreadcrumbItem[]): void {
+    console.log('updating breadcrumbs...');
     this.breadCrumbs.next(list);
   }
 
   // used when reverting changes and staying in the same page
   public revertChanges(): void {
-    this.project.next(this.savedProject.copy());
+    this.project.next(this.savedProject.value.copy());
   }
 
   public updateInformationPanel(list: InformationItem[]): void {
@@ -155,7 +161,7 @@ export class ProjectService {
     }
     project.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
     this.project.next(project);
-    this.savedProject = project.copy();
+    this.savedProject.next(project.copy());
     this.currentProject = project.copy();
     return project;
   }
@@ -170,7 +176,7 @@ export class ProjectService {
     if (response && !this.basicInfos.getValue()) {
       this.basicInfos.next(true);
     }
-    this.savedProject = savedProject.copy();
+    this.savedProject.next(savedProject.copy());
     this.currentProject = savedProject.copy();
     return savedProject;
   }

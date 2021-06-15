@@ -204,6 +204,7 @@ export class SidenavService {
       }
     }
 
+  // TODO: Check if we can replace this canCreateProject by just checking if we have the projectCreation role
   // When a user creates a project, make sure the sidenav displays all the information, even when the page reloads
     this.projectService.projectUserCreatingProject.subscribe(canCreateProject => {
     // If a user has a project role but the project doesnt have its basics infos, it means it's being created

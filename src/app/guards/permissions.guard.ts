@@ -60,8 +60,8 @@ export class PermissionsGuard implements CanActivate {
     switch (module) {
       // For the structure part
       case 'structure':
-        if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')
-            && !this.giveAccess && this.currentProjectId !== '') {
+        //TODO: Check as well the project creation role
+        if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')) {
           return true;
         }
         else {
