@@ -119,7 +119,6 @@ export class ProjectService {
 
   // Update the breadcrumbs list
   public updateBreadCrumbs(list: BreadcrumbItem[]): void {
-    console.log('updating breadcrumbs...');
     this.breadCrumbs.next(list);
   }
 
