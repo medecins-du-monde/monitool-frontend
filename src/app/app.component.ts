@@ -19,7 +19,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   loadingComponent = false;
   httpLoading = false;
-  timerLoadingComponent: any;
 
   constructor(
     private matIconRegistry: MatIconRegistry,
