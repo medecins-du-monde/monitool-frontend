@@ -90,7 +90,6 @@ export class FormElementEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        console.log(this.partitions);
         for (const partition of res.selectedPartitions){
           this.partitions.push(this.newPartition(partition));
         }

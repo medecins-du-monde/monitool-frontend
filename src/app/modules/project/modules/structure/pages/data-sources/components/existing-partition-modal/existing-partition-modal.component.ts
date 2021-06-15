@@ -39,16 +39,13 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<ExistingPartitionModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: FormGroup
-  ) { 
-    console.log(this.data);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) =>{
         this.project = project;
         this.createOptions();
-        console.log(this.allPartitions);
       })
     )
   }
@@ -79,8 +76,6 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    console.log(this.partitionsForm.value);
-
     const selectedPartitions = [];
     for (const partition of this.allPartitions){
       if (this.partitionsForm.get(partition.id).value){
