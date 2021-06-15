@@ -69,17 +69,17 @@ export class HistoryComponent implements OnInit {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
       const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
         } as BreadcrumbItem,
         {
-          value: project.country,
+          value: savedProject.country,
         } as BreadcrumbItem,
         {
-          value: project.name,
+          value: savedProject.name,
         } as BreadcrumbItem,
         {
           value: 'Structure',
@@ -89,6 +89,9 @@ export class HistoryComponent implements OnInit {
         } as BreadcrumbItem,
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
+    });
+
+    this.projectService.openedProject.subscribe((project: Project) => {
       this.showLoadMore = true;
       this.projectId = project.id;
       this.project = project;

@@ -44,20 +44,17 @@ export class LogicalFramesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.logicalFrames = project.logicalFrames;
-
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
       const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
         } as BreadcrumbItem,
         {
-          value: project.country,
+          value: savedProject.country,
         } as BreadcrumbItem,
         {
-          value: project.name,
+          value: savedProject.name,
         } as BreadcrumbItem,
         {
           value: 'Structure',
@@ -68,6 +65,12 @@ export class LogicalFramesListComponent implements OnInit {
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
     });
+
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
+      this.logicalFrames = project.logicalFrames;
+    });
+
     this.projectService.updateInformationPanel(this.informations);
   }
 

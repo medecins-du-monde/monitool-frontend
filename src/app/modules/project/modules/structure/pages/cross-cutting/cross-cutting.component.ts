@@ -64,6 +64,28 @@ export class CrossCuttingComponent implements OnInit {
   ngOnInit(): void {
     this.setForm();
 
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+      const breadCrumbs = [
+        {
+          value: 'Projects',
+          link: './../../projects'
+        } as BreadcrumbItem,
+        {
+          value: savedProject.country,
+        } as BreadcrumbItem,
+        {
+          value: savedProject.name,
+        } as BreadcrumbItem,
+        {
+          value: 'Structure',
+        } as BreadcrumbItem,
+        {
+          value: 'CrossCuttingIndicators',
+        } as BreadcrumbItem
+      ];
+      this.projectService.updateBreadCrumbs(breadCrumbs);
+    });
+
     this.projectService.openedProject.subscribe((project: Project) => {
       // CrossCutting already in the project
       this.project = project;
@@ -112,26 +134,6 @@ export class CrossCuttingComponent implements OnInit {
         });
         this.setForm();
       });
-
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: project.country,
-        } as BreadcrumbItem,
-        {
-          value: project.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'CrossCuttingIndicators',
-        } as BreadcrumbItem
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
     });
     this.projectService.updateInformationPanel(this.informations);
   }
