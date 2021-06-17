@@ -163,7 +163,7 @@
     </ng-container>
 
     <ng-container matColumnDef="group_stick" *ngIf="columnsToDisplay">
-      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length - optimalColspanForGroupName"></td>
+      <td mat-cell *matCellDef="" [attr.colspan]="columnsToDisplay.length - optimalColspanForGroupName - 1"></td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
