@@ -618,6 +618,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // after this we go down subtracting the value
     // of the red until we get to the green: rgb (128, 255, 128)
 
+    if(this.checkIfNaN(element.values[column])){
+      return 'rgb(238, 238, 238)';
+    }
 
     // Set background color to white if the row doesn't want colors
     if (!element.colorize
