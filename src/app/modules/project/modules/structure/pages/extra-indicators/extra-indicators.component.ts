@@ -45,19 +45,17 @@ export class ExtraIndicatorsComponent implements OnInit {
   constructor(private projectService: ProjectService, private fb: FormBuilder, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
       const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
         } as BreadcrumbItem,
         {
-          value: project.country,
+          value: savedProject.country,
         } as BreadcrumbItem,
         {
-          value: project.name,
+          value: savedProject.name,
         } as BreadcrumbItem,
         {
           value: 'Structure',
@@ -67,6 +65,9 @@ export class ExtraIndicatorsComponent implements OnInit {
         } as BreadcrumbItem,
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
+    });
+    this.projectService.openedProject.subscribe((project: Project) => {
+      this.project = project;
       this.setForm();
     });
     this.projectService.updateInformationPanel(this.informations);

@@ -1,6 +1,9 @@
 // tslint:disable: no-string-literal
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Project } from '../models/classes/project.model';
 import { User } from '../models/classes/user.model';
 import { AuthService } from '../services/auth.service';
 import { ProjectService } from '../services/project.service';
@@ -9,27 +12,36 @@ import { ProjectService } from '../services/project.service';
   providedIn: 'root'
 })
 export class PermissionsGuard implements CanActivate {
-  user: User;
-  // TODO: To be replaced by the user.role
-  userRole: string;
-  // TODO: To be replaced by the user.type
-  userType: string;
   currentProjectId: string;
   giveAccess: boolean;
+  // This give the rights of the user in the whole application : Common, Project Creation or Admin.
+  activeUser: User;
+  // This give the rights of the user inside a project: Owner, Data entry, Read only.
+  currentProjectUser: User;
+  currentProject: Project;
 
   constructor(private authService: AuthService, private router: Router, private projectService: ProjectService) {
-    this.authService.currentUser.subscribe((user: User) => {
-      this.user = user;
-      this.userRole = user.role;
-      this.userType = user.type;
+
+    combineLatest([this.projectService.openedProject, this.authService.currentUser]).pipe(
+      map(results => ({ currentProject: results[0] as Project, currentUser: results[1] as User}))
+    ).subscribe((res: {currentProject: Project, currentUser: User}) => {
+      this.activeUser = res.currentUser;
+      this.currentProjectUser = res.currentProject.users.find(user => {
+        if ((res.currentUser['_id'] && user.id === res.currentUser['_id'])
+             || (user.name === res.currentUser.name && user.username === res.currentUser.username)) {
+          return true;
+        }
+        return false;
+      });
+      if (!this.currentProjectUser) {
+        this.currentProjectUser = res.currentUser;
+      }
     });
+
+    // TODO: Check if really usefull
     // Make sure we have the correct project ID for MDM Accounts
     this.projectService.getProjectId.subscribe((id) => {
       this.currentProjectId = id;
-    });
-    // Allow project role to go to structure when they create a project
-    this.projectService.projectUserCreatingProject.subscribe(val => {
-       this.giveAccess = val;
     });
   }
 
@@ -42,93 +54,63 @@ export class PermissionsGuard implements CanActivate {
     switch (module) {
       // For the structure part
       case 'structure':
-        if (this.userType === 'user' && !this.giveAccess && this.currentProjectId !== '') {
-          // MDM accounts can have assigned role within the project that is different than their MDM account role
-          this.projectService.get(this.currentProjectId).then((project) => {
-            // Get the project and check if the user is part of it
-            const projectUser = project.users.filter(user => user.id === this.user['_id']);
-            // If the MDM user is owner in a particular project, he can access everything
-            if (projectUser.length > 0 && projectUser[0].role === 'owner') {
-              return true;
-              // If the MDM user is not owner of the project, redirect them
-            } else if ((this.userRole === 'common') || (this.userRole === 'project' && !this.giveAccess)
-                      || (projectUser.length > 0 && projectUser[0].role === 'input')
-                      || (projectUser.length > 0 && projectUser[0].role === 'read')) {
-              // Not authorized and redirection to the reporting home page
-              this.projectService.get(this.currentProjectId).then(() => {
-                this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
-              });
-              return false;
-            }
-          });
-        } else if (this.userType === 'user' && this.userRole === 'project' && this.giveAccess) {
+        // No need to check the project role because as soon as a user create a project
+        // he has the owner role on this project
+        if ((this.currentProjectUser.role === 'admin' || this.currentProjectUser.role === 'owner')) {
           return true;
         }
-        // It the user has read role or input role
-        else if ((this.userRole === 'read' || this.userRole === 'input') && this.user.projectId !== '') {
-          // Not authorized and redirection to reporting home
-          this.projectService.get(this.user.projectId).then(() => {
-            this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
-          });
+        else {
+          this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
           return false;
         }
-        // Otherwise, he has access to all the structure
-        return true;
       case 'input':
         // If the user has a partner account or has input role
-        if (this.user.type === 'partner' && this.user.role === 'input') {
-            // Get formID of the current pageand make sure the user has the permission to access it
-            // Otherwise redirect him to the reporting home page
-          if (!this.user.dataSources.includes(route.children[0].params.formId)) {
-            this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
-          }
+        if (this.currentProjectUser.role === 'owner' || this.currentProjectUser.role === 'admin') {
           return true;
-        } else if (this.user.type === 'user' && this.currentProjectId !== '') {
-          this.projectService.get(this.currentProjectId).then((project) => {
-            // Check if the user is part of this project
-            const projectUser = project.users.filter(user => user.id === this.user['_id']);
-            if (projectUser.length > 0 && projectUser[0].role === 'input') {
-              // If he does and has an input role, check which datasource he has access to and redirect accordingly
-              const hasAccessToDatasource = project.forms.some(form => form.id === route.children[0].params.formId);
-              if (!hasAccessToDatasource) {
-                this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
-                return false;
-              }
+        }
+        // Get formID of the current pageand make sure the user has the permission to access it
+        // Otherwise redirect him to the reporting home page
+        else if (this.currentProjectUser.role === 'input') {
+          // If we have formId in the url but the user doesn't have access to this form
+          // then he is redirected to the input home page
+          if (route.children[0].params.formId
+            && !this.currentProjectUser.dataSources.find(datasource => datasource.id === route.children[0].params.formId)) {
+            this.router.navigate([`/projects/${this.currentProjectId}/input/home`]);
+            return false;
+          }
+          else  {
+            return true;
+          }
+        }
+        else {
+          this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
+          return false;
+        }
+      case 'reporting':
+        if (this.currentProjectUser.role === 'admin'
+            || this.currentProjectUser.role === 'common'
+            || this.currentProjectUser.role === 'owner'
+            || this.currentProjectUser.role === 'input'
+            || this.currentProjectUser.role === 'read'
+            || this.currentProjectUser.role === 'project') {
               return true;
             }
-            else if (projectUser[0].role === 'read') {
-              this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
-              return false;
-            }
-            // If the user is not in the project users but he has a common role
-            else if (projectUser.length === 0 && this.user.role === 'common'){
-              this.router.navigate([`/projects/${this.currentProjectId}/reporting/home`]);
-              return false;
-            }
-          });
-        }
-        // If the user has just a read_only role
-        // Redirect him to the reporting home page
-        if (this.userRole === 'read'){
-          this.router.navigate([`/projects/${this.user.projectId}/reporting/home`]);
-        }
-        break;
-      case 'reporting':
-        return true;
+        this.router.navigate(['/projects']);
+        return false;
       case 'users':
-        if (this.userRole === 'admin') {
+        if (this.activeUser.role === 'admin') {
           return true;
         }
         this.router.navigate(['/projects']);
         return false;
       case 'themes':
-        if (this.userRole === 'admin') {
+        if (this.activeUser.role === 'admin') {
           return true;
         }
         this.router.navigate(['/projects']);
         return false;
       case 'indicators':
-        if (this.userRole === 'admin') {
+        if (this.activeUser.role === 'admin') {
           return true;
         }
         this.router.navigate(['/projects']);

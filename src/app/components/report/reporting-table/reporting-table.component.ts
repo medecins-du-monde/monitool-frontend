@@ -67,8 +67,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               private chartService: ChartService,
               private translateService: TranslateService) { }
 
-  content: any[];
-
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
@@ -95,7 +93,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
+  // These values are used to check if the value changed in the subscribe
+  currentDimension: string;
+  currentFilter: any;
+  content: any[];
   project: Project;
+
   dimensions: string[];
   columnsToDisplay: string[];
   openedSections = {0: true};
@@ -141,52 +144,64 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     );
 
     if (!this.isCrossCuttingReport) {
+      // Project loaded twice
       this.subscription.add(
-        this.projectService.openedProject.subscribe( (project: Project) => {
-          this.project = project;
-          this.updateDimensions();
-          this.refreshValues();
-          this.updateTableContent();
+        this.projectService.openedProject.subscribe((project: Project) => {
+          if (JSON.stringify(this.project) !== JSON.stringify(project)) {
+            this.project = project;
+            this.updateDimensions();
+            this.refreshValues();
+            this.updateTableContent();
+          }
         })
       );
     }
 
     this.subscription.add(
-      this.dimensionIds.subscribe( () => {
-        this.updateDimensions();
-        this.refreshValues();
-        this.updateTableContent();
+      this.dimensionIds.subscribe(newDimension => {
+        if (this.currentDimension !== newDimension) {
+          this.currentDimension = newDimension;
+          this.updateDimensions();
+          this.refreshValues();
+          this.updateTableContent();
+        }
       })
     );
 
     this.subscription.add(
-      this.filter.subscribe( () => {
-        this.updateDimensions();
-        this.refreshValues();
-        this.updateTableContent();
+      this.filter.subscribe(newFilter => {
+        if (JSON.stringify(this.currentFilter) !== JSON.stringify(newFilter)) {
+          this.currentFilter = newFilter;
+          this.updateDimensions();
+          this.refreshValues();
+          this.updateTableContent();
+        }
       })
     );
 
     this.subscription.add(
-      this.tableContent.subscribe(content => {
-        this.content = content;
-        this.updateTableContent();
+      this.tableContent.subscribe(newContent => {
+        if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
+          this.content = newContent;
+          this.updateTableContent();
+        }
       })
     );
 
     this.subscription.add(
-      this.chartService.reset.subscribe(() =>
+      this.chartService.reset.subscribe(reset =>
         {
-        const updatedRows = this.rows.getValue();
-        updatedRows.forEach(row => {
-          if (this.isInfoRow(0, row)) {
-            row.onChart = false;
+          if (reset) {
+          const updatedRows = this.rows.getValue();
+          updatedRows.forEach(row => {
+            if (this.isInfoRow(0, row)) {
+              row.onChart = false;
+            }
           }
-        }
-        );
-        this.rows.next(updatedRows);
-        }
-        )
+          );
+          this.rows.next(updatedRows);
+          }
+        })
     );
   }
 

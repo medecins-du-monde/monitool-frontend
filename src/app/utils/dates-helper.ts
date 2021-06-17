@@ -1,9 +1,18 @@
-import { FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 import moment from 'moment';
 
 export default class DatesHelper {
 
   static areEquals(date1: Date, date2: Date): boolean {
+    // TODO: Convert moment to date in case there is.
+    // If it s a moment type, we have to re create the date in order to have the method getTime after.
+    if (date1 instanceof moment) {
+      date1 = new Date(date1.toString());
+    }
+    if (date2 instanceof moment) {
+      date2 = new Date(date2.toString());
+    }
+
     if (
       date1.getFullYear() === date2.getFullYear() &&
       date1.getMonth() === date2.getMonth() &&
