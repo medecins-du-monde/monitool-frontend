@@ -13,11 +13,18 @@
     </mat-grid-tile>
 
     <mat-grid-tile colspan="6">
-        <a mat-stroked-button type="button" class="mdm-button"
+        <!-- Put just a different href later on -->
+        <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
         [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity" target="_blank"
         rel="noopener noreferrer">
         <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
         </a>
+        <ng-template #elseBlock>
+            <a #elseBlock mat-stroked-button type="button" class="mdm-button"
+            rel="noopener noreferrer">
+            <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
+            </a>
+        </ng-template>
     </mat-grid-tile>        
 
 </mat-grid-list>

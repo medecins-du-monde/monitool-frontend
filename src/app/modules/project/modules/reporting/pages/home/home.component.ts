@@ -21,17 +21,17 @@ export class HomeComponent implements OnInit {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
+    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
       const breadCrumbs = [
         {
           value: 'Projects',
           link: './../../projects'
         } as BreadcrumbItem,
         {
-          value: project.country,
+          value: savedProject.country,
         } as BreadcrumbItem,
         {
-          value: project.name,
+          value: savedProject.name,
         } as BreadcrumbItem,
         {
           value: 'Reporting',

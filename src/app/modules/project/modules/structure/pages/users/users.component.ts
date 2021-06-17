@@ -47,22 +47,18 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.users = [];
-
     this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.users = this.project.users;
-
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
         const breadCrumbs = [
           {
             value: 'Projects',
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: project.country,
+            value: savedProject.country,
           } as BreadcrumbItem,
           {
-            value: project.name,
+            value: savedProject.name,
           } as BreadcrumbItem,
           {
             value: 'Structure',
@@ -72,6 +68,13 @@ export class UsersComponent implements OnInit {
           } as BreadcrumbItem,
         ];
         this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
+
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.users = this.project.users;
       })
     );
     this.projectService.updateInformationPanel(this.informations);
