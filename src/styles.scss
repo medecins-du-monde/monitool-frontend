@@ -677,6 +677,10 @@ hot-table {
   width: 100%;
   overflow: hidden;
   font-size: $small_text;
+  
+  &.fixed-height{
+    height: 550px;
+  }
 }
 
 .handsontable td{
