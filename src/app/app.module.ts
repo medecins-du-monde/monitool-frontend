@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomHttpInterceptor } from './interceptors/http-interceptor';
 import { LoadingBarModule } from './components/loading-bar/loading-bar.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -64,7 +65,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
         ['https://graph.microsoft.com/v1.0/me', ['user.read']]
       ],
       extraQueryParameters: {}
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     {
