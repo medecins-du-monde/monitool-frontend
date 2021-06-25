@@ -2,7 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
-import Chart from 'chart.js';
+import Chart, { ChartOptions } from 'chart.js';
+
 
 @Component({
   selector: 'app-chart',
@@ -29,8 +30,13 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private chart: Chart;
 
-  @Input() options: any;
   @Input() data: any;
+  options: ChartOptions = {
+    tooltips: {
+      mode: 'index',
+      intersect: false,
+    }
+  };
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [

@@ -80,8 +80,6 @@ export class GeneralComponent implements OnInit {
   entities: Entity[];
   tableContent = new BehaviorSubject<any[]>([]);
 
-  options =  {fill: false};
-
   themes: Theme[];
   crosscutting: Indicator[];
   multiThemesIndicators: Indicator[];
