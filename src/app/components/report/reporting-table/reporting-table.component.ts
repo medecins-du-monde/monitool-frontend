@@ -208,7 +208,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         row.sectionId = id;
       }
 
-      this.content = this.content.map(this.convertToRow);
       // defines the level of the first row as zero if it is undefined
       if (this.content.length > 0){
         if (this.content[0].level === undefined){
@@ -229,6 +228,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
+    if (row.open){
+      for(let c of this.content){
+        if (c.sectionId > row.sectionId){
+          break;
+        }
+        if (c.sectionId === row.sectionId){
+          c = this.updateRowValues(c);
+        }
+      }
+    }
   }
 
   // Create new row if it s an indicator
@@ -280,7 +289,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // Create row of the table from a ProjectIndicator
   indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow{
-    let row = {
+    const row = {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
@@ -301,9 +310,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       row.customFilter = customFilter;
     }
 
-    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions && this.dimensions.length > 0){
-      row = this.updateRowValues(row);
-    }
     return row;
   }
   // Fetch the data of one especific row in function of project, content, filter and dimension
