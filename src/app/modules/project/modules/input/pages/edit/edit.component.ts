@@ -429,8 +429,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
               let newValue;
               try{
-                newValue = this.expressionParser.evaluate(change[3])
-              }catch(e){
+                newValue = this.expressionParser.evaluate(change[3]);
+              }catch (e){
                 newValue = change[3];
               }
 
