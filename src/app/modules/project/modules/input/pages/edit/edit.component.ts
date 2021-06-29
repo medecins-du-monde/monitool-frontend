@@ -17,6 +17,7 @@ import * as _ from 'lodash';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
+import Parser from 'expr-eval';
 
 @Component({
   selector: 'app-edit',
@@ -76,6 +77,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   previousInput: Input;
   private initValue: any;
   tableSettings: any;
+  expressionParser = new Parser.Parser();
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean{
@@ -424,10 +426,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
               const x = change[0];
               const y = change[1];
               const oldValue = +change[2];
-              let newValue = +change[3];
-              if (isNaN(newValue)){
+
+              let newValue;
+              try{
+                newValue = this.expressionParser.evaluate(change[3]);
+              }catch (e){
                 newValue = change[3];
               }
+
               if (oldValue !== newValue){
                 const pos = this.isInputCell(-1, x, y, tableObj);
                 if (pos !== null){
@@ -455,7 +461,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             cellProperties['className'] = 'hot-header-cell';
           }else{
             cellProperties['className'] = 'hot-input-cell';
-            cellProperties['validator'] = /^\d+$/;
+            cellProperties['validator'] = /^(\d+[-+*/^%])*\d+$/;
           }
 
           return cellProperties;
