@@ -30,7 +30,9 @@
     </ng-container>
     
     <ng-container matColumnDef="error">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">{{element.error === 'Calculation is missing' ? ('ReportingError.MissingCalculation' | translate) : (('ReportingError.DataNotAvailable' | translate) + ' ' + (element.error | translate))}}</td>
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">
+        <span *ngFor="let err of element.error">{{ err | translate}} </span>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions" [stickyEnd]="column === '_total'">

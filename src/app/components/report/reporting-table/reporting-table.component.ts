@@ -50,7 +50,7 @@ export interface InfoRow {
   nextRow: Row;
   open: boolean;
   level: number;
-  error?: string;
+  error?: string[];
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -329,6 +329,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
 
     if (this.checkPeriodicityIsValid(row)){
+      row.error = ['Loading'];
       this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
         response => {
           if (response) {
@@ -343,6 +344,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               fill: false
             };
             row.values = response;
+            row.error = undefined;
+            this.rows.next(this.rows.value);
 
             if (row.onChart){
               this.updateChart();
@@ -365,7 +368,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   checkPeriodicityIsValid(row: InfoRow): boolean{
     row.error = undefined;
     if (!row.computation || !row.computation.formula) {
-      row.error = 'Calculation is missing';
+      row.error = ['ReportingError.MissingCalculation'];
       return false;
     }
 
@@ -396,7 +399,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // they only work togheter if they are the same
 
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
-      row.error = 'Filter.' + highestPeriodicity;
+      row.error = ['ReportingError.DataNotAvailable', 'Filter.' + highestPeriodicity];
       return false;
     }
     return true;
@@ -410,7 +413,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
             if (this.dimensions.length > 0){
-              row = this.updateRowValues(row);
+              if (this.openedSections[row.sectionId]){   
+                row = this.updateRowValues(row);
+              }
             }
             // this only happens when you group by collection sites or by group and you don't have any site or group in your project
             else {
