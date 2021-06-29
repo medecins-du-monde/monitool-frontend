@@ -416,6 +416,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         colHeaders: false,
         rowHeaders: false,
         stretchH: 'all',
+        viewportColumnRenderingOffset: 1000,
+        viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
         // updates the inputForm everytime we change something in the table
