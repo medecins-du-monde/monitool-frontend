@@ -26,7 +26,6 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
 
   tableContent = new BehaviorSubject<any[]>([]);
 
-  options = {fill: false};
 
   mainIndicator: Indicator;
   relatedProjects: Project[];

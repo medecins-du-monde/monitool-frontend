@@ -50,7 +50,7 @@ export interface InfoRow {
   nextRow: Row;
   open: boolean;
   level: number;
-  error?: string;
+  error?: string[];
 }
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -208,7 +208,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         row.sectionId = id;
       }
 
-      this.content = this.content.map(this.convertToRow);
       // defines the level of the first row as zero if it is undefined
       if (this.content.length > 0){
         if (this.content[0].level === undefined){
@@ -225,10 +224,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  openSection(row: SectionTitle): void{
+  toggleSection(row: SectionTitle): void{
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
+    if (row.open){
+      for (let c of this.content){
+        if (c.sectionId > row.sectionId){
+          break;
+        }
+        if (c.sectionId === row.sectionId){
+          c = this.updateRowValues(c);
+        }
+      }
+    }
   }
 
   // Create new row if it s an indicator
@@ -280,7 +289,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // Create row of the table from a ProjectIndicator
   indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow{
-    let row = {
+    const row = {
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
@@ -301,12 +310,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       row.customFilter = customFilter;
     }
 
-    if (this.tableContent && this.filter && this.dimensionIds && this.dimensions && this.dimensions.length > 0){
-      row = this.updateRowValues(row);
-    }
     return row;
   }
   // Fetch the data of one especific row in function of project, content, filter and dimension
+  // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow{
     const currentFilter = this.filter.value;
     const modifiedFilter = {
@@ -323,6 +330,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
 
     if (this.checkPeriodicityIsValid(row)){
+      row.error = ['Loading'];
       this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value] , customFilter, true, false).then(
         response => {
           if (response) {
@@ -337,6 +345,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               fill: false
             };
             row.values = response;
+            row.error = undefined;
+            this.rows.next(this.rows.value);
 
             if (row.onChart){
               this.updateChart();
@@ -359,7 +369,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   checkPeriodicityIsValid(row: InfoRow): boolean{
     row.error = undefined;
     if (!row.computation || !row.computation.formula) {
-      row.error = 'Calculation is missing';
+      row.error = ['ReportingError.MissingCalculation'];
       return false;
     }
 
@@ -390,7 +400,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // they only work togheter if they are the same
 
     if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]){
-      row.error = 'Filter.' + highestPeriodicity;
+      row.error = ['ReportingError.DataNotAvailable', 'Filter.' + highestPeriodicity];
       return false;
     }
     return true;
@@ -404,7 +414,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
             if (this.dimensions.length > 0){
-              row = this.updateRowValues(row);
+              if (this.openedSections[row.sectionId]){
+                row = this.updateRowValues(row);
+              }
             }
             // this only happens when you group by collection sites or by group and you don't have any site or group in your project
             else {
