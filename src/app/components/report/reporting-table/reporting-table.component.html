@@ -150,7 +150,7 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
     <tr mat-row *matRowDef="let element; columns: COLUMNS_TO_DISPLAY_TITLE; when: isSectionTitle" 
         class="example-element-row"
-        (click)="openSection(element)"
+        (click)="toggleSection(element)"
     ></tr>
     
     <tr mat-row *matRowDef="let element; columns: columnsToDisplay; when: isInfoRowNoError"></tr>

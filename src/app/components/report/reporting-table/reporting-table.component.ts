@@ -224,12 +224,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  openSection(row: SectionTitle): void{
+  toggleSection(row: SectionTitle): void{
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
     if (row.open){
-      for(let c of this.content){
+      for (let c of this.content){
         if (c.sectionId > row.sectionId){
           break;
         }
@@ -313,6 +313,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return row;
   }
   // Fetch the data of one especific row in function of project, content, filter and dimension
+  // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow{
     const currentFilter = this.filter.value;
     const modifiedFilter = {
@@ -413,7 +414,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         this.content.map( row => {
           if (this.isInfoRow(0, row)){
             if (this.dimensions.length > 0){
-              if (this.openedSections[row.sectionId]){   
+              if (this.openedSections[row.sectionId]){
                 row = this.updateRowValues(row);
               }
             }
