@@ -9,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class LoadingBarComponent implements OnInit, OnChanges {
 
 @Input() loadingComponent = false;
-@Input() httpLoading = false;
 
   constructor(private spinnerService: NgxSpinnerService) {}
   ngOnInit(): void {
@@ -20,11 +19,14 @@ export class LoadingBarComponent implements OnInit, OnChanges {
   }
 
   private spinnerUpdate() {
-    if (this.loadingComponent || this.httpLoading) {
+    if (this.loadingComponent) {
       this.spinnerService.show();
     }
     else {
-      this.spinnerService.hide();
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinnerService.hide();
+    }, 1500);
     }
   }
 
