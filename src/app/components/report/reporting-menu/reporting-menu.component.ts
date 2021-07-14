@@ -7,14 +7,8 @@ import { Partition } from 'src/app/models/classes/partition.model';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
-import { InfoRow } from '../reporting-table/reporting-table.component';
-
-export interface AddedIndicators {
-  indicator: InfoRow;
-  disaggregatedIndicators?: ProjectIndicator[];
-  splitBySites?: boolean;
-  splitByTime?: string;
-}
+import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
+import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
 
 @Component({
   selector: 'app-reporting-menu',
