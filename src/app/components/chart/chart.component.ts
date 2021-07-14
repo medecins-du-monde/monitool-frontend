@@ -32,10 +32,10 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   @Input() data: any;
   options: ChartOptions = {
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-    }
+    // tooltips: {
+    //   mode: 'index',
+    //   intersect: false,
+    // }
   };
 
   /* which chart to choose from should always depend on the datatype */
