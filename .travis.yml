@@ -29,6 +29,7 @@ jobs:
       script:
         - npm run build:beta
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* reliefapps@92.243.25.191:/var/www/html/mdm-monitool-frontend
+        - echo -e 'deployed in development environment !!!'
     - stage: deploy
       if: branch = uat
       before_install:
@@ -46,6 +47,7 @@ jobs:
       script:
         - npm run build:uat
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
+        - echo -e 'deployed in uat environment !!!'
     - stage: deploy
       if: branch = master
       before_install:
@@ -63,4 +65,5 @@ jobs:
       script:
         - npm run build -- --prod
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@monitool.medecinsdumonde.net:/var/www/html/mdm-monitool-frontend
+        - echo -e 'deployed in production environment !!!'
     
