@@ -61,7 +61,7 @@
                   "maximumError": "10kb"
                 }
               ],
-              "serviceWorker": false,
+              "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
             "beta": {
@@ -91,7 +91,7 @@
                   "maximumError": "10kb"
                 }
               ],
-              "serviceWorker": false,
+              "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
             "uat": {
@@ -101,30 +101,6 @@
                   "with": "src/environments/environment.uat.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ],
-              "serviceWorker": false,
-              "ngswConfigPath": "ngsw-config.json"
-            },
-            "local": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
