@@ -66,7 +66,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       ],
       extraQueryParameters: {}
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    // Enabled in every environments
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
   ],
   providers: [
     {

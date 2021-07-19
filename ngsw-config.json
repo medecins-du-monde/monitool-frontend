@@ -31,5 +31,9 @@
         ]
       }
     }
+  ],
+  "navigationUrls": [
+    "!/api/resources/myself",
+    "!/api/authentication/login-callback"
   ]
 }
