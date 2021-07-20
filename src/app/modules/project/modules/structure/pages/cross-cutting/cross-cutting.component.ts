@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,13 +12,14 @@ import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cross-cutting',
   templateUrl: './cross-cutting.component.html',
   styleUrls: ['./cross-cutting.component.scss']
 })
-export class CrossCuttingComponent implements OnInit {
+export class CrossCuttingComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -36,6 +37,8 @@ export class CrossCuttingComponent implements OnInit {
 
   crossCuttingForm: FormGroup;
 
+  private subscription: Subscription = new Subscription();
+
   get groupsArray(): FormArray {
     return this.crossCuttingForm.controls.groupsArray as FormArray;
   }
@@ -44,12 +47,12 @@ export class CrossCuttingComponent implements OnInit {
     return this.crossCuttingForm.controls.multiThemesArray as FormArray;
   }
 
-  getIndicators(groupNumber): FormArray {
+  getIndicators(groupNumber: string): FormArray {
     return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as FormArray;
   }
 
   // TODO: Remove this method if not used
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -64,77 +67,84 @@ export class CrossCuttingComponent implements OnInit {
   ngOnInit(): void {
     this.setForm();
 
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'CrossCuttingIndicators',
-        } as BreadcrumbItem
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'CrossCuttingIndicators',
+          } as BreadcrumbItem
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      // CrossCutting already in the project
-      this.project = project;
 
-      // Initialization of indicatorlist with the one that we already have
-      const listOldCrossCutting =  [];
-      Object.keys(this.project.crossCutting).map(x => {
-        const crossCutting = this.project.crossCutting[x];
-        crossCutting.id = x;
-        listOldCrossCutting.push(crossCutting);
-      }
-      );
-      this.indicatorService
-        .listForProject(Object.keys(project.themes)
-        .map(x => project.themes[x].id))
-        .then((indicators: Indicator[]) => {
-        this.indicators = [];
-        this.groups = [];
-        this.multiThemesIndicators = [];
-        // Adding the indicators not initialized yet
-        indicators.map(indicator => {
-          const indicatorFound  = listOldCrossCutting.find(x => x.id === indicator.id);
-          if (indicatorFound) {
-          // Filling all data coming from the indicator configuration
-            indicatorFound.themes = indicator.themes;
-            // TODO: Filling it with the name in the right language
-            indicatorFound.display = indicator.name.en;
-            indicatorFound.description = indicator.description;
-            this.indicators.push(new ProjectIndicator(indicatorFound));
-          }
-          else {
-            this.indicators.push(new ProjectIndicator(indicator));
-          }
-        });
-        this.indicators.forEach(x => {
-          if (x.themes.length > 1) {
-            this.multiThemesIndicators.push(x);
-          } else if (x.themes.length > 0){
-            const group = this.groups.find(g => g.theme.id === x.themes[0].id );
-            if ( group ) {
-              group.indicators.push(x);
-            } else if (x.themes.length > 0){
-              this.groups.push({ theme: x.themes[0], indicators: [x] });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        // CrossCutting already in the project
+        this.project = project;
+
+        // Initialization of indicatorlist with the one that we already have
+        const listOldCrossCutting =  [];
+        Object.keys(this.project.crossCutting).map(x => {
+          const crossCutting = this.project.crossCutting[x];
+          crossCutting.id = x;
+          listOldCrossCutting.push(crossCutting);
+        }
+        );
+        this.indicatorService
+          .listForProject(Object.keys(project.themes)
+          .map(x => project.themes[x].id))
+          .then((indicators: Indicator[]) => {
+          this.indicators = [];
+          this.groups = [];
+          this.multiThemesIndicators = [];
+          // Adding the indicators not initialized yet
+          indicators.map(indicator => {
+            const indicatorFound  = listOldCrossCutting.find(x => x.id === indicator.id);
+            if (indicatorFound) {
+            // Filling all data coming from the indicator configuration
+              indicatorFound.themes = indicator.themes;
+              // TODO: Filling it with the name in the right language
+              indicatorFound.display = indicator.name.en;
+              indicatorFound.description = indicator.description;
+              this.indicators.push(new ProjectIndicator(indicatorFound));
             }
-          }
+            else {
+              this.indicators.push(new ProjectIndicator(indicator));
+            }
+          });
+          this.indicators.forEach(x => {
+            if (x.themes.length > 1) {
+              this.multiThemesIndicators.push(x);
+            } else if (x.themes.length > 0){
+              const group = this.groups.find(g => g.theme.id === x.themes[0].id );
+              if ( group ) {
+                group.indicators.push(x);
+              } else if (x.themes.length > 0){
+                this.groups.push({ theme: x.themes[0], indicators: [x] });
+              }
+            }
+          });
+          this.setForm();
         });
-        this.setForm();
-      });
-    });
+
+
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -145,11 +155,11 @@ export class CrossCuttingComponent implements OnInit {
     });
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number, indexGroup?: number) {
+  onEditIndicator(indicator: FormGroup, index?: number, indexGroup?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value, true), index, indexGroup);
   }
 
-  openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number) {
+  openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -176,6 +186,10 @@ export class CrossCuttingComponent implements OnInit {
         this.projectService.project.next(this.project);
         }
     });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
 }
