@@ -191,16 +191,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
           this.adapter.setLocale(lang);
         }
       )
-    )
+    );
     this.projectService.updateInformationPanel(this.informations);
-  }
-
-  ngOnDestroy(): void {
-    if (this.formSubscription) {
-      this.formSubscription.unsubscribe();
-    }
-
-    this.subscription.unsubscribe();
   }
 
   private setForm(): void {
@@ -306,6 +298,13 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     const newControls = this.elements.at(event.currentIndex);
     this.elements.setControl(event.previousIndex, newControls);
     this.elements.setControl(event.currentIndex, selectedControl);
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+    this.subscription.unsubscribe();
   }
 
 }

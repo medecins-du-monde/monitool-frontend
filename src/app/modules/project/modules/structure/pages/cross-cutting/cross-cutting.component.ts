@@ -47,12 +47,12 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     return this.crossCuttingForm.controls.multiThemesArray as FormArray;
   }
 
-  getIndicators(groupNumber): FormArray {
+  getIndicators(groupNumber: string): FormArray {
     return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as FormArray;
   }
 
   // TODO: Remove this method if not used
-  get currentLang() {
+  get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
@@ -67,33 +67,36 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setForm();
 
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'CrossCuttingIndicators',
-        } as BreadcrumbItem
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'CrossCuttingIndicators',
+          } as BreadcrumbItem
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
+
 
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         // CrossCutting already in the project
         this.project = project;
-  
+
         // Initialization of indicatorlist with the one that we already have
         const listOldCrossCutting =  [];
         Object.keys(this.project.crossCutting).map(x => {
@@ -138,10 +141,10 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
           });
           this.setForm();
         });
-      
-      
+
+
       })
-    )
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -152,11 +155,11 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number, indexGroup?: number) {
+  onEditIndicator(indicator: FormGroup, index?: number, indexGroup?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value, true), index, indexGroup);
   }
 
-  openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number) {
+  openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
