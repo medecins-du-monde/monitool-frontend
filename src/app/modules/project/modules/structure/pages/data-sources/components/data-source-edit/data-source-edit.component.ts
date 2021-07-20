@@ -114,6 +114,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public periodicities = [];
   public allOption: Entity = new Entity({id: 'all', name: 'All'});
 
+  private subscription: Subscription = new Subscription();
+
   get elements(): FormArray {
     return this.dataSourceForm.controls.elements as FormArray;
   }
@@ -183,18 +185,14 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       });
     }
 
-    this.dateService.currentLang.subscribe(
-      lang => {
-        this.adapter.setLocale(lang);
-      }
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang => {
+          this.adapter.setLocale(lang);
+        }
+      )
     );
     this.projectService.updateInformationPanel(this.informations);
-  }
-
-  ngOnDestroy(): void {
-    if (this.formSubscription) {
-      this.formSubscription.unsubscribe();
-    }
   }
 
   private setForm(): void {
@@ -300,6 +298,13 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     const newControls = this.elements.at(event.currentIndex);
     this.elements.setControl(event.previousIndex, newControls);
     this.elements.setControl(event.currentIndex, selectedControl);
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+    this.subscription.unsubscribe();
   }
 
 }
