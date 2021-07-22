@@ -686,6 +686,31 @@ hot-table {
   }
 }
 
+// === CHART ===
+#chartjs-tooltip{
+  background-color: #fff;
+  padding: 0px !important;
+  table{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #aaa;
+    tbody{
+      tr{
+        .dashed {
+          border-left-style: dashed;
+          border-left-width: 1px;
+          border-left-color: #999;
+        }
+      }
+      #title-row{
+        background-color: #aaa;
+        color: #fff;
+        font-size: $small_text;
+      }
+    }
+  }
+}
+
 // === MODALS ===
 .mat-dialog-container {
   position: relative;

@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
-import Chart, { ChartOptions } from 'chart.js';
+import Chart, { ChartOptions, ChartTooltipModel } from 'chart.js';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -11,6 +12,8 @@ import Chart, { ChartOptions } from 'chart.js';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy {
+
+
 
   /* CHART COMPONENT
     required Input:
@@ -31,12 +34,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   private chart: Chart;
 
   @Input() data: any;
-  options: ChartOptions = {
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-    }
-  };
+  options: ChartOptions;
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [
@@ -52,7 +50,107 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService) { }
+  constructor(private chartService: ChartService, @Inject(DOCUMENT) document: Document) { 
+    this.options = {
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+  
+        enabled: false,
+        custom:(tooltipModel: any): void => {
+          // tooltipModel.beforeBody = ['hello', 'this is nice'];
+          console.log(tooltipModel);
+
+
+          // Tooltip Element
+          let tooltipEl = document.getElementById('chartjs-tooltip');
+  
+          // Create element on first render
+          if (!tooltipEl) {
+            tooltipEl = document.createElement('div');
+            tooltipEl.id = 'chartjs-tooltip';
+            tooltipEl.innerHTML = '<table></table>';
+            document.body.appendChild(tooltipEl);
+          }
+  
+          // Hide if no tooltip
+          if (tooltipModel.opacity === 0) {
+            tooltipEl.style.opacity = '0';
+            return;
+          }
+
+          tooltipEl.classList.remove('above', 'below', 'no-transform');
+          if (tooltipModel.yAlign) {
+            tooltipEl.classList.add(tooltipModel.yAlign);
+          } else {
+            tooltipEl.classList.add('no-transform');
+          }
+
+          function getBody(bodyItem) {
+            return bodyItem.lines;
+          }
+          // Set Text
+          if (tooltipModel.body) {
+            const titleLines = tooltipModel.title || [];
+            const bodyLines = tooltipModel.body.map(getBody);
+
+            // let innerHtml = '<thead>';
+            let innerHtml = '<tbody>';
+
+            titleLines.forEach(function(title) {
+                innerHtml += '<tr id="title-row"><th colspan="2">' + title + '</th></tr>';
+            });
+            // innerHtml += '</thead><tbody>';
+
+            bodyLines.forEach(function(body, i) {
+                const colors = tooltipModel.labelColors[i];
+                console.log(tooltipModel.labelColors[i]);
+                console.log(typeof(tooltipModel.labelColors[i]))
+                // let style = '';
+                // these two color are swapped
+                let style = 'background:' + colors.borderColor + ' !important';
+                style += '; border-color:' + colors.backgroundColor+ ' !important';
+
+                style += '; border-width: 2px';
+                style += '; width: 14px';
+                style += '; height: 14px';
+                style += '; margin-right: 6px';
+                const span = '<div style="' + style + '"> </div>';
+               
+                const name = body[0].split(':')[0];
+                const value = body[0].split(':')[1];
+                innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + value + '</td></tr>';
+                
+            });
+            innerHtml += '</tbody>';
+
+            const tableRoot = tooltipEl.querySelector('table');
+            tableRoot.innerHTML = innerHtml;
+          }
+
+          // `this` will be the overall tooltip
+          const position = this.chart.canvas.getBoundingClientRect();
+
+          // Display, position, and set styles for font
+          tooltipEl.style.opacity = '1';
+          tooltipEl.style.position = 'absolute';
+          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+          tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
+          tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
+          tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
+          tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
+          tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+          tooltipEl.style.pointerEvents = 'none';
+
+
+          console.log(tooltipEl);
+  
+          return;
+        }
+      }
+    };
+  }
+
 
   ngOnInit(): void {
     this.chart = new Chart('currentChart', {
