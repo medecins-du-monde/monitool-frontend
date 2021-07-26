@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  constructor(private _snackBar: MatSnackBar) {}
 
   onlinePlatformCards = [
     {
@@ -85,4 +88,12 @@ export class HomeComponent {
       content: 'HomeSections.OtherTools.Cards.0'
     }
   ];
+
+  ngOnInit(): void {
+    this._snackBar.open('A new version is available', 'REFRESH');
+
+    this._snackBar._openedSnackBarRef.onAction().subscribe(() => {
+      console.log('you closed the snackbar');
+    })
+  }
 }
