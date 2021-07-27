@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SwUpdate } from '@angular/service-worker';
+import { interval } from 'rxjs';
 
 
 @Component({
@@ -8,7 +10,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(
+    private _snackBar: MatSnackBar,
+    private swUpdate: SwUpdate,
+  ) {}
 
   onlinePlatformCards = [
     {
@@ -89,11 +94,29 @@ export class HomeComponent implements OnInit {
     }
   ];
 
+  hasUpdate = false;
+
   ngOnInit(): void {
+
+    if (this.swUpdate.isEnabled) {
+      interval(15000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
+        // checking for updates
+        console.log('checking for updates');
+      }));
+    }
+    this.swUpdate.available.subscribe(() => {
+      this.hasUpdate = true;
+      console.log('found update available');
+      this.showSnackBar();
+    });
+  }
+
+  showSnackBar(): void{
     this._snackBar.open('A new version is available', 'REFRESH');
 
     this._snackBar._openedSnackBarRef.onAction().subscribe(() => {
       console.log('you closed the snackbar');
-    })
+      location.reload();
+    });
   }
 }
