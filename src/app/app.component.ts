@@ -173,13 +173,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }, 300);
     });
 
-    // this.showSnackBar();
-
     // check service worker for updates
     if (this.swUpdate.isEnabled) {
       interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
         // checking for updates
-        // console.log('// checking for updates')
       }));
     }
     this.swUpdate.available.subscribe(() => {
@@ -189,7 +186,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   showSnackBar(): void{
-    // this._snackBar.open(snackbarMessage[this.currentLang], actionText[this.currentLang]);
     this._snackBar.openFromComponent(RefreshSnackbarComponent);
   }
 
