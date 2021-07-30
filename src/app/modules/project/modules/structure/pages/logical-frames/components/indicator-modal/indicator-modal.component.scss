@@ -1,3 +1,26 @@
+@import "src/assets/theme/size_vars.scss";
 mat-hint mat-icon{
     font-size: inherit;
+}
+
+.mdm-form-group{
+    font-size: $small_text;
+    .mdm-form-label{
+        flex: 0.2;
+        font-size: $small_text;
+    }    
+}
+
+.mat-form-field-wrapper{
+    padding: 0px;
+}
+
+.mat-icon{
+    margin: 0px;
+}
+
+.mdm-form-field{
+    input{
+        height: unset !important;
+    }
 }

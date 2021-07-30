@@ -7,7 +7,7 @@
         <div class="mdm-form-label">{{ 'Description' | translate }}</div>
         <label>{{ data.indicator.value.description ? data.indicator.value.description.en : null }}</label>
     </div>
-    <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group">
+    <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="display" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Name' | translate }}">
@@ -16,7 +16,7 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Baseline' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput type="number" formControlName="baseline" placeholder="{{ 'Baseline' | translate }}">
@@ -25,7 +25,7 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Target' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput type="number" formControlName="target" placeholder="{{ 'Target' | translate }}">
@@ -34,7 +34,7 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group" *ngIf="data.indicator.value.target !== null && data.indicator.value.baseline !== null">
+    <div class="mdm-form-group indicator-modal" *ngIf="data.indicator.value.target !== null && data.indicator.value.baseline !== null">
         <div class="mdm-form-label">{{ 'Colorize' | translate }}</div>
         <div class="mat-form-field mdm-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-can-float mat-form-field-should-float ng-untouched ng-pristine ng-valid _mat-animation-noopable">
             <div class="mat-form-field-wrapper">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
@@ -57,13 +57,13 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
+    <div class="mdm-form-group indicator-modal" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
         </mat-form-field>
     </div>
 
-    <div class="mdm-form-group" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
+    <div class="mdm-form-group indicator-modal" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
         <div class="mdm-form-label"></div>
         <table mat-table [dataSource]="dataSource" class="mdm-table">
             <ng-container matColumnDef="parameter">
