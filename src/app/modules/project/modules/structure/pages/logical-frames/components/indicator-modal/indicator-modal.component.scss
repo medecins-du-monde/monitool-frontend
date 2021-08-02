@@ -3,12 +3,19 @@ mat-hint mat-icon{
     font-size: inherit;
 }
 
+.mdm-dialog{
+    padding: 0px 12px;
+    .mdm-table{
+        margin: 0px;
+    }
+}
+
 .mdm-form-group{
     font-size: $small_text;
-    .mdm-form-label{
+    >.mdm-form-label{
         flex: 0.2;
         font-size: $small_text;
-    }    
+    }
 }
 
 .mat-form-field-wrapper{
@@ -23,4 +30,14 @@ mat-hint mat-icon{
     input{
         height: unset !important;
     }
+}
+
+.disaggregation-header{
+    width: 50%;
+}
+
+.disaggregation-field{
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
 }
