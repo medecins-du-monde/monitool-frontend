@@ -2,7 +2,7 @@
     <mat-icon>close</mat-icon>
 </button>
 <h2 mat-dialog-title>{{ 'IndicatorEdition' | translate }}</h2>
-<mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog">
+<mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog indicator-modal">
     <div *ngIf="data.indicator.value.crossCutting" class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Description' | translate }}</div>
         <label>{{ data.indicator.value.description ? data.indicator.value.description.en : null }}</label>

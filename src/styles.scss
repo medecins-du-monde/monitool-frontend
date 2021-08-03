@@ -726,6 +726,14 @@ hot-table {
   @media screen and (max-width: $breakpoint-xs) { //599px
     min-width: 300px;
   }
+
+  &.indicator-modal{
+    min-height: 750px;
+
+    @media screen and (max-height: 900px) {
+      min-height: 650px;
+    }
+  }
 }
 
 //
