@@ -1,4 +1,6 @@
 @import "src/assets/theme/size_vars.scss";
+
+
 mat-hint mat-icon{
     font-size: inherit;
 }
@@ -7,7 +9,17 @@ mat-hint mat-icon{
     padding: 0px 12px;
     .mdm-table{
         margin: 0px;
+        tr{
+            td {
+                color: black;
+            }
+        }
     }
+}
+
+.mat-standard-chip .mat-chip-remove, .mat-standard-chip .mat-chip-trailing-icon {
+    margin-left: 2px;
+    margin-right: 0;
 }
 
 .mdm-form-group{
