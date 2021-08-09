@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 import { Form } from 'src/app/models/classes/form.model';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
-import { COPY_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
+import { COPY_FORMULA, CUSTOM_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
   selector: 'app-indicator-modal',
@@ -153,13 +153,18 @@ export class IndicatorModalComponent implements OnInit {
     }
     else if (type.value === 'copy') {
       computation.controls.formula.setValue(COPY_FORMULA);
-    } else if (type.value === 'percentage') {
+    }
+    else if (type.value === 'percentage') {
       computation.controls.formula.setValue(PERCENTAGE_FORMULA);
-    } else if (type.value === 'permille') {
+    }
+    else if (type.value === 'permille') {
       computation.controls.formula.setValue(PERMILLE_FORMULA);
     }
     else if (type.value === 'unavailable') {
       computation.controls.formula.setValue(null);
+    }
+    else if (type.value === 'formula'){
+      computation.controls.formula.setValue(CUSTOM_FORMULA)
     }
     this.onFormulaChange();
   }

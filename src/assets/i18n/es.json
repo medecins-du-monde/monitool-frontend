@@ -758,7 +758,7 @@
     "Parameter": "Parámetro",
     "Variable": "Variable",
     "Help": {
-        "Variable": "De que variable viene esta información?",
+        "Data": "De que variable viene esta información?",
         "Partition": "Qué desagregaciones son relevantes?"
     },
     "Disaggregations": "Desagregaciones",
