@@ -34,6 +34,7 @@
     "CloneProject": "Clone Project",
     "CloneProjectInfo": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
+    "DeleteConfirmation": "Are you sure that you want to delete? Confirm to delete.",
     "DeleteProject": "Delete Project",
     "DeleteProjectInfo": "Are you sure that you want to delete this project? Confirm to delete.",
     "CollectionSites": "Collection sites",
