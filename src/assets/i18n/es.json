@@ -511,6 +511,7 @@
     "MultipleThematics": "Varias temáticas",
     "MyAccount": "Mi cuenta",
     "Name": "Nombre",
+    "newVersionAvailable": "Una nueva version esta disponible",
     "NoExtraIndicator": "Ningún indicador adicional ha sido creado. ¡Haga click en \"Añadir un indicador\" para agregar uno!",
     "None": "Ninguna",
     "Ongoing": "En curso",
@@ -596,6 +597,7 @@
         "Entre aqui la lista de todos los usuarios que deben tener acceso a los datos del programa."
     ],
     "ReadOnlyUser": "Consulta unicamente",
+    "Refresh": "ACTUALIZAR",
     "RemoveActivity": "Suprimir la actividad",
     "RemoveOutput": "Suprimir el resultado",
     "RemovePurpose": "Suprimir el objectivo especifico",
