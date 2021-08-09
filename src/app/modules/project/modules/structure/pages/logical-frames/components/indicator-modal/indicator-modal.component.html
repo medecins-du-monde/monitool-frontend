@@ -104,7 +104,7 @@
                         <div class="mdm-form-label">{{partition.name}}</div>
                         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table">
                           <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple>
-                              <mat-select-trigger>
+                              <mat-select-trigger class="scrollable">
                                   <mat-chip-list>
                                       <mat-chip *ngFor="let partitionElement of getPartitions(control.symbol, partition.id)"
                                       [removable]="true"

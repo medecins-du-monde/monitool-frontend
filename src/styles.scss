@@ -1054,4 +1054,7 @@ code {
   color: var(--main);
 }
 
-
+.mat-chip-list-wrapper{
+  overflow: auto;
+  white-space: nowrap;
+}
