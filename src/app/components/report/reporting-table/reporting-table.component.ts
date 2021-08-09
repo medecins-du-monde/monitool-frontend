@@ -41,6 +41,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   dataSource = new MatTableDataSource([]);
 
+  COLORS = [
+    '#1f77b4',
+    '#ff7f0e',
+    '#2ca02c',
+    '#d62728',
+    '#9467bd',
+    '#8c564b',
+    '#e377c2',
+    '#7f7f7f',
+    '#bcbd22',
+    '#17becf',
+  ];
+
+  currentColorIndex = 0;
 
   get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -306,8 +320,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               label: row.name,
               data,
               labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
-              borderColor: this.randomColor(),
-              backgroundColor: this.randomColor(),
               fill: false
             };
             row.values = response;
@@ -449,7 +461,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // We take all the rows with the onChart attribute
     for (const row of this.dataSource.data){
       if (row.onChart){
-        datasets.push(Object.assign({}, row.dataset));
+        
+        if (!row.dataset.backgroundColor){
+          row.dataset.borderColor = this.COLORS[this.currentColorIndex];
+          row.dataset.backgroundColor = this.COLORS[this.currentColorIndex];
+
+          this.currentColorIndex = (this.currentColorIndex + 1) % this.COLORS.length;
+        }
+        
+        const copyOfDataset = Object.assign({}, row.dataset);
+
+        datasets.push(copyOfDataset);
       }
     }
     const data = {
