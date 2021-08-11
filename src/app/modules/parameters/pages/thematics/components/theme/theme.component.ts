@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeModalComponent } from '../theme-modal/theme-modal.component';
 
@@ -26,10 +27,12 @@ export class ThemeComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    //do something about this
+  }
 
   onDelete(): void {
-    this.delete.emit(this.theme.id);
+    this.confirmDeletion();
   }
 
   openDialog() {
@@ -40,5 +43,14 @@ export class ThemeComponent implements OnInit {
         this.edit.emit(res.data);
       }
     });
+  }
+
+  confirmDeletion(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.confirm){
+        this.delete.emit(this.theme.id);
+      }
+    })
   }
 }
