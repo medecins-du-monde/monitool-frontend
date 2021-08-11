@@ -51,7 +51,7 @@ export class IndicatorComponent implements OnInit {
       if (res.confirm){
         this.delete.emit(this.indicator.id);
       }
-    })
+    });
   }
 
 }

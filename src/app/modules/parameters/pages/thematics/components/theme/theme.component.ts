@@ -28,7 +28,7 @@ export class ThemeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //do something about this
+    // do something about this
   }
 
   onDelete(): void {
@@ -51,6 +51,6 @@ export class ThemeComponent implements OnInit {
       if (res.confirm){
         this.delete.emit(this.theme.id);
       }
-    })
+    });
   }
 }

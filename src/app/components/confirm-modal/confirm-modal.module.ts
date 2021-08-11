@@ -17,6 +17,6 @@ import { ConfirmModalComponent } from './confirm-modal.component';
   ],
   exports: [ConfirmModalComponent]
 })
-export class ConfirmModalModule { 
+export class ConfirmModalModule {
 
 }
