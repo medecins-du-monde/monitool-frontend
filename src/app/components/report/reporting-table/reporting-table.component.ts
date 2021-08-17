@@ -229,7 +229,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
     if (row.open){
-      for(let c of this.content){
+      for (let c of this.content){
         if (c.sectionId > row.sectionId){
           break;
         }

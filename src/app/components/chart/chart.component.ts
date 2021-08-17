@@ -50,21 +50,21 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService, @Inject(DOCUMENT) document: Document) { 
+  constructor(private chartService: ChartService, @Inject(DOCUMENT) document: Document) {
     this.options = {
       tooltips: {
         mode: 'index',
         intersect: false,
-  
+
         enabled: false,
-        custom:(tooltipModel: any): void => {
+        custom: (tooltipModel: any): void => {
           // tooltipModel.beforeBody = ['hello', 'this is nice'];
           console.log(tooltipModel);
 
 
           // Tooltip Element
           let tooltipEl = document.getElementById('chartjs-tooltip');
-  
+
           // Create element on first render
           if (!tooltipEl) {
             tooltipEl = document.createElement('div');
@@ -72,7 +72,7 @@ export class ChartComponent implements OnInit, OnDestroy {
             tooltipEl.innerHTML = '<table></table>';
             document.body.appendChild(tooltipEl);
           }
-  
+
           // Hide if no tooltip
           if (tooltipModel.opacity === 0) {
             tooltipEl.style.opacity = '0';
@@ -97,30 +97,30 @@ export class ChartComponent implements OnInit, OnDestroy {
             // let innerHtml = '<thead>';
             let innerHtml = '<tbody>';
 
-            titleLines.forEach(function(title) {
+            titleLines.forEach(title => {
                 innerHtml += '<tr id="title-row"><th colspan="2">' + title + '</th></tr>';
             });
             // innerHtml += '</thead><tbody>';
 
-            bodyLines.forEach(function(body, i) {
+            bodyLines.forEach((body, i) => {
                 const colors = tooltipModel.labelColors[i];
                 console.log(tooltipModel.labelColors[i]);
-                console.log(typeof(tooltipModel.labelColors[i]))
+                console.log(typeof(tooltipModel.labelColors[i]));
                 // let style = '';
                 // these two color are swapped
                 let style = 'background:' + colors.borderColor + ' !important';
-                style += '; border-color:' + colors.backgroundColor+ ' !important';
+                style += '; border-color:' + colors.backgroundColor + ' !important';
 
                 style += '; border-width: 2px';
                 style += '; width: 14px';
                 style += '; height: 14px';
                 style += '; margin-right: 6px';
                 const span = '<div style="' + style + '"> </div>';
-               
+
                 const name = body[0].split(':')[0];
                 const value = body[0].split(':')[1];
                 innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + value + '</td></tr>';
-                
+
             });
             innerHtml += '</tbody>';
 
@@ -144,7 +144,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
 
           console.log(tooltipEl);
-  
+
           return;
         }
       }
