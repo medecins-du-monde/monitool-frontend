@@ -37,7 +37,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     //   intersect: false,
     // }
 
-    // makes the chart look better with fixed height and width 
+    // makes the chart look better with fixed height and width
     maintainAspectRatio: false,
 
     // change fontSize of the legends in the top of the chart
