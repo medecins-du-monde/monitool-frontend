@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     private loadingService: LoadingService,
     private changeDetectorRef: ChangeDetectorRef,
     private route: Router,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private swUpdate: SwUpdate,
   ) {
     // === Translations ===
@@ -186,7 +186,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   showSnackBar(): void{
-    this._snackBar.openFromComponent(RefreshSnackbarComponent);
+    this.snackBar.openFromComponent(RefreshSnackbarComponent);
   }
 
   ngAfterViewChecked(): void {
