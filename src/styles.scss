@@ -1040,7 +1040,7 @@ code {
 }
 
 
-//  Style for table inside information panel
+// Style for table inside information panel
 .information-panel-table{
   border-collapse: collapse;
   width: 100%;
@@ -1054,7 +1054,16 @@ code {
   color: var(--main);
 }
 
-.mat-chip-list-wrapper{
-  overflow: auto;
-  white-space: nowrap;
+.mat-chip-list.wrap{
+  .mat-chip-list-wrapper{
+    flex-wrap: wrap !important;
+  }
+}
+
+.mat-select-panel mat-option.mat-option {
+  height: unset;
+}
+
+.mat-option-text.mat-option-text {
+  white-space: normal;
 }
