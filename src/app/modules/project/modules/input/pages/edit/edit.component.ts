@@ -103,7 +103,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     if (!this.input){
       return true;
     }
-    
+
     // If the coming input is different from our form, we can return true
     if (this.inputForm && this.input){
       return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
