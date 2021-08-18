@@ -5,6 +5,10 @@ import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angul
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from './services/loading.service';
 import { ProjectService } from './services/project.service';
+import { interval } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SwUpdate } from '@angular/service-worker';
+import { RefreshSnackbarComponent } from './components/refresh-snackbar/refresh-snackbar.component';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +31,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
     private projectService: ProjectService,
     private loadingService: LoadingService,
     private changeDetectorRef: ChangeDetectorRef,
-    private route: Router
+    private route: Router,
+    private snackBar: MatSnackBar,
+    private swUpdate: SwUpdate,
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
@@ -139,6 +145,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val);
   }
 
+  hasUpdate = false;
+
   ngOnInit(): void {
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
@@ -164,6 +172,21 @@ export class AppComponent implements OnInit, AfterViewChecked {
         this.httpLoading = isLoading;
       }, 300);
     });
+
+    // check service worker for updates
+    if (this.swUpdate.isEnabled) {
+      interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
+        // checking for updates
+      }));
+    }
+    this.swUpdate.available.subscribe(() => {
+      this.hasUpdate = true;
+      this.showSnackBar();
+    });
+  }
+
+  showSnackBar(): void{
+    this.snackBar.openFromComponent(RefreshSnackbarComponent);
   }
 
   ngAfterViewChecked(): void {

@@ -16,6 +16,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomHttpInterceptor } from './interceptors/http-interceptor';
 import { LoadingBarModule } from './components/loading-bar/loading-bar.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RefreshSnackbarModule } from './components/refresh-snackbar/refresh-snackbar.module';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -42,6 +44,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     MatNativeDateModule,
     LoginModule,
     NoopAnimationsModule,
+    MatSnackBarModule,
+    RefreshSnackbarModule,
     MsalModule.forRoot({
       auth: {
         clientId: environment.clientId, // This is your client ID
