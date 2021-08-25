@@ -173,7 +173,7 @@
     "Groups": "Groups",
     "Help": {
         "Partition": "Which disaggregations are relevant?",
-        "Variable": "From which variable does this information comes from?"
+        "Data": "From which variable does this information comes from?"
     },
     "History": "History",
     "HistoryChanges": "Changes",
