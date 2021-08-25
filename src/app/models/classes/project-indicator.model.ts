@@ -5,8 +5,9 @@ import { Project } from './project.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
+export const CUSTOM_FORMULA = 'A + B + C';
 export const COPY_FORMULA = 'copied_value';
-export const UNAVAIlABLE = 'unavailable';
+export const UNAVAILABLE = 'unavailable';
 export const FIXED = 'fixed';
 export const COPY = 'copy';
 export const PERCENTAGE = 'percentage';
@@ -28,7 +29,7 @@ export class ProjectIndicator implements Deserializable {
     parameters: {}
   };
   unit: string;
-  type = UNAVAIlABLE;
+  type = UNAVAILABLE;
   typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
   originProject?: Project;
@@ -72,8 +73,8 @@ export class ProjectIndicator implements Deserializable {
     if (input && input.computation) {
       this.type = input.type ? input.type : this.type;
       this.computation.formula = input.computation.formula;
-      if (input.type === UNAVAIlABLE) {
-        this.type = UNAVAIlABLE;
+      if (input.type === UNAVAILABLE) {
+        this.type = UNAVAILABLE;
         this.computation.formula = '';
         this.computation.parameters = {};
       } else if (input.computation.formula === COPY_FORMULA) {
@@ -102,7 +103,7 @@ export class ProjectIndicator implements Deserializable {
     }
 
     if (!this.typeList.includes(this.type)) {
-      this.type = UNAVAIlABLE;
+      this.type = UNAVAILABLE;
     }
     return this;
   }
