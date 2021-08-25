@@ -164,7 +164,7 @@ export class IndicatorModalComponent implements OnInit {
       computation.controls.formula.setValue(null);
     }
     else if (type.value === 'formula'){
-      computation.controls.formula.setValue(CUSTOM_FORMULA)
+      computation.controls.formula.setValue(CUSTOM_FORMULA);
     }
     this.onFormulaChange();
   }
