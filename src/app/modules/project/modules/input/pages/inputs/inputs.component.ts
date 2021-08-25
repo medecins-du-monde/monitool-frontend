@@ -295,7 +295,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
