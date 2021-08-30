@@ -5,7 +5,7 @@ import { Project } from './project.model';
 
 export const PERCENTAGE_FORMULA = '100 * numerator / denominator';
 export const PERMILLE_FORMULA = '1000 * numerator / denominator';
-export const CUSTOM_FORMULA = 'A + B + C';
+export const CUSTOM_FORMULA = 'A+B+C';
 export const COPY_FORMULA = 'copied_value';
 export const UNAVAILABLE = 'unavailable';
 export const FIXED = 'fixed';
