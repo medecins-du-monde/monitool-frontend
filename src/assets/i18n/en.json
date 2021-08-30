@@ -34,6 +34,7 @@
     "CloneProject": "Clone Project",
     "CloneProjectInfo": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
+    "DeleteConfirmation": "Are you sure that you want to delete? Confirm to delete.",
     "DeleteProject": "Delete Project",
     "DeleteProjectInfo": "Are you sure that you want to delete this project? Confirm to delete.",
     "CollectionSites": "Collection sites",
@@ -507,6 +508,7 @@
     "Name": "Name",
     "Name-Hint": "Indicate your Full Name",
     "NameLogicalFramework-Hint": "Name this logical framework to be able to identify it easily. For instance, with the name of the relevant donor",
+    "newVersionAvailable": "A new version is available",
     "NoExtraIndicator": "No extra indicator has been created yet. Click on \"Add indicator\" to create one!",
     "None": "None",
     "Ongoing": "On going",
@@ -599,6 +601,7 @@
         "Enter here all users that need to have access to the monitoring of the project."
     ],
     "ReadOnlyUser": "Read only",
+    "Refresh": "REFRESH",
     "RemoveActivity": "Delete Activity",
     "RemoveOutput": "Delete Result",
     "RemovePurpose": "Delete Specific Objective",

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-indicator',
@@ -26,10 +27,12 @@ export class IndicatorComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //
+  }
 
   onDelete(): void {
-    this.delete.emit(this.indicator.id);
+    this.confirmDeletion();
   }
 
   openDialog() {
@@ -38,6 +41,15 @@ export class IndicatorComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.edit.emit(res.data);
+      }
+    });
+  }
+
+  confirmDeletion(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.confirm){
+        this.delete.emit(this.indicator.id);
       }
     });
   }

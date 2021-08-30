@@ -13,7 +13,7 @@ import { HomeComponent } from './home.component';
         TranslateModule,
         HomeRoutingModule,
         HomeCardModule,
-        HomeIllustrationModule
+        HomeIllustrationModule,
     ]
 })
 export class HomeModule { }
