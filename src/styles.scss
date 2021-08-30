@@ -733,6 +733,19 @@ hot-table {
     @media screen and (max-height: 900px) {
       min-height: 650px;
     }
+    @media screen and (max-height: 800px) {
+      min-height: 550px;
+    }
+    @media screen and (max-height: 700px) {
+      min-height: 450px;
+    }
+    @media screen and (max-height: 600px) {
+      min-height: 350px;
+    }
+    @media screen and (max-height: 500px) {
+      min-height: 250px;
+    }
+
   }
 }
 
