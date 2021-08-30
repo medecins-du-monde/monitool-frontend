@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
-import { Project } from 'src/app/models/classes/project.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { take } from 'rxjs/operators';
 
 
 export interface Task {
@@ -86,56 +86,60 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
       // We subscribe to the savedProject and not the opened project, otherwise we would always
       // update this component and it would slow down this application
-      this.projectService.lastSavedVersion.subscribe(savedProject => {
-        const breadCrumbs = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: savedProject.country,
-          } as BreadcrumbItem,
-          {
-            value: savedProject.name,
-          } as BreadcrumbItem,
-          {
-            value: 'Structure',
-          } as BreadcrumbItem,
-          {
-            value: 'Home',
-          } as BreadcrumbItem,
-        ];
-        this.projectService.updateBreadCrumbs(breadCrumbs);
+      this.projectService.lastSavedVersion.pipe(take(2)).subscribe(savedProject => {
 
-        this.historyLink = '/projects/' + savedProject.id + '/structure/history';
+        if (savedProject.country) {
 
-        this.indicatorService
-          .listForProject(Object.keys(savedProject.themes)
-          .map(x => savedProject.themes[x].id))
-          .then((indicators: Indicator[]) => {
-          const listCrossCutting = Object.keys(savedProject.crossCutting).map(x => savedProject.crossCutting[x]);
-          const newPercentages = {
-            // Check if we have
-            basics: ( savedProject.name && savedProject.country && savedProject.themes.length > 0 ) ? 100 : 0,
-            sites: ( savedProject.entities.length > 0 ) ? 100 : 0,
-            // Check if we have at least one logical frame
-            logicalFrames: ( savedProject.logicalFrames.length > 0 ) ? 100 : 0,
-            // Check if we have more than one
-            logicalFramesOther: ( savedProject.logicalFrames.length > 1 ) ? 100 : 0,
-            // Check if we have extra indicators
-            extraIndicators: ( savedProject.extraIndicators.length > 0 ) ? 100 : 0,
-            // Check if we have one form created
-            datasource: ( savedProject.forms.length > 0 ) ? 100 : 0,
-            // If there is no indicator available, we consider that they are all filled
-            crossCuttingUpdate: indicators.length > 0 ? ((listCrossCutting.length / indicators.length) * 100).toFixed(0) : 100,
-            // Same here
-            extraIndicatorsUpdate: savedProject.extraIndicators.length > 0 ?
-            ((savedProject.extraIndicators
-              .filter(indicator => indicator.filled).length / savedProject.extraIndicators.length) * 100)
-              .toFixed(0) : 100
-          };
-          this.percentages.next(newPercentages);
-        });
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: savedProject.country,
+            } as BreadcrumbItem,
+            {
+              value: savedProject.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'Home',
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+
+          this.historyLink = '/projects/' + savedProject.id + '/structure/history';
+
+          this.indicatorService
+            .listForProject(Object.keys(savedProject.themes)
+            .map(x => savedProject.themes[x].id))
+            .then((indicators: Indicator[]) => {
+            const listCrossCutting = Object.keys(savedProject.crossCutting).map(x => savedProject.crossCutting[x]);
+            const newPercentages = {
+              // Check if we have
+              basics: ( savedProject.name && savedProject.country && savedProject.themes.length > 0 ) ? 100 : 0,
+              sites: ( savedProject.entities.length > 0 ) ? 100 : 0,
+              // Check if we have at least one logical frame
+              logicalFrames: ( savedProject.logicalFrames.length > 0 ) ? 100 : 0,
+              // Check if we have more than one
+              logicalFramesOther: ( savedProject.logicalFrames.length > 1 ) ? 100 : 0,
+              // Check if we have extra indicators
+              extraIndicators: ( savedProject.extraIndicators.length > 0 ) ? 100 : 0,
+              // Check if we have one form created
+              datasource: ( savedProject.forms.length > 0 ) ? 100 : 0,
+              // If there is no indicator available, we consider that they are all filled
+              crossCuttingUpdate: indicators.length > 0 ? ((listCrossCutting.length / indicators.length) * 100).toFixed(0) : 100,
+              // Same here
+              extraIndicatorsUpdate: savedProject.extraIndicators.length > 0 ?
+              ((savedProject.extraIndicators
+                .filter(indicator => indicator.filled).length / savedProject.extraIndicators.length) * 100)
+                .toFixed(0) : 100
+            };
+            this.percentages.next(newPercentages);
+          });
+        }
 
         // TODO: Do the translation of these element with a proper way of doing it, adding
         // the translations in the en.json, es.json and fr.json file and calling the
