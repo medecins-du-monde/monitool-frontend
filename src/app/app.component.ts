@@ -158,12 +158,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
       });
       console.log('error while loading : ' + error);
     });
-
-    this.loadingService.loaded.subscribe( isLoading => {
-      setTimeout(() => {
-        this.httpLoading = isLoading;
-      }, 300);
-    });
   }
 
   ngAfterViewChecked(): void {
