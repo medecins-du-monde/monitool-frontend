@@ -141,7 +141,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
             }
           });
           this.setForm();
-          this.changeDetector.detectChanges();
+          this.changeDetector.markForCheck();
         });
       })
     );

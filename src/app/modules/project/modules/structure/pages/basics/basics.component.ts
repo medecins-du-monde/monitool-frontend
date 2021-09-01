@@ -104,6 +104,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
           this.projectService.valid = this.basicsForm.valid;
           this.projectService.project.next(Object.assign(project, value));
         });
+        this.changeDetector.markForCheck();
       })
     );
 
@@ -133,7 +134,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     });
 
     this.dateService.currentLang.subscribe(

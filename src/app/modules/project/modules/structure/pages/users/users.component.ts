@@ -76,7 +76,7 @@ export class UsersComponent implements OnInit {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.users = this.project.users;
-        this.changeDetector.detectChanges();
+        this.changeDetector.markForCheck();
       })
     );
     this.projectService.updateInformationPanel(this.informations);

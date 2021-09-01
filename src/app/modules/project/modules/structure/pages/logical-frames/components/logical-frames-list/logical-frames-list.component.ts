@@ -69,7 +69,7 @@ export class LogicalFramesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     });
 
     this.projectService.updateInformationPanel(this.informations);

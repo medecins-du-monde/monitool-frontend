@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
                 .toFixed(0) : 100
             };
             this.percentages.next(newPercentages);
-            this.changeDetector.detectChanges();
+            this.changeDetector.markForCheck();
           });
         }
 
@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit {
         // the translations in the en.json, es.json and fr.json file and calling the
         // translate pipe after
         this.projectPercentages.subscribe(percentages => {
-          this.changeDetector.detectChanges();
+          this.changeDetector.markForCheck();
           this.dataSource = [
             {
               taskText1: new MultiLanguage({

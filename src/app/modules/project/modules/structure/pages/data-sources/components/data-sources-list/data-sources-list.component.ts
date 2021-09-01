@@ -79,7 +79,7 @@ export class DataSourcesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.forms = project.forms;
-      this.changeDetector.detectChanges();
+      this.changeDetector.markForCheck();
     });
     this.projectService.updateInformationPanel(this.informations);
   }

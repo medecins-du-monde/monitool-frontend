@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,6 +19,7 @@ export class ProjectSaveComponent {
     private projectService: ProjectService,
     private authService: AuthService,
     private sidenavService: SidenavService,
+    private changeDetector: ChangeDetectorRef
     ) { }
 
   get hasChanges(): boolean{
@@ -44,6 +45,7 @@ export class ProjectSaveComponent {
         this.errorWhileSaving = false;
       }
       this.projectSaved = true;
+      this.changeDetector.markForCheck(); 
     }).catch(() => {
       this.errorWhileSaving = true;
     });

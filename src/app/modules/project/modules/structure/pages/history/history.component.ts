@@ -101,7 +101,7 @@ export class HistoryComponent implements OnInit {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;
-          this.changeDetector.detectChanges();
+          this.changeDetector.markForCheck();
         });
       }
     });
