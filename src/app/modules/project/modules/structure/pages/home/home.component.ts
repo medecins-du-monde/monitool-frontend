@@ -139,6 +139,7 @@ export class HomeComponent implements OnInit {
                 .toFixed(0) : 100
             };
             this.percentages.next(newPercentages);
+            this.changeDetector.detectChanges();
           });
         }
 

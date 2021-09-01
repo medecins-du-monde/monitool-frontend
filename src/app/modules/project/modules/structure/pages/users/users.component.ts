@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { Subscription } from 'rxjs';
@@ -42,7 +42,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +76,7 @@ export class UsersComponent implements OnInit {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.users = this.project.users;
+        this.changeDetector.detectChanges();
       })
     );
     this.projectService.updateInformationPanel(this.informations);
