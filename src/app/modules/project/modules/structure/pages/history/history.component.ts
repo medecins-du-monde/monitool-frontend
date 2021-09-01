@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -66,7 +66,8 @@ export class HistoryComponent implements OnInit {
 
   public showLoadMore: boolean;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService,
+              private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
@@ -100,6 +101,7 @@ export class HistoryComponent implements OnInit {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;
+          this.changeDetector.detectChanges();
         });
       }
     });

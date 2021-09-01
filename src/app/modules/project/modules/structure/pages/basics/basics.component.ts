@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -83,6 +83,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -132,6 +133,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
+      this.changeDetector.detectChanges();
     });
 
     this.dateService.currentLang.subscribe(

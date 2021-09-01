@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
@@ -76,7 +76,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private translateService: TranslateService,
-    private indicatorService: IndicatorService
+    private indicatorService: IndicatorService,
+    private changeDetector: ChangeDetectorRef,
   ) { }
 
   get currentLang(): string {
@@ -145,6 +146,7 @@ export class HomeComponent implements OnInit {
         // the translations in the en.json, es.json and fr.json file and calling the
         // translate pipe after
         this.projectPercentages.subscribe(percentages => {
+          this.changeDetector.detectChanges();
           this.dataSource = [
             {
               taskText1: new MultiLanguage({
