@@ -45,7 +45,7 @@ export class ProjectSaveComponent {
         this.errorWhileSaving = false;
       }
       this.projectSaved = true;
-      this.changeDetector.markForCheck(); 
+      this.changeDetector.markForCheck();
     }).catch(() => {
       this.errorWhileSaving = true;
     });
