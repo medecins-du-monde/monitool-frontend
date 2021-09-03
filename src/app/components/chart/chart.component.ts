@@ -58,10 +58,6 @@ export class ChartComponent implements OnInit, OnDestroy {
 
         enabled: false,
         custom: (tooltipModel: any): void => {
-          // tooltipModel.beforeBody = ['hello', 'this is nice'];
-          console.log(tooltipModel);
-
-
           // Tooltip Element
           let tooltipEl = document.getElementById('chartjs-tooltip');
 
@@ -94,19 +90,14 @@ export class ChartComponent implements OnInit, OnDestroy {
             const titleLines = tooltipModel.title || [];
             const bodyLines = tooltipModel.body.map(getBody);
 
-            // let innerHtml = '<thead>';
             let innerHtml = '<tbody>';
 
             titleLines.forEach(title => {
                 innerHtml += '<tr id="title-row"><th colspan="2">' + title + '</th></tr>';
             });
-            // innerHtml += '</thead><tbody>';
 
             bodyLines.forEach((body, i) => {
                 const colors = tooltipModel.labelColors[i];
-                console.log(tooltipModel.labelColors[i]);
-                console.log(typeof(tooltipModel.labelColors[i]));
-                // let style = '';
                 // these two color are swapped
                 let style = 'background:' + colors.borderColor + ' !important';
                 style += '; border-color:' + colors.backgroundColor + ' !important';
@@ -141,10 +132,6 @@ export class ChartComponent implements OnInit, OnDestroy {
           tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
           tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
           tooltipEl.style.pointerEvents = 'none';
-
-
-          console.log(tooltipEl);
-
           return;
         }
       }
