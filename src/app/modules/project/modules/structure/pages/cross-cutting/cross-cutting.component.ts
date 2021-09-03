@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -62,6 +62,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private dialog: MatDialog,
     private fb: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -140,9 +141,8 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
             }
           });
           this.setForm();
+          this.changeDetector.markForCheck();
         });
-
-
       })
     );
     this.projectService.updateInformationPanel(this.informations);
