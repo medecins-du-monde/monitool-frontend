@@ -148,6 +148,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   hasUpdate = false;
 
   ngOnInit(): void {
+    console.log('for testing purpose, to be removed');
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         setTimeout(() => {
