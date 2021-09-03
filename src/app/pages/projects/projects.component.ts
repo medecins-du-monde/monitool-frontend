@@ -106,6 +106,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
+    console.log('this message is a test, remove later');
     this.filtersForm = this.fb.group({
       search: '',
       countries: [['0']],
