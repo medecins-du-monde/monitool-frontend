@@ -2,52 +2,54 @@
     <mat-icon>close</mat-icon>
 </button>
 <h2 mat-dialog-title>{{ 'IndicatorEdition' | translate }}</h2>
-<mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog">
+<mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog indicator-modal">
     <div *ngIf="data.indicator.value.crossCutting" class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Description' | translate }}</div>
         <label>{{ data.indicator.value.description ? data.indicator.value.description.en : null }}</label>
     </div>
-    <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group">
+    <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <input matInput formControlName="display" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Name' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Name' | translate }}
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Baseline' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <input matInput type="number" formControlName="baseline" placeholder="{{ 'Baseline' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Baseline-Hint' | translate }}
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Target' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <input matInput type="number" formControlName="target" placeholder="{{ 'Target' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Target-Hint' | translate }}
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group" *ngIf="data.indicator.value.target !== null && data.indicator.value.baseline !== null">
+    <div class="mdm-form-group indicator-modal" *ngIf="data.indicator.value.target !== null && data.indicator.value.baseline !== null">
         <div class="mdm-form-label">{{ 'Colorize' | translate }}</div>
-        <div class="mat-form-field mdm-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-can-float mat-form-field-should-float ng-untouched ng-pristine ng-valid _mat-animation-noopable">
+        <div class="mat-form-field mdm-form-field indicator-modal-form-field mat-primary mat-form-field-type-mat-input mat-form-field-appearance-outline mat-form-field-can-float mat-form-field-should-float ng-untouched ng-pristine ng-valid _mat-animation-noopable">
             <div class="mat-form-field-wrapper">
                 <mat-checkbox formControlName="colorize" ></mat-checkbox>
-                <mat-hint>
-                    <mat-icon class="icon-style">info</mat-icon>{{ 'Colorize-Hint' | translate }}
-                </mat-hint> 
+                <div class="mat-form-field-subscript-wrapper">
+                    <mat-hint>
+                        <mat-icon class="icon-style">info</mat-icon>{{ 'Colorize-Hint' | translate }}
+                    </mat-hint>
+                </div>
             </div>
         </div>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
                 <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                 </mat-option>
@@ -57,15 +59,15 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group" *ngIf="type === 'fixed'" formGroupName="computation">
-        <mat-form-field appearance="outline" class="mdm-form-field">
+    <div class="mdm-form-group indicator-modal" *ngIf="type === 'fixed'" formGroupName="computation">
+        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
         </mat-form-field>
     </div>
 
-    <div class="mdm-form-group" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
+    <div class="mdm-form-group indicator-modal" *ngIf="type !== 'unavailable' && type !== 'fixed'" formGroupName="computation">
         <div class="mdm-form-label"></div>
-        <table mat-table [dataSource]="dataSource" class="mdm-table">
+        <table mat-table [dataSource]="dataSource" class="mdm-table indicator-modal-table">
             <ng-container matColumnDef="parameter">
                 <th mat-header-cell *matHeaderCellDef>{{ 'Parameter' | translate }}</th>
                 <td mat-cell *matCellDef="let element">
@@ -75,9 +77,9 @@
                 <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
             <ng-container matColumnDef="variable" formGroupName="parameters">
-                <th mat-header-cell *matHeaderCellDef>{{ 'Variable' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>{{ 'Data' | translate }}</th>
                 <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
-                    <mat-form-field appearance="outline" class="mdm-form-field" >
+                    <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table" >
                         <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, control)" placeholder="{{ 'Variable' | translate }}">
                             <mat-optgroup *ngFor="let form of data.forms" [label]="form.name">
                                 <mat-option *ngFor="let element of form.elements" [value]="element.id">
@@ -87,41 +89,51 @@
                         </mat-select>
                     </mat-form-field>
                 </td>
-                <td mat-footer-cell *matFooterCellDef>{{ 'Help.Variable' | translate }}</td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-hint>
+                        <mat-icon>info</mat-icon>{{ 'Help.Data' | translate }}
+                    </mat-hint>
+                </td>
             </ng-container>
             <ng-container matColumnDef="disaggregations" formGroupName="parameters">
-              <th mat-header-cell *matHeaderCellDef>{{ 'Disaggregations' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef class="disaggregation-header">{{ 'Disaggregations' | translate }}</th>
               <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
                 <div *ngIf="control.filter">
                   <ng-container formGroupName="filter" *ngFor="let partition of control.filter.partitions">
-                    {{partition.name}}
-                    <mat-form-field appearance="outline" class="mdm-form-field">
-                      <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple>
-                          <mat-select-trigger>
-                              <mat-chip-list>
-                                  <mat-chip *ngFor="let partitionElement of getPartitions(control.symbol, partition.id)"
-                                  [removable]="true"
-                                  (removed)="onPartitionElementRemoved(control.symbol, partition.id, partitionElement.id)"
-                                  >
-                                      {{ partitionElement.name }}
-                                      <mat-icon matChipRemove>cancel</mat-icon>
-                                  </mat-chip>
-                              </mat-chip-list>
-                          </mat-select-trigger>
-                          <mat-option #allSelected (click)="toggleAllSelection(control.symbol, partition)" [value]="allOption">{{ 'All' | translate }} </mat-option>
-                          <mat-option *ngFor="let partitionElement of partition.elements" (click)="toggleNormalOption(control.symbol, partition, partitionElement)" [value]="partitionElement">{{partitionElement.name }}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <br />
+                    <div class="disaggregation-field">
+                        <div class="mdm-form-label">{{partition.name}}</div>
+                        <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table">
+                          <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple>
+                              <mat-select-trigger>
+                                  <mat-chip-list class="wrap">
+                                      <mat-chip *ngFor="let partitionElement of getPartitions(control.symbol, partition.id)"
+                                      [removable]="true"
+                                      (removed)="onPartitionElementRemoved(control.symbol, partition.id, partitionElement.id)"
+                                      >
+                                          {{ partitionElement.name }}
+                                          <mat-icon matChipRemove>cancel</mat-icon>
+                                      </mat-chip>
+                                  </mat-chip-list>
+                              </mat-select-trigger>
+                              <mat-option #allSelected (click)="toggleAllSelection(control.symbol, partition)" [value]="allOption">{{ 'All' | translate }} </mat-option>
+                              <mat-option *ngFor="let partitionElement of partition.elements" (click)="toggleNormalOption(control.symbol, partition, partitionElement)" [value]="partitionElement">{{partitionElement.name }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <br /> -->
                   </ng-container>
                 </div>
               </td>
-              <td mat-footer-cell *matFooterCellDef>{{ 'Help.Partition' | translate }}</td>
+              <td mat-footer-cell *matFooterCellDef>
+                  <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Help.Partition' | translate }}
+                  </mat-hint>
+              </td>
           </ng-container>
 
             <ng-container matColumnDef="formula">
                 <td mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
-                    <mat-form-field appearance="outline" class="mdm-form-field">
+                    <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table">
                         <input matInput formControlName="formula" (change)="onFormulaChange()"
                             placeholder="{{ 'Formula' | translate }}" [readonly]="type !== 'formula'">
                     </mat-form-field>

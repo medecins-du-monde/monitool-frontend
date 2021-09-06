@@ -1,7 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Entity } from 'src/app/models/classes/entity.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
@@ -40,7 +39,8 @@ export class LogicalFramesListComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +69,7 @@ export class LogicalFramesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
+      this.changeDetector.markForCheck();
     });
 
     this.projectService.updateInformationPanel(this.informations);
