@@ -106,7 +106,6 @@ export class ChartComponent implements OnInit, OnDestroy {
                 style += '; width: 14px';
                 style += '; height: 14px';
                 style += '; margin-right: 6px';
-                style += '; z-index: 0';
 
                 const span = '<div style="' + style + '"> </div>';
 
@@ -127,7 +126,7 @@ export class ChartComponent implements OnInit, OnDestroy {
           // Display, position, and set styles for font
           tooltipEl.style.opacity = '1';
           tooltipEl.style.position = 'absolute';
-          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+          tooltipEl.style.left = position.left + window.pageXOffset + (0.85 * tooltipModel.caretX) + 'px';
           tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
           tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
           tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
