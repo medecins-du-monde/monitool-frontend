@@ -106,6 +106,7 @@ export class ChartComponent implements OnInit, OnDestroy {
                 style += '; width: 14px';
                 style += '; height: 14px';
                 style += '; margin-right: 6px';
+
                 const span = '<div style="' + style + '"> </div>';
 
                 const name = body[0].split(':')[0];
@@ -125,12 +126,13 @@ export class ChartComponent implements OnInit, OnDestroy {
           // Display, position, and set styles for font
           tooltipEl.style.opacity = '1';
           tooltipEl.style.position = 'absolute';
-          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
+          tooltipEl.style.left = position.left + window.pageXOffset + (0.85 * tooltipModel.caretX) + 'px';
           tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
           tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
           tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
           tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
           tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+          tooltipEl.style.marginRight = '30px';
           tooltipEl.style.pointerEvents = 'none';
           return;
         }
