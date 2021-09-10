@@ -686,7 +686,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.subscription.unsubscribe();
   }
 }
