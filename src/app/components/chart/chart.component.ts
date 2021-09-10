@@ -34,7 +34,37 @@ export class ChartComponent implements OnInit, OnDestroy {
   private chart: Chart;
 
   @Input() data: any;
-  options: ChartOptions;
+  options: ChartOptions = {
+    // tooltips: {
+    //   mode: 'index',
+    //   intersect: false,
+    // }
+
+    // makes the chart look better with fixed height and width
+    maintainAspectRatio: false,
+
+    // change fontSize of the legends in the top of the chart
+    legend: {
+      labels: {
+          fontSize: 14
+      }
+    },
+
+    scales: {
+      // change fontSize of the labels in the xAxis
+      xAxes: [{
+          ticks: {
+              fontSize: 14
+          }
+      }],
+      // change fontSize of the labels in the yAxis
+      yAxes: [{
+        ticks: {
+            fontSize: 14
+        }
+      }],
+    },
+  };
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [
