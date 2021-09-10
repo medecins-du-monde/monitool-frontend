@@ -132,6 +132,7 @@ export class ChartComponent implements OnInit, OnDestroy {
           tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
           tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
           tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
+          tooltipEl.style.marginRight = '30px';
           tooltipEl.style.pointerEvents = 'none';
           return;
         }
