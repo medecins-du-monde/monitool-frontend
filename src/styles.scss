@@ -688,6 +688,7 @@ hot-table {
 
 // === CHART ===
 #chartjs-tooltip{
+  z-index: 2;
   background-color: #fff;
   padding: 0px !important;
   table{
@@ -715,6 +716,11 @@ hot-table {
       }
     }
   }
+}
+
+canvas#currentChart{
+  position: relative;
+  z-index: 0;
 }
 
 // === MODALS ===
