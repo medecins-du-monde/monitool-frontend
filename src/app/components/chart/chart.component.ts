@@ -135,6 +135,7 @@ export class ChartComponent implements OnInit, OnDestroy {
               style += '; width: 14px';
               style += '; height: 14px';
               style += '; margin-right: 6px';
+              style += '; z-index: 0';
 
               const span = '<div style="' + style + '"> </div>';
 
