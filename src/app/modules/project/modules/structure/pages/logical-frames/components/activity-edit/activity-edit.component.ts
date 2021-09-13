@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Form, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
@@ -21,6 +21,7 @@ export class ActivityEditComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +52,7 @@ export class ActivityEditComponent implements OnInit {
           this.indicators.setControl(index, res.indicator);
         }
       }
+      this.changeDetector.markForCheck();
     });
   }
 

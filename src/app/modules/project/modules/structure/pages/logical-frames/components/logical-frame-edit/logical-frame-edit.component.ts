@@ -1,5 +1,5 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -76,7 +76,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   @HostListener('window:beforeunload')
@@ -219,6 +220,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
           this.indicators.setControl(index, res.indicator);
         }
       }
+      this.changeDetector.markForCheck();
     });
   }
 

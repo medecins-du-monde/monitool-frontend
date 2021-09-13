@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -50,7 +50,8 @@ export class FormElementEditComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +95,8 @@ export class FormElementEditComponent implements OnInit {
           }
         }
       }
+
+      this.changeDetector.markForCheck();
     });
   }
 

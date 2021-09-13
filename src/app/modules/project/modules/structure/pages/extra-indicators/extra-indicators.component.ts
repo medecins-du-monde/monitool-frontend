@@ -1,7 +1,7 @@
 import { Project } from '../../../../../../models/classes/project.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -42,7 +42,10 @@ export class ExtraIndicatorsComponent implements OnInit {
   extraIndicators: ProjectIndicator[] = [];
   project: Project;
 
-  constructor(private projectService: ProjectService, private fb: FormBuilder, public dialog: MatDialog) { }
+  constructor(private projectService: ProjectService,
+              private fb: FormBuilder,
+              public dialog: MatDialog,
+              private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
@@ -69,6 +72,7 @@ export class ExtraIndicatorsComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.setForm();
+      this.changeDetector.markForCheck();
     });
     this.projectService.updateInformationPanel(this.informations);
   }

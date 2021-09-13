@@ -1,7 +1,7 @@
 // tslint:disable: no-string-literal
 // tslint:disable: ban-types
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -49,7 +49,8 @@ export class DataSourcesListComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +79,7 @@ export class DataSourcesListComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.forms = project.forms;
+      this.changeDetector.markForCheck();
     });
     this.projectService.updateInformationPanel(this.informations);
   }

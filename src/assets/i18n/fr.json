@@ -31,6 +31,7 @@
     "Clone": "Dupliquer",
     "CloneProject": "Dupliquer Project",
     "CloneProjectInfo": "Cette action va cloner ce projet et toutes ses saisies. Confimez pour cloner.",
+    "DeleteConfirmation": "Êtes-vous sûr de vouloir supprimer? Confirmez pour supprimer.",
     "DeleteProject": "Supprimer Projet",
     "DeleteProjectInfo": "Êtes-vous sûr de vouloir supprimer ce projet? Confirmez pour supprimer.",
     "CollectionSiteName": "Nom de la structure ou lieu d’intervention",
@@ -507,6 +508,7 @@
     "MultipleThematics": "Multi-thématique",
     "MyAccount": "Mon compte",
     "Name": "Nom",
+    "newVersionAvailable": "Une nouvelle version est disponible",
     "NoExtraIndicator": "Aucune indicateur annexé n'a été créé. Cliquez sur \"Ajouter un indicateur\" pour en créer un!",
     "None": "Aucune",
     "Ongoing": "En cours",
@@ -593,6 +595,7 @@
         "Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
     ],
     "ReadOnlyUser": "Consultation uniquement",
+    "Refresh": "ACTUALISER",
     "RemoveActivity": "Supprimer l'activité",
     "RemoveOutput": "Supprimer le résultat",
     "RemovePurpose": "Supprimer l'objectif spécifique",
@@ -755,7 +758,7 @@
     "Parameter": "Paramètre",
     "Variable": "Variable",
     "Help": {
-        "Variable": "De quelle variable provient cette information?",
+        "Data": "De quelle variable provient cette information?",
         "Partition": "Quelles désagrégations sont concernées?"
     },
     "Disaggregations": "Désagrégations",

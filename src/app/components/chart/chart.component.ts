@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
-import Chart, { ChartOptions } from 'chart.js';
+import Chart, { ChartOptions, ChartTooltipModel } from 'chart.js';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -11,6 +12,8 @@ import Chart, { ChartOptions } from 'chart.js';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnDestroy {
+
+
 
   /* CHART COMPONENT
     required Input:

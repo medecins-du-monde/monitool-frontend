@@ -744,16 +744,75 @@ canvas#currentChart{
     margin-bottom: 24px;
   }
 
-  @media screen and (max-width: $breakpoint-md) {
-    min-width: 600px;
+  @media screen and (max-width: $breakpoint-md) { // 1440px
+    min-width: 900px;
   }
 
-  @media screen and (max-width: $breakpoint-sm) {
-    min-width: 400px;
+  @media screen and (max-width: $breakpoint-sm-md){ //1240px
+    min-width: 800px;
   }
 
-  @media screen and (max-width: $breakpoint-xs) {
+  @media screen and (max-width: $breakpoint-sm) { //1023px
+    min-width: 700px;
+  }
+
+  @media screen and (max-width: $breakpoint-xs-sm) { //850px
+    min-width: 500px;
+  }
+
+  @media screen and (max-width: $breakpoint-xs) { //599px
     min-width: 300px;
+  }
+
+  &.indicator-modal{
+    min-height: 750px;
+
+    @media screen and (max-height: 900px) {
+      min-height: 650px;
+    }
+    @media screen and (max-height: 800px) {
+      min-height: 550px;
+    }
+    @media screen and (max-height: 700px) {
+      min-height: 450px;
+    }
+    @media screen and (max-height: 600px) {
+      min-height: 350px;
+    }
+    @media screen and (max-height: 500px) {
+      min-height: 250px;
+    }
+
+  }
+}
+
+//
+.mdm-table.indicator-modal-table{
+  thead{
+    tr.mat-header-row{
+      height: unset !important;
+      th{
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+  }
+}
+
+.indicator-modal-form-field{
+  .mat-form-field-wrapper{
+    .mat-form-field-subscript-wrapper{
+      margin-top: 0px;
+      margin-bottom: 0.6666666667em;
+    }
+  }
+}
+
+.indicator-modal-form-field-table{
+  .mat-form-field-wrapper{
+    .mat-form-field-subscript-wrapper{
+      margin-top: 0px;
+    }
   }
 }
 
@@ -890,6 +949,14 @@ mat-hint {
       }
     }
   }
+
+  &.indicator-modal{
+    .mdm-form-field{
+      .mat-form-field-wrapper{
+        padding-bottom: 0.3em;
+      }
+    }
+  }
 }
 
 
@@ -1023,7 +1090,7 @@ code {
 }
 
 
-//  Style for table inside information panel
+// Style for table inside information panel
 .information-panel-table{
   border-collapse: collapse;
   width: 100%;
@@ -1037,4 +1104,30 @@ code {
   color: var(--main);
 }
 
+// Style for snackbar
+.mat-snack-bar-container{
+  min-width: 400px !important;
+}
+.mat-simple-snackbar-action{
+  .mat-button{
+    font-weight: 800;
+    color: $radio_button_color;
+    line-height: 20px;
+  }
+  color: $delete_text_color;
+}
 
+
+.mat-chip-list.wrap{
+  .mat-chip-list-wrapper{
+    flex-wrap: wrap !important;
+  }
+}
+
+.mat-select-panel mat-option.mat-option {
+  height: unset;
+}
+
+.mat-option-text.mat-option-text {
+  white-space: normal;
+}
