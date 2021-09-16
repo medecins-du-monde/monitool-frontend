@@ -86,6 +86,13 @@ export class ChartComponent implements OnInit, OnDestroy {
       intersect: false,
 
       enabled: false,
+
+      callbacks: {
+        label: (context) => {
+          return context.label + ': ' + (+context.value).toLocaleString('fr-FR') + this.data.datasets[context.datasetIndex].unit;
+        }
+      },
+
       custom: (tooltipModel: any): void => {
         // Tooltip Element
         let tooltipEl = document.getElementById('chartjs-tooltip');
