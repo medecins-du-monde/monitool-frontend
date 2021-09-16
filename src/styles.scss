@@ -929,6 +929,8 @@ mat-hint {
   >.mdm-form-label{
       flex: 0.2;
       font-size: $small_text;
+      text-align: right;
+      padding-right: 30px;
   }
 
   @media screen and (max-width: $breakpoint-sm) {
