@@ -13,3 +13,8 @@
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   background-color: $output_panel_background !important;
 }
+
+.delete-output {
+  color: white !important;
+  background-color: $delete_background !important;
+}

@@ -1080,9 +1080,9 @@ code {
 }
 
 .delete-button:not([disabled]) {
-  color: $delete_text_color;
+  color: white !important;
   background-color: $delete_background;
-  border-color: $delete_border;
+  border: none !important;
 }
 
 .delete {
