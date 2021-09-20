@@ -739,9 +739,16 @@ canvas#currentChart{
   flex-direction: column;
   min-width: 900px;
   width: auto;
+  padding: 0px 12px !important;
 
   .mdm-table {
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
+    margin: 0px;
+    tr{
+      td {
+          color: black;
+      }
+    }
   }
 
   @media screen and (max-width: $breakpoint-md) { // 1440px
@@ -764,25 +771,23 @@ canvas#currentChart{
     min-width: 300px;
   }
 
-  &.indicator-modal{
-    min-height: 750px;
 
-    @media screen and (max-height: 900px) {
-      min-height: 650px;
-    }
-    @media screen and (max-height: 800px) {
-      min-height: 550px;
-    }
-    @media screen and (max-height: 700px) {
-      min-height: 450px;
-    }
-    @media screen and (max-height: 600px) {
-      min-height: 350px;
-    }
-    @media screen and (max-height: 500px) {
-      min-height: 250px;
-    }
+  min-height: 750px;
 
+  @media screen and (max-height: 900px) {
+    min-height: 650px;
+  }
+  @media screen and (max-height: 800px) {
+    min-height: 550px;
+  }
+  @media screen and (max-height: 700px) {
+    min-height: 450px;
+  }
+  @media screen and (max-height: 600px) {
+    min-height: 350px;
+  }
+  @media screen and (max-height: 500px) {
+    min-height: 250px;
   }
 }
 
@@ -799,22 +804,22 @@ canvas#currentChart{
   }
 }
 
-.indicator-modal-form-field{
-  .mat-form-field-wrapper{
-    .mat-form-field-subscript-wrapper{
-      margin-top: 0px;
-      margin-bottom: 0.6666666667em;
-    }
+.mat-form-field-wrapper{
+  .mat-form-field-subscript-wrapper{
+    margin-top: 0px;
+    margin-bottom: 0.6666666667em;
   }
 }
+// .indicator-modal-form-field{
+// }
 
-.indicator-modal-form-field-table{
-  .mat-form-field-wrapper{
-    .mat-form-field-subscript-wrapper{
-      margin-top: 0px;
-    }
+.mat-form-field-wrapper{
+  .mat-form-field-subscript-wrapper{
+    margin-top: 0px;
   }
 }
+// .indicator-modal-form-field-table{
+// }
 
 // === Hints ===
 mat-hint {
@@ -872,9 +877,10 @@ mat-hint {
     }
   }
 
-  input {
-    height: 30px !important;
-  }
+  // input {
+  //   // height: 30px !important;
+  //   height: unset !important;
+  // }
 
   .mat-form-field-flex>.mat-form-field-infix {
     border-top: 10px solid transparent;
@@ -919,6 +925,14 @@ mat-hint {
   align-items: baseline;
   flex-wrap: wrap;
 
+  font-size: $small_text;
+  >.mdm-form-label{
+      flex: 0.2;
+      font-size: $small_text;
+      text-align: right;
+      padding-right: 30px;
+  }
+
   @media screen and (max-width: $breakpoint-sm) {
     flex-direction: column;
 
@@ -934,7 +948,7 @@ mat-hint {
 
   .mdm-form-label {
     font-weight: bold;
-    flex: 0.4;
+    // flex: 0.4;
   }
 
   .mdm-form-field {
@@ -950,11 +964,11 @@ mat-hint {
     }
   }
 
-  &.indicator-modal{
-    .mdm-form-field{
-      .mat-form-field-wrapper{
-        padding-bottom: 0.3em;
-      }
+  // &.indicator-modal{
+  // }
+  .mdm-form-field{
+    .mat-form-field-wrapper{
+      padding-bottom: 0.3em;
     }
   }
 }
