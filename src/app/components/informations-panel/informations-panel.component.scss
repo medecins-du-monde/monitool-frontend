@@ -36,7 +36,9 @@
     width: auto;
     display: flex;
     background-color: $white;
-    z-index: 102;
+    &.open{
+        z-index: 102;
+    }
 
     .information-panel-title {
         text-align: justify;

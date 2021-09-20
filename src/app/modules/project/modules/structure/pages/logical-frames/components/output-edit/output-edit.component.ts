@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
@@ -27,7 +27,8 @@ export class OutputEditComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {}
@@ -65,6 +66,7 @@ export class OutputEditComponent implements OnInit {
           this.indicators.setControl(index, res.indicator);
         }
       }
+      this.changeDetector.markForCheck();
     });
   }
 
