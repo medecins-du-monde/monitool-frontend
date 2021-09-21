@@ -71,7 +71,7 @@
         <mat-accordion formArrayName="elements" cdkDropList (cdkDropListDropped)="drop($event)">
             <mat-expansion-panel *ngFor="let element of elements.controls; let i=index" [formGroupName]="i" cdkDrag>
                 <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> Variable {{i + 1}}: {{element.value.name}}</mat-panel-title>
+                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> {{ 'Data' | translate }} {{i + 1}}: {{element.value.name}}</mat-panel-title>
                     <mat-panel-description>
                         <button mat-stroked-button class="mdm-button delete-button" (click)="onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
                     </mat-panel-description>
@@ -81,4 +81,4 @@
         </mat-accordion>
     </div>
 </div>
-<button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddVariable' | translate }}</button>
+<button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddData' | translate }}</button>
