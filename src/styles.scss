@@ -995,6 +995,25 @@ code {
   flex-direction: column;
 }
 
+.dateGroup .mat-radio-container{
+  height: 14px;
+  width: 14px;
+  margin-bottom: 3px;
+}
+.dateGroup .mat-radio-outer-circle{
+  height: 14px;
+  width: 14px;
+}
+.dateGroup .mat-radio-inner-circle{
+  height: 14px;
+  width: 14px;
+}
+.dateGroup .mat-radio-button .mat-radio-ripple{
+  height: 20px; 
+  width: 20px; 
+  left: calc(50% - 10px); 
+  top: calc(50% - 10px); 
+}
 
 // Management of all radio buttons
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
