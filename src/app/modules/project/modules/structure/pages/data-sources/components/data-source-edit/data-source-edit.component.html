@@ -22,7 +22,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Periodicity' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}">
+                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}" disableOptionCentering panelClass="myPanelClass">
                     <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">{{ periodicity.display | translate }}
                     </mat-option>
                 </mat-select>

@@ -5,7 +5,7 @@
 
     <mat-grid-tile colspan="15">
         <mat-form-field appearance="none" class="mdm-form-field" [formGroup]="dimensionForm">
-            <mat-select formControlName="dimensionId" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}">
+            <mat-select formControlName="dimensionId" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" disableOptionCentering panelClass="filterClass">
                 <mat-option *ngFor="let option of groupOptions" [value]="option.value">{{ option.viewValue | translate }}
                 </mat-option>
             </mat-select>
