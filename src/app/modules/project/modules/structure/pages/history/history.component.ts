@@ -64,55 +64,7 @@ export class HistoryComponent implements OnInit {
   showSaveConfirm: boolean;
   saveConfirmElement: number;
 
-  months = [
-    {
-      en: 'January',
-      fr: 'Janvier'
-    },
-    {
-      en: 'February',
-      fr: 'Février'
-    },
-    {
-      en: 'March',
-      fr: 'Mars'
-    },
-    {
-      en: 'April',
-      fr: 'Avril'
-    },
-    {
-      en: 'May',
-      fr: 'Mai'
-    },{
-      en: 'Juin',
-      fr: 'June'
-    },
-    {
-      en: 'July',
-      fr: 'Juillet'
-    },
-    {
-      en: 'Août',
-      fr: 'August'
-    },
-    {
-      en: 'Septembre',
-      fr: 'September'
-    },
-    {
-      en: 'Octobre',
-      fr: 'October'
-    },
-    {
-      en: 'November',
-      fr: 'Novembre'
-    },
-    {
-      en: 'December',
-      fr: 'Décembre'
-    }
-  ]
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
   private projectId: string;
   private project: Project;
@@ -154,10 +106,12 @@ export class HistoryComponent implements OnInit {
       this.limit = 10;
       if (project.id) {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
-          const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang
+          const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
           revisions.forEach(revision => {
+            const timeArr = [];
             const newDate = new Date(revision.time);
-            revision.time = newDate.getUTCDate() + ' ' + this.months[newDate.getMonth()][language] + ' ' + newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]
+            timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+            revision.displayedTime = timeArr;
           });
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;

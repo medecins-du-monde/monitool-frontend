@@ -16,9 +16,10 @@ class Patch {
 
 export class Revision implements Deserializable {
     user: string;
-    time: Date | string;
+    time: Date;
     backwards: Patch[];
     forwards: Patch[];
+    displayedTime?: any[];
 
     get username(): string {
         return this.user.substring(5);

@@ -756,5 +756,18 @@
     },
     "DownloadTable": "Download Table",
     "FillWithPreviousData": "Fill with data from the previous entry",
-    "ShowFinishedProjects": "Show finished projects"
+    "ShowFinishedProjects": "Show finished projects",
+
+    "Jan": "january",
+    "Feb": "february",
+    "Mar": "march",
+    "Apr": "april",
+    "May": "may",
+    "June": "june",
+    "Jul": "july",
+    "Aug": "august",
+    "Sept": "september",
+    "Oct": "october",
+    "Nov": "november",
+    "Dec": "december"
 }
