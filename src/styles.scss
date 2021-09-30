@@ -1192,3 +1192,9 @@ code {
   margin-left: -5px !important;
   min-width: calc(100% + 20px) !important;
 }
+
+// style for expansion-panel inside existing-partiton-modal
+// make the sections be shown side by side
+.mat-expansion-panel-body{
+  display: flex;
+}
