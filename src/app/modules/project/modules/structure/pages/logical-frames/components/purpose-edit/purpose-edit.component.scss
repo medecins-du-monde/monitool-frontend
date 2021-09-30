@@ -2,7 +2,8 @@
 
 .mat-expansion-panel-header-description {
   button {
-      color: $output_panel_button_color;
+    margin-top: 4px;
+    color: $output_panel_button_color;
   }
 }
 
@@ -12,4 +13,9 @@
 
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   background-color: $output_panel_background !important;
+}
+
+.delete-output {
+  color: white !important;
+  background-color: $delete_background !important;
 }

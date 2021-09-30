@@ -1,13 +1,13 @@
 <div class="info-section blue">{{ 'ProjectHistoryInfo' | translate }}</div>
 
 <div class="mdm-title">{{ 'History' | translate }}</div>
-<table mat-table multiTemplateDataRows class="mdm-table history-table"
+<table mat-table multiTemplateDataRows fixedLayout="true" class="mdm-table history-table"
     [dataSource]="revisions" (mouseleave)='mouseLeave()'>
     <!-- Task Column -->
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>{{ 'Date'| translate}} & {{ 'User' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="date"> 
-            <p>{{ element.time | date: 'short' }}</p>
+            <p>{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}</p>
             <p>{{ element.username }}</p>
         </td>
     </ng-container>

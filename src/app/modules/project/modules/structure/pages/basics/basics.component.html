@@ -20,7 +20,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" multiple>
+            <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" disableOptionCentering panelClass="chipListPanelClass" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
                         <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"
@@ -40,10 +40,10 @@
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
             <input matInput [matDatepicker]="startPicker" formControlName="start"
                 placeholder="{{ 'StartDate' | translate }}">
-            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.StartDate' | translate }}
@@ -52,10 +52,10 @@
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
             <input matInput [matDatepicker]="endPicker" formControlName="end"
                 placeholder="{{ 'EndDate' | translate }}">
-            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.EndDate' | translate }}
@@ -65,7 +65,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Visibility' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="visibility" placeholder="{{ 'Visibility' | translate }}">
+            <mat-select formControlName="visibility" placeholder="{{ 'Visibility' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option value="private">{{ 'VisibilityPrivate' | translate }}
                 </mat-option>
                 <mat-option value="public">{{ 'VisibilityPublic' | translate }}
