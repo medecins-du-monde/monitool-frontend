@@ -19,6 +19,7 @@ export class Revision implements Deserializable {
     time: Date;
     backwards: Patch[];
     forwards: Patch[];
+    displayedTime?: any[];
 
     get username(): string {
         return this.user.substring(5);

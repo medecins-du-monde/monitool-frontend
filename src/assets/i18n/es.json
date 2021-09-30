@@ -775,5 +775,18 @@
     },
     "DownloadTable": "Descargar la tabla",
     "FillWithPreviousData": "Rellenar con los datos de la última entrada",
-    "ShowFinishedProjects": "Mostrar proyectos terminados"
+    "ShowFinishedProjects": "Mostrar proyectos terminados",
+
+    "Jan": "enero",
+    "Feb": "febrero",
+    "Mar": "marzo",
+    "Apr": "abril",
+    "May": "mayo",
+    "June": "junio",
+    "Jul": "julio",
+    "Aug": "agosto",
+    "Sept": "septiembre",
+    "Oct": "octubre",
+    "Nov": "noviembre",
+    "Dec": "diciembre"
 }
