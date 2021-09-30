@@ -5,14 +5,13 @@
     tr {
 
         td:first-child {
-            font-size: $normal_text;
             font-weight: bold;
-            color: $title_black;
-            width: 150px;
+            width: 15%;
           }
 
         th {
             text-align: center;
+            min-width: 100px;
         }
         td{
             text-align: center;

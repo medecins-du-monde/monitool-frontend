@@ -4,7 +4,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { PERCENTAGE_FORMULA, ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
@@ -320,7 +320,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               label: row.name,
               data,
               labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
-              fill: false
+              fill: false,
+              unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
             row.values = response;
             row.error = undefined;

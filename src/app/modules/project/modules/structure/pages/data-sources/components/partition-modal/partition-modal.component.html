@@ -54,7 +54,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}">
+            <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
                 </mat-option>
             </mat-select>

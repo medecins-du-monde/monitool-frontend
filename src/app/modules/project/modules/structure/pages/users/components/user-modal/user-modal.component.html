@@ -4,7 +4,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Type' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="type" placeholder="{{ 'Type' | translate }}">
+            <mat-select formControlName="type" placeholder="{{ 'Type' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let type of types" [value]="type.value">{{ type.name | translate }}</mat-option>
             </mat-select>
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Type' | translate }}</mat-hint>
@@ -14,7 +14,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'User' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}">
+                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass">
                     <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
                 </mat-select>
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
@@ -47,7 +47,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Role' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}">
+            <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name | translate }}</mat-option>
             </mat-select>
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}</mat-hint>

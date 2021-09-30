@@ -35,8 +35,8 @@
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
+    <button mat-menu-item class="delete" (click)="onDelete()">
+        <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
 </mat-menu>

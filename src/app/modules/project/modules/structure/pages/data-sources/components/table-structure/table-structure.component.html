@@ -31,7 +31,7 @@
         <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
         <td class ="title">
             <mat-form-field class="auto-width" >
-                <mat-select formArrayName="partitions"  [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id" (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))">
+                <mat-select formArrayName="partitions"  [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id" (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))" disableOptionCentering panelClass="myPanelClass">
                     <mat-option *ngFor="let part of partitions" [value]="part.id"  >
                         {{ part.name }} ({{part.elements.length}})
                     </mat-option>
