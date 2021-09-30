@@ -15,7 +15,7 @@
     <mat-grid-tile colspan="6">
         <!-- Put just a different href later on -->
         <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
-        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang" target="_blank"
+        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/' + minimized" target="_blank"
         rel="noopener noreferrer">
         <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
         </a>
