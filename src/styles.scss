@@ -352,12 +352,15 @@ mat-hint {
 
   .card-info-title {
       width: 50%;
+      font-weight: bold;
+      color: var(--main);
 
       &:not(b) {
           color: $grey;
       }
   }
   .card-info-value {
+    color: var(--main);
     margin-left: 10px;
     width: 100%;
   }
@@ -580,9 +583,9 @@ mat-hint {
     }
   
     th {
-      font-size: $normal_text;
       font-weight: bold;
-      color: $title_black;
+      font-size: $small_text;
+      color: var(--main);
     }
   }
   
@@ -683,6 +686,13 @@ hot-table {
   &.hot-header-cell{
     background-color: $table_background;
     color: $table_color !important;
+    overflow-wrap: normal;
+    white-space: pre-line;
+    max-width: 100px;
+    vertical-align: middle;
+  }
+  &.hot-input-cell{
+    vertical-align: middle;
   }
 }
 
@@ -739,9 +749,16 @@ canvas#currentChart{
   flex-direction: column;
   min-width: 900px;
   width: auto;
+  padding: 0px 12px !important;
 
   .mdm-table {
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
+    margin: 0px;
+    tr{
+      td {
+          color: black;
+      }
+    }
   }
 
   @media screen and (max-width: $breakpoint-md) { // 1440px
@@ -764,25 +781,23 @@ canvas#currentChart{
     min-width: 300px;
   }
 
-  &.indicator-modal{
-    min-height: 750px;
 
-    @media screen and (max-height: 900px) {
-      min-height: 650px;
-    }
-    @media screen and (max-height: 800px) {
-      min-height: 550px;
-    }
-    @media screen and (max-height: 700px) {
-      min-height: 450px;
-    }
-    @media screen and (max-height: 600px) {
-      min-height: 350px;
-    }
-    @media screen and (max-height: 500px) {
-      min-height: 250px;
-    }
+  min-height: 750px;
 
+  @media screen and (max-height: 900px) {
+    min-height: 650px;
+  }
+  @media screen and (max-height: 800px) {
+    min-height: 550px;
+  }
+  @media screen and (max-height: 700px) {
+    min-height: 450px;
+  }
+  @media screen and (max-height: 600px) {
+    min-height: 350px;
+  }
+  @media screen and (max-height: 500px) {
+    min-height: 250px;
   }
 }
 
@@ -799,22 +814,22 @@ canvas#currentChart{
   }
 }
 
-.indicator-modal-form-field{
-  .mat-form-field-wrapper{
-    .mat-form-field-subscript-wrapper{
-      margin-top: 0px;
-      margin-bottom: 0.6666666667em;
-    }
+.mat-form-field-wrapper{
+  .mat-form-field-subscript-wrapper{
+    margin-top: 0px;
+    margin-bottom: 0.6666666667em;
   }
 }
+// .indicator-modal-form-field{
+// }
 
-.indicator-modal-form-field-table{
-  .mat-form-field-wrapper{
-    .mat-form-field-subscript-wrapper{
-      margin-top: 0px;
-    }
+.mat-form-field-wrapper{
+  .mat-form-field-subscript-wrapper{
+    margin-top: 0px;
   }
 }
+// .indicator-modal-form-field-table{
+// }
 
 // === Hints ===
 mat-hint {
@@ -872,9 +887,10 @@ mat-hint {
     }
   }
 
-  input {
-    height: 30px !important;
-  }
+  // input {
+  //   // height: 30px !important;
+  //   height: unset !important;
+  // }
 
   .mat-form-field-flex>.mat-form-field-infix {
     border-top: 10px solid transparent;
@@ -919,6 +935,14 @@ mat-hint {
   align-items: baseline;
   flex-wrap: wrap;
 
+  font-size: $small_text;
+  >.mdm-form-label{
+      flex: 0.2;
+      font-size: $small_text;
+      text-align: right;
+      padding-right: 30px;
+  }
+
   @media screen and (max-width: $breakpoint-sm) {
     flex-direction: column;
 
@@ -934,7 +958,7 @@ mat-hint {
 
   .mdm-form-label {
     font-weight: bold;
-    flex: 0.4;
+    // flex: 0.4;
   }
 
   .mdm-form-field {
@@ -950,11 +974,11 @@ mat-hint {
     }
   }
 
-  &.indicator-modal{
-    .mdm-form-field{
-      .mat-form-field-wrapper{
-        padding-bottom: 0.3em;
-      }
+  // &.indicator-modal{
+  // }
+  .mdm-form-field{
+    .mat-form-field-wrapper{
+      padding-bottom: 0.3em;
     }
   }
 }
@@ -981,6 +1005,25 @@ code {
   flex-direction: column;
 }
 
+.dateGroup .mat-radio-container{
+  height: 14px;
+  width: 14px;
+  margin-bottom: 3px;
+}
+.dateGroup .mat-radio-outer-circle{
+  height: 14px;
+  width: 14px;
+}
+.dateGroup .mat-radio-inner-circle{
+  height: 14px;
+  width: 14px;
+}
+.dateGroup .mat-radio-button .mat-radio-ripple{
+  height: 20px; 
+  width: 20px; 
+  left: calc(50% - 10px); 
+  top: calc(50% - 10px); 
+}
 
 // Management of all radio buttons
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
@@ -1080,13 +1123,13 @@ code {
 }
 
 .delete-button:not([disabled]) {
-  color: $delete_text_color;
+  color: white !important;
   background-color: $delete_background;
-  border-color: $delete_border;
+  border: none !important;
 }
 
 .delete {
-  color: $warning !important;
+  color: $delete_background !important;
 }
 
 
@@ -1130,4 +1173,35 @@ code {
 
 .mat-option-text.mat-option-text {
   white-space: normal;
+}
+
+.myPanelClass {
+  margin-top: 25px !important;
+  max-height: 300px !important;
+  margin-left: 5px;
+  overflow-x: hidden !important;
+  min-width: calc(100% + 20px) !important;
+  margin-bottom: -35px !important;
+}
+
+.chipListPanelClass{
+  margin-top: 30px !important; 
+  max-height: 300px !important;
+  overflow-x: hidden !important;
+  margin-left: 28px;
+  min-width: calc(100% + 25px) !important;
+  margin-bottom: 35px !important;
+}
+
+.filterClass {
+  margin-top: 30px !important; 
+  overflow-x: hidden !important;
+  margin-left: -5px !important;
+  min-width: calc(100% + 20px) !important;
+}
+
+// style for expansion-panel inside existing-partiton-modal
+// make the sections be shown side by side
+.mat-expansion-panel-body{
+  display: flex;
 }

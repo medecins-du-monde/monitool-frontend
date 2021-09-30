@@ -1,5 +1,10 @@
 @import "src/assets/theme/color_vars.scss";
 
+.mat-column-date {
+  width: 200px !important;
+  max-width: 200px !important;
+}
+
 #date {
   width: 20%;
 }

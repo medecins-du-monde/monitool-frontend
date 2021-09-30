@@ -13,7 +13,8 @@
 }
 
 th {
-    font-weight: bold;
+    font-size: 14px;
+    color: red;
     flex: 1;
     display: flex;
     align-items: center;
@@ -117,4 +118,5 @@ mat-hint {
     align-items: center;
     justify-content: center;
     padding-top: 5px;
+    font-weight: 400;
   }

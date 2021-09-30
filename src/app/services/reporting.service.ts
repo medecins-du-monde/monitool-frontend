@@ -41,7 +41,7 @@ export class ReportingService {
       for (let i = dimensionIds.length - 1; i >= 0; --i) {
         const dimId = dimensionIds[i];
         const newResult = {};
-        let ids;
+        let ids = [];
 
         if (filter[dimId]) {
           ids = filter[dimId];

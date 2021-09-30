@@ -50,7 +50,7 @@
     <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
-            <mat-select formControlName="type" (selectionChange)="onTypeChange($event)">
+            <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                 </mat-option>
             </mat-select>
@@ -80,7 +80,7 @@
                 <th mat-header-cell *matHeaderCellDef>{{ 'Data' | translate }}</th>
                 <td mat-cell *matCellDef="let control" [formGroupName]="control.symbol">
                     <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table" >
-                        <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, control)" placeholder="{{ 'Variable' | translate }}">
+                        <mat-select formControlName="elementId" (selectionChange)="onVariableSelected($event, control)" placeholder="{{ 'Variable' | translate }}" disableOptionCentering panelClass="myPanelClass">
                             <mat-optgroup *ngFor="let form of data.forms" [label]="form.name">
                                 <mat-option *ngFor="let element of form.elements" [value]="element.id">
                                     {{element.name}}
@@ -103,7 +103,7 @@
                     <div class="disaggregation-field">
                         <div class="mdm-form-label">{{partition.name}}</div>
                         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table">
-                          <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple>
+                          <mat-select [formControlName]="partition.id" placeholder="{{ 'partitionElement' | translate }}" multiple disableOptionCentering panelClass="chipListPanelClass">
                               <mat-select-trigger>
                                   <mat-chip-list class="wrap">
                                       <mat-chip *ngFor="let partitionElement of getPartitions(control.symbol, partition.id)"

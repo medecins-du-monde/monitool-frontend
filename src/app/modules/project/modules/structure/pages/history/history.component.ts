@@ -9,6 +9,10 @@ import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { DateService } from 'src/app/services/date.service';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -60,6 +64,8 @@ export class HistoryComponent implements OnInit {
   showSaveConfirm: boolean;
   saveConfirmElement: number;
 
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
   private projectId: string;
   private project: Project;
   private limit: number;
@@ -67,6 +73,7 @@ export class HistoryComponent implements OnInit {
   public showLoadMore: boolean;
 
   constructor(private projectService: ProjectService,
+              private translateService: TranslateService,
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -99,6 +106,13 @@ export class HistoryComponent implements OnInit {
       this.limit = 10;
       if (project.id) {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
+          const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+          revisions.forEach(revision => {
+            const timeArr = [];
+            const newDate = new Date(revision.time);
+            timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+            revision.displayedTime = timeArr;
+          });
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;
           this.changeDetector.markForCheck();

@@ -5,7 +5,7 @@
 
     <mat-grid-tile colspan="15">
         <mat-form-field appearance="none" class="mdm-form-field" [formGroup]="dimensionForm">
-            <mat-select formControlName="dimensionId" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}">
+            <mat-select formControlName="dimensionId" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" disableOptionCentering panelClass="filterClass">
                 <mat-option *ngFor="let option of groupOptions" [value]="option.value">{{ option.viewValue | translate }}
                 </mat-option>
             </mat-select>
@@ -15,7 +15,7 @@
     <mat-grid-tile colspan="6">
         <!-- Put just a different href later on -->
         <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
-        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang" target="_blank"
+        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/' + minimized" target="_blank"
         rel="noopener noreferrer">
         <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
         </a>

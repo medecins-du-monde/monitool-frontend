@@ -1,10 +1,10 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { PERCENTAGE_FORMULA, ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
@@ -33,6 +33,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               private chartService: ChartService,
               private translateService: TranslateService) { }
 
+  get optimalColspanForGroupName(): number{
+    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen);
+  }
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
@@ -55,10 +63,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   ];
 
   currentColorIndex = 0;
-
-  get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-  }
+  innerWidth: number;
+  colsThatFitInTheScreen: number;
 
   private subscription: Subscription = new Subscription();
 
@@ -75,6 +81,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_ERROR =  ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void{
+    this.calculateOptimalColspan();
+  }
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
@@ -84,6 +95,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
+    this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
 
@@ -265,6 +277,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.dimensions.push('_total');
     }
     this.columnsToDisplay = this.COLUMNS_TO_DISPLAY.concat(this.dimensions);
+    this.calculateOptimalColspan();
   }
 
   // Create row of the table from a ProjectIndicator
@@ -320,7 +333,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               label: row.name,
               data,
               labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
-              fill: false
+              fill: false,
+              unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
             row.values = response;
             row.error = undefined;
@@ -682,6 +696,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   checkIfNaN(x: unknown): boolean{
     return isNaN(x);
+  }
+
+  calculateOptimalColspan(): void{
+    this.innerWidth = window.innerWidth;
+
+    if (this.innerWidth < 640){
+      this.colsThatFitInTheScreen = 3;
+    }
+    else if (this.innerWidth < 1024){
+      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 640) / 85);
+    }
+    else{
+      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
+    }
   }
 
   ngOnDestroy(): void{
