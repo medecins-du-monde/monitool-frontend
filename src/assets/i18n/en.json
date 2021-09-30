@@ -758,6 +758,7 @@
         "MissingCalculation": "Calculation is missing"
     },
     "DownloadTable": "Download Table",
+    "DownloadTableMini": "Download Table (Minimized)",
     "FillWithPreviousData": "Fill with data from the previous entry",
     "ShowFinishedProjects": "Show finished projects",
 

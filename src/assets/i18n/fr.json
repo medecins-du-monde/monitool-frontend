@@ -773,6 +773,7 @@
         "MissingCalculation": "Calcul absent"
     },
     "DownloadTable": "Télécharger le tableau",
+    "DownloadTableMini": "Download Table (Minimized)",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
     "ShowFinishedProjects": "Afficher les projets terminés",
 

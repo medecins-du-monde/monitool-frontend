@@ -12,19 +12,33 @@
         </mat-form-field>
     </mat-grid-tile>
 
-    <mat-grid-tile colspan="6">
+    <mat-grid-tile colspan="3">
         <!-- Put just a different href later on -->
         <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
         [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/' + minimized" target="_blank"
         rel="noopener noreferrer">
-        <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
+        <mat-icon>insert_drive_file</mat-icon>{{'DownloadTableMini' | translate}}
         </a>
         <ng-template #elseBlock>
+            <a #elseBlock mat-stroked-button type="button" class="mdm-button"
+            rel="noopener noreferrer">
+            <mat-icon>insert_drive_file</mat-icon>{{'DownloadTableMini' | translate}}
+            </a>
+        </ng-template>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3">
+        <!-- Put just a different href later on -->
+        <a *ngIf="project; else elseBlock2" mat-stroked-button type="button" class="mdm-button"
+        [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang" target="_blank"
+        rel="noopener noreferrer">
+        <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
+        </a>
+        <ng-template #elseBlock2>
             <a #elseBlock mat-stroked-button type="button" class="mdm-button"
             rel="noopener noreferrer">
             <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
             </a>
         </ng-template>
-    </mat-grid-tile>        
+    </mat-grid-tile>
 
 </mat-grid-list>
