@@ -12,7 +12,7 @@
   <div class="mdm-form-group">
       <div class="mdm-form-label">{{ 'GeoAggregation' | translate }}</div>
       <mat-form-field appearance="outline" class="mdm-form-field">
-          <mat-select formControlName="geoAgg" placeholder="{{ 'MissingComputation' | translate }}">
+          <mat-select formControlName="geoAgg" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
               <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
               </mat-option>
           </mat-select>
@@ -25,7 +25,7 @@
   <div class="mdm-form-group">
       <div class="mdm-form-label">{{ 'TimeAggregation' | translate }}</div>
       <mat-form-field appearance="outline" class="mdm-form-field">
-          <mat-select formControlName="timeAgg" placeholder="{{ 'MissingComputation' | translate }}">
+          <mat-select formControlName="timeAgg" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
               <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
               </mat-option>
           </mat-select>
