@@ -33,6 +33,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               private chartService: ChartService,
               private translateService: TranslateService) { }
 
+  get optimalColspanForGroupName(): number{
+    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen);
+  }
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
@@ -58,19 +66,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   innerWidth: number;
   colsThatFitInTheScreen: number;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event): void{
-    this.calculateOptimalColspan();
-  }
-  
-  get optimalColspanForGroupName(): number{
-    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen)
-  }
-
-  get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-  }
-
   private subscription: Subscription = new Subscription();
 
   // These values are used to check if the value changed in the subscribe
@@ -86,6 +81,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_ERROR =  ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void{
+    this.calculateOptimalColspan();
+  }
   isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
   isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
   isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
@@ -700,7 +700,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   calculateOptimalColspan(): void{
     this.innerWidth = window.innerWidth;
-    
+
     if (this.innerWidth < 640){
       this.colsThatFitInTheScreen = 3;
     }

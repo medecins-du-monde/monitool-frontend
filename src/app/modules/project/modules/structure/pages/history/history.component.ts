@@ -114,7 +114,6 @@ export class HistoryComponent implements OnInit {
             revision.displayedTime = timeArr;
           });
           this.revisions = revisions;
-          console.log('rev', revisions);
           this.showLoadMore = revisions.length < 10 ? false : true;
           this.changeDetector.markForCheck();
         });

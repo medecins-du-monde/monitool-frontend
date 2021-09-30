@@ -67,7 +67,7 @@ export class FormElementEditComponent implements OnInit {
   }
 
   onUseExistingPartition(){
-    this.openExistingPartitionDialog()
+    this.openExistingPartitionDialog();
   }
 
   onRemovePartition(i: number) {
@@ -95,7 +95,8 @@ export class FormElementEditComponent implements OnInit {
           this.partitions.push(this.newPartition(partition));
         }
       }
-    })
+      this.changeDetector.markForCheck();
+    });
   }
 
   private newPartition(partition: Partition): FormGroup {
@@ -128,7 +129,7 @@ export class FormElementEditComponent implements OnInit {
   }
 
 
-  
+
   openDialog(partition: FormGroup) {
     const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });
 

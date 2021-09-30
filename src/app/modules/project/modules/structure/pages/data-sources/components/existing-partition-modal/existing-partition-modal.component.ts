@@ -13,7 +13,7 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   project: Project;
-  allPartitions: Partition[]
+  allPartitions: Partition[];
   private subscription: Subscription = new Subscription();
   partitionsForm: FormGroup;
   panelStates: Array<boolean> = [];
@@ -43,11 +43,11 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) =>{
+      this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.createOptions();
       })
-    )
+    );
   }
 
   ngOnDestroy(): void {
@@ -57,7 +57,7 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
   createOptions(): void {
     this.partitionsForm = new FormGroup({});
-    
+
     this.allPartitions = [];
     this.panelStates = [];
     if (this.project){
@@ -99,13 +99,13 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   }
 
   minimizePanels(): void{
-    for (let i = 0; i < this.panelStates.length; i+=1){
+    for (let i = 0; i < this.panelStates.length; i += 1){
       this.panelStates[i] = false;
     }
   }
 
   maximizePanels(): void{
-    for (let i = 0; i < this.panelStates.length; i+=1){
+    for (let i = 0; i < this.panelStates.length; i += 1){
       this.panelStates[i] = true;
     }
   }
