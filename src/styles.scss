@@ -686,6 +686,13 @@ hot-table {
   &.hot-header-cell{
     background-color: $table_background;
     color: $table_color !important;
+    overflow-wrap: normal;
+    white-space: pre-line;
+    max-width: 100px;
+    vertical-align: middle;
+  }
+  &.hot-input-cell{
+    vertical-align: middle;
   }
 }
 
