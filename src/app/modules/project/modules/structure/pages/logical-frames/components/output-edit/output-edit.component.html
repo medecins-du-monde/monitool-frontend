@@ -41,8 +41,8 @@
             <mat-expansion-panel-header>
                 <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'Activity' | translate }} {{i + 1}}: {{activity.value.description}}</mat-panel-title>
                 <mat-panel-description>
-                    <button mat-stroked-button class="mdm-button" (click)="onRemoveActivity(i)"><mat-icon>delete</mat-icon>{{ 'RemoveActivity' | translate }}</button>
-                </mat-panel-description>
+                    <button mat-stroked-button class="mdm-button delete-button" (click)="onRemoveActivity(i)"><mat-icon>delete</mat-icon>{{ 'RemoveActivity' | translate }}</button>
+                </mat-panel-description> 
             </mat-expansion-panel-header>
             <app-activity-edit [activityForm]="activity" [forms]="forms"></app-activity-edit>
         </mat-expansion-panel>
