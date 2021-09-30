@@ -59,6 +59,10 @@ export class ObjectGroupingComponent implements OnInit {
      return this.project.id;
   }
 
+  get minimized(): boolean {
+    return true;
+  }
+
   ngOnInit(): void {
     this.updateDimension(8, this.periodicitiesList);
     this.groupOptions = [];
