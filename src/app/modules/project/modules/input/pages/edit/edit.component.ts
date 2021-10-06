@@ -424,6 +424,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         hotId: 'element.id',
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
+          console.log('changes', changes);
           if (changes !== null){
             for (let i = 0; i < changes.length; i += 1){
               const change = changes[i];
@@ -433,7 +434,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
               let newValue;
               try{
-                newValue = this.expressionParser.evaluate(change[3]);
+                newValue = this.expressionParser.evaluate(change[3]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
               }catch (e){
                 newValue = change[3];
               }
