@@ -147,7 +147,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   hasUpdate = false;
 
-  ngOnInit(): void {
+  ngOnInit() {
     console.log('for testing purpose, to be removed');
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
