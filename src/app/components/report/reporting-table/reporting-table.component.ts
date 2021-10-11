@@ -308,20 +308,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
     const currentFilter = this.filter.value;
-    const start = new Date(currentFilter._start).toLocaleDateString().split('/');
-    const end = new Date(currentFilter._end).toLocaleDateString().split('/');
-
-    const formattedStart = start[2] + '-' +
-                          (start[0].length === 1 ? + '0' + start[0] : start[0]) + '-' +
-                          (start[1].length === 1 ? + '0' + start[1] : start[1]);
-
-    const formattedEnd = end[2] + '-' +
-                        (end[0].length === 1 ? + '0' + end[0] : end[0]) + '-' +
-                        (end[1].length === 1 ? + '0' + end[1] : end[1]);
 
     const modifiedFilter = {
-      _start: formattedStart,
-      _end: formattedEnd,
+      _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
+      _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
       entity: currentFilter.entities
     };
 
