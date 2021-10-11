@@ -422,9 +422,17 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
+        type: 'numeric',
+        renderer: function(instance, td, row, col, prop, value, cellProperties) {
+          if (typeof value === "number") {
+            const new_value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            td.innerHTML = new_value
+          } else {
+            td.innerHTML = value;
+          }
+        },
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
-          console.log('changes', changes);
           if (changes !== null){
             for (let i = 0; i < changes.length; i += 1){
               const change = changes[i];
@@ -434,7 +442,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
               let newValue;
               try{
-                newValue = this.expressionParser.evaluate(change[3]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                newValue = this.expressionParser.evaluate(change[3]);
               }catch (e){
                 newValue = change[3];
               }

@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -54,7 +57,7 @@ export class DataSourceComponent implements OnInit {
     return entities;
   }
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService, private dialog: MatDialog, private projectService: ProjectService,) { }
 
   ngOnInit(): void {
     this.allOption.members = this.form.entities;
@@ -80,6 +83,29 @@ export class DataSourceComponent implements OnInit {
 
   onDelete() {
     this.delete.emit(this.form);
+  }
+
+  onClone(form) {
+    console.log('FUCK', form);
+    const newForm = new Form();
+    newForm.name = 'Clone - ' + form.name;
+    newForm.end = form.end;
+    newForm.periodicity = form.periodicity;
+    newForm.start = form.start;
+    newForm.entities = form.entities;
+
+    form.elements.forEach(el => {
+      const newElement = new FormElement();
+      newElement.distribution = el.distribution;
+      newElement.geoAgg = el.geoAgg;
+      newElement.name = el.name;
+      newElement.partitions = el.partitions;
+      newElement.timeAgg = el.timeAgg;
+      newForm.elements.push(newElement);
+    });
+
+    this.project.forms.push(newForm);
+    this.projectService.project.next(this.project);
   }
 
 }

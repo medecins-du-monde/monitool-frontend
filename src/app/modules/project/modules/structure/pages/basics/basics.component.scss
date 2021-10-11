@@ -4,3 +4,10 @@
         margin-bottom: 5px;
     }
 }
+
+.chip-list {
+    ::ng-deep .mat-form-field-flex > .mat-form-field-infix { height: auto !important; max-width: 100% !important;
+        .mat-chip-list-wrapper{
+            flex-wrap: wrap !important;
+        }}
+}

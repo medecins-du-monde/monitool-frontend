@@ -37,4 +37,8 @@
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
+    <button mat-menu-item (click)="onClone(form)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'Clone' | translate }}</span>
+    </button>
 </mat-menu>
