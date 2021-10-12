@@ -557,13 +557,23 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       endTimeSlot = endTimeSlot.next();
 
       const newIndicators = [];
-
+      let counter = 0;
       while (startTimeSlot !== endTimeSlot) {
-        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        counter++;
 
+        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
         customIndicator.level = info.indicator.level + 1;
-        // TO DO: add correct language here
-        customIndicator.name = startTimeSlot.humanizeValue('en');
+
+        const dateToCompare = new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[0] + '-'
+                              + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
+
+        if (counter === 1) {
+          if (dateToCompare === startTimeSlot.value) {
+            customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+          }
+        } else {
+          customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+        }
         customIndicator.values = {};
 
         if (!customIndicator.customFilter) {
