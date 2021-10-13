@@ -42,7 +42,7 @@
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
         <ng-template #elseNumber>
-          {{ element.values[column] !== undefined ? (element.values[column].toLocaleString() ) : null }}{{ (element.unit && element.values[column]) ? element.unit : null }}
+          {{ element.values[column] !== undefined ? (element.values[column].toLocaleString("en-US") ) : null }}{{ (element.unit && element.values[column]) ? element.unit : null }}
         </ng-template>
       </td>
     </ng-container>

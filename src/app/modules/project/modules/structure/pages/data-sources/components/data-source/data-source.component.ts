@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { clone } from 'lodash';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -20,9 +21,13 @@ export class DataSourceComponent implements OnInit {
   @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+
+  @ViewChild('cloneDatasourceDialog') cloneDatasourceDialog: TemplateRef<any>
+  
   public allOption: Group = new Group({id: 'all', name: 'All'});
   groups: Group[];
   entities: Entity[];
+  private formToClone;
 
   private getGroupsSelected(){
     if (this.form === null || this.form.entities === null){
@@ -86,15 +91,25 @@ export class DataSourceComponent implements OnInit {
   }
 
   onClone(form) {
-    console.log('FUCK', form);
-    const newForm = new Form();
-    newForm.name = 'Clone - ' + form.name;
-    newForm.end = form.end;
-    newForm.periodicity = form.periodicity;
-    newForm.start = form.start;
-    newForm.entities = form.entities;
+    this.formToClone = form;
+    this.dialog.open(this.cloneDatasourceDialog);
+  }
 
-    form.elements.forEach(el => {
+  onSubmit(): void {
+    let cloneCount = 0;
+    this.project.forms.forEach(el => {
+      if(el.name.includes(this.formToClone.name)) {
+        cloneCount++;
+      }
+    })
+    const newForm = new Form();
+    newForm.name = 'Clone ' + (cloneCount === 0 ? '' : cloneCount) + ' - '+ this.formToClone.name;
+    newForm.end = this.formToClone.end;
+    newForm.periodicity = this.formToClone.periodicity;
+    newForm.start = this.formToClone.start;
+    newForm.entities = this.formToClone.entities;
+
+    this.formToClone.elements.forEach(el => {
       const newElement = new FormElement();
       newElement.distribution = el.distribution;
       newElement.geoAgg = el.geoAgg;

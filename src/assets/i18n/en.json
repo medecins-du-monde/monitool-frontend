@@ -108,6 +108,8 @@
     "DownloadPdfLandscape": "Download PDF (landscape)",
     "DownloadPdfPortrait": "Download PDF (portrait)",
     "DownloadPlot": "Download",
+    "DuplicateDatasourceTitle": "Duplicate Datasource",
+    "DuplicateDatasource": "This action will clone this datasource. Confirm to clone.",
     "ResetGraph": "Reset",
     "EMail-Hint": "Enter your e-mail address",
     "Edit": "Edit",

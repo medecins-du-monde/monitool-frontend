@@ -425,7 +425,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         type: 'numeric',
         renderer: function(instance, td, row, col, prop, value, cellProperties) {
           if (typeof value === "number") {
-            const new_value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            const new_value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             td.innerHTML = new_value
           } else {
             td.innerHTML = value;
