@@ -1,5 +1,17 @@
 @import "src/assets/theme/size_vars.scss";
 
+.partition-dialog {
+  display: flex;
+  flex-direction: column;
+
+  .partition-label {
+    width: 20%;
+  }
+  .partition-content {
+    width: 70%;
+  }
+}
+
 .mat-footer-cell {
   text-align: center;
 }

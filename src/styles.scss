@@ -932,7 +932,6 @@ mat-hint {
 
 .mdm-form-group {
   display: flex;
-  align-items: baseline;
   flex-wrap: wrap;
 
   font-size: $small_text;
@@ -941,6 +940,10 @@ mat-hint {
       font-size: $small_text;
       text-align: right;
       padding-right: 30px;
+  }
+
+  .label-offset {
+    margin-top: 10px !important;
   }
 
   @media screen and (max-width: $breakpoint-sm) {
@@ -1000,7 +1003,7 @@ code {
 // Management of dateGroups (custom dates and same as project)
 .dateGroup {
   flex: 1;
-  margin: 25px 0px;
+  margin: 5px 0px;
   display: flex;
   flex-direction: column;
 }
