@@ -22,8 +22,8 @@ export class DataSourceComponent implements OnInit {
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 
-  @ViewChild('cloneDatasourceDialog') cloneDatasourceDialog: TemplateRef<any>
-  
+  @ViewChild('cloneDatasourceDialog') cloneDatasourceDialog: TemplateRef<any>;
+
   public allOption: Group = new Group({id: 'all', name: 'All'});
   groups: Group[];
   entities: Entity[];
@@ -62,7 +62,7 @@ export class DataSourceComponent implements OnInit {
     return entities;
   }
 
-  constructor(private translateService: TranslateService, private dialog: MatDialog, private projectService: ProjectService,) { }
+  constructor(private translateService: TranslateService, private dialog: MatDialog, private projectService: ProjectService, ) { }
 
   ngOnInit(): void {
     this.allOption.members = this.form.entities;
@@ -98,12 +98,12 @@ export class DataSourceComponent implements OnInit {
   onSubmit(): void {
     let cloneCount = 0;
     this.project.forms.forEach(el => {
-      if(el.name.includes(this.formToClone.name)) {
+      if (el.name.includes(this.formToClone.name)) {
         cloneCount++;
       }
-    })
+    });
     const newForm = new Form();
-    newForm.name = 'Clone ' + (cloneCount === 0 ? '' : cloneCount) + ' - '+ this.formToClone.name;
+    newForm.name = 'Clone ' + (cloneCount === 0 ? '' : cloneCount) + ' - ' + this.formToClone.name;
     newForm.end = this.formToClone.end;
     newForm.periodicity = this.formToClone.periodicity;
     newForm.start = this.formToClone.start;

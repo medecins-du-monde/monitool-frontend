@@ -423,10 +423,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         observeChanges: true,
         hotId: 'element.id',
         type: 'numeric',
-        renderer: function(instance, td, row, col, prop, value, cellProperties) {
-          if (typeof value === "number") {
-            const new_value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            td.innerHTML = new_value
+        renderer(instance, td, row, col, prop, value, cellProperties) {
+          if (typeof value === 'number') {
+            const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            td.innerHTML = newValue;
           } else {
             td.innerHTML = value;
           }
