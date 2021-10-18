@@ -56,7 +56,10 @@ export class PartitionModalComponent implements OnInit {
     this.groupsDataSource.next(this.groups.controls);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.elements.push(this.newElement())
+    this.elements.push(this.newElement())
+  }
 
   onAddNewElement() {
     this.elements.push(this.newElement());

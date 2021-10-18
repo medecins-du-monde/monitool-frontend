@@ -2,7 +2,7 @@
 <h2 mat-dialog-title>{{ 'PartitionEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="data" class="mdm-dialog partition-dialog">
     <div class="mdm-form-group">
-        <div class="mdm-form-label partition-label">{{ 'Name' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field partition-content">
             <input matInput formControlName="name" placeholder="{{ 'Disaggregation.AddNamePlaceholder' | translate }}">
             <mat-hint>
@@ -10,8 +10,8 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label partition-label">{{ 'Elements' | translate }}</div>
+    <div class="mdm-form-group partition-group">
+        <div class="partition-label">{{ 'Elements' | translate }}</div>
         <table mat-table [dataSource]="elementsDataSource" class="mdm-table partition-content" formArrayName="elements">
             <ng-container matColumnDef="position">
                 <th class="w-10" mat-header-cell *matHeaderCellDef></th>
@@ -51,8 +51,8 @@
             <mat-icon>info</mat-icon>{{ 'Disaggregation.ElementsHint' | translate }}
         </mat-hint>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label partition-label">{{ 'Aggregation' | translate }}</div>
+    <div class="mdm-form-group partition-group">
+        <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field partition-content">
             <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
@@ -63,14 +63,14 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label partition-label">{{ 'Groups' | translate }}</div>
+    <div class="mdm-form-group partition-group">
+        <div class="mdm-form-label">{{ 'Groups' | translate }}</div>
         <mat-checkbox class="mdm-form-field partition-content" formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
         <mat-hint class="hint">
             <mat-icon>info</mat-icon>{{ 'Disaggregation.GroupsHint' | translate }}
         </mat-hint>
     </div>
-    <div class="mdm-form-group" *ngIf="data.value.useGroups">
+    <div class="mdm-form-group partition-group" *ngIf="data.value.useGroups">
         <div class="mdm-form-label"></div>
         <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
             <ng-container matColumnDef="position">

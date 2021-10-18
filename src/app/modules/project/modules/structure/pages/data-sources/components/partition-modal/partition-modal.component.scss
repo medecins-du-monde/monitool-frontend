@@ -4,11 +4,19 @@
   display: flex;
   flex-direction: column;
 
-  .partition-label {
-    width: 20%;
+  .partition-group {
+    display: flex;
+    justify-content: space-between;
+
+    .partition-label {
+      width: 16%;
+      text-align: end;
+      font-weight: bold;
+    }
   }
+
   .partition-content {
-    width: 70%;
+    width: 81%;
   }
 }
 
