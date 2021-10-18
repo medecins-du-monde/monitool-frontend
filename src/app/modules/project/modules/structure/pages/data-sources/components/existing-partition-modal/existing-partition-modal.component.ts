@@ -65,7 +65,23 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
         for (const element of form.elements){
           if (element.id !== this.element.id){
             for (const partition of element.partitions){
-              this.allPartitions.push(partition);
+              if (this.allPartitions.length) {
+                if (!this.allPartitions.some(el =>
+                  (el.name).replace(' ', '').toUpperCase() === (partition.name).replace(' ', '').toUpperCase())
+                  ) {
+                  this.allPartitions.push(partition);
+                } else {
+                  this.allPartitions.forEach(par => {
+                    par.elements.forEach(val => {
+                      if (!partition.elements.some(part => part.name !== val.name)) {
+                        this.allPartitions.push(partition);
+                      }
+                    });
+                  });
+                }
+              } else {
+                this.allPartitions.push(partition);
+              }
               this.panelStates.push(true);
               this.partitionsForm.addControl(partition.id, new FormControl(false));
             }

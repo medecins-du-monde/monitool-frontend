@@ -418,10 +418,22 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         colHeaders: false,
         rowHeaders: false,
         stretchH: 'all',
+        wordWrap: true,
+        autoRowSize: true,
+        colWidths: 100,
         viewportColumnRenderingOffset: 1000,
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
+        type: 'numeric',
+        renderer(instance, td, row, col, prop, value, cellProperties) {
+          if (typeof value === 'number') {
+            const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            td.innerHTML = newValue;
+          } else {
+            td.innerHTML = value;
+          }
+        },
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
           if (changes !== null){

@@ -106,6 +106,8 @@
     "ResetGraph": "Reiniciar",
     "Done": "Realizado",
     "Download":"Descargar",
+    "DuplicateDatasourceTitle": "Clonar Fuente de datos",
+    "DuplicateDatasource": "Va a clonar este fuente de datos. Confirme para clonar.",
     "Edit": "Modificar",
     "Email": "Correo electrónico",
     "en": "Inglés",
