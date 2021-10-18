@@ -17,10 +17,10 @@
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
+    <div class="mdm-form-group chip-list">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" disableOptionCentering panelClass="chipListPanelClass" multiple>
+            <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" disableOptionCentering panelClass="basicsChipListPanelClass" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
                         <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"

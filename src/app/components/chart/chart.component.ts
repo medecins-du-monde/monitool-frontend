@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
-import Chart, { ChartOptions, ChartTooltipModel } from 'chart.js';
-import { DOCUMENT } from '@angular/common';
+import Chart, { ChartOptions } from 'chart.js';
 
 
 @Component({
@@ -60,7 +59,10 @@ export class ChartComponent implements OnInit, OnDestroy {
       // change fontSize of the labels in the yAxis
       yAxes: [{
         ticks: {
-            fontSize: 14
+            fontSize: 14,
+            callback: (value, index, values) => {
+              return value.toLocaleString('de-DE');
+            }
         }
       }],
     },
@@ -148,7 +150,8 @@ export class ChartComponent implements OnInit, OnDestroy {
 
               const name = body[0].split(':')[0];
               const value = body[0].split(':')[1];
-              innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + value + '</td></tr>';
+              const formattedValue = Number(value.replace(/\s/g, '')).toLocaleString('de-DE');
+              innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
 
           });
           innerHtml += '</tbody>';
