@@ -66,7 +66,9 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
           if (element.id !== this.element.id){
             for (const partition of element.partitions){
               if (this.allPartitions.length) {
-                if (!this.allPartitions.some(el => el.name === partition.name)) {
+                if (!this.allPartitions.some(el =>
+                  (el.name).replace(' ', '').toUpperCase() === (partition.name).replace(' ', '').toUpperCase())
+                  ) {
                   this.allPartitions.push(partition);
                 } else {
                   this.allPartitions.forEach(par => {
@@ -74,7 +76,7 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
                       if (!partition.elements.some(part => part.name !== val.name)) {
                         this.allPartitions.push(partition);
                       }
-                    })
+                    });
                   });
                 }
               } else {
