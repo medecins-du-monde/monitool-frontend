@@ -147,7 +147,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   hasUpdate = false;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         setTimeout(() => {
