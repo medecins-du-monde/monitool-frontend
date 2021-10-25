@@ -18,6 +18,8 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
 import Parser from 'expr-eval';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-edit',
@@ -129,7 +131,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     private translateService: TranslateService,
     private fb: FormBuilder,
     private inputService: InputService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -661,13 +664,22 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   // Save the current input and redirect the user to the input home page
   async saveInput(): Promise<void>{
-    const inputToBeSaved = new Input(this.inputForm.value);
-    const response = await this.inputService.save(inputToBeSaved);
-    if (response){
-      this.input = new Input(response);
-      this.inputForm.get('rev').setValue(this.input.rev);
-      this.router.navigate(['./../../../'], {relativeTo: this.route});
-    }
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
+    
+    dialogRef.afterClosed().subscribe(res => {
+      if(res.confirm){
+        const inputToBeSaved = new Input(this.inputForm.value);
+        this.inputService.save(inputToBeSaved).then(response => {
+          if (response){
+            this.input = new Input(response);
+            this.inputForm.get('rev').setValue(this.input.rev);
+            this.router.navigate(['./../../../'], {relativeTo: this.route});
+          }
+        });
+      }
+    })
+
+    
   }
 
   // Delete current input and redirect the user to input home page
