@@ -667,7 +667,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
     
     dialogRef.afterClosed().subscribe(res => {
-      if(res.confirm){
+      if(res?.confirm){
         const inputToBeSaved = new Input(this.inputForm.value);
         this.inputService.save(inputToBeSaved).then(response => {
           if (response){
