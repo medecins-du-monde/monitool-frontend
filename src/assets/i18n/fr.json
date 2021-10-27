@@ -103,7 +103,7 @@
     "DownloadPdfPortrait": "Télécharger PDF (portrait)",
     "DownloadPlot": "Télécharger",
     "DuplicateDatasourceTitle": "Cloner la source de données",
-    "DuplicateDatasource": "Cette action va cloner cette source de données. Confimez pour cloner.",
+    "DuplicateDatasource": "Cette action va cloner la structure de cette source de données sans les données déjà saisies. Confirmez pour cloner.",
     "ResetGraph": "Réinitialiser",
     "Edit": "Modifier",
     "Email": "Email",
