@@ -1,7 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { PartitionElement } from 'src/app/models/classes/partition-element.model';
+import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
 import { Partition } from 'src/app/models/classes/partition.model';
+import { ExistingPartitionModalComponent } from '../existing-partition-modal/existing-partition-modal.component';
 import { PartitionModalComponent } from '../partition-modal/partition-modal.component';
 
 
@@ -59,15 +62,19 @@ export class FormElementEditComponent implements OnInit {
   }
 
   onAddNewPartition() {
-    const partition: FormGroup = this.newPartition();
+    const partition: FormGroup = this.newEmptyPartition();
     this.openDialog(partition);
+  }
+
+  onUseExistingPartition(){
+    this.openExistingPartitionDialog();
   }
 
   onRemovePartition(i: number) {
     this.partitions.removeAt(i);
   }
 
-  private newPartition(): FormGroup {
+  private newEmptyPartition(): FormGroup {
     const partition = new Partition();
     return this.fb.group({
       id: [partition.id],
@@ -78,6 +85,50 @@ export class FormElementEditComponent implements OnInit {
       groups: this.fb.array([])
     });
   }
+
+  openExistingPartitionDialog(){
+    const dialogRef = this.dialog.open(ExistingPartitionModalComponent, { data: this.elementForm });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        for (const partition of res.selectedPartitions){
+          this.partitions.push(this.newPartition(partition));
+        }
+      }
+      this.changeDetector.markForCheck();
+    });
+  }
+
+  private newPartition(partition: Partition): FormGroup {
+    const partitionForm = this.fb.group({
+      id: [partition.id],
+      name: [partition.name, Validators.required],
+      aggregation: [partition.aggregation],
+      elements: this.fb.array(partition.elements.map(x => this.newPartitionElement(x))),
+      useGroups: [partition.useGroups]
+    });
+    const elements = partitionForm.controls.elements as FormArray;
+    partitionForm.addControl('groups', this.fb.array(
+      partition.useGroups ? partition.groups.map(x => this.newPartitionGroup(x, elements)) : []));
+    return partitionForm;
+  }
+
+  private newPartitionElement(partitionElement: PartitionElement): FormGroup {
+    return this.fb.group({
+      id: [partitionElement.id],
+      name: [partitionElement.name, Validators.required]
+    });
+  }
+
+  private newPartitionGroup(partitionGroup: PartitionGroup, elements: FormArray): FormGroup {
+    return this.fb.group({
+      id: [partitionGroup.id],
+      name: [partitionGroup.name, Validators.required],
+      members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
+    });
+  }
+
+
 
   openDialog(partition: FormGroup) {
     const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });

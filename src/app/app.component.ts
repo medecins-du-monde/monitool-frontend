@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.preferredLanguage = 'fr';
     }
     this.translateService.setDefaultLang(this.preferredLanguage);
+    this.translateService.use(this.preferredLanguage);
 
     // === Icons ===
     this.matIconRegistry.addSvgIcon(

@@ -19,8 +19,12 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
-        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()"><mat-icon>edit</mat-icon>{{ 'Edit' | translate }}</button>
-        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
+        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()">
+            <mat-icon>edit</mat-icon>{{ 'Edit' | translate }}
+        </button>
+        <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button">
+            <mat-icon>expand_more</mat-icon>
+        </button>
     </mat-card-actions>
 </mat-card>
 
@@ -33,8 +37,29 @@
         <mat-icon>note</mat-icon>
         <span>{{ 'DownloadPdfLandscape' | translate }}</span>
     </a>
-    <button mat-menu-item (click)="onDelete()">
-        <mat-icon>delete</mat-icon>
+    <button mat-menu-item class="delete" (click)="onDelete()">
+        <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
+    <button mat-menu-item (click)="onClone(form)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'Clone' | translate }}</span>
+    </button>
 </mat-menu>
+
+<ng-template #cloneDatasourceDialog>
+    <mat-dialog-content>
+        <button class="dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>{{ 'DuplicateDatasourceTitle' | translate }}</h2>
+
+        <p>{{ 'DuplicateDatasource' | translate }}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'Cancel' | translate }}</button>
+        <button mat-flat-button mat-dialog-close color="primary" (click)="onSubmit()" class="mdm-button">{{ 'Confirm' | translate
+            }}</button>
+    </mat-dialog-actions>
+</ng-template>

@@ -22,7 +22,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Periodicity' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}">
+                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}" disableOptionCentering panelClass="myPanelClass">
                     <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">{{ periodicity.display | translate }}
                     </mat-option>
                 </mat-select>
@@ -32,13 +32,13 @@
             </mat-form-field>
         </div>
         <ng-container *ngIf="this.dataSourceForm.value.periodicity !== 'free'">
-            <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
+            <div class="mdm-form-group date-group">
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'StartDate' | translate }}</div>
                     <mat-radio-group class="dateGroup">
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="isCustom('start')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
                         <mat-form-field *ngIf="isCustom('start')" appearance="outline" class="mdm-form-field">
                             <input matInput [matDatepicker]="startPicker" formControlName="start">
-                            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
                             <mat-datepicker #startPicker></mat-datepicker>
                             <mat-hint>
                                 <mat-icon>info</mat-icon>{{ 'DataSourceEdit.StartDateHint' | translate }}
@@ -47,13 +47,13 @@
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : { date: project.start | localizedDate} }}</mat-radio-button>
                     </mat-radio-group>
             </div>
-            <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+            <div class="mdm-form-group date-group">
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'EndDate' | translate }}</div>
                     <mat-radio-group class="dateGroup">
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="isCustom('end')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
                         <mat-form-field *ngIf="isCustom('end')" appearance="outline" class="mdm-form-field">
                             <input matInput [matDatepicker]="endPicker" formControlName="end">
-                            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                            <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>
                             <mat-datepicker #endPicker></mat-datepicker>
                             <mat-hint>
                                 <mat-icon>info</mat-icon>{{ 'DataSourceEdit.EndDateHint' | translate }}
@@ -71,7 +71,7 @@
         <mat-accordion formArrayName="elements" cdkDropList (cdkDropListDropped)="drop($event)">
             <mat-expansion-panel *ngFor="let element of elements.controls; let i=index" [formGroupName]="i" cdkDrag>
                 <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> Variable {{i + 1}}: {{element.value.name}}</mat-panel-title>
+                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> {{ 'Data' | translate }} {{i + 1}}: {{element.value.name}}</mat-panel-title>
                     <mat-panel-description>
                         <button mat-stroked-button class="mdm-button delete-button" (click)="onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
                     </mat-panel-description>
@@ -81,4 +81,4 @@
         </mat-accordion>
     </div>
 </div>
-<button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddVariable' | translate }}</button>
+<button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddData' | translate }}</button>

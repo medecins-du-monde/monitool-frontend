@@ -1,5 +1,5 @@
-<mat-form-field [formGroup]="form" appearance="outline" class="mdm-form-field">
-    <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple>
+<mat-form-field [formGroup]="form" appearance="outline" class="mdm-form-field chip-list">
+    <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple disableOptionCentering panelClass="basicsChipListPanelClass">
         <mat-select-trigger>
             <mat-chip-list>
                 <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"

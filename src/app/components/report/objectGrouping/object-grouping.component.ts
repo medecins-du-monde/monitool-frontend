@@ -3,6 +3,7 @@ import {  FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-object-grouping',
@@ -37,7 +38,13 @@ export class ObjectGroupingComponent implements OnInit {
   ];
 
   constructor(private projectService: ProjectService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private translateService: TranslateService) { }
+
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
 
   get currentPeriodicity(): string {
@@ -50,6 +57,10 @@ export class ObjectGroupingComponent implements OnInit {
 
   get currentProjectId(): string {
      return this.project.id;
+  }
+
+  get minimized(): boolean {
+    return true;
   }
 
   ngOnInit(): void {

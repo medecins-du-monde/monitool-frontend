@@ -49,7 +49,7 @@
                 <div *ngIf="column === 'footerDate'; else elseBlockFooter">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput [matDatepicker]="startPicker" [formControl]="dateForm">
-                        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
                         <mat-datepicker #startPicker></mat-datepicker>
                     </mat-form-field>
                 </div>
