@@ -1196,6 +1196,15 @@ code {
   margin-bottom: 35px !important;
 }
 
+.basicsChipListPanelClass {
+  margin-top: 63px !important; 
+  max-height: 300px !important;
+  overflow-x: hidden !important;
+  margin-left: 28px;
+  min-width: calc(100% + 25px) !important;
+  margin-bottom: 35px !important;
+}
+
 .filterClass {
   margin-top: 30px !important; 
   overflow-x: hidden !important;

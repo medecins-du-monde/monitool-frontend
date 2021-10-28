@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { clone } from 'lodash';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,9 +21,13 @@ export class DataSourceComponent implements OnInit {
   @Input() project: Project;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+
+  @ViewChild('cloneDatasourceDialog') cloneDatasourceDialog: TemplateRef<any>;
+
   public allOption: Group = new Group({id: 'all', name: 'All'});
   groups: Group[];
   entities: Entity[];
+  private formToClone;
 
   private getGroupsSelected(){
     if (this.form === null || this.form.entities === null){
@@ -54,7 +62,7 @@ export class DataSourceComponent implements OnInit {
     return entities;
   }
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService, private dialog: MatDialog, private projectService: ProjectService, ) { }
 
   ngOnInit(): void {
     this.allOption.members = this.form.entities;
@@ -80,6 +88,39 @@ export class DataSourceComponent implements OnInit {
 
   onDelete() {
     this.delete.emit(this.form);
+  }
+
+  onClone(form) {
+    this.formToClone = form;
+    this.dialog.open(this.cloneDatasourceDialog);
+  }
+
+  onSubmit(): void {
+    let cloneCount = 0;
+    this.project.forms.forEach(el => {
+      if (el.name.includes(this.formToClone.name)) {
+        cloneCount++;
+      }
+    });
+    const newForm = new Form();
+    newForm.name = 'Clone ' + (cloneCount === 0 ? '' : cloneCount) + ' - ' + this.formToClone.name;
+    newForm.end = this.formToClone.end;
+    newForm.periodicity = this.formToClone.periodicity;
+    newForm.start = this.formToClone.start;
+    newForm.entities = this.formToClone.entities;
+
+    this.formToClone.elements.forEach(el => {
+      const newElement = new FormElement();
+      newElement.distribution = el.distribution;
+      newElement.geoAgg = el.geoAgg;
+      newElement.name = el.name;
+      newElement.partitions = el.partitions;
+      newElement.timeAgg = el.timeAgg;
+      newForm.elements.push(newElement);
+    });
+
+    this.project.forms.push(newForm);
+    this.projectService.project.next(this.project);
   }
 
 }

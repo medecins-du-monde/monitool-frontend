@@ -32,8 +32,8 @@
             </mat-form-field>
         </div>
         <ng-container *ngIf="this.dataSourceForm.value.periodicity !== 'free'">
-            <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
+            <div class="mdm-form-group date-group">
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'StartDate' | translate }}</div>
                     <mat-radio-group class="dateGroup">
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="isCustom('start')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
                         <mat-form-field *ngIf="isCustom('start')" appearance="outline" class="mdm-form-field">
@@ -47,8 +47,8 @@
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : { date: project.start | localizedDate} }}</mat-radio-button>
                     </mat-radio-group>
             </div>
-            <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+            <div class="mdm-form-group date-group">
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'EndDate' | translate }}</div>
                     <mat-radio-group class="dateGroup">
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="isCustom('end')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
                         <mat-form-field *ngIf="isCustom('end')" appearance="outline" class="mdm-form-field">

@@ -121,8 +121,8 @@
         <ng-container matColumnDef="sites">
             <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="sites" [formGroupName]="index">
-                <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-select formControlName="members" placeholder="{{ 'CollectionSites' | translate }}" multiple disableOptionCentering panelClass="chipListPanelClass">
+                <mat-form-field appearance="outline" class="mdm-form-field chip-list">
+                    <mat-select formControlName="members" placeholder="{{ 'CollectionSites' | translate }}" multiple disableOptionCentering panelClass="basicsChipListPanelClass">
                         <mat-select-trigger>
                             <mat-chip-list>
                                 <mat-chip *ngFor="let entity of selectedEntities[index]" [removable]="true"

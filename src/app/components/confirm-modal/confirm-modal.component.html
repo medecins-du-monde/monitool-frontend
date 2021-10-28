@@ -1,6 +1,6 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
-<p>{{ 'DeleteConfirmation' | translate }}</p>
+<p>{{ this.data.messageId | translate }}</p>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button (click)="confirm()" class="mdm-button save-button">{{ 'Confirm' | translate }}</button>
     <button mat-stroked-button (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate }}</button>
+    <button mat-stroked-button (click)="confirm()" class="mdm-button save-button">{{ 'Confirm' | translate }}</button>
 </mat-dialog-actions>
