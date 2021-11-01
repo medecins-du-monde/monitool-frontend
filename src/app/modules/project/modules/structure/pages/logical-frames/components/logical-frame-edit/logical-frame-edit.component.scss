@@ -18,3 +18,11 @@ app-collection-sites-selector{
   flex: 1;
   display: flex;
 }
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 40px !important;
+}
+
+.mdm-form-expansion {
+  padding: 10px
+}
