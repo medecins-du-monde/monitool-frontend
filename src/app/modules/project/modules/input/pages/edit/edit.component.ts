@@ -429,6 +429,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         observeChanges: true,
         hotId: 'element.id',
         type: 'numeric',
+        allowInvalid: false,
+        validator : (value, callback) => {
+          if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
+            callback(true);
+          } else {
+            callback(false);
+          }
+        },
         renderer(instance, td, row, col, prop, value, cellProperties) {
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -455,7 +463,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
               if (oldValue !== newValue){
                 const pos = this.isInputCell(-1, x, y, tableObj);
-                if (pos !== null){
+                if (pos !== null && typeof newValue === 'number'){
                   change[3] = newValue;
                   this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
                 }

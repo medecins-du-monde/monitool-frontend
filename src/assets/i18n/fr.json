@@ -77,7 +77,7 @@
     "DataSources": "Sources de données",
     "DataSource": "Source de données",
     "Date": "Date",
-    "DelayWarning": "Il peut y avoir un délais de quelques minutes avant de voir les données dans le Rapport Général.",
+    "DelayWarning": "Attention, les données sauvegardées peuvent apparaître dans le Rapport General après quelques minutes.",
     "Delete": "Supprimer",
     "Deleted": "Supprimé",
     "DeletedPlural": "Supprimés",

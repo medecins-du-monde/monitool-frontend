@@ -8,13 +8,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ConfirmModalComponent implements OnInit {
 
+  public warning: boolean;
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any 
   ){}
 
   ngOnInit(): void {
-    //
+    if (this.data.messageId === 'DelayWarning') {
+      this.warning = true;
+    } else {
+      this.warning = false;
+    }
   }
 
   confirm(){
