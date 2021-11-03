@@ -258,7 +258,7 @@
         "logicalFrames_indicators_computation_replace": "Change indicator <code>{{indicator.display}}</code> computation in logical framework <code>{{logicalFrame.name}}</code>",
         "extraIndicators_add": "Add extra indicator <code>{{item.display}}</code>",
         "extraIndicators_move": "Reorder extra indicators",
-        "extraIndicators_remove": "Deletee extra indicator <code>{{item.display}}</code>",
+        "extraIndicators_remove": "Delete extra indicator <code>{{item.display}}</code>",
         "extraIndicators_baseline_replace": "Change baseline of extra indicator <code>{{extraIndicator.display}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
         "extraIndicators_target_replace": "Change target of extra indicator <code>{{extraIndicator.display}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
         "extraIndicators_display_replace": "Rename extra indicator <code>{{before}}</code> to <code>{{after}}</code>",

@@ -127,7 +127,7 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i + 1);
+    const patchedProject = this.patchProject(i);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
@@ -169,7 +169,7 @@ export class HistoryComponent implements OnInit {
     const patchedRevision = this.patchProject(revisionIndex);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
-    this.projectService.project.next(new Project(patchedRevision));
+    this.projectService.project.next(patchedRevision);
   }
 
 }
