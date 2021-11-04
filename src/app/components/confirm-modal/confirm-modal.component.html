@@ -4,7 +4,7 @@
 <div class="modal-text">
     <p><span><mat-icon *ngIf="warning">warning</mat-icon></span>{{ this.data.messageId | translate }}</p>
 </div>
-<mat-checkbox>J'ai compris</mat-checkbox>
+<mat-checkbox  color="primary" (change)="userAgreement($event)" >{{ 'Understood' | translate }}</mat-checkbox>
 <mat-dialog-actions align="end">
     <button mat-stroked-button *ngIf="!warning" (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate
         }}</button>

@@ -20,6 +20,7 @@ import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptio
 import Parser from 'expr-eval';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-edit',
@@ -56,6 +57,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     } as InformationItem
   ];
 
+  private showModal: boolean;
 
 // TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
@@ -133,9 +135,15 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
     private inputService: InputService,
     private router: Router,
     private dialog: MatDialog,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
+
+    this.userService.showingInputModal.subscribe(val => {
+      console.log('val', val);
+      this.showModal = val;
+    });
     // Set the page with the normal size
     this.projectService.inBigPage.next(false);
 
@@ -672,22 +680,31 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
 
   // Save the current input and redirect the user to the input home page
   async saveInput(): Promise<void>{
-    const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
-    
-    dialogRef.afterClosed().subscribe(res => {
-      if(res?.confirm){
-        const inputToBeSaved = new Input(this.inputForm.value);
-        this.inputService.save(inputToBeSaved).then(response => {
-          if (response){
-            this.input = new Input(response);
-            this.inputForm.get('rev').setValue(this.input.rev);
-            this.router.navigate(['./../../../'], {relativeTo: this.route});
-          }
-        });
-      }
-    })
-
-    
+    if (this.showModal) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
+  
+      dialogRef.afterClosed().subscribe(res => {
+        if(res?.confirm){
+          const inputToBeSaved = new Input(this.inputForm.value);
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response){
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.router.navigate(['./../../../'], {relativeTo: this.route});
+            }
+          });
+        }
+      })
+    } else {
+      const inputToBeSaved = new Input(this.inputForm.value);
+      this.inputService.save(inputToBeSaved).then(response => {
+        if (response){
+          this.input = new Input(response);
+          this.inputForm.get('rev').setValue(this.input.rev);
+          this.router.navigate(['./../../../'], {relativeTo: this.route});
+        }
+      });
+    }  
   }
 
   // Delete current input and redirect the user to input home page
