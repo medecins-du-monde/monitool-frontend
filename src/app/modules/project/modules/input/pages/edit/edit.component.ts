@@ -317,7 +317,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
         // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
-        total += sum;
+        if (sum !== null){
+          total += sum;
+        }
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
@@ -328,7 +330,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
-      total = 0;
+      total = null;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1) {
         let sum = null;
         for (x = 0; x < table.numberRows; x += 1) {
@@ -346,13 +348,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
         // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
-        total += sum;
+        if (sum !== null){
+          total += sum;
+        }
       }
       // if the table has multiple rows and collums the total in the last cell needs to be updated
       if (total && total !== 0) {
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
-      } else {
-        table.value[table.numberRows - 1][table.numberCols - 1] = null;
       }
     }
   }
@@ -710,7 +712,27 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   // Save the current input and redirect the user to the input home page
   async saveInput(): Promise<void> {
-    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+    let foundNull = false;
+    for (const values of Object.values(this.inputForm.value.values)){
+      for (const v of (values as Array<number>)){
+        if (v === null){
+          foundNull = true;
+          break;
+        }
+      }
+      if (foundNull){
+        break;
+      }
+    }
+    
+    let dialogRef;
+    if (foundNull){
+      dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'SavingNull' } });
+    }
+    else{
+      dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+    }
+
 
     dialogRef.afterClosed().subscribe(res => {
       if (res?.confirm) {
