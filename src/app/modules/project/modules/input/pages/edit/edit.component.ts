@@ -306,7 +306,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos]) {
+              if (val.values[table.id][inputPos] !== null) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -337,7 +337,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos]) {
+              if (val.values[table.id][inputPos] !== null) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -681,7 +681,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     const valuesGroup = {};
     const inputArr = [];
     for (const e of this.form.elements) {
-      this.input.values[e.id].forEach(value => {
+      this.inputForm.get('values').get(e.id).value.forEach(value => {
         if (typeof value === 'number') {
           inputArr.push(value);
         } else {
@@ -691,21 +691,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       valuesGroup[e.id] = this.fb.array(
         inputArr
       );
+      
+      this.inputForm.get('values').get(e.id).setValue(inputArr);
     }
 
-    // Create the formGroup
-    this.inputForm = this.fb.group({
-      _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
-      entity: this.site.id,
-      form: this.form.id,
-      period: this.timeSlotDate,
-      project: this.project.id,
-      rev: (this.input && this.input.rev) ? this.input.rev : null,
-      values: this.fb.group(valuesGroup)
-    });
-
-    // Fill the init value with the current value in order to be able to reset
-    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
     this.createTable();
     this.updateTotals(this.inputForm.value);
   }
