@@ -82,6 +82,7 @@
     "DataSources": "Data sources",
     "DataSource": "Data sources",
     "Date": "Date",
+    "DelayWarning": "The data you just entered can take a few minutes to appear on the General Report.",
     "Delete": "Delete",
     "Deleted": "Deleted",
     "DeletedPlural": "Deleted",
@@ -762,6 +763,7 @@
     "DownloadTable": "Download Table",
     "FillWithPreviousData": "Fill with data from the previous entry",
     "ShowFinishedProjects": "Show finished projects",
+    "Understood": "I understand",
 
     "Jan": "january",
     "Feb": "february",
