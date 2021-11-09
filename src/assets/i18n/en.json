@@ -646,6 +646,7 @@
     "SaveIndicator": "Save indicator",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",
+    "SavingNull": "You did not filled in some of the fields, are you sure you want to save?",
     "Search": "Enter text here to filter the projects",
     "SearchHelp": "Search a project by name of country or project or thematic.",
     "SeeOlderDates": "See older dates",

@@ -141,7 +141,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   ngOnInit(): void {
 
     this.userService.showingInputModal.subscribe(val => {
-      console.log('val', val);
       this.showModal = val;
     });
     // Set the page with the normal size
@@ -765,41 +764,29 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       });
     }
     else{
-      dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+      if (this.showModal){
+        dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+        dialogRef.afterClosed().subscribe(res => {
+          const inputToBeSaved = new Input(this.inputForm.value);
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response) {
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.router.navigate(['./../../../'], { relativeTo: this.route });
+            }
+          });
+        });
+      }else{
+        const inputToBeSaved = new Input(this.inputForm.value);
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response) {
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.router.navigate(['./../../../'], { relativeTo: this.route });
+            }
+          });
+      }
     }
-
-
-    
-
-
-// =======
-//   async saveInput(): Promise<void>{
-//     if (this.showModal) {
-//       const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
-  
-//       dialogRef.afterClosed().subscribe(res => {
-//         if(res?.confirm){
-//           const inputToBeSaved = new Input(this.inputForm.value);
-//           this.inputService.save(inputToBeSaved).then(response => {
-//             if (response){
-//               this.input = new Input(response);
-//               this.inputForm.get('rev').setValue(this.input.rev);
-//               this.router.navigate(['./../../../'], {relativeTo: this.route});
-//             }
-//           });
-//         }
-//       })
-//     } else {
-//       const inputToBeSaved = new Input(this.inputForm.value);
-//       this.inputService.save(inputToBeSaved).then(response => {
-//         if (response){
-//           this.input = new Input(response);
-//           this.inputForm.get('rev').setValue(this.input.rev);
-//           this.router.navigate(['./../../../'], {relativeTo: this.route});
-//         }
-//       });
-//     }  
-// >>>>>>> 243-warning-about-delay
   }
 
   // Delete current input and redirect the user to input home page

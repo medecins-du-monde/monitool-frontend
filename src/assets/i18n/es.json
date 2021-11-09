@@ -641,6 +641,7 @@
     "SaveConfirm": "Guarde para confirmar que desea volver a este punto",
     "SaveThematic": "Guardar la temática",
     "SaveUser": "Guardar usuario",
+    "SavingNull": "No llenó algunos campos, ¿está seguro de que desea guardar?",
     "Search": "Entre texto para buscar proyectos",
     "SearchHelp": "Buscar proyecto por nombre de país, del proyecto o de la temática.",
     "SeeReport": "Ver el informe",

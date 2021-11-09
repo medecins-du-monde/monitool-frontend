@@ -26,7 +26,6 @@ export class ConfirmModalComponent implements OnInit {
   }
 
   userAgreement(event): void {
-    console.log('checked', event.checked);
     this.userService.updateInputModalChoice(!event.checked);
   }
 
