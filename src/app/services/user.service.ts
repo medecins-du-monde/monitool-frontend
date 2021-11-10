@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/classes/user.model';
 import { ApiService } from './api.service';
 
@@ -6,6 +7,12 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class UserService {
+
+  public showInputWarningModal: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
+  get showingInputModal(): Observable<boolean> {
+    return this.showInputWarningModal.asObservable();
+  }
 
   constructor(private apiService: ApiService) { }
 
@@ -17,6 +24,10 @@ export class UserService {
 
   public async save(user: User): Promise<void> {
     await this.apiService.put(`/resources/user/${user.id}`, user.serialize());
+  }
+
+  public updateInputModalChoice(showing: boolean): void {
+    this.showInputWarningModal.next(showing);
   }
 
 }
