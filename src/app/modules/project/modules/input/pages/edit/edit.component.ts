@@ -682,9 +682,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   async saveInput(): Promise<void>{
     if (this.showModal) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
-  
+
       dialogRef.afterClosed().subscribe(res => {
-        if(res?.confirm){
+        if (res?.confirm){
           const inputToBeSaved = new Input(this.inputForm.value);
           this.inputService.save(inputToBeSaved).then(response => {
             if (response){
@@ -694,7 +694,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             }
           });
         }
-      })
+      });
     } else {
       const inputToBeSaved = new Input(this.inputForm.value);
       this.inputService.save(inputToBeSaved).then(response => {
@@ -704,7 +704,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           this.router.navigate(['./../../../'], {relativeTo: this.route});
         }
       });
-    }  
+    }
   }
 
   // Delete current input and redirect the user to input home page

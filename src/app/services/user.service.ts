@@ -27,7 +27,7 @@ export class UserService {
   }
 
   public updateInputModalChoice(showing: boolean): void {
-    this.showInputWarningModal.next(showing)
+    this.showInputWarningModal.next(showing);
   }
 
 }
