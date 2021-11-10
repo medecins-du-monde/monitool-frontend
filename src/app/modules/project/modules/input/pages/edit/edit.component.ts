@@ -219,9 +219,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         this.inputForm.valueChanges.subscribe(val => {
           console.log('form', this.inputForm.value);
         // Convert the string input to a number
-        //this.convertToNumber(val);
+        // this.convertToNumber(val);
         // Update of the total cell of each row or column
-        this.updateTotals(val);
+          this.updateTotals(val);
       });
 
       // Update the breadcrumbs informations
@@ -690,7 +690,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
             );
           }
         }
-    
+
         // Create the formGroup
         this.inputForm = this.fb.group({
           _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
@@ -701,7 +701,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           rev: (this.input && this.input.rev) ? this.input.rev : null,
           values: this.fb.group(valuesGroup)
         });
-    
+
         // Fill the init value with the current value in order to be able to reset
         this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
         this.createTable();
@@ -711,9 +711,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   // Save the current input and redirect the user to the input home page
   async saveInput(): Promise<void>{
     const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
-    
+
     dialogRef.afterClosed().subscribe(res => {
-      if(res?.confirm){
+      if (res?.confirm){
         const inputToBeSaved = new Input(this.inputForm.value);
         this.inputService.save(inputToBeSaved).then(response => {
           if (response){
@@ -723,9 +723,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           }
         });
       }
-    })
+    });
 
-    
+
   }
 
   // Delete current input and redirect the user to input home page

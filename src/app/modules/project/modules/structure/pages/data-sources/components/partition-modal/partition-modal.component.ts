@@ -57,8 +57,8 @@ export class PartitionModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.elements.push(this.newElement())
-    this.elements.push(this.newElement())
+    this.elements.push(this.newElement());
+    this.elements.push(this.newElement());
   }
 
   onAddNewElement() {
