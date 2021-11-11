@@ -706,8 +706,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       valuesGroup[e.id] = this.fb.array(
         inputArr
       );
-      
-      this.inputForm.get('values').get(e.id).setValue(inputArr);
+      this.inputForm.get('values').get(e.id).patchValue(inputArr);
     }
 
     this.createTable();
@@ -729,7 +728,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         break;
       }
     }
-    
+
     let dialogRef;
     if (foundNull){
       dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'SavingNull' } });
@@ -738,7 +737,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           if (this.showModal){
             const dialogRef2 = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DelayWarning'}});
             dialogRef2.afterClosed().subscribe(res => {
-              if(res?.confirm){
+              if (res?.confirm){
                 const inputToBeSaved = new Input(this.inputForm.value);
                 this.inputService.save(inputToBeSaved).then(response => {
                   if (response){
@@ -748,7 +747,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
                   }
                 });
               }
-            })
+            });
           }
           else{
             const inputToBeSaved = new Input(this.inputForm.value);
@@ -778,7 +777,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         });
       }else{
         const inputToBeSaved = new Input(this.inputForm.value);
-          this.inputService.save(inputToBeSaved).then(response => {
+        this.inputService.save(inputToBeSaved).then(response => {
             if (response) {
               this.input = new Input(response);
               this.inputForm.get('rev').setValue(this.input.rev);
