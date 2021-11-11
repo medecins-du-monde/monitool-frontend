@@ -165,7 +165,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       setTimeout(() => {
         this.loadingComponent = false;
       });
-      console.log('error while loading : ' + error);
+      console.log('Error while loading : ' + error);
     });
 
     this.loadingService.loaded.subscribe( isLoading => {
