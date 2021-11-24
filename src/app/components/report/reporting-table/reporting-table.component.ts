@@ -533,7 +533,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // This allows to round all values
   roundResponse(response: unknown): unknown {
     for (const [key, value] of Object.entries(response)) {
-      response[key] = value === null ? null : round(value as number);
+      if (value === null){
+        response[key] = null;
+      }
+      if (typeof value === 'string'){
+        response[key] = value;
+      }
+      else{
+        response[key] = round(value as number);
+      }
     }
     return response;
   }
@@ -740,8 +748,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   checkIfNaN(x: unknown): boolean {
-    console.log('TYPE OF', typeof x);
-    console.log('XXXX', x);
     return isNaN(x);
   }
 
@@ -757,6 +763,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     else {
       this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
     }
+  }
+
+  isString(val: unknown): boolean{
+    return typeof val === 'string';
   }
 
   ngOnDestroy(): void {
