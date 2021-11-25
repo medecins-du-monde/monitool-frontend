@@ -129,8 +129,10 @@
                         </button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <app-purpose-edit [purposeForm]="purpose" [forms]="project.forms" (edit)="onEditPurpose($event, i)">
-                </app-purpose-edit>
+                <div class="purpose">
+                    <app-purpose-edit [purposeForm]="purpose" [forms]="project.forms" (edit)="onEditPurpose($event, i)">
+                    </app-purpose-edit>
+                </div>
             </mat-expansion-panel>
         </mat-accordion>
     </div>
