@@ -65,6 +65,7 @@
     ],
     "CustomDate": "Custom date",
     "Data": "Data",
+    "DataIncomplete": "This value was computed from data which is incomplete",
     "DataEntryUser": "Data entry",
     "DataSourceCalendarTitle": "Calendar",
     "DataSourceEdit": {
@@ -508,6 +509,7 @@
     "Login": "Login",
     "Members": "Members",
     "Missing": "Missing",
+    "MissingDataEntry":"The value cannot be computed because the data entry was not done",
     "MultipleThematics": "Multiple thematics",
     "MyAccount": "My account",
     "Name": "Name",
