@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmModalComponent } from './confirm-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [ConfirmModalComponent],
@@ -14,6 +15,7 @@ import { ConfirmModalComponent } from './confirm-modal.component';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatCheckboxModule
   ],
   exports: [ConfirmModalComponent]
 })

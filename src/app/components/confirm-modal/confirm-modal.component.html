@@ -1,6 +1,12 @@
-<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
-<p>{{ this.data.messageId | translate }}</p>
+<button class="dialog-close" mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+</button>
+<div class="modal-text">
+    <p><span><mat-icon *ngIf="warning">warning</mat-icon></span>{{ this.data.messageId | translate }}</p>
+</div>
+<mat-checkbox  color="primary" (change)="userAgreement($event)" >{{ 'Understood' | translate }}</mat-checkbox>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate }}</button>
+    <button mat-stroked-button *ngIf="!warning" (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate
+        }}</button>
     <button mat-stroked-button (click)="confirm()" class="mdm-button save-button">{{ 'Confirm' | translate }}</button>
 </mat-dialog-actions>
