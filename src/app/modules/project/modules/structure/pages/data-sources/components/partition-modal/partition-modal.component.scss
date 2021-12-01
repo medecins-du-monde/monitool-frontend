@@ -1,5 +1,25 @@
 @import "src/assets/theme/size_vars.scss";
 
+.partition-dialog {
+  display: flex;
+  flex-direction: column;
+
+  .partition-group {
+    display: flex;
+    justify-content: space-between;
+
+    .partition-label {
+      width: 10%;
+      text-align: end;
+      font-weight: bold;
+    }
+  }
+
+  .partition-content {
+    width: 88%;
+  }
+}
+
 .mat-footer-cell {
   text-align: center;
 }
@@ -28,7 +48,7 @@ tr {
 }
 
 .w-10 {
-  width: 10% !important;
+  width: 5% !important;
 }
 
 .w-40 {
@@ -36,11 +56,22 @@ tr {
 }
 
 .w-80 {
-  width: 80% !important;
+  width: 90% !important;
+}
+
+tr.mat-row {
+  height: 40px !important;
+}
+tr.mat-header-row {
+  height: 45px !important;
+}
+
+tr.mat-foot-row {
+  height: 45px !important;
 }
 
 th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type  {
-  padding: 4px;
+  padding: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,5 +90,17 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
   width: unset;
   height: unset;
   font-size: 16px;
+}
+
+.hint {
+  margin-left: 19%;
+}
+
+.mdm-form-label-edition {
+  flex: 0.1;
+  font-size: $small_text;
+  text-align: right;
+  padding-right: 30px;
+  font-weight: bold;
 }
 
