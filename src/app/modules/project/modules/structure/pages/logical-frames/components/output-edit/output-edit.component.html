@@ -46,7 +46,7 @@
     </div>
     <mat-accordion formArrayName="activities" cdkDropList (cdkDropListDropped)="drop($event)">
         <mat-expansion-panel *ngFor="let activity of activities.controls; let i=index" [formGroupName]="i" cdkDrag
-            [expanded]="true">
+            [expanded]="i === 0 ? true : false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'Activity' | translate }} {{i + 1}}:
@@ -58,7 +58,9 @@
                     </button>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-activity-edit [activityForm]="activity" [forms]="forms"></app-activity-edit>
+            <div class="activity">
+                <app-activity-edit [activityForm]="activity" [forms]="forms"></app-activity-edit>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
     <div class="button">

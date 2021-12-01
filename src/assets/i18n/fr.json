@@ -61,7 +61,7 @@
     "DataEntryUser": "Saisisseur",
     "DataSourceCalendarTitle": "Calendrier",
     "DataSourceStructureTitle": "Structure",
-    "CustomDate" : "date personnalisée",
+    "CustomDate" : "Date personnalisée",
     "SameAsProject": "Égale au projet ({{date}})",
     "DataSourceEdit": {
         "AddNameHint": "Comment s'apelle la source de laquelle vous voulez extraire des données? Par exemple: \"Dossier patient informatisé\", \"Registre des centre de santé\", \"Rapport du système national d'information sanitaire\", ...",

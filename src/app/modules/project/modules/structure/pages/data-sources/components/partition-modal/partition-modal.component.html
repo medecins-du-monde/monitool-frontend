@@ -4,7 +4,7 @@
 <h2 mat-dialog-title>{{ 'PartitionEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="data" class="mdm-dialog partition-dialog">
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+        <div class="mdm-form-label-edition">{{ 'Name' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field partition-content">
             <input matInput formControlName="name" placeholder="{{ 'Disaggregation.AddNamePlaceholder' | translate }}">
             <mat-hint>
@@ -54,7 +54,7 @@
         </mat-hint>
     </div>
     <div class="mdm-form-group partition-group">
-        <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
+        <div class="mdm-form-label-edition">{{ 'Aggregation' | translate }}</div>
         <div class="mdm-form-field partition-content">
             <mat-form-field appearance="outline">
                 <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}"
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div class="mdm-form-group partition-group">
-        <div class="mdm-form-label">{{ 'Groups' | translate }}</div>
+        <div class="mdm-form-label-edition">{{ 'Groups' | translate }}</div>
         <div class="mdm-form-field partition-content">
             <mat-checkbox formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
             <mat-hint>
@@ -79,7 +79,7 @@
         </div>
     </div>
     <div class="mdm-form-group partition-group" *ngIf="data.value.useGroups">
-        <div class="mdm-form-label"></div>
+        <div class="mdm-form-label-edition"></div>
         <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
             <ng-container matColumnDef="position">
                 <th class="w-10" mat-header-cell *matHeaderCellDef></th>

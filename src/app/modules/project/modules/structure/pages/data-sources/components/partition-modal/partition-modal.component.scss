@@ -9,14 +9,14 @@
     justify-content: space-between;
 
     .partition-label {
-      width: 16%;
+      width: 10%;
       text-align: end;
       font-weight: bold;
     }
   }
 
   .partition-content {
-    width: 81%;
+    width: 88%;
   }
 }
 
@@ -66,6 +66,10 @@ tr.mat-header-row {
   height: 45px !important;
 }
 
+tr.mat-foot-row {
+  height: 45px !important;
+}
+
 th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type  {
   padding: 0px;
   display: flex;
@@ -90,5 +94,13 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 
 .hint {
   margin-left: 19%;
+}
+
+.mdm-form-label-edition {
+  flex: 0.1;
+  font-size: $small_text;
+  text-align: right;
+  padding-right: 30px;
+  font-weight: bold;
 }
 

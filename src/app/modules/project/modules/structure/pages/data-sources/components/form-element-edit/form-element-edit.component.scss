@@ -14,11 +14,20 @@
 }
 
 .hint {
-  padding: 1em 1em;
+  padding: 0em 1em;
+  margin-bottom: 0.3rem;
 }
 
 .hint mat-icon {
   font-size: inherit;
+}
+
+.align-hint mat-icon{
+  margin-bottom: 40px;
+}
+
+.align-up mat-icon{
+  margin-bottom: 20px;
 }
 
 .display table,
