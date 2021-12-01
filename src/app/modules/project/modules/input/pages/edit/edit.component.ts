@@ -58,6 +58,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   ];
 
   private showModal: boolean;
+  public validInputCell = true;
 
 // TODO: Check if we can make this component cleaner and simplier
   private subscription: Subscription = new Subscription();
@@ -141,7 +142,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
   ngOnInit(): void {
 
     this.userService.showingInputModal.subscribe(val => {
-      console.log('val', val);
       this.showModal = val;
     });
     // Set the page with the normal size
@@ -444,6 +444,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           } else {
             callback(false);
           }
+        },
+        afterValidate: (isValid, value, row, prop, source) => {
+          this.validInputCell = value;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
           if (typeof value === 'number') {

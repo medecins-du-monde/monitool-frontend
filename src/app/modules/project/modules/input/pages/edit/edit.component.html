@@ -29,7 +29,7 @@
     </div>
 </div>
 <div class="save-actions">
-    <button mat-stroked-button class="mdm-button primary" [disabled]="!canBeSaved" (click)="saveInput()">
+    <button mat-stroked-button class="mdm-button primary" [disabled]="!canBeSaved || !validInputCell" (click)="saveInput()">
         <mat-icon>save</mat-icon>
         {{ 'Save' | translate }}
     </button>
