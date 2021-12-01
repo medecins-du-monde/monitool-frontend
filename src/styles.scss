@@ -268,6 +268,7 @@ mat-hint {
 .mdm-section {
   margin-bottom: 20px;
   color: $grey !important;
+  width: 100%;
 
     .mat-icon{
         cursor: pointer;
@@ -282,7 +283,7 @@ mat-hint {
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  margin: 24px -12px 0;
+  margin: 10px -12px 0;
 
 
   @media screen and (max-width: $breakpoint-xs) {
@@ -293,15 +294,6 @@ mat-hint {
 .mdm-card {
   width: 22%;
   margin: 0 1% 10px 1%;
-
-  @media screen and (max-width: $breakpoint-md) {
-    width: 23%
-  }
-
-  @media screen and (max-width: $breakpoint-sm-md) {
-    width: 30%;
-    margin: 0 1.666% 10px 1.666%;
-  }
 
   @media screen and (max-width: $breakpoint-xs-sm) {
     width: 47%;
@@ -343,8 +335,7 @@ mat-hint {
   display: flex;
   flex-direction: row;
   font-size: $small_text;
-  margin-bottom: 8px;
-  padding: 0px 16px 16px 16px;
+  padding: 8px 16px;
 
   &.column {
     flex-direction: column;
@@ -368,15 +359,18 @@ mat-hint {
   .computation {
       &.valid {
           color: $success;
+          font-weight: bold;
       }
 
       &.invalid {
           color: $warning;
+          font-weight: bold;
       }
 
       mat-icon{
           height: 14px;
           width: 14px;
+          font-weight: bold;
           font-size: $small_text;
           line-height: 14px;
           vertical-align: middle;
@@ -425,7 +419,7 @@ mat-hint {
     }
   
     .mat-card-actions {
-      padding: 16px !important;
+      padding: 0px 8px 16px 8px !important;
     }
 
     .card-header {
@@ -436,7 +430,6 @@ mat-hint {
   .mat-card-header {
     align-items: center;
     padding-bottom: 8px;
-    margin-bottom: 12px;
 
     .mat-card-header-text {
       margin-left: 16px;
@@ -847,7 +840,7 @@ mat-hint {
 // === FORMS ===
 
 .mdm-form {
-  padding: 24px 16px;
+  padding: 16px 10px;
   background-color: $form_background;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
 }
@@ -932,8 +925,8 @@ mat-hint {
 
 .mdm-form-group {
   display: flex;
-  align-items: baseline;
   flex-wrap: wrap;
+  width: 100%;
 
   font-size: $small_text;
   >.mdm-form-label{
@@ -941,6 +934,10 @@ mat-hint {
       font-size: $small_text;
       text-align: right;
       padding-right: 30px;
+  }
+
+  .label-offset {
+    margin-top: 10px !important;
   }
 
   @media screen and (max-width: $breakpoint-sm) {
@@ -1000,7 +997,7 @@ code {
 // Management of dateGroups (custom dates and same as project)
 .dateGroup {
   flex: 1;
-  margin: 25px 0px;
+  margin: 5px 0px;
   display: flex;
   flex-direction: column;
 }
@@ -1037,7 +1034,6 @@ code {
 
 .mat-radio-label {
   white-space: normal !important;
-  margin-bottom: 10px;
 }
 
 // Management of invalid forms

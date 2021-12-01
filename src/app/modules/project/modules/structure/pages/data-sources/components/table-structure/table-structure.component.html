@@ -1,55 +1,66 @@
 <!--- TOTAL STRUCTURES -->
 
 <div [formGroup]="elementForm">
-    <mat-radio-group [formControl]="floatLabelControl"  formControlName="distribution" (change)=selected($event)>
+    <mat-radio-group [formControl]="floatLabelControl" formControlName="distribution" (change)=selected($event)>
         <table *ngIf="visualize" class="display">
             <tr>
-        <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
-            <table>
-            <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
-                <td *ngFor="let column of getNumber(i)" class ="empty"></td>
-                <td class ="title">{{ 'Disaggregation.Title' | translate }}</td>
-            </tr>
-            <tr>
-                <td *ngFor="let partition of partitions.slice((partitions.length)-i); let x = index" class ="title">
-                    {{ 'Disaggregation.Title' | translate }}
+                <td *ngFor="let partition of getNumber(partitions.length+1); let i = index">
+                    <table>
+                        <tr *ngFor="let row of getNumber(partitions.length-i); let y = index">
+                            <td *ngFor="let column of getNumber(i)" class="empty"></td>
+                            <td class="title">{{ 'Disaggregation.Title' | translate }}</td>
+                        </tr>
+                        <tr>
+                            <td *ngFor="let partition of partitions.slice((partitions.length)-i); let x = index"
+                                class="title">
+                                {{ 'Disaggregation.Title' | translate }}
+                            </td>
+                            <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
+                        </tr>
+                        <tr>
+                            <td class="radioButton" [attr.colspan]="toNumber(i+1)">
+                                <mat-radio-button value="{{i}}" [checked]="isCurrent(i)"></mat-radio-button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td class="data">{{ 'Disaggregation.Data' | translate }}</td>
             </tr>
-            <tr><td class="radioButton" [attr.colspan]="toNumber(i+1)"><mat-radio-button value="{{i}}" [checked]="isCurrent(i)"></mat-radio-button></td></tr>
-            </table>
-        </td>
-        </tr>
         </table>
     </mat-radio-group>
 </div>
 <!--- DYNAMIC Structure -->
 
-<div *ngIf="partitions" [formGroup]="elementForm"> 
-<table *ngIf="!visualize" class="display">
-    <tr *ngFor="let row of partitions.slice(tableStructure); let rowIndex = index">
-        <td *ngFor="let column of getNumber(tableStructure)" class = "empty"></td>
-        <td class ="title">
-            <mat-form-field class="auto-width" >
-                <mat-select formArrayName="partitions"  [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id" (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))" disableOptionCentering panelClass="myPanelClass">
-                    <mat-option *ngFor="let part of partitions" [value]="part.id"  >
-                        {{ part.name }} ({{part.elements.length}})
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </td>
-    </tr>
-    <tr>
-        <td *ngFor="let partition of partitions.slice(0, tableStructure); let lastRowIndex = index" class ="title">
-            <mat-form-field class="auto-width">
-                <mat-select formArrayName="partitions" [(value)]="partitions[lastRowIndex].id" (selectionChange)="reorderPartitions($event.value, lastRowIndex)" >
-                    <mat-option *ngFor="let part of partitions" [value]="part.id" >
-                        {{ part.name }} ({{part.elements.length}})
-                    </mat-option>
+<div class="partition-table" *ngIf="partitions" [formGroup]="elementForm">
+    <table *ngIf="!visualize" class="display">
+        <tr *ngFor="let row of partitions.slice(tableStructure); let rowIndex = index">
+            <td *ngFor="let column of getNumber(tableStructure)" class="empty"></td>
+            <td class="title">
+                <div class="auto-width">
+                    <mat-select formArrayName="partitions"
+                        [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id"
+                        (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))"
+                        disableOptionCentering panelClass="myPanelClass">
+                        <mat-option *ngFor="let part of partitions" [value]="part.id">
+                            {{ part.name }} ({{part.elements.length}})
+                        </mat-option>
                     </mat-select>
-                </mat-form-field>
-        </td>
-        <td class="data">{{ 'Disaggregation.Data' | translate }} ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0, (partitions.length)-tableStructure))}}) </td>
-    </tr>
-</table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td *ngFor="let partition of partitions.slice(0, tableStructure); let lastRowIndex = index" class="title">
+                <div class="auto-width">
+                    <mat-select formArrayName="partitions" [(value)]="partitions[lastRowIndex].id"
+                        (selectionChange)="reorderPartitions($event.value, lastRowIndex)">
+                        <mat-option *ngFor="let part of partitions" [value]="part.id">
+                            {{ part.name }} ({{part.elements.length}})
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </td>
+            <td class="data">{{ 'Disaggregation.Data' | translate }}
+                ({{getLength(partitions.slice((partitions.length)-tableStructure))}} x {{getLength(partitions.slice(0,
+                (partitions.length)-tableStructure))}})</td>
+        </tr>
+    </table>
 </div>
