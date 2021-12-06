@@ -48,12 +48,15 @@
     width: auto !important;
   }
   .mat-select-value {
-    max-width: 100%;
-    width: auto;
+    display: block;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .mat-option {
     max-width: 100%;
     width: auto;
+    background: red !important;
   }
 }
