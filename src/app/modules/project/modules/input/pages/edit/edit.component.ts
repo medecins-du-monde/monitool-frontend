@@ -441,7 +441,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
         rowHeaders: false,
         stretchH: 'all',
         wordWrap: true,
-        autoRowSize: true,
         colWidths: 100,
         viewportColumnRenderingOffset: 1000,
         viewportRowRenderingOffset: 1000,
@@ -460,9 +459,17 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate{
           this.validInputCell = value;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
+          console.log('!!!!!!!', tableObj.numberCols);
+          if (col === tableObj.numberCols - 1) {
+            td.style.fontWeight = 'bold';
+          }
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             td.innerHTML = newValue;
+          } else if (typeof value === 'string') {
+            td.style.color = 'black';
+						td.style.background = '#eee';
+            td.innerHTML = value;
           } else {
             td.innerHTML = value;
           }
