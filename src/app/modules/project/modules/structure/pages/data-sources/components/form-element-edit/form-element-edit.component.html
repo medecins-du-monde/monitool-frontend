@@ -1,6 +1,6 @@
 <div [formGroup]="elementForm">
   <div class="mdm-form-group">
-      <div class="mdm-form-label">{{ 'AddVariableName' | translate }}</div>
+      <div class="mdm-form-label label-offset">{{ 'AddVariableName' | translate }}</div>
       <mat-form-field appearance="outline" class="mdm-form-field">
           <input matInput formControlName="name" placeholder="{{ 'AddVariableNamePlaceholder' | translate }}">
           <mat-hint>
@@ -10,7 +10,7 @@
       </mat-form-field>
   </div>
   <div class="mdm-form-group">
-      <div class="mdm-form-label">{{ 'GeoAggregation' | translate }}</div>
+      <div class="mdm-form-label label-offset">{{ 'GeoAggregation' | translate }}</div>
       <mat-form-field appearance="outline" class="mdm-form-field">
           <mat-select formControlName="geoAgg" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
               <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
@@ -23,8 +23,8 @@
       </mat-form-field>
   </div>
   <div class="mdm-form-group">
-      <div class="mdm-form-label">{{ 'TimeAggregation' | translate }}</div>
-      <mat-form-field appearance="outline" class="mdm-form-field">
+      <div class="mdm-form-label label-offset">{{ 'TimeAggregation' | translate }}</div>
+      <mat-form-field appearance ="outline" class="mdm-form-field">
           <mat-select formControlName="timeAgg" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
               <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
               </mat-option>
@@ -46,7 +46,7 @@
               </ng-container>
           </div>
           <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
-          <div class="hint">
+          <div class="hint align-hint">
               <mat-hint>
                   <mat-icon>info</mat-icon>
                   <span [innerHTML]="'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' }"></span>
@@ -59,7 +59,7 @@
       <div class="mdm-form-label">{{ 'Disaggregation.DisplayTitle' | translate }}</div>
       <div class="partitions-list">
           <app-table-structure  [visualize]="true" [elementForm]="elementForm" (chosenStructure)="receiveStructure($event)" ></app-table-structure>
-          <mat-hint  class="hint">
+          <mat-hint class="hint align-up">
               <mat-icon>info</mat-icon>
               <span [innerHTML]="'Disaggregation.DisplayHint' | translate"></span>
           </mat-hint>

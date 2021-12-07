@@ -104,7 +104,7 @@ export class HistoryComponent implements OnInit {
       this.projectId = project.id;
       this.project = project;
       this.limit = 10;
-      if (project.id) {
+      if (project.id && project.rev) {
         this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
           const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
           revisions.forEach(revision => {
@@ -127,7 +127,7 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i + 1);
+    const patchedProject = this.patchProject(i);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
@@ -166,10 +166,10 @@ export class HistoryComponent implements OnInit {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex + 1);
+    const patchedRevision = this.patchProject(revisionIndex);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
-    this.projectService.project.next(new Project(patchedRevision));
+    this.projectService.project.next(patchedRevision);
   }
 
 }

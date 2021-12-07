@@ -46,7 +46,7 @@ export class ThemeComponent implements OnInit {
   }
 
   confirmDeletion(): void {
-    const dialogRef = this.dialog.open(ConfirmModalComponent);
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DeleteConfirmation'}});
     dialogRef.afterClosed().subscribe(res => {
       if (res.confirm){
         this.delete.emit(this.theme.id);
