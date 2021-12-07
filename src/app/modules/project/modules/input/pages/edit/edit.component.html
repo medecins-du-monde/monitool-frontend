@@ -28,7 +28,7 @@
 </div>
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >
-        <p>{{ form.elements[k].name }}</p>
+        <p class="table-title">{{ form.elements[k].name }}</p>
         <hot-table [settings]="tableSettings[table.id]" [data]="table.value"></hot-table>
     </div>
 </div>
