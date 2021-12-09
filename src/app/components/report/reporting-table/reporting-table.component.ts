@@ -74,12 +74,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   content: any[];
   project: Project;
 
+  results: any[] = [];
+
   dimensions: string[];
   columnsToDisplay: string[];
   openedSections = { 0: true };
   COLUMNS_TO_DISPLAY = ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_ERROR = ['icon', 'name', 'baseline', 'target', 'error'];
-  COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
+  COLUMNS_TO_DISPLAY_TITLE = ['title'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
   @HostListener('window:resize', ['$event'])
@@ -720,6 +722,18 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     else {
       this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
     }
+  }
+
+  formatGroupName(groupName: string) {
+    if (groupName.charAt(0) === 'R') {
+      this.results.indexOf(groupName) === -1 ? this.results.push(groupName) : console.log("This item already exists");
+
+      return groupName.split(":")[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(":")[1]
+    } else {
+      this.results = [];
+    }
+
+    return groupName
   }
 
   ngOnDestroy(): void {
