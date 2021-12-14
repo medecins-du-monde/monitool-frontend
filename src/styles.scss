@@ -417,7 +417,7 @@ mat-hint {
     .mat-card-content {
       flex: 1;
     }
-  
+
     .mat-card-actions {
       padding: 0px 8px 16px 8px !important;
     }
@@ -569,25 +569,25 @@ mat-hint {
     th:not(:last-child) {
       border-right: 1px solid $table_border;
     }
-  
+
     td {
       color: $grey;
       font-size: $small_text;
     }
-  
+
     th {
       font-weight: bold;
       font-size: $small_text;
       color: var(--main);
     }
   }
-  
+
   .mdm-form-field {
     width: 100%;
-  
+
     .mat-form-field-wrapper {
       padding: 0 !important;
-  
+
       .mat-form-field-flex {
         align-items: center !important;
         .mat-form-field-infix {
@@ -1016,10 +1016,10 @@ code {
   width: 14px;
 }
 .dateGroup .mat-radio-button .mat-radio-ripple{
-  height: 20px; 
-  width: 20px; 
-  left: calc(50% - 10px); 
-  top: calc(50% - 10px); 
+  height: 20px;
+  width: 20px;
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
 }
 
 // Management of all radio buttons
@@ -1146,11 +1146,18 @@ code {
 // Style for snackbar
 .mat-snack-bar-container{
   min-width: 400px !important;
+  max-width: 45vw !important;
+  background-color: map-get($mdm-monitool-frontend-primary, 500);
+  color: #FFFFFF;
 }
+
+.mat-simple-snackbar {
+  justify-content: center !important;
+}
+
 .mat-simple-snackbar-action{
   .mat-button{
     font-weight: 800;
-    color: $radio_button_color;
     line-height: 20px;
   }
   color: $delete_text_color;
@@ -1181,7 +1188,7 @@ code {
 }
 
 .chipListPanelClass{
-  margin-top: 30px !important; 
+  margin-top: 30px !important;
   max-height: 300px !important;
   overflow-x: hidden !important;
   margin-left: 28px;
@@ -1190,7 +1197,7 @@ code {
 }
 
 .basicsChipListPanelClass {
-  margin-top: 63px !important; 
+  margin-top: 63px !important;
   max-height: 300px !important;
   overflow-x: hidden !important;
   margin-left: 28px;
@@ -1199,7 +1206,7 @@ code {
 }
 
 .filterClass {
-  margin-top: 30px !important; 
+  margin-top: 30px !important;
   overflow-x: hidden !important;
   margin-left: -5px !important;
   min-width: calc(100% + 20px) !important;

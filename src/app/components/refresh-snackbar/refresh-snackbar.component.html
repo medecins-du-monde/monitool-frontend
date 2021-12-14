@@ -1,7 +1,9 @@
 <div class="container mat-simple-snackbar">
-    <span>{{ 'newVersionAvailable' | translate }}</span>
+    <div class="text">
+      <span>{{ 'newVersionAvailable' | translate }}</span>
+    </div>
     <div class="mat-simple-snackbar-action">
-        <button mat-button="" class="mat-focus-indicator mat-button mat-button-base _mat-animation-noopable action-button" (click)="reload()">{{ 'Refresh' | translate }}</button>
+        <!-- <button mat-button="" class="mat-focus-indicator mat-button mat-button-base _mat-animation-noopable action-button" (click)="reload()">{{ 'Refresh' | translate }}</button> -->
         <button class="dialog-close" mat-icon-button mat-dialog-close (click)="snackBarRef.dismiss()"><mat-icon>close</mat-icon></button>
     </div>
 </div>

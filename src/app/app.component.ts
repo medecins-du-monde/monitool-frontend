@@ -187,7 +187,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   showSnackBar(): void{
-    this.snackBar.openFromComponent(RefreshSnackbarComponent);
+    this.snackBar.openFromComponent(RefreshSnackbarComponent, {
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center'
+    });
+
+    //wait for 5 seconds then reload;
+    setTimeout(function(){
+      location.reload();
+    }, 5000);
   }
 
   ngAfterViewChecked(): void {
