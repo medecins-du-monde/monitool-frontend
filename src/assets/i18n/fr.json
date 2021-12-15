@@ -794,5 +794,8 @@
     "Sept": "Septembre",
     "Oct": "Octobre",
     "Nov": "Novembre",
-    "Dec": "Décembre"
+    "Dec": "Décembre",
+    "Elements": "Eléments de la désagrégation",
+    "Aggregation": "Règle d’agrégation des éléments",
+    "Groups": "Groupe d’éléments"
 }

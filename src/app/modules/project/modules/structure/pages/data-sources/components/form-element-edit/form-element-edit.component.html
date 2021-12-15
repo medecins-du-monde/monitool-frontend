@@ -86,12 +86,12 @@
 </div>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onAddNewPartition()">
-        <mat-icon>add</mat-icon>
+    <button class="menu-button" mat-menu-item (click)="onAddNewPartition()">
+        <mat-icon class="menu-icon">add</mat-icon>
         <span>{{ 'AddCustomDisaggregation' | translate }}</span>
     </button>
-    <button mat-menu-item (click)="openExistingPartitionDialog()">
-        <mat-icon>file_copy</mat-icon>
+    <button class="menu-button" mat-menu-item (click)="openExistingPartitionDialog()">
+        <mat-icon class="menu-icon">file_copy</mat-icon>
         <span>{{ 'UseExistingDisaggregation' | translate }}</span>
     </button>
 </mat-menu>
