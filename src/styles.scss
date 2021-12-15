@@ -479,7 +479,7 @@ mat-hint {
 }
 
 .mat-chip-list-wrapper {
-  flex-wrap: nowrap !important;
+  //flex-wrap: nowrap !important;
 }
 
 
@@ -1055,7 +1055,7 @@ code {
 
 .mat-expansion-panel {
   display: flex;
-  margin: 16px 0 !important;
+  margin: 8px 0 !important;
   color: $grey !important;
 }
 

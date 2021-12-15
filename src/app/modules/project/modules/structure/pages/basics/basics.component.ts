@@ -145,7 +145,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
