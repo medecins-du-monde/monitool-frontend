@@ -18,8 +18,6 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
-import moment from 'moment';
-import { InputService } from 'src/app/services/input.service';
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
@@ -33,7 +31,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService,
-              private inputService: InputService,
               private translateService: TranslateService) { }
 
   get optimalColspanForGroupName(): number {
@@ -77,11 +74,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   content: any[];
   project: Project;
 
-  elementStartDate;
-  elementEndDate;
-
-  periodicity: string;
-
   dimensions: string[];
   columnsToDisplay: string[];
   openedSections = { 0: true };
@@ -106,13 +98,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
+
         const filteredRows = value.filter(row => {
           if (this.isSectionTitle(0, row)) {
             return true;
           }
 
           if (this.openedSections[row.sectionId]) {
-            // this.checkForCompleteData(row);
             if (this.isInfoRow(0, row)) {
               if (row.originProject) {
                 if (this.filter.value.finished) {
@@ -190,32 +182,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       })
     );
-  }
-
-  checkForCompleteData(row): void {
-    console.log('row', row);
-    for (const value of Object.values(row.computation.parameters)) {
-      const varId = value['elementId'];
-      this.project.forms.forEach(form => {
-        if (form.elements.find(element => element.id === varId)) {
-          this.periodicity = form.periodicity;
-          this.elementEndDate = form.end;
-          this.elementStartDate = form.start;
-        }
-      });
-    }
-
-    if (this.periodicity === 'month') {
-      const start = moment(this.elementStartDate).format('YYYY-MM');
-      const end = moment(this.elementEndDate).format('YYYY-MM');
-
-      for (const m = moment(start); m.isBefore(end); m.add(1, 'month')) {
-
-        if (!(m.format('YYYY-MM') in row['values'])) {
-          row['values'][m.format('YYYY-MM')] = 'missing-data';
-        }
-      }
-    }
   }
 
   updateTableContent(): void {
@@ -416,8 +382,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const varId = value['elementId'];
       currentProject.forms.forEach(form => {
         if (form.elements.find(element => element.id === varId)) {
-          this.elementEndDate = form.end;
-          this.elementStartDate = form.start;
           if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]) {
             highestPeriodicity = form.periodicity;
           }
@@ -534,15 +498,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // This allows to round all values
   roundResponse(response: unknown): unknown {
     for (const [key, value] of Object.entries(response)) {
-      if (value === null){
-        response[key] = null;
-      }
-      if (typeof value === 'string'){
-        response[key] = value;
-      }
-      else{
-        response[key] = round(value as number);
-      }
+      response[key] = value === null ? null : round(value as number);
     }
     return response;
   }
@@ -764,10 +720,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     else {
       this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
     }
-  }
-
-  isString(val: unknown): boolean{
-    return typeof val === 'string';
   }
 
   ngOnDestroy(): void {

@@ -1,11 +1,6 @@
 @import "src/assets/theme/size_vars.scss";
 @import "src/assets/theme/color_vars.scss";
 
-
-.italic{
-  font-style: italic;
-}
-
 .big-table {
   max-height: 76vh !important;
 }
@@ -24,7 +19,7 @@
     table-layout: fixed;
     position: relative;
   }
-
+  
   .mat-column-icon {
     width: 50px;
   }
@@ -59,7 +54,7 @@
     font-size: $small_text;
     padding: 0 !important
   }
-
+  
   .mat-column {
     width: 50px;
   }
@@ -78,38 +73,38 @@
       &.empty{
         background-color: $table_report_empty_cell_background;
       }
-    }
+    }    
   }
 
-
+  
   tr.mat-row {
     z-index: 3 !important;
     height: 30px !important;
     overflow: hidden;
   }
-
+  
   tr.example-detail-row {
     z-index: 3 !important;
     height: 0;
   }
-
+  
   tr.example-element-row:not(.example-expanded-row):hover {
     z-index: 3 !important;
     background: $table_hover_background;
     cursor: pointer;
   }
-
+  
   tr.example-element-row:not(.example-expanded-row):active {
     z-index: 3 !important;
     background: $table_report_background;
   }
-
-
+  
+  
   .example-element-detail {
     z-index: 3 !important;
     overflow: hidden;
   }
-
+  
   .gradient-background{
     background-image: repeating-linear-gradient(-45deg, rgb(255, 255, 255), rgb(255, 255, 255) 3px, rgb(240, 240, 240) 0px, rgb(240, 240, 240) 6px);
   }
@@ -122,8 +117,8 @@
     border-left-style: solid;
     border-left-color: $table_report_border_left_color;
     padding-left: 5px;
-  }
-
+  } 
+  
   .menu {
     display: flex;
     align-items: center;
@@ -135,36 +130,36 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
+    
   }
 
   .mat-icon.NaN{
     font-size: $very_small_text;
     line-height: 24px;
   }
-
+  
   .groupName{
     padding-left: 15px;
     text-align: left;
   }
-
+  
   .title{
     font-weight: bold;
     font-size: $small_text;
-    color: $grey;
+    color: $grey; 
     div {
       display: flex;
       align-items: center;
     }
   }
-
+  
   .mdm-button {
     display: flex !important;
     justify-content: center;
     align-items: center;
     color: $grey;
   }
-
+  
   th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
     z-index: 3 !important;
     padding-left: 10px !important;
@@ -198,7 +193,7 @@
   background-color: rgba(0, 0, 0, .5);
 }
 
-.table-scroll::-webkit-scrollbar-track {
-  background-color: #fff;
-  border-radius: 8px;
-}
+.table-scroll::-webkit-scrollbar-track { 
+  background-color: #fff; 
+  border-radius: 8px; 
+} 
