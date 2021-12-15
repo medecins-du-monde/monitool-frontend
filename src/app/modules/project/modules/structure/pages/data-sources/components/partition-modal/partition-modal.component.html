@@ -49,7 +49,7 @@
             <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['add']"></tr>
         </table>
-        <mat-hint class="hint">
+        <mat-hint class="table-hint">
             <mat-icon>info</mat-icon>{{ 'Disaggregation.ElementsHint' | translate }}
         </mat-hint>
     </div>
@@ -64,7 +64,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-hint>
+            <mat-hint class="aggregation-hint">
                 <mat-icon>info</mat-icon>{{ 'Disaggregation.AggregationHint' | translate }}
             </mat-hint>
         </div>
@@ -73,7 +73,7 @@
         <div class="mdm-form-label-edition">{{ 'Groups' | translate }}</div>
         <div class="mdm-form-field partition-content">
             <mat-checkbox formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
-            <mat-hint>
+            <mat-hint class="aggregation-hint">
                 <mat-icon>info</mat-icon>{{ 'Disaggregation.GroupsHint' | translate }}
             </mat-hint>
         </div>

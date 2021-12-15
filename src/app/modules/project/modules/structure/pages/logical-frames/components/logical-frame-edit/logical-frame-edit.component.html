@@ -1,7 +1,7 @@
-<mat-accordion>
+<mat-accordion class="blue-accordion">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
-            <mat-panel-title>{{ 'GeneralInformations' | translate }}</mat-panel-title>
+            <mat-panel-title><div class="header-title"><p>{{ 'GeneralInformations' | translate }} : {{ logFrameName }}</p></div></mat-panel-title>
         </mat-expansion-panel-header>
         <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
             <div class="mdm-form-group">
@@ -61,11 +61,11 @@
         </div>
     </mat-expansion-panel>
 </mat-accordion>
-<div class="mdm-section">
+<div class="mdm-section blue-accordion">
     <mat-accordion>
         <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ 'GeneralObjective' | translate }}</mat-panel-title>
+                <mat-panel-title><div class="header-title"><p>{{ 'GeneralObjective' | translate }}: {{ logFrameGoal }}</p></div></mat-panel-title>
             </mat-expansion-panel-header>
             <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
                 <div class="mdm-form-group">
@@ -111,14 +111,14 @@
 
 </div>
 <div class="mdm-section">
-    <div [formGroup]="logicalFrameForm">
+    <div [formGroup]="logicalFrameForm" class="specific-accordion">
         <mat-accordion formArrayName="purposes" cdkDropList (cdkDropListDropped)="drop($event)">
             <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag
                 [expanded]="i === 0 ? true: false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon cdkDragHandle>drag_indicator</mat-icon>{{ 'SpecificObjective' | translate }} {{i +
-                        1}}: {{purpose.value.description}}
+                        <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p>{{ 'SpecificObjective' | translate }} {{i +
+                        1}}: {{purpose.value.description}}</p></div>
                     </mat-panel-title>
                     <mat-panel-description>
                         <button mat-stroked-button class="mdm-button delete-button" (click)="onRemovePurpose(i)">

@@ -7,27 +7,52 @@
 }
 
 .check-panel-section{
-    margin: 10px 0px;
+    margin: 10px 5px;
     &.elements-section{
-        width: 50%;
+        width: 70%;
     }
     &.aggregations-section{
-        width: 25%;
+        width: 15%;
     }
     &.aggregations-section:last-child{
         width: 50%;
     }
     &.groups-section{
-        width: 25%;
+        width: 15%;
     }
 
+    .mat-chip-list-wrapper {
+        flex-wrap: wrap !important;
+    }
     .mat-chip{
         font-size: $normal_text;
         border-radius: 4px;
+        height: auto; // overrides default height 1px
+        line-height: 1.1em; // keeps chip from "squaring out" at one line
     }
+
 }
 
 .minimize-button-section{
+    margin-top: 8px;
     display: flex;
     justify-content: space-between;
 }
+
+.existing {
+
+    ::ng-deep.mat-expansion-panel {
+        margin: 8px 0 !important;
+    }
+    ::ng-deep.mat-expansion-panel-content > .mat-expansion-panel-body {
+        margin-top: -15px !important;
+    }
+}
+
+h3, h2 {
+    margin-bottom: 0px !important;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+    height: 50px !important;
+  }
