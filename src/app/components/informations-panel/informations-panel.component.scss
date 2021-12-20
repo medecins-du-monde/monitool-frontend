@@ -53,12 +53,18 @@
 
     .information-panel-toggle-btn {
         height: 100%;
-        width: 25px;
+        width: 30px;
         cursor: pointer;
-        background-color: $card_header_background;
+        background-color: #d9edf7;
+        color: #31708f;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
 
         mat-icon {
-            margin-top: 45vh;
+            align-self: center;
+            margin-top: 20px;
+            margin-bottom: 40vh;
         }
     }
 
