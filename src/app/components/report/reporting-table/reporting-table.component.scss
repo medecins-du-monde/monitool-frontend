@@ -86,7 +86,13 @@
     z-index: 3 !important;
     height: 26px !important;
     overflow: hidden;
+  }
 
+  .blue-hover {
+
+    .mat-cell {
+      color: #1c1c1c;
+    }
     :hover {
       color:#005ec5;
     }

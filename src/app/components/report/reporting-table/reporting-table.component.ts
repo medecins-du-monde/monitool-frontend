@@ -75,6 +75,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
 
   results: any[] = [];
+  specificObjectif: any[] = [];
 
   dimensions: string[];
   columnsToDisplay: string[];
@@ -710,8 +711,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return isNaN(x);
   }
 
-  calculateOptimalColspan(): void {
+  calculateOptimalColspan(): number {
     this.innerWidth = window.innerWidth;
+
+    if (this.columnsToDisplay) {
+      if (this.columnsToDisplay.length < this.colsThatFitInTheScreen) {
+        console.log(76/this.columnsToDisplay.length)
+        return 76/this.columnsToDisplay.length
+      }
+    }
 
     if (this.innerWidth < 640) {
       this.colsThatFitInTheScreen = 3;
@@ -726,13 +734,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   formatGroupName(groupName: string) {
     if (groupName.charAt(0) === 'R') {
-      this.results.indexOf(groupName) === -1 ? this.results.push(groupName) : console.log("This item already exists");
-
+      if (this.results.indexOf(groupName) === -1){this.results.push(groupName)};
       return groupName.split(":")[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(":")[1]
+    } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
+      this.results = [];
+      if (this.specificObjectif.indexOf(groupName) === -1){this.specificObjectif.push(groupName)} 
+      return groupName.split(":")[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(":")[1]
     } else {
+      this.specificObjectif = [];
       this.results = [];
     }
-
     return groupName
   }
 
