@@ -62,7 +62,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         ticks: {
             fontSize: 14,
             callback: (value, index, values) => {
-              return value.toLocaleString('de-DE') + this.unit;
+              return value.toLocaleString('de-DE') + (this.unit ? this.unit : '');
             }
         }
       }],

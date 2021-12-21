@@ -82,7 +82,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   openedSections = { 0: true };
   COLUMNS_TO_DISPLAY = ['icon', 'name', 'baseline', 'target'];
   COLUMNS_TO_DISPLAY_ERROR = ['icon', 'name', 'baseline', 'target', 'error'];
-  COLUMNS_TO_DISPLAY_TITLE = ['title'];
+  COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
   @HostListener('window:resize', ['$event'])
@@ -711,15 +711,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return isNaN(x);
   }
 
-  calculateOptimalColspan(): number {
+  calculateOptimalColspan(): void {
     this.innerWidth = window.innerWidth;
-
-    if (this.columnsToDisplay) {
-      if (this.columnsToDisplay.length < this.colsThatFitInTheScreen) {
-        console.log(76/this.columnsToDisplay.length)
-        return 76/this.columnsToDisplay.length
-      }
-    }
 
     if (this.innerWidth < 640) {
       this.colsThatFitInTheScreen = 3;
