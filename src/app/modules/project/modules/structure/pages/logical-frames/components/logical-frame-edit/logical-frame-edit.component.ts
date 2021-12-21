@@ -238,4 +238,12 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
   }
 
+  get logFrameName() {
+    return this.logicalFrameForm.value.name;
+  }
+
+  get logFrameGoal() {
+    return this.logicalFrameForm.value.goal;
+  }
+
 }
