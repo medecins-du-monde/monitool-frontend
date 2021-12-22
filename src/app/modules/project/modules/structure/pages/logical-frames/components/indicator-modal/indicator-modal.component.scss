@@ -1,4 +1,5 @@
 @import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
 
 mat-hint mat-icon{
@@ -53,3 +54,12 @@ mat-hint mat-icon{
     align-items: baseline;
     flex-wrap: wrap;
 }
+
+::ng-deep.mat-select-panel mat-option.mat-option {
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+
+::ng-deep .mat-option-text.mat-option-text {
+    white-space: normal;
+  }

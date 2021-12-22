@@ -1,8 +1,12 @@
 @import "src/assets/theme/color_vars.scss";
 
+.mdm-section {
+  margin-bottom: 0px !important;
+}
+
 .mat-expansion-panel-header-description {
   button {
-    margin-top: 4px;
+    margin-top: 10px;
     color: $specific_obj_panel_button_color;
   }
 }
@@ -10,11 +14,107 @@
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
   color: $specific_obj_panel_color;
 }
-.mat-expansion-panel-header:not([aria-disabled=true]) {
-  background-color: $specific_obj_panel_background !important;
+
+
+.blue-accordion, .purpose, .specific-accordion{
+
+  .mat-expansion-panel-header-title {
+    display: flex !important;
+    margin-right: 16px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    height: 50px;
+    white-space:normal;
+    align-items: center;
+    width: 80%;
+    mat-icon {
+      align-self: center;
+      margin-right: 10px;
+      margin-top: 30px;
+      height: 100%;
+    }
+  }
+} 
+
+.blue-accordion, .purpose {
+
+  .mat-expansion-panel-header {
+    vertical-align: middle;
+    .header-title {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      p {
+        margin: 0 0 0px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+  .mat-expansion-panel-header:not([aria-disabled=true]) {
+    background-color: $specific_obj_panel_background !important;
+  }
 }
 
 app-collection-sites-selector{
   flex: 1;
   display: flex;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 50px !important;
+}
+
+.mdm-form-expansion {
+  padding: 10px;
+  width: 100%;
+}
+
+.indicators-list {
+  flex: 1;
+  width: 100%;
+  display: inline-block;
+}
+
+.purpose {
+  width: 100%;
+}
+
+.objective {
+  width: 30%;
+}
+
+.mdm-button {
+  mat-icon {
+    font-size: 14px !important;
+  }
+}
+
+.specific-accordion {
+
+  .mat-expansion-panel-header, .mat-expansion-panel-header:not([aria-disabled=true]){
+    background-color: #73bde9;
+
+    .header-title {
+      height: 40px;
+      vertical-align: middle;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      p {
+        margin: 0 0 0px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
 }

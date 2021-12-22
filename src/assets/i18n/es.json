@@ -79,6 +79,7 @@
     "DataSources": "Fuente de datos",
     "DataSource": "Fuente de datos",
     "Date": "Fecha",
+    "DelayWarning": "Pueden pasar unos minutos antes de que pueda ver estos datos en el Informe General.",
     "Delete": "Suprimir",
     "Deleted": "Suprimido",
     "DeletedPlural": "Suprimidos",
@@ -780,6 +781,7 @@
     "DownloadTable": "Descargar la tabla",
     "FillWithPreviousData": "Rellenar con los datos de la última entrada",
     "ShowFinishedProjects": "Mostrar proyectos terminados",
+    "Understood": "Entiendo",
 
     "Jan": "enero",
     "Feb": "febrero",

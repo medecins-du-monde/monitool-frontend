@@ -14,11 +14,20 @@
 }
 
 .hint {
-  padding: 1em 1em;
+  padding: 0em 1em;
+  margin-bottom: 0.3rem;
 }
 
 .hint mat-icon {
   font-size: inherit;
+}
+
+.align-hint mat-icon{
+  margin-bottom: 40px;
+}
+
+.align-up mat-icon{
+  margin-bottom: 20px;
 }
 
 .display table,
@@ -45,4 +54,14 @@ td {
 
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
+}
+
+.menu-button {
+  font-size: 14px;
+}
+.menu-icon {
+  margin-right: 0px !important;
+  font-size: 14px !important;
+  padding-top: 5px;
+  width: 20px !important;
 }

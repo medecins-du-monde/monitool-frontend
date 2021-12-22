@@ -1,18 +1,20 @@
-<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<button class="dialog-close" mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+</button>
 <h2 mat-dialog-title>{{ 'PartitionEdition' | translate }}</h2>
-<mat-dialog-content [formGroup]="data" class="mdm-dialog">
+<mat-dialog-content [formGroup]="data" class="mdm-dialog partition-dialog">
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
+        <div class="mdm-form-label-edition">{{ 'Name' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field partition-content">
             <input matInput formControlName="name" placeholder="{{ 'Disaggregation.AddNamePlaceholder' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Disaggregation.AddNameHint' | translate }}
             </mat-hint>
         </mat-form-field>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Elements' | translate }}</div>
-        <table mat-table [dataSource]="elementsDataSource" class="mdm-table" formArrayName="elements">
+    <div class="mdm-form-group partition-group">
+        <div class="partition-label">{{ 'Elements' | translate }}</div>
+        <table mat-table [dataSource]="elementsDataSource" class="mdm-table partition-content" formArrayName="elements">
             <ng-container matColumnDef="position">
                 <th class="w-10" mat-header-cell *matHeaderCellDef></th>
                 <td class="w-10" mat-cell *matCellDef="let element" id="position">
@@ -47,31 +49,37 @@
             <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['add']"></tr>
         </table>
-        <mat-hint class="hint">
+        <mat-hint class="table-hint">
             <mat-icon>info</mat-icon>{{ 'Disaggregation.ElementsHint' | translate }}
         </mat-hint>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Aggregation' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}" disableOptionCentering panelClass="myPanelClass">
-                <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{ aggregation.display | translate }}
-                </mat-option>
-            </mat-select>
-            <mat-hint>
+    <div class="mdm-form-group partition-group">
+        <div class="mdm-form-label-edition">{{ 'Aggregation' | translate }}</div>
+        <div class="mdm-form-field partition-content">
+            <mat-form-field appearance="outline">
+                <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}"
+                    disableOptionCentering panelClass="myPanelClass">
+                    <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{
+                        aggregation.display | translate }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-hint class="aggregation-hint">
                 <mat-icon>info</mat-icon>{{ 'Disaggregation.AggregationHint' | translate }}
             </mat-hint>
-        </mat-form-field>
+        </div>
     </div>
-    <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Groups' | translate }}</div>
-        <mat-checkbox class="mdm-form-field" formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
-        <mat-hint class="hint">
-            <mat-icon>info</mat-icon>{{ 'Disaggregation.GroupsHint' | translate }}
-        </mat-hint>
+    <div class="mdm-form-group partition-group">
+        <div class="mdm-form-label-edition">{{ 'Groups' | translate }}</div>
+        <div class="mdm-form-field partition-content">
+            <mat-checkbox formControlName="useGroups">{{ 'UseGroups' | translate }}</mat-checkbox>
+            <mat-hint class="aggregation-hint">
+                <mat-icon>info</mat-icon>{{ 'Disaggregation.GroupsHint' | translate }}
+            </mat-hint>
+        </div>
     </div>
-    <div class="mdm-form-group" *ngIf="data.value.useGroups">
-        <div class="mdm-form-label"></div>
+    <div class="mdm-form-group partition-group" *ngIf="data.value.useGroups">
+        <div class="mdm-form-label-edition"></div>
         <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">
             <ng-container matColumnDef="position">
                 <th class="w-10" mat-header-cell *matHeaderCellDef></th>
@@ -113,7 +121,7 @@
                     </button>
                 </td>
             </ng-container>
-            
+
             <tr mat-header-row *matHeaderRowDef="groupsDisplayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: groupsDisplayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['add']"></tr>
@@ -121,7 +129,13 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button class="mdm-button save-button" (click)="onSubmit()"><mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}</button>
-    <button mat-stroked-button class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
-    <button mat-stroked-button class="mdm-button delete-button" (click)="onDelete()"><mat-icon>delete</mat-icon>{{ 'Delete' | translate }}</button>
+    <button mat-stroked-button class="mdm-button save-button" (click)="onSubmit()">
+        <mat-icon>save</mat-icon>{{ 'ApplyChanges' | translate }}
+    </button>
+    <button mat-stroked-button class="mdm-button">
+        <mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}
+    </button>
+    <button mat-stroked-button class="mdm-button delete-button" (click)="onDelete()">
+        <mat-icon>delete</mat-icon>{{ 'Delete' | translate }}
+    </button>
 </mat-dialog-actions>

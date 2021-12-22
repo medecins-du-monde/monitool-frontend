@@ -15,7 +15,59 @@
   background-color: $output_panel_background !important;
 }
 
+.mat-expansion-panel-header-title {
+  display: flex !important;
+  margin-right: 16px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  height: 50px;
+  white-space:normal;
+  align-items: center;
+  width: 80%;
+  mat-icon {
+    align-self: center;
+    margin-right: 10px;
+    margin-top: 30px;
+    height: 100%;
+  }
+
+  .header-title {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    p {
+      margin: 0 0 0px !important;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
 .delete-output {
   color: white !important;
   background-color: $delete_background !important;
+}
+
+.mdm-form-expansion {
+  padding: 10px;
+  width: 100%;
+}
+
+.indicators-list {
+  flex: 1;
+  width: 100%;
+  display: inline-block;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 40px !important;
+}
+
+.output {
+  width: 100%;
 }

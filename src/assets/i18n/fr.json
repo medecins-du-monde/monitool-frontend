@@ -61,7 +61,7 @@
     "DataEntryUser": "Saisisseur",
     "DataSourceCalendarTitle": "Calendrier",
     "DataSourceStructureTitle": "Structure",
-    "CustomDate" : "date personnalisée",
+    "CustomDate" : "Date personnalisée",
     "SameAsProject": "Égale au projet ({{date}})",
     "DataSourceEdit": {
         "AddNameHint": "Comment s'apelle la source de laquelle vous voulez extraire des données? Par exemple: \"Dossier patient informatisé\", \"Registre des centre de santé\", \"Rapport du système national d'information sanitaire\", ...",
@@ -77,6 +77,7 @@
     "DataSources": "Sources de données",
     "DataSource": "Source de données",
     "Date": "Date",
+    "DelayWarning": "Attention, les données sauvegardées peuvent apparaître dans le Rapport General après quelques minutes.",
     "Delete": "Supprimer",
     "Deleted": "Supprimé",
     "DeletedPlural": "Supprimés",
@@ -777,6 +778,7 @@
     "DownloadTable": "Télécharger le tableau",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
     "ShowFinishedProjects": "Afficher les projets terminés",
+    "Understood": "J'ai compris",
 
     "Jan": "Janvier",
     "Feb": "Février",
@@ -789,5 +791,8 @@
     "Sept": "Septembre",
     "Oct": "Octobre",
     "Nov": "Novembre",
-    "Dec": "Décembre"
+    "Dec": "Décembre",
+    "Elements": "Eléments de la désagrégation",
+    "Aggregation": "Règle d’agrégation des éléments",
+    "Groups": "Groupe d’éléments"
 }
