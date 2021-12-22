@@ -437,7 +437,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         observeChanges: true,
         hotId: 'element.id',
         type: 'numeric',
-        allowInvalid: false,
+        allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
             callback(true);
@@ -455,10 +455,17 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             td.innerHTML = newValue;
+          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly) {
+            td.style.background = '#d9534f';
+            td.innerHTML = value;
           } else if (typeof value === 'string') {
             td.style.color = 'black';
             td.style.background = '#eee';
-            td.innerHTML = value;
+            if (value.length > 70) {
+              td.innerHTML = '<div class="truncate">' + value + '</div>';
+            } else {
+              td.innerHTML = value;
+            }
           } else {
             td.innerHTML = value;
           }
