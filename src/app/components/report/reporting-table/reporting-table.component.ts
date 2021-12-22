@@ -74,6 +74,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   content: any[];
   project: Project;
 
+  results: any[] = [];
+  specificObjectif: any[] = [];
+
   dimensions: string[];
   columnsToDisplay: string[];
   openedSections = { 0: true };
@@ -720,6 +723,21 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     else {
       this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
     }
+  }
+
+  formatGroupName(groupName: string) {
+    if (groupName.charAt(0) === 'R') {
+      if (this.results.indexOf(groupName) === -1) {this.results.push(groupName); }
+      return groupName.split(':')[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+    } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
+      this.results = [];
+      if (this.specificObjectif.indexOf(groupName) === -1) {this.specificObjectif.push(groupName); }
+      return groupName.split(':')[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+    } else {
+      this.specificObjectif = [];
+      this.results = [];
+    }
+    return groupName;
   }
 
   ngOnDestroy(): void {
