@@ -431,14 +431,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         rowHeaders: false,
         stretchH: 'all',
         wordWrap: true,
-        autoRowSize: true,
         colWidths: 100,
         viewportColumnRenderingOffset: 1000,
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
         type: 'numeric',
-        allowInvalid: false,
+        allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
             callback(true);
@@ -450,9 +449,23 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           this.validInputCell = value;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
+          if (col === tableObj.numberCols - 1) {
+            td.style.fontWeight = 'bold';
+          }
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             td.innerHTML = newValue;
+          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly) {
+            td.style.background = '#d9534f';
+            td.innerHTML = value;
+          } else if (typeof value === 'string') {
+            td.style.color = 'black';
+            td.style.background = '#eee';
+            if (value.length > 70) {
+              td.innerHTML = '<div class="truncate">' + value + '</div>';
+            } else {
+              td.innerHTML = value;
+            }
           } else {
             td.innerHTML = value;
           }

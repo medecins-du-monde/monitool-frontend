@@ -1210,3 +1210,12 @@ code {
 .mat-expansion-panel-body{
   display: flex;
 }
+
+.truncate {
+  height: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
