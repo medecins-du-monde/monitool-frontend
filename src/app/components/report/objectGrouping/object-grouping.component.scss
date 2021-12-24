@@ -41,11 +41,13 @@ a {
   align-items: center;
   justify-content: center;
   font-size: $small_text;
+  color: $white;
+  background-color: #005ec5;
   @media screen and (max-width: $breakpoint-xs) {
     font-size: 0;
   }
   mat-icon {
-    color: $grey;
+    color: $white;
   }
 }
 .mat-option {
