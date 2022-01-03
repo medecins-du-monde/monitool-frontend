@@ -179,18 +179,18 @@
         "end_replace": "Modifie la date de fin du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
         "country_replace": "Modifie le pays du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
         "visibility_replace": "Modifie la visibilité du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
-    
+
         "themes_add": "Ajoute une thématique au projet",
         "themes_move": "Reordonne les thématiques du projet",
         "themes_remove": "Retire une thématique du projet",
-    
+
         "entities_add": "Ajoute le lieu <code>{{item.name}}</code>",
         "entities_move": "Reordonne les lieux du projet",
         "entities_remove": "Supprime le lieu <code>{{item.name}}</code>",
         "entities_name_replace": "Renomme le lieu <code>{{before}}</code> en <code>{{after}}</code>",
         "entities_start_replace": "Change la date de début du lieu <code>{{entity.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
         "entities_end_replace": "Change la date de fin du lieu <code>{{entity.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
-    
+
         "groups_add": "Ajoute le groupe <code>{{item.name}}</code>",
         "groups_move": "Reordonne les groupes du projet",
         "groups_remove": "Supprime le groupe <code>{{item.name}}</code>",
@@ -198,7 +198,7 @@
         "groups_members_add": "Ajoute le lieu <code>{{item.name}}</code> au groupe <code>{{group.name}}</code>",
         "groups_members_move": "Reordonne les lieux du groupe <code>{{group.name}}</code>",
         "groups_members_remove": "Retire le lieu <code>{{item.name}}</code> du groupe <code>{{group.name}}</code>",
-    
+
         "users_add": "Ajoute l'utilisateur <code>{{item.id}}</code> au projet",
         "users_move": "Reordonne les utilisateurs du projet",
         "users_remove": "Supprime l'utilisateur <code>{{item.id}}</code> du projet",
@@ -211,7 +211,7 @@
         "users_dataSources_add": "Autorise <code>{{user.name}}</code> à saisir sur la source de données <code>{{item.name}}</code>",
         "users_dataSources_move": "Reordonne les sources de données associées à l'utilisateur <code>{{user.name}}</code>",
         "users_dataSources_remove": "Retire l'autorisation de saisir sur <code>{{item.name}}</code> à l'utilisateur <code>{{user.name}}</code>",
-    
+
         "forms_add": "Ajoute la source de données <code>{{item.name}}</code>",
         "forms_move": "Reordonne les sources de données du projet",
         "forms_remove": "Supprime la source de données <code>{{item.name}}</code>",
@@ -219,11 +219,11 @@
         "forms_periodicity_replace": "Change la périodicité de <code>{{form.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
         "forms_start_replace": "Change la date de début de <code>{{form.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
         "forms_end_replace": "Change la date de fin de <code>{{form.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
-    
+
         "forms_entities_add": "Ajoute le lieu <code>{{item.name}}</code> à la source de données <code>{{form.name}}</code>",
         "forms_entities_move": "Reordonne les lieux de la source de données <code>{{form.name}}</code>",
         "forms_entities_remove": "Retire le lieu <code>{{item.name}}</code> de la source de données <code>{{form.name}}</code>",
-    
+
         "forms_elements_add": "Ajoute le donnée <code>{{item.name}}</code> dans <code>{{form.name}}</code>",
         "forms_elements_move": "Reordonne les données de la source de données <code>{{form.name}}</code>",
         "forms_elements_remove": "Supprime le donnée <code>{{item.name}}</code> dans <code>{{form.name}}</code>",
@@ -232,18 +232,18 @@
         "forms_elements_timeAgg_replace": "Change la règle d'aggrégation (temps) de <code>{{variable.name}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
         "forms_elements_order_replace": "Change la présentation de la saisie de le donnée <code>{{variable.name}}</code>",
         "forms_elements_distribution_replace": "Change la présentation de la saisie de le donnée <code>{{variable.name}}</code>",
-    
+
         "forms_elements_partitions_add": "Ajoute la désagrégation <code>{{item.name}}</code> dans <code>{{variable.name}}</code>",
         "forms_elements_partitions_move": "Reordonne les désagrégations de <code>{{variable.name}}</code>",
         "forms_elements_partitions_remove": "Supprime la désagrégation <code>{{item.name}}</code> de <code>{{variable.name}}</code>",
         "forms_elements_partitions_name_replace": "Renomme la désagrégation <code>{{before}}</code> en <code>{{after}}</code> dans le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_aggregation_replace": "Change la règle d'aggrégation de <code>{{before}}</code> vers <code>{{after}}</code> pour le donnée <code>{{variable.name}}</code>",
-    
+
         "forms_elements_partitions_elements_add": "Ajoute l'élément <code>{{item.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_elements_move": "Reordonne les éléments de la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_elements_remove": "Supprime l'élément <code>{{item.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_elements_name_replace": "Renomme <code>{{before}}</code> en <code>{{after}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
-    
+
         "forms_elements_partitions_groups_add": "Ajoute le groupe <code>{{item.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_groups_move": "Reordonne les groupes de la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_groups_remove": "Supprime le groupe <code>{{item.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
@@ -251,37 +251,37 @@
         "forms_elements_partitions_groups_members_add": "Ajoute <code>{{item.name}}</code> au groupe <code>{{group.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_groups_members_move": "Reordonne les membres du groupe <code>{{group.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
         "forms_elements_partitions_groups_members_remove": "Retire <code>{{item.name}}</code> du groupe <code>{{group.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
-    
+
         "logicalFrames_add": "Ajoute le cadre logique <code>{{item.name}}</code>",
         "logicalFrames_move": "Reordonne les cadres logiques",
         "logicalFrames_remove": "Supprime le cadre logique <code>{{item.name}}</code>",
-    
+
         "logicalFrames_entities_add": "Ajoute le lieu <code>{{item.name}}</code> au cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_entities_move": "Reordonne les lieux du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_entities_remove": "Retire le lieu <code>{{item.name}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "logicalFrames_name_replace": "Renomme le cadre logique <code>{{before}}</code> en <code>{{after}}</code>",
         "logicalFrames_goal_replace": "Change l'objectif général <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_start_replace": "Change la date de début <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_end_replace": "Change la date de fin <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "logicalFrames_purposes_add": "Ajoute l'objectif spécifique <code>{{item.description}}</code> au cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_move": "Reordonne les objectifs spécifiques du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_remove": "Supprime l'objectif spécifique <code>{{item.description}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_description_replace": "Change la description de l'objectif spécifique <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_assumptions_replace": "Change les hypothèses de l'objectif spécifique <code>{{purpose.description}}</code> de <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "logicalFrames_purposes_outputs_add": "Ajoute le résultat <code>{{item.description}}</code> au cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_move": "Reordonne des résultats dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_remove": "Supprime le résultat <code>{{item.description}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_description_replace": "Change la description du résultat <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_assumptions_replace": "Change les hypothèses du résultat <code>{{output.description}}</code> de <code>{{before}}</code> vers <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "logicalFrames_purposes_outputs_activities_add": "Ajoute l'activité <code>{{item.description}}</code> au cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_activities_move": "Reordonne des activités dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_activities_remove": "Supprime l'activité <code>{{item.description}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_purposes_outputs_activities_description_replace": "Change la description de l'activité <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "logicalFrames_indicators_add": "Ajoute l'indicateur <code>{{item.display}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_indicators_move": "Déplace l'indicateur <code>{{item.display}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_indicators_remove": "Supprime l'indicateur <code>{{item.display}}</code> du cadre logique <code>{{logicalFrame.name}}</code>",
@@ -290,7 +290,7 @@
         "logicalFrames_indicators_display_replace": "Renomme l'indicateur <code>{{before}}</code> en <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_indicators_colorize_replace": "Change la colorisation de l'indicateur <code>{{indicator.display}}</code> de <code>{{before}}</code> vers <code>{{after}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
         "logicalFrames_indicators_computation_replace": "Change le calcul de l'indicateur <code>{{indicator.display}}</code> dans le cadre logique <code>{{logicalFrame.name}}</code>",
-    
+
         "extraIndicators_add": "Ajoute l'indicateur annexé <code>{{item.display}}</code>",
         "extraIndicators_move": "Reordonne les indicateurs annexés",
         "extraIndicators_remove": "Supprime l'indicateur annexé <code>{{item.display}}</code>",
@@ -299,7 +299,7 @@
         "extraIndicators_display_replace": "Renomme l'indicateur annexé <code>{{before}}</code> en <code>{{after}}</code>",
         "extraIndicators_colorize_replace": "Change la colorisation de l'indicateur annexé <code>{{extraIndicator.display}}</code> de <code>{{before}}</code> vers <code>{{after}}</code>",
         "extraIndicators_computation_replace": "Change le calcul de l'indicateur annexé <code>{{extraIndicator.display}}</code>",
-    
+
         "crossCutting_add": "Ajoute un indicateur transversal",
         "crossCutting_remove": "Supprime un indicateur transversal",
         "crossCutting_baseline_replace": "Change la valeur initiale d'un indicateur transversal de <code>{{before}}</code> vers <code>{{after}}</code>",
@@ -776,6 +776,7 @@
         "MissingCalculation": "Calcul absent"
     },
     "DownloadTable": "Télécharger le tableau",
+    "DownloadTableMini": "Télécharger mini",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
     "ShowFinishedProjects": "Afficher les projets terminés",
     "Understood": "J'ai compris",
