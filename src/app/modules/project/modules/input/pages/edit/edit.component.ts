@@ -449,7 +449,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           this.validInputCell = value;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
-          if (col === tableObj.numberCols - 1) {
+          if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
+          (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
           }
           if (typeof value === 'number') {
