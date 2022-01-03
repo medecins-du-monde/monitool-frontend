@@ -314,17 +314,20 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos]) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
                 sum += val.values[table.id][inputPos];
-              } else {
-                sum = null;
               }
             }
           }
         }
         // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
-        total += sum;
+        if (sum !== null){
+          total += sum;
+        }
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
@@ -335,24 +338,27 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
-      total = 0;
+      total = null;
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1) {
         let sum = null;
         for (x = 0; x < table.numberRows; x += 1) {
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos]) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
                 sum += val.values[table.id][inputPos];
-              } else {
-                sum = null;
               }
             }
           }
         }
         // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
-        total += sum;
+        if (sum !== null){
+          total += sum;
+        }
       }
       // if the table has multiple rows and collums the total in the last cell needs to be updated
       if (total && total !== 0) {
