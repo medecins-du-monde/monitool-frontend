@@ -266,7 +266,7 @@ mat-hint {
 }
 
 .mdm-section {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: $grey !important;
   width: 100%;
 
@@ -1209,4 +1209,17 @@ code {
 // make the sections be shown side by side
 .mat-expansion-panel-body{
   display: flex;
+}
+
+.truncate {
+  height: 60px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.mat-typography p {
+  margin: 0 0 8px;
 }
