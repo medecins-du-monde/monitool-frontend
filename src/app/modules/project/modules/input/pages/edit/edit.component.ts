@@ -142,7 +142,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   ngOnInit(): void {
 
     this.userService.showingInputModal.subscribe(val => {
-      console.log('val', val);
       this.showModal = val;
     });
     // Set the page with the normal size
@@ -449,7 +448,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           this.validInputCell = value;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
-          if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
+          if ((tableObj.numberCols > 2 && col === tableObj.numberCols - 1) ||
           (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
           }

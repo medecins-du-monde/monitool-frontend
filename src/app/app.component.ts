@@ -177,6 +177,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }, 300);
     });
 
+    /*
     // check service worker for updates
     if (this.swUpdate.isEnabled) {
       interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
@@ -187,6 +188,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.hasUpdate = true;
       // this.showSnackBar();
     });
+    */
   }
 
   showSnackBar(): void{
