@@ -45,6 +45,7 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('FGUOIHPOGUIFY', this.data);
     this.types = typesList;
     this.roles = rolesList;
     this.projectService.openedProject.subscribe(project => {
@@ -61,6 +62,26 @@ export class UserModalComponent implements OnInit {
       this.users = users;
     });
 
+    this.userForm.valueChanges.subscribe(() => {
+      console.log('type', this.userForm.value.type);
+      if (this.userForm.value.type && this.userForm.value.type === 'partner') {
+        this.userForm.controls['name'].setValidators([Validators.required]);
+        this.userForm.controls['username'].setValidators([Validators.required]);
+        this.userForm.controls['password'].setValidators([Validators.required]);
+      } else {
+        this.userForm.controls['name'].clearValidators();
+        this.userForm.controls['username'].clearValidators();
+        this.userForm.controls['password'].clearValidators();
+      }
+      if (this.userForm.value.role && this.userForm.value.role === 'input') {
+        this.userForm.controls['dataSources'].setValidators([Validators.required]);
+        this.userForm.controls['entities'].setValidators([Validators.required]);
+      } else {
+        this.userForm.controls['dataSources'].clearValidators();
+        this.userForm.controls['entities'].clearValidators();
+      }
+    });
+
   }
 
   onSubmit(): void {
@@ -73,14 +94,14 @@ export class UserModalComponent implements OnInit {
 
   resetChanges(): void {
     this.userForm = this.fb.group({
-      id: [(this.data ? this.data.id : null), Validators.required],
+      id: [(this.data ? this.data.id : null)],
       role: [(this.data ? this.data.role : null), Validators.required],
       type: [(this.data ? this.data.type : this.types[0].value), Validators.required],
-      entities: [((this.data && this.data.entities) ? this.data.entities : []), Validators.required],
-      dataSources: [((this.data && this.data.dataSources) ? this.data.dataSources : []), Validators.required],
-      name: [this.data ? this.data.name : null, Validators.required],
-      username: [this.data ? this.data.username : null, Validators.required],
-      password: [this.data ? this.data.password : null, Validators.required]
+      entities: [((this.data && this.data.entities) ? this.data.entities : [])],
+      dataSources: [((this.data && this.data.dataSources) ? this.data.dataSources : [])],
+      name: [this.data ? this.data.name : null],
+      username: [this.data ? this.data.username : null],
+      password: [this.data ? this.data.password : null]
     });
   }
 
