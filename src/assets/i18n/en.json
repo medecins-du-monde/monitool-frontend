@@ -777,5 +777,7 @@
     "Oct": "october",
     "Nov": "november",
     "Dec": "december",
-    "NewVersion": "Congratulations! Your monitool is now up to date."
+    "NewVersion": "Congratulations! Your monitool is now up to date.",
+    "CommentedGraphs": "Commented graphs",
+    "PersonalDashboard": "Personal dashboard"
 }
