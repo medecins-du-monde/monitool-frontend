@@ -493,7 +493,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               const change = changes[i];
               const x = change[0];
               const y = change[1];
-              const oldValue = +change[2];
+              const oldValue = change[2] === null ? null : +change[2];
 
               let newValue;
               try {
@@ -501,7 +501,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               } catch (e) {
                 newValue = change[3];
               }
-
               if (oldValue !== newValue) {
                 const pos = this.isInputCell(-1, x, y, tableObj);
                 if (pos !== null && typeof newValue === 'number') {
