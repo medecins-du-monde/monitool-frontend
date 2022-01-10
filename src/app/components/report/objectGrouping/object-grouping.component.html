@@ -26,11 +26,9 @@
             </a>
         </ng-template>
     </mat-grid-tile>
-    <mat-grid-tile colspan="4">
+    <mat-grid-tile colspan="4" (click)="downloadExcelSheet()">
       <!-- Put just a different href later on -->
-      <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
-      [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/'" target="_blank"
-      rel="noopener noreferrer">
+      <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button">
       <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
       </a>
       <ng-template #elseBlock>
@@ -42,3 +40,11 @@
   </mat-grid-tile>
 
 </mat-grid-list>
+
+<ng-template #dlMinimized>
+    <p>This project contains too many data, the download by collection sites maybe impossible, do you want to download the minimized version ?</p>
+    <div>
+        <button mat-button (click)="dlMini()">Yes</button>
+        <button mat-button mat-dialog-close>No</button>
+    </div>
+</ng-template>
