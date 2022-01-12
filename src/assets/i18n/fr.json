@@ -35,7 +35,7 @@
     "CloneStructureAndData": "Dupliquer structure et données",
     "CloneProject": "Dupliquer Projet",
     "CloneProjectInfo": "Cette action dupliquera uniquement la structure de ce projet, sans les entrées. Confimez pour cloner.",
-    "CloneProjectInfoData": "Cette action va cloner ce projet et toutes ses saisies. Confimez pour cloner.",
+    "CloneProjectInfoData": "Cette action va dupliquer ce projet et toutes ses saisies. Confimez pour cloner.",
     "DeleteConfirmation": "Êtes-vous sûr de vouloir supprimer? Confirmez pour supprimer.",
     "DeleteProject": "Supprimer Projet",
     "DeleteProjectInfo": "Êtes-vous sûr de vouloir supprimer ce projet? Confirmez pour supprimer.",
