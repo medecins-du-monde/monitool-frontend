@@ -541,16 +541,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     if (info.splitBySites) {
       const newIndicators = [];
-      console.log('ENTITIES', this.logFrameEntities);
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
-      console.log('ENT 2', entities);
 
-      for (const entityId of this.logFrameEntities) {
+      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+
+      for (const entityId of ent) {
         const customFilter = {
           entity: [entityId]
         };
-
-        console.log('CUSTOM', customFilter);
 
         let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
