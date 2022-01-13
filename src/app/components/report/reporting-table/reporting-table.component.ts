@@ -47,6 +47,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   @Input() isCrossCuttingReport = false;
   rows = new BehaviorSubject<Row[]>([]);
 
+  clickedLogFrame;
+  logFrameEntities = [];
+
   dataSource = new MatTableDataSource([]);
 
   COLORS = [
@@ -219,6 +222,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   toggleSection(row: SectionTitle): void {
+    this.clickedLogFrame = row;
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -310,12 +314,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // Fetch the data of one especific row in function of project, content, filter and dimension
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
+    this.logFrameEntities = [];
     const currentFilter = this.filter.value;
+    const selectedLogFrames = this.project.logicalFrames.find(log =>
+      log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
+    );
+
+    if (selectedLogFrames) {
+      selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
+    }
 
     const modifiedFilter = {
       _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
       _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-      entity: currentFilter.entities
+      entity: this.logFrameEntities.length ? this.logFrameEntities : currentFilter.entities
     };
 
     const currentProject = row.originProject ? row.originProject : this.project;
@@ -520,7 +532,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
-
+    console.log('HI?', this.clickedLogFrame);
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
@@ -531,7 +543,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      for (const entityId of entities) {
+      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+
+      for (const entityId of ent) {
         const customFilter = {
           entity: [entityId]
         };
