@@ -338,7 +338,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             };
             row.values = response;
             row.error = undefined;
-            // TODO: Check why we have this row below
+            // TODO: Check why we have this row below?
             this.rows.next(this.rows.value);
 
             if (row.onChart) {
