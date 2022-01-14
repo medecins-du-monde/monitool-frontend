@@ -101,6 +101,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
+    console.log('FILTER', this.filter);
     this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
@@ -325,8 +326,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     const modifiedFilter = {
-      _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
-      _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
+      _start: selectedLogFrames.start && new Date(selectedLogFrames.start).getTime() === new Date(currentFilter._start).getTime() ?
+        new Date(currentFilter._start).toLocaleDateString('fr-CA') :
+        new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+      _end: selectedLogFrames.end && new Date(selectedLogFrames.end).getTime() === new Date(currentFilter._end).getTime() ?
+        new Date(currentFilter._end).toLocaleDateString('fr-CA') :
+        new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
       entity: this.logFrameEntities.length ? this.logFrameEntities : currentFilter.entities
     };
 
@@ -582,7 +587,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         customIndicator.level = info.indicator.level + 1;
 
         const dateToCompare = new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[0] + '-'
-                              + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
+          + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
 
         if (counter === 1) {
           if (dateToCompare === startTimeSlot.value) {
@@ -741,11 +746,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   formatGroupName(groupName: string) {
     if (groupName.charAt(0) === 'R') {
-      if (this.results.indexOf(groupName) === -1) {this.results.push(groupName); }
+      if (this.results.indexOf(groupName) === -1) { this.results.push(groupName); }
       return groupName.split(':')[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
     } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
       this.results = [];
-      if (this.specificObjectif.indexOf(groupName) === -1) {this.specificObjectif.push(groupName); }
+      if (this.specificObjectif.indexOf(groupName) === -1) { this.specificObjectif.push(groupName); }
       return groupName.split(':')[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
     } else {
       this.specificObjectif = [];
