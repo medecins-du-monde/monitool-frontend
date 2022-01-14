@@ -51,3 +51,13 @@ a {
 .mat-option {
   color: $grey;
 }
+
+.excel-download {
+  background-color: #005ec5;
+
+  .dl-select {
+    width: 100%;
+    color: white;
+    font-weight: bold;
+  }
+}
