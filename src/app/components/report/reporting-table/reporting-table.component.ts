@@ -101,7 +101,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   ngOnInit(): void {
-    console.log('FILTER', this.filter);
     this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
@@ -317,23 +316,26 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   updateRowValues(row: InfoRow): InfoRow {
     this.logFrameEntities = [];
     const currentFilter = this.filter.value;
+    let modifiedFilter;
+
     const selectedLogFrames = this.project.logicalFrames.find(log =>
       log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
     );
 
-    if (selectedLogFrames) {
+    if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
       selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
+      modifiedFilter = {
+        _start: new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end: new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
+        entity: this.logFrameEntities
+      };
+    } else {
+      modifiedFilter = {
+        _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
+        _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
+        entity: currentFilter.entities
+      };
     }
-
-    const modifiedFilter = {
-      _start: selectedLogFrames.start && new Date(selectedLogFrames.start).getTime() === new Date(currentFilter._start).getTime() ?
-        new Date(currentFilter._start).toLocaleDateString('fr-CA') :
-        new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-      _end: selectedLogFrames.end && new Date(selectedLogFrames.end).getTime() === new Date(currentFilter._end).getTime() ?
-        new Date(currentFilter._end).toLocaleDateString('fr-CA') :
-        new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
-      entity: this.logFrameEntities.length ? this.logFrameEntities : currentFilter.entities
-    };
 
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
