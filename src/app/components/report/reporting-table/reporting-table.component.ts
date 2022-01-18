@@ -317,7 +317,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.logFrameEntities = [];
     const currentFilter = this.filter.value;
     let modifiedFilter;
-    
+
     const selectedLogFrames = this.project.logicalFrames.find(log =>
       log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
     );
