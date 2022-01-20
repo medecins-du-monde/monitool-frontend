@@ -1,0 +1,65 @@
+.logframe-details {
+
+    width: 98%;
+    margin-left: 1%;
+    margin-top: 30px;
+
+    .indicator-chart {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        mat-icon {
+            cursor: pointer;
+        }
+    }
+
+    .mat-expansion-panel-header.mat-expanded {
+        height: 40px !important;
+    }
+
+    .mat-expansion-panel-content > .mat-expansion-panel-body {
+        margin-top: 0px !important;
+    }
+
+    h2, p {
+        color: black;
+        margin-bottom: 0px;
+    }
+    h3 {
+        color: #0072FF;
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
+
+    .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+        box-shadow: none;
+    }
+
+    .mat-expansion-panel {
+        background-color: #F5F9FF;
+    }
+
+    .specific-objective {
+
+        h3 {
+            color: black;
+            font-weight: normal;
+            margin-bottom: 0px;
+        }
+
+        .results {
+            .mat-expansion-panel {
+                background-color: #C4DEF2;
+            }
+    
+            .result-indicators {
+                width: 100%;
+    
+                .mat-expansion-panel {
+                    background-color: #F5F9FF;
+                }
+            }
+        }
+    }
+}

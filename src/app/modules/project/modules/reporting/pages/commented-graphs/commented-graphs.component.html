@@ -1,1 +1,14 @@
-<p>commented-graphs works!</p>
+<h3>Commented graphs</h3>
+
+<div class="logframes-containers">
+    <ul *ngFor="let logframe of logicalFrames">
+        <li>
+            <mat-card (click)="goToDashboard(logframe)">
+                <div class="logframe">
+                    <p>{{ logframe.name }}</p><mat-icon>arrow_forward</mat-icon>
+                </div>
+            </mat-card>
+        </li>
+    </ul>
+</div>
+
