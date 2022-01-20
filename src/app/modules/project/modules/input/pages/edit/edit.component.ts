@@ -142,7 +142,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   ngOnInit(): void {
 
     this.userService.showingInputModal.subscribe(val => {
-      console.log('val', val);
       this.showModal = val;
     });
     // Set the page with the normal size
