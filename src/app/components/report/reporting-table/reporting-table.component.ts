@@ -766,7 +766,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
 
-  //Temporary fix for the export issue TO REMOVE ONCE IT'S FIXED
+  // Temporary fix for the export issue TO REMOVE ONCE IT'S FIXED
   exportTOExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
