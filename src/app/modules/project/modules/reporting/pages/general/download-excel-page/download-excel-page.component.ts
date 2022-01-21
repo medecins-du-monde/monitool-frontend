@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -8,12 +9,18 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class DownloadExcelPageComponent implements OnInit {
 
-  informations = [];
+  informations = []; 
+  mini = false;
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.projectService.updateInformationPanel(this.informations);
+    this.route.params.subscribe(params => {
+      if (params.mini && params.mini === 'mini') {
+        this.mini = true;
+      }
+    })
   }
 
 }
