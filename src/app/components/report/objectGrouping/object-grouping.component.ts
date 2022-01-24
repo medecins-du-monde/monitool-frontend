@@ -5,6 +5,8 @@ import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DownloadService } from 'src/app/services/download.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-object-grouping',
@@ -45,7 +47,9 @@ export class ObjectGroupingComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private fb: FormBuilder,
               private translateService: TranslateService,
-              private dialog: MatDialog) { }
+              private downloadService: DownloadService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
 
   get currentLang(): string {
@@ -135,21 +139,30 @@ export class ObjectGroupingComponent implements OnInit {
 
   downloadExcelSheet() {
     const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/';
-    const win = window.open(url, '_blank');
+    
+    this.downloadService.url.next(url);
+    this.router.navigate(['./download'], { relativeTo: this.route });
+    
+    
+    // const win = window.open(url, '_blank');
 
-    const timer = setInterval(() => {
-      if (!win.closed) {
-        clearInterval(timer);
-        this.dialog.open(this.dlMinimized);
-        win.close();
-      }
-    }, 500);
+    // const timer = setInterval(() => {
+    //   if (!win.closed) {
+    //     clearInterval(timer);
+    //     this.dialog.open(this.dlMinimized);
+    //     win.close();
+    //   }
+    // }, 500);
   }
 
   dlMini() {
     const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/' + this.minimized;
-    window.open(url, '_blank');
-    this.dialog.closeAll();
+
+    this.downloadService.url.next(url);
+    this.router.navigate(['./download'], { relativeTo: this.route });
+    
+    // window.open(url, '_blank');
+    // this.dialog.closeAll();
   }
 
 }

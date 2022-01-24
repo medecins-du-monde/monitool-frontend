@@ -6,10 +6,6 @@ import { GeneralComponent } from './general.component';
 
 const routes: Routes = [
   {
-    path: 'download/:mini',
-    component: DownloadExcelPageComponent
-  },
-  {
     path: 'download',
     component: DownloadExcelPageComponent
   },

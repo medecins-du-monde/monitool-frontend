@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { DownloadService } from 'src/app/services/download.service';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -7,20 +9,33 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './download-excel-page.component.html',
   styleUrls: ['./download-excel-page.component.scss']
 })
-export class DownloadExcelPageComponent implements OnInit {
+export class DownloadExcelPageComponent implements OnInit, OnDestroy {
 
+  pageText = '';
   informations = []; 
   mini = false;
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
+  private subscription: Subscription = new Subscription();
+  
+  constructor(
+    private projectService: ProjectService, 
+    private downloadService: DownloadService
+  ) { }
 
   ngOnInit(): void {
     this.projectService.updateInformationPanel(this.informations);
-    this.route.params.subscribe(params => {
-      if (params.mini && params.mini === 'mini') {
-        this.mini = true;
-      }
-    })
+
+    this.pageText = 'Generating excel sheet';
+
+    this.subscription.add(
+      this.downloadService.url.subscribe(newUrl => {
+        this.downloadService.download();
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 
 }
