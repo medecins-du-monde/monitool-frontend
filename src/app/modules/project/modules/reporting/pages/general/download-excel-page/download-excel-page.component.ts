@@ -11,7 +11,7 @@ import { ProjectService } from 'src/app/services/project.service';
 })
 export class DownloadExcelPageComponent implements OnInit, OnDestroy {
 
-  pageText = '';
+  pageText = 'Something went wrong';
   informations = []; 
   mini = false;
 
@@ -25,11 +25,12 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.projectService.updateInformationPanel(this.informations);
 
-    this.pageText = 'Generating excel sheet';
-
     this.subscription.add(
-      this.downloadService.url.subscribe(newUrl => {
-        this.downloadService.download();
+      this.downloadService.url.subscribe(() => {
+        if (this.downloadService.url.getValue() !== ''){
+          this.pageText = 'Generating excel sheet';
+        }
+        this.downloadService.generate();
       })
     )
   }
