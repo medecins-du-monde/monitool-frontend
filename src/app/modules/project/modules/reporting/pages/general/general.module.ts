@@ -8,10 +8,11 @@ import { ObjectGroupingModule} from '../../../../../../components/report/objectG
 import { FilterModule} from '../../../../../../components/report/filter/filter.module';
 import { ReportingTableModule } from 'src/app/components/report/reporting-table/reporting-table.module';
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
+import { DownloadExcelPageComponent } from './download-excel-page/download-excel-page.component';
 
 
 @NgModule({
-    declarations: [GeneralComponent],
+    declarations: [GeneralComponent, DownloadExcelPageComponent],
     imports: [
         CommonModule,
         TranslateModule,

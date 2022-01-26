@@ -266,7 +266,7 @@ mat-hint {
 }
 
 .mdm-section {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: $grey !important;
   width: 100%;
 
@@ -1218,4 +1218,8 @@ code {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* number of lines to show */
   -webkit-box-orient: vertical;
+}
+
+.mat-typography p {
+  margin: 0 0 8px;
 }

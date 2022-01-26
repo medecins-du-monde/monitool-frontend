@@ -9,6 +9,8 @@ import { interval } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { RefreshSnackbarComponent } from './components/refresh-snackbar/refresh-snackbar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     private route: Router,
     private snackBar: MatSnackBar,
     private swUpdate: SwUpdate,
+    private dialog: MatDialog
   ) {
     // === Translations ===
     this.translateService.addLangs(['fr', 'en', 'es']);
@@ -182,12 +185,13 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
     this.swUpdate.available.subscribe(() => {
       this.hasUpdate = true;
-      this.showSnackBar();
+      // this.showSnackBar();
     });
   }
 
   showSnackBar(): void{
-    this.snackBar.openFromComponent(RefreshSnackbarComponent);
+    // this.snackBar.openFromComponent(RefreshSnackbarComponent);
+    // const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
   }
 
   ngAfterViewChecked(): void {

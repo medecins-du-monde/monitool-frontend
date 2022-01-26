@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class InformationsPanelComponent implements OnInit {
 
-  displayed;
+  displayed = false;
   firstDisplayed = true;
   informations: InformationItem[] = [];
 
