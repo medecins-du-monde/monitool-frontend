@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DownloadService } from 'src/app/services/download.service';
 import { ProjectService } from 'src/app/services/project.service';
@@ -12,13 +11,17 @@ import { ProjectService } from 'src/app/services/project.service';
 export class DownloadExcelPageComponent implements OnInit, OnDestroy {
 
   pageText = 'Something went wrong';
-  informations = []; 
+  informations = [];
   mini = false;
 
+  get status(): string{
+    return this.downloadService.status.getValue();
+  }
+
   private subscription: Subscription = new Subscription();
-  
+
   constructor(
-    private projectService: ProjectService, 
+    private projectService: ProjectService,
     private downloadService: DownloadService
   ) { }
 
@@ -28,11 +31,15 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.downloadService.url.subscribe(() => {
         if (this.downloadService.url.getValue() !== ''){
-          this.pageText = 'Generating excel sheet';
+          this.pageText = 'Generating excel sheet, please wait...';
         }
         this.downloadService.generate();
       })
     )
+  }
+
+  download(): void {
+    this.downloadService.download();
   }
 
   ngOnDestroy(): void {
