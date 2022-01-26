@@ -156,6 +156,7 @@ export default class FormGroupBuilder {
       group = new Group();
     }
     return new FormGroup({
+      id: new FormControl(group.id),
       name: new FormControl(group.name, Validators.required),
       members: new FormControl(group.members.map(x => x.id), Validators.required),
     });
