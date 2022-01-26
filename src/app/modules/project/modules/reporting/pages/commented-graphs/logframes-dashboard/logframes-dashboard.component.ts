@@ -15,7 +15,7 @@ export class LogframesDashboardComponent implements OnInit {
 
   public logicalFrame: LogicalFrame;
   public project: Project;
-  public displayActivity: boolean = false;
+  public displayActivity = false;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
 

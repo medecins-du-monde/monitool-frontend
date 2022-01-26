@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { LogframesDashboardComponent } from './logframes-dashboard/logframes-dashboard.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatMenuModule } from '@angular/material/menu'; 
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [CommentedGraphsComponent, LogframesDashboardComponent],

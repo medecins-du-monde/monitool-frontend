@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,6 +18,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
+//  import * as XLSX from 'xlsx';
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
@@ -85,6 +86,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
+
+  //  @ViewChild('TABLE') table: ElementRef;
+
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.calculateOptimalColspan();
@@ -101,7 +105,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
-
         const filteredRows = value.filter(row => {
           if (this.isSectionTitle(0, row)) {
             return true;
@@ -739,6 +742,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return groupName;
   }
+
+  /* TEMPORARY
+  exportTOExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'SheetJS.xlsx');
+  } */
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
