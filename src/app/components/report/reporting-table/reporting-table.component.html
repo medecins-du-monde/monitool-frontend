@@ -127,8 +127,41 @@
         </div>
         </td>
       </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length >= 9">
+      <ng-container *ngIf="columnsToDisplay.length === 9">
         <td mat-cell *matCellDef="let element" [attr.colspan]="8" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 10">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="9" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length === 11">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="10" class="title">
+          <div>
+          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+          <ng-template #elseOpen>
+            <mat-icon>remove_circle</mat-icon>
+          </ng-template>
+             {{ element['title'] }}
+        </div>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="columnsToDisplay.length >= 12">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="13" class="title">
           <div>
           <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
           <ng-template #elseOpen>
