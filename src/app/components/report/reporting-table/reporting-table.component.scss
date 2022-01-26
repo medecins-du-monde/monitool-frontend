@@ -89,11 +89,13 @@
   }
 
   .blue-hover {
-
     .mat-cell {
       color: #1c1c1c;
     }
-    :hover {
+  }
+
+  .blue-hover:hover {
+    .mat-cell {
       color:#005ec5;
     }
   }

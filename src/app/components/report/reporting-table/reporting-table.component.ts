@@ -543,7 +543,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
-    console.log('HI?', this.clickedLogFrame);
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
@@ -610,7 +609,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
 
         customIndicator = this.updateRowValues(customIndicator);
-        newIndicators.push(customIndicator);
+        if (customIndicator.name !== info.indicator.name) {
+          newIndicators.push(customIndicator);
+        }
 
         startTimeSlot = startTimeSlot.next();
       }
