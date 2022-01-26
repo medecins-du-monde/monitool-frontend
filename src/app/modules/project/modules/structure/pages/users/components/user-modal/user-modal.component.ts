@@ -45,7 +45,6 @@ export class UserModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('FGUOIHPOGUIFY', this.data);
     this.types = typesList;
     this.roles = rolesList;
     this.projectService.openedProject.subscribe(project => {
@@ -63,7 +62,6 @@ export class UserModalComponent implements OnInit {
     });
 
     this.userForm.valueChanges.subscribe(() => {
-      console.log('type', this.userForm.value.type);
       if (this.userForm.value.type && this.userForm.value.type === 'partner') {
         this.userForm.controls['name'].setValidators([Validators.required]);
         this.userForm.controls['username'].setValidators([Validators.required]);
