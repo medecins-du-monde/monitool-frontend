@@ -19,8 +19,6 @@ import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
 
-import * as XLSX from 'xlsx';
-
 type Row = SectionTitle | GroupTitle | InfoRow;
 
 @Component({
@@ -764,17 +762,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.results = [];
     }
     return groupName;
-  }
-
-
-  // Temporary fix for the export issue TO REMOVE ONCE IT'S FIXED
-  exportTOExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    /* save to file */
-    XLSX.writeFile(wb, 'SheetJS.xlsx');
   }
 
   ngOnDestroy(): void {
