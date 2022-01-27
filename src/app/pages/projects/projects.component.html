@@ -13,7 +13,7 @@
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">
-                        {{ status.text | translate }} 
+                        {{ status.text | translate }}
                         ({{ status.count }})
                     </mat-button-toggle>
                 </mat-button-toggle-group>
@@ -30,7 +30,7 @@
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"
-            [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)"
+            [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"
         ></app-project>
     </div>
 </div>

@@ -215,6 +215,12 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
+  onCloneWithData(project: Project): void {
+    this.projectService.cloneWithData(project.id).then(() => {
+      this.getProjects();
+    });
+  }
+
   onToggleCountry() {
     if (this.allSelected.selected) {
       this.allSelected.deselect();
