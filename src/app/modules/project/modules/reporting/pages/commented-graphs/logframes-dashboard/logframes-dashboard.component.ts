@@ -16,6 +16,7 @@ export class LogframesDashboardComponent implements OnInit {
   public logicalFrame: LogicalFrame;
   public project: Project;
   public displayActivity = false;
+  public hasActivities: boolean = false;
 
   constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
 
@@ -24,8 +25,17 @@ export class LogframesDashboardComponent implements OnInit {
       map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
     ).subscribe((res: { project: Project, logicalFrameId: string }) => {
       this.project = res.project;
-      const oldLogicalFrame = this.logicalFrame;
       this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
+      if (this.logicalFrame) {
+        this.logicalFrame.purposes.forEach(purpose =>
+          purpose.outputs.forEach(output => {
+            if (output.activities.length) {
+              this.hasActivities = true;
+              output['hasActivities'] = true;
+            }
+          })
+        )
+      }
       /*
       if (!this.logicalFrame) {
         this.router.navigate(['..'], { relativeTo: this.route });
@@ -38,7 +48,7 @@ export class LogframesDashboardComponent implements OnInit {
   }
 
   displayActivities() {
-    this.displayActivity = !this.displayActivity;
+    this.displayActivity = true;
   }
 
 }

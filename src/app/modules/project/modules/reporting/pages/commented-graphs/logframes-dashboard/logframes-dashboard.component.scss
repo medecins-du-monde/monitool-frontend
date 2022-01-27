@@ -60,16 +60,24 @@
         }
 
         .results {
+
             .mat-expansion-panel {
                 background-color: #C4DEF2;
             }
     
             .result-indicators {
                 width: 100%;
+                margin-bottom: 5px;
     
-                .mat-expansion-panel {
+                .result-indic-accordions {
                     background-color: #F5F9FF;
+                    width: 98%;
+                    margin-left: 1% !important;
                 }
+            }
+
+            .activity-accordions {
+                background-color: #EDEDEE;;
             }
         }
     }

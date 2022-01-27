@@ -41,16 +41,36 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="result-indicators">
-                    <mat-expansion-panel *ngFor="let indic of output.indicators">
+                    <mat-icon *ngIf="output.hasActivities" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                    <mat-expansion-panel class="result-indic-accordions" *ngFor="let indic of output.indicators">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{ indic.display }}
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div class="indicator-chart">
-                            <p>The chart will go there</p><mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                            <p>The chart will go there</p>
                         </div>
                     </mat-expansion-panel>
+                    <ng-container *ngIf="displayActivity">
+                        <mat-expansion-panel class="activity-accordions" *ngFor="let activity of output.activities">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Activité : {{ activity.description}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-expansion-panel *ngFor="let indic of activity.indicators">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{ indic.display }}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="indicator-chart">
+                                    <p>The chart will go there</p>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-expansion-panel>
+                    </ng-container>
                 </div>
             </mat-expansion-panel>
         </div>
