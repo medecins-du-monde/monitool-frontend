@@ -795,5 +795,7 @@
     "Elements": "Eléments de la désagrégation",
     "Aggregation": "Règle d’agrégation des éléments",
     "Groups": "Groupe d’éléments",
-    "NewVersion": "Félicitations ! Votre Monitool est à jour."
+    "NewVersion": "Félicitations ! Votre Monitool est à jour.",
+    "CommentedGraphs": "Graphiques commentés",
+    "PersonalDashboard": "Tableaux de bord personnels"
 }

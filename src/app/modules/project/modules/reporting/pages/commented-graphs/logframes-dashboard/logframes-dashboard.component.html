@@ -1,0 +1,74 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Filters
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>The filters will go there</p>
+</mat-expansion-panel>
+
+<div class="logframe-details" *ngIf="logicalFrame">
+    <h2 class="logframe-name"><b>{{ logicalFrame.name }}</b></h2>
+    <h3 class="logframe-obj">Objectif : {{ logicalFrame.goal }}</h3>
+
+    <mat-expansion-panel *ngFor="let indic of logicalFrame.indicators">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ indic.display }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+            <p>The chart will go there</p>
+    </mat-expansion-panel>
+
+    <div class="specific-objective" *ngFor="let spec of logicalFrame.purposes">
+        <div class="specific-objectives-indic">
+            <h3><b>Specific objective : </b> {{ spec.description }}</h3>
+            <mat-expansion-panel *ngFor="let indic of spec.indicators">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{ indic.display }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                    <p>The chart will go there</p>
+            </mat-expansion-panel>
+        </div>
+
+        <div class="results">
+            <mat-expansion-panel *ngFor="let output of spec.outputs">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <b>Result : </b>{{ output.description }}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="result-indicators">
+                    <mat-expansion-panel *ngFor="let indic of output.indicators">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ indic.display }}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="indicator-chart">
+                            <p>The chart will go there</p><mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                        </div>
+                    </mat-expansion-panel>
+                </div>
+            </mat-expansion-panel>
+        </div>
+    </div>
+
+</div>
+
+<mat-menu #menu>
+    <button mat-menu-item>
+      <mat-icon>filter_list</mat-icon>
+      <span>Show filters</span>
+    </button>
+    <button mat-menu-item (click)="displayActivities()">
+      <mat-icon>auto_graph</mat-icon>
+      <span>Show activities</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>comment</mat-icon>
+      <span>Show comments</span>
+    </button>
+  </mat-menu>

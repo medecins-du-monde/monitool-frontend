@@ -1,0 +1,15 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+mat-card {
+    color: #005ec5;
+    font-weight: bold;
+    cursor: pointer;
+
+    .logframe {
+        display: flex;
+        justify-content: space-between;
+    }
+}
