@@ -8,8 +8,8 @@
 </mat-expansion-panel>
 
 <div class="logframe-details" *ngIf="logicalFrame">
-    <h2><b>{{ logicalFrame.name }}</b></h2>
-    <h3>Objectif : {{ logicalFrame.goal }}</h3>
+    <h2 class="logframe-name"><b>{{ logicalFrame.name }}</b></h2>
+    <h3 class="logframe-obj">Objectif : {{ logicalFrame.goal }}</h3>
 
     <mat-expansion-panel *ngFor="let indic of logicalFrame.indicators">
         <mat-expansion-panel-header>

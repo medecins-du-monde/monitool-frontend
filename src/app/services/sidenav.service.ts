@@ -44,12 +44,12 @@ export class SidenavService {
         {
           name: 'CommentedGraphs',
           routerLink: `../${project.id}/reporting/commented-graphs`,
-          icon: 'clipboard'
+          icon: 'comment'
         },
         {
           name: 'PersonalDashboard',
           routerLink: `../${project.id}/reporting/personal-dashboard`,
-          icon: 'clipboard'
+          icon: 'dashboard'
         }
       ]
     };

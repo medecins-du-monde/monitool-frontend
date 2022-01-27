@@ -1,8 +1,14 @@
 .logframe-details {
+    background-color: white;
+    margin-top: 20px;
+    padding: 10px 12px;
+    box-shadow: 0 1px 6px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
 
-    width: 98%;
-    margin-left: 1%;
-    margin-top: 30px;
+   h3 {
+        line-height: normal;
+        margin-bottom: 10px !important;
+    }
 
     .indicator-chart {
         display: flex;
@@ -22,14 +28,19 @@
         margin-top: 0px !important;
     }
 
-    h2, p {
+    p {
         color: black;
-        margin-bottom: 0px;
     }
-    h3 {
+
+    .logframe-name {
+        color: black;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    h3, .logframe-obj {
         color: #0072FF;
         font-weight: bold;
-        margin-bottom: 0px;
     }
 
     .mat-expansion-panel:not([class*="mat-elevation-z"]) {
