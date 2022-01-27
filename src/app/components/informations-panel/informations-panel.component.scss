@@ -52,13 +52,19 @@
     }
 
     .information-panel-toggle-btn {
-        height: 100%;
+        height: 100vh;
         width: 25px;
         cursor: pointer;
-        background-color: $card_header_background;
+        background-color: #d9edf7;
+        color: #31708f;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         mat-icon {
-            margin-top: 45vh;
+            align-self: center;
+            // margin-top: 20px;
+            // margin-bottom: 40vh;
         }
     }
 

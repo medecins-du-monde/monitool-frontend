@@ -10,8 +10,14 @@ export class UserService {
 
   public showInputWarningModal: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  public displayInfoPanel: BehaviorSubject<boolean> = new BehaviorSubject(true);
+
   get showingInputModal(): Observable<boolean> {
     return this.showInputWarningModal.asObservable();
+  }
+
+  get isInfoPanelOpened(): Observable<boolean> {
+    return this.displayInfoPanel.asObservable();
   }
 
   constructor(private apiService: ApiService) { }
@@ -28,6 +34,10 @@ export class UserService {
 
   public updateInputModalChoice(showing: boolean): void {
     this.showInputWarningModal.next(showing);
+  }
+
+  public closeInfoPanel(showing: boolean): void {
+    this.displayInfoPanel.next(showing);
   }
 
 }

@@ -33,6 +33,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   private chart: Chart;
 
   @Input() data: any;
+  unit: string;
   options: ChartOptions = {
     // tooltips: {
     //   mode: 'index',
@@ -61,7 +62,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         ticks: {
             fontSize: 14,
             callback: (value, index, values) => {
-              return value.toLocaleString('de-DE');
+              return value.toLocaleString('de-DE') + (this.unit ? this.unit : '');
             }
         }
       }],
@@ -150,7 +151,8 @@ export class ChartComponent implements OnInit, OnDestroy {
 
               const name = body[0].split(':')[0];
               const value = body[0].split(':')[1];
-              const formattedValue = Number(value.replace(/\s/g, '')).toLocaleString('de-DE');
+              console.log('VALUE', typeof value, value.indexOf('p'));
+              const formattedValue = value.indexOf('%') === -1 ? Number(value.replace(/\s/g, '')).toLocaleString('de-DE') : value;
               innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
 
           });
@@ -206,6 +208,9 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   addData(data): void {
     if (this.chart){
+      if (data.datasets.length && data.datasets[0].unit === '%') {
+        this.unit = '%';
+      }
       this.chart.data = data;
       this.chart.update();
     }

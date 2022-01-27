@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -47,6 +47,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   @Input() isCrossCuttingReport = false;
   rows = new BehaviorSubject<Row[]>([]);
 
+  clickedLogFrame;
+  logFrameEntities = [];
+
   dataSource = new MatTableDataSource([]);
 
   COLORS = [
@@ -74,6 +77,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   content: any[];
   project: Project;
 
+  results: any[] = [];
+  specificObjectif: any[] = [];
+
   dimensions: string[];
   columnsToDisplay: string[];
   openedSections = { 0: true };
@@ -81,6 +87,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_ERROR = ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
+
+  @ViewChild('TABLE') table: ElementRef;
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
@@ -216,6 +224,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   toggleSection(row: SectionTitle): void {
+    this.clickedLogFrame = row;
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -307,13 +316,28 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // Fetch the data of one especific row in function of project, content, filter and dimension
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
+    this.logFrameEntities = [];
     const currentFilter = this.filter.value;
+    let modifiedFilter;
 
-    const modifiedFilter = {
-      _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
-      _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-      entity: currentFilter.entities
-    };
+    const selectedLogFrames = this.project.logicalFrames.find(log =>
+      log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
+    );
+
+    if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
+      selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
+      modifiedFilter = {
+        _start: new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end: new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
+        entity: this.logFrameEntities
+      };
+    } else {
+      modifiedFilter = {
+        _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
+        _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
+        entity: currentFilter.entities
+      };
+    }
 
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
@@ -517,7 +541,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
-
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
@@ -528,7 +551,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      for (const entityId of entities) {
+      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+
+      for (const entityId of ent) {
         const customFilter = {
           entity: [entityId]
         };
@@ -565,7 +590,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         customIndicator.level = info.indicator.level + 1;
 
         const dateToCompare = new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[0] + '-'
-                              + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
+          + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
 
         if (counter === 1) {
           if (dateToCompare === startTimeSlot.value) {
@@ -582,7 +607,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
 
         customIndicator = this.updateRowValues(customIndicator);
-        newIndicators.push(customIndicator);
+        if (customIndicator.name !== info.indicator.name) {
+          newIndicators.push(customIndicator);
+        }
 
         startTimeSlot = startTimeSlot.next();
       }
@@ -722,7 +749,23 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  formatGroupName(groupName: string) {
+    if (groupName.charAt(0) === 'R') {
+      if (this.results.indexOf(groupName) === -1) { this.results.push(groupName); }
+      return groupName.split(':')[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+    } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
+      this.results = [];
+      if (this.specificObjectif.indexOf(groupName) === -1) { this.specificObjectif.push(groupName); }
+      return groupName.split(':')[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+    } else {
+      this.specificObjectif = [];
+      this.results = [];
+    }
+    return groupName;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
+

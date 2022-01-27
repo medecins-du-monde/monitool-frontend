@@ -9,6 +9,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
+import { TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
 
 @Component({
   selector: 'app-reporting-menu',
@@ -78,34 +79,49 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       });
     }
 
+    // the periodicity that represents the row is the biggest periodicity of all the datasources that
+    // constitute the parameters to the computation
+    let highestPeriodicity = 'day';
+
+    for (const value of Object.values(this.indicator.computation.parameters)) {
+      const varId = value['elementId'];
+      currentProject.forms.forEach(form => {
+        if (form.elements.find(element => element.id === varId)) {
+          if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]) {
+            highestPeriodicity = form.periodicity;
+          }
+        }
+      });
+    }
+
     // This part is managing the options that we put when we select the entity or group filter
     if ((this.dimensionName === 'entity' || this.dimensionName === 'group')){
-      if (!this.indicator.customFilter?.month){
+      if (!this.indicator.customFilter?.month && TimeSlotOrder[highestPeriodicity] <= TimeSlotOrder['month']){
         this.options.push({
           value: `${this.translateService.instant('Filter.month')}`,
           action: () => this.timeOption('month')
         });
+      }
 
-        if (!this.indicator.customFilter?.quarter){
-          this.options.push({
-            value: `${this.translateService.instant('Filter.quarter')}`,
-            action: () => this.timeOption('quarter')
-          });
+      if (!this.indicator.customFilter?.quarter && TimeSlotOrder[highestPeriodicity] <= TimeSlotOrder['quarter']){
+        this.options.push({
+          value: `${this.translateService.instant('Filter.quarter')}`,
+          action: () => this.timeOption('quarter')
+        });
+      }
 
-          if (!this.indicator.customFilter?.semester){
-            this.options.push({
-              value: `${this.translateService.instant('Filter.semester')}`,
-              action: () => this.timeOption('semester')
-            });
+      if (!this.indicator.customFilter?.semester && TimeSlotOrder[highestPeriodicity] <= TimeSlotOrder['semester']){
+        this.options.push({
+          value: `${this.translateService.instant('Filter.semester')}`,
+          action: () => this.timeOption('semester')
+        });
+      }
 
-            if (!this.indicator.customFilter?.year){
-              this.options.push({
-                value: `${this.translateService.instant('Filter.year')}`,
-                action: () => this.timeOption('year')
-              });
-            }
-          }
-        }
+      if (!this.indicator.customFilter?.year && TimeSlotOrder[highestPeriodicity] <= TimeSlotOrder['year']){
+        this.options.push({
+          value: `${this.translateService.instant('Filter.year')}`,
+          action: () => this.timeOption('year')
+        });
       }
     }
 

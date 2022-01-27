@@ -8,7 +8,7 @@
 .table-scroll {
   z-index: 3 !important;
   width: 100%;
-  max-height: 71vh;
+  max-height: 67vh;
   overflow: auto;
   border: solid 0.5px $table_border;
 
@@ -21,11 +21,11 @@
   }
   
   .mat-column-icon {
-    width: 50px;
+    width: 35px;
   }
 
   .mat-column-baseline, .mat-column-target {
-    width: 65px;
+    width: 50px;
   }
 
   .mat-column-name {
@@ -38,6 +38,11 @@
   .mat-column-title, .mat-column-groupName {
     border-right: none !important;
     width: 100vw !important;
+
+    mat-icon {
+      margin-top: 6px;
+      font-size: 18px;
+    }
   }
 
   .mat-column-title_stick, .mat-column-group_stick {
@@ -46,12 +51,12 @@
 
   th {
     overflow: hidden;
-    width: 85px;
+    width: 68px;
     border: solid 0.5px $table_border !important;
     color: $grey;
     font-weight: bold;
     text-align: center;
-    font-size: $small_text;
+    font-size: 13px;
     padding: 0 !important
   }
   
@@ -61,7 +66,7 @@
   td {
     z-index: 3 !important;
     padding: 0;
-    font-size : $small_text;
+    font-size : 13px;
     text-align: center;
     color: $grey;
     border: solid 1px $table_border !important;
@@ -79,8 +84,20 @@
   
   tr.mat-row {
     z-index: 3 !important;
-    height: 30px !important;
+    height: 26px !important;
     overflow: hidden;
+  }
+
+  .blue-hover {
+    .mat-cell {
+      color: #1c1c1c;
+    }
+  }
+
+  .blue-hover:hover {
+    .mat-cell {
+      color:#005ec5;
+    }
   }
   
   tr.example-detail-row {
@@ -145,7 +162,7 @@
   
   .title{
     font-weight: bold;
-    font-size: $small_text;
+    font-size: 13px;
     color: $grey; 
     div {
       display: flex;
@@ -161,8 +178,8 @@
   }
   
   th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-    z-index: 3 !important;
-    padding-left: 10px !important;
+    //z-index: 3 !important;
+    padding-left: 5px !important;
   }
 
   .clicked {
@@ -197,3 +214,11 @@
   background-color: #fff; 
   border-radius: 8px; 
 } 
+
+tr.mat-header-row {
+  height: 34px !important;
+}
+
+.mat-column-_total {
+  color: #1c1c1c !important;
+}
