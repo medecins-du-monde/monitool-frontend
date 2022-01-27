@@ -327,8 +327,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
       selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
       modifiedFilter = {
-        _start: new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-        _end: new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
+        _start: new Date(selectedLogFrames.start) < new Date(currentFilter._start) ?
+          new Date(currentFilter._start).toLocaleDateString('fr-CA') :
+          new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
+          new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
+          new Date(currentFilter._end).toLocaleDateString('fr-CA'),
         entity: this.logFrameEntities
       };
     } else {
@@ -338,6 +342,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entities
       };
     }
+
+    console.log('MODIFIED', modifiedFilter);
 
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
