@@ -83,6 +83,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   private initValue: any;
   tableSettings: any;
   expressionParser = new Parser.Parser();
+  filledWithZero = false;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
@@ -325,7 +326,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
         // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
-        if (sum !== null){
+        if (sum !== null) {
           total += sum;
         }
       }
@@ -338,8 +339,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
-      total = null;
+      if (table.numberCols !== 2) { total = null; }
       for (y = table.rows.length; y < (table.numberCols - 1); y += 1) {
+        if (table.numberCols < 3) { total = null; }
         let sum = null;
         for (x = 0; x < table.numberRows; x += 1) {
           const inputPos = this.isInputCell(i, x, y);
@@ -356,7 +358,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
         // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
-        if (sum !== null){
+        if (sum !== null) {
           total += sum;
         }
       }
@@ -366,6 +368,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       } else {
         table.value[table.numberRows - 1][table.numberCols - 1] = null;
       }
+      table.value[table.numberRows - 1][table.numberCols - 1] = total;
     }
   }
 
@@ -465,7 +468,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
           if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
-          (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
+            (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
           }
           if (typeof value === 'number') {
@@ -715,29 +718,29 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     const valuesGroup = {};
     for (const e of this.form.elements) {
       if (this.input && this.input.values && this.input.values[e.id]) {
-        valuesGroup[e.id] = this.fb.array(
-          this.input.values[e.id]
-        );
+        const newValue = [];
+        this.input.values[e.id].forEach((val, i) => {
+          if (!val) { newValue.push(0); } else { newValue.push(val); }
+        });
+        this.inputForm.get('values').get(e.id).setValue(newValue);
       } else {
         valuesGroup[e.id] = this.fb.array(
           Array.from({ length: this.countInputCells(e) }, () => 0)
         );
+        this.inputForm = this.fb.group({
+          _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
+          entity: this.site.id,
+          form: this.form.id,
+          period: this.timeSlotDate,
+          project: this.project.id,
+          rev: (this.input && this.input.rev) ? this.input.rev : null,
+          values: this.fb.group(valuesGroup)
+        });
       }
     }
 
-    // Create the formGroup
-    this.inputForm = this.fb.group({
-      _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
-      entity: this.site.id,
-      form: this.form.id,
-      period: this.timeSlotDate,
-      project: this.project.id,
-      rev: (this.input && this.input.rev) ? this.input.rev : null,
-      values: this.fb.group(valuesGroup)
-    });
-
     // Fill the init value with the current value in order to be able to reset
-    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+    // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
     this.createTable();
     this.updateTotals(this.inputForm.value);
   }
