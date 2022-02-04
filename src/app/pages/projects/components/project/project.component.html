@@ -44,15 +44,15 @@
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onClone()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item (click)="onClone()" *ngIf="project.active">
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'CloneStructure' | translate }}</span>
     </button>
-    <button mat-menu-item (click)="onCloneWithData()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item (click)="onCloneWithData()" *ngIf="project.active">
       <mat-icon>content_copy</mat-icon>
       <span>{{ 'CloneStructureAndData' | translate }}</span>
   </button>
-    <button mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active">
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
