@@ -374,7 +374,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       row.onChart = !row.onChart;
       this.updateChart();
     }
-
     return row;
   }
 
@@ -670,7 +669,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // after this we go down subtracting the value
     // of the red until we get to the green: rgb (128, 255, 128)
 
-    if (this.checkIfNaN(element.values[column])) {
+    if (typeof element.values[column] !== 'number') {
       return 'rgb(238, 238, 238)';
     }
 
@@ -730,7 +729,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   checkIfNaN(x: unknown): boolean {
-    return isNaN(x);
+    if (typeof x === null || isNaN(x)) {
+      return true
+    } 
+
+    if (typeof x === 'number' && !isNaN(x)) {
+      return false
+    }
   }
 
   calculateOptimalColspan(): void {

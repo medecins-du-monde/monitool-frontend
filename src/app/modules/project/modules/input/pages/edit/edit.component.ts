@@ -83,6 +83,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   private initValue: any;
   tableSettings: any;
   expressionParser = new Parser.Parser();
+  filledWithZero = false;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
@@ -225,11 +226,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
         // Subscribe to any changes in the form
         this.inputForm.valueChanges.subscribe(val => {
-        // Convert the string input to a number
-        this.convertToNumber(val);
-        // Update of the total cell of each row or column
-        this.updateTotals(val);
-      });
+          // Convert the string input to a number
+          // this.convertToNumber(val);
+          // Update of the total cell of each row or column
+          this.updateTotals(val);
+        });
 
         // Update the breadcrumbs informations
         const breadCrumbs = [
@@ -269,7 +270,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         );
       } else {
         valuesGroup[e.id] = this.fb.array(
-          Array.from({length: this.countInputCells(e)}, () => 0)
+          Array.from({ length: this.countInputCells(e) }, () => null)
         );
       }
     }
@@ -302,25 +303,32 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       const table = this.tables[i];
       let x: number;
       let y: number;
-      let total = 0;
+      let total = null;
 
       // Update of the total for all rows
       // chose a row
       for (x = table.cols.length; x < (table.numberRows - 1); x += 1) {
         // sum of the row
-        let sum = 0;
+        let sum = null;
         // iterate over all collumns for the row chosen
         for (y = 0; y < table.numberCols; y += 1) {
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== null){
-            if (!isNaN(val.values[table.id][inputPos])){
-              sum += val.values[table.id][inputPos];
+          if (inputPos !== null) {
+            if (!isNaN(val.values[table.id][inputPos])) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
+                sum += val.values[table.id][inputPos];
+              }
             }
           }
         }
         // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
-        total += sum;
+        if (sum !== null) {
+          total += sum;
+        }
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
@@ -331,25 +339,36 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
-      total = 0;
-      for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
-        let sum = 0;
-        for (x = 0; x < table.numberRows; x += 1){
+      if (table.numberCols !== 2) { total = null; }
+      for (y = table.rows.length; y < (table.numberCols - 1); y += 1) {
+        if (table.numberCols < 3) { total = null; }
+        let sum = null;
+        for (x = 0; x < table.numberRows; x += 1) {
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== null){
-            if (!isNaN(val.values[table.id][inputPos])){
-              sum += +val.values[table.id][inputPos];
+          if (inputPos !== null) {
+            if (!isNaN(val.values[table.id][inputPos])) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
+                sum += val.values[table.id][inputPos];
+              }
             }
           }
         }
         // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
-        total += sum;
+        if (sum !== null) {
+          total += sum;
+        }
       }
       // if the table has multiple rows and collums the total in the last cell needs to be updated
-      if (total !== 0){
+      if (total && total !== 0) {
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
+      } else {
+        table.value[table.numberRows - 1][table.numberCols - 1] = null;
       }
+      table.value[table.numberRows - 1][table.numberCols - 1] = total;
     }
   }
 
@@ -455,7 +474,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             td.innerHTML = newValue;
-          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly) {
+          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly && value !== null) {
             td.style.background = '#d9534f';
             td.innerHTML = value;
           } else if (typeof value === 'string') {
@@ -472,12 +491,12 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         },
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
-          if (changes !== null){
-            for (let i = 0; i < changes.length; i += 1){
+          if (changes !== null) {
+            for (let i = 0; i < changes.length; i += 1) {
               const change = changes[i];
               const x = change[0];
               const y = change[1];
-              const oldValue = +change[2];
+              const oldValue = change[2] === null ? null : +change[2];
 
               let newValue;
               try {
@@ -485,7 +504,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               } catch (e) {
                 newValue = change[3];
               }
-
               if (oldValue !== newValue) {
                 const pos = this.isInputCell(-1, x, y, tableObj);
                 if (pos !== null && typeof newValue === 'number') {
@@ -682,10 +700,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   // Fill the current input with the data of the previous one
-  fillWithPreviousData(): void{
-    if (this.previousInput){
-      for (const e of this.form.elements){
-        if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]){
+  fillWithPreviousData(): void {
+    if (this.previousInput) {
+      for (const e of this.form.elements) {
+        if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]) {
           this.inputForm.get('values').get(e.id).setValue(this.previousInput.values[e.id]);
         }
       }
@@ -693,6 +711,38 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       this.updateTotals(this.inputForm.value);
     }
 
+  }
+
+  fillWithZero(): void {
+    // Get all the values already in the current form
+    const valuesGroup = {};
+    for (const e of this.form.elements) {
+      if (this.input && this.input.values && this.input.values[e.id]) {
+        const newValue = [];
+        this.input.values[e.id].forEach((val, i) => {
+          if (!val) { newValue.push(0); } else { newValue.push(val); }
+        });
+        this.inputForm.get('values').get(e.id).setValue(newValue);
+      } else {
+        valuesGroup[e.id] = this.fb.array(
+          Array.from({ length: this.countInputCells(e) }, () => 0)
+        );
+        this.inputForm = this.fb.group({
+          _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
+          entity: this.site.id,
+          form: this.form.id,
+          period: this.timeSlotDate,
+          project: this.project.id,
+          rev: (this.input && this.input.rev) ? this.input.rev : null,
+          values: this.fb.group(valuesGroup)
+        });
+      }
+    }
+
+    // Fill the init value with the current value in order to be able to reset
+    // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+    this.createTable();
+    this.updateTotals(this.inputForm.value);
   }
 
   // Save the current input and redirect the user to the input home page
@@ -754,7 +804,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
