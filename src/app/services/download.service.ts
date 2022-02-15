@@ -21,6 +21,7 @@ export class DownloadService {
       // observe: 'response' makes the get return
       // an observable with the entire response instead of just the body
       this.status.next('generating');
+
       this.httpClient.get(this.url.getValue(), {observe: 'response'}).subscribe(resp => {
         // display its headers
         const keys = resp.headers.keys();
@@ -33,6 +34,9 @@ export class DownloadService {
         // console.log(body)
         // TO DO: add error handling here
 
+        this.check();
+      }, err => {
+        console.log(err);
         this.check();
       });
     }
