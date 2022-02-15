@@ -55,7 +55,7 @@ export class AuthService {
         response = true;
       })
       .catch(err => {
-        console.log('An error occured');
+        console.log('An Error occured');
         console.log(err);
         response = false;
       });

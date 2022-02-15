@@ -20,8 +20,6 @@ import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-titl
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
 //  import * as XLSX from 'xlsx';
 
-import * as XLSX from 'xlsx';
-
 type Row = SectionTitle | GroupTitle | InfoRow;
 
 @Component({
@@ -330,8 +328,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
       selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
       modifiedFilter = {
-        _start: new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-        _end: new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
+        _start: new Date(selectedLogFrames.start) < new Date(currentFilter._start) ?
+          new Date(currentFilter._start).toLocaleDateString('fr-CA') :
+          new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
+          new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
+          new Date(currentFilter._end).toLocaleDateString('fr-CA'),
         entity: this.logFrameEntities
       };
     } else {
@@ -341,6 +343,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         entity: currentFilter.entities
       };
     }
+
+    console.log('MODIFIED', modifiedFilter);
 
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
@@ -365,7 +369,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             };
             row.values = response;
             row.error = undefined;
-            // TODO: Check why we have this row below
+            // TODO: Check why we have this row below?
             this.rows.next(this.rows.value);
 
             if (row.onChart) {
@@ -766,14 +770,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return groupName;
   }
-
-  /* TEMPORARY
-  exportTOExcel() {
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'SheetJS.xlsx');
-  } */
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
