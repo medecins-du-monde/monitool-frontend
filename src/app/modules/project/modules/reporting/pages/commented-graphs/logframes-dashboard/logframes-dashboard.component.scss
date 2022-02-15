@@ -1,0 +1,76 @@
+.logframe-details {
+    background-color: white;
+    margin-top: 15px;
+    padding: 10px 12px;
+    box-shadow: 0 1px 6px 0 rgb(0 0 0 / 10%);
+    border-radius: 4px;
+
+   h3 {
+        line-height: normal;
+        margin-bottom: 10px !important;
+    }
+
+    .indicator-chart {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        mat-icon {
+            cursor: pointer;
+        }
+    }
+
+    .mat-expansion-panel-header.mat-expanded {
+        height: 40px !important;
+    }
+
+    .mat-expansion-panel-content > .mat-expansion-panel-body {
+        margin-top: 0px !important;
+    }
+
+    p {
+        color: black;
+    }
+
+    .logframe-name {
+        color: black;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    h3, .logframe-obj {
+        color: #0072FF;
+        font-weight: bold;
+    }
+
+    .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+        box-shadow: none;
+    }
+
+    .mat-expansion-panel {
+        background-color: #F5F9FF;
+    }
+
+    .specific-objective {
+
+        h3 {
+            color: black;
+            font-weight: normal;
+            margin-bottom: 0px;
+        }
+
+        .results {
+            .mat-expansion-panel {
+                background-color: #C4DEF2;
+            }
+    
+            .result-indicators {
+                width: 100%;
+    
+                .mat-expansion-panel {
+                    background-color: #F5F9FF;
+                }
+            }
+        }
+    }
+}

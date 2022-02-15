@@ -145,6 +145,14 @@ export class AppComponent implements OnInit, AfterViewChecked {
       'edit',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/edit.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'comment',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/comment.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'dashboard',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/dashboard.svg')
+    );
 
     this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val);
   }
