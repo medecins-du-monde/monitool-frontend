@@ -196,6 +196,11 @@ export class ProjectService {
 
   public async clone(id: string): Promise<void> {
     const project = new Project();
+    await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=false`);
+  }
+
+  public async cloneWithData(id: string): Promise<void> {
+    const project = new Project();
     await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
   }
 

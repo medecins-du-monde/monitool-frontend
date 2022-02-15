@@ -18,6 +18,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
+//  import * as XLSX from 'xlsx';
 
 type Row = SectionTitle | GroupTitle | InfoRow;
 
@@ -88,7 +89,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
-  @ViewChild('TABLE') table: ElementRef;
+
+  //  @ViewChild('TABLE') table: ElementRef;
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
@@ -106,7 +108,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.calculateOptimalColspan();
     this.subscription.add(
       this.rows.subscribe(value => {
-
         const filteredRows = value.filter(row => {
           if (this.isSectionTitle(0, row)) {
             return true;
