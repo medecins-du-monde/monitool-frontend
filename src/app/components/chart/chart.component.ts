@@ -151,7 +151,6 @@ export class ChartComponent implements OnInit, OnDestroy {
 
               const name = body[0].split(':')[0];
               const value = body[0].split(':')[1];
-              console.log('VALUE', typeof value, value.indexOf('p'));
               const formattedValue = value.indexOf('%') === -1 ? Number(value.replace(/\s/g, '')).toLocaleString('de-DE') : value;
               innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
 

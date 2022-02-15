@@ -20,7 +20,6 @@ export class CommentedGraphsComponent implements OnInit {
     this.projectService.openedProject.subscribe((project: Project) => {
       this.project = project;
       this.logicalFrames = project.logicalFrames;
-      console.log('LOG FRAMES', this.logicalFrames);
     });
   }
 
