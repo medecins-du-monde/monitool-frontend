@@ -99,6 +99,23 @@ export class BasicsComponent implements OnInit, OnDestroy {
           visibility: [project.visibility, Validators.required]
         }, { validators: [DatesHelper.orderedDates('start', 'end')] });
         this.basicsForm.valueChanges.subscribe((value: any) => {
+          if (value.start._d) {
+            project.entities.forEach(entity => {
+              entity.start = new Date(entity.start).getTime() === new Date(project.start).getTime() ? value.start._d : entity.start;
+            });
+            project.forms.forEach(form => {
+              form.start = new Date(form.start).getTime() === new Date(project.start).getTime() ? value.start._d : form.start;
+            });
+          }
+
+          if (value.end._d) {
+            project.entities.forEach(entity => {
+              entity.end = new Date(entity.end).getTime() === new Date(project.end).getTime() ? value.end._d : entity.end;
+            });
+            project.forms.forEach(form => {
+              form.end = new Date(form.end).getTime() === new Date(project.end).getTime() ? value.end._d : form.end;
+            });
+          }
           const selectedThemes = value.themes;
           value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
           this.projectService.valid = this.basicsForm.valid;
