@@ -8,7 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [ObjectGroupingComponent],
@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatDialogModule,
         FormsModule,
         ReactiveFormsModule,
+        MatTooltipModule
     ]
 })
 export class ObjectGroupingModule { }

@@ -1203,6 +1203,13 @@ code {
   overflow-x: hidden !important;
   margin-left: -5px !important;
   min-width: calc(100% + 20px) !important;
+
+  mat-icon {
+    font-size: 14px;
+    float: right;
+    margin-right: 0px !important;
+    margin-top: 5%;
+  }
 }
 
 // style for expansion-panel inside existing-partiton-modal
