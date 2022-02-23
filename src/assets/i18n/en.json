@@ -783,5 +783,10 @@
     "Dec": "december",
     "NewVersion": "Congratulations! Your monitool is now up to date.",
     "CommentedGraphs": "Commented graphs",
-    "PersonalDashboard": "Personal dashboard"
+    "PersonalDashboard": "Personal dashboard",
+    "export-download": "Download Excel Report",
+    "export-complete": "Global Excel Export",
+    "export-minimized": "Detailed Excel Export",
+    "minimized-tooltip": "All Sites merged",
+    "complete-tooltip": "Global Export + 1 Tab per Collecion Site"
 }

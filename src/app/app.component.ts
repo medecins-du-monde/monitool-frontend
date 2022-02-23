@@ -193,16 +193,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }));
     }
     this.swUpdate.available.subscribe(() => {
-      this.hasUpdate = true;
-      this.showSnackBar();
+      // this.hasUpdate = true;
+      // this.showSnackBar();
     });
 
   }
 
-  showSnackBar(): void{
-    this.snackBar.openFromComponent(RefreshSnackbarComponent);
-    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
-  }
+  // showSnackBar(): void{
+  //   this.snackBar.openFromComponent(RefreshSnackbarComponent);
+  //   const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
+  // }
 
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
