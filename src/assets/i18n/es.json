@@ -801,8 +801,8 @@
     "Dec": "Diciembre",
     "NewVersion": "¡Enhorabuena! Tu monitool está actualizado.",
     "export-download": "Descargar informe Excel",
-    "export-complete": "Exportación global de Excel",
-    "export-minimized": "Exportación detallada de Excel",
+    "export-complete": "Exportación detallada de Excel",
+    "export-minimized": "Exportación global de Excel",
     "minimized-tooltip": "Todos los sitios combinados",
     "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección"
 }

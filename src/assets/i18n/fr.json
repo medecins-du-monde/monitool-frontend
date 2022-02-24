@@ -802,8 +802,8 @@
     "CommentedGraphs": "Graphiques commentés",
     "PersonalDashboard": "Tableaux de bord personnels",
     "export-download": "Télécharger le rapport Excel",
-    "export-complete": "Export Excel Global",
-    "export-minimized": "Export Excel détaillé",
+    "export-complete": "Export Excel détaillé",
+    "export-minimized": "Export Excel Global",
     "minimized-tooltip": "Tous sites confondus",
     "complete-tooltip": "Rapport Total + 1 onglet par site de collecte"
 }

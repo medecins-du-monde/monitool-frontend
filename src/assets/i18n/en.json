@@ -785,8 +785,8 @@
     "CommentedGraphs": "Commented graphs",
     "PersonalDashboard": "Personal dashboard",
     "export-download": "Download Excel Report",
-    "export-complete": "Global Excel Export",
-    "export-minimized": "Detailed Excel Export",
+    "export-complete": "Detailed Excel Export",
+    "export-minimized": "Global Excel Export",
     "minimized-tooltip": "All Sites merged",
     "complete-tooltip": "Global Export + 1 Tab per Collecion Site"
 }
