@@ -343,8 +343,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       };
     }
 
-    console.log('MODIFIED', modifiedFilter);
-
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
     if (row.customFilter) {
