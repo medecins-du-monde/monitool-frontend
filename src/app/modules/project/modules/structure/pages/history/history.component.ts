@@ -9,10 +9,8 @@ import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
-import { DateService } from 'src/app/services/date.service';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from 'src/app/services/user.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 
 
 @Component({
@@ -169,6 +167,7 @@ export class HistoryComponent implements OnInit {
     const patchedRevision = this.patchProject(revisionIndex);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
+    patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y))
     this.projectService.project.next(patchedRevision);
   }
 
