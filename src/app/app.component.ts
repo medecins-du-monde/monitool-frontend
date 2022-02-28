@@ -205,7 +205,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.snackBar.openFromComponent(RefreshSnackbarComponent);
     const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
   }*/
-  
+
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
   }
