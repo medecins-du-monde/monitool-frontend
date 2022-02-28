@@ -20,6 +20,7 @@ export class ProjectComponent implements OnInit {
   @Output() delete = new EventEmitter();
   @Output() restore = new EventEmitter();
   @Output() clone = new EventEmitter();
+  @Output() cloneWithData = new EventEmitter();
   @Output() getProjects: EventEmitter<any> = new EventEmitter();
 
   currentUser: User;
@@ -71,6 +72,16 @@ export class ProjectComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.clone.emit(this.project);
+      }
+    });
+  }
+
+  onCloneWithData(): void {
+    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfoData'} } );
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.cloneWithData.emit(this.project);
       }
     });
   }

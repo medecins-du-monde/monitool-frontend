@@ -41,13 +41,30 @@ a {
   align-items: center;
   justify-content: center;
   font-size: $small_text;
+  color: $white;
+  background-color: #005ec5;
   @media screen and (max-width: $breakpoint-xs) {
     font-size: 0;
   }
   mat-icon {
-    color: $grey;
+    color: $white;
   }
 }
 .mat-option {
   color: $grey;
+}
+.excel-download {
+
+  background-color: #005ec5;
+
+  .dl-select {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+  }
+
+}
+
+::ng-deep .mat-select-placeholder {
+  color: white !important;
 }

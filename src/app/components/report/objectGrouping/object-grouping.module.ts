@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [ObjectGroupingComponent],
@@ -19,8 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatIconModule,
         MatGridListModule,
         MatButtonModule,
+        MatDialogModule,
         FormsModule,
         ReactiveFormsModule,
+        MatTooltipModule
     ]
 })
 export class ObjectGroupingModule { }

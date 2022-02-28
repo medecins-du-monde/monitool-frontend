@@ -33,8 +33,11 @@
     "Basics": "Basics",
     "Cancel": "Cancel",
     "Clone": "Clone",
+    "CloneStructure": "Clone structure",
+    "CloneStructureAndData": "Clone structure and sata",
     "CloneProject": "Clone Project",
-    "CloneProjectInfo": "This action will clone this project, and all related input. Confirm to clone.",
+    "CloneProjectInfo": "This action will clone only the structure of this project, without the entries. Confirm to clone.",
+    "CloneProjectInfoData": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
     "DeleteConfirmation": "Are you sure that you want to delete? Confirm to delete.",
     "DeleteProject": "Delete Project",
@@ -761,6 +764,7 @@
         "MissingCalculation": "Calculation is missing"
     },
     "DownloadTable": "Download Table",
+    "DownloadTableMini": "Download Mini",
     "FillWithPreviousData": "Fill with data from the previous entry",
     "ShowFinishedProjects": "Show finished projects",
     "Understood": "I understand",
@@ -777,5 +781,12 @@
     "Oct": "october",
     "Nov": "november",
     "Dec": "december",
-    "NewVersion": "Congratulations! Your monitool is now up to date."
+    "NewVersion": "Congratulations! Your monitool is now up to date.",
+    "CommentedGraphs": "Commented graphs",
+    "PersonalDashboard": "Personal dashboard",
+    "export-download": "Download Excel Report",
+    "export-complete": "Detailed Excel Export",
+    "export-minimized": "Global Excel Export",
+    "minimized-tooltip": "All Sites merged",
+    "complete-tooltip": "Global Export + 1 Tab per Collecion Site"
 }

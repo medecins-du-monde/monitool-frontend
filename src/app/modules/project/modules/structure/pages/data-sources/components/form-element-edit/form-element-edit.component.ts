@@ -72,6 +72,7 @@ export class FormElementEditComponent implements OnInit {
 
   onRemovePartition(i: number) {
     this.partitions.removeAt(i);
+    this.elementForm.get('distribution').patchValue(0);
   }
 
   private newEmptyPartition(): FormGroup {
