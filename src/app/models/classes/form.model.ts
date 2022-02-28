@@ -13,21 +13,34 @@ export class Form implements Deserializable {
     elements: FormElement[] = [];
     entities: Entity[] = [];
 
-    constructor(input?: any) {
-        this.deserialize(input);
+    constructor(input?: any, globalEntities?: Entity[]) {
+        this.deserialize(input, globalEntities);
     }
 
     get periodicityDisplay(): string {
         return `Enum.Periodicity.${this.periodicity}`;
     }
 
-    deserialize(input: any): this {
+    deserialize(input: any, globalEntities?: Entity[]): this {
         Object.assign(this, input);
         this.id = (input && input.id) ? input.id : uuid();
         this.periodicity = ( input && input.periodicity ) ? input.periodicity : 'month';
         this.start = ( input && input.start && this.periodicity !== 'free') ? DatesHelper.parseDate(input.start) : null;
         this.end = ( input && input.end && this.periodicity !== 'free') ? DatesHelper.parseDate(input.end) : null;
         this.elements = ( input && input.elements ) ? input.elements.map(x => new FormElement(x)) : [];
+
+        // recognizes when input.entites is a list of Entities id's instead of Entity objects
+        this.entities = [];
+        if (input && input.entities){
+            for (let ambiguousEntity of input.entities){
+                if (typeof ambiguousEntity === 'string' && globalEntities){
+                    let ambiguousEntityId: string = ambiguousEntity
+                    ambiguousEntity = globalEntities.find(e => e.id = ambiguousEntityId);
+                }
+                this.entities.push(ambiguousEntity);
+            }
+        }
+
         return this;
     }
 
