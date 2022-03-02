@@ -113,6 +113,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {
         this.user = user;
+        console.log(this.user);
       })
     );
     this.subscription.add(
@@ -160,7 +161,8 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.allowedEntities = this.sites;
 
       // We show only columns of data in which the current user has rights
-      const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+      const projectUser = this.project.users.filter(user => user.username === this.user.username);
+
       if (this.user.role !== 'admin') {
         if (projectUser.length > 0) {
           if (projectUser[0].role === 'input') {
