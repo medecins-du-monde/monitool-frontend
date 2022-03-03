@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Entity } from 'src/app/models/classes/entity.model';
@@ -16,7 +16,7 @@ import { typesList } from '../../constants/type';
   templateUrl: './user-modal.component.html',
   styleUrls: ['./user-modal.component.scss']
 })
-export class UserModalComponent implements OnInit {
+export class UserModalComponent implements OnInit, AfterViewChecked {
 
   userForm: FormGroup;
 
@@ -33,7 +33,8 @@ export class UserModalComponent implements OnInit {
     public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private userService: UserService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   get selectedSites(): Entity[] {
@@ -42,6 +43,10 @@ export class UserModalComponent implements OnInit {
 
   get selectedDataSources(): Form[] {
     return this.userForm ? this.dataSources.filter(x => this.userForm.controls.dataSources.value.includes(x)) : [];
+  }
+
+  get disableButton(): boolean {
+    return !this.userForm?.valid;
   }
 
   ngOnInit(): void {
@@ -111,6 +116,10 @@ export class UserModalComponent implements OnInit {
   onDataSourceRemoved(dataSource: Form): void {
     const dataSources = this.userForm.controls.dataSources.value;
     this.userForm.controls.dataSources.setValue(dataSources.filter(d => d.id !== dataSource.id));
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
 }
