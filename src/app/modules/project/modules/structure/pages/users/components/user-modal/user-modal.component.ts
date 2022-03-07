@@ -65,7 +65,10 @@ export class UserModalComponent implements OnInit {
       if (this.userForm.value.type && this.userForm.value.type === 'partner') {
         this.userForm.controls['name'].setValidators([Validators.required]);
         this.userForm.controls['username'].setValidators([Validators.required]);
-        this.userForm.controls['password'].setValidators([Validators.required]);
+        // this.data is null when creating a new user
+        if (!this.data){
+          this.userForm.controls['password'].setValidators([Validators.required]);
+        }
       } else {
         this.userForm.controls['name'].clearValidators();
         this.userForm.controls['username'].clearValidators();
