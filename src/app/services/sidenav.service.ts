@@ -41,6 +41,7 @@ export class SidenavService {
           routerLink: `../${project.id}/reporting/general`,
           icon: 'clipboard'
         },
+        /*
         {
           name: 'CommentedGraphs',
           routerLink: `../${project.id}/reporting/commented-graphs`,
@@ -51,6 +52,7 @@ export class SidenavService {
           routerLink: `../${project.id}/reporting/personal-dashboard`,
           icon: 'dashboard'
         }
+        */
       ]
     };
 

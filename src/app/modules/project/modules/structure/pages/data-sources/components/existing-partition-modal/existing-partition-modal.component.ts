@@ -65,7 +65,6 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
         for (const element of form.elements){
           if (element.id !== this.element.id){
             for (const partition of element.partitions){
-              // console.log('PARTITION', partition);
               if (this.allPartitions.length) {
                 if (!this.allPartitions.some(el =>
                   (el.name).replace(' ', '').toUpperCase() === (partition.name).replace(' ', '').toUpperCase())

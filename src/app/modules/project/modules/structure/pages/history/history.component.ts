@@ -150,7 +150,7 @@ export class HistoryComponent implements OnInit {
         const patch = this.revisions[i].backwards as Operation[];
         jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
-        console.log('Error in reverting to datasource at Index ', i);
+        console.log('Error in reverting to datasource at index ', i);
         console.log(e);
       }
     }
