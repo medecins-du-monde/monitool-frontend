@@ -34,7 +34,7 @@ export class Form implements Deserializable {
         if (input && input.entities){
             for (let ambiguousEntity of input.entities){
                 if (typeof ambiguousEntity === 'string' && globalEntities){
-                    let ambiguousEntityId: string = ambiguousEntity
+                    const ambiguousEntityId: string = ambiguousEntity;
                     ambiguousEntity = globalEntities.find(e => e.id === ambiguousEntityId);
                 }
                 this.entities.push(ambiguousEntity);

@@ -166,9 +166,8 @@ export class HistoryComponent implements OnInit {
     this.saveConfirmElement = revisionIndex;
     const patchedRevision = this.patchProject(revisionIndex);
 
-    console.log(patchedRevision.forms)
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
-    patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y))
+    patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
     this.projectService.project.next(patchedRevision);
   }
 
