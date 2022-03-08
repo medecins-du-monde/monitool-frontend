@@ -187,7 +187,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     /*
 
-    // check serviceworker for updates
+    // check serviceworker for updates, disabled for now
     if (this.swUpdate.isEnabled) {
       interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
         // checking for updates
