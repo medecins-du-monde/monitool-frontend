@@ -160,9 +160,7 @@ export class RevisionSummaryComponent implements OnInit {
     //////////////////////////
 
     if (operation.op === 'add' || operation.op === 'remove') {
-
       if (editedField === 'users_dataSources') {
-
         translationData['item'] = before.forms.find(e => {
 
           if (Array.isArray(translationData['item'])) {
@@ -175,17 +173,17 @@ export class RevisionSummaryComponent implements OnInit {
 
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
-
         translationData['item'] = before.entities.find(e => {
-
-          if (Array.isArray(translationData['item'])) {
-            return e.id === translationData['item'][0];
+          if(e === translationData['item']) {
+            return e
           }
-          else {
-            return e.id === translationData['item'];
-          }
+          // if (Array.isArray(translationData['item'])) {
+          //   return e.id === translationData['item'][0];
+          // }
+          // else {
+          //   return e.id === translationData['item'];
+          // }
         });
-
       }
 
       if (editedField === 'forms_elements_partitions_groups_members') {

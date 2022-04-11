@@ -293,7 +293,7 @@
         "users_dataSources_remove": "Remove authorization to input on data source <code>{{item.name}}</code> of user <code>{{user.name}}</code>",
         "users_entities_add": "Allow <code>{{user.name}}</code> to input data on site <code>{{item.name}}</code>",
         "users_entities_move": "Reorder the sites associated with user <code>{{user.name}}</code>",
-        "users_entities_remove": "Remove authorization to input on site <code>{{item.name}}</code> of user <code>{{user.name}}</code>",
+        "users_entities_remove": "Remove authorization to input on site <code>{{item.name}}</code> of user <code>{{user.id}}</code>",
         "users_move": "Reorder the project users",
         "users_name_replace": "Rename the partner <code>{{before}}</code> to <code>{{after}}</code>",
         "users_password_replace": "Change the password of the partner <code>{{user.name}}</code>",
