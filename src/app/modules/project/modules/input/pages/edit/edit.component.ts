@@ -711,29 +711,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   fillWithZero(): void {
-    // Get all the values already in the current form
-    const valuesGroup = {};
     for (const e of this.form.elements) {
-      if (this.input && this.input.values && this.input.values[e.id]) {
-        const newValue = [];
-        this.input.values[e.id].forEach((val, i) => {
-          if (!val) { newValue.push(0); } else { newValue.push(val); }
-        });
-        this.inputForm.get('values').get(e.id).setValue(newValue);
-      } else {
-        valuesGroup[e.id] = this.fb.array(
-          Array.from({ length: this.countInputCells(e) }, () => 0)
-        );
-        this.inputForm = this.fb.group({
-          _id: (this.input && this.input.id) ? this.input.id : `input:${this.project.id}:${this.form.id}:${this.site.id}:${this.timeSlotDate}`,
-          entity: this.site.id,
-          form: this.form.id,
-          period: this.timeSlotDate,
-          project: this.project.id,
-          rev: (this.input && this.input.rev) ? this.input.rev : null,
-          values: this.fb.group(valuesGroup)
-        });
-      }
+      const newValue = [];
+      // Get all the values already in the current form
+      this.inputForm.get('values').get(e.id).value.forEach((val, i) => {
+        if (!val) { newValue.push(0); } else { newValue.push(val); }
+      });
+      this.inputForm.get('values').get(e.id).setValue(newValue);
     }
 
     // Fill the init value with the current value in order to be able to reset
@@ -796,7 +780,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     this.createTable();
     this.updateTotals(this.inputForm.value);
     this.inputForm.valueChanges.subscribe(val => {
-      this.convertToNumber(val);
       this.updateTotals(val);
     });
   }
