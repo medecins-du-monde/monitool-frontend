@@ -363,12 +363,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
       }
       // if the table has multiple rows and collums the total in the last cell needs to be updated
-      if (total && total !== 0) {
+      if (total !== null) {
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
-      } else {
-        table.value[table.numberRows - 1][table.numberCols - 1] = null;
       }
-      table.value[table.numberRows - 1][table.numberCols - 1] = total;
     }
   }
 
