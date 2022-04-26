@@ -99,6 +99,13 @@ export class ProjectIndicator implements Deserializable {
           this.type = FORMULA;
           this.computation.formula = input.computation.formula;
           this.computation.parameters = input.computation.parameters;
+
+          if (/1000/.test(input.computation.formula)){
+            this.unit = '‰';
+          } else if (/100/.test(input.computation.formula)){
+            this.unit = '%';
+          }
+
         }
     }
 

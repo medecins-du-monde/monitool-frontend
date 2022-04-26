@@ -186,18 +186,17 @@ export class AppComponent implements OnInit, AfterViewChecked {
     });
 
     /*
-
-    // check serviceworker for updates
+    // check service worker for updates
     if (this.swUpdate.isEnabled) {
       interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
         // checking for updates
       }));
     }
     this.swUpdate.available.subscribe(() => {
-      this.hasUpdate = true;
-      this.showSnackBar();
-    });*/
-
+      // this.hasUpdate = true;
+      // this.showSnackBar();
+    });
+    */
   }
 
   /*

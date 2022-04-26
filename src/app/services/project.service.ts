@@ -169,6 +169,7 @@ export class ProjectService {
 
   public async saveCurrent(): Promise<Project>{
     const project = this.currentProject;
+    // console.log(this.currentProject);
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
