@@ -1,6 +1,6 @@
 // tslint:disable:no-shadowed-variable
 // tslint:disable:one-variable-per-declaration
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -29,6 +30,56 @@ import { UserService } from 'src/app/services/user.service';
 })
 
 export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  // Check if the form has any error
+  get canBeSaved(): boolean {
+    if (this.inputForm) {
+      let values: any[];
+      for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
+        if (values.findIndex(v => isNaN(v)) !== -1) {
+          return false;
+        }
+      }
+    }
+
+    // if you haven't save it already, you can always save
+    if (!this.input) {
+      return true;
+    }
+
+    // If the coming input is different from our form, we can return true
+    if (this.inputForm && this.input) {
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+
+  // Check if the initial input got has any modification
+  get inputHasModification(): boolean {
+    if (!this.input && this.initValue) {
+      // If new values are different from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
+    }
+    if (this.inputForm && this.input) {
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private projectService: ProjectService,
+    private translateService: TranslateService,
+    private fb: FormBuilder,
+    private inputService: InputService,
+    private router: Router,
+    private dialog: MatDialog,
+    private userService: UserService,
+  ) { }
 
   informations = [
     {
@@ -84,64 +135,17 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   tableSettings: any;
   expressionParser = new Parser.Parser();
   filledWithZero = false;
+  public imageLink: string;
+
+  @ViewChild('nullInputInfoDialog') nullInputInfoDialog: TemplateRef<any>;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.canBeSaved;
   }
 
-  get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-  }
-
-  // Check if the form has any error
-  get canBeSaved(): boolean {
-    if (this.inputForm) {
-      let values: any[];
-      for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
-        if (values.findIndex(v => isNaN(v)) !== -1) {
-          return false;
-        }
-      }
-    }
-
-    // if you haven't save it already, you can always save
-    if (!this.input) {
-      return true;
-    }
-
-    // If the coming input is different from our form, we can return true
-    if (this.inputForm && this.input) {
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-
-  // Check if the initial input got has any modification
-  get inputHasModification(): boolean {
-    if (!this.input && this.initValue) {
-      // If new values are different from the initial ones, we can return true
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
-    }
-    if (this.inputForm && this.input) {
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-
-  constructor(
-    private route: ActivatedRoute,
-    private projectService: ProjectService,
-    private translateService: TranslateService,
-    private fb: FormBuilder,
-    private inputService: InputService,
-    private router: Router,
-    private dialog: MatDialog,
-    private userService: UserService
-  ) { }
-
   ngOnInit(): void {
-
+    this.imageLink = 'assets/images/null-data-' + this.currentLang + '.png';
     this.userService.showingInputModal.subscribe(val => {
       this.showModal = val;
     });
@@ -369,7 +373,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     }
   }
 
-  createTable(): void {
+  createTable(saveMode?: boolean): void {
     // Re-initiate table data and table
     this.tables = [];
     this.tableSettings = {};
@@ -467,6 +471,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
             (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
+          }
+          if (saveMode && value === null) {
+            td.style.background = '#d9534f';
+            td.innerHTML = value;
           }
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -727,32 +735,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   // Save the current input and redirect the user to the input home page
-  async saveInput(): Promise<void> {
-    if (this.showModal) {
-      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
-
-      dialogRef.afterClosed().subscribe(res => {
-        if (res?.confirm) {
-          const inputToBeSaved = new Input(this.inputForm.value);
-          this.inputService.save(inputToBeSaved).then(response => {
-            if (response) {
-              this.input = new Input(response);
-              this.inputForm.get('rev').setValue(this.input.rev);
-              this.router.navigate(['./../../../'], { relativeTo: this.route });
-            }
-          });
-        }
-      });
-    } else {
-      const inputToBeSaved = new Input(this.inputForm.value);
-      this.inputService.save(inputToBeSaved).then(response => {
-        if (response) {
-          this.input = new Input(response);
-          this.inputForm.get('rev').setValue(this.input.rev);
-          this.router.navigate(['./../../../'], { relativeTo: this.route });
-        }
-      });
-    }
+  saveInput(): void {
+    this.createTable(true);
+    this.dialog.open(this.nullInputInfoDialog);
   }
 
   // Delete current input and redirect the user to input home page
@@ -786,5 +771,37 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  cancel() {
+    this.createTable();
+  }
+
+  async confirm(): Promise<void> {
+    if (this.showModal) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+
+      dialogRef.afterClosed().subscribe(res => {
+        if (res?.confirm) {
+          const inputToBeSaved = new Input(this.inputForm.value);
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response) {
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.router.navigate(['./../../../'], { relativeTo: this.route });
+            }
+          });
+        }
+      });
+    } else {
+      const inputToBeSaved = new Input(this.inputForm.value);
+      this.inputService.save(inputToBeSaved).then(response => {
+        if (response) {
+          this.input = new Input(response);
+          this.inputForm.get('rev').setValue(this.input.rev);
+          this.router.navigate(['./../../../'], { relativeTo: this.route });
+        }
+      });
+    }
   }
 }

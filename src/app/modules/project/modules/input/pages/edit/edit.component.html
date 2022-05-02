@@ -20,7 +20,7 @@
     </button>
     <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithZero()">
         <mat-icon>edit</mat-icon>
-        Fill with 0
+        {{ 'FillWithZero' | translate }}
     </button>
     <div class="mdm-title">
         {{ 'Data' | translate }}
@@ -48,3 +48,14 @@
         {{ 'Delete' | translate }}
     </button>
 </div>
+
+<ng-template #nullInputInfoDialog>
+    <p><span class="bold-text">{{ 'NullValueMessage.Warning' | translate }}</span>{{ 'NullValueMessage.NullValueMeaning' | translate }}</p>
+    <img [src]="imageLink">
+    <p>{{ 'NullValueMessage.Save' | translate }}</p>
+    <mat-dialog-actions align="end">
+        <button mat-stroked-button (click)="cancel()" class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
+            }}</button>
+        <button mat-stroked-button (click)="confirm()" class="mdm-button save-button" mat-dialog-close>{{ 'Confirm' | translate }}</button>
+    </mat-dialog-actions>
+</ng-template>

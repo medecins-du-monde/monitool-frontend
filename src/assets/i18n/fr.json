@@ -777,6 +777,7 @@
     },
     "DownloadTable": "Télécharger le tableau",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
+    "FillWithZero": "Remplir les cellules vides avec des 0",
     "ShowFinishedProjects": "Afficher les projets terminés",
     "Understood": "J'ai compris",
 
@@ -795,5 +796,10 @@
     "Elements": "Eléments de la désagrégation",
     "Aggregation": "Règle d’agrégation des éléments",
     "Groups": "Groupe d’éléments",
-    "NewVersion": "Félicitations ! Votre Monitool est à jour."
+    "NewVersion": "Félicitations ! Votre Monitool est à jour.",
+    "NullValueMessage": {
+        "Warning": "Attention : ",
+        "NullValueMeaning": " le formulaire contient des données vides. Le calcul des indicateurs à partir de formulaires de saisies incomplets sera possible, mais donnera un résultat imprécis. Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques \"0\", vous pouvez utiliser le bouton \"Remplir toutes les cellules vides avec des zéros\". ",
+        "Save": "Etes-vous sûr de vouloir sauvegarder ?"
+    }
 }
