@@ -185,7 +185,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }, 300);
     });
 
-    /*
     // check service worker for updates
     if (this.swUpdate.isEnabled) {
       interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
@@ -193,17 +192,15 @@ export class AppComponent implements OnInit, AfterViewChecked {
       }));
     }
     this.swUpdate.available.subscribe(() => {
-      // this.hasUpdate = true;
-      // this.showSnackBar();
+      this.hasUpdate = true;
+      this.showSnackBar();
     });
-    */
   }
 
-  /*
   showSnackBar(): void{
     this.snackBar.openFromComponent(RefreshSnackbarComponent);
-    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
-  }*/
+    //  const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'NewVersion' } });
+  }
 
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
