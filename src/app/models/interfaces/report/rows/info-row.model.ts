@@ -14,6 +14,7 @@ export interface InfoRow {
     onChart?: boolean;
     dataset?: any;
     filterFlag: boolean;
+    filter?: any;
     computation: any;
     originProject?: Project;
     customFilter?: any;

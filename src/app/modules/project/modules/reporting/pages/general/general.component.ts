@@ -140,7 +140,14 @@ export class GeneralComponent implements OnInit {
           level
         } as GroupTitle);
 
-        rows = rows.concat(logicalFrame.indicators);
+        rows = rows.concat(logicalFrame.indicators.map(indicator => {
+          indicator.filter = {
+            _start: logicalFrame.start,
+            _end: logicalFrame.end,
+            entities: logicalFrame.entities.map(e => e.id)
+          }
+          return indicator;
+        }));
 
         level += 1;
         for (const purpose of logicalFrame.purposes){
@@ -151,7 +158,14 @@ export class GeneralComponent implements OnInit {
             level
           } as GroupTitle);
 
-          rows = rows.concat(purpose.indicators);
+          rows = rows.concat(purpose.indicators.map(indicator => {
+            indicator.filter = {
+              _start: logicalFrame.start,
+              _end: logicalFrame.end,
+              entities: logicalFrame.entities.map(e => e.id)
+            }
+            return indicator;
+          }));
 
           level += 1;
           for (const output of purpose.outputs){
@@ -162,7 +176,14 @@ export class GeneralComponent implements OnInit {
               level
             } as GroupTitle);
 
-            rows = rows.concat(output.indicators);
+            rows = rows.concat(output.indicators.map(indicator => {
+              indicator.filter = {
+                _start: logicalFrame.start,
+                _end: logicalFrame.end,
+                entities: logicalFrame.entities.map(e => e.id)
+              }
+              return indicator;
+            }));
 
             level += 1;
             for (const activity of output.activities){
@@ -173,7 +194,14 @@ export class GeneralComponent implements OnInit {
                 level
               } as GroupTitle);
 
-              rows = rows.concat(activity.indicators);
+              rows = rows.concat(activity.indicators.map(indicator => {
+                indicator.filter = {
+                  _start: logicalFrame.start,
+                  _end: logicalFrame.end,
+                  entities: logicalFrame.entities.map(e => e.id)
+                }
+                return indicator;
+              }));
             }
             level -= 1;
           }

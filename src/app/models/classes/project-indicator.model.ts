@@ -28,6 +28,7 @@ export class ProjectIndicator implements Deserializable {
     formula: '',
     parameters: {}
   };
+  filter: any = undefined;
   unit: string;
   type = UNAVAILABLE;
   typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];

@@ -9,7 +9,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
-import { isArray, isNaN, round } from 'lodash';
+import { isArray, isNaN, max, min, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
@@ -303,6 +303,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       onChart: false,
       dataset: {},
       filterFlag: true,
+      filter: indicator.filter,
       computation: indicator.computation,
       originProject: indicator.originProject ? indicator.originProject : undefined,
       open: true
@@ -314,37 +315,39 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
     return row;
   }
+
+  // merge two lists of entities keeping only the entities present in both of them
+  mergeEntityLists(listA: string[], listB: string[]){
+    return listA.filter( e => listB.includes(e) );
+  }
+
+  mergeFilters(filterA: Filter, filterB: Filter){
+    if (filterA !== undefined){
+      return {
+        _start: max([filterA._start, filterB._start]).toLocaleDateString('fr-CA'),
+        _end: min([filterA._end, filterB._end]).toLocaleDateString('fr-CA'),
+        entity: this.mergeEntityLists(filterA.entities, filterB.entities)
+      }
+    }
+
+    return {
+      _start: filterB._start.toLocaleDateString('fr-CA'),
+      _end: filterB._end.toLocaleDateString('fr-CA'),
+      entity: filterB.entities
+    }
+  }
+
   // Fetch the data of one especific row in function of project, content, filter and dimension
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
-    this.logFrameEntities = [];
     const currentFilter = this.filter.value;
-    let modifiedFilter;
+    let modifiedFilter: any = {
+      _start: new Date(currentFilter._start),
+      _end: new Date(currentFilter._end),
+      entities: currentFilter.entities
+    };
 
-    const selectedLogFrames = this.project.logicalFrames.find(log =>
-      log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
-    );
-
-    if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
-      selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
-      modifiedFilter = {
-        _start: new Date(selectedLogFrames.start) < new Date(currentFilter._start) ?
-          new Date(currentFilter._start).toLocaleDateString('fr-CA') :
-          new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-        _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
-          new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
-          new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-        entity: this.logFrameEntities
-      };
-    } else {
-      modifiedFilter = {
-        _start: new Date(currentFilter._start).toLocaleDateString('fr-CA'),
-        _end: new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-        entity: currentFilter.entities
-      };
-    }
-
-    console.log('MODIFIED', modifiedFilter);
+    modifiedFilter = this.mergeFilters(row.filter, currentFilter);
 
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
@@ -558,7 +561,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+      // TO DO: merge the global filter entities with the indicator filter entities instead of just chosing one or another
+      const ent = currentIndicator.filter?.entities ? currentIndicator.filter.entities : entities;
 
       for (const entityId of ent) {
         const customFilter = {
