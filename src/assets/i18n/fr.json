@@ -781,6 +781,7 @@
     "DownloadTable": "Télécharger le tableau",
     "DownloadTableMini": "Télécharger mini",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
+    "FillWithZero": "Remplir les cellules vides avec des 0",
     "ShowFinishedProjects": "Afficher les projets terminés",
     "Understood": "J'ai compris",
 
@@ -805,5 +806,11 @@
     "export-complete": "Export Excel détaillé",
     "export-minimized": "Export Excel Global",
     "minimized-tooltip": "Tous sites confondus",
-    "complete-tooltip": "Rapport Total + 1 onglet par site de collecte"
+    "complete-tooltip": "Rapport Total + 1 onglet par site de collecte",
+    "Groups": "Groupe d’éléments",
+    "NullValueMessage": {
+        "Warning": "Attention : ",
+        "NullValueMeaning": " le formulaire contient des données vides. Le calcul des indicateurs à partir de formulaires de saisies incomplets sera possible, mais donnera un résultat imprécis. Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques \"0\", vous pouvez utiliser le bouton \"Remplir toutes les cellules vides avec des zéros\". ",
+        "Save": "Etes-vous sûr de vouloir sauvegarder ?"
+    }
 }
