@@ -50,12 +50,17 @@
 </div>
 
 <ng-template #nullInputInfoDialog>
-    <p><span class="bold-text">{{ 'NullValueMessage.Warning' | translate }}</span>{{ 'NullValueMessage.NullValueMeaning' | translate }}</p>
-    <img [src]="imageLink">
-    <p>{{ 'NullValueMessage.Save' | translate }}</p>
+    <button class="dialog-close" mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+    <div class="modal-text">
+        <p><span class="bold-text">{{ 'NullValueMessage.Warning' | translate }}</span>{{ 'NullValueMessage.NullValueMeaning' | translate }}</p>
+        <img [src]="imageLink">
+        <p>{{ 'NullValueMessage.Save' | translate }}</p>
+    </div>
     <mat-dialog-actions align="end">
-        <button mat-stroked-button (click)="cancel()" class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
+        <button mat-stroked-button (click)="cancel()" class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
             }}</button>
-        <button mat-stroked-button (click)="confirm()" class="mdm-button save-button" mat-dialog-close>{{ 'Confirm' | translate }}</button>
+        <button mat-stroked-button (click)="confirm()" class="mdm-button save-button" mat-dialog-close>{{ 'Confirm' | translate }}</button>
     </mat-dialog-actions>
 </ng-template>

@@ -800,6 +800,6 @@
     "NullValueMessage": {
         "Warning": "Advertencia : ",
         "NullValueMeaning": "el formulario contiene datos vacíos. El cálculo de indicadores a partir de formularios de entrada incompletos será posible, pero dará un resultado inexacto. Si desea sustituir los valores no introducidos por valores numéricos \"0\", puede utilizar el botón \"Rellenar todas las celdas vacías con 0",
-        "Save": "Are you sure you want to save ?"
+        "Save": "¿Estás seguro de que quieres ahorrar?"
     }
 }

@@ -782,6 +782,6 @@
     "NullValueMessage": {
         "Warning": "Warning : ",
         "NullValueMeaning": "the form contains empty data. The calculation of indicators from incomplete input forms will be possible, but will give an inaccurate result. If you want to replace the unentered values with numerical values \"0\", you can use the button \"Fill all empty cells with 0\".",
-        "Save": "¿Estás seguro de que quieres ahorrar?"
+        "Save": "Are you sure you want to save?"
     }
 }
