@@ -766,6 +766,7 @@
     "DownloadTable": "Download Table",
     "DownloadTableMini": "Download Mini",
     "FillWithPreviousData": "Fill with data from the previous entry",
+    "FillWithZero": "Fill the empty cells with 0",
     "ShowFinishedProjects": "Show finished projects",
     "Understood": "I understand",
 
@@ -788,5 +789,10 @@
     "export-complete": "Detailed Excel Export",
     "export-minimized": "Global Excel Export",
     "minimized-tooltip": "All Sites merged",
-    "complete-tooltip": "Global Export + 1 Tab per Collecion Site"
+    "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
+    "NullValueMessage": {
+        "Warning": "Warning : ",
+        "NullValueMeaning": "the form contains empty data. The calculation of indicators from incomplete input forms will be possible, but will give an inaccurate result. If you want to replace the unentered values with numerical values \"0\", you can use the button \"Fill all empty cells with 0\".",
+        "Save": "Are you sure you want to save?"
+    }
 }

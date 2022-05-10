@@ -784,6 +784,7 @@
     "DownloadTable": "Descargar la tabla",
     "DownloadTableMini": "Descargar mini",
     "FillWithPreviousData": "Rellenar con los datos de la última entrada",
+    "FillWithZero": "Rellenar todas las celdas vacías con 0",
     "ShowFinishedProjects": "Mostrar proyectos terminados",
     "Understood": "Entiendo",
 
@@ -804,5 +805,10 @@
     "export-complete": "Exportación detallada de Excel",
     "export-minimized": "Exportación global de Excel",
     "minimized-tooltip": "Todos los sitios combinados",
-    "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección"
+    "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección",
+    "NullValueMessage": {
+        "Warning": "Advertencia : ",
+        "NullValueMeaning": "el formulario contiene datos vacíos. El cálculo de indicadores a partir de formularios de entrada incompletos será posible, pero dará un resultado inexacto. Si desea sustituir los valores no introducidos por valores numéricos \"0\", puede utilizar el botón \"Rellenar todas las celdas vacías con 0",
+        "Save": "¿Estás seguro de que quieres ahorrar?"
+    }
 }
