@@ -40,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     if (this.inputForm) {
       let values: any[];
       for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
-        if (values.findIndex(v => isNaN(v)) !== -1) {
+        if (values.findIndex(v => isNaN(v) && v !== null) !== -1) {
           return false;
         }
       }
@@ -464,15 +464,16 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             callback(false);
           }
         },
-        afterValidate: (isValid, value, row, prop, source) => {
-          this.validInputCell = value;
+        afterValidate: (core, isValid, value, row, prop, source) => {
+          this.validInputCell = isValid;
+          if(value === '') this.validInputCell = true;
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
           if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
             (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
           }
-          if (saveMode && value === null) {
+          if (saveMode && (value === null || value === '')) {
             td.style.background = '#d9534f';
             td.innerHTML = value;
           }
@@ -502,6 +503,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               const x = change[0];
               const y = change[1];
               const oldValue = change[2] === null ? null : +change[2];
+              if(change[3] === '') change[3] = null;
 
               let newValue;
               try {
@@ -511,7 +513,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               }
               if (oldValue !== newValue) {
                 const pos = this.isInputCell(-1, x, y, tableObj);
-                if (pos !== null && typeof newValue === 'number') {
+                if (pos !== null && (newValue === null || typeof newValue === 'number')){
                   change[3] = newValue;
                   this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
                 }
