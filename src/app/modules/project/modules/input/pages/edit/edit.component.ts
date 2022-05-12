@@ -472,7 +472,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         },
         afterValidate: (core, isValid, value, row, prop, source) => {
           this.validInputCell = isValid;
-          if(value === '') this.validInputCell = true;
+          if (value === '') {
+            this.validInputCell = true;
+          }
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
           if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
@@ -509,7 +511,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               const x = change[0];
               const y = change[1];
               const oldValue = change[2] === null ? null : +change[2];
-              if(change[3] === '') change[3] = null;
+              if (change[3] === '') {
+                change[3] = null;
+              }
 
               let newValue;
               try {
