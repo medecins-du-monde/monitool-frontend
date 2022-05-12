@@ -46,15 +46,21 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       }
     }
 
-    // if you haven't save it already, you can always save
-    if (!this.input) {
-      return true;
-    }
-
     // If the coming input is different from our form, we can return true
     if (this.inputForm && this.input) {
       return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
     }
+    else { // if you haven't save it already, you can save if there is at least one value that is not null
+      if (this.inputForm) {
+        let values: any[];
+        for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
+          if (values.findIndex(v => v !== null) !== -1) {
+            return true;
+          }
+        }
+      }
+    }
+
     return false;
   }
 
@@ -466,7 +472,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         },
         afterValidate: (core, isValid, value, row, prop, source) => {
           this.validInputCell = isValid;
-          if (value === ''){
+          if (value === '') {
             this.validInputCell = true;
           }
         },
