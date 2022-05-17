@@ -26,7 +26,7 @@
                 <ng-template #elseBlock>
                     <div *ngIf="element[column]?.value === -1; else elseBlock2">
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
-                            class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                            class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                     </div>
                     <ng-template #elseBlock2>
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
