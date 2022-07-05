@@ -32,6 +32,7 @@
     "Baseline-Hint": "What was the value of the indicator before the first activities? Tick the checkbox to specify. ",
     "Basics": "Basics",
     "Cancel": "Cancel",
+    "CannotBeComputed": "This value cannot be computed because the data entry was not (fully) done",
     "Clone": "Clone",
     "CloneStructure": "Clone structure",
     "CloneStructureAndData": "Clone structure and sata",
@@ -108,6 +109,7 @@
         "OrderTitle": "In which order should the disaggregations be shown?"
     },
     "Disaggregations": "Disaggregations",
+    "DivisionByZero": "Division by zero",
     "Done": "Done",
     "DownloadPdfLandscape": "Download PDF (landscape)",
     "DownloadPdfPortrait": "Download PDF (portrait)",
@@ -363,6 +365,7 @@
             "Title": "When should you use Monitool"
         }
     },
+    "IncompleteData": "This value was computed using incomplete data",
     "IndicatorEdition": "Edit indicator",
     "IndicatorEditionPlaceholder": {
         "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",

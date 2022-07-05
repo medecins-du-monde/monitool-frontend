@@ -32,6 +32,7 @@
     "Colorize":"Colorear",
     "Basics": "Datos de base",
     "Cancel": "Cancelar",
+    "CannotBeComputed": "Este valor no puede ser calculado porque la entrada de datos no fue hecha (completamente)",
     "Clone": "Clonar",
     "CloneStructure": "Clonar estructura",
     "CloneStructureAndData": "Clonar estructura y datos",
@@ -108,6 +109,7 @@
     "DownloadPdfPortrait": "Descargar PDF (vertical)",
     "DownloadPlot": "Descargar",
     "ResetGraph": "Reiniciar",
+    "DivisionByZero": "División por cero",
     "Done": "Realizado",
     "Download":"Descargar",
     "DuplicateDatasourceTitle": "Clonar a fuente de datos",
@@ -376,6 +378,7 @@
             ]
         }
     },
+    "IncompleteData": "Este valor se calculó con datos incompletos",
     "IndicatorEdition": "Edición indicador",
     "IndicatorEditionPlaceholder": {
         "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",

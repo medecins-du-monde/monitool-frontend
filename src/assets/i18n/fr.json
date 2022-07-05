@@ -30,6 +30,7 @@
     "Colorize":"Colorer",
     "Basics": "Données de base",
     "Cancel": "Annuler",
+    "CannotBeComputed": "Cette valeur ne peut pas être calculée car la saisie des données n'a pas été (entièrement) effectuée",
     "Clone": "Dupliquer",
     "CloneStructure": "Dupliquer structure",
     "CloneStructureAndData": "Dupliquer structure et données",
@@ -102,6 +103,7 @@
         }
     },
     "Description": "Description",
+    "DivisionByZero": "Division par zéro",
     "Done": "Réalisé",
     "DownloadPdfLandscape": "Télécharger PDF (paysage)",
     "DownloadPdfPortrait": "Télécharger PDF (portrait)",
@@ -372,6 +374,7 @@
             ]
         }
     },
+    "IncompleteData": "Cette valeur a été calculée à partir de données incomplètes",
     "IndicatorEdition": "Édition indicateur",
     "IndicatorEditionPlaceholder": {
         "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",

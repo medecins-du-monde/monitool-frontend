@@ -358,7 +358,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value], customFilter, true, false).then(
         response => {
           if (response) {
-            this.roundResponse(response);
+            // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
             row.dataset = {
               label: row.name,
@@ -770,6 +770,57 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return groupName;
   }
+
+
+  isItalic(value): boolean {
+    if (typeof value === 'string' && !isNaN(Number(value))){
+      return true;
+    }
+    return false;
+  }
+
+  styleValue(value, unit){
+    if (value === undefined){
+      return '';
+    }
+
+    if (value === 'Not a finite number'){
+      return '!';
+    }
+
+    if (value === null || isNaN(Number(value))){
+      return '?';
+    }
+
+    let newValue = Number(value).toLocaleString('de-DE');
+
+    if (unit){
+      newValue += unit;
+    }
+
+    return newValue;
+  }
+
+  getTooltipMessage(value){
+    if (value === undefined){
+      return '';
+    }
+
+    if (value === 'Not a finite number'){
+      return 'DivisionByZero';
+    }
+
+    if (value === null || isNaN(Number(value))){
+      return 'CannotBeComputed';
+    }
+
+    if (typeof value === 'string' && !isNaN(Number(value))){
+      return 'IncompleteData';
+    }
+
+    return '';
+  }
+
 
   /* TEMPORARY
   exportTOExcel() {
