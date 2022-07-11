@@ -731,19 +731,28 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   fillWithZero(): void {
-    for (const e of this.form.elements) {
-      const newValue = [];
-      // Get all the values already in the current form
-      this.inputForm.get('values').get(e.id).value.forEach((val, i) => {
-        if (!val) { newValue.push(0); } else { newValue.push(val); }
-      });
-      this.inputForm.get('values').get(e.id).setValue(newValue);
-    }
 
-    // Fill the init value with the current value in order to be able to reset
-    // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
-    this.createTable();
-    this.updateTotals(this.inputForm.value);
+    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning' } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res?.confirm) {
+        for (const e of this.form.elements) {
+          const newValue = [];
+          // Get all the values already in the current form
+          this.inputForm.get('values').get(e.id).value.forEach((val, i) => {
+            if (!val) { newValue.push(0); } else { newValue.push(val); }
+          });
+          this.inputForm.get('values').get(e.id).setValue(newValue);
+        }
+
+        // Fill the init value with the current value in order to be able to reset
+        // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+        this.createTable();
+        this.updateTotals(this.inputForm.value);
+      }
+    });
+
+
   }
 
   // Save the current input and redirect the user to the input home page

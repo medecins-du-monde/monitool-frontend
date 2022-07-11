@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="title">
-    <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()">
+    <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()" [disabled]="this.previousInput ? false : true">
         <mat-icon>edit</mat-icon>
         {{ 'FillWithPreviousData' | translate }}
     </button>

@@ -167,6 +167,7 @@
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
     "FillThe": "Fill the",
+    "FillWithZeroWarning" : "Attention: empty cells (not entered) will now be initialized to the numerical value \"0\". Do you want to continue?",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
     "Fiters": "Filters",
