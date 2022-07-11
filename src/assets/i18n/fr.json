@@ -158,6 +158,7 @@
         "Ils permettent de suivre des éléments spécifiques du projet (données médicales, logistiques, ...)"
     ],
     "FillThe": "Remplir les",
+    "FillWithZeroWarning" : "Attention: les cellules vides (valeur non saisie) seront désormais initialisée à la valeur numérique \"0\". Voulez-vous continuer?",
     "Finished": "Terminé",
     "FinishedPlural": "Terminés",
     "FormsOf": "saisies de",

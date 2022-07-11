@@ -161,6 +161,7 @@
         "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
     ],
     "FillThe": "Rellenar los",
+    "FillWithZeroWarning" : "Atención: las celdas vacías (valor no introducido) se inicializarán ahora con el valor numérico \"0\". ¿Quieres continuar?",
     "Fiters": "Filtres",
     "Finished": "Terminado",
     "FinishedPlural": "Terminados",
