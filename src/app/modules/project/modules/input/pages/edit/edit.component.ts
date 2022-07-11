@@ -738,7 +738,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           });
           this.inputForm.get('values').get(e.id).setValue(newValue);
         }
-    
+
         // Fill the init value with the current value in order to be able to reset
         // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
         this.createTable();
@@ -746,7 +746,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       }
     });
 
-    
+
   }
 
   // Save the current input and redirect the user to the input home page
