@@ -80,11 +80,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   // Check if the input has any null values
   get inputHasNull(): boolean {
     if (this.inputForm){
-      const formValue = this.inputForm.get('values').value 
-      for (let elem in formValue) {
-        for (let pos in (formValue[elem] as Array<any>)) {
-          if (formValue[elem][pos] === null) {
-            return true;
+      const formValue = this.inputForm.get('values').value;
+      for (const elem in formValue) {
+        if (formValue[elem]){
+          for (const pos in (formValue[elem] as Array<any>)) {
+            if (formValue[elem][pos] === null) {
+              return true;
+            }
           }
         }
       }
