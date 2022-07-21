@@ -76,6 +76,22 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     return false;
   }
 
+
+  // Check if the input has any null values
+  get inputHasNull(): boolean {
+    if (this.inputForm){
+      const formValue = this.inputForm.get('values').value 
+      for (let elem in formValue) {
+        for (let pos in (formValue[elem] as Array<any>)) {
+          if (formValue[elem][pos] === null) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
@@ -758,7 +774,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   // Save the current input and redirect the user to the input home page
   saveInput(): void {
     this.createTable(true);
-    this.dialog.open(this.nullInputInfoDialog);
+    this.updateTotals(this.inputForm.value);
+    if (this.inputHasNull){
+      this.dialog.open(this.nullInputInfoDialog);
+    }
+    else{
+      this.confirm();
+    }
   }
 
   // Delete current input and redirect the user to input home page
@@ -795,7 +817,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   cancel() {
-    this.createTable();
+    // does nothing ???
   }
 
   async confirm(): Promise<void> {
