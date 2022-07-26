@@ -159,16 +159,24 @@ export class InputsComponent implements OnInit, OnDestroy {
 
       this.allowedEntities = this.sites;
 
+
       // We show only columns of data in which the current user has rights
-      const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+      let projectUser;
+
+      // const projectUser = this.project.users.filter(user => user.id === this.user['_id']);
+      if (this.user.type === 'partner') {
+        projectUser = this.project.users.find(user => user.username === this.user.username);
+      } else {
+        projectUser = this.project.users.find(user => user.id === this.user['_id']);
+      }
+
+
       if (this.user.role !== 'admin') {
-        if (projectUser.length > 0) {
-          if (projectUser[0].role === 'input') {
-            this.allowedEntities = this.sites.filter(e => projectUser[0].entities.find((entity: Entity) => entity.id === e.id));
-          }
-          else if (projectUser[0].role === 'read') {
-            this.allowedEntities =  [];
-          }
+        if (projectUser.role === 'input') {
+          this.allowedEntities = this.sites.filter(e => projectUser.entities.find((entity: Entity) => entity.id === e.id));
+        }
+        else if (projectUser.role === 'read') {
+          this.allowedEntities =  [];
         }
       }
 
