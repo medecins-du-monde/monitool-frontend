@@ -32,6 +32,7 @@
     "Baseline-Hint": "What was the value of the indicator before the first activities? Tick the checkbox to specify. ",
     "Basics": "Basics",
     "Cancel": "Cancel",
+    "CannotBeComputed": "This value cannot be computed because the data entry was not (fully) done",
     "Clone": "Clone",
     "CloneStructure": "Clone structure",
     "CloneStructureAndData": "Clone structure and sata",
@@ -108,6 +109,7 @@
         "OrderTitle": "In which order should the disaggregations be shown?"
     },
     "Disaggregations": "Disaggregations",
+    "DivisionByZero": "Division by zero",
     "Done": "Done",
     "DownloadPdfLandscape": "Download PDF (landscape)",
     "DownloadPdfPortrait": "Download PDF (portrait)",
@@ -165,6 +167,7 @@
         "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
     ],
     "FillThe": "Fill the",
+    "FillWithZeroWarning" : "Attention: empty cells (not entered) will now be initialized to the numerical value \"0\". Do you want to continue?",
     "Finished": "Finished",
     "FinishedPlural": "Finished",
     "Fiters": "Filters",
@@ -363,6 +366,7 @@
             "Title": "When should you use Monitool"
         }
     },
+    "IncompleteData": "This value was computed using incomplete data",
     "IndicatorEdition": "Edit indicator",
     "IndicatorEditionPlaceholder": {
         "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
@@ -766,6 +770,7 @@
     "DownloadTable": "Download Table",
     "DownloadTableMini": "Download Mini",
     "FillWithPreviousData": "Fill with data from the previous entry",
+    "FillWithZero": "Fill the empty cells with 0",
     "ShowFinishedProjects": "Show finished projects",
     "Understood": "I understand",
 
@@ -788,5 +793,10 @@
     "export-complete": "Detailed Excel Export",
     "export-minimized": "Global Excel Export",
     "minimized-tooltip": "All Sites merged",
-    "complete-tooltip": "Global Export + 1 Tab per Collecion Site"
+    "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
+    "NullValueMessage": {
+        "Warning": "Warning : ",
+        "NullValueMeaning": "the form contains empty data. The calculation of indicators from incomplete input forms will be possible, but will give an inaccurate result. If you want to replace the unentered values with numerical values \"0\", you can use the button \"Fill all empty cells with 0\".",
+        "Save": "Are you sure you want to save?"
+    }
 }

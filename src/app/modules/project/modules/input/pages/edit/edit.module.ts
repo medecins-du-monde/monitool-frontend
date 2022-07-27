@@ -11,6 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HotTableModule } from '@handsontable/angular';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [EditComponent],
@@ -25,7 +26,8 @@ import { HotTableModule } from '@handsontable/angular';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
 })
 export class EditModule { }

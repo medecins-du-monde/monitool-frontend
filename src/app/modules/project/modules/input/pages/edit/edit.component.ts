@@ -1,6 +1,6 @@
 // tslint:disable:no-shadowed-variable
 // tslint:disable:one-variable-per-declaration
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
@@ -22,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
 
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -29,6 +30,80 @@ import { UserService } from 'src/app/services/user.service';
 })
 
 export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  // Check if the form has any error
+  get canBeSaved(): boolean {
+    if (this.inputForm) {
+      let values: any[];
+      for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
+        if (values.findIndex(v => isNaN(v) && v !== null) !== -1) {
+          return false;
+        }
+      }
+    }
+
+    // If the coming input is different from our form, we can return true
+    if (this.inputForm && this.input) {
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    else { // if you haven't save it already, you can save if there is at least one value that is not null
+      if (this.inputForm) {
+        let values: any[];
+        for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
+          if (values.findIndex(v => v !== null) !== -1) {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // Check if the initial input got has any modification
+  get inputHasModification(): boolean {
+    if (!this.input && this.initValue) {
+      // If new values are different from the initial ones, we can return true
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
+    }
+    if (this.inputForm && this.input) {
+      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
+    }
+    return false;
+  }
+
+
+  // Check if the input has any null values
+  get inputHasNull(): boolean {
+    if (this.inputForm){
+      const formValue = this.inputForm.get('values').value;
+      for (const elem in formValue) {
+        if (formValue[elem]){
+          for (const pos in (formValue[elem] as Array<any>)) {
+            if (formValue[elem][pos] === null) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private projectService: ProjectService,
+    private translateService: TranslateService,
+    private fb: FormBuilder,
+    private inputService: InputService,
+    private router: Router,
+    private dialog: MatDialog,
+    private userService: UserService,
+  ) { }
 
   informations = [
     {
@@ -83,64 +158,18 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   private initValue: any;
   tableSettings: any;
   expressionParser = new Parser.Parser();
+  filledWithZero = false;
+  public imageLink: string;
+
+  @ViewChild('nullInputInfoDialog') nullInputInfoDialog: TemplateRef<any>;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.canBeSaved;
   }
 
-  get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-  }
-
-  // Check if the form has any error
-  get canBeSaved(): boolean {
-    if (this.inputForm) {
-      let values: any[];
-      for (values of Object.values<Array<any>>(this.inputForm.get('values').value)) {
-        if (values.findIndex(v => isNaN(v)) !== -1) {
-          return false;
-        }
-      }
-    }
-
-    // if you haven't save it already, you can always save
-    if (!this.input) {
-      return true;
-    }
-
-    // If the coming input is different from our form, we can return true
-    if (this.inputForm && this.input) {
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-
-  // Check if the initial input got has any modification
-  get inputHasModification(): boolean {
-    if (!this.input && this.initValue) {
-      // If new values are different from the initial ones, we can return true
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.initValue.value.values);
-    }
-    if (this.inputForm && this.input) {
-      return JSON.stringify(this.inputForm.get('values').value) !== JSON.stringify(this.input.values);
-    }
-    return false;
-  }
-
-  constructor(
-    private route: ActivatedRoute,
-    private projectService: ProjectService,
-    private translateService: TranslateService,
-    private fb: FormBuilder,
-    private inputService: InputService,
-    private router: Router,
-    private dialog: MatDialog,
-    private userService: UserService
-  ) { }
-
   ngOnInit(): void {
-
+    this.imageLink = 'assets/images/null-data-' + this.currentLang + '.png';
     this.userService.showingInputModal.subscribe(val => {
       this.showModal = val;
     });
@@ -225,11 +254,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
         // Subscribe to any changes in the form
         this.inputForm.valueChanges.subscribe(val => {
-        // Convert the string input to a number
-        this.convertToNumber(val);
-        // Update of the total cell of each row or column
-        this.updateTotals(val);
-      });
+          // Convert the string input to a number
+          // this.convertToNumber(val);
+          // Update of the total cell of each row or column
+          this.updateTotals(val);
+        });
 
         // Update the breadcrumbs informations
         const breadCrumbs = [
@@ -269,7 +298,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         );
       } else {
         valuesGroup[e.id] = this.fb.array(
-          Array.from({length: this.countInputCells(e)}, () => 0)
+          Array.from({ length: this.countInputCells(e) }, () => null)
         );
       }
     }
@@ -302,25 +331,32 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       const table = this.tables[i];
       let x: number;
       let y: number;
-      let total = 0;
+      let total = null;
 
       // Update of the total for all rows
       // chose a row
       for (x = table.cols.length; x < (table.numberRows - 1); x += 1) {
         // sum of the row
-        let sum = 0;
+        let sum = null;
         // iterate over all collumns for the row chosen
         for (y = 0; y < table.numberCols; y += 1) {
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== null){
-            if (!isNaN(val.values[table.id][inputPos])){
-              sum += val.values[table.id][inputPos];
+          if (inputPos !== null) {
+            if (!isNaN(val.values[table.id][inputPos])) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
+                sum += val.values[table.id][inputPos];
+              }
             }
           }
         }
         // set the total for the row
         table.value[x][table.numberCols - 1] = sum;
-        total += sum;
+        if (sum !== null) {
+          total += sum;
+        }
       }
       // set the total of the table
       // if the table doesnt have multiple rows, this will be final
@@ -331,29 +367,37 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
       // Update of the total for all collumns
       // Re-initialisation of the total after having used it for the columns
-      total = 0;
-      for (y = table.rows.length; y < (table.numberCols - 1); y += 1){
-        let sum = 0;
-        for (x = 0; x < table.numberRows; x += 1){
+      if (table.numberCols !== 2) { total = null; }
+      for (y = table.rows.length; y < (table.numberCols - 1); y += 1) {
+        if (table.numberCols < 3) { total = null; }
+        let sum = null;
+        for (x = 0; x < table.numberRows; x += 1) {
           const inputPos = this.isInputCell(i, x, y);
-          if (inputPos !== null){
-            if (!isNaN(val.values[table.id][inputPos])){
-              sum += +val.values[table.id][inputPos];
+          if (inputPos !== null) {
+            if (!isNaN(val.values[table.id][inputPos])) {
+              if (val.values[table.id][inputPos] !== null) {
+                if (sum === null) {
+                  sum = 0;
+                }
+                sum += val.values[table.id][inputPos];
+              }
             }
           }
         }
         // set the total for the collumn
         table.value[table.numberRows - 1][y] = sum;
-        total += sum;
+        if (sum !== null) {
+          total += sum;
+        }
       }
       // if the table has multiple rows and collums the total in the last cell needs to be updated
-      if (total !== 0){
+      if (total !== null) {
         table.value[table.numberRows - 1][table.numberCols - 1] = total;
       }
     }
   }
 
-  createTable(): void {
+  createTable(saveMode?: boolean): void {
     // Re-initiate table data and table
     this.tables = [];
     this.tableSettings = {};
@@ -444,18 +488,25 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             callback(false);
           }
         },
-        afterValidate: (isValid, value, row, prop, source) => {
-          this.validInputCell = value;
+        afterValidate: (core, isValid, value, row, prop, source) => {
+          this.validInputCell = isValid;
+          if (value === '') {
+            this.validInputCell = true;
+          }
         },
         renderer(instance, td, row, col, prop, value, cellProperties) {
-          if ((tableObj.numberCols > 2 && col === tableObj.numberCols - 1) ||
-          (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
+          if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
+            (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
+          }
+          if (saveMode && (value === null || value === '')) {
+            td.style.background = '#d9534f';
+            td.innerHTML = value;
           }
           if (typeof value === 'number') {
             const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             td.innerHTML = newValue;
-          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly) {
+          } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly && value !== null) {
             td.style.background = '#d9534f';
             td.innerHTML = value;
           } else if (typeof value === 'string') {
@@ -472,12 +523,15 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         },
         // updates the inputForm everytime we change something in the table
         beforeChange: (core, changes) => {
-          if (changes !== null){
-            for (let i = 0; i < changes.length; i += 1){
+          if (changes !== null) {
+            for (let i = 0; i < changes.length; i += 1) {
               const change = changes[i];
               const x = change[0];
               const y = change[1];
-              const oldValue = +change[2];
+              const oldValue = change[2] === null ? null : +change[2];
+              if (change[3] === '') {
+                change[3] = null;
+              }
 
               let newValue;
               try {
@@ -485,10 +539,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               } catch (e) {
                 newValue = change[3];
               }
-
               if (oldValue !== newValue) {
                 const pos = this.isInputCell(-1, x, y, tableObj);
-                if (pos !== null && typeof newValue === 'number') {
+                if (pos !== null && (newValue === null || typeof newValue === 'number')){
                   change[3] = newValue;
                   this.inputForm.get('values').get(element.id).get(`${pos}`).setValue(newValue);
                 }
@@ -682,10 +735,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   // Fill the current input with the data of the previous one
-  fillWithPreviousData(): void{
-    if (this.previousInput){
-      for (const e of this.form.elements){
-        if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]){
+  fillWithPreviousData(): void {
+    if (this.previousInput) {
+      for (const e of this.form.elements) {
+        if (this.previousInput && this.previousInput.values && this.previousInput.values[e.id]) {
           this.inputForm.get('values').get(e.id).setValue(this.previousInput.values[e.id]);
         }
       }
@@ -695,32 +748,40 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   }
 
-  // Save the current input and redirect the user to the input home page
-  async saveInput(): Promise<void> {
-    if (this.showModal) {
-      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+  fillWithZero(): void {
 
-      dialogRef.afterClosed().subscribe(res => {
-        if (res?.confirm) {
-          const inputToBeSaved = new Input(this.inputForm.value);
-          this.inputService.save(inputToBeSaved).then(response => {
-            if (response) {
-              this.input = new Input(response);
-              this.inputForm.get('rev').setValue(this.input.rev);
-              this.router.navigate(['./../../../'], { relativeTo: this.route });
-            }
+    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning' } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res?.confirm) {
+        for (const e of this.form.elements) {
+          const newValue = [];
+          // Get all the values already in the current form
+          this.inputForm.get('values').get(e.id).value.forEach((val, i) => {
+            if (!val) { newValue.push(0); } else { newValue.push(val); }
           });
+          this.inputForm.get('values').get(e.id).setValue(newValue);
         }
-      });
-    } else {
-      const inputToBeSaved = new Input(this.inputForm.value);
-      this.inputService.save(inputToBeSaved).then(response => {
-        if (response) {
-          this.input = new Input(response);
-          this.inputForm.get('rev').setValue(this.input.rev);
-          this.router.navigate(['./../../../'], { relativeTo: this.route });
-        }
-      });
+
+        // Fill the init value with the current value in order to be able to reset
+        // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+        this.createTable();
+        this.updateTotals(this.inputForm.value);
+      }
+    });
+
+
+  }
+
+  // Save the current input and redirect the user to the input home page
+  saveInput(): void {
+    this.createTable(true);
+    this.updateTotals(this.inputForm.value);
+    if (this.inputHasNull){
+      this.dialog.open(this.nullInputInfoDialog);
+    }
+    else{
+      this.confirm();
     }
   }
 
@@ -749,12 +810,43 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     this.createTable();
     this.updateTotals(this.inputForm.value);
     this.inputForm.valueChanges.subscribe(val => {
-      this.convertToNumber(val);
       this.updateTotals(val);
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  cancel() {
+    // does nothing ???
+  }
+
+  async confirm(): Promise<void> {
+    if (this.showModal) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+
+      dialogRef.afterClosed().subscribe(res => {
+        if (res?.confirm) {
+          const inputToBeSaved = new Input(this.inputForm.value);
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response) {
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.router.navigate(['./../../../'], { relativeTo: this.route });
+            }
+          });
+        }
+      });
+    } else {
+      const inputToBeSaved = new Input(this.inputForm.value);
+      this.inputService.save(inputToBeSaved).then(response => {
+        if (response) {
+          this.input = new Input(response);
+          this.inputForm.get('rev').setValue(this.input.rev);
+          this.router.navigate(['./../../../'], { relativeTo: this.route });
+        }
+      });
+    }
   }
 }

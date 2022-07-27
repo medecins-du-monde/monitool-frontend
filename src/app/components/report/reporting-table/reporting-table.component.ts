@@ -18,6 +18,12 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
+import { formatNumber, registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import localeDeExtra from '@angular/common/locales/extra/de';
+
+
+
 //  import * as XLSX from 'xlsx';
 
 type Row = SectionTitle | GroupTitle | InfoRow;
@@ -32,7 +38,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService,
-              private translateService: TranslateService) { }
+              private translateService: TranslateService) {
+                registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+              }
 
   get optimalColspanForGroupName(): number {
     return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen);
@@ -356,7 +364,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value], customFilter, true, false).then(
         response => {
           if (response) {
-            this.roundResponse(response);
+            // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
             row.dataset = {
               label: row.name,
@@ -673,12 +681,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // the colors change in the following way:
     // we start in the red: rgb(255, 128, 128)
     // we go up increasing the value of the blue
-    // until we reach the yellow: rgb (255, 128, 128)
+    // until we reach the yellow: rgb (255, 255, 128)
     // after this we go down subtracting the value
     // of the red until we get to the green: rgb (128, 255, 128)
 
     if (this.checkIfNaN(element.values[column])) {
       return 'rgb(238, 238, 238)';
+    }
+
+    if (element.values[column] === null || isNaN(Number(element.values[column]))) {
+      return 'white';
     }
 
     // Set background color to white if the row doesn't want colors
@@ -768,6 +780,57 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
     return groupName;
   }
+
+
+  isItalic(value): boolean {
+    if (typeof value === 'string' && !isNaN(Number(value))){
+      return true;
+    }
+    return false;
+  }
+
+  styleValue(value, unit){
+    if (value === undefined){
+      return '';
+    }
+
+    if (value === 'Not a finite number'){
+      return '!';
+    }
+
+    if (value === null || isNaN(Number(value))){
+      return '?';
+    }
+
+    let newValue = formatNumber(Number(value), 'de-DE', '1.0-1');
+
+    if (unit){
+      newValue += unit;
+    }
+
+    return newValue;
+  }
+
+  getTooltipMessage(value){
+    if (value === undefined){
+      return '';
+    }
+
+    if (value === 'Not a finite number'){
+      return 'DivisionByZero';
+    }
+
+    if (value === null || isNaN(Number(value))){
+      return 'CannotBeComputed';
+    }
+
+    if (typeof value === 'string' && !isNaN(Number(value))){
+      return 'IncompleteData';
+    }
+
+    return '';
+  }
+
 
   /* TEMPORARY
   exportTOExcel() {

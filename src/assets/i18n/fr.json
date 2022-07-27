@@ -30,6 +30,7 @@
     "Colorize":"Colorer",
     "Basics": "Données de base",
     "Cancel": "Annuler",
+    "CannotBeComputed": "Cette valeur ne peut pas être calculée car la saisie des données n'a pas été (entièrement) effectuée",
     "Clone": "Dupliquer",
     "CloneStructure": "Dupliquer structure",
     "CloneStructureAndData": "Dupliquer structure et données",
@@ -102,6 +103,7 @@
         }
     },
     "Description": "Description",
+    "DivisionByZero": "Division par zéro",
     "Done": "Réalisé",
     "DownloadPdfLandscape": "Télécharger PDF (paysage)",
     "DownloadPdfPortrait": "Télécharger PDF (portrait)",
@@ -161,6 +163,7 @@
         "Ils permettent de suivre des éléments spécifiques du projet (données médicales, logistiques, ...)"
     ],
     "FillThe": "Remplir les",
+    "FillWithZeroWarning" : "Attention: les cellules vides (valeur non saisie) seront désormais initialisée à la valeur numérique \"0\". Voulez-vous continuer?",
     "Finished": "Terminé",
     "FinishedPlural": "Terminés",
     "FormsOf": "saisies de",
@@ -372,6 +375,7 @@
             ]
         }
     },
+    "IncompleteData": "Cette valeur a été calculée à partir de données incomplètes",
     "IndicatorEdition": "Édition indicateur",
     "IndicatorEditionPlaceholder": {
         "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
@@ -781,6 +785,7 @@
     "DownloadTable": "Télécharger le tableau",
     "DownloadTableMini": "Télécharger mini",
     "FillWithPreviousData": "Remplir avec les données de la période précédente",
+    "FillWithZero": "Remplir les cellules vides avec des 0",
     "ShowFinishedProjects": "Afficher les projets terminés",
     "Understood": "J'ai compris",
 
@@ -805,5 +810,11 @@
     "export-complete": "Export Excel détaillé",
     "export-minimized": "Export Excel Global",
     "minimized-tooltip": "Tous sites confondus",
-    "complete-tooltip": "Rapport Total + 1 onglet par site de collecte"
+    "complete-tooltip": "Rapport Total + 1 onglet par site de collecte",
+    "Groups": "Groupe d’éléments",
+    "NullValueMessage": {
+        "Warning": "Attention : ",
+        "NullValueMeaning": " le formulaire contient des données vides. Le calcul des indicateurs à partir de formulaires de saisies incomplets sera possible, mais donnera un résultat imprécis. Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques \"0\", vous pouvez utiliser le bouton \"Remplir toutes les cellules vides avec des zéros\". ",
+        "Save": "Etes-vous sûr de vouloir sauvegarder ?"
+    }
 }

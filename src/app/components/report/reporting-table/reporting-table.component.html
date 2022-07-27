@@ -44,15 +44,20 @@
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions" [stickyEnd]="column === '_total'">
       <th matTooltip="{{getSiteOrGroupName(column) | translate}}" [matTooltipShowDelay]="500" mat-header-cell
         *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
-      <td mat-cell class="value-cell" *matCellDef="let element"
-        [ngStyle]="{ 'backgroundColor': element.values[column] !== undefined ? calcColor(element, column) : 'rgb(238, 238, 238)', 'fontWeight': column === '_total' ? 'bold' : '' }">
-        <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
+      <td mat-cell class="value-cell" [matTooltip]="getTooltipMessage(element?.values[column]) | translate" matTooltipPosition="above" *matCellDef="let element"
+        [ngStyle]="{ 
+          'backgroundColor': element.values[column] !== undefined ? calcColor(element, column) : 'rgb(238, 238, 238)',
+          'fontWeight': column === '_total' ? 'bold' : '',
+          'font-style': isItalic(element?.values[column]) ? 'italic' : '' }">
+        <!-- <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
         <ng-template #elseNumber>
-          {{ element.values[column] !== undefined &&  element.values[column] !== null ? (element.values[column].toLocaleString("de-DE") ) : null }}{{
-          (element.unit && element.values[column]) ? element.unit : null }}
-        </ng-template>
+          {{ element.values[column] !== undefined &&  element.values[column] !== null ? (element.values[column].toLocaleString("de-DE") ) : null }}
+          {{ (element.unit && element.values[column]) ? element.unit : null }}
+        </ng-template> -->
+
+        {{ styleValue(element?.values[column], element.unit) }}
       </td>
     </ng-container>
 
