@@ -342,7 +342,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
           new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
           new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-        entity: this.logFrameEntities
+        entity: currentFilter.entities.filter(e => this.logFrameEntities.includes(e))
       };
     } else {
       modifiedFilter = {
