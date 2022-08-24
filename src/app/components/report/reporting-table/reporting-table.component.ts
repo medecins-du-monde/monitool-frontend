@@ -21,6 +21,7 @@ import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.mo
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import {LogicalFrame} from '../../../models/classes/logical-frame.model';
 
 
 
@@ -554,6 +555,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
+  getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
+    const { logicalFrames } = this.project;
+    for (const logicalFrame of logicalFrames) {
+      const {indicators} = logicalFrame;
+      const matched = indicators.some(({display}) => display === indicator.name);
+      if (matched) {
+        return logicalFrame;
+      }
+    }
+  }
+
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
     // Getting the indicator information inside the content
@@ -566,7 +578,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+      const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
+      const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
+      const ent = logFrameEntities.length ? logFrameEntities : entities;
 
       for (const entityId of ent) {
         const customFilter = {
