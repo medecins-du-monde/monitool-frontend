@@ -353,8 +353,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       };
     }
 
-    console.log('MODIFIED', modifiedFilter);
-
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
     if (row.customFilter) {
@@ -578,9 +576,25 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
+      // old method
+      const oldEnt = this.logFrameEntities.length ? this.logFrameEntities : entities;
+
+      // new method harsh implemented
       const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
       const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
+      console.log(logFrameEntities) // this will be [] in the indicator mentioned in the ticket 
       const ent = logFrameEntities.length ? logFrameEntities : entities;
+      
+
+      if (oldEnt !== ent){
+        console.log('FOUND A DIFFERENCE');
+
+        // this will show 34 collection sites, matching the logicalFrame config
+        console.log('oldEnt', oldEnt);
+
+        // this will show 77 collection sites, which are all the collection sites of the project
+        console.log('ent', ent);
+      }
 
       for (const entityId of ent) {
         const customFilter = {
