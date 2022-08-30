@@ -21,6 +21,7 @@ import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.mo
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import {LogicalFrame} from '../../../models/classes/logical-frame.model';
 
 
 
@@ -352,8 +353,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       };
     }
 
-    console.log('MODIFIED', modifiedFilter);
-
     const currentProject = row.originProject ? row.originProject : this.project;
     const customFilter = JSON.parse(JSON.stringify(modifiedFilter));
     if (row.customFilter) {
@@ -554,6 +553,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
+  // this method will return the logicalFrame of given indicator
+  getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
+    const { logicalFrames } = this.project;
+    for (const logicalFrame of logicalFrames) {
+      const allIndicators = [...(logicalFrame.indicators || [])];
+      (logicalFrame.purposes || []).forEach(purpose => {
+        allIndicators.push(...purpose.indicators);
+        purpose.outputs.forEach(output => allIndicators.push(...output.indicators));
+      });
+      const matched = allIndicators.some(({display}) => display === indicator.name);
+      if (matched) {
+        return logicalFrame;
+      }
+    }
+  }
+
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
     // Getting the indicator information inside the content
@@ -566,7 +581,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+      // getting the logical frame of current indicator to get all its entities.
+      const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
+      const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
+      const ent = logFrameEntities.length ? logFrameEntities : entities;
 
       for (const entityId of ent) {
         const customFilter = {
