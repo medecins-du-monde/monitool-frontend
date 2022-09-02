@@ -11,7 +11,7 @@
 
         th {
             text-align: center;
-            min-width: 100px;
+          min-width: 120px; // taking into account the width of max length of word possible.
         }
         td{
             text-align: center;
@@ -55,10 +55,10 @@
 
 .mdm-form-field {
     width: 100%;
-  
+
     .mat-form-field-wrapper {
       padding: 0 !important;
-  
+
       .mat-form-field-flex {
         .mat-form-field-infix {
           width: auto;
@@ -97,7 +97,7 @@ td.mat-cell, td.mat-footer-cell{
     &.datepicker-cell{
         align-items: baseline;
     }
-    
+
 }
 
 .tr.mat-footer-row{
