@@ -553,11 +553,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
+  // this method will return the logicalFrame of given indicator
   getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
     const { logicalFrames } = this.project;
     for (const logicalFrame of logicalFrames) {
-      const {indicators} = logicalFrame;
-      const matched = indicators.some(({display}) => display === indicator.name);
+      const allIndicators = [...(logicalFrame.indicators || [])];
+      (logicalFrame.purposes || []).forEach(purpose => {
+        allIndicators.push(...purpose.indicators);
+        purpose.outputs.forEach(output => allIndicators.push(...output.indicators));
+      });
+      const matched = allIndicators.some(({display}) => display === indicator.name);
       if (matched) {
         return logicalFrame;
       }
@@ -576,25 +581,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      // old method
-      const oldEnt = this.logFrameEntities.length ? this.logFrameEntities : entities;
-
-      // new method harsh implemented
+      // getting the logical frame of current indicator to get all its entities.
       const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
       const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
-      console.log(logFrameEntities) // this will be [] in the indicator mentioned in the ticket 
       const ent = logFrameEntities.length ? logFrameEntities : entities;
-      
-
-      if (oldEnt !== ent){
-        console.log('FOUND A DIFFERENCE');
-
-        // this will show 34 collection sites, matching the logicalFrame config
-        console.log('oldEnt', oldEnt);
-
-        // this will show 77 collection sites, which are all the collection sites of the project
-        console.log('ent', ent);
-      }
 
       for (const entityId of ent) {
         const customFilter = {
