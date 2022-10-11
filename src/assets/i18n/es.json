@@ -40,6 +40,7 @@
     "CloneProjectInfo": "Esta acción clonará solo la estructura de este proyecto, sin las entradas. Confirme para clonar.",
     "CloneProjectInfoData": "Va a clonar este proyecto, y todas sus entradas de datos. Confirme para clonar.",
     "DeleteConfirmation": "¿Esta seguro de querer suprimir? Confirme para suprimir.",
+    "ProjectDataLossConfirmation": "Si confirma este cambio, todos los datos introducidos después de la nueva fecha de finalización del proyecto se perderán",
     "DeleteProject": "Suprimir Proyecto",
     "DeleteProjectInfo": "¿Esta seguro de querer suprimir este proyecto? Confirme para suprimir.",
     "CollectionSiteName": "Nombre de la estructura o del lugar de intervención",
