@@ -41,6 +41,7 @@
     "CloneProjectInfoData": "This action will clone this project, and all related input. Confirm to clone.",
     "CollectionSiteName": "Site name",
     "DeleteConfirmation": "Are you sure that you want to delete? Confirm to delete.",
+    "ProjectDataLossConfirmation": "If you make this change, all data already inputted after this new end date will be lost",
     "DeleteProject": "Delete Project",
     "DeleteProjectInfo": "Are you sure that you want to delete this project? Confirm to delete.",
     "CollectionSites": "Collection sites",

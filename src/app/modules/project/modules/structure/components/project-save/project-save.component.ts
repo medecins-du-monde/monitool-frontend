@@ -1,26 +1,42 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { SidenavService } from 'src/app/services/sidenav.service';
+import moment from 'moment/moment';
+import {ConfirmModalComponent} from '../../../../../../components/confirm-modal/confirm-modal.component';
+import {map} from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-project-save',
   templateUrl: './project-save.component.html',
   styleUrls: ['./project-save.component.scss']
 })
-export class ProjectSaveComponent {
+export class ProjectSaveComponent implements OnInit {
   projectSaved = false;
   errorWhileSaving = false;
   currentUser: User;
+  savedProject: Project;
+  currentProject: Project;
 
   constructor(
     private projectService: ProjectService,
     private authService: AuthService,
     private sidenavService: SidenavService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog
     ) { }
+
+  ngOnInit(): void {
+    this.projectService.openedProject.subscribe(project => {
+      this.currentProject = project;
+    });
+    this.projectService.savedProject.subscribe(project => {
+      this.savedProject = project;
+    });
+  }
 
   get hasChanges(): boolean{
     // If the project has no changes anymore and has already been saved
@@ -36,7 +52,14 @@ export class ProjectSaveComponent {
     return this.projectService.valid;
   }
 
-  onSave(): void {
+  async onSave(): Promise<void> {
+    if (moment(this.currentProject.end).isBefore(this.savedProject.end)) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'ProjectDataLossConfirmation'}});
+      const confirm = await dialogRef.afterClosed().pipe(map(res => res.confirm)).toPromise();
+      if (!confirm) {
+        return;
+      }
+    }
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
       this.authService.currentUser.subscribe((user: User) => this.currentUser = user );
