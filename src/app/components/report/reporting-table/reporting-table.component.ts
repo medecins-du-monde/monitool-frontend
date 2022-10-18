@@ -97,7 +97,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_ERROR = ['icon', 'name', 'baseline', 'target', 'error'];
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
-
+  sitesOpenedIndicators = [];
 
   //  @ViewChild('TABLE') table: ElementRef;
 
@@ -229,6 +229,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           this.content[i].level = this.content[i - 1].level;
         }
       }
+
+      this.sitesOpenedIndicators.forEach(indicator => {
+        const indicatorIndex = this.content.indexOf(indicator);
+        // first removing all collection site indicators
+        for (let i = indicatorIndex + 1; i < this.content.length; i += 1) {
+          if (this.content[i] === indicator.nextRow) {
+            break;
+          }
+          this.content.splice(i, 1);
+          i -= 1;
+        }
+        const newIndicators = this.getIndicatorCollectionSiteIndicators(indicator);
+        // then inserting filtered collection site indicators
+        this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+      });
+
       this.rows.next(this.content);
     }
   }
@@ -569,43 +585,52 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
   }
 
+  getIndicatorCollectionSiteIndicators(indicator: InfoRow): InfoRow[] {
+    const newIndicators = [];
+    const entities = indicator.originProject ? indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
+    const indicatorIndex = this.content.indexOf(indicator);
+    const currentIndicator = this.content[indicatorIndex];
+    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
+
+    // getting the logical frame of current indicator to get all its entities.
+    const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
+    const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
+    let ent = logFrameEntities.length ? logFrameEntities : entities;
+    ent = ent.filter(e => this.currentFilter.entities.includes(e));
+
+    for (const entityId of ent) {
+      const customFilter = {
+        entity: [entityId]
+      };
+
+      let customIndicator = Object.assign({}, indicator) as InfoRow;
+
+      customIndicator.level = indicator.level + 1;
+      customIndicator.onChart = false;
+      customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
+      customIndicator.customFilter = customFilter;
+      customIndicator.values = {};
+      customIndicator = this.updateRowValues(customIndicator);
+
+      newIndicators.push(customIndicator);
+    }
+
+    return newIndicators;
+  }
+
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
-    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites) {
-      const newIndicators = [];
-      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
-
-      // getting the logical frame of current indicator to get all its entities.
-      const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
-      const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
-      const ent = logFrameEntities.length ? logFrameEntities : entities;
-
-      for (const entityId of ent) {
-        const customFilter = {
-          entity: [entityId]
-        };
-
-        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
-
-        customIndicator.level = info.indicator.level + 1;
-        customIndicator.onChart = false;
-        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
-        customIndicator.customFilter = customFilter;
-        customIndicator.values = {};
-        customIndicator = this.updateRowValues(customIndicator);
-
-        newIndicators.push(customIndicator);
-      }
-
+      const newIndicators = this.getIndicatorCollectionSiteIndicators(info.indicator);
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
 
       currentIndicator.open = !currentIndicator.open;
+      this.sitesOpenedIndicators.push(currentIndicator);
       this.updateTableContent();
     }
 
@@ -677,6 +702,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     const indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
     currentIndicator.open = !currentIndicator.open;
+
+    const index = this.sitesOpenedIndicators.indexOf(currentIndicator);
+    if (index > -1) {
+      this.sitesOpenedIndicators.splice(index, 1);
+    }
 
     for (let i = indicatorIndex + 1; i < this.content.length; i += 1) {
       if (this.content[i] === currentIndicator.nextRow) {
