@@ -9,18 +9,20 @@ import { ChartModule } from 'src/app/components/chart/chart.module';
 import { FilterModule } from 'src/app/components/report/filter/filter.module';
 import { ReportingTableModule } from 'src/app/components/report/reporting-table/reporting-table.module';
 import { ObjectGroupingModule } from 'src/app/components/report/objectGrouping/object-grouping.module';
+import {InformationsPanelModule} from '../../components/informations-panel/informations-panel.module';
 
 @NgModule({
     declarations: [IndicatorsComponent, IndicatorReportComponent],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        IndicatorsRoutingModule,
-        IndicatorModule,
-        FilterModule,
-        ReportingTableModule,
-        ChartModule,
-        ObjectGroupingModule
-    ]
+  imports: [
+    CommonModule,
+    TranslateModule,
+    IndicatorsRoutingModule,
+    IndicatorModule,
+    FilterModule,
+    ReportingTableModule,
+    ChartModule,
+    ObjectGroupingModule,
+    InformationsPanelModule
+  ]
 })
 export class IndicatorsModule { }
