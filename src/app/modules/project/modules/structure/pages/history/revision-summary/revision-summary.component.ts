@@ -174,6 +174,9 @@ export class RevisionSummaryComponent implements OnInit {
         });
 
       }
+      if (editedField === 'users' && operation.op === 'remove') {
+        translationData['item']['id'] = translationData['item']['id'] || translationData['item']['name'];
+      }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
 
         translationData['item'] = before.entities.find(e => {
