@@ -61,6 +61,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       yAxes: [{
         ticks: {
             fontSize: 14,
+            beginAtZero : true,
             callback: (value, index, values) => {
               return value.toLocaleString('de-DE') + (this.unit ? this.unit : '');
             }
