@@ -116,7 +116,7 @@ export class Project implements Deserializable {
             country: this.country,
             crossCutting: this.formatCrossCutting(),
             end: this.end ? DatesHelper.dateToString(this.end) : null,
-            entities: this.entities.map(x => x.serialize()),
+            entities: this.entities.map(x => x.serialize ? x.serialize() : x),
             extraIndicators: this.extraIndicators.map(x => x.serialize()),
             forms: this.forms.map(x => x.serialize()),
             logicalFrames: this.logicalFrames.map(x => x.serialize()),
