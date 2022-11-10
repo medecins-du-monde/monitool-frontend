@@ -160,7 +160,7 @@
         }
     },
     "ErrorNoCollectionSiteAssociated": "This data source is not associated with any collection site.",
-    "EquivalentVersion" : "This version is equivalent to the current state of the project",
+    "EquivalentVersion" : "This version has already been reverted",
     "EveryMonth": "Every month",
     "ExtraIndicators": "Extra indicators",
     "ExtraIndicatorsInfo": [
@@ -646,11 +646,11 @@
     "ResetChanges": "Reset changes",
     "Result": "Result",
     "Result-Result-SpecificObjective-Hint": "Product or tangible service brought by the project ",
-    "RevertToVersion": "Revert to this version",
+    "RevertToVersion": "Revert to previous version",
     "Role": "Role",
     "SameAsProject": "Same as project ({{date}})",
     "Save": "Save",
-    "SaveConfirm": "Save to confirm reverting to this version",
+    "SaveConfirm": "Save to confirm reverting this version",
     "SaveIndicator": "Save indicator",
     "SaveThematic": "Save the thematic",
     "SaveUser": "Save user",

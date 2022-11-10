@@ -6,28 +6,30 @@
     <!-- Task Column -->
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>{{ 'Date'| translate}} & {{ 'User' | translate }}</th>
-        <td mat-cell *matCellDef="let element" id="date"> 
+        <td mat-cell *matCellDef="let element" id="date">
             <p>{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}</p>
             <p>{{ element.username }}</p>
         </td>
     </ng-container>
-    
+
     <!-- Status Column -->
     <ng-container matColumnDef="changes">
         <th mat-header-cell *matHeaderCellDef>{{ 'HistoryChanges' | translate }}</th>
-        <td mat-cell *matCellDef="let element; let i = dataIndex" id="changes"> 
+        <td mat-cell *matCellDef="let element; let i = dataIndex" id="changes">
 
             <app-revision-summary [revision]="element" [revisions]="revisions" [index]="i"></app-revision-summary>
         </td>
     </ng-container>
-    
+
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element; let i = dataIndex" [attr.colspan]="displayedColumns.length">
-            <div class="example-element-detail" 
-              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <span *ngIf="(sameVersion(i) && i !== saveConfirmElement)" >{{ 'EquivalentVersion' | translate }}</span>
-                <button mat-stroked-button *ngIf="(!sameVersion(i) && i !== saveConfirmElement)" (click)="onRevertClick(i)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
+            <div class="example-element-detail"
+              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+              *ngIf="i !== saveConfirmElement"
+              >
+                <span *ngIf="sameVersion(i)" >{{ 'EquivalentVersion' | translate }}</span>
+                <button mat-stroked-button *ngIf="!sameVersion(i)" (click)="onRevertClick(i)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
             </div>
             <div class="static-row" *ngIf="i === saveConfirmElement">{{ 'SaveConfirm' | translate }}</div>
         </td>
@@ -38,7 +40,7 @@
             <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'LoadMoreRevisions' | translate }}</button>
         </td>
     </ng-container>
-   
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns" (mouseover)="mouseLeave()"></tr>
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
       class="example-element-row"
