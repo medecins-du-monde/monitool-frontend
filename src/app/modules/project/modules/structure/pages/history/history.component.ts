@@ -95,6 +95,7 @@ export class HistoryComponent implements OnInit {
         } as BreadcrumbItem,
       ];
       this.projectService.updateBreadCrumbs(breadCrumbs);
+      this.saveConfirmElement = undefined;
     });
 
     this.projectService.openedProject.subscribe((project: Project) => {
@@ -125,7 +126,7 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i);
+    const patchedProject = this.patchProject(i + 1);
     const equal = isEqual(patchedProject, this.project);
     this.isSameVersion = equal;
     return (equal);
@@ -163,8 +164,9 @@ export class HistoryComponent implements OnInit {
   }
 
   onRevertClick(revisionIndex) {
+    console.log(this.saveConfirmElement);
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex);
+    const patchedRevision = this.patchProject(revisionIndex + 1);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
