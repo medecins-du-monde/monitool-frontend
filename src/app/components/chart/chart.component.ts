@@ -55,10 +55,10 @@ export class ChartComponent implements OnInit, OnDestroy {
       }],
       // change fontSize of the labels in the yAxis
       yAxes: [{
-        id: "A",
+        id: 'A',
         display: false
-      },{
-        id: "B",
+      }, {
+        id: 'B',
         display: false,
       }
     ],
@@ -207,17 +207,17 @@ export class ChartComponent implements OnInit, OnDestroy {
       let higherPercentages = false;
       data.datasets.map(dataGroup => {
         console.log(dataGroup);
-        if(dataGroup.unit === '%' || dataGroup.unit === '‰') {
-          dataGroup.yAxisID = 'B'
+        if (dataGroup.unit === '%' || dataGroup.unit === '‰') {
+          dataGroup.yAxisID = 'B';
           if (dataGroup.unit === '‰') {
             higherPercentages = true;
           }
         } else {
           onlyPercentages = false;
-          dataGroup.yAxisID = 'A'
+          dataGroup.yAxisID = 'A';
         }
-      })
-      this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages})
+      });
+      this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
       this.chart.data = data;
       this.chart.update();
     }
@@ -253,14 +253,14 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private getYAxes(options?: any): any {
     return [{
-        id: "A",
+        id: 'A',
         display: 'auto',
         ticks: {
           fontSize: 14,
           beginAtZero : true,
         }
-      },{
-        id: "B",
+      }, {
+        id: 'B',
         display: 'auto',
         position: options?.onlyPercentages ? 'left' : 'right',
         gridLines: {
@@ -275,7 +275,7 @@ export class ChartComponent implements OnInit, OnDestroy {
           },
         }
       }
-    ]
+    ];
   }
 
   get downloadChart(): string{
