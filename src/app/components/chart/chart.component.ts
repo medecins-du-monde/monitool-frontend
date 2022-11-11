@@ -35,10 +35,6 @@ export class ChartComponent implements OnInit, OnDestroy {
   @Input() data: any;
   unit: string;
   options: ChartOptions = {
-    // tooltips: {
-    //   mode: 'index',
-    //   intersect: false,
-    // }
 
     // makes the chart look better with fixed height and width
     maintainAspectRatio: false,
@@ -59,15 +55,14 @@ export class ChartComponent implements OnInit, OnDestroy {
       }],
       // change fontSize of the labels in the yAxis
       yAxes: [{
-        ticks: {
-            fontSize: 14,
-            beginAtZero : true,
-            callback: (value, index, values) => {
-              return value.toLocaleString('de-DE') + (this.unit ? this.unit : '');
-            }
-        }
-      }],
-    },
+        id: 'A',
+        display: false
+      }, {
+        id: 'B',
+        display: false,
+      }
+    ],
+  }
   };
 
   /* which chart to choose from should always depend on the datatype */
@@ -208,9 +203,21 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   addData(data): void {
     if (this.chart){
-      if (data.datasets.length && data.datasets[0].unit === '%') {
-        this.unit = '%';
-      }
+      let onlyPercentages = true;
+      let higherPercentages = false;
+      data.datasets.map(dataGroup => {
+        console.log(dataGroup);
+        if (dataGroup.unit === '%' || dataGroup.unit === '‰') {
+          dataGroup.yAxisID = 'B';
+          if (dataGroup.unit === '‰') {
+            higherPercentages = true;
+          }
+        } else {
+          onlyPercentages = false;
+          dataGroup.yAxisID = 'A';
+        }
+      });
+      this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
       this.chart.data = data;
       this.chart.update();
     }
@@ -242,6 +249,33 @@ export class ChartComponent implements OnInit, OnDestroy {
         }
       }]
     });
+  }
+
+  private getYAxes(options?: any): any {
+    return [{
+        id: 'A',
+        display: 'auto',
+        ticks: {
+          fontSize: 14,
+          beginAtZero : true,
+        }
+      }, {
+        id: 'B',
+        display: 'auto',
+        position: options?.onlyPercentages ? 'left' : 'right',
+        gridLines: {
+          display: options?.onlyPercentages,
+        },
+        ticks: {
+          fontSize: 14,
+          beginAtZero : true,
+          suggestedMax: 100,
+          callback: (val) => {
+            return val + (options?.higherPercentages ? '‰' : '%');
+          },
+        }
+      }
+    ];
   }
 
   get downloadChart(): string{
