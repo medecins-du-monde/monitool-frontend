@@ -10,7 +10,7 @@
   #currentChart {
     display: block;
     width: 85% !important;
-    min-height: 300px;
+    min-height: 400px;
     max-height: 400px;
     @media screen and (max-width: $breakpoint-xs) {
       width: 100% !important;
@@ -45,7 +45,6 @@
       }
     }
   }
-  
 }
 
 .chart-field {
