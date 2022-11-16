@@ -72,7 +72,7 @@ export class UserModalComponent implements OnInit {
         this.userForm.controls.name.setValidators([Validators.required]);
         this.userForm.controls.username.setValidators([Validators.required]);
         if (val.password.length > 0 && val.password.length < 6) {
-          this.userForm.controls.password.setErrors({'incorrect': true});
+          this.userForm.controls.password.setErrors({incorrect: true});
         }
       } else if (val.type === 'internal') {
         this.userForm.controls.name.clearValidators();
@@ -93,7 +93,7 @@ export class UserModalComponent implements OnInit {
   onSubmit(): void {
     const formValue = this.userForm.value;
     // Assigns null to the password if empty
-    if (formValue.password === "") {
+    if (formValue.password === '') {
       formValue.password = null;
     }
     formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
@@ -130,7 +130,7 @@ export class UserModalComponent implements OnInit {
       ...this.userForm.value,
       dataSources: this.userForm.value.dataSources.filter(el => el.id !== 'all'),
       entities: this.userForm.value.entities.filter(el => el.id !== 'all'),
-    }
+    };
     return JSON.stringify(cleanedForm) !== JSON.stringify(this.originalForm) && this.userForm.valid;
   }
 
