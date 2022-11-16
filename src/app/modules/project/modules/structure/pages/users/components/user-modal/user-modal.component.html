@@ -10,7 +10,7 @@
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Type' | translate }}</mat-hint>
         </mat-form-field>
     </div>
-    <div *ngIf="userForm.value.type === types[0].value; else elseBlock">
+    <div *ngIf="userForm.value.type === 'internal'">
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'User' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
@@ -21,7 +21,7 @@
             </mat-form-field>
         </div>
     </div>
-    <ng-template #elseBlock>
+    <div *ngIf="userForm.value.type === 'partner'">
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Login' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
@@ -43,11 +43,17 @@
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Password' | translate }}</mat-hint>
             </mat-form-field>
         </div>
-    </ng-template>
+    </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Role' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="role" placeholder="{{ 'Role' | translate }}" disableOptionCentering panelClass="myPanelClass">
+            <mat-select
+              formControlName="role"
+              placeholder="{{ 'Role' | translate }}"
+              disableOptionCentering
+              panelClass="myPanelClass"
+              (selectionChange)="userForm.patchValue({dataSources: [], entities: []})"
+            >
                 <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name | translate }}</mat-option>
             </mat-select>
             <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}</mat-hint>
@@ -74,6 +80,6 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button [disabled]="!userForm.valid" (click)="onSubmit()" class="mdm-button save-button">{{ 'UpdateUser' | translate }}</button>
+    <button mat-stroked-button [disabled]="!canSubmitForm()" (click)="onSubmit()" class="mdm-button save-button">{{ 'UpdateUser' | translate }}</button>
     <button mat-stroked-button (click)="resetChanges()" class="mdm-button"><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
 </mat-dialog-actions>
