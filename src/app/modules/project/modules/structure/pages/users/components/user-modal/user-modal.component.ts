@@ -28,6 +28,8 @@ export class UserModalComponent implements OnInit {
   entities: Entity[];
   groups: Group[];
 
+  originalForm: any;
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UserModalComponent>,
@@ -61,29 +63,39 @@ export class UserModalComponent implements OnInit {
       this.users = users;
     });
 
-    this.userForm.valueChanges.subscribe(() => {
-      if (this.userForm.value.type && this.userForm.value.type === 'partner') {
-        this.userForm.controls['name'].setValidators([Validators.required]);
-        this.userForm.controls['username'].setValidators([Validators.required]);
-        this.userForm.controls['password'].setValidators([Validators.required]);
-      } else {
-        this.userForm.controls['name'].clearValidators();
-        this.userForm.controls['username'].clearValidators();
-        this.userForm.controls['password'].clearValidators();
+    this.originalForm = this.userForm.value;
+
+    this.userForm.valueChanges.subscribe(val => {
+      // Sets validators depending on the type
+      this.userForm.controls.password.setErrors(null);
+      if (val.type && val.type === 'partner') {
+        this.userForm.controls.name.setValidators([Validators.required]);
+        this.userForm.controls.username.setValidators([Validators.required]);
+        if (val.password.length > 0 && val.password.length < 6) {
+          this.userForm.controls.password.setErrors({'incorrect': true});
+        }
+      } else if (val.type === 'internal') {
+        this.userForm.controls.name.clearValidators();
+        this.userForm.controls.username.clearValidators();
+        this.userForm.controls.password.clearValidators();
       }
-      if (this.userForm.value.role && this.userForm.value.role === 'input') {
-        this.userForm.controls['dataSources'].setValidators([Validators.required]);
-        this.userForm.controls['entities'].setValidators([Validators.required]);
-      } else {
-        this.userForm.controls['dataSources'].clearValidators();
-        this.userForm.controls['entities'].clearValidators();
+      // Sets validators depending on the input
+      if (val.role && val.role === 'input') {
+        this.userForm.controls.dataSources.setValidators([Validators.required]);
+        this.userForm.controls.entities.setValidators([Validators.required]);
+      } else if (val.role) {
+        this.userForm.controls.dataSources.clearValidators();
+        this.userForm.controls.entities.clearValidators();
       }
     });
-
   }
 
   onSubmit(): void {
     const formValue = this.userForm.value;
+    // Assigns null to the password if empty
+    if (formValue.password === "") {
+      formValue.password = null;
+    }
     formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
     formValue.dataSources = formValue.dataSources.filter(d => this.dataSources.includes(d));
     const user = new User(formValue);
@@ -99,7 +111,7 @@ export class UserModalComponent implements OnInit {
       dataSources: [((this.data && this.data.dataSources) ? this.data.dataSources : [])],
       name: [this.data ? this.data.name : null],
       username: [this.data ? this.data.username : null],
-      password: [this.data ? this.data.password : null]
+      password: ['']
     });
   }
 
@@ -111,6 +123,15 @@ export class UserModalComponent implements OnInit {
   onDataSourceRemoved(dataSource: Form): void {
     const dataSources = this.userForm.controls.dataSources.value;
     this.userForm.controls.dataSources.setValue(dataSources.filter(d => d.id !== dataSource.id));
+  }
+
+  canSubmitForm(): boolean {
+    const cleanedForm = {
+      ...this.userForm.value,
+      dataSources: this.userForm.value.dataSources.filter(el => el.id !== 'all'),
+      entities: this.userForm.value.entities.filter(el => el.id !== 'all'),
+    }
+    return JSON.stringify(cleanedForm) !== JSON.stringify(this.originalForm) && this.userForm.valid;
   }
 
 }
