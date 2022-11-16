@@ -715,7 +715,10 @@
             "Type": "Choisissez \"Compte MDM\" si l'utilisateur possède une adresse email xxx@medecinsdumonde.net, et compte partenaire sinon.",
             "User": "De quel utilisateur MDM s'agit-il? Si l'utilisateur que vous voulez ajouter n'est pas disponible dans la liste, demandez lui de se connecter à Monitool une première fois.",
             "CollectionSites": " Sur quels lieux de collecte cet utilisateur pourra-t'il saisir?",
-            "DataSources": "Sur quels sources de données cet utilisateur pourra-t'il saisir?"
+            "DataSources": "Sur quels sources de données cet utilisateur pourra-t'il saisir?",
+            "Username": "Cet identifiant permettra à l'utilisateur de se connecter. Les adresses emails ne sont pas acceptés comme identifiant (utiliser par exemple: \"nom.prenom\", ou \"fonction.pays\")",
+            "Fullname": "Rentrez ici le nom complet de la personne qui va utiliser ce compte.",
+            "Password": "Le mot de passe doit avoir 6 caractères au minimum. Ne pas utiliser la même valeur que l'identifiant"
         }
     },
     "TooltipRoleHint": {

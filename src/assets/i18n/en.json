@@ -727,7 +727,10 @@
             "Type": "Choose \"MDM Account\" if the user has a xxx@medecinsdumonde.net email address. Choose \"Partner account\" otherwise.",
             "User": "Who is the MDM user that you want to add? If the user is not in the list, ask him/her to log-in Monitool a first time.",
             "CollectionSites": "For which sites will this user enter data?",
-            "DataSources": "For which data sources will this user enter data?"
+            "DataSources": "For which data sources will this user enter data?",
+            "Username": "This username will allow the user to connect. Email addresses are not allowed as usernames (i.e. your can use \"lastname.firstname\", ou \"job.country\")",
+            "Fullname": "Enter here the full name of the person that will use the account.",
+            "Password": "The password must be at least 6 characters long. Do not use the same value than the username"
         }
     },
     "TooltipRoleHint": {
