@@ -71,7 +71,7 @@ export class UserModalComponent implements OnInit {
       if (val.type && val.type === 'partner') {
         this.userForm.controls.name.setValidators([Validators.required]);
         this.userForm.controls.username.setValidators([Validators.required]);
-        if (val.password.length > 0 && val.password.length < 6) {
+        if (val.password.length >= (this.data ? 1 : 0) && val.password.length < 6) {
           this.userForm.controls.password.setErrors({incorrect: true});
         }
       } else if (val.type === 'internal') {
