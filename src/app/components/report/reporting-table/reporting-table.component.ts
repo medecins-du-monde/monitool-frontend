@@ -599,11 +599,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
       customIndicator.level = indicator.level + 1;
       customIndicator.onChart = false;
+      customIndicator.open = true;
       customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
       customIndicator.customFilter = customFilter;
       customIndicator.values = {};
       customIndicator = this.updateRowValues(customIndicator);
-
       newIndicators.push(customIndicator);
     }
 
