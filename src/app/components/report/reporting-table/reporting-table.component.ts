@@ -572,24 +572,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // this method will return the logicalFrame of given indicator
   getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
     const { logicalFrames } = this.project;
-    for (const logicalFrame of logicalFrames) {
-      const allIndicators = [...(logicalFrame.indicators || [])];
-      (logicalFrame.purposes || []).forEach(purpose => {
-        allIndicators.push(...purpose.indicators);
-        purpose.outputs.forEach(output => allIndicators.push(...output.indicators));
-      });
-      const allComputationElementIds: Set<string> = new Set(allIndicators
-        .map(item => Object.values(item.computation.parameters))
-        .map(parameterComputation => parameterComputation.map(({elementId}) => String(elementId)))
-        .flat(1));
-      const indicatorComputationElementIds = Object.values(indicator.computation.parameters)
-        .map((parameterComputation: { elementId: string }) => parameterComputation.elementId);
-      const matched = allIndicators.some(({display}) => display === indicator.name) ||
-        indicatorComputationElementIds.every(elementId => allComputationElementIds.has(elementId));
-      if (matched) {
-        return logicalFrame;
-      }
-    }
+    // We get the correct logical frame assuming that they will always be at the top
+    return logicalFrames[indicator.sectionId - 1];
+
   }
 
   getIndicatorCollectionSiteIndicators(indicator: InfoRow): InfoRow[] {
