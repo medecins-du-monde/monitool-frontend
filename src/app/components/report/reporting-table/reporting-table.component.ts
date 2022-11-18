@@ -517,7 +517,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // We take all the rows with the onChart attribute
     for (const row of this.dataSource.data) {
       if (row.onChart) {
-
         if (!row.dataset.backgroundColor) {
           row.dataset.borderColor = this.COLORS[this.currentColorIndex];
           row.dataset.backgroundColor = this.COLORS[this.currentColorIndex];
@@ -526,6 +525,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
 
         const copyOfDataset = Object.assign({}, row.dataset);
+        copyOfDataset.unit = row.unit;
 
         datasets.push(copyOfDataset);
       }

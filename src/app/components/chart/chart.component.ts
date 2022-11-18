@@ -206,7 +206,6 @@ export class ChartComponent implements OnInit, OnDestroy {
       let onlyPercentages = true;
       let higherPercentages = false;
       data.datasets.map(dataGroup => {
-        console.log(dataGroup);
         if (dataGroup.unit === '%' || dataGroup.unit === '‰') {
           dataGroup.yAxisID = 'B';
           if (dataGroup.unit === '‰') {
