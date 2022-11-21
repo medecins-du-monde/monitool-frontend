@@ -82,8 +82,14 @@ export class UsersComponent implements OnInit {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  onDelete(id: string) {
-    const oldUserIndex = this.project.users.findIndex(u => u.id === id);
+  onDelete(user: User) {
+    let oldUserIndex = null;
+    if (user.type === 'internal'){
+      oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
+    }
+    else {
+      oldUserIndex = this.project.users.findIndex(u => u.username === user.username);
+    }
     this.project.users.splice(oldUserIndex, 1);
     this.projectService.project.next(this.project);
   }
