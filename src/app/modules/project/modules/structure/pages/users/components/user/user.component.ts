@@ -110,7 +110,7 @@ export class UserComponent implements OnInit {
   }
 
   onDelete(): void {
-    this.delete.emit(this.user.id);
+    this.delete.emit(this.user);
   }
 
   openDialog(): void {
