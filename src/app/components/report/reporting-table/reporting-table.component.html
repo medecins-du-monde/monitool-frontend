@@ -45,7 +45,7 @@
       <th matTooltip="{{getSiteOrGroupName(column) | translate}}" [matTooltipShowDelay]="500" mat-header-cell
         *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
       <td mat-cell class="value-cell" [matTooltip]="getTooltipMessage(element?.values[column]) | translate" matTooltipPosition="above" *matCellDef="let element"
-        [ngStyle]="{ 
+        [ngStyle]="{
           'backgroundColor': element.values[column] !== undefined ? calcColor(element, column) : 'rgb(238, 238, 238)',
           'fontWeight': column === '_total' ? 'bold' : '',
           'font-style': isItalic(element?.values[column]) ? 'italic' : '' }">
@@ -233,7 +233,7 @@
         class="groupName">{{formatGroupName(element.groupName)}}</td>
       </ng-container>
       <ng-container *ngIf="optimalColspanForGroupName >= 15" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="16" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}" 
+        <td mat-cell *matCellDef="let element" [attr.colspan]="16" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
         class="groupName">{{formatGroupName(element.groupName)}}</td>
       </ng-container>
     </ng-container>
