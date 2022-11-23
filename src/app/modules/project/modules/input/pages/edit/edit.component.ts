@@ -21,6 +21,7 @@ import Parser from 'expr-eval';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
+import Handsontable from 'handsontable';
 
 
 @Component({
@@ -479,7 +480,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
-        type: 'numeric',
+        type: Handsontable.cellTypes.numeric,
         allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
@@ -522,7 +523,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           }
         },
         // updates the inputForm everytime we change something in the table
-        beforeChange: (core, changes) => {
+        beforeChange: (changes) => {
           if (changes !== null) {
             for (let i = 0; i < changes.length; i += 1) {
               const change = changes[i];
