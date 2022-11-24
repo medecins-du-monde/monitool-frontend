@@ -19,12 +19,10 @@
         <mat-form-field appearance="none" class="mdm-form-field" class="dl-select">
             <mat-select disableOptionCentering panelClass="filterClass" placeholder="{{ 'export-download' | translate }}">
                 <mat-option matTooltip="{{ 'minimized-tooltip' | translate }}" (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon>info</mat-icon></mat-option>
-                <!--
                 <mat-option matTooltip="{{ 'complete-tooltip' | translate }}" (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon>info</mat-icon></mat-option>
-                -->
             </mat-select>
         </mat-form-field>
-        <!-- Put just a different href later on 
+        <!-- Put just a different href later on
         <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
         [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/' + minimized" target="_blank"
         rel="noopener noreferrer">
@@ -39,7 +37,7 @@
     </mat-grid-tile>
     <mat-grid-tile colspan="4" (click)="downloadExcelSheet()">
     -->
-        <!-- Put just a different href later on 
+        <!-- Put just a different href later on
       <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button">
       <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
       </a>
