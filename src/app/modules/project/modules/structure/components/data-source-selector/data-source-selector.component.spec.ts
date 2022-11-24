@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { Form } from 'src/app/models/classes/form.model';
 
 import { DataSourceSelectorComponent } from './data-source-selector.component';
 
@@ -8,14 +11,28 @@ describe('DataSourceSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataSourceSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [DataSourceSelectorComponent],
+      imports: [TranslateModule.forRoot()]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DataSourceSelectorComponent);
     component = fixture.componentInstance;
+    component.dataSources = [
+      new Form({
+        id: 'id',
+        name: 'name',
+        start: new Date('2022-11-23T23:05:11.938Z'),
+        end: new Date('2022-11-23T23:05:11.938Z'),
+        periodicity: 'periodicity',
+        elements: [],
+        entities: []
+      })
+    ];
+    component.userForm = new FormGroup({
+      dataSources: new FormArray([])
+    });
     fixture.detectChanges();
   });
 

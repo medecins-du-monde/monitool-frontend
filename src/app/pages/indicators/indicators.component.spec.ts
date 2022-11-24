@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IndicatorsComponent } from './indicators.component';
 
 describe('IndicatorsComponent', () => {
@@ -8,9 +9,9 @@ describe('IndicatorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndicatorsComponent ]
-    })
-    .compileComponents();
+      declarations: [IndicatorsComponent],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
