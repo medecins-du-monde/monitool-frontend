@@ -479,6 +479,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
+        type: 'numeric',
         allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
