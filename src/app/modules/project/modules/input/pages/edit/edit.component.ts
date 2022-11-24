@@ -21,7 +21,6 @@ import Parser from 'expr-eval';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
-import Handsontable from 'handsontable';
 
 
 @Component({
@@ -480,7 +479,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
-        type: Handsontable.cellTypes.numeric,
         allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
