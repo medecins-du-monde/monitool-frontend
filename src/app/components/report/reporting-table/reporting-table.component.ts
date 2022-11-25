@@ -558,11 +558,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  // this method will return the logicalFrame of given indicator
-  getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
+  // this method will return the input group for a given indicator
+  getGroup(indicator: InfoRow): any {
     const { logicalFrames } = this.project;
+    const { forms } = this.project;
     // We get the correct logical frame assuming that they will always be at the top
-    return logicalFrames[indicator.sectionId - 1];
+    return logicalFrames[indicator.sectionId - 1] ?
+      logicalFrames[indicator.sectionId - 1] :
+      forms[indicator.sectionId - logicalFrames.length - 3];
 
   }
 
@@ -579,9 +582,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
     // getting the logical frame of current indicator to get all its entities.
-      const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
-      const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
-      const ent = logFrameEntities.length ? logFrameEntities : entities;
+      const group = this.getGroup(currentIndicator);
+      const groupEntities = (group?.entities || []).map(({id}) => id).filter(Boolean);
+      const ent = groupEntities.length ? groupEntities : entities;
 
       for (const entityId of ent) {
       const customFilter = {
