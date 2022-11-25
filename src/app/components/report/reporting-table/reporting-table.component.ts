@@ -563,7 +563,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     const { logicalFrames } = this.project;
     const { forms } = this.project;
     // We get the correct logical frame assuming that they will always be at the top
-    return logicalFrames[indicator.sectionId - 1] ? logicalFrames[indicator.sectionId - 1] : forms[indicator.sectionId - logicalFrames.length - 3];
+    return logicalFrames[indicator.sectionId - 1] ?
+      logicalFrames[indicator.sectionId - 1] :
+      forms[indicator.sectionId - logicalFrames.length - 3];
 
   }
 
@@ -578,7 +580,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (info.splitBySites) {
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
-      console.log(entities)
 
     // getting the logical frame of current indicator to get all its entities.
       const group = this.getGroup(currentIndicator);
