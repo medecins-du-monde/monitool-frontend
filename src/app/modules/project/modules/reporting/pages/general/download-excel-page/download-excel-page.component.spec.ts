@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DownloadExcelPageComponent } from './download-excel-page.component';
@@ -8,9 +9,9 @@ describe('DownloadExcelPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DownloadExcelPageComponent ]
-    })
-    .compileComponents();
+      declarations: [DownloadExcelPageComponent],
+      imports: [HttpClientTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

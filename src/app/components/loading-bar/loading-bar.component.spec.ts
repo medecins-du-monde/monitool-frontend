@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LoadingBarComponent } from './loading-bar.component';
 
@@ -8,9 +9,9 @@ describe('LoadingBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingBarComponent ]
-    })
-    .compileComponents();
+      declarations: [LoadingBarComponent],
+      imports: [TranslateModule.forRoot()]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

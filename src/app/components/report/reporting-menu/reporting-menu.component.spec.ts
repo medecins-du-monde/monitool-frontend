@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { Project } from 'src/app/models/classes/project.model';
 
 import { ReportingMenuComponent } from './reporting-menu.component';
 
@@ -8,14 +11,62 @@ describe('ReportingMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportingMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [ReportingMenuComponent],
+      imports: [HttpClientTestingModule, TranslateModule.forRoot()]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReportingMenuComponent);
     component = fixture.componentInstance;
+
+    component.indicator = {
+      icon: true,
+      name: 'test',
+      unit: 'test',
+      baseline: 1,
+      colorize: true,
+      target: 1,
+      sectionId: 1,
+      values: {},
+      onChart: true,
+      dataset: {},
+      filterFlag: true,
+      computation: {},
+      originProject: new Project({
+        id: 'id',
+        rev: 'rev',
+        type: 'project',
+        name: 'name',
+        active: true,
+        start: new Date('2022-11-23T23:05:11.938Z'),
+        end: new Date('2022-11-23T23:05:11.938Z'),
+        inputDate: new Date('2022-11-23T23:05:11.938Z'),
+        country: 'country',
+        themes: [],
+        crossCutting: {},
+        extraIndicators: [],
+        logicalFrames: [],
+        entities: [],
+        groups: [],
+        forms: [],
+        users: [],
+        visibility: 'visibility'
+      }),
+      customFilter: {},
+      nextRow: {
+        title: 'test',
+        sectionId: 1,
+        open: true,
+        level: 1,
+        click: () => {
+          return;
+        }
+      },
+      open: true,
+      level: 1
+    };
+    component.dimensionName = 'test';
     fixture.detectChanges();
   });
 

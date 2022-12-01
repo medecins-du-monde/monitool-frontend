@@ -1,4 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CrossCuttingComponent } from './cross-cutting.component';
 
@@ -8,9 +12,14 @@ describe('CrossCuttingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrossCuttingComponent ]
-    })
-    .compileComponents();
+      declarations: [CrossCuttingComponent],
+      imports: [
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        MatDialogModule,
+        ReactiveFormsModule
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
