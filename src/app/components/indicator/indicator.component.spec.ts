@@ -39,7 +39,7 @@ describe('IndicatorComponent', () => {
       },
       rev: 'rev',
       themes: [],
-    })
+    });
     fixture.detectChanges();
   });
 

@@ -57,7 +57,7 @@ describe('DataSourceComponent', () => {
       periodicity: 'periodicity',
       elements: [],
       entities: []
-    })
+    });
     fixture.detectChanges();
   });
 
