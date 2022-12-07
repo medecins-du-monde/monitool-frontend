@@ -211,7 +211,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.dataSourceForm.valid;
+      this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -290,6 +290,22 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  private datesAreInRange(): boolean {
+    const dataSource = this.dataSourceForm.value;
+    const start = (dataSource.start as any)._d || dataSource.start ;
+    const end = (dataSource.end as any)._d || dataSource.end ;
+    if (start.getTime() < this.project.start.getTime() ||
+        end.getTime() > this.project.end.getTime()) {
+      this.projectService.errorMessage = {
+        error: 'DatesOutOfRange',
+        type: 'DataSource'
+      };
+      return false;
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
   }
 
   // drag and drop function on a form array displayed in one column
