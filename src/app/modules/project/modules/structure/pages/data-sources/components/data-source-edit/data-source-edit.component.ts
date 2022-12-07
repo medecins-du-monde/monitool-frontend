@@ -294,15 +294,17 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
 
   private datesAreInRange(): boolean {
     const dataSource = this.dataSourceForm.value;
-    const start = (dataSource.start as any)._d || dataSource.start ;
-    const end = (dataSource.end as any)._d || dataSource.end ;
-    if (start.getTime() < this.project.start.getTime() ||
-        end.getTime() > this.project.end.getTime()) {
-      this.projectService.errorMessage = {
-        error: 'DatesOutOfRange',
-        type: 'DataSource'
-      };
-      return false;
+    if (dataSource.start && dataSource.end) {
+      const start = (dataSource.start as any)._d || dataSource.start ;
+      const end = (dataSource.end as any)._d || dataSource.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          error: 'DatesOutOfRange',
+          type: 'DataSource'
+        };
+        return false;
+      }
     }
     this.projectService.errorMessage = undefined;
     return true;

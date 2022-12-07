@@ -222,7 +222,6 @@ export class SitesComponent implements OnInit {
 
   private datesAreInRange(): boolean {
     for (const element of this.entities.value) {
-      console.log(element);
       const start = (element.start as any)._d || element.start ;
       const end = (element.end as any)._d || element.end ;
       if (start.getTime() < this.project.start.getTime() ||
