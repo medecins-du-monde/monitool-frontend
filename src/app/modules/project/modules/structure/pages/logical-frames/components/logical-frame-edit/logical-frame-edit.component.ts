@@ -248,15 +248,17 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   private datesAreInRange(): boolean {
     const logicalFrame = this.logicalFrameForm.value;
-    const start = (logicalFrame.start as any)._d || logicalFrame.start ;
-    const end = (logicalFrame.end as any)._d || logicalFrame.end ;
-    if (start.getTime() < this.project.start.getTime() ||
-        end.getTime() > this.project.end.getTime()) {
-      this.projectService.errorMessage = {
-        error: 'DatesOutOfRange',
-        type: 'LogicalFramework'
-      };
-      return false;
+    if (logicalFrame.start && logicalFrame.end) {
+      const start = (logicalFrame.start as any)._d || logicalFrame.start ;
+      const end = (logicalFrame.end as any)._d || logicalFrame.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          error: 'DatesOutOfRange',
+          type: 'LogicalFramework'
+        };
+        return false;
+      }
     }
     this.projectService.errorMessage = undefined;
     return true;
