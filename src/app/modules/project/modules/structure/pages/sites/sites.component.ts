@@ -250,9 +250,9 @@ export class SitesComponent implements OnInit {
           }
         });
         subscription.unsubscribe();
+        this.projectService.errorMessage = undefined;
+        return true;
       }
     }
-    this.projectService.errorMessage = undefined;
-    return true;
   }
 }
