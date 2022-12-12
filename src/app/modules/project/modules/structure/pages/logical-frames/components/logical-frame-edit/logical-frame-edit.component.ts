@@ -254,10 +254,28 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
       if (start.getTime() < this.project.start.getTime() ||
           end.getTime() > this.project.end.getTime()) {
         this.projectService.errorMessage = {
-          error: 'DatesOutOfRange',
+          message: 'DatesOutOfRange',
           type: 'LogicalFramework'
         };
         return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldLogicalFrame = res.logicalFrames.find(logFrame => logFrame.id === logicalFrame.id);
+          if (start.getTime() > oldLogicalFrame.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenStart',
+              type: ''
+            };
+          } else if (end.getTime() < oldLogicalFrame.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenEnd',
+              type: ''
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
       }
     }
     this.projectService.errorMessage = undefined;

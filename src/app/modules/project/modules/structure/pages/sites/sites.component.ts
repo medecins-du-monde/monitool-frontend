@@ -227,10 +227,29 @@ export class SitesComponent implements OnInit {
       if (start.getTime() < this.project.start.getTime() ||
           end.getTime() > this.project.end.getTime()) {
         this.projectService.errorMessage = {
-          error: 'DatesOutOfRange',
+          message: 'DatesOutOfRange',
           type: 'CollectionSite'
         };
         return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          console.log(res, element);
+          const oldCollectionSite = res.entities.find(collectionSite => collectionSite.id === element.id);
+          if (start.getTime() > oldCollectionSite.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'CollectionSite'
+            };
+          } else if (end.getTime() < oldCollectionSite.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'CollectionSite'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
       }
     }
     this.projectService.errorMessage = undefined;

@@ -300,10 +300,28 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       if (start.getTime() < this.project.start.getTime() ||
           end.getTime() > this.project.end.getTime()) {
         this.projectService.errorMessage = {
-          error: 'DatesOutOfRange',
+          message: 'DatesOutOfRange',
           type: 'DataSource'
         };
         return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldDataSource = res.forms.find(form => form.id === this.dataSourceForm.value.id);
+          if (start.getTime() > oldDataSource.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'DataSource'
+            };
+          } else if (end.getTime() < oldDataSource.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'DataSource'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
       }
     }
     this.projectService.errorMessage = undefined;

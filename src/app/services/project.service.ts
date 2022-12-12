@@ -26,7 +26,13 @@ export class ProjectService {
 
   // Error message to show when form isn't valid
   errorMessage: undefined | {
-    error: string,
+    message: string,
+    type: string
+  };
+
+  // Warning message
+  warningMessage: undefined | {
+    message: string,
     type: string
   };
 
