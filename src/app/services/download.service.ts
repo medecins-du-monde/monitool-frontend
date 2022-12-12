@@ -45,7 +45,7 @@ export class DownloadService {
   check(): void {
     this.status.next('checking');
     if (this.url.getValue() !== ''){
-      this.httpClient.get(this.url.getValue() + '/check',  {observe: 'response'}).subscribe(resp => {
+      this.httpClient.get(this.url.getValue().split('?')[0] + '/check',  {observe: 'response'}).subscribe(resp => {
         const body = { ...resp.body };
 
         if (body['message'] === 'done'){
@@ -62,7 +62,7 @@ export class DownloadService {
   }
   download(): void {
     if (this.url.getValue() !== ''){
-      window.open(this.url.getValue() + '/file', '_blank');
+      window.open(this.url.getValue().split('?')[0] + '/file', '_blank');
     }
   }
 }
