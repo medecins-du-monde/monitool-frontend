@@ -113,6 +113,55 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
+  get exportFilters(): any {
+    const filter = this.filter.getValue();
+    const filters: {
+      logicalFrames: string[];
+      dataSources: string[];
+      crossCutting: boolean;
+      extraIndicators: boolean;
+      dateRange: {
+        start: string;
+        end: string;
+      },
+      entities: string[];
+    } = {
+      logicalFrames: [],
+      dataSources: [],
+      crossCutting: false,
+      extraIndicators: false,
+      dateRange: {
+        start: filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end.toLocaleDateString('fr-CA')
+      },
+      entities: filter.entities || []
+    };
+    this.projectService.openedProject.subscribe((project: Project) => {
+      let i = 1;
+      project.logicalFrames.forEach(logicalFrame => {
+        if (this.openedSections[i]) {
+          filters.logicalFrames.push(logicalFrame.id);
+        }
+        i++;
+      });
+      if (this.openedSections[i]) {
+        filters.crossCutting = true;
+      }
+      i++;
+      if (this.openedSections[i]) {
+        filters.extraIndicators = true;
+      }
+      i++;
+      project.forms.forEach(dataSource => {
+        if (this.openedSections[i]) {
+          filters.dataSources.push(dataSource.id);
+        }
+        i++;
+      });
+    });
+
+    return filters;
+  }
   ngOnInit(): void {
     this.calculateOptimalColspan();
     this.subscription.add(
@@ -203,10 +252,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   updateTableContent(): void {
+    this.reportingService.exportFilters.next(this.exportFilters);
     // TODO: Check why this.tableContent and not this.content
     if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)) {
       let id = 0;
-
       this.content = this.content.map(this.convertToRow);
 
       for (const row of this.content) {
