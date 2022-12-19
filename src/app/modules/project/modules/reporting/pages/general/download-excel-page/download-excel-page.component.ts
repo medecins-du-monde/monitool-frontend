@@ -32,7 +32,7 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
 
     if (this.router.url.indexOf('api_export_project') >= 0) {
       const downloadRoute = this.router.url.slice(this.router.url.indexOf('api_export_project'), this.router.url.length);
-      this.downloadService.url.next('/' + downloadRoute.replace(/[_]/g, '/'))
+      this.downloadService.url.next('/' + downloadRoute.replace(/[_]/g, '/'));
     }
 
     this.subscription.add(
