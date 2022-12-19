@@ -139,11 +139,13 @@ export class ObjectGroupingComponent implements OnInit {
     });
   }
 
-  downloadExcelSheet() {
-    const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/';
+  downloadExcelSheet(): void {
+    const url = 'api_export_' + this.currentProjectId + '_' + this.currentPeriodicity + '_' + this.currentLang + '_';
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    window.open(this.router.url + '/download/' + url, '_blank');
+
+    // this.downloadService.url.next(url);
+    // this.router.navigate(['./download'], { relativeTo: this.route });
 
 
     // const win = window.open(url, '_blank');
@@ -161,20 +163,33 @@ export class ObjectGroupingComponent implements OnInit {
     const filters = this.reportingService.exportFilters.getValue();
     const encodedFilters = encodeURIComponent(JSON.stringify(filters));
     const url =
-      '/api/export/' +
+      'api_export_' +
       this.currentProjectId +
-      '/' +
+      '_' +
       this.currentPeriodicity +
-      '/' +
+      '_' +
       this.currentLang +
-      '/' +
+      '_' +
       this.minimized +
       (type === 'toggled' ? '?filters=' + encodedFilters : '');
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    window.open(this.router.url + '/download/' + url, '_blank');
 
-    // window.open(url, '_blank');
+    // const url =
+    //   '/api/export/' +
+    //   this.currentProjectId +
+    //   '/' +
+    //   this.currentPeriodicity +
+    //   '/' +
+    //   this.currentLang +
+    //   '/' +
+    //   this.minimized +
+    //   (type === 'toggled' ? '?filters=' + encodedFilters : '');
+
+    // console.log(url);
+    // this.downloadService.url.next(url);
+    // this.router.navigate(['./download'], { relativeTo: this.route });
+
     // this.dialog.closeAll();
   }
 

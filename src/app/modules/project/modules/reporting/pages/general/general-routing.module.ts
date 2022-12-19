@@ -7,7 +7,11 @@ import { GeneralComponent } from './general.component';
 const routes: Routes = [
   {
     path: 'download',
-    component: DownloadExcelPageComponent
+    component: DownloadExcelPageComponent,
+  },
+  {
+    path: 'download/:data',
+    component: DownloadExcelPageComponent,
   },
   {
     path: '',
