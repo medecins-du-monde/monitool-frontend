@@ -818,5 +818,6 @@
         "Warning": "Advertencia : ",
         "NullValueMeaning": "el formulario contiene datos vacíos. El cálculo de indicadores a partir de formularios de entrada incompletos será posible, pero dará un resultado inexacto. Si desea sustituir los valores no introducidos por valores numéricos \"0\", puede utilizar el botón \"Rellenar todas las celdas vacías con 0",
         "Save": "¿Estás seguro de que quieres ahorrar?"
-    }
+    },
+    "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento."
 }

@@ -24,22 +24,26 @@
             <td mat-cell *matCellDef="let element" id="{{column}}">
                 <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
                 <ng-template #elseBlock>
-                    <div *ngIf="element[column]?.value === -1; else elseBlock2">
+                    <div *ngIf="element[column]?.value === -1">
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
                             class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                     </div>
-                    <ng-template #elseBlock2>
+                    <div *ngIf="element[column]?.value === -2" style="height: 24px"></div>
+                    <div *ngIf="element[column]?.value >= 0">
                         <button mat-stroked-button [routerLink]="element[column]?.routerLink"
                             class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>
-                    </ng-template>
+                    </div>
                 </ng-template>
             </td>
         </ng-container>
         <ng-container matColumnDef="expandedDates">
             <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
-                <ng-template [ngIf]="!endDateReached">
+                <ng-template [ngIf]="!endDateReached && this.allDates.length > 0">
                     <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ 'SeeOlderDates'
                         | translate }}</button>
+                </ng-template>
+                <ng-template [ngIf]="this.allDates.length === 0">
+                    <div>{{ 'dataInputNotAvilable' | translate }}</div>
                 </ng-template>
             </td>
         </ng-container>
