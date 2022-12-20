@@ -147,7 +147,13 @@ export class ChartComponent implements OnInit, OnDestroy {
 
               const name = body[0].split(':')[0];
               const value = body[0].split(':')[1];
-              const formattedValue = value.indexOf('%') === -1 ? Number(value.replace(/\s/g, '')).toLocaleString('de-DE') : value;
+              let formattedValue = 'NaN';
+              if (value.indexOf('%') !== -1) {
+                formattedValue = parseFloat(parseFloat(value.replace(',', '.')).toFixed(1)).toString().replace('.', ',') + '%';
+              } else {
+                console.log(value.replace('null', '').replace(',', '.').replace(/\s/g, ''));
+                formattedValue = Number(value.replace('null', '').replace(',', '.').replace(/\s/g, '')).toLocaleString('de-DE');
+              }
               innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
 
           });

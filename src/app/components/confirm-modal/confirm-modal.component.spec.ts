@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ConfirmModalComponent } from './confirm-modal.component';
 
@@ -8,9 +11,13 @@ describe('ConfirmModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmModalComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfirmModalComponent],
+      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,3 +1,4 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,6 +12,8 @@ import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
   styleUrls: ['./partition-modal.component.scss']
 })
 export class PartitionModalComponent implements OnInit {
+
+  private previousData: any;
 
   public aggregations = [
     {
@@ -57,6 +60,7 @@ export class PartitionModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.previousData = {...this.data.value};
     if (!this.elements.value.length) {
       this.elements.push(this.newElement());
       this.elements.push(this.newElement());
@@ -79,6 +83,15 @@ export class PartitionModalComponent implements OnInit {
       id: [element.id],
       name: [element.name, Validators.required]
     });
+  }
+
+  onMoveElement(event: any) {
+    moveItemInArray(this.elements.controls, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.elements.value, event.previousIndex, event.currentIndex);
+    this.elementsDataSource.next(this.elements.controls);
+    // const array = this.elementsDataSource.getValue();
+    // moveItemInArray(array, event.previousIndex, event.currentIndex);
+    // this.elementsDataSource.next(array);
   }
 
   onAddNewGroup() {
@@ -106,5 +119,9 @@ export class PartitionModalComponent implements OnInit {
 
   onDelete() {
     this.dialogRef.close({ save: false, data: this.data });
+  }
+
+  onReset() {
+    this.data.patchValue(this.previousData);
   }
 }

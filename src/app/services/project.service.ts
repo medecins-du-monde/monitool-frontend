@@ -24,6 +24,18 @@ export class ProjectService {
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
 
+  // Error message to show when form isn't valid
+  errorMessage: undefined | {
+    message: string,
+    type: string
+  };
+
+  // Warning message
+  warningMessage: undefined | {
+    message: string,
+    type: string
+  };
+
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 

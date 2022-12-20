@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReportingService } from 'src/app/services/reporting.service';
 
 @Component({
   selector: 'app-object-grouping',
@@ -49,7 +50,8 @@ export class ObjectGroupingComponent implements OnInit {
               private translateService: TranslateService,
               private downloadService: DownloadService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private reportingService: ReportingService) { }
 
 
   get currentLang(): string {
@@ -155,8 +157,19 @@ export class ObjectGroupingComponent implements OnInit {
     // }, 500);
   }
 
-  dlMini() {
-    const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/' + this.minimized;
+  dlMini(type: 'global' | 'toggled'): void {
+    const filters = this.reportingService.exportFilters.getValue();
+    const encodedFilters = encodeURIComponent(JSON.stringify(filters));
+    const url =
+      '/api/export/' +
+      this.currentProjectId +
+      '/' +
+      this.currentPeriodicity +
+      '/' +
+      this.currentLang +
+      '/' +
+      this.minimized +
+      (type === 'toggled' ? '?filters=' + encodedFilters : '');
 
     this.downloadService.url.next(url);
     this.router.navigate(['./download'], { relativeTo: this.route });

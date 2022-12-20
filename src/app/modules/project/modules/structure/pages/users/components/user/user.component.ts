@@ -23,8 +23,8 @@ export class UserComponent implements OnInit {
 
   MDMusers: User[];
   groups: Group[];
-  entities: any;
-  dataSources: any;
+  entities: any[] = [];
+  dataSources: any = {};
 
   constructor(
     private dialog: MatDialog,
@@ -45,12 +45,12 @@ export class UserComponent implements OnInit {
   }
 
   get role(): string{
-    return rolesList.find(x => x.value === this.user.role).name;
+    return rolesList.find(x => x.value === this.user.role)?.name || '';
   }
 
   get name(): string{
     if (this.user.type === 'internal' && this.MDMusers){
-      return this.MDMusers.find(x => x.id === this.user.id).name;
+      return this.MDMusers.find(x => x.id === this.user.id)?.name || '';
     }
     if (this.user.type === 'partner'){
       return this.user.name;

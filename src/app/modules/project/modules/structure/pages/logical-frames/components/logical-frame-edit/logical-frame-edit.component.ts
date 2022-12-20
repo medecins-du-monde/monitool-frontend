@@ -159,7 +159,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.formSubscription = this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.logicalFrameForm.valid;
+      this.projectService.valid = this.datesAreInRange() && this.logicalFrameForm.valid;
       this.logicalFrame.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -246,4 +246,39 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     return this.logicalFrameForm.value.goal;
   }
 
+  private datesAreInRange(): boolean {
+    const logicalFrame = this.logicalFrameForm.value;
+    if (logicalFrame.start && logicalFrame.end) {
+      const start = (logicalFrame.start as any)._d || logicalFrame.start ;
+      const end = (logicalFrame.end as any)._d || logicalFrame.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'LogicalFramework'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldLogicalFrame = res.logicalFrames.find(logFrame => logFrame.id === logicalFrame.id);
+          if (start.getTime() > oldLogicalFrame.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenStart',
+              type: ''
+            };
+          } else if (end.getTime() < oldLogicalFrame.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenEnd',
+              type: ''
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
+  }
 }

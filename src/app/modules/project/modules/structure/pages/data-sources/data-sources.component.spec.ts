@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { DataSourcesComponent } from './data-sources.component';
 
@@ -8,9 +9,9 @@ describe('DataSourcesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataSourcesComponent ]
-    })
-    .compileComponents();
+      declarations: [DataSourcesComponent],
+      imports: [TranslateModule.forRoot()]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

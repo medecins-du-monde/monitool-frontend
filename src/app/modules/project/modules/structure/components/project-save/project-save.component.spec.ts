@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ProjectSaveComponent } from './project-save.component';
 
@@ -8,9 +11,13 @@ describe('ProjectSaveComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectSaveComponent ]
-    })
-    .compileComponents();
+      declarations: [ProjectSaveComponent],
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        MatDialogModule
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

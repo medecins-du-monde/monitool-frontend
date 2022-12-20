@@ -113,6 +113,55 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
+  get exportFilters(): any {
+    const filter = this.filter.getValue();
+    const filters: {
+      logicalFrames: string[];
+      dataSources: string[];
+      crossCutting: boolean;
+      extraIndicators: boolean;
+      dateRange: {
+        start: string;
+        end: string;
+      },
+      entities: string[];
+    } = {
+      logicalFrames: [],
+      dataSources: [],
+      crossCutting: false,
+      extraIndicators: false,
+      dateRange: {
+        start: filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end.toLocaleDateString('fr-CA')
+      },
+      entities: filter.entities || []
+    };
+    this.projectService.openedProject.subscribe((project: Project) => {
+      let i = 1;
+      project.logicalFrames.forEach(logicalFrame => {
+        if (this.openedSections[i]) {
+          filters.logicalFrames.push(logicalFrame.id);
+        }
+        i++;
+      });
+      if (this.openedSections[i]) {
+        filters.crossCutting = true;
+      }
+      i++;
+      if (this.openedSections[i]) {
+        filters.extraIndicators = true;
+      }
+      i++;
+      project.forms.forEach(dataSource => {
+        if (this.openedSections[i]) {
+          filters.dataSources.push(dataSource.id);
+        }
+        i++;
+      });
+    });
+
+    return filters;
+  }
   ngOnInit(): void {
     this.calculateOptimalColspan();
     this.subscription.add(
@@ -203,10 +252,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   updateTableContent(): void {
+    this.reportingService.exportFilters.next(this.exportFilters);
     // TODO: Check why this.tableContent and not this.content
     if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)) {
       let id = 0;
-
       this.content = this.content.map(this.convertToRow);
 
       for (const row of this.content) {
@@ -558,11 +607,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
-  // this method will return the logicalFrame of given indicator
-  getIndicatorLogicalFrame(indicator: InfoRow): LogicalFrame | undefined {
+  // this method will return the input group for a given indicator
+  getGroup(indicator: InfoRow): any {
     const { logicalFrames } = this.project;
+    const { forms } = this.project;
     // We get the correct logical frame assuming that they will always be at the top
-    return logicalFrames[indicator.sectionId - 1];
+    return logicalFrames[indicator.sectionId - 1] ?
+      logicalFrames[indicator.sectionId - 1] :
+      forms[indicator.sectionId - logicalFrames.length - 3];
 
   }
 
@@ -579,9 +631,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
     // getting the logical frame of current indicator to get all its entities.
-      const logicalFrame = this.getIndicatorLogicalFrame(currentIndicator);
-      const logFrameEntities = (logicalFrame?.entities || []).map(({id}) => id).filter(Boolean);
-      const ent = logFrameEntities.length ? logFrameEntities : entities;
+      const group = this.getGroup(currentIndicator);
+      const groupEntities = (group?.entities || []).map(({id}) => id).filter(Boolean);
+      const ent = groupEntities.length ? groupEntities : entities;
 
       for (const entityId of ent) {
       const customFilter = {
