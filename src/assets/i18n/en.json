@@ -783,7 +783,6 @@
   "FillWithZero": "Fill the empty cells with 0",
   "ShowFinishedProjects": "Show finished projects",
   "Understood": "I understand",
-
   "Jan": "january",
   "Feb": "february",
   "Mar": "march",
@@ -810,5 +809,6 @@
       "Save": "Are you sure you want to save?"
   },
   "export-current-minimized": "Current View Excel Report",
-  "current-minimized-tooltip": "Export the report respecting opened groups"
+  "current-minimized-tooltip": "Export the report respecting opened groups",
+  "dataInputNotAvilable": "There isn't any data input available at this time."
 }
