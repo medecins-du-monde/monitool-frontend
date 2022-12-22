@@ -522,7 +522,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           }
         },
         // updates the inputForm everytime we change something in the table
-        beforeChange: (core, changes) => {
+        beforeChange: (changes) => {
           if (changes !== null) {
             for (let i = 0; i < changes.length; i += 1) {
               const change = changes[i];

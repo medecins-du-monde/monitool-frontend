@@ -4,7 +4,15 @@
         <button mat-stroked-button class="mdm-button" (click)="onRevert()" [disabled]=!hasChanges><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
     </div>
     <div *ngIf="projectSaved" class="information-form saved"><mat-icon>info</mat-icon> {{ 'SavedForm' | translate }}</div>
-    <div *ngIf="hasChanges && valid && !errorWhileSaving" class="information-form pending"><mat-icon>info</mat-icon> {{ 'PendingForm' | translate }}</div>
-    <div *ngIf="hasChanges && !valid" class="information-form invalid"><mat-icon>info</mat-icon> {{ 'InvalidForm' | translate }}</div>
+    <div *ngIf="hasChanges && valid && !errorWhileSaving" class="information-form pending"><mat-icon>info</mat-icon> {{
+      warningMessage ?
+        (warningMessage.message | translate:{ element: (warningMessage.type! | translate).toLowerCase() }) :
+        ('PendingForm' | translate)
+    }}</div>
+    <div *ngIf="hasChanges && !valid" class="information-form invalid"><mat-icon>info</mat-icon>{{
+      errorMessage ?
+        (errorMessage.message | translate:{ element: (errorMessage.type | translate).toLowerCase() }) :
+        ('InvalidForm' | translate)
+    }}</div>
     <div *ngIf="errorWhileSaving" class="information-form invalid"><mat-icon>info</mat-icon> {{ 'ApplicationError' | translate }}</div>
 </div>

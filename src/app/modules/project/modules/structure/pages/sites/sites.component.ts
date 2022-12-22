@@ -143,7 +143,7 @@ export class SitesComponent implements OnInit {
               groups.push(group);
             });
             value.groups = groups;
-            this.projectService.valid = this.sitesForm.valid;
+            this.projectService.valid = this.datesAreInRange() && this.sitesForm.valid;
             this.projectService.project.next(Object.assign(project, value));
           });
         }
@@ -162,7 +162,7 @@ export class SitesComponent implements OnInit {
   public onAddNewEntity(): void {
     this.entities.push(FormGroupBuilder.newEntity(this.project));
     this.entitiesDataSource.data = this.entities.controls;
-    this.projectService.valid = this.sitesForm.valid;
+    this.projectService.valid = this.datesAreInRange() && this.sitesForm.valid;
   }
 
   public onRemoveEntity(index: number): void {
@@ -180,7 +180,7 @@ export class SitesComponent implements OnInit {
 
     this.entities.removeAt(index);
     this.entitiesDataSource.data = this.entities.controls;
-    this.projectService.valid = this.sitesForm.valid;
+    this.projectService.valid = this.datesAreInRange() && this.sitesForm.valid;
   }
 
   onEntityRemoved(index: number, id: number): void {
@@ -218,5 +218,41 @@ export class SitesComponent implements OnInit {
 
   toggleStartInfos(): void {
     this.displayInfos = !this.displayInfos;
+  }
+
+  private datesAreInRange(): boolean {
+    for (const element of this.entities.value) {
+      const start = (element.start as any)._d || element.start ;
+      const end = (element.end as any)._d || element.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'CollectionSite'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          console.log(res, element);
+          const oldCollectionSite = res.entities.find(collectionSite => collectionSite.id === element.id);
+          if (start.getTime() > oldCollectionSite.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'CollectionSite'
+            };
+          } else if (end.getTime() < oldCollectionSite.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'CollectionSite'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+        this.projectService.errorMessage = undefined;
+        return true;
+      }
+    }
   }
 }

@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ThematicsComponent } from './thematics.component';
 
@@ -8,9 +11,13 @@ describe('ThematicsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThematicsComponent ]
-    })
-    .compileComponents();
+      declarations: [ThematicsComponent],
+      imports: [
+        HttpClientTestingModule,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

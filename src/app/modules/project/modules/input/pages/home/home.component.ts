@@ -118,11 +118,13 @@ export class HomeComponent implements OnInit {
             const endTimeSlot = TimeSlot.fromDate(endDate.toISOString(), TimeSlotPeriodicity[form.periodicity]);
 
             const periods = [];
-            while (startTimeSlot !== endTimeSlot){
+            while (startTimeSlot.firstDate < endTimeSlot.firstDate){
               periods.push(startTimeSlot.value);
               startTimeSlot = startTimeSlot.next();
             }
-            periods.push(endTimeSlot.value);
+            if (startTimeSlot.firstDate === endTimeSlot.firstDate) {
+              periods.push(endTimeSlot.value);
+            }
 
             total = periods.length * form.entities.length;
             done = Object.values(inputs).filter(x => x === 1).length;

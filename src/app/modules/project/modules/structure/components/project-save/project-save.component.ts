@@ -52,6 +52,14 @@ export class ProjectSaveComponent implements OnInit {
     return this.projectService.valid;
   }
 
+  get errorMessage(): any{
+    return this.projectService.errorMessage;
+  }
+
+  get warningMessage(): any{
+    return this.projectService.warningMessage;
+  }
+
   async onSave(): Promise<void> {
     if (moment(this.currentProject.end).isBefore(this.savedProject.end)) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'ProjectDataLossConfirmation'}});

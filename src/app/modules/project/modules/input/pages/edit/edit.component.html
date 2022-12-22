@@ -24,12 +24,16 @@
     </button>
     <div class="mdm-title">
         {{ 'Data' | translate }}
-    </div> 
+    </div>
 </div>
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
     <div class="mdm-section" *ngFor="let table of tables; let k = index" >
         <p class="table-title">{{ form.elements[k].name }}</p>
-        <hot-table [settings]="tableSettings[table.id]" [data]="table.value"></hot-table>
+        <hot-table
+          [settings]="tableSettings[table.id]"
+          [data]="table.value"
+          licenseKey="non-commercial-and-evaluation"
+        ></hot-table>
     </div>
 </div>
 <div class="save-actions">
@@ -37,7 +41,7 @@
         <mat-icon>save</mat-icon>
         {{ 'Save' | translate }}
     </button>
-    
+
     <button mat-stroked-button class="mdm-button" [disabled]="!inputHasModification" (click)="resetInput()">
         <mat-icon>replay</mat-icon>
         {{ 'ResetChanges' | translate }}

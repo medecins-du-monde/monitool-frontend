@@ -245,19 +245,29 @@ export class InputsComponent implements OnInit, OnDestroy {
 
     const inputId = `input:${this.project.id}:${this.formId}`;
     const newDataSource = [];
+    const lastDates = {};
     for (const date of nextDates){
       const current = { Date: date.humanValue };
 
       for (const site of this.sites){
-        if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
+        if (!lastDates[site.id] && date.date <= site.end) {
+          if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
+            current[site.name] = {
+              value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
+              routerLink: `./edit/${site.id}/${date.value}`
+            };
+          } else{
+            current[site.name] = {
+              value: -1,
+              routerLink: `./edit/${site.id}/${date.value}`
+            };
+          }
+          if (date.date <= site.start.setHours(1)) {
+            lastDates[site.id] = true;
+          }
+        } else {
           current[site.name] = {
-            value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
-            routerLink: `./edit/${site.id}/${date.value}`
-          };
-        }else{
-          current[site.name] = {
-            value: -1,
-            routerLink: `./edit/${site.id}/${date.value}`
+            value: -2
           };
         }
       }
@@ -271,22 +281,21 @@ export class InputsComponent implements OnInit, OnDestroy {
     const dates = [];
     if (this.form.periodicity !== 'free'){
       let datesAdded = 0;
-
       while (datesAdded < 10 && !this.endDateReached){
+        if (this.slotStart.firstDate < this.slotEnd.firstDate){
+          this.endDateReached = true;
+          break;
+        }
         dates.push({
           humanValue: this.slotStart.humanizeValue(this.currentLang),
-          value: this.slotStart.value
+          value: this.slotStart.value,
+          date: this.slotStart.firstDate
         });
-
-        if (this.slotStart === this.slotEnd){
-          this.endDateReached = true;
-        }else{
-          this.slotStart = this.slotStart.previous();
-        }
+        this.slotStart = this.slotStart.previous();
         datesAdded += 1;
       }
 
-    }else{
+    } else {
       let datesAdded = 0;
 
       while (datesAdded < 10 && !this.endDateReached){

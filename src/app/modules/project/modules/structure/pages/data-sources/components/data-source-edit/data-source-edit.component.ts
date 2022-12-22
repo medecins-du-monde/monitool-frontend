@@ -211,7 +211,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.dataSourceForm.valid;
+      this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -290,6 +290,42 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       name: [partitionGroup.name, Validators.required],
       members: [elements.value.filter(x => partitionGroup.members.map(m => m.id).includes(x.id))]
     });
+  }
+
+  private datesAreInRange(): boolean {
+    const dataSource = this.dataSourceForm.value;
+    if (dataSource.start && dataSource.end) {
+      const start = (dataSource.start as any)._d || dataSource.start ;
+      const end = (dataSource.end as any)._d || dataSource.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'DataSource'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldDataSource = res.forms.find(form => form.id === this.dataSourceForm.value.id);
+          if (start.getTime() > oldDataSource.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'DataSource'
+            };
+          } else if (end.getTime() < oldDataSource.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'DataSource'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
   }
 
   // drag and drop function on a form array displayed in one column

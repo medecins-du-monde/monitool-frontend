@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import TimeSlot from 'timeslot-dag';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,9 @@ import TimeSlot from 'timeslot-dag';
 export class ReportingService {
 
   constructor(private apiService: ApiService) { }
+
+
+  public exportFilters = new BehaviorSubject<any>({});
 
   public TIME_PERIODICITIES = [
     'day', 'month_week_sat', 'month_week_sun', 'month_week_mon', 'week_sat', 'week_sun',

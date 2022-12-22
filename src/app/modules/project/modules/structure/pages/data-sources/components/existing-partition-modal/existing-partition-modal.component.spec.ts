@@ -1,4 +1,9 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { ExistingPartitionModalComponent } from './existing-partition-modal.component';
 
@@ -8,9 +13,18 @@ describe('ExistingPartitionModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExistingPartitionModalComponent ]
-    })
-    .compileComponents();
+      declarations: [ExistingPartitionModalComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        ReactiveFormsModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

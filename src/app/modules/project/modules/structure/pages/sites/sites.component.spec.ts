@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { SitesComponent } from './sites.component';
 
@@ -8,9 +11,13 @@ describe('SitesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SitesComponent ]
-    })
-    .compileComponents();
+      declarations: [SitesComponent],
+      imports: [
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

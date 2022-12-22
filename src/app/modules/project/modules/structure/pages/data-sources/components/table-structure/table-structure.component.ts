@@ -19,7 +19,7 @@ export class TableStructureComponent implements OnInit {
   project: Project;
   floatLabelControl = new FormControl();
 
-  partitions: any;
+  partitions: any[] = [];
 
   savedStructure: number;
 
