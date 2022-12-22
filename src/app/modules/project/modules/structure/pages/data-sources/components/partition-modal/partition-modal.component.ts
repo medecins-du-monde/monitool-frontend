@@ -107,4 +107,12 @@ export class PartitionModalComponent implements OnInit {
   onDelete() {
     this.dialogRef.close({ save: false, data: this.data });
   }
+
+  memberDisplay( member1: any, member2: any): string {
+    if (member1.id === member2.id) {
+      return member1.name;
+    } else {
+      return '';
+    }
+  }
 }

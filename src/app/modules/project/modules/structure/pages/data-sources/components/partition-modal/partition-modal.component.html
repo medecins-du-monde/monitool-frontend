@@ -44,7 +44,7 @@
                     </button>
                 </td>
             </ng-container>
-            
+
             <tr mat-header-row *matHeaderRowDef="elementsDisplayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="['add']"></tr>
@@ -97,11 +97,11 @@
             </ng-container>
             <ng-container matColumnDef="members">
                 <th class="w-40" mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
-                <td class="w-40" mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">
+                <td class="w-40" mat-cell *matCellDef="let element; let i=index" id="members" [formGroupName]="i">
                     <mat-form-field appearance="outline" class="mdm-form-field">
-                        <mat-select formControlName="members" placeholder="{{ 'Members' | translate }}" multiple>
-                            <mat-option *ngFor="let element of elements.value" [value]="element">{{ element.name }}
-                            </mat-option>
+                        <mat-select formControlName="members" placeholder="{{ 'Members' | translate }}" multiple [compareWith]="memberDisplay">
+                          <mat-option *ngFor="let element of elements.value" [value]="element">{{ element.name }}
+                          </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </td>
