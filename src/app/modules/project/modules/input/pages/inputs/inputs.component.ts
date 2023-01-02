@@ -75,6 +75,8 @@ export class InputsComponent implements OnInit, OnDestroy {
   differentInputDates: { humanValue: string; value: string; }[] = [];
   endDateReached = false;
 
+  lastDates = {};
+
 
   get currentDate(): string {
     return DatesHelper.dateToString(this.dateForm.value);
@@ -152,6 +154,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   }
 
   updateData(){
+    this.lastDates = {};
     if (this.formId && this.project && this.user){
 
       this.form = this.project.forms.find(x => x.id === this.formId);
@@ -245,12 +248,11 @@ export class InputsComponent implements OnInit, OnDestroy {
 
     const inputId = `input:${this.project.id}:${this.formId}`;
     const newDataSource = [];
-    const lastDates = {};
     for (const date of nextDates){
       const current = { Date: date.humanValue };
 
       for (const site of this.sites){
-        if (!lastDates[site.id] && date.date <= site.end) {
+        if (!this.lastDates[site.id] && date.date <= site.end) {
           if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
             current[site.name] = {
               value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
@@ -262,8 +264,8 @@ export class InputsComponent implements OnInit, OnDestroy {
               routerLink: `./edit/${site.id}/${date.value}`
             };
           }
-          if (date.date <= site.start.setHours(1)) {
-            lastDates[site.id] = true;
+          if (date.date <= site.start.setHours(12)) {
+            this.lastDates[site.id] = true;
           }
         } else {
           current[site.name] = {
@@ -282,7 +284,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     if (this.form.periodicity !== 'free'){
       let datesAdded = 0;
       while (datesAdded < 10 && !this.endDateReached){
-        if (this.slotStart.firstDate < this.slotEnd.firstDate){
+        if (this.slotStart.firstDate <= this.slotEnd.firstDate){
           this.endDateReached = true;
           break;
         }
