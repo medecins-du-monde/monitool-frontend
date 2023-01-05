@@ -801,7 +801,6 @@
   "FillWithZero": "Rellenar todas las celdas vacías con 0",
   "ShowFinishedProjects": "Mostrar proyectos terminados",
   "Understood": "Entiendo",
-
   "Jan": "Enero",
   "Feb": "Febrero",
   "Mar": "Marzo",
@@ -827,5 +826,6 @@
   },
   "export-current-minimized": "Exportación de la vista actual",
   "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",
-  "export-warning": "La descarga de este informe puede ser larga dependiendo de la cantidad de datos exportados. ¿Desea continuar?"
+  "export-warning": "La descarga de este informe puede ser larga dependiendo de la cantidad de datos exportados. ¿Desea continuar?",
+  "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento."
 }
