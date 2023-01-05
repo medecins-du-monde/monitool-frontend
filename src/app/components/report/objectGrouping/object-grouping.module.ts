@@ -9,9 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
 
 @NgModule({
-    declarations: [ObjectGroupingComponent],
+    declarations: [ObjectGroupingComponent, ConfirmExportComponent],
     exports: [ObjectGroupingComponent],
     imports: [
         CommonModule,
@@ -23,7 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatDialogModule
     ]
 })
 export class ObjectGroupingModule { }

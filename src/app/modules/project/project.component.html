@@ -5,5 +5,5 @@
         <app-breadcrumb></app-breadcrumb>
         <router-outlet></router-outlet>
     </div>
-    <app-informations-panel></app-informations-panel>
+    <app-informations-panel *ngIf="router.url.indexOf('download') === -1"></app-informations-panel>
 </div>

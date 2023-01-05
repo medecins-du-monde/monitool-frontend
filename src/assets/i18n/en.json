@@ -810,5 +810,6 @@
   },
   "export-current-minimized": "Current View Excel Report",
   "current-minimized-tooltip": "Export the report respecting opened groups",
+  "export-warning": "The download of this report can be long depending on the amount of data exported. Do you want to continue?",
   "dataInputNotAvilable": "There isn't any data input available at this time."
 }

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/services/reporting.service';
+import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
 
 @Component({
   selector: 'app-object-grouping',
@@ -45,13 +46,16 @@ export class ObjectGroupingComponent implements OnInit {
     'group'
   ];
 
-  constructor(private projectService: ProjectService,
-              private fb: FormBuilder,
-              private translateService: TranslateService,
-              private downloadService: DownloadService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private reportingService: ReportingService) { }
+  constructor(
+    private projectService: ProjectService,
+    private fb: FormBuilder,
+    private translateService: TranslateService,
+    private downloadService: DownloadService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private reportingService: ReportingService,
+    private dialog: MatDialog
+  ) { }
 
 
   get currentLang(): string {
@@ -139,43 +143,44 @@ export class ObjectGroupingComponent implements OnInit {
     });
   }
 
-  downloadExcelSheet() {
-    const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/';
+  downloadExcelSheet(): void {
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {title: this.translateService.instant('export-complete')}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const url = 'api_export_' + this.currentProjectId + '_' + this.currentPeriodicity + '_' + this.currentLang + '_';
 
-    // const win = window.open(url, '_blank');
-
-    // const timer = setInterval(() => {
-    //   if (!win.closed) {
-    //     clearInterval(timer);
-    //     this.dialog.open(this.dlMinimized);
-    //     win.close();
-    //   }
-    // }, 500);
+        window.open(this.router.url + '/download/' + url, '_blank');
+      }
+    });
   }
 
   dlMini(type: 'global' | 'toggled'): void {
-    const filters = this.reportingService.exportFilters.getValue();
-    const encodedFilters = encodeURIComponent(JSON.stringify(filters));
-    const url =
-      '/api/export/' +
-      this.currentProjectId +
-      '/' +
-      this.currentPeriodicity +
-      '/' +
-      this.currentLang +
-      '/' +
-      this.minimized +
-      (type === 'toggled' ? '?filters=' + encodedFilters : '');
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {title: this.translateService.instant(type === 'global' ? 'export-minimized' : 'export-current-minimized')}
+    });
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const filters = this.reportingService.exportFilters.getValue();
+        const encodedFilters = encodeURIComponent(JSON.stringify(filters));
+        const url =
+          'api_export_' +
+          this.currentProjectId +
+          '_' +
+          this.currentPeriodicity +
+          '_' +
+          this.currentLang +
+          '_' +
+          this.minimized +
+          (type === 'toggled' ? '?filters=' + encodedFilters : '');
 
-    // window.open(url, '_blank');
-    // this.dialog.closeAll();
+        window.open(this.router.url + '/download/' + url, '_blank');
+      }
+    });
   }
 
 }

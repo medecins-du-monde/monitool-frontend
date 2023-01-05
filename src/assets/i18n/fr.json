@@ -827,5 +827,6 @@
   },
   "export-current-minimized": "Rapport Excel de la vue actuelle",
   "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",
+  "export-warning": "Le téléchargement de ce rapport peut être long en fonction de la quantité de données exportées. Voulez-vous continuer?",
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment."
 }
