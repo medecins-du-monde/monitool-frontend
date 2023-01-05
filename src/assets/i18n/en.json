@@ -788,6 +788,7 @@
     "export-download": "Download Excel Report",
     "export-complete": "Detailed Excel Export",
     "export-minimized": "Global Excel Export",
+    "export-current-minimized": "Current View Excel Report",
     "minimized-tooltip": "All Sites merged",
     "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
     "NullValueMessage": {
