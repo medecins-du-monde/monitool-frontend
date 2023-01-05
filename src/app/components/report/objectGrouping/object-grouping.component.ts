@@ -4,9 +4,9 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReportingService } from 'src/app/services/reporting.service';
 
 @Component({
   selector: 'app-object-grouping',
@@ -44,12 +44,15 @@ export class ObjectGroupingComponent implements OnInit {
     'group'
   ];
 
-  constructor(private projectService: ProjectService,
-              private fb: FormBuilder,
-              private translateService: TranslateService,
-              private downloadService: DownloadService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private projectService: ProjectService,
+    private fb: FormBuilder,
+    private translateService: TranslateService,
+    private downloadService: DownloadService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private reportingService: ReportingService,
+  ) {}
 
 
   get currentLang(): string {
@@ -165,4 +168,9 @@ export class ObjectGroupingComponent implements OnInit {
     // this.dialog.closeAll();
   }
 
+  /** Downloads the current view of the table */
+  async dlCurrView(): Promise<void> {
+    await this.reportingService.downloadCurrentTableView();
+  }
+  
 }

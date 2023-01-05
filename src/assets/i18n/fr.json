@@ -813,6 +813,7 @@
     "export-download": "Télécharger le rapport Excel",
     "export-complete": "Export Excel détaillé",
     "export-minimized": "Export Excel Global",
+    "export-current-minimized": "Rapport Excel de la vue actuelle",
     "minimized-tooltip": "Tous sites confondus",
     "complete-tooltip": "Rapport Total + 1 onglet par site de collecte",
     "Groups": "Groupe d’éléments",

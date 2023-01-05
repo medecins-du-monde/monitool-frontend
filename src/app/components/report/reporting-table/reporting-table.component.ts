@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss']
 })
-export class ReportingTableComponent implements OnInit, OnDestroy {
+export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
@@ -51,6 +51,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
+  @ViewChild('reportingTable') tableRef: ElementRef;
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
@@ -200,6 +201,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.reportingService.currReportTable.next(this.tableRef);
   }
 
   updateTableContent(): void {

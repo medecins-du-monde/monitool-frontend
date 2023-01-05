@@ -812,6 +812,7 @@
     "export-download": "Descargar informe Excel",
     "export-complete": "Exportación detallada de Excel",
     "export-minimized": "Exportación global de Excel",
+    "export-current-minimized": "Informe de Excel de vista actual",
     "minimized-tooltip": "Todos los sitios combinados",
     "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección",
     "NullValueMessage": {

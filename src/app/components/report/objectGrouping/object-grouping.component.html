@@ -18,7 +18,24 @@
     <mat-grid-tile class="excel-download" colspan="6">
         <mat-form-field appearance="none" class="mdm-form-field" class="dl-select">
             <mat-select disableOptionCentering panelClass="filterClass" placeholder="{{ 'export-download' | translate }}">
-                <mat-option matTooltip="{{ 'minimized-tooltip' | translate }}" (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon>info</mat-icon></mat-option>
+                <mat-option (click)="dlMini()">
+                    {{ "export-minimized" | translate}}
+                    <mat-icon
+                        matTooltip="{{ 'minimized-tooltip' | translate }}"
+                        matTooltipPosition="left"
+                    >
+                        info
+                    </mat-icon>
+                </mat-option>
+                <mat-option (click)="dlCurrView()">
+                    {{ "export-current-minimized" | translate}}
+                    <mat-icon
+                    matTooltip="{{ 'export-current-minimized' | translate }}"
+                    matTooltipPosition="left"
+                    >
+                        info
+                    </mat-icon>
+                </mat-option>
                 <!--
                 <mat-option matTooltip="{{ 'complete-tooltip' | translate }}" (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon>info</mat-icon></mat-option>
                 -->
