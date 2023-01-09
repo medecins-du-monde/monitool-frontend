@@ -144,7 +144,6 @@ export class ObjectGroupingComponent implements OnInit {
   }
 
   downloadExcelSheet(): void {
-
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
       data: {title: this.translateService.instant('export-complete')}
     });
@@ -158,15 +157,13 @@ export class ObjectGroupingComponent implements OnInit {
     });
   }
 
-  dlMini(type: 'global' | 'toggled'): void {
+  dlMini(): void {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
-      data: {title: this.translateService.instant(type === 'global' ? 'export-minimized' : 'export-current-minimized')}
+      data: {title: this.translateService.instant('export-minimized')}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const filters = this.reportingService.exportFilters.getValue();
-        const encodedFilters = encodeURIComponent(JSON.stringify(filters));
         const url =
           'api_export_' +
           this.currentProjectId +
@@ -175,8 +172,7 @@ export class ObjectGroupingComponent implements OnInit {
           '_' +
           this.currentLang +
           '_' +
-          this.minimized +
-          (type === 'toggled' ? '?filters=' + encodedFilters : '');
+          this.minimized;
 
         window.open(this.router.url + '/download/' + url, '_blank');
       }
@@ -185,7 +181,16 @@ export class ObjectGroupingComponent implements OnInit {
 
   /** Downloads the current view of the table */
   async dlCurrView(): Promise<void> {
-    await this.reportingService.downloadCurrentTableView();
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {title: this.translateService.instant('export-current-minimized')}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        window.open(this.router.url + '/download/' + 'export_current_view', '_blank');
+      }
+    });
+    // await this.reportingService.downloadCurrentTableView();
   }
 
 }
