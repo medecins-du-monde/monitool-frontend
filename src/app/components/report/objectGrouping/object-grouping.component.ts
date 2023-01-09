@@ -172,5 +172,5 @@ export class ObjectGroupingComponent implements OnInit {
   async dlCurrView(): Promise<void> {
     await this.reportingService.downloadCurrentTableView();
   }
-  
+
 }

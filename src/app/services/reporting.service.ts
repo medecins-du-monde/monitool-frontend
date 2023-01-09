@@ -155,7 +155,7 @@ export class ReportingService {
     // get the header of the table
     const headers: string[] = [];
     const ths = table.nativeElement.querySelectorAll('th');
-    for (const th of ths) headers.push(th.innerText);
+    for (const th of ths) { headers.push(th.innerText); }
     headers.shift();
 
     // get the padding values the tds in each row,
@@ -218,7 +218,7 @@ export class ReportingService {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    
+
     // filename format is 'monitool-<project name>.xlsx'
     const projectCountry = this.projectService.project.getValue().country;
     a.download = `monitool-${projectCountry}.xlsx`;
