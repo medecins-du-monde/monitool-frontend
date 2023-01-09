@@ -4,11 +4,11 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-object-grouping',
@@ -55,7 +55,7 @@ export class ObjectGroupingComponent implements OnInit {
     private route: ActivatedRoute,
     private reportingService: ReportingService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
 
   get currentLang(): string {
@@ -181,6 +181,11 @@ export class ObjectGroupingComponent implements OnInit {
         window.open(this.router.url + '/download/' + url, '_blank');
       }
     });
+  }
+
+  /** Downloads the current view of the table */
+  async dlCurrView(): Promise<void> {
+    await this.reportingService.downloadCurrentTableView();
   }
 
 }
