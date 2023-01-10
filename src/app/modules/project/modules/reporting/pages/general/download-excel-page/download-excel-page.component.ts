@@ -12,9 +12,10 @@ import { ReportingService } from 'src/app/services/reporting.service';
 })
 export class DownloadExcelPageComponent implements OnInit, OnDestroy {
 
-  pageText = 'Something went wrong';
+  pageText = 'export-error';
   informations = [];
   mini = false;
+  localDownloadReady = false;
 
   get status(): string{
     return this.downloadService.status.getValue();
@@ -39,7 +40,7 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.downloadService.url.subscribe(() => {
           if (this.downloadService.url.getValue() !== ''){
-            this.pageText = 'Generating excel sheet, please wait...';
+            this.pageText = 'export-generating-file';
           }
           this.downloadService.generate();
         })
@@ -47,18 +48,24 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
     } else if (this.router.url.indexOf('export_current_view') >= 0) {
       // get param from url after /export_current_view
       const id = this.router.url.slice(this.router.url.indexOf('export_current_view') + 20, this.router.url.length);
-      this.pageText = 'Generating excel sheet, please wait...';
+      this.pageText = 'export-generating-file';
       try {
         await this.reportingService.downloadSavedTableView(id);
-        this.pageText = 'Excel sheet generated, downloading...';
+        // this.pageText = 'Excel sheet generated, downloading...';
+        this.localDownloadReady = true;
       } catch (error) {
-        this.pageText = 'Something went wrong';
+        this.pageText = 'export-error';
       }
     }
   }
 
   download(): void {
-    this.downloadService.download();
+    if (!this.localDownloadReady) {
+      this.downloadService.download();
+    } else {
+      const id = this.router.url.slice(this.router.url.indexOf('export_current_view') + 20, this.router.url.length);
+      this.reportingService.downloadSavedTableView(id);
+    }
   }
 
   ngOnDestroy(): void {

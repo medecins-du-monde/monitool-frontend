@@ -828,5 +828,8 @@
   "export-current-minimized": "Rapport Excel de la vue actuelle",
   "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",
   "export-warning": "Le téléchargement de ce rapport peut être long en fonction de la quantité de données exportées. Voulez-vous continuer?",
-  "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment."
+  "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
+  "export-error": "Quelque chose s’est mal passé",
+  "export-generating-file": "Génération de la feuille Excel, veuillez patienter...",
+  "export-aoutomatic-download": "Si le téléchargement ne démarre pas automatiquement, cliquez sur le bouton"
 }
