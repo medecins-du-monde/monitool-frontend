@@ -18,9 +18,9 @@
     <mat-grid-tile class="excel-download" colspan="6">
         <mat-form-field appearance="none" class="mdm-form-field" class="dl-select">
             <mat-select disableOptionCentering panelClass="filterClass" placeholder="{{ 'export-download' | translate }}">
-                <mat-option matTooltip="{{ 'minimized-tooltip' | translate }}" (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon>info</mat-icon></mat-option>
-                <mat-option matTooltip="{{ 'complete-tooltip' | translate }}" (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon>info</mat-icon></mat-option>
-                <mat-option matTooltip="{{ 'current-minimized-tooltip' | translate }}" (click)="dlCurrView()">{{ 'export-current-minimized' | translate }}<mat-icon>info</mat-icon></mat-option>
+                <mat-option (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'minimized-tooltip' | translate }}">info</mat-icon></mat-option>
+                <mat-option (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'complete-tooltip' | translate }}">info</mat-icon></mat-option>
+                <mat-option (click)="dlCurrView()">{{ 'export-current-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'current-minimized-tooltip' | translate }}">info</mat-icon></mat-option>
             </mat-select>
         </mat-form-field>
         <!-- Put just a different href later on

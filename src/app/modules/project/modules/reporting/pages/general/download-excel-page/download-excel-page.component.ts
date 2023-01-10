@@ -29,7 +29,7 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.projectService.updateInformationPanel(this.informations);
 
     if (this.router.url.indexOf('api_export_project') >= 0) {
@@ -45,7 +45,15 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
         })
       );
     } else if (this.router.url.indexOf('export_current_view') >= 0) {
-      this.reportingService.downloadCurrentTableView();
+      // get param from url after /export_current_view
+      const id = this.router.url.slice(this.router.url.indexOf('export_current_view') + 20, this.router.url.length);
+      this.pageText = 'Generating excel sheet, please wait...';
+      try {
+        await this.reportingService.downloadSavedTableView(id);
+        this.pageText = 'Excel sheet generated, downloading...';
+      } catch (error) {
+        this.pageText = 'Something went wrong';
+      } 
     }
   }
 

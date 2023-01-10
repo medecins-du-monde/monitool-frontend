@@ -126,12 +126,18 @@ export class ReportingService {
     });
   }
 
-  /** Downloads current reporting table view */
-  async downloadCurrentTableView(): Promise<void> {
+   /** Downloads current reporting table view */
+   async downloadSavedTableView(id: string): Promise<void> {
+    // retrieve html from localStorage
+    const html = localStorage.getItem(`currView:${id}`);
+    if (!html) throw new Error();
+
+    // new div
+    const div = document.createElement('div') as any;
+    div.innerHTML = html;
+
     const table = {
-      nativeElement: this.currReportTable
-        .getValue()
-        .nativeElement.cloneNode(true)
+      nativeElement: div
     };
 
     // remove all buttons
@@ -158,7 +164,9 @@ export class ReportingService {
     // get the header of the table
     const headers: string[] = [];
     const ths = table.nativeElement.querySelectorAll('th');
-    for (const th of ths) { headers.push(th.innerText); }
+    for (const th of ths) {
+      headers.push(th.innerText);
+    }
     headers.shift();
 
     // get the padding values the tds in each row,
@@ -228,6 +236,25 @@ export class ReportingService {
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
+  }
+
+  /**
+   * Save currReportingTable to localStorage
+   *
+   * @returns id to retrieve the table in localStorage
+   */
+  saveCurrentTableView(): string {
+    // generate random id
+    const id = Math.random()
+      .toString(36)
+      .substring(2, 15);
+
+    // get the table as a string
+    const html = this.currReportTable.getValue().nativeElement.outerHTML;
+
+    // save the table in localStorage
+    localStorage.setItem(`currView:${id}`, html);
+    return id;
   }
 }
 

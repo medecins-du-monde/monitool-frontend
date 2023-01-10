@@ -187,10 +187,12 @@ export class ObjectGroupingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        window.open(this.router.url + '/download/' + 'export_current_view', '_blank');
+        // save the current table html to the localStorage,
+        // so it can be accessed from the new tab
+        const tableID = this.reportingService.saveCurrentTableView();
+        window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
       }
     });
-    // await this.reportingService.downloadCurrentTableView();
   }
 
 }
