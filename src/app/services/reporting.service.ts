@@ -130,7 +130,7 @@ export class ReportingService {
    async downloadSavedTableView(id: string): Promise<void> {
     // retrieve html from localStorage
     const html = localStorage.getItem(`currView:${id}`);
-    if (!html) throw new Error();
+    if (!html) { throw new Error(); }
 
     // new div
     const div = document.createElement('div') as any;
@@ -144,6 +144,13 @@ export class ReportingService {
     const btnRegex = /<button.*?>(.*?)<\/button>/g;
     table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
       btnRegex,
+      ''
+    );
+
+    // remove all tooltips
+    const tooltipRegex = /ng-reflect-message="(.*?)"/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      tooltipRegex,
       ''
     );
 
@@ -196,6 +203,7 @@ export class ReportingService {
     }
     paddingValues.shift();
 
+    console.log(table.nativeElement.innerHTML);
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table.nativeElement, {
       raw: true
     });
@@ -209,6 +217,7 @@ export class ReportingService {
         delete row[''];
       }
     });
+    console.log(json);
 
     const file = await this.apiService.post(
       '/export/currentView',

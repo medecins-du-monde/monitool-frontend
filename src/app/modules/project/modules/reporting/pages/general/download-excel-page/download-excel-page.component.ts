@@ -53,7 +53,7 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
         this.pageText = 'Excel sheet generated, downloading...';
       } catch (error) {
         this.pageText = 'Something went wrong';
-      } 
+      }
     }
   }
 
