@@ -21,4 +21,6 @@ export interface InfoRow {
     open: boolean;
     level: number;
     error?: string[];
+    start?: Date;
+    end?: Date;
   }
