@@ -114,7 +114,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
   get exportFilters(): any {
-    const filter = this.filter.getValue();
+    const filter: any = this.filter.getValue();
     const filters: {
       logicalFrames: string[];
       dataSources: string[];
@@ -131,8 +131,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       crossCutting: false,
       extraIndicators: false,
       dateRange: {
-        start: filter._start.toLocaleDateString('fr-CA'),
-        end: filter._end.toLocaleDateString('fr-CA')
+        start: filter._start._d ? filter._start._d.toLocaleDateString('fr-CA') : filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end._d ? filter._end._d.toLocaleDateString('fr-CA') : filter._end.toLocaleDateString('fr-CA')
       },
       entities: filter.entities || []
     };
