@@ -811,5 +811,8 @@
   "export-current-minimized": "Current View Excel Report",
   "current-minimized-tooltip": "Export the report respecting opened groups",
   "export-warning": "The download of this report can be long depending on the amount of data exported. Do you want to continue?",
-  "dataInputNotAvilable": "There isn't any data input available at this time."
+  "dataInputNotAvilable": "There isn't any data input available at this time.",
+  "export-error": "Something went wrong",
+  "export-generating-file": "Generating excel sheet, please wait...",
+  "export-aoutomatic-download": "If the download doesn't start automatically click on the button"
 }

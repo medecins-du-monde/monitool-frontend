@@ -4,11 +4,11 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-object-grouping',
@@ -55,7 +55,7 @@ export class ObjectGroupingComponent implements OnInit {
     private route: ActivatedRoute,
     private reportingService: ReportingService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
 
   get currentLang(): string {
@@ -144,7 +144,6 @@ export class ObjectGroupingComponent implements OnInit {
   }
 
   downloadExcelSheet(): void {
-
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
       data: {title: this.translateService.instant('export-complete')}
     });
@@ -158,15 +157,13 @@ export class ObjectGroupingComponent implements OnInit {
     });
   }
 
-  dlMini(type: 'global' | 'toggled'): void {
+  dlMini(): void {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
-      data: {title: this.translateService.instant(type === 'global' ? 'export-minimized' : 'export-current-minimized')}
+      data: {title: this.translateService.instant('export-minimized')}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const filters = this.reportingService.exportFilters.getValue();
-        const encodedFilters = encodeURIComponent(JSON.stringify(filters));
         const url =
           'api_export_' +
           this.currentProjectId +
@@ -175,10 +172,25 @@ export class ObjectGroupingComponent implements OnInit {
           '_' +
           this.currentLang +
           '_' +
-          this.minimized +
-          (type === 'toggled' ? '?filters=' + encodedFilters : '');
+          this.minimized;
 
         window.open(this.router.url + '/download/' + url, '_blank');
+      }
+    });
+  }
+
+  /** Downloads the current view of the table */
+  async dlCurrView(): Promise<void> {
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {title: this.translateService.instant('export-current-minimized')}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // save the current table html to the localStorage,
+        // so it can be accessed from the new tab
+        const tableID = this.reportingService.saveCurrentTableView();
+        window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
       }
     });
   }

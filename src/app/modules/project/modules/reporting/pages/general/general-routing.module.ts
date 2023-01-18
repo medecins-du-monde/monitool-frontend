@@ -14,6 +14,10 @@ const routes: Routes = [
     component: DownloadExcelPageComponent,
   },
   {
+    path: 'download/:data/:id',
+    component: DownloadExcelPageComponent,
+  },
+  {
     path: '',
     component: GeneralComponent
   }

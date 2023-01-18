@@ -1,15 +1,20 @@
 // tslint:disable: no-string-literal
-import { Injectable } from '@angular/core';
+import * as XLSX from 'xlsx';
+import { ElementRef, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import TimeSlot from 'timeslot-dag';
 import { BehaviorSubject } from 'rxjs';
-
+import { ProjectService } from './project.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ReportingService {
+  public currReportTable = new BehaviorSubject<ElementRef>(null);
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private apiService: ApiService,
+    private projectService: ProjectService
+  ) {}
 
 
   public exportFilters = new BehaviorSubject<any>({});
@@ -121,6 +126,144 @@ export class ReportingService {
     });
   }
 
+   /** Downloads current reporting table view */
+   async downloadSavedTableView(id: string): Promise<void> {
+    // retrieve html from localStorage
+    const html = localStorage.getItem(`currView:${id}`);
+    if (!html) { throw new Error(); }
 
+    // new div
+    const div = document.createElement('div') as any;
+    div.innerHTML = html;
+
+    const table = {
+      nativeElement: div
+    };
+
+    // remove all buttons
+    const btnRegex = /<button.*?>(.*?)<\/button>/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      btnRegex,
+      ''
+    );
+
+    // remove all tooltips
+    const tooltipRegex = /ng-reflect-message="(.*?)"/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      tooltipRegex,
+      ''
+    );
+
+    // remove inly add_circle and remove_circle icons
+    const addRmBtnRegex = /<mat-icon.*?>(add_circle|remove_circle)<\/mat-icon>/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      addRmBtnRegex,
+      ''
+    );
+
+    // replace 'do_disturb' icon with '🚫'
+    const doDisturbRegex = /<mat-icon.*?>do_disturb<\/mat-icon>/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      doDisturbRegex,
+      '🚫'
+    );
+
+    // get the header of the table
+    const headers: string[] = [];
+    const ths = table.nativeElement.querySelectorAll('th');
+    for (const th of ths) {
+      headers.push(th.innerText);
+    }
+    headers.shift();
+
+    // get the padding values the tds in each row,
+    // that will be used to determine the color of the row
+    const trs = table.nativeElement.querySelectorAll('tr');
+    const paddingValues: number[] = [];
+    for (const tr of trs) {
+      // console.log('new tr', tr)
+      const tds = tr.querySelectorAll('td');
+      if (tds.length !== 0 && tds[0].innerText !== '') {
+        paddingValues.push(0);
+        continue;
+      }
+      let flag = false;
+      for (const td of tds) {
+        if (td.style.paddingLeft) {
+          paddingValues.push(
+            (parseInt(td.style.paddingLeft.slice(0, -2), 10) + 10) / 10
+          );
+          flag = true;
+          break;
+        }
+      }
+      if (!flag) {
+        paddingValues.push(1);
+      }
+    }
+    paddingValues.shift();
+
+    console.log(table.nativeElement.innerHTML);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table.nativeElement, {
+      raw: true
+    });
+
+    // parse table to json, in order to send it to the server
+    // (we can't do style stuff with the front-end library)
+    const json = XLSX.utils.sheet_to_json(ws);
+    json.forEach(row => {
+      if (row['']) {
+        row['Name'] = row[''];
+        delete row[''];
+      }
+    });
+    console.log(json);
+
+    const file = await this.apiService.post(
+      '/export/currentView',
+      {
+        data: json,
+        paddings: paddingValues,
+        headers
+      },
+      {
+        responseType: 'blob'
+      }
+    );
+
+    // save file to the user's computer
+    const blob = new Blob([file], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+
+    // filename format is 'monitool-<project name>.xlsx'
+    const projectCountry = this.projectService.project.getValue().country;
+    a.download = `monitool-${projectCountry}.xlsx`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }
+
+  /**
+   * Save currReportingTable to localStorage
+   *
+   * @returns id to retrieve the table in localStorage
+   */
+  saveCurrentTableView(): string {
+    // generate random id
+    const id = Math.random()
+      .toString(36)
+      .substring(2, 15);
+
+    // get the table as a string
+    const html = this.currReportTable.getValue().nativeElement.outerHTML;
+
+    // save the table in localStorage
+    localStorage.setItem(`currView:${id}`, html);
+    return id;
+  }
 }
 
