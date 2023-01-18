@@ -44,11 +44,15 @@
     <ng-container matColumnDef="{{column}}" *ngFor="let column of dimensions" [stickyEnd]="column === '_total'">
       <th matTooltip="{{getSiteOrGroupName(column) | translate}}" [matTooltipShowDelay]="500" mat-header-cell
         *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
-      <td mat-cell class="value-cell" [matTooltip]="getTooltipMessage(element?.values[column]) | translate" matTooltipPosition="above" *matCellDef="let element"
+      <td mat-cell class="value-cell"
+        [matTooltip]="isInRange(element, column) ? (getTooltipMessage(element?.values[column]) | translate) : ''"
+        matTooltipPosition="above"
+        *matCellDef="let element"
         [ngStyle]="{
-          'backgroundColor': element.values[column] !== undefined ? calcColor(element, column) : 'rgb(238, 238, 238)',
+          'backgroundColor': (element.values[column] !== undefined && isInRange(element, column)) ? calcColor(element, column) : 'rgb(238, 238, 238)',
           'fontWeight': column === '_total' ? 'bold' : '',
-          'font-style': isItalic(element?.values[column]) ? 'italic' : '' }">
+          'font-style': isItalic(element?.values[column]) ? 'italic' : '' }"
+          >
         <!-- <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
@@ -57,7 +61,7 @@
           {{ (element.unit && element.values[column]) ? element.unit : null }}
         </ng-template> -->
 
-        {{ styleValue(element?.values[column], element.unit) }}
+        {{ isInRange(element, column) ? styleValue(element?.values[column], element.unit) : '' }}
       </td>
     </ng-container>
 

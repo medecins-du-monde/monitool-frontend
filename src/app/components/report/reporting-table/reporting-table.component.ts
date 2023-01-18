@@ -358,7 +358,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   // Create row of the table from a ProjectIndicator
-  indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow {
+  indicatorToRow(indicator: ProjectIndicator, currentIndicator?: any): InfoRow {
     const row = {
       icon: true,
       name: indicator.display,
@@ -376,8 +376,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       open: true
     } as InfoRow;
 
-    if (customFilter) {
-      row.customFilter = customFilter;
+    if (currentIndicator) {
+      row.customFilter = currentIndicator.customFilter;
+      row.start = currentIndicator.start;
+      row.end = currentIndicator.end;
     }
 
     return row;
@@ -641,20 +643,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       const ent = groupEntities.length ? groupEntities : entities;
 
       for (const entityId of ent) {
-      const customFilter = {
-        entity: [entityId]
-      };
+        const customFilter = {
+          entity: [entityId]
+        };
 
-      let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
-      customIndicator.level = info.indicator.level + 1;
-      customIndicator.onChart = false;
-      customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
-      customIndicator.customFilter = customFilter;
-      customIndicator.values = {};
-      customIndicator = this.updateRowValues(customIndicator);
-      newIndicators.push(customIndicator);
-    }
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
+        customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
+        customIndicator = this.updateRowValues(customIndicator);
+        newIndicators.push(customIndicator);
+      }
 
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
 
@@ -710,7 +714,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
         let newRow;
         if (currentIndicator.customFilter) {
-          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
+          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator);
         }
         else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
@@ -867,6 +871,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       return true;
     }
     return false;
+  }
+
+  isInRange(data, date): boolean {
+    if (data.start && data.end) {
+      const currentDate = new Date(date);
+      currentDate.setHours(12);
+      if (data.start.getTime() > currentDate.getTime() || data.end.getTime() < currentDate.getTime()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   styleValue(value, unit){
