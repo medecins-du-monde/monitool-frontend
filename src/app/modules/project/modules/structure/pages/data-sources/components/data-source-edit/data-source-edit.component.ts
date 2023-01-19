@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -330,10 +330,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
 
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>): void {
-    const selectedControl = this.elements.at(event.previousIndex);
-    const newControls = this.elements.at(event.currentIndex);
-    this.elements.setControl(event.previousIndex, newControls);
-    this.elements.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.elements.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.elements.at(0);
+    this.elements.setControl(0, control);
   }
 
   ngOnDestroy(): void {

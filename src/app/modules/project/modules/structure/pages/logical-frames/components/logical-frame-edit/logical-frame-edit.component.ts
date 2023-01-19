@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -226,16 +226,18 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
-    const selectedControl = this.purposes.at(event.previousIndex);
-    const newControls = this.purposes.at(event.currentIndex);
-    this.purposes.setControl(event.previousIndex, newControls);
-    this.purposes.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.purposes.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.purposes.at(0);
+    this.purposes.setControl(0, control);
   }
 
   // drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
-    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
-    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    // Dummy code so the save button is available
+    const control = this.indicators.at(0);
+    this.indicators.setControl(0, control);
   }
 
   get logFrameName() {

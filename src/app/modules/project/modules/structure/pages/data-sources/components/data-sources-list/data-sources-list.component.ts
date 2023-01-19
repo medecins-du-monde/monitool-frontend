@@ -1,6 +1,6 @@
 // tslint:disable: no-string-literal
 // tslint:disable: ban-types
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
@@ -133,8 +133,7 @@ export class DataSourcesListComponent implements OnInit {
 
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.forms[event.previousContainer.data.index] = event.container.data.form;
-    this.forms[event.container.data.index] = event.previousContainer.data.form;
+    moveItemInArray(this.forms, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }

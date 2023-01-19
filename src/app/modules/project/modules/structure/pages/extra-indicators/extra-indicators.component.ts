@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
@@ -123,8 +123,8 @@ export class ExtraIndicatorsComponent implements OnInit {
 
   // drag and drop function on a form array that can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
-    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    moveItemInArray(this.indicators.value, event.previousContainer.data.index, event.container.data.index);
     this.project.extraIndicators = this.indicators.value.map(x => new ProjectIndicator(x));
     this.projectService.project.next(this.project);
   }
