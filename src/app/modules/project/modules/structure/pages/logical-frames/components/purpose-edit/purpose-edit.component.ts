@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-purpose-edit',
@@ -70,16 +70,18 @@ export class PurposeEditComponent implements OnInit {
 
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
-    const selectedControl = this.outputs.at(event.previousIndex);
-    const newControls = this.outputs.at(event.currentIndex);
-    this.outputs.setControl(event.previousIndex, newControls);
-    this.outputs.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.outputs.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.outputs.at(0);
+    this.outputs.setControl(0, control);
   }
 
   // drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
-    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
-    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    // Dummy code so the save button is available
+    const control = this.indicators.at(0);
+    this.indicators.setControl(0, control);
   }
 
 }

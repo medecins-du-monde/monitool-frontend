@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
@@ -106,8 +106,7 @@ export class LogicalFramesListComponent implements OnInit {
 
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.logicalFrames[event.previousContainer.data.index] = event.container.data.logicalFrame;
-    this.logicalFrames[event.container.data.index] = event.previousContainer.data.logicalFrame;
+    moveItemInArray(this.logicalFrames, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }
