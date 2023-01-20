@@ -7,6 +7,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { Operation } from 'fast-json-patch';
 import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
+import { isEqual, uniqWith } from 'lodash';
 
 
 @Component({
@@ -31,6 +32,15 @@ export class RevisionSummaryComponent implements OnInit {
       this.project = project;
     });
     this.createDynamicRevisionText();
+    this.output = uniqWith(this.output, isEqual)
+    this.output = uniqWith(this.output, (a,b)=> {
+      const keyA = a['translationKey'];
+      const keyB = b['translationKey'];
+      if (keyA !== keyB) return false;
+
+      const uniqueKeys = ['HistoryRevision.users_move'];
+      return uniqueKeys.includes(keyA);
+    })
   }
 
 
@@ -64,15 +74,15 @@ export class RevisionSummaryComponent implements OnInit {
 
   getTranslationKey(operation): string {
     let editedField = operation.path
-      .substring(1) // Remove leading slash
-      .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
-      .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\//, '_')
-      .replace(/\/\d+$/, '')
-      .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/, '');	// Remove trailing numbers and trailing uuids
+    .substring(1) // Remove leading slash
+    .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
+    .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\//, '_')
+    .replace(/\/\d+$/, '')
+    .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/, '');	// Remove trailing numbers and trailing uuids
 
-    // Special case for indicators: we do as if all logframe indicators were on the general objective.
-    const indicatorMatch = editedField.match(/^logicalFrames.*indicators(.*)$/);
-    if (indicatorMatch) {
+  // Special case for indicators: we do as if all logframe indicators were on the general objective.
+  const indicatorMatch = editedField.match(/^logicalFrames.*indicators(.*)$/);
+  if (indicatorMatch) {
       editedField = 'logicalFrames_indicators' + indicatorMatch[1];
     }
 
@@ -137,7 +147,8 @@ export class RevisionSummaryComponent implements OnInit {
     else if (operation.op === 'remove') {
       translationData['item'] = after;
       splitPath.forEach(path => {
-        translationData['item'] = translationData['item'][path];
+        if (translationData['item'])
+          translationData['item'] = translationData['item'][path];
 
       });
 
