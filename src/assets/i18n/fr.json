@@ -669,9 +669,9 @@
       "Cette page contient la liste de tous les utilisateurs qui se sont connectés au moins une fois sur Monitool",
       "Il n'est pas nécessaire de créer de comptes pour les nouveaux utilisateurs si ceux-ci possède un compte Médecins du Monde: après leur première connexion ils apparaitront automatiquement ici. Pour les utilisateurs hors MDM, il est possible de créer des comptes partenaires depuis l'interface de gestion des projets."
   ],
-  "SpecificEndDate": "Date de fin spécifique",
+  "SpecificEndDate": "Date de fin",
   "SpecificObjective-Hint": " Description des avantages directs destinés au(x) groupe(s) cible(s)",
-  "SpecificStartDate": "Date de début spécifique",
+  "SpecificStartDate": "Date de début",
   "SpecificStartDate-Hint": "Si la date de début du site de collecte est différente de la date de début du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
   "SpecificEndDate-Hint": "Si la date de fin du site de collecte est différente de la date de fin du projet qui a été sélectionnée dans \"Données de base\", alors cliquer sur le calendrier",
   "Start": "Début",
