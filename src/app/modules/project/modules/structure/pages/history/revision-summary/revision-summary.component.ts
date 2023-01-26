@@ -32,15 +32,15 @@ export class RevisionSummaryComponent implements OnInit {
       this.project = project;
     });
     this.createDynamicRevisionText();
-    this.output = uniqWith(this.output, isEqual)
-    this.output = uniqWith(this.output, (a,b)=> {
+    this.output = uniqWith(this.output, isEqual);
+    this.output = uniqWith(this.output, (a, b) => {
       const keyA = a['translationKey'];
       const keyB = b['translationKey'];
-      if (keyA !== keyB) return false;
+      if (keyA !== keyB) { return false; }
 
       const uniqueKeys = ['HistoryRevision.users_move'];
       return uniqueKeys.includes(keyA);
-    })
+    });
   }
 
 
@@ -81,8 +81,8 @@ export class RevisionSummaryComponent implements OnInit {
     .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/, '');	// Remove trailing numbers and trailing uuids
 
   // Special case for indicators: we do as if all logframe indicators were on the general objective.
-  const indicatorMatch = editedField.match(/^logicalFrames.*indicators(.*)$/);
-  if (indicatorMatch) {
+    const indicatorMatch = editedField.match(/^logicalFrames.*indicators(.*)$/);
+    if (indicatorMatch) {
       editedField = 'logicalFrames_indicators' + indicatorMatch[1];
     }
 
@@ -147,8 +147,9 @@ export class RevisionSummaryComponent implements OnInit {
     else if (operation.op === 'remove') {
       translationData['item'] = after;
       splitPath.forEach(path => {
-        if (translationData['item'])
+        if (translationData['item']) {
           translationData['item'] = translationData['item'][path];
+        }
 
       });
 
