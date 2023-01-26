@@ -61,6 +61,8 @@ export class SitesComponent implements OnInit {
 
   displayInfos = true;
 
+  today = new Date();
+
   sitesForm: FormGroup = new FormGroup({
     entities: new FormArray([]),
     groups: new FormArray([])
@@ -132,6 +134,7 @@ export class SitesComponent implements OnInit {
             groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))
           });
           this.entitiesDataSource.data = this.entities.controls;
+          console.log(this.entitiesDataSource.data);
           this.groupsDataSource.data = this.groups.controls;
           this.sitesForm.valueChanges.subscribe((value: any) => {
             value.entities = value.entities.map(x => new Entity(x));

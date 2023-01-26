@@ -22,7 +22,12 @@
             <th mat-header-cell class="column-title" *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameEntity' | translate }}">
+                    <input
+                      matInput
+                      formControlName="name"
+                      placeholder="{{ 'Placeholder.Sites.NameEntity' | translate }}"
+                      [ngStyle]="{'color': (element.value.end < today) ? 'red' : ''}"
+                    >
                 </mat-form-field>
             </td>
         </ng-container>
@@ -41,8 +46,16 @@
             </th>
             <td mat-cell *matCellDef="let element; let index = index" id="start" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput [matDatepicker]="startPicker" formControlName="start"
-                        placeholder="{{ 'StartDate' | translate }}">
+                    <input
+                      matInput
+                      [matDatepicker]="startPicker"
+                      formControlName="start"
+                      placeholder="{{ 'StartDate' | translate }}"
+                      [ngStyle]="{
+                        'font-weight': (project.start.toString() !== element.value.start.toString()) ? 'bold' : '',
+                        'color': (element.value.end < today) ? 'red' : ''
+                      }"
+                    >
                     <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
                     <mat-datepicker #startPicker></mat-datepicker>
                 </mat-form-field>
@@ -64,8 +77,16 @@
             </th>
             <td mat-cell *matCellDef="let element; let index = index" id="end" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
-                    <input matInput [matDatepicker]="endPicker" formControlName="end"
-                        placeholder="{{ 'EndDate' | translate }}">
+                    <input
+                      matInput
+                      [matDatepicker]="endPicker"
+                      formControlName="end"
+                      placeholder="{{ 'EndDate' | translate }}"
+                      [ngStyle]="{
+                        'font-weight': (project.end.toString() !== element.value.end.toString()) ? 'bold' : '',
+                        'color': (element.value.end < today) ? 'red' : ''
+                      }"
+                    >
                     <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>
                     <mat-datepicker #endPicker></mat-datepicker>
                 </mat-form-field>
