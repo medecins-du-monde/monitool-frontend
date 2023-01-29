@@ -869,5 +869,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  /**
+   * Gets the baseline value from an element
+   *
+   * @param element The element to get the baseline from
+   * @returns A string containing the baseline value
+   */
+  getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
+    const value = element[type];
+
+    if (value === null || (element.level > 0 && element.unit !== '%'))
+      return '';
+    return value + (element.unit ?? '');
+  }
 }
 
