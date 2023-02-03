@@ -3,6 +3,7 @@ import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
 
 
 @Component({
@@ -30,6 +31,13 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
   */
 
+  public selectedBaselines: any[] = [];
+  public selectedTargets: any[] = [];
+
+  public availableBaselines: any[] = [];
+  public availableTargets: any[] = [];
+
+
   private chart: Chart;
 
   @Input() data: any;
@@ -46,24 +54,46 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
     },
 
-    scales: {
-      // change fontSize of the labels in the xAxis
-      xAxes: [{
-          ticks: {
-              fontSize: 14
-          }
-      }],
-      // change fontSize of the labels in the yAxis
-      yAxes: [{
-        id: 'A',
-        display: false
-      }, {
-        id: 'B',
-        display: false,
-      }
-    ],
-  }
-  };
+	annotation: {
+    annotations: [
+      // {
+      //   type: 'line',
+      //   mode: 'horizontal',
+      //   scaleID: 'A',
+      //   value: '5',
+      //   borderColor: 'red',
+      //   borderWidth: 2,
+      //   borderDash: [3,5]
+      // }, {
+      //   type: 'line',
+      //   mode: 'horizontal',
+      //   scaleID: 'A',
+      //   value: '15',
+      //   borderColor: 'red',
+      //   borderWidth: 2,
+      //   borderDash: [15,10]
+      // }
+    ]
+  },
+
+  scales: {
+    // change fontSize of the labels in the xAxis
+    xAxes: [{
+        ticks: {
+            fontSize: 14
+        }
+    }],
+    // change fontSize of the labels in the yAxis
+    yAxes: [{
+      id: 'A',
+      display: false
+    }, {
+      id: 'B',
+      display: false,
+    }
+  ],
+  },
+  } as ChartOptions;
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [
@@ -151,7 +181,6 @@ export class ChartComponent implements OnInit, OnDestroy {
               if (value.indexOf('%') !== -1) {
                 formattedValue = parseFloat(parseFloat(value.replace(',', '.')).toFixed(1)).toString().replace('.', ',') + '%';
               } else {
-                console.log(value.replace('null', '').replace(',', '.').replace(/\s/g, ''));
                 formattedValue = Number(value.replace('null', '').replace(',', '.').replace(/\s/g, '')).toLocaleString('de-DE');
               }
               innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
@@ -187,6 +216,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       type: this.chartService.type.value,
       data: this.data,
       options: this.options,
+      plugins: [ChartAnnotation]
     });
 
     this.subscription.add(
@@ -209,6 +239,16 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   addData(data): void {
     if (this.chart){
+
+      // Setup targets and baselines
+      this.availableBaselines = []
+      const previousSelectedBaselines = [...this.selectedBaselines];
+      this.selectedBaselines = [];
+      this.availableTargets = []
+      const previousSelectedTargets = [...this.selectedTargets];
+      this.selectedTargets = [];
+      (this.chart.options as any).annotation.annotations = [];
+
       let onlyPercentages = true;
       let higherPercentages = false;
       data.datasets.map(dataGroup => {
@@ -221,6 +261,8 @@ export class ChartComponent implements OnInit, OnDestroy {
           onlyPercentages = false;
           dataGroup.yAxisID = 'A';
         }
+        this.setBaseline(dataGroup, previousSelectedBaselines);
+        this.setTarget(dataGroup, previousSelectedTargets);
       });
       this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
       this.chart.data = data;
@@ -243,7 +285,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       type,
       data: this.data,
       options: this.options,
-      plugins: [{
+      plugins: [
+        ChartAnnotation,
+        {
         afterRender: (c: Chart) => {
           const ctx = c.ctx;
           ctx.save();
@@ -281,6 +325,50 @@ export class ChartComponent implements OnInit, OnDestroy {
         }
       }
     ];
+  }
+
+  private setBaseline(data: any, selectedBaselines: any[]): void {
+    if (typeof(data.baseline) === 'number') {
+      const baseline = {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: data.yAxisID,
+        value: data.baseline,
+        borderColor: data.borderColor,
+        borderWidth: 2,
+        borderDash: [3,5],
+        label: data.label
+      }
+      this.availableBaselines.push(baseline);
+      if (selectedBaselines.find(el =>  JSON.stringify(el) === JSON.stringify(baseline))) {
+        (this.chart.options as any).annotation.annotations.push(baseline);
+        this.selectedBaselines.push(baseline);
+      }
+    }
+  }
+
+  private setTarget(data: any, selectedTargets: any[]): void {
+    if (typeof(data.target) === 'number') {
+      const target = {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: data.yAxisID,
+        value: data.target,
+        borderColor: data.borderColor,
+        borderWidth: 2,
+        borderDash: [12,10],
+        label: data.label
+      }
+      this.availableTargets.push(target);
+      if (selectedTargets.find(el =>  JSON.stringify(el) === JSON.stringify(target))) {
+        (this.chart.options as any).annotation.annotations.push(target);
+        this.selectedTargets.push(target);
+      }
+    }
+  }
+
+  public loadAnnotations(): void {
+    this.addData(this.data);
   }
 
   get downloadChart(): string{

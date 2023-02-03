@@ -583,6 +583,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
         const copyOfDataset = Object.assign({}, row.dataset);
         copyOfDataset.unit = row.unit;
+        copyOfDataset.baseline = row.baseline;
+        copyOfDataset.target = row.target;
 
         datasets.push(copyOfDataset);
       }
