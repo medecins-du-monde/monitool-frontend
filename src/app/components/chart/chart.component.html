@@ -2,19 +2,57 @@
 <div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
     <div class="chart-section">
         <canvas id="currentChart"></canvas>
-        <div class="action-buttons">
-            <a [href]="downloadChart" download="chart.png" class="mat-button mdm-button small-button">
-                <mat-icon>play_for_work</mat-icon>
-                <span>
-                    {{ 'DownloadPlot' | translate }}
-                </span>
-            </a>
-            <button (click)="resetCharts()" class="mat-button mdm-button small-button">
-                <mat-icon >history</mat-icon>
-                <span>
-                    {{ 'ResetGraph' | translate }}
-                </span>
+        <div class="chart-extras">
+          <div class="legend-box">
+            <div class="legend" *ngIf="selectedBaselines.length > 0">
+              <div class="identifier baseline"></div>
+              <p>{{ 'Baseline' | translate }}</p>
+            </div>
+            <div class="legend" *ngIf="selectedTargets.length > 0">
+              <div class="identifier target"></div>
+              <p>{{ 'Target' | translate }}</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="mat-button mdm-button small-button" (click)="baselines.open()" *ngIf="availableBaselines.length > 0">
+              {{ 'DisplayBaseline' | translate }}
+              <mat-select multiple #baselines [(value)]="selectedBaselines" (selectionChange)="loadAnnotations()">
+                <mat-option
+                  *ngFor="let baseline of availableBaselines"
+                  [value]="baseline"
+                >
+                  <div class="selection-label">
+                    <p [title]="baseline.label">{{baseline.label}}</p>
+                  </div>
+                </mat-option>
+              </mat-select>
             </button>
+            <button class="mat-button mdm-button small-button" (click)="targets.open()" *ngIf="availableTargets.length > 0">
+              {{ 'DisplayTarget' | translate }}
+              <mat-select multiple #targets [(value)]="selectedTargets" (selectionChange)="loadAnnotations()">
+                <mat-option
+                  *ngFor="let target of availableTargets"
+                  [value]="target"
+                >
+                  <div class="selection-label">
+                    <p [title]="target.label">{{target.label}}</p>
+                  </div>
+                </mat-option>
+              </mat-select>
+            </button>
+              <a [href]="downloadChart" download="chart.png" class="mat-button mdm-button small-button">
+                  <mat-icon>play_for_work</mat-icon>
+                  <span>
+                      {{ 'DownloadPlot' | translate }}
+                  </span>
+              </a>
+              <button (click)="resetCharts()" class="mat-button mdm-button small-button">
+                  <mat-icon >history</mat-icon>
+                  <span>
+                      {{ 'ResetGraph' | translate }}
+                  </span>
+              </button>
+          </div>
         </div>
     </div>
 </div>
