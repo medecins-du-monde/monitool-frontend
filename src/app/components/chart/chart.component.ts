@@ -54,45 +54,26 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
     },
 
-	annotation: {
-    annotations: [
-      // {
-      //   type: 'line',
-      //   mode: 'horizontal',
-      //   scaleID: 'A',
-      //   value: '5',
-      //   borderColor: 'red',
-      //   borderWidth: 2,
-      //   borderDash: [3,5]
-      // }, {
-      //   type: 'line',
-      //   mode: 'horizontal',
-      //   scaleID: 'A',
-      //   value: '15',
-      //   borderColor: 'red',
-      //   borderWidth: 2,
-      //   borderDash: [15,10]
-      // }
-    ]
-  },
+    annotation: {
+      annotations: []
+    },
 
-  scales: {
-    // change fontSize of the labels in the xAxis
-    xAxes: [{
-        ticks: {
-            fontSize: 14
-        }
-    }],
-    // change fontSize of the labels in the yAxis
-    yAxes: [{
-      id: 'A',
-      display: false
-    }, {
-      id: 'B',
-      display: false,
-    }
-  ],
-  },
+    scales: {
+      // change fontSize of the labels in the xAxis
+      xAxes: [{
+          ticks: {
+              fontSize: 14
+          }
+      }],
+      // change fontSize of the labels in the yAxis
+      yAxes: [{
+          id: 'A',
+          display: false
+        }, {
+          id: 'B',
+          display: false,
+        }],
+    },
   } as ChartOptions;
 
   /* which chart to choose from should always depend on the datatype */
@@ -241,10 +222,10 @@ export class ChartComponent implements OnInit, OnDestroy {
     if (this.chart){
 
       // Setup targets and baselines
-      this.availableBaselines = []
+      this.availableBaselines = [];
       const previousSelectedBaselines = [...this.selectedBaselines];
       this.selectedBaselines = [];
-      this.availableTargets = []
+      this.availableTargets = [];
       const previousSelectedTargets = [...this.selectedTargets];
       this.selectedTargets = [];
       (this.chart.options as any).annotation.annotations = [];
@@ -336,9 +317,9 @@ export class ChartComponent implements OnInit, OnDestroy {
         value: data.baseline,
         borderColor: data.borderColor,
         borderWidth: 2,
-        borderDash: [3,5],
+        borderDash: [3, 5],
         label: data.label
-      }
+      };
       this.availableBaselines.push(baseline);
       if (selectedBaselines.find(el =>  JSON.stringify(el) === JSON.stringify(baseline))) {
         (this.chart.options as any).annotation.annotations.push(baseline);
@@ -356,9 +337,9 @@ export class ChartComponent implements OnInit, OnDestroy {
         value: data.target,
         borderColor: data.borderColor,
         borderWidth: 2,
-        borderDash: [12,10],
+        borderDash: [12, 10],
         label: data.label
-      }
+      };
       this.availableTargets.push(target);
       if (selectedTargets.find(el =>  JSON.stringify(el) === JSON.stringify(target))) {
         (this.chart.options as any).annotation.annotations.push(target);
