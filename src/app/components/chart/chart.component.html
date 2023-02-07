@@ -3,7 +3,7 @@
     <div class="chart-section">
         <canvas id="currentChart"></canvas>
         <div class="chart-extras">
-          <div class="legend-box">
+          <!-- <div class="legend-box">
             <div class="legend" *ngIf="selectedBaselines.length > 0">
               <div class="identifier baseline"></div>
               <p>{{ 'Baseline' | translate }}</p>
@@ -12,7 +12,7 @@
               <div class="identifier target"></div>
               <p>{{ 'Target' | translate }}</p>
             </div>
-          </div>
+          </div> -->
           <div class="action-buttons">
             <button class="mat-button mdm-button small-button" (click)="baselines.open()" *ngIf="availableBaselines.length > 0">
               {{ 'DisplayBaseline' | translate }}
