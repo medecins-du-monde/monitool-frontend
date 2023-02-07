@@ -53,9 +53,6 @@ export class ChartComponent implements OnInit, OnDestroy {
   public availableBaselines: any[] = [];
   public availableTargets: any[] = [];
 
-  public baselineLabelPos?: number;
-  public targetLabelPos?: number;
-
 
   private chart: Chart;
 
