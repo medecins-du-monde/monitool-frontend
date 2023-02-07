@@ -4,7 +4,23 @@ import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import { TranslateService } from '@ngx-translate/core';
 
+const BASELINE_LABEL = {
+  borderColor: 'rgba(0, 0, 0, .3)',
+  backgroundColor: 'white',
+  label: 'Baseline',
+  borderDash: [2, 4.62],
+  borderWidth: 2
+};
+
+const TARGET_LABEL = {
+  borderColor: 'rgba(0, 0, 0, .3)',
+  backgroundColor: 'white',
+  label: 'Target',
+  borderDash: [9.5, 5.9],
+  borderWidth: 2
+};
 
 @Component({
   selector: 'app-chart',
@@ -90,7 +106,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService) {
+  constructor(private chartService: ChartService, private translate: TranslateService) {
     this.options.tooltips = {
       mode: 'index',
       intersect: false,
@@ -202,6 +218,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.chartService.currentData.subscribe(data => {
+
         if (!isEmpty(data)) {
           this.addData(data);
         }
@@ -246,6 +263,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         this.setTarget(dataGroup, previousSelectedTargets);
       });
       this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
+      this.loadLabels(data);
       this.chart.data = data;
       this.chart.update();
     }
@@ -350,6 +368,35 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   public loadAnnotations(): void {
     this.addData(this.data);
+  }
+
+  private loadLabels(data: any) {
+
+    for (let i = data.datasets.length - 1; i >= 0; i--) {
+      if (
+        data.datasets[i].borderColor === 'rgba(0, 0, 0, .3)' &&
+        data.datasets[i].backgroundColor === 'white' ) {
+          data.datasets.splice(i, 1);
+      }
+    }
+
+    if (this.selectedBaselines.length > 0) {
+      data.datasets.push({
+        ...BASELINE_LABEL,
+        unit: data.datasets[0].unit,
+        yAxisID: data.datasets[0].yAxisID,
+        label: this.translate.instant(BASELINE_LABEL.label)
+      });
+    }
+
+    if (this.selectedTargets.length > 0) {
+      data.datasets.push({
+        ...TARGET_LABEL,
+        unit: data.datasets[0].unit,
+        yAxisID: data.datasets[0].yAxisID,
+        label: this.translate.instant(TARGET_LABEL.label)
+      });
+    }
   }
 
   get downloadChart(): string{
