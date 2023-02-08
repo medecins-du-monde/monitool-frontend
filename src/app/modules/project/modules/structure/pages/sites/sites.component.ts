@@ -223,7 +223,16 @@ export class SitesComponent implements OnInit {
     this.displayInfos = !this.displayInfos;
   }
 
+  sameDay(day1: any, day2: any): boolean {
+    if (day2._d) {
+      return day1.toString() === day2._d.toString();
+    } else {
+      return day1.toString() === day2.toString();
+    }
+  }
+
   private datesAreInRange(): boolean {
+    this.projectService.warningMessage = undefined;
     for (const element of this.entities.value) {
       const start = (element.start as any)._d || element.start ;
       const end = (element.end as any)._d || element.end ;
@@ -236,7 +245,6 @@ export class SitesComponent implements OnInit {
         return false;
       } else {
         const subscription = this.projectService.lastSavedVersion.subscribe(res => {
-          console.log(res, element);
           const oldCollectionSite = res.entities.find(collectionSite => collectionSite.id === element.id);
           if (start.getTime() > oldCollectionSite.start.getTime()) {
             this.projectService.warningMessage = {
@@ -248,14 +256,12 @@ export class SitesComponent implements OnInit {
               message: 'DataDeletionEnd',
               type: 'CollectionSite'
             };
-          } else {
-            this.projectService.warningMessage = undefined;
           }
         });
         subscription.unsubscribe();
-        this.projectService.errorMessage = undefined;
-        return true;
       }
     }
+    this.projectService.errorMessage = undefined;
+    return true;
   }
 }

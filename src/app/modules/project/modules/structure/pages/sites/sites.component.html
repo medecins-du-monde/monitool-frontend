@@ -52,7 +52,7 @@
                       formControlName="start"
                       placeholder="{{ 'StartDate' | translate }}"
                       [ngStyle]="{
-                        'font-weight': (project.start.toString() !== element.value.start.toString()) ? 'bold' : '',
+                        'font-weight': (sameDay(project.start, element.value.start)) ? '' : 'bold',
                         'color': (element.value.end < today) ? 'red' : ''
                       }"
                     >
@@ -83,7 +83,7 @@
                       formControlName="end"
                       placeholder="{{ 'EndDate' | translate }}"
                       [ngStyle]="{
-                        'font-weight': (project.end.toString() !== element.value.end.toString()) ? 'bold' : '',
+                        'font-weight': (sameDay(project.end, element.value.end)) ? '' : 'bold',
                         'color': (element.value.end < today) ? 'red' : ''
                       }"
                     >
