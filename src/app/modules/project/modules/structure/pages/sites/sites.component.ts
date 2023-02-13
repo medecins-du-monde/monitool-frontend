@@ -126,7 +126,12 @@ export class SitesComponent implements OnInit {
 
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.project || project.id !== this.project.id || project.rev !== this.project.rev || !project.parsed) {
+        if (!this.project ||
+            project.id !== this.project.id ||
+            project.rev !== this.project.rev ||
+            !project.parsed ||
+            JSON.stringify(project) !== JSON.stringify(this.project)
+        ) {
           this.project = project;
           project.parsed = true;
           this.sitesForm = this.fb.group({
@@ -134,7 +139,6 @@ export class SitesComponent implements OnInit {
             groups: this.fb.array(this.project.groups.map(x => FormGroupBuilder.newEntityGroup(x)))
           });
           this.entitiesDataSource.data = this.entities.controls;
-          console.log(this.entitiesDataSource.data);
           this.groupsDataSource.data = this.groups.controls;
           this.sitesForm.valueChanges.subscribe((value: any) => {
             value.entities = value.entities.map(x => new Entity(x));
