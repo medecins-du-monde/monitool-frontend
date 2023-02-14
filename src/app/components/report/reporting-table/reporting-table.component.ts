@@ -779,38 +779,58 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       return 'white';
     }
 
-    const distance = element.target - element.baseline;
-
     let r = 255;
     let g = 128;
     const b = 128;
 
-    // if the value is lower than the baseline, we choose red
-    if (element.values[column] <= element.baseline) {
-      r = 255;
-      g = 128;
-    }
-    // if it is higher than the target, we choose green
-    else if (element.values[column] >= element.target) {
-      g = 255;
-      r = 128;
-    }
-    // if it is somewhere in between, we calculate where and choose accordingly
-    else {
-      const myPosition = element.values[column] - element.baseline;
-      const normalizedDifference = (myPosition / distance) * 255;
-      if (normalizedDifference <= 127) {
-        g += normalizedDifference;
-      } else {
-        g = 255;
-        r -= (normalizedDifference - 127);
-      }
-    }
+    if (element.baseline <= element.target) {
+      const distance = element.target - element.baseline;
 
-    if (distance < 0) {
-      const aux = g;
-      g = r;
-      r = aux;
+      // if the value is lower than the baseline, we choose red
+      if (element.values[column] <= element.baseline) {
+        r = 255;
+        g = 128;
+      }
+      // if it is higher than the target, we choose green
+      else if (element.values[column] >= element.target) {
+        g = 255;
+        r = 128;
+      }
+      // if it is somewhere in between, we calculate where and choose accordingly
+      else {
+        const myPosition = element.values[column] - element.baseline;
+        const normalizedDifference = (myPosition / distance) * 255;
+        if (normalizedDifference <= 127) {
+          g += normalizedDifference;
+        } else {
+          g = 255;
+          r -= (normalizedDifference - 127);
+        }
+      }
+    } else { // If baseline is a higher value that the target we invert the calculations
+      const distance = element.baseline - element.target;
+
+      // if the value is higher than the baseline, we choose red
+      if (element.values[column] >= element.baseline) {
+        r = 255;
+        g = 128;
+      }
+      // if it is lower than the target, we choose green
+      else if (element.values[column] <= element.target) {
+        g = 255;
+        r = 128;
+      }
+      // if it is somewhere in between, we calculate where and choose accordingly
+      else {
+        const myPosition = element.baseline - element.values[column];
+        const normalizedDifference = (myPosition / distance) * 255;
+        if (normalizedDifference <= 127) {
+          g += normalizedDifference;
+        } else {
+          g = 255;
+          r -= (normalizedDifference - 127);
+        }
+      }
     }
 
     return `rgb(${r}, ${g}, ${b})`;
