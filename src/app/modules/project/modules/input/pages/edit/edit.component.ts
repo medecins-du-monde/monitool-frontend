@@ -488,7 +488,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             callback(false);
           }
         },
-        afterValidate: (core, isValid, value, row, prop, source) => {
+        afterValidate: (isValid, value, row, prop, source) => {
           this.validInputCell = isValid;
           if (value === '') {
             this.validInputCell = true;
