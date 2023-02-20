@@ -300,12 +300,40 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   private getYAxes(options?: any): any {
+    // Gets max a min values of baselines/targets and uses them to set the max/min values of Y axes
+    let maxAValue = 0;
+    let minAValue = 0;
+    let maxBValue = 100;
+    let minBValue = 0;
+
+    this.selectedBaselines.map(baseline => {
+      if (baseline.scaleID === 'A') {
+        minAValue = minAValue > baseline.value ? baseline.value : minAValue;
+        maxAValue = maxAValue < baseline.value ? baseline.value : maxAValue;
+      } else {
+        minBValue = minBValue > baseline.value ? baseline.value : minBValue;
+        maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
+      }
+    })
+    this.selectedTargets.map(baseline => {
+      if (baseline.scaleID === 'A') {
+        minAValue = minAValue > baseline.value ? baseline.value : minAValue;
+        maxAValue = maxAValue < baseline.value ? baseline.value : maxAValue;
+      } else {
+        minBValue = minBValue > baseline.value ? baseline.value : minBValue;
+        maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
+      }
+    })
+
+
     return [{
         id: 'A',
         display: 'auto',
         ticks: {
           fontSize: 14,
           beginAtZero : true,
+          suggestedMax: maxAValue,
+          suggestedMin: minAValue
         }
       }, {
         id: 'B',
@@ -317,7 +345,8 @@ export class ChartComponent implements OnInit, OnDestroy {
         ticks: {
           fontSize: 14,
           beginAtZero : true,
-          suggestedMax: 100,
+          suggestedMax: maxBValue,
+          suggestedMin: minBValue,
           callback: (val) => {
             return val + (options?.higherPercentages ? '‰' : '%');
           },
