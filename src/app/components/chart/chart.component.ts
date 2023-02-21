@@ -314,7 +314,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         minBValue = minBValue > baseline.value ? baseline.value : minBValue;
         maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
       }
-    })
+    });
     this.selectedTargets.map(baseline => {
       if (baseline.scaleID === 'A') {
         minAValue = minAValue > baseline.value ? baseline.value : minAValue;
@@ -323,7 +323,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         minBValue = minBValue > baseline.value ? baseline.value : minBValue;
         maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
       }
-    })
+    });
 
 
     return [{
