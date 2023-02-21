@@ -262,7 +262,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         this.setBaseline(dataGroup, previousSelectedBaselines);
         this.setTarget(dataGroup, previousSelectedTargets);
       });
-      this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
+      this.chart.options.scales.yAxes = this.getYAxes(data, {onlyPercentages, higherPercentages});
       this.loadLabels(data);
       this.chart.data = data;
       this.chart.update();
@@ -299,11 +299,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getYAxes(options?: any): any {
+  private getYAxes(data: any, options?: any): any {
     // Gets max a min values of baselines/targets and uses them to set the max/min values of Y axes
     let maxAValue = 0;
     let minAValue = 0;
-    let maxBValue = 100;
+    let maxBValue = this.getMaxPercentageValue(data);
     let minBValue = 0;
 
     this.selectedBaselines.map(baseline => {
@@ -325,6 +325,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
     });
 
+    maxBValue = this.getMaxDisplayedPercentage(maxBValue);
 
     return [{
         id: 'A',
@@ -353,6 +354,31 @@ export class ChartComponent implements OnInit, OnDestroy {
         }
       }
     ];
+  }
+
+  private getMaxPercentageValue(data: any): number {
+    let maxPrecentage = 0;
+    data.datasets.map(dataset => {
+      if (dataset.yAxisID === 'B') {
+        dataset.data.map(el => {
+          if (el.y && el.y > maxPrecentage) {
+            maxPrecentage = el.y;
+          }
+        });
+      }
+    });
+    return maxPrecentage;
+  }
+
+  private getMaxDisplayedPercentage(percentage: number): number {
+    if (percentage === 0) {
+      return 100;
+    }
+    let roundedUp = percentage;
+    if (percentage % 10 > 0) {
+      roundedUp = percentage - percentage % 10 + 10;
+    }
+    return roundedUp > 50 ? 100 : roundedUp;
   }
 
   private setBaseline(data: any, selectedBaselines: any[]): void {
