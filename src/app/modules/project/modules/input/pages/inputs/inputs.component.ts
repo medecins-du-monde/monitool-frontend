@@ -252,7 +252,6 @@ export class InputsComponent implements OnInit, OnDestroy {
       const current = { Date: date.humanValue };
 
       for (const site of this.sites){
-        console.log(this.form);
         if (!this.lastDates[site.id] && date.date <= site.end || this.form.periodicity === 'free') {
           if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
             current[site.name] = {
