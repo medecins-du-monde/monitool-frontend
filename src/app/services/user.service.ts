@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/classes/user.model';
 import { ApiService } from './api.service';
@@ -20,7 +21,7 @@ export class UserService {
     return this.displayInfoPanel.asObservable();
   }
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private translateService: TranslateService) {}
 
   public async list(): Promise<User[]> {
     const response: any = await this.apiService.get('/resources/user');
@@ -40,4 +41,26 @@ export class UserService {
     this.displayInfoPanel.next(showing);
   }
 
+  public async exportUsers(): Promise<void> {
+    const file = await this.apiService.get('/export/users', {
+      params: {
+        lang: this.translateService.currentLang || 'en'
+      },
+      responseType: 'blob'
+    });
+
+    // save file to the user's computer
+    const blob = new Blob([file], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+
+    const usersText = this.translateService.instant('Users');
+    a.download = `${usersText.toLocaleLowerCase()}.xlsx`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
+  }
 }

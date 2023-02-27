@@ -745,7 +745,7 @@
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",
   "UsePartnerAccount": "Usar cuenta de socio",
-  "User": "Usario",
+  "User": "Usuario",
   "UserEdition": "Editar usuario",
   "Users": "Usuarios",
   "UseTrainingAccount":"Usar cuenta de entrenamiento (admin)",
@@ -832,5 +832,6 @@
   "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento.",
   "export-error": "Algo ha ido mal.",
   "export-generating-file": "Generando el archivo excel, porfavor tenga paciencia...",
-  "export-aoutomatic-download": "Si tu descarga no empieza automaticamente hazle click al botón"
+  "export-aoutomatic-download": "Si tu descarga no empieza automaticamente hazle click al botón",
+  "export-users": "Exportar usuarios"
 }

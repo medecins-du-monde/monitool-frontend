@@ -816,5 +816,6 @@
   "dataInputNotAvilable": "There isn't any data input available at this time.",
   "export-error": "Something went wrong",
   "export-generating-file": "Generating excel sheet, please wait...",
-  "export-aoutomatic-download": "If the download doesn't start automatically click on the button"
+  "export-aoutomatic-download": "If the download doesn't start automatically click on the button",
+  "export-users": "Export users"
 }

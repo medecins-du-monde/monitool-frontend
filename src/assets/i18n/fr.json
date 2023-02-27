@@ -833,5 +833,6 @@
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
   "export-error": "Quelque chose s’est mal passé",
   "export-generating-file": "Génération de la feuille Excel, veuillez patienter...",
-  "export-aoutomatic-download": "Si le téléchargement ne démarre pas automatiquement, cliquez sur le bouton"
+  "export-aoutomatic-download": "Si le téléchargement ne démarre pas automatiquement, cliquez sur le bouton",
+  "export-users": "Exporter les utilisateurs"
 }

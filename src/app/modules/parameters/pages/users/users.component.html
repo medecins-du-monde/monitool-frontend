@@ -1,7 +1,20 @@
 <div class="info-section blue">
-    <p>{{ 'SettingsUserInfo.0' | translate}}</p>
-    <p>{{ 'SettingsUserInfo.1' | translate}}</p>
+  <p>{{ "SettingsUserInfo.0" | translate }}</p>
+  <p>{{ "SettingsUserInfo.1" | translate }}</p>
 </div>
+    <button
+  mat-stroked-button
+  class="mat-focus-indicator mdm-button mat-stroked-button mat-button-base _mat-animation-noopable"
+  (click)="exportUsers()"
+>
+<mat-icon [style]="{'margin-right': '10px'}">cloud_download</mat-icon>
+  {{ "export-users" | translate }}
+</button>
 <div class="mdm-cards">
-    <app-user *ngFor="let user of users" [user]="user" (edit)="onEdit($event)" class="mdm-card"></app-user>
+  <app-user
+    *ngFor="let user of users"
+    [user]="user"
+    (edit)="onEdit($event)"
+    class="mdm-card"
+  ></app-user>
 </div>
