@@ -28,4 +28,9 @@ export class UsersComponent implements OnInit {
   onEdit(user: User) {
     this.userService.save(user).then(() => this.getUsers());
   }
+
+  /** Export EXCEL file with the application users */
+  exportUsers(): void {
+    this.userService.exportUsers();
+  }
 }
