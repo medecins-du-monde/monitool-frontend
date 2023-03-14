@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DownloadModalComponent } from './download-modal/download-modal.component';
 
 const BASELINE_LABEL = {
   borderColor: 'rgba(0, 0, 0, .3)',
@@ -57,6 +59,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   private chart: Chart;
 
   @Input() data: any;
+  @Input() name: string;
   unit: string;
   options: ChartOptions = {
 
@@ -90,6 +93,11 @@ export class ChartComponent implements OnInit, OnDestroy {
           display: false,
         }],
     },
+    plugins: {
+      datalabels: {
+        color: 'rgba(0, 0, 0, 0)'
+      }
+    }
   } as ChartOptions;
 
   /* which chart to choose from should always depend on the datatype */
@@ -106,7 +114,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService, private translate: TranslateService) {
+  constructor(private chartService: ChartService, private translate: TranslateService, private dialog: MatDialog) {
     this.options.tooltips = {
       mode: 'index',
       intersect: false,
@@ -454,8 +462,15 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  get downloadChart(): string{
-    return this.chart.toBase64Image();
+  public downloadChart(): void{
+    const dialogRef = this.dialog.open(DownloadModalComponent, {
+      panelClass: 'no-overflow-dialog',
+      data: {chart: this.chart, name: this.name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Closed');
+    });
+
   }
 
   ngOnDestroy(): void{
