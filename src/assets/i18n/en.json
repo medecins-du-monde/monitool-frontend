@@ -817,5 +817,24 @@
   "export-error": "Something went wrong",
   "export-generating-file": "Generating excel sheet, please wait...",
   "export-aoutomatic-download": "If the download doesn't start automatically click on the button",
-  "export-users": "Export users"
+  "export-users": "Export users",
+  "export-graph-modal": {
+    "header": "Export graph settings",
+    "title-display": "Display title",
+    "title": "Title",
+    "position": "Position",
+    "top": "Top",
+    "bottom": "Bottom",
+    "right": "Right",
+    "left": "Left",
+    "footer-display": "Display footer",
+    "footer": "Footer",
+    "legend-display": "Display legend",
+    "data-labels-display": "Display data labels",
+    "yAxis-display": "Display yAxis",
+    "xAxis-display": "Display xAxis",
+    "pdf-export": "Export as PDF",
+    "png-export": "Export as PNG",
+    "footer-placeholder": "Monitool graph"
+  }
 }

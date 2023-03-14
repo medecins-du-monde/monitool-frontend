@@ -834,5 +834,24 @@
   "export-error": "Quelque chose s’est mal passé",
   "export-generating-file": "Génération de la feuille Excel, veuillez patienter...",
   "export-aoutomatic-download": "Si le téléchargement ne démarre pas automatiquement, cliquez sur le bouton",
-  "export-users": "Exporter les utilisateurs"
+  "export-users": "Exporter les utilisateurs",
+  "export-graph-modal": {
+    "header": "Paramètres d'exportation de graphique",
+    "title-display": "Afficher le titre",
+    "title": "Titre",
+    "position": "Position",
+    "top": "Haut",
+    "bottom": "Bas",
+    "right": "Droite",
+    "left": "Gauche",
+    "footer-display": "Afficher le pied de image",
+    "footer": "Pied de image",
+    "legend-display": "Afficher légende",
+    "data-labels-display": "Afficher les étiquettes de données",
+    "yAxis-display": "Afficher le yAxis",
+    "xAxis-display": "Afficher le xAxis",
+    "pdf-export": "Exporter en PDF",
+    "png-export": "Exporter en PNG",
+    "footer-placeholder": "Monitool graphique"
+  }
 }

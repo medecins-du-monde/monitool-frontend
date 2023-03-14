@@ -833,5 +833,24 @@
   "export-error": "Algo ha ido mal.",
   "export-generating-file": "Generando el archivo excel, porfavor tenga paciencia...",
   "export-aoutomatic-download": "Si tu descarga no empieza automaticamente hazle click al botón",
-  "export-users": "Exportar usuarios"
+  "export-users": "Exportar usuarios",
+  "export-graph-modal": {
+    "header": "Ajustes de la exportación del gráfico",
+    "title-display": "Mostrar el título",
+    "title": "Título",
+    "position": "Posición",
+    "top": "Arriba",
+    "bottom": "Abajo",
+    "right": "Derecha",
+    "left": "Izquierda",
+    "footer-display": "Mostrat el píe de imagen",
+    "footer": "Píe de imagen",
+    "legend-display": "Mostrar leyenda",
+    "data-labels-display": "Mostrar etiquetas de datos",
+    "yAxis-display": "Mostrar yAxis",
+    "xAxis-display": "Mostrar xAxis",
+    "pdf-export": "Esportar como PDF",
+    "png-export": "Exportar como PNG",
+    "footer-placeholder": "Gráfico de Monitool"
+  }
 }
