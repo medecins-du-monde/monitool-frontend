@@ -129,11 +129,11 @@ export class ReportingService {
    /** Downloads current reporting table view */
    async downloadSavedTableView(id: string): Promise<void> {
     // retrieve html from localStorage
-    const html = localStorage.getItem(`currView:${id}`);
+    const {html, project} = JSON.parse(localStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
     // new div
-    const div = document.createElement('div') as any;
+    const div = document.createElement('div');
     div.innerHTML = html;
 
     const table = {
@@ -167,11 +167,17 @@ export class ReportingService {
       doDisturbRegex,
       '🚫'
     );
+    // replace ‰ with decimal value
+    const perThousandRegex = /(\d+)‰/g;
+    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+      perThousandRegex,
+      (_, p1) => `${parseInt(p1, 10) / 1000}`.replace('.', ',')
+    );
 
     // get the header of the table
     const headers: string[] = [];
     const ths = table.nativeElement.querySelectorAll('th');
-    for (const th of ths) {
+    for (const th of Array.from(ths)) {
       headers.push(th.innerText);
     }
     headers.shift();
@@ -180,15 +186,14 @@ export class ReportingService {
     // that will be used to determine the color of the row
     const trs = table.nativeElement.querySelectorAll('tr');
     const paddingValues: number[] = [];
-    for (const tr of trs) {
-      // console.log('new tr', tr)
+    for (const tr of Array.from(trs)) {
       const tds = tr.querySelectorAll('td');
       if (tds.length !== 0 && tds[0].innerText !== '') {
         paddingValues.push(0);
         continue;
       }
       let flag = false;
-      for (const td of tds) {
+      for (const td of Array.from(tds)) {
         if (td.style.paddingLeft) {
           paddingValues.push(
             (parseInt(td.style.paddingLeft.slice(0, -2), 10) + 10) / 10
@@ -203,7 +208,6 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(table.nativeElement.innerHTML);
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table.nativeElement, {
       raw: true
     });
@@ -217,7 +221,6 @@ export class ReportingService {
         delete row[''];
       }
     });
-    console.log(json);
 
     const file = await this.apiService.post(
       '/export/currentView',
@@ -240,8 +243,7 @@ export class ReportingService {
     a.href = url;
 
     // filename format is 'monitool-<project name>.xlsx'
-    const projectCountry = this.projectService.project.getValue().country;
-    a.download = `monitool-${projectCountry}.xlsx`;
+    a.download = `monitool-${project}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
@@ -262,7 +264,13 @@ export class ReportingService {
     const html = this.currReportTable.getValue().nativeElement.outerHTML;
 
     // save the table in localStorage
-    localStorage.setItem(`currView:${id}`, html);
+    localStorage.setItem(
+      `currView:${id}`,
+      JSON.stringify({
+        html,
+        project: this.projectService.project.getValue().country
+      })
+    );
     return id;
   }
 }
