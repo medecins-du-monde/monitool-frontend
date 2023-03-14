@@ -463,14 +463,10 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   public downloadChart(): void{
-    const dialogRef = this.dialog.open(DownloadModalComponent, {
+    this.dialog.open(DownloadModalComponent, {
       panelClass: 'no-overflow-dialog',
       data: {chart: this.chart, name: this.name}
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Closed');
-    });
-
   }
 
   ngOnDestroy(): void{
