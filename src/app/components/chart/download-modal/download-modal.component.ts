@@ -43,11 +43,12 @@ export class DownloadModalComponent {
     title: {
       text: '',
       display: false,
-      position: 'top'
+      position: 'top',
+      fontSize: 18
     },
     footnote: {
       text: '',
-      display: false,
+      display: false
     },
     legend: {
       display: true,
@@ -100,6 +101,7 @@ export class DownloadModalComponent {
             this.translateService.instant('export-graph-modal.footer-placeholder') :
             this.options.footnote.text,
           fontStyle: 'italic',
+          fontSize: 14,
           align: 'end'
         }
       });
