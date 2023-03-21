@@ -4,8 +4,8 @@
 .dialog-body {
   display: flex !important;
   flex-direction: column;
-  min-width: 900px;
-  width: auto;
+  max-width: 900px;
+  width: 80vw;
   padding: 0px 12px !important;
 }
 
