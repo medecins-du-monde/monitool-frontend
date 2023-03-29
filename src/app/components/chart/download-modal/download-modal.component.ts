@@ -28,7 +28,7 @@ const dataLabelsConfig = {
     size: 10
   },
   formatter(value, context) {
-    console.log(value, context)
+    console.log(value, context);
     return context.dataset.unit ? Math.round(value.y * 10) / 10 + context.dataset.unit : value.y;
   }
 
