@@ -22,6 +22,7 @@ import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import {LogicalFrame} from '../../../models/classes/logical-frame.model';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 
 
@@ -52,14 +53,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   @ViewChild('reportingTable') tableRef: ElementRef;
+  @ViewChild(MatMenuTrigger) notificationMenuBtn: MatMenuTrigger;
+
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
+  @Input() showComments: boolean;
   rows = new BehaviorSubject<Row[]>([]);
 
   clickedLogFrame;
   logFrameEntities = [];
+
+  public menuLeft = 0;
+  public menuTop = 0;
 
   dataSource = new MatTableDataSource([]);
 
@@ -956,6 +963,32 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'SheetJS.xlsx');
   } */
+
+  getComment(): string {
+    if (this.showComments) {
+      return ('this is a comment');
+    } else {
+      return;
+    }
+  }
+
+  onRightClick(
+    event: MouseEvent,
+    trigger: MatMenuTrigger,
+    triggerElement: HTMLElement
+  ): void {
+    triggerElement.style.left = event.clientX + 5 + 'px';
+    triggerElement.style.top = event.clientY + 5 + 'px';
+    console.log(trigger.menuOpen);
+    if (trigger.menuOpen) {
+      trigger.closeMenu();
+      trigger.openMenu();
+    } else {
+      trigger.openMenu();
+    }
+    event.preventDefault();
+
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

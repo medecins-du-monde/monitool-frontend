@@ -26,20 +26,24 @@ td {
 }
 
 h2 {
+  padding: 0 10px;
   display: flex;
-  flex-direction: row;
-  align-content: space-between;
-  justify-content: space-between;
-  width: 110px;
-  justify-content: baseline;
-  padding: 2px;
+  align-items: center;
+  gap: 10px;
   margin: 0;
   font-size: $small_text;
+  cursor: pointer;
+  margin-top: 4px;
+
+  mat-icon {
+    margin-top: -4px;
+  }
+
+  mat-checkbox {
+    margin-top: -4px;
+  }
 }
 
-.mat-icon {
-  padding: 2px;
-}
 
 app-collection-sites-selector{
   flex: 1;

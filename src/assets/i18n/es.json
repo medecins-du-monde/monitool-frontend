@@ -852,5 +852,6 @@
     "pdf-export": "Esportar como PDF",
     "png-export": "Exportar como PNG",
     "footer-placeholder": "Gráfico de Monitool"
-  }
+  },
+  "display-comments": "Mostrar comentarios"
 }

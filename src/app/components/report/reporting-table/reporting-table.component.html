@@ -13,7 +13,11 @@
 
     <ng-container matColumnDef="name" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
-      <td mat-cell *matCellDef="let element" [style]="calcPaddingLevel(element)">
+      <td mat-cell *matCellDef="let element"
+        [style]="calcPaddingLevel(element)"
+        [ngClass]="getComment() ? 'comment-cell' : ''"
+        (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
+      >
         <div class="menu">
           <div matTooltip="{{element.name}}" [matTooltipShowDelay]="500">{{element.name}}</div>
           <app-reporting-menu [indicator]="element" [dimensionName]="dimensionIds.value"
@@ -25,18 +29,32 @@
 
     <ng-container matColumnDef="baseline" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Baseline' | translate }}</th>
-      <td mat-cell *matCellDef="let element" class="gradient-background">{{ element.baseline !== null ? element.baseline
+      <td mat-cell *matCellDef="let element"
+        class="gradient-background"
+        [ngClass]="getComment() ? 'comment-cell' : ''"
+        (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
+      >
+        {{ element.baseline !== null ? element.baseline
         : null }}{{ element.baseline !== null ? element.unit : null}}</td>
     </ng-container>
 
     <ng-container matColumnDef="target" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef>{{ 'Target' | translate }}</th>
-      <td mat-cell *matCellDef="let element" class="gradient-background"> {{element.target !== null ? element.target :
+      <td mat-cell *matCellDef="let element"
+        class="gradient-background"
+        [ngClass]="getComment() ? 'comment-cell' : ''"
+        (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
+      >
+        {{element.target !== null ? element.target :
         null}}{{ element.target !== null ? element.unit : null }}</td>
     </ng-container>
 
     <ng-container matColumnDef="error">
-      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length - 4" class="error">
+      <td mat-cell *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length - 4" class="error"
+        [ngClass]="getComment() ? 'comment-cell' : ''"
+        (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
+      >
         <span *ngFor="let err of element.error">{{ err | translate}} </span>
       </td>
     </ng-container>
@@ -51,8 +69,16 @@
         [ngStyle]="{
           'backgroundColor': (element.values[column] !== undefined && isInRange(element, column)) ? calcColor(element, column) : 'rgb(238, 238, 238)',
           'fontWeight': column === '_total' ? 'bold' : '',
-          'font-style': isItalic(element?.values[column]) ? 'italic' : '' }"
-          >
+          'font-style': isItalic(element?.values[column]) ? 'italic' : ''
+        }"
+        (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
+      >
+      <div
+        style="position:relative;"
+        [ngClass]="getComment() ? 'comment-cell' : ''" class="cell-content"
+      >
+        {{ isInRange(element, column) ? styleValue(element?.values[column], element.unit) : '' }}
+      </div>
         <!-- <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
           <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
         </div>
@@ -61,7 +87,6 @@
           {{ (element.unit && element.values[column]) ? element.unit : null }}
         </ng-template> -->
 
-        {{ isInRange(element, column) ? styleValue(element?.values[column], element.unit) : '' }}
       </td>
     </ng-container>
 
@@ -264,6 +289,25 @@
   </table>
 </div>
 
-<!--
-<button mat-raised-button color="primary" (click)="exportTOExcel()">Export as Excel</button>
--->
+<!-- Comments management menu -->
+
+<span style="position:fixed;" #spanTrigger class="context-menu-trigger" #matTrigger="matMenuTrigger" [matMenuTriggerFor]="commentMenu"></span>
+
+<mat-menu #commentMenu="matMenu">
+  <ng-container *ngIf="true">
+    <button mat-menu-item>
+      <mat-icon>add</mat-icon>
+      <span>Add comment</span>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="true">
+    <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Edit comment</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon color="warn">delete</mat-icon>
+      <span style="color: red">Remove</span>
+    </button>
+  </ng-container>
+</mat-menu>

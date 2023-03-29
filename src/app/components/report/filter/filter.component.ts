@@ -49,7 +49,9 @@ export class FilterComponent implements OnInit, OnDestroy{
 
   @Input() isCrossCuttingReport = false;
   @Input() project: Project;
+  @Input() showComments: boolean;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
+  @Output() showCommentsChange = new EventEmitter<any>();
 
   private subscription: Subscription = new Subscription();
   entities: Entity[];

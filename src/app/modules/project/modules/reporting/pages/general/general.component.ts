@@ -86,6 +86,9 @@ export class GeneralComponent implements OnInit {
   multiThemesIndicators: Indicator[];
   groups: { theme: Theme, indicators: Indicator[]}[] = [];
 
+  //
+  showComments = false;
+
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();

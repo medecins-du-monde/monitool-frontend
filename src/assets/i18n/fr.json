@@ -853,5 +853,6 @@
     "pdf-export": "Exporter en PDF",
     "png-export": "Exporter en PNG",
     "footer-placeholder": "Monitool graphique"
-  }
+  },
+  "display-comments": "Afficher les commentaires"
 }
