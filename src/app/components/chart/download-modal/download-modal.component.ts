@@ -24,8 +24,12 @@ const dataLabelsConfig = {
   backgroundColor: 'white',
   borderRadius: 100,
   align: 'right',
-  formatter(value) {
-    return value.y;
+  font: {
+    size: 10
+  },
+  formatter(value, context) {
+    console.log(value, context)
+    return context.dataset.unit ? Math.round(value.y * 10) / 10 + context.dataset.unit : value.y;
   }
 
 };
