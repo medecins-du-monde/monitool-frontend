@@ -295,17 +295,17 @@
 
 <mat-menu #commentMenu="matMenu">
   <ng-container *ngIf="true">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="commentModal('add')">
       <mat-icon>add</mat-icon>
       <span>Add comment</span>
     </button>
   </ng-container>
   <ng-container *ngIf="true">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="commentModal('edit')">
       <mat-icon>edit</mat-icon>
       <span>Edit comment</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="deleteComment()">
       <mat-icon color="warn">delete</mat-icon>
       <span style="color: red">Remove</span>
     </button>

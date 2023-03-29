@@ -9,7 +9,7 @@
         </h2>
         <h2>
           {{ 'display-comments' | translate}}
-          <mat-checkbox [(ngModel)]="showComments" (change)="onShowCommentsChange.emit(showComments)"></mat-checkbox>
+          <mat-checkbox [(ngModel)]="showComments" (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
         </h2>
       </td>
     </tr>

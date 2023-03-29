@@ -23,6 +23,8 @@ import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import {LogicalFrame} from '../../../models/classes/logical-frame.model';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 
 
 
@@ -40,7 +42,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
               private chartService: ChartService,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              private dialog: MatDialog
+              ) {
                 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
               }
 
@@ -979,7 +983,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   ): void {
     triggerElement.style.left = event.clientX + 5 + 'px';
     triggerElement.style.top = event.clientY + 5 + 'px';
-    console.log(trigger.menuOpen);
     if (trigger.menuOpen) {
       trigger.closeMenu();
       trigger.openMenu();
@@ -987,7 +990,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       trigger.openMenu();
     }
     event.preventDefault();
+  }
 
+  commentModal(action: 'add' | 'edit'): void {
+    this.dialog.open(CommentModalComponent, {
+      data: {action}
+    }).afterClosed().subscribe(result => {
+      if (action === 'add') {
+        // Add comment mutation
+      } else {
+        // Edit comment mutation
+      }
+    });
+  }
+
+  deleteComment(): void {
+    // Delete comment mutation
   }
 
   ngOnDestroy(): void {
