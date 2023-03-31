@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReportingMenuModule } from '../reporting-menu/reporting-menu.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { CommentModalModule } from '../comment-modal/comment-modal.module';
 
 @NgModule({
   declarations: [ReportingTableComponent],
@@ -17,7 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatIconModule,
     ReportingMenuModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    CommentModalModule
   ],
   exports: [ReportingTableComponent]
 })

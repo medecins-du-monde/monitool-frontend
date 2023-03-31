@@ -25,6 +25,8 @@ import {LogicalFrame} from '../../../models/classes/logical-frame.model';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/classes/user.model';
 
 
 
@@ -43,7 +45,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
               private reportingService: ReportingService,
               private chartService: ChartService,
               private translateService: TranslateService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private authService: AuthService
               ) {
                 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
               }
@@ -71,6 +74,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   public menuLeft = 0;
   public menuTop = 0;
+
+  public userIsAdmin = false;
+  public selectedComment: any;
 
   dataSource = new MatTableDataSource([]);
 
@@ -211,6 +217,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             this.updateDimensions();
             this.refreshValues();
             this.updateTableContent();
+            const userSubscription = this.authService.currentUser.subscribe((user: User) => {
+              user.role === 'admin' || user.role === "owner" ? this.userIsAdmin = true : this.userIsAdmin = false;
+            });
+            userSubscription.unsubscribe();
           }
         })
       );
@@ -981,20 +991,28 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     trigger: MatMenuTrigger,
     triggerElement: HTMLElement
   ): void {
-    triggerElement.style.left = event.clientX + 5 + 'px';
-    triggerElement.style.top = event.clientY + 5 + 'px';
-    if (trigger.menuOpen) {
-      trigger.closeMenu();
-      trigger.openMenu();
-    } else {
-      trigger.openMenu();
+    if (this.userIsAdmin) {
+      triggerElement.style.left = event.clientX + 5 + 'px';
+      triggerElement.style.top = event.clientY + 5 + 'px';
+      if (trigger.menuOpen) {
+        trigger.closeMenu();
+        trigger.openMenu();
+      } else {
+        trigger.openMenu();
+      }
+      event.preventDefault();
     }
-    event.preventDefault();
   }
 
   commentModal(action: 'add' | 'edit'): void {
+    // Pass the comment to this function
+    const comment = 'This is a hardcoded comment';
+
     this.dialog.open(CommentModalComponent, {
-      data: {action}
+      data: {
+        action,
+        comment
+      }
     }).afterClosed().subscribe(result => {
       if (action === 'add') {
         // Add comment mutation

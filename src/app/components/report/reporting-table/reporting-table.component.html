@@ -19,7 +19,7 @@
         (contextmenu)="onRightClick($event, matTrigger, spanTrigger)"
       >
         <div class="menu">
-          <div matTooltip="{{element.name}}" [matTooltipShowDelay]="500">{{element.name}}</div>
+          <div matTooltip="{{element.name}}<br>comment" [matTooltipShowDelay]="500">{{element.name}}</div>
           <app-reporting-menu [indicator]="element" [dimensionName]="dimensionIds.value"
             (addIndicatorsEvent)="receiveIndicators($event)" (collapseIndicatorsEvent)="collapseIndicators($event)"
             [isCrossCuttingReport]="isCrossCuttingReport"></app-reporting-menu>

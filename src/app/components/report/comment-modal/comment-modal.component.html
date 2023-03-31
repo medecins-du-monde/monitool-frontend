@@ -1,5 +1,14 @@
 <h1 mat-dialog-title>{{ action + '-comment' | translate }}</h1>
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
 
-<!-- <mat-form-field appearance="outline">
-  <textarea matInput placeholder="Textarea"></textarea>
-</mat-form-field> -->
+<mat-dialog-content class="dialog-body">
+  <mat-form-field appearance="outline">
+    <mat-label>Comment</mat-label>
+    <textarea matInput placeholder="Write here your comment" [(ngModel)]="comment"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button class="mdm-button" (click)="onCancel()">{{'Cancel' | translate}}</button>
+  <button mat-stroked-button class="mdm-button save-button" [disabled]="!comment" [mat-dialog-close]="comment" >{{'Save' | translate}}</button>
+</mat-dialog-actions>
