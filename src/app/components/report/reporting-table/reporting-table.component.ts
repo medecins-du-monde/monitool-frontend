@@ -970,8 +970,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
     const value = element[type];
 
-    if (value === null || (element.level > 0 && element.unit !== '%'))
+    if (value === null || (element.level > 0 && element.unit !== '%')) {
       return '';
+    }
     return value + (element.unit ?? '');
   }
 }
