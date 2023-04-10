@@ -57,6 +57,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
 
   private chart: Chart;
+  public higherPercentages: boolean;
 
   @Input() data: any;
   @Input() name: string;
@@ -256,12 +257,12 @@ export class ChartComponent implements OnInit, OnDestroy {
       (this.chart.options as any).annotation.annotations = [];
 
       let onlyPercentages = true;
-      let higherPercentages = false;
+      this.higherPercentages = false;
       data.datasets.map(dataGroup => {
         if (dataGroup.unit === '%' || dataGroup.unit === '‰') {
           dataGroup.yAxisID = 'B';
           if (dataGroup.unit === '‰') {
-            higherPercentages = true;
+            this.higherPercentages = true;
           }
         } else {
           onlyPercentages = false;
@@ -270,7 +271,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         this.setBaseline(dataGroup, previousSelectedBaselines);
         this.setTarget(dataGroup, previousSelectedTargets);
       });
-      this.chart.options.scales.yAxes = this.getYAxes(data, {onlyPercentages, higherPercentages});
+      this.chart.options.scales.yAxes = this.getYAxes(data, {onlyPercentages});
       this.loadLabels(data);
       this.chart.data = data;
       this.chart.update();
@@ -356,9 +357,7 @@ export class ChartComponent implements OnInit, OnDestroy {
           beginAtZero : true,
           suggestedMax: maxBValue,
           suggestedMin: minBValue,
-          callback: (val) => {
-            return val + (options?.higherPercentages ? '‰' : '%');
-          },
+          callback: (val) => val + (this.higherPercentages ? '‰' : '%'),
         }
       }
     ];
@@ -465,7 +464,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   public downloadChart(): void{
     this.dialog.open(DownloadModalComponent, {
       panelClass: 'no-overflow-dialog',
-      data: {chart: this.chart, name: this.name}
+      data: {chart: this.chart, name: this.name, higherPercentages: this.higherPercentages}
     });
   }
 

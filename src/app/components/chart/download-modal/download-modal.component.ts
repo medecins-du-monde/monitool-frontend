@@ -28,8 +28,7 @@ const dataLabelsConfig = {
     size: 10
   },
   formatter(value, context) {
-    console.log(value, context);
-    return context.dataset.unit ? Math.round(value.y * 10) / 10 + context.dataset.unit : value.y;
+    return Math.round(value.y * 10) / 10 + context.dataset.unit;
   }
 
 };
@@ -110,6 +109,14 @@ export class DownloadModalComponent {
         }
       });
     }
+    options.scales.yAxes.map((scale: any) => {
+      if (scale.id === 'B') {
+        scale.ticks.callback = (val) => {
+          return val + (this.data.higherPercentages ? '‰' : '%');
+        };
+      }
+    });
+    options.scales.xAxes[0].ticks.fontSize = 12;
 
     const chart = new Chart('chartToDownload', {
       type: this.data.chart.config.type,
