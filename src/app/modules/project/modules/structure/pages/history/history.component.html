@@ -7,7 +7,7 @@
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>{{ 'Date'| translate}} & {{ 'User' | translate }}</th>
         <td mat-cell *matCellDef="let element" id="date">
-            <p>{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}</p>
+            <p *ngIf="element.displayedTime">{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}</p>
             <p>{{ element.username }}</p>
         </td>
     </ng-container>
