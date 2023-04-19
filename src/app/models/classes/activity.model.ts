@@ -2,6 +2,11 @@ import { Deserializable } from '../interfaces/deserializable.model';
 import { ProjectIndicator } from '../classes/project-indicator.model';
 
 export class Activity implements Deserializable {
+    id?: string;
+    comment: {
+        value: { [key: string]: string },
+        filter: any
+    }[] = [];
     description: string;
     indicators: ProjectIndicator[] = [];
 

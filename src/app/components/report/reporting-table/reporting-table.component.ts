@@ -9,7 +9,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
 import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
-import { isArray, isNaN, round } from 'lodash';
+import { isArray, isEqual, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
@@ -21,14 +21,42 @@ import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.mo
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import {LogicalFrame} from '../../../models/classes/logical-frame.model';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/classes/user.model';
+import { CommentFilterT, CommentService } from 'src/app/services/comment.service';
 
+const matchesFilter = (filter: CommentFilterT, c: Partial<CommentFilterT>) => {
+  // check if both array have the same string, order doesn't matter
+  const haveSameEntities = (a: string[], b: string[]) => {
+    if (!a || !b) return false;
+    if (a.length !== b.length) return false;
 
+    return a.every((e) => b.includes(e)) && b.every((e) => a.includes(e));
+  };
+
+  if (!c) return false;
+  const {
+    computation,
+    customFilters,
+    dateRange,
+    dimensionId,
+    entities
+  } = c;
+  if (computation && !isEqual(computation, filter.computation))
+    return false;
+  if (customFilters && !isEqual(customFilters, filter.customFilters))
+    return false;
+  if (dateRange && !isEqual(dateRange, filter.dateRange))
+    return false;
+  if (dimensionId && !isEqual(dimensionId, filter.dimensionId))
+    return false;
+  if (entities && !haveSameEntities(entities, filter.entities)) return false;
+
+  return true;
+};
 
 //  import * as XLSX from 'xlsx';
 
@@ -46,7 +74,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
               private chartService: ChartService,
               private translateService: TranslateService,
               private dialog: MatDialog,
-              private authService: AuthService
+              private authService: AuthService,
+              private commentService: CommentService
               ) {
                 registerLocaleData(localeDe, 'de-DE', localeDeExtra);
               }
@@ -76,7 +105,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   public menuTop = 0;
 
   public userIsAdmin = false;
-  public selectedComment: any;
+  public selectedCell: {
+    row: any;
+    col?: string;
+  } | null = null;
+
+  /** @returns the selectedCell comment */
+  get selectedCellComment(): string | null {
+    if (!this.selectedCell) return null;
+    return this.getCommentFromCell(this.selectedCell.row, this.selectedCell.col);
+  }
 
   dataSource = new MatTableDataSource([]);
 
@@ -131,19 +169,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
-  get exportFilters(): any {
+  get exportFilters() {
     const filter: any = this.filter.getValue();
-    const filters: {
-      logicalFrames: string[];
-      dataSources: string[];
-      crossCutting: boolean;
-      extraIndicators: boolean;
-      dateRange: {
-        start: string;
-        end: string;
-      },
-      entities: string[];
-    } = {
+    const filters = {
       logicalFrames: [],
       dataSources: [],
       crossCutting: false,
@@ -152,7 +180,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         start: filter._start._d ? filter._start._d.toLocaleDateString('fr-CA') : filter._start.toLocaleDateString('fr-CA'),
         end: filter._end._d ? filter._end._d.toLocaleDateString('fr-CA') : filter._end.toLocaleDateString('fr-CA')
       },
-      entities: filter.entities || []
+      entities: filter.entities || [],
+      dimensionId: this.dimensionIds.getValue()
     };
     this.projectService.openedProject.subscribe((project: Project) => {
       let i = 1;
@@ -332,6 +361,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   // Create new row if it s an indicator
   convertToRow = (item: Row | ProjectIndicator): Row => {
+    if ('values' in item && item.values) return item;
     if (this.isProjectIndicator(item)) {
       return this.indicatorToRow(item);
     }
@@ -381,6 +411,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   // Create row of the table from a ProjectIndicator
   indicatorToRow(indicator: ProjectIndicator, currentIndicator?: any): InfoRow {
     const row = {
+      ...indicator as any,
       icon: true,
       name: indicator.display,
       baseline: indicator.baseline,
@@ -394,18 +425,27 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       filterFlag: true,
       computation: indicator.computation,
       originProject: indicator.originProject ? indicator.originProject : undefined,
-      open: true
+      open: true,
+      cellType: 'indicator',
     } as InfoRow;
 
     if (currentIndicator) {
       row.customFilter = currentIndicator.customFilter;
       row.start = currentIndicator.start;
       row.end = currentIndicator.end;
+      row.comments = currentIndicator.comments;
+      row.id = currentIndicator.id;
+      row.logicalFrameID = currentIndicator.logicalFrameID;
+      row.purposeID = currentIndicator.purposeID;
+      row.outputID = currentIndicator.outputID;
+      row.activityID = currentIndicator.activityID;
+      row.formID = currentIndicator.formID;
+      row.entities = currentIndicator.entities;
     }
 
     return row;
   }
-  // Fetch the data of one especific row in function of project, content, filter and dimension
+  // Fetch the data of one specific row in function of project, content, filter and dimension
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
     this.logFrameEntities = [];
@@ -680,6 +720,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
         customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
         customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.entities = [entityId];
         newIndicators.push(customIndicator);
       }
 
@@ -736,12 +777,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         indicatorIndex += 1;
 
         let newRow;
-        if (currentIndicator.customFilter) {
-          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator);
-        }
-        else {
-          newRow = this.indicatorToRow(disaggregatedIndicator);
-        }
+        newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator);
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
         newRow = this.updateRowValues(newRow);
@@ -978,19 +1014,58 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     XLSX.writeFile(wb, 'SheetJS.xlsx');
   } */
 
-  getComment(): string {
-    if (this.showComments) {
-      return ('this is a comment');
-    } else {
-      return;
+  getCommentFromCell(row: any, col?: string): string | null {
+    if (!row) return null;
+    const exportFilters = this.reportingService.exportFilters.getValue();
+    const filter: CommentFilterT = {
+      computation: row.computation,
+      customFilters: row.customFilters,
+      dateRange: exportFilters.dateRange,
+      dimensionId: exportFilters.dimensionId,
+      entities: row.entities || exportFilters.entities
+    };
+    switch (row.cellType) {
+      case 'indicator':
+        if (row.id?.startsWith('indicator:'))
+          return (
+            row.comments?.find(c => matchesFilter(filter, c?.filter))?.value?.[
+              this.project.id
+            ]?.[col] || null
+          );
+        else
+          return (
+            row.comments?.find(c => matchesFilter(filter, c?.filter))?.value?.[col] ||
+            null
+          );
+      case 'theme':
+        return (
+          row.comment?.find(c => matchesFilter(filter, c?.filter))?.value?.[
+            this.project.id
+          ] || null
+        );
+      case 'logicalFrameGoal':
+      case 'logicalFrameName':
+      case 'crossCuttingName':
+      case 'crossCuttingMultiTheme':
+      case 'purpose':
+      case 'output':
+      case 'activity':
+      case 'extraIndicators':
+      case 'dataSource':
+        return row.comment?.find(c => matchesFilter(filter, c?.filter))?.value || null;
+      default:
+        return null;
     }
   }
 
   onRightClick(
     event: MouseEvent,
     trigger: MatMenuTrigger,
-    triggerElement: HTMLElement
+    triggerElement: HTMLElement,
+    el?: any,
+    col?: string,
   ): void {
+    this.selectedCell = {row: el, col };
     if (this.userIsAdmin) {
       triggerElement.style.left = event.clientX + 5 + 'px';
       triggerElement.style.top = event.clientY + 5 + 'px';
@@ -1004,26 +1079,213 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  commentModal(action: 'add' | 'edit'): void {
-    // Pass the comment to this function
-    const comment = 'This is a hardcoded comment';
+  public updateComment(action: 'add' | 'edit' | 'delete'): void {
+    if (!this.selectedCell) return;
+    const { row, col } = this.selectedCell;
+    const comment = this.selectedCellComment || '';
 
-    this.dialog.open(CommentModalComponent, {
-      data: {
-        action,
-        comment
-      }
-    }).afterClosed().subscribe(result => {
-      if (action === 'add') {
-        // Add comment mutation
-      } else {
-        // Edit comment mutation
-      }
-    });
-  }
+    const saveResult = (result: string) => {
+      const exportFilters = this.reportingService.exportFilters.getValue();
+      const filter: CommentFilterT = {
+        computation: row.computation,
+        customFilters: row.customFilters,
+        dateRange: exportFilters.dateRange,
+        dimensionId: exportFilters.dimensionId,
+        entities: row.entities || exportFilters.entities
+      };
 
-  deleteComment(): void {
-    // Delete comment mutation
+      // remove everything before the first colon of the row groupName
+      const getFromColonOn = (str: string) =>
+        str
+          .split(':')
+          .slice(1)
+          .join(':')
+          .slice(1);
+
+      if (!(typeof result === 'string')) return;
+
+      const updateCommentByFilter = (comment: string, project?: string) => {
+        const isIndicator = row.cellType === 'indicator';
+        const rowIndex = this.rows.getValue().findIndex(r => isEqual(r, row));
+        if (rowIndex === -1) return;
+
+        if (isIndicator && !row.comments) row.comments = [];
+        if (!isIndicator && !row.comment) row.comment = []; 
+
+        const rowComment = isIndicator ? row.comments : row.comment;
+        if (!isArray(rowComment)) return null;
+
+        const commentIndex = rowComment.findIndex(c =>
+          matchesFilter(filter, c.filter)
+        );
+
+        if (commentIndex !== -1) {
+          if (project)
+            rowComment[commentIndex].value[project] = isIndicator
+              ? {
+                  ...rowComment[commentIndex].value[project],
+                  [col]: comment
+                }
+              : comment;
+          else
+            rowComment[commentIndex].value = isIndicator
+              ? { ...rowComment[commentIndex].value, [col]: comment }
+              : comment;
+        } else {
+          if (project)
+            rowComment.push({
+              value: {
+                [project]: isIndicator ? { [col]: comment } : comment
+              },
+              filter
+            });
+          else
+            rowComment.push({
+              value: isIndicator ? { [col]: comment } : comment,
+              filter
+            });
+        }
+      };
+
+      switch (row.cellType) {
+        case 'logicalFrameGoal':
+        case 'logicalFrameName':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'logicalFrame',
+            filter,
+            id: row.logicalFrameID,
+            project: this.projectService.projectId.getValue(),
+            nameComment:
+              row.cellType === 'logicalFrameName' ? result : undefined,
+            goalComment:
+              row.cellType === 'logicalFrameGoal' ? result : undefined
+          });
+          break;
+        case 'indicator':
+          updateCommentByFilter(
+            result,
+            typeof row?.id === 'string' && row.id.startsWith('indicator:')
+              ? this.projectService.projectId.getValue()
+              : undefined
+          );
+
+          this.commentService.save({
+            type: 'indicator',
+            filter,
+            column: col,
+            comment: result,
+            id: row.id || {
+              display: row.display
+            },
+            project: this.projectService.projectId.getValue(),
+            logicalFrame: row.logicalFrameID,
+            purpose: row.purposeID,
+            output: row.outputID,
+            indicator: row.indicatorID,
+            form: row.formID
+          });
+          break;
+        case 'purpose':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'purpose',
+            filter,
+            comment: result,
+            id: row.purposeID || {
+              description: getFromColonOn(row.groupName)
+            },
+            project: this.projectService.projectId.getValue(),
+            logicalFrame: row.logicalFrameID
+          });
+          break;
+        case 'output':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'output',
+            filter,
+            comment: result,
+            id: row.outputID || {
+              description: getFromColonOn(row.groupName)
+            },
+            project: this.projectService.projectId.getValue(),
+            logicalFrame: row.logicalFrameID,
+            purpose: row.purposeID
+          });
+          break;
+        case 'activity':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'activity',
+            filter,
+            comment: result,
+            id: row.activityID || {
+              description: getFromColonOn(row.groupName)
+            },
+            project: this.projectService.projectId.getValue(),
+            logicalFrame: row.logicalFrameID,
+            purpose: row.purposeID,
+            output: row.outputID
+          });
+          break;
+        case 'crossCuttingName':
+        case 'crossCuttingMultiTheme':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'crossCutting',
+            filter,
+            project: this.projectService.projectId.getValue(),
+            nameComment:
+              row.cellType === 'crossCuttingName' ? result : undefined,
+            multiThemeComment:
+              row.cellType === 'crossCuttingMultiTheme' ? result : undefined
+          });
+          break;
+        case 'theme':
+          updateCommentByFilter(result, this.project.id);
+          this.commentService.save({
+            type: 'theme',
+            filter,
+            project: this.projectService.projectId.getValue(),
+            id: row.themeID,
+            comment: result
+          });
+          break;
+        case 'extraIndicators':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'extraIndicators',
+            filter,
+            project: this.projectService.projectId.getValue(),
+            comment: result
+          });
+          break;
+        case 'dataSource':
+          updateCommentByFilter(result);
+          this.commentService.save({
+            type: 'dataSource',
+            filter,
+            project: this.projectService.projectId.getValue(),
+            id: row.formID,
+            comment: result
+          });
+          break;
+      }
+    };
+
+    if (action === 'delete') saveResult('');
+    else
+      this.dialog
+        .open(CommentModalComponent, {
+          data: {
+            action,
+            comment
+          }
+        })
+        .afterClosed()
+        .subscribe(result => {
+          if (result) saveResult(result);
+        });
   }
 
   ngOnDestroy(): void {

@@ -3,4 +3,5 @@ export interface GroupTitle{
     groupName: string;
     sectionId: number;
     level: number;
+    comment?: string;
   }

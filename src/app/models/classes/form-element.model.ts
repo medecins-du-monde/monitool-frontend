@@ -9,6 +9,15 @@ export class FormElement implements Deserializable {
     timeAgg = 'sum';
     distribution: number;
     partitions: Partition[] = [];
+    comments: {
+        value: {
+          baseline?: string;
+          target?: string;
+          name?: string;
+          [key: string]: string;
+        };
+        filter: any;
+      }[] = [];
 
     constructor(input?: any) {
         this.deserialize(input);

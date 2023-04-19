@@ -7,6 +7,11 @@ export class Purpose implements Deserializable {
     description: string;
     indicators: ProjectIndicator[] = [];
     outputs: OutputElement[] = [];
+    comment: {
+        value: { [key: string]: string },
+        filter: any
+    }[] = [];
+    id?: string;
 
     constructor(input?: any) {
         this.deserialize(input);

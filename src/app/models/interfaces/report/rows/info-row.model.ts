@@ -3,6 +3,18 @@ import { GroupTitle } from './group-title.model';
 import { SectionTitle } from './section-title.model';
 
 export interface InfoRow {
+    // Comment related props
+    id?: string;
+    logicalFrameID?: string;
+    cellType: string;
+    comments: {filter: any, value: any}[];
+    entities?: string[];
+    purposeID?: string;
+    outputID?: string;
+    activityID?: string;
+    formID?: string;
+    
+    // Other props
     icon: boolean;
     name: string;
     unit?: string;

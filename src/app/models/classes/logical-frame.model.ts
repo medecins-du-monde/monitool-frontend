@@ -16,6 +16,15 @@ export class LogicalFrame implements Deserializable {
     indicators: ProjectIndicator[] = [];
     purposes: Purpose[] = [];
 
+    nameComment?: {
+      value: { [key: string]: string },
+      filter: any
+    }[] = [];
+    goalComment?: {
+      value: { [key: string]: string },
+      filter: any
+    }[] = [];
+
     constructor(input?: any) {
       this.deserialize(input);
     }
@@ -40,6 +49,8 @@ export class LogicalFrame implements Deserializable {
             entities: this.entities.map(x => x.id),
             purposes: this.purposes.map(x => x.serialize()),
             indicators: this.indicators.map(x => x.serialize()),
+            nameComment: this.nameComment,
+            goalComment: this.goalComment
         };
     }
 

@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ action + '-comment' | translate }}</h1>
-<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="null"><mat-icon>close</mat-icon></button>
 
 <mat-dialog-content class="dialog-body">
   <mat-form-field appearance="outline">
@@ -9,6 +9,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button class="mdm-button" (click)="onCancel()">{{'Cancel' | translate}}</button>
+  <button mat-stroked-button class="mdm-button" [mat-dialog-close]="null">{{'Cancel' | translate}}</button>
   <button mat-stroked-button class="mdm-button save-button" [disabled]="!comment" [mat-dialog-close]="comment" >{{'Save' | translate}}</button>
 </mat-dialog-actions>

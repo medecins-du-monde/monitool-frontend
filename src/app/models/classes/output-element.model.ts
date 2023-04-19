@@ -3,6 +3,11 @@ import { Deserializable } from '../interfaces/deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
 
 export class OutputElement implements Deserializable {
+    id?: string;
+    comment?: {
+        value: { [key: string]: string },
+        filter: any
+    }[] = [];
     assumptions: string;
     description: string;
     activities: Activity[] = [];

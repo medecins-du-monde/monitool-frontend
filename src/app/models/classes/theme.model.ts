@@ -8,6 +8,10 @@ export class Theme implements Deserializable {
     name: MultiLanguage;
     shortName: MultiLanguage;
     rev: string;
+    comments: {
+        value: { [key: string]: string },
+        filter: any
+    }[] = [];
 
     constructor(input?: any) {
         this.deserialize(input);

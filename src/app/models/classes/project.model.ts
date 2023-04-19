@@ -22,7 +22,9 @@ export class Project implements Deserializable {
     country: string;
     themes: Theme[] = [];
     crossCutting: any;
+    crossCuttingComments: {filter: any, value: { nameComment: string; multiThemeComment: string }}[] = [];
     extraIndicators: ProjectIndicator[] = [];
+    extraIndicatorsComment: {filter: any, value: string}[];
     logicalFrames: LogicalFrame[] = [];
     entities: Entity[] = [];
     groups: Group[] = [];

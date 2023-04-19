@@ -7,6 +7,10 @@ import DatesHelper from 'src/app/utils/dates-helper';
 export class Form implements Deserializable {
     id: string;
     name: string;
+    comment: {
+        value: { [key: string]: string };
+        filter: any;
+    }[] = [];
     start: Date;
     end: Date;
     periodicity: string;

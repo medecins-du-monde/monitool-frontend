@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comment-modal',
@@ -7,13 +7,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./comment-modal.component.scss']
 })
 export class CommentModalComponent {
-
   action: string;
   comment: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<CommentModalComponent>
   ) {
     this.action = data.action;
     if (this.action === 'edit') {
@@ -21,8 +19,5 @@ export class CommentModalComponent {
     }
   }
 
-  onCancel(): void {
-    this.dialogRef.close();
-  }
 
 }
