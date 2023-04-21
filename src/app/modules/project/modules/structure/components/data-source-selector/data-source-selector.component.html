@@ -1,5 +1,11 @@
 <mat-form-field [formGroup]="userForm" appearance="outline" class="mdm-form-field">
-    <mat-select formControlName="dataSources" placeholder="{{ 'DataSources' | translate }}" multiple disableOptionCentering panelClass="myPanelClass">
+    <mat-select
+      formControlName="dataSources"
+      placeholder="{{ 'DataSources' | translate }}"
+      multiple
+      disableOptionCentering
+      panelClass="myPanelClass"
+    >
         <mat-select-trigger>
             <mat-chip-list>
                 <mat-chip *ngFor="let dataSource of selectedDataSources" [removable]="true"

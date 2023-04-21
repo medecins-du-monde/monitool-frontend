@@ -62,20 +62,20 @@
 
     <div *ngIf="userForm.value.role === roles[1].value">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
-            <app-collection-sites-selector
-                [form]="userForm"
-                [entities]="entities"
-                [groups]="groups"
-                [hint]="'Tooltip.UserEdition.CollectionSites'">
-            </app-collection-sites-selector>
-        </div>
-        <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'DataSources' | translate }}</div>
             <app-data-source-selector
                 [userForm]="userForm"
                 [dataSources]="dataSources"
             ></app-data-source-selector>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
+            <app-collection-sites-selector
+                [form]="userForm"
+                [entities]="availableEntities"
+                [groups]="availableGroups"
+                [hint]="'Tooltip.UserEdition.CollectionSites'">
+            </app-collection-sites-selector>
         </div>
     </div>
 </mat-dialog-content>

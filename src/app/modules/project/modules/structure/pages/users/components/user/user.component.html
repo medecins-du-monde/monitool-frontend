@@ -17,16 +17,16 @@
             </div>
         </div>
         <div class="card-info" *ngIf="user.role === 'input'">
+            <div class="card-info-title">{{ 'DataSources' | translate }}</div>
+            <div class="card-info-value">
+                <div *ngFor="let dataSource of dataSources">{{ dataSource.name }}</div>
+            </div>
+        </div>
+        <div class="card-info" *ngIf="user.role === 'input'">
             <div class="card-info-title">{{ 'CollectionSites' | translate }}</div>
             <div class="card-info-value">
                 <div *ngFor="let group of groups">{{ group.name | translate }}</div>
                 <div *ngFor="let entity of entities">{{ entity.name }}</div>
-            </div>
-        </div>
-        <div class="card-info" *ngIf="user.role === 'input'">
-            <div class="card-info-title">{{ 'DataSources' | translate }}</div>
-            <div class="card-info-value">
-                <div *ngFor="let dataSource of dataSources">{{ dataSource.name }}</div>
             </div>
         </div>
     </mat-card-content>
