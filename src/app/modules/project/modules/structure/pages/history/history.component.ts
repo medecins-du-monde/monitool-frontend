@@ -112,6 +112,7 @@ export class HistoryComponent implements OnInit {
             timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
             revision.displayedTime = timeArr;
           });
+          console.log(revisions);
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;
           this.changeDetector.markForCheck();
@@ -139,6 +140,14 @@ export class HistoryComponent implements OnInit {
   onLoadMore() {
     this.limit += 10;
     this.projectService.listRevisions(this.projectId, this.limit).then((revisions: Revision[]) => {
+      revisions.forEach(revision => {
+        const timeArr = [];
+        const newDate = new Date(revision.time);
+        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()],
+        newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+        revision.displayedTime = timeArr;
+      });
+      console.log(revisions);
       this.revisions = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });
