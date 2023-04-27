@@ -143,7 +143,8 @@ export class HistoryComponent implements OnInit {
       revisions.forEach(revision => {
         const timeArr = [];
         const newDate = new Date(revision.time);
-        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()],
+        newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
         revision.displayedTime = timeArr;
       });
       console.log(revisions);
