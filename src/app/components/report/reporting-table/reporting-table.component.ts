@@ -100,6 +100,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
+  // Used for getIndicator()
+  parent = {
+    level: 0,
+    sectionId: 0
+  };
+
   //  @ViewChild('TABLE') table: ElementRef;
 
   @HostListener('window:resize', ['$event'])
@@ -977,8 +983,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
    */
   getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
     const value = element[type];
-
-    if (value === null || (element.level > 0 && element.unit !== '%')) {
+    if (element.level < this.parent.level || element.sectionId !== this.parent.sectionId) {
+      this.parent.level = element.level;
+      this.parent.sectionId = element.sectionId;
+    }
+    if (value === null || value === undefined || (element.level !== this.parent.level && element.unit !== '%')) {
       return '';
     }
     return value + (element.unit ?? '');
