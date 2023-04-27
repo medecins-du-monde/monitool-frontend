@@ -68,8 +68,8 @@ export class UserModalComponent implements OnInit {
 
     this.originalForm = this.userForm.value;
 
-    this.getAvailableEntities(this.originalForm.dataSources)
-    this.userForm.controls.dataSources.valueChanges.subscribe(dataSources => this.getAvailableEntities(dataSources))
+    this.getAvailableEntities(this.originalForm.dataSources);
+    this.userForm.controls.dataSources.valueChanges.subscribe(dataSources => this.getAvailableEntities(dataSources));
 
     this.userForm.valueChanges.subscribe(val => {
       // Sets validators depending on the type
@@ -153,8 +153,8 @@ export class UserModalComponent implements OnInit {
             if (!this.availableEntities.find(ent => ent.id === entity.id)) {
               this.availableEntities.push(entity);
             }
-          })
-        })
+          });
+        });
         this.groups.map(group => {
           this.availableGroups.push(group);
           for (let i = 0; group.members[i]; i++) {
@@ -163,11 +163,11 @@ export class UserModalComponent implements OnInit {
               break;
             }
           }
-        })
+        });
       }
     }
     this.userForm.controls.entities.patchValue(this.userForm.value.entities.filter(entity => this.availableEntities.includes(entity)));
-    console.log(this.userForm.value)
+    console.log(this.userForm.value);
   }
 
 }
