@@ -30,6 +30,9 @@ export class UserModalComponent implements OnInit {
 
   originalForm: any;
 
+  availableEntities: Entity[];
+  availableGroups: Group[];
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UserModalComponent>,
@@ -64,6 +67,9 @@ export class UserModalComponent implements OnInit {
     });
 
     this.originalForm = this.userForm.value;
+
+    this.getAvailableEntities(this.originalForm.dataSources);
+    this.userForm.controls.dataSources.valueChanges.subscribe(dataSources => this.getAvailableEntities(dataSources));
 
     this.userForm.valueChanges.subscribe(val => {
       // Sets validators depending on the type
@@ -132,6 +138,36 @@ export class UserModalComponent implements OnInit {
       entities: this.userForm.value.entities.filter(el => el.id !== 'all'),
     };
     return JSON.stringify(cleanedForm) !== JSON.stringify(this.originalForm) && this.userForm.valid;
+  }
+
+  getAvailableEntities(dataSources: any): void {
+    this.availableEntities = [];
+    this.availableGroups = [];
+    if (dataSources && dataSources.length > 0) {
+      if (dataSources[0].id === 'all') {
+        this.availableEntities = this.entities;
+        this.availableGroups = this.groups;
+      } else {
+        dataSources.map(dataSource => {
+          dataSource.entities.map(entity => {
+            if (!this.availableEntities.find(ent => ent.id === entity.id)) {
+              this.availableEntities.push(entity);
+            }
+          });
+        });
+        this.groups.map(group => {
+          this.availableGroups.push(group);
+          for (let i = 0; group.members[i]; i++) {
+            if (!this.availableEntities.find(ent => ent.id === group.members[i].id)) {
+              this.availableGroups.pop();
+              break;
+            }
+          }
+        });
+      }
+    }
+    this.userForm.controls.entities.patchValue(this.userForm.value.entities.filter(entity => this.availableEntities.includes(entity)));
+    console.log(this.userForm.value);
   }
 
 }
