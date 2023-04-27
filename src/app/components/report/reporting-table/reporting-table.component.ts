@@ -100,12 +100,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
-  // Used for getIndicator()
-  parent = {
-    level: 0,
-    sectionId: 0
-  };
-
   //  @ViewChild('TABLE') table: ElementRef;
 
   @HostListener('window:resize', ['$event'])
@@ -283,10 +277,29 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           this.content[0].level = 0;
         }
       }
+
+
+      // Used for getIndicator()
+      let parentLevel;
+
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1) {
         if (this.content[i].level === undefined) {
           this.content[i].level = this.content[i - 1].level;
+        }
+
+        // Info for getIndicator()
+        if (this.content[i].groupName) {
+          parentLevel = undefined;
+        }
+        if (this.content[i].name && (this.content[i].unit !== '%' || this.content[i].unit !== '‰')) {
+          if (parentLevel === undefined) {
+            parentLevel = this.content[i].level;
+          }
+          if (this.content[i].level === parentLevel) {
+            console.log(this.content[i], parentLevel);
+            this.content[i].isParent = parentLevel;
+          }
         }
       }
       this.rows.next(this.content.filter(el => {
@@ -983,11 +996,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
    */
   getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
     const value = element[type];
-    if (element.level < this.parent.level || element.sectionId !== this.parent.sectionId) {
-      this.parent.level = element.level;
-      this.parent.sectionId = element.sectionId;
-    }
-    if (value === null || value === undefined || (element.level !== this.parent.level && element.unit !== '%')) {
+    // if (type === 'baseline') console.log(element);
+    if (value === null || value === undefined || (element.isParent !== element.level &&
+      element.unit !== '%' && element.unit !== '‰')) {
       return '';
     }
     return value + (element.unit ?? '');

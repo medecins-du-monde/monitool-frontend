@@ -23,4 +23,5 @@ export interface InfoRow {
     error?: string[];
     start?: Date;
     end?: Date;
+    isParent?: number;
   }
