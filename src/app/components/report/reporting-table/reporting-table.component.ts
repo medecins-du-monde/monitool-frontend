@@ -896,14 +896,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   isInRange(data, date): boolean {
-    if (data.start && data.end) {
-      const currentDate = new Date(date);
-      currentDate.setHours(12);
-      if (data.start.getTime() > currentDate.getTime() || data.end.getTime() < currentDate.getTime()) {
-        return false;
+    let result = true;
+    const group = this.getGroup(data);
+    const currentDate = new Date(date);
+    currentDate.setHours(12);
+
+    if (group instanceof LogicalFrame) {
+      if (group.start.getTime() > currentDate.getTime() || group.end.getTime() < currentDate.getTime()) {
+        result = false;
       }
     }
-    return true;
+    if (data.start && data.end) {
+      if (data.start.getTime() > currentDate.getTime() || data.end.getTime() < currentDate.getTime()) {
+        result = false;
+      }
+    }
+    return result;
   }
 
   styleValue(value, unit){
