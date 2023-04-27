@@ -853,5 +853,12 @@
     "pdf-export": "Exporter en PDF",
     "png-export": "Exporter en PNG",
     "footer-placeholder": "Monitool graphique"
+  },
+  "delete-modal": {
+    "datasource": "source de données",
+    "header": "Supprimer '{{item}}'",
+    "description": "Si vous supprimez votre {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez enregistrer vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
   }
 }

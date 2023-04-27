@@ -852,5 +852,12 @@
     "pdf-export": "Esportar como PDF",
     "png-export": "Exportar como PNG",
     "footer-placeholder": "Gráfico de Monitool"
+  },
+  "delete-modal": {
+    "datasource": "fuente de datos",
+    "header": "Eliminar '{{item}}'",
+    "description": "Si eliminas tu {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   }
 }

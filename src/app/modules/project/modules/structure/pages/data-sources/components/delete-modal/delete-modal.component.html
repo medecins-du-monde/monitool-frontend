@@ -1,0 +1,9 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title [innerHTML]='"delete-modal.header" | translate: {item: data.item}'></h2>
+<mat-dialog-content>
+  <div style="max-width: 750px;" [innerHTML]='"delete-modal.description" | translate: {type: ("delete-modal.datasource" | translate), item: data.item}'></div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onSubmit()" class="mdm-button delete-button" color="warn" >{{"delete-modal.confirm" | translate}}</button>
+    <button mat-stroked-button mat-dialog-close class="mdm-button"><mat-icon style="margin-right: 6px">undo</mat-icon>{{"delete-modal.cancel" | translate}}</button>
+</mat-dialog-actions>
