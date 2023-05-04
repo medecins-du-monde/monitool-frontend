@@ -836,5 +836,12 @@
     "pdf-export": "Export as PDF",
     "png-export": "Export as PNG",
     "footer-placeholder": "Monitool graph"
+  },
+  "delete-modal": {
+    "datasource": "data source",
+    "header": "Delete '{{item}}'",
+    "description": "If you delete your {{type}} '{{item}}', all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

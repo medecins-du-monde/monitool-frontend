@@ -8,6 +8,8 @@ import { Project } from 'src/app/models/classes/project.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-data-sources-list',
@@ -50,7 +52,8 @@ export class DataSourcesListComponent implements OnInit {
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -97,38 +100,45 @@ export class DataSourcesListComponent implements OnInit {
   }
 
   onDelete(form: Form): void {
-    // Get all the variables id from the deleted datasource
-    form.elements.forEach(el => {
-      this.deletedFormVariables.push(el.id);
-    });
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { item: form.name } });
 
-    // Delete datasource from extra indicators computation
-    this.project.extraIndicators.map(extraIndicator => {
-      if (extraIndicator.computation) {
-        const params = extraIndicator.computation.parameters;
-        // If the deleted datasource was used in the computation of this indicator, set computation to null
-        if (this.computationBroken(params)) {
-          extraIndicator.computation = null;
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete){
+
+        // Get all the variables id from the deleted datasource
+        form.elements.forEach(el => {
+          this.deletedFormVariables.push(el.id);
+        });
+
+        // Delete datasource from extra indicators computation
+        this.project.extraIndicators.map(extraIndicator => {
+          if (extraIndicator.computation) {
+            const params = extraIndicator.computation.parameters;
+            // If the deleted datasource was used in the computation of this indicator, set computation to null
+            if (this.computationBroken(params)) {
+              extraIndicator.computation = null;
+            }
+          }
+        });
+
+        // Delete datasource from cross-cutting indicators
+        for (const val of Object.values(this.project.crossCutting)) {
+          // Check for computation
+          if (val['computation']) {
+            const params = val['computation']['parameters'];
+            if (this.computationBroken(params)) {
+              val['computation'] = null;
+            }
+          }
         }
+
+        // Delete the datasource from logicalFrames
+        this.deleteDatasource(this.project.logicalFrames);
+
+        this.project.forms = this.project.forms.filter(x => x.id !== form.id);
+        this.projectService.project.next(this.project);
       }
     });
-
-    // Delete datasource from cross-cutting indicators
-    for (const val of Object.values(this.project.crossCutting)) {
-      // Check for computation
-      if (val['computation']) {
-        const params = val['computation']['parameters'];
-        if (this.computationBroken(params)) {
-          val['computation'] = null;
-        }
-      }
-    }
-
-    // Delete the datasource from logicalFrames
-    this.deleteDatasource(this.project.logicalFrames);
-
-    this.project.forms = this.project.forms.filter(x => x.id !== form.id);
-    this.projectService.project.next(this.project);
   }
 
   // drag and drop function on a list than can span accross multiple rows
