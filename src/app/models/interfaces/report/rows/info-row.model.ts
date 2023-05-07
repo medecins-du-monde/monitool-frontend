@@ -1,6 +1,7 @@
 import { Project } from 'src/app/models/classes/project.model';
 import { GroupTitle } from './group-title.model';
 import { SectionTitle } from './section-title.model';
+import { Comment } from 'src/app/services/comment.service';
 
 export interface InfoRow {
     icon: boolean;
@@ -24,4 +25,8 @@ export interface InfoRow {
     start?: Date;
     end?: Date;
     isParent?: number;
+    disaggregatedBy: { [key in string]: string };
+    commentInfo: Comment;
+    comment?: string;
+    comments?: { [key: string]: string };
   }

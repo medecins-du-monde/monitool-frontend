@@ -12,19 +12,19 @@
   overflow: auto;
   border: solid 0.5px $table_border;
 
-
   table {
     z-index: 3 !important;
     width: 100%;
     table-layout: fixed;
     position: relative;
   }
-  
+
   .mat-column-icon {
     width: 35px;
   }
 
-  .mat-column-baseline, .mat-column-target {
+  .mat-column-baseline,
+  .mat-column-target {
     width: 50px;
   }
 
@@ -35,7 +35,8 @@
     }
   }
 
-  .mat-column-title, .mat-column-groupName {
+  .mat-column-title,
+  .mat-column-groupName {
     border-right: none !important;
     width: 100vw !important;
 
@@ -45,7 +46,8 @@
     }
   }
 
-  .mat-column-title_stick, .mat-column-group_stick {
+  .mat-column-title_stick,
+  .mat-column-group_stick {
     border-left: none !important;
   }
 
@@ -57,31 +59,30 @@
     font-weight: bold;
     text-align: center;
     font-size: 13px;
-    padding: 0 !important
+    padding: 0 !important;
   }
-  
+
   .mat-column {
     width: 50px;
   }
   td {
     z-index: 3 !important;
     padding: 0;
-    font-size : 13px;
+    font-size: 13px;
     text-align: center;
     color: $grey;
     border: solid 1px $table_border !important;
     word-break: break-word;
-    &.value-cell{
+    &.value-cell {
       border-left-width: 0.5px;
       border-left-style: solid;
       border-left-color: $table_report_border_left_color;
-      &.empty{
+      &.empty {
         background-color: $table_report_empty_cell_background;
       }
-    }    
+    }
   }
 
-  
   tr.mat-row {
     z-index: 3 !important;
     height: 26px !important;
@@ -96,37 +97,42 @@
 
   .blue-hover:hover {
     .mat-cell {
-      color:#005ec5;
+      color: #005ec5;
     }
   }
-  
+
   tr.example-detail-row {
     z-index: 3 !important;
     height: 0;
   }
-  
+
   tr.example-element-row:not(.example-expanded-row):hover {
     z-index: 3 !important;
     background: $table_hover_background;
     cursor: pointer;
   }
-  
+
   tr.example-element-row:not(.example-expanded-row):active {
     z-index: 3 !important;
     background: $table_report_background;
   }
-  
-  
+
   .example-element-detail {
     z-index: 3 !important;
     overflow: hidden;
   }
-  
-  .gradient-background{
-    background-image: repeating-linear-gradient(-45deg, rgb(255, 255, 255), rgb(255, 255, 255) 3px, rgb(240, 240, 240) 0px, rgb(240, 240, 240) 6px);
+
+  .gradient-background {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(255, 255, 255),
+      rgb(255, 255, 255) 3px,
+      rgb(240, 240, 240) 0px,
+      rgb(240, 240, 240) 6px
+    );
   }
 
-  .error{
+  .error {
     z-index: 3 !important;
     background-color: $table_report_error_background;
     text-align: left;
@@ -134,8 +140,8 @@
     border-left-style: solid;
     border-left-color: $table_report_border_left_color;
     padding-left: 5px;
-  } 
-  
+  }
+
   .menu {
     display: flex;
     align-items: center;
@@ -147,37 +153,38 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    
   }
 
-  .mat-icon.NaN{
+  .mat-icon.NaN {
     font-size: $very_small_text;
     line-height: 24px;
   }
-  
-  .groupName{
+
+  .groupName {
     padding-left: 15px;
     text-align: left;
   }
-  
-  .title{
+
+  .title {
     font-weight: bold;
     font-size: 13px;
-    color: $grey; 
+    color: $grey;
     div {
       display: flex;
       align-items: center;
     }
   }
-  
+
   .mdm-button {
     display: flex !important;
     justify-content: center;
     align-items: center;
     color: $grey;
   }
-  
-  th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+
+  th.mat-header-cell:first-of-type,
+  td.mat-cell:first-of-type,
+  td.mat-footer-cell:first-of-type {
     //z-index: 3 !important;
     padding-left: 5px !important;
   }
@@ -190,7 +197,6 @@
     background-color: $report_button_disabled_graph_background !important;
   }
 }
-
 
 .table-scroll::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -207,13 +213,13 @@
 .table-scroll::-webkit-scrollbar-thumb {
   border-radius: 8px;
   border: 2px solid white; /* should match background, can't be transparent */
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.table-scroll::-webkit-scrollbar-track { 
-  background-color: #fff; 
-  border-radius: 8px; 
-} 
+.table-scroll::-webkit-scrollbar-track {
+  background-color: #fff;
+  border-radius: 8px;
+}
 
 tr.mat-header-row {
   height: 34px !important;
@@ -221,4 +227,29 @@ tr.mat-header-row {
 
 .mat-column-_total {
   color: #1c1c1c !important;
+}
+
+// CSS black magic
+.comment-cell {
+  overflow: hidden;
+}
+.comment-cell:after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: -12px;
+  right: -12px;
+  width: 20px;
+  height: 20px;
+  transform: rotate(45deg);
+  background-color: #005ec5;
+  outline: white solid 1px;
+}
+
+.cell-content {
+  min-height: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

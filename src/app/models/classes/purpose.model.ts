@@ -1,8 +1,10 @@
 import { Deserializable } from '../interfaces/deserializable.model';
 import { OutputElement } from './output-element.model';
 import { ProjectIndicator } from './project-indicator.model';
+import { v4 as uuid } from 'uuid';
 
 export class Purpose implements Deserializable {
+    id: string;
     assumptions: string;
     description: string;
     indicators: ProjectIndicator[] = [];
@@ -14,6 +16,7 @@ export class Purpose implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.id = (input && input.id) ? input.id : uuid();
         this.outputs = ( input && input.outputs ) ? input.outputs.map(x => new OutputElement(x)) : [];
         this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;

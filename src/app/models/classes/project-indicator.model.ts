@@ -33,6 +33,8 @@ export class ProjectIndicator implements Deserializable {
   typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
   originProject?: Project;
+  disaggregatedBy?: { [key in string]: string };
+  partitionedBy?: { [key in string]: string };
 
   constructor(input?: any) {
     this.deserialize(input);

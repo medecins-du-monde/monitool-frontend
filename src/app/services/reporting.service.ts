@@ -17,7 +17,18 @@ export class ReportingService {
   ) {}
 
 
-  public exportFilters = new BehaviorSubject<any>({});
+  public exportFilters = new BehaviorSubject<{
+    logicalFrames: string[];
+    dataSources: string[];
+    crossCutting: boolean;
+    extraIndicators: boolean;
+    dimensionId: string;
+    dateRange: {
+      start: string;
+      end: string;
+    };
+    entities: string[];
+  } | null>(null);
 
   public TIME_PERIODICITIES = [
     'day', 'month_week_sat', 'month_week_sun', 'month_week_mon', 'week_sat', 'week_sun',

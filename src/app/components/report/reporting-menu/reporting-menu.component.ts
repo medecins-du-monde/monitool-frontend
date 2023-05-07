@@ -184,6 +184,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         baseline: 0,
         target: 0 ,
         originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
+        partitionedBy: {[partition.id]: partitionElement.id},
       }));
     }
 
@@ -235,7 +236,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           display: fullName,
           baseline: 0,
           target: 0,
-          originProject: this.indicator.originProject
+          originProject: this.indicator.originProject,
+          partitionedBy: { parameter }
         }));
       }
       this.addIndicatorsEvent.emit(

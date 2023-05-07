@@ -1,8 +1,10 @@
 import { Activity } from './activity.model';
 import { Deserializable } from '../interfaces/deserializable.model';
 import { ProjectIndicator } from './project-indicator.model';
+import { v4 as uuid } from 'uuid';
 
 export class OutputElement implements Deserializable {
+    id: string;
     assumptions: string;
     description: string;
     activities: Activity[] = [];
@@ -14,6 +16,7 @@ export class OutputElement implements Deserializable {
 
     deserialize(input: any): this {
         Object.assign(this, input);
+        this.id = (input && input.id) ? input.id : uuid();
         this.activities = ( input && input.activities ) ? input.activities.map(x => new Activity(x)) : [];
         this.indicators = ( input && input.indicators ) ? input.indicators.map(x => new ProjectIndicator(x)) : [];
         return this;

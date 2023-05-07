@@ -836,5 +836,8 @@
     "pdf-export": "Export as PDF",
     "png-export": "Export as PNG",
     "footer-placeholder": "Monitool graph"
-  }
+},
+  "display-comments": "Display comments",
+  "add-comment": "Add comment",
+  "edit-comment": "Edit comment"
 }
