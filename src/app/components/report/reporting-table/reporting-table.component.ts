@@ -77,10 +77,6 @@ export class ReportingTableComponent
     registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   }
 
-  get currentUser(): Observable<User> {
-    return this.authService.currentUser;
-  }
-
   get optimalColspanForGroupName(): number {
     return Math.min(
       this.columnsToDisplay.length - 2,
@@ -1325,7 +1321,6 @@ export class ReportingTableComponent
     col?: string
   ): void {
     this.selectedCell = { row: el, col };
-    console.log('row', el);
     if (this.userIsAdmin) {
       triggerElement.style.left = event.clientX + 5 + 'px';
       triggerElement.style.top = event.clientY + 5 + 'px';
@@ -1361,56 +1356,5 @@ export class ReportingTableComponent
           this.selectedCellComment = result || '';
           this.commentService.stashComment(row.commentInfo);
         });
-  }
-
-  onRevertComments(): void {
-    // if (!this.commentService.hasChanges) {
-    //   this.cellChanges = {};
-    //   return;
-    // }
-    // const changedCommentsPaths = Object.keys(this.cellChanges);
-    // console.log('changedCommentsPaths', changedCommentsPaths);
-
-    // const rows = this.rows.getValue() as RowCommentInfo[];
-    // const newRows = rows.map(row => {
-    //   const rowPath = row.commentInfo.path;
-    //   if (!changedCommentsPaths.includes(rowPath)) return row;
-
-    //   const initInfo = this.cellChanges[rowPath];
-    //   row.commentInfo = cloneDeep(initInfo);
-
-    //   const filters: CommentFilter = {
-    //     ...this.globalCommentFilters,
-    //     disaggregatedBy: row.disaggregatedBy || {}
-    //   };
-
-    //   // Update comment/comments
-    //   const contentIndex = findContentIndexByFilter(row.commentInfo, filters);
-    //   const content =
-    //     contentIndex !== -1 ? row.commentInfo.content[contentIndex] : null;
-
-    //   // If no match, remove old comments, if any
-    //   if (!content) {
-    //     delete row.comment;
-    //     row.comments = {};
-    //     return row;
-    //   }
-
-    //   // Check if the row corresponds to an indicator
-    //   const path = row.commentInfo.path;
-    //   const pathArr = path.split('|');
-    //   const isIndicator = ['indicator:', 'element:'].some(prefix =>
-    //     pathArr[pathArr.length - 1].startsWith(prefix)
-    //   );
-
-    //   if (isIndicator) row.comments = content.comments;
-    //   else row.comment = content.comment;
-
-    //   return row;
-    // });
-
-    // this.rows.next(newRows);
-    // this.cellChanges = {};
-    // this.commentService.clearStash();
   }
 }

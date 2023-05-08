@@ -64,7 +64,6 @@ export class RevisionSummaryComponent implements OnInit {
 
       if (key) {
         data.translationKey = key;
-        console.log('data', data);
         // Simplify the comments to only show 'updated comment'
         // Check if there is already a key starting with 'HistoryRevision.comments'
         if (key.startsWith('HistoryRevision.comments')) {

@@ -54,19 +54,16 @@ export class CommentService {
     private authService: AuthService
   ) {
     this.projectService.projectId.subscribe(() => {
-      console.log('projectService.projectId.subscribe');
       this.cachedComments = null;
     })
   }
 
   public getByPath(paths: string[]): (Comment | undefined)[] {
     const comments = this.projectService.project.getValue().comments || [];
-    console.log('getByPath comments', comments);
     return paths.map(path => comments.find(comment => comment.path === path));
   }
 
   public stashComment(comment: Comment): void {
-    console.log('stashComment', comment);
     // Only admin accounts can touch comments.
     const isAdmin = this.authService.user.getValue()?.role === 'admin';
     if (!isAdmin) return;
@@ -77,9 +74,6 @@ export class CommentService {
         .serialize().comments;
 
     const allComments = cloneDeep(this.cachedComments) || [];
-    console.log('project comments', this.projectService.project
-    .getValue()
-    .serialize().comments);
 
     // Check if there's a comment with the same id
     const oldComment = comment.id
@@ -94,7 +88,6 @@ export class CommentService {
       // Adds the comment to the project
       this.projectService.setComments([...allComments, comment]);
       this.cachedComments = [...allComments, comment];
-      console.log('new comment');
       return;
     }
 
@@ -102,6 +95,5 @@ export class CommentService {
     oldComment.content = comment.content;
     this.projectService.setComments(allComments);
     this.cachedComments = allComments;
-    console.log('updated comment');
   }
 }

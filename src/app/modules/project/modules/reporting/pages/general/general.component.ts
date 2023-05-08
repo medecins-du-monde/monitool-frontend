@@ -147,7 +147,6 @@ export class GeneralComponent implements OnInit {
   }
 
   buildIndicators(): void {
-    // console.log('buildIndicators');
     if (!(this.themes && this.crosscutting && this.project)) {
       return;
     }
@@ -443,7 +442,6 @@ export class GeneralComponent implements OnInit {
       return row;
     });
 
-    // console.log(newRows);
     this.tableContent.next(newRows);
   }
 

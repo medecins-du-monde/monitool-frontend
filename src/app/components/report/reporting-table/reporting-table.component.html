@@ -691,9 +691,7 @@
   </ng-container>
 </mat-menu>
 
-<app-project-save
-  *ngIf="(currentUser | async).role === 'admin'"
-></app-project-save>
+<app-project-save *ngIf="userIsAdmin"></app-project-save>
 <!--
 <button mat-raised-button color="primary" (click)="exportTOExcel()">Export as Excel</button>
 -->
