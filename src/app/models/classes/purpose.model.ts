@@ -24,10 +24,11 @@ export class Purpose implements Deserializable {
 
     serialize() {
       return {
+            id: this.id,      
             assumptions: this.assumptions || '',
             description: this.description || '',
             indicators: this.indicators.map(x => x.serialize()),
-            outputs: this.outputs.map(x => x.serialize())
+            outputs: this.outputs.map(x => x.serialize()),
         };
     }
 }

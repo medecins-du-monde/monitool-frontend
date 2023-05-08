@@ -18,26 +18,9 @@ import { Entity } from 'src/app/models/classes/entity.model';
 import {
   CommentService,
   Comment,
-  CommentFilter
+  CommentFilter,
+  findContentIndexByFilter
 } from 'src/app/services/comment.service';
-import { isEqual } from 'lodash';
-
-/** Find the comments  */
-export const findContentIndexByFilter = (
-  comment: Comment,
-  filters: CommentFilter
-): number => {
-  return comment.content.findIndex(c => {
-    const cFilters = c.filter;
-    return (
-      cFilters.dateStart === filters.dateStart &&
-      cFilters.dateEnd === filters.dateEnd &&
-      cFilters.dimension === filters.dimension &&
-      cFilters.project === filters.project &&
-      isEqual(cFilters.disaggregatedBy, filters.disaggregatedBy)
-    );
-  });
-};
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -109,13 +92,11 @@ export class GeneralComponent implements OnInit {
     const dateStart = this.filter.getValue()._start.toISOString();
     const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
-    const project = this.project.id;
 
     return {
       dateStart,
       dateEnd,
-      dimension,
-      project
+      dimension
     };
   }
 
@@ -127,7 +108,7 @@ export class GeneralComponent implements OnInit {
   crosscutting: Indicator[];
   multiThemesIndicators: Indicator[];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
-  showComments = true;
+  showComments = false;
 
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
@@ -215,7 +196,7 @@ export class GeneralComponent implements OnInit {
         level += 1;
         for (const purpose of logicalFrame.purposes) {
           const pathAux = path;
-          path += '|' + purpose.id;
+          path += '|purpose:' + purpose.id;
           rows.push({
             icon: false,
             groupName: `${this.translateService.instant(
@@ -234,7 +215,7 @@ export class GeneralComponent implements OnInit {
           level += 1;
           for (const output of purpose.outputs) {
             const pathAux = path;
-            path += '|' + output.id;
+            path += '|output:' + output.id;
             rows.push({
               icon: false,
               groupName: `${this.translateService.instant('Result')}: ${
@@ -409,22 +390,20 @@ export class GeneralComponent implements OnInit {
     }
     this.tableContent.next(rows);
 
-    this.commentService
-      .loadComments(commentsToLoad)
-      // Update rows once comments are loaded
-      .then(comments => {
-        (comments || []).forEach((comment, index) => {
-          if (!comment) {
-            rows[index].commentInfo = {
-              path: commentsToLoad[index],
-              content: []
-            };
-          } else {
-            rows[index].commentInfo = comment;
-          }
-        });
-        this.updateTableComments(rows);
-      });
+    const comments = this.commentService.getByPath(commentsToLoad);
+    // Update rows once comments are loaded
+    comments.forEach((comment, index) => {
+      if (!comment) {
+        rows[index].commentInfo = {
+          path: commentsToLoad[index],
+          content: []
+        };
+      } else {
+        rows[index].commentInfo = comment;
+      }
+    });
+    
+    this.updateTableComments(rows);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -441,7 +420,8 @@ export class GeneralComponent implements OnInit {
 
       // Check if there is a comment with the same filters
       const contentIndex = findContentIndexByFilter(commentInfo, filters);
-      const content = contentIndex !== -1 ? commentInfo.content[contentIndex] : null;
+      const content =
+        contentIndex !== -1 ? commentInfo.content[contentIndex] : null;
 
       // If no match, remove old comments, if any
       if (!content) {
@@ -453,9 +433,9 @@ export class GeneralComponent implements OnInit {
       // Check if the row corresponds to an indicator
       const path = row.commentInfo.path;
       const pathArr = path.split('|');
-      const isIndicator = ['indicator:', 'element:'].some(
-        prefix => pathArr[pathArr.length - 1].startsWith(prefix)
-      )
+      const isIndicator = ['indicator:', 'element:'].some(prefix =>
+        pathArr[pathArr.length - 1].startsWith(prefix)
+      );
 
       if (isIndicator) row.comments = content.comments;
       else row.comment = content.comment;

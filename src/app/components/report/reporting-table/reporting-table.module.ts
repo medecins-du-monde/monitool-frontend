@@ -8,6 +8,7 @@ import { ReportingMenuModule } from '../reporting-menu/reporting-menu.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommentModalModule } from '../comment-modal/comment-modal.module';
+import { ProjectSaveModule } from 'src/app/modules/project/modules/structure/components/project-save/project-save.module';
 
 @NgModule({
   declarations: [ReportingTableComponent],
@@ -19,7 +20,8 @@ import { CommentModalModule } from '../comment-modal/comment-modal.module';
     ReportingMenuModule,
     MatTooltipModule,
     MatMenuModule,
-    CommentModalModule
+    CommentModalModule,
+    ProjectSaveModule
   ],
   exports: [ReportingTableComponent]
 })

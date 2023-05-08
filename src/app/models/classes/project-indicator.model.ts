@@ -154,6 +154,7 @@ export class ProjectIndicator implements Deserializable {
         && this.target !== null
         && this.target !== undefined) ? this.colorize : false,
       computation: this.formatComputation(this.computation),
+      id: this.id,
     };
 
     if (!crossCuttingType) {

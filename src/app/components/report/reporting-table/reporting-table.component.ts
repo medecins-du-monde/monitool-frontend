@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import {
   PERCENTAGE_FORMULA,
@@ -42,15 +42,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import {
   CommentFilter,
-  // CommentFilter,
   CommentService,
-  Comment
+  Comment,
+  findContentIndexByFilter
 } from 'src/app/services/comment.service';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 import { User } from 'src/app/models/classes/user.model';
-import { findContentIndexByFilter } from 'src/app/modules/project/modules/reporting/pages/general/general.component';
 
-type Row = SectionTitle | GroupTitle | InfoRow;
+type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
 type RowCommentInfo = {
   comment?: string;
@@ -76,6 +75,10 @@ export class ReportingTableComponent
     private commentService: CommentService
   ) {
     registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
+
+  get currentUser(): Observable<User> {
+    return this.authService.currentUser;
   }
 
   get optimalColspanForGroupName(): number {
@@ -115,13 +118,11 @@ export class ReportingTableComponent
     const dateStart = this.filter.getValue()._start.toISOString();
     const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
-    const project = this.project.id;
 
     return {
       dateStart,
       dateEnd,
       dimension,
-      project
     };
   }
 
@@ -139,9 +140,7 @@ export class ReportingTableComponent
     if (!this.selectedCell) return;
 
     const isIndicator = !!this.selectedCell.col;
-    console.log('this.selectedCell.row', this.selectedCell.row);
     const commentInfo: Comment = this.selectedCell.row.commentInfo;
-    console.log('row, ', this.selectedCell.row);
     const filters = {
       ...this.globalCommentFilters,
       disaggregatedBy: this.selectedCell.row.disaggregatedBy || {}
@@ -989,7 +988,6 @@ export class ReportingTableComponent
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
     } else {
-      console.log('here', info.disaggregatedIndicators)
       for (const disaggregatedIndicator of info.disaggregatedIndicators) {
         indicatorIndex += 1;
 
@@ -1348,7 +1346,7 @@ export class ReportingTableComponent
 
     if (action === 'delete') {
       this.selectedCellComment = '';
-      this.commentService.saveComment(row.commentInfo);
+      this.commentService.stashComment(row.commentInfo);
     } else
       this.dialog
         .open(CommentModalComponent, {
@@ -1361,7 +1359,58 @@ export class ReportingTableComponent
         .subscribe(result => {
           if (result === null) return;
           this.selectedCellComment = result || '';
-          this.commentService.saveComment(row.commentInfo);
+          this.commentService.stashComment(row.commentInfo);
         });
+  }
+
+  onRevertComments(): void {
+    // if (!this.commentService.hasChanges) {
+    //   this.cellChanges = {};
+    //   return;
+    // }
+    // const changedCommentsPaths = Object.keys(this.cellChanges);
+    // console.log('changedCommentsPaths', changedCommentsPaths);
+
+    // const rows = this.rows.getValue() as RowCommentInfo[];
+    // const newRows = rows.map(row => {
+    //   const rowPath = row.commentInfo.path;
+    //   if (!changedCommentsPaths.includes(rowPath)) return row;
+
+    //   const initInfo = this.cellChanges[rowPath];
+    //   row.commentInfo = cloneDeep(initInfo);
+
+    //   const filters: CommentFilter = {
+    //     ...this.globalCommentFilters,
+    //     disaggregatedBy: row.disaggregatedBy || {}
+    //   };
+
+    //   // Update comment/comments
+    //   const contentIndex = findContentIndexByFilter(row.commentInfo, filters);
+    //   const content =
+    //     contentIndex !== -1 ? row.commentInfo.content[contentIndex] : null;
+
+    //   // If no match, remove old comments, if any
+    //   if (!content) {
+    //     delete row.comment;
+    //     row.comments = {};
+    //     return row;
+    //   }
+
+    //   // Check if the row corresponds to an indicator
+    //   const path = row.commentInfo.path;
+    //   const pathArr = path.split('|');
+    //   const isIndicator = ['indicator:', 'element:'].some(prefix =>
+    //     pathArr[pathArr.length - 1].startsWith(prefix)
+    //   );
+
+    //   if (isIndicator) row.comments = content.comments;
+    //   else row.comment = content.comment;
+
+    //   return row;
+    // });
+
+    // this.rows.next(newRows);
+    // this.cellChanges = {};
+    // this.commentService.clearStash();
   }
 }

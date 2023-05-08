@@ -63,8 +63,22 @@ export class RevisionSummaryComponent implements OnInit {
       }
 
       if (key) {
-        data['translationKey'] = key;
-        this.output.push(data);
+        data.translationKey = key;
+        console.log('data', data);
+        // Simplify the comments to only show 'updated comment'
+        // Check if there is already a key starting with 'HistoryRevision.comments'
+        if (key.startsWith('HistoryRevision.comments')) {
+          const hasCommentPatch =
+            this.output.findIndex(x =>
+              x.translationKey.startsWith('HistoryRevision.comments_updated')
+            ) !== -1;
+          if (!hasCommentPatch) {
+            this.output.push({
+              ...data,
+              translationKey: 'HistoryRevision.comments_updated'
+            });
+          }
+        } else this.output.push(data);
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;

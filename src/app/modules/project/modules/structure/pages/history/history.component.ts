@@ -112,7 +112,6 @@ export class HistoryComponent implements OnInit {
             timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
             revision.displayedTime = timeArr;
           });
-          console.log(revisions);
           this.revisions = revisions;
           this.showLoadMore = revisions.length < 10 ? false : true;
           this.changeDetector.markForCheck();
@@ -147,7 +146,6 @@ export class HistoryComponent implements OnInit {
         newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
         revision.displayedTime = timeArr;
       });
-      console.log(revisions);
       this.revisions = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });

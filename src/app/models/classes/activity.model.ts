@@ -20,6 +20,7 @@ export class Activity implements Deserializable {
 
     serialize() {
         return {
+            id: this.id,
             description: this.description || '',
             indicators: this.indicators.map(x => x.serialize()),
         };

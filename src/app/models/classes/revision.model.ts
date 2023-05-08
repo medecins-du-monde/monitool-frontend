@@ -1,6 +1,6 @@
 import { Deserializable } from '../interfaces/deserializable.model';
 
-class Patch {
+export class Patch {
     op: string;
     path: string;
     value?: string;
@@ -22,7 +22,7 @@ export class Revision implements Deserializable {
     displayedTime?: any[];
 
     get username(): string {
-        return this.user.substring(5);
+        return this.user?.substring(5) || '';
     }
 
     constructor(input?: any) {

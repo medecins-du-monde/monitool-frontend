@@ -192,6 +192,7 @@
       "end_replace": "Cambia el final del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "country_replace": "Cambia el país del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "visibility_replace": "Cambia la visibilidad del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+      "comments_updated": "Comentarios de la tabla de informes actualizados",
 
       "themes_add": "Añade una temática al proyecto",
       "themes_move": "Reordena las temáticas del proyecto",

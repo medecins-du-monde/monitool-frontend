@@ -305,8 +305,9 @@
       "users_password_replace": "Change the password of the partner <code>{{user.name}}</code>",
       "users_remove": "Remove the user <code>{{item.id}}</code> from the project",
       "users_role_replace": "Change the role of  <code>{{user.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
-      "visibility_replace": "Change the project visibility from <code>{{before}}</code> vers <code>{{after}}</code>"
-  },
+      "visibility_replace": "Change the project visibility from <code>{{before}}</code> vers <code>{{after}}</code>",
+      "comments_updated": "Reporting table comments updated"
+    },
   "Home": "Home",
   "HomeSections": {
       "GettingStarted": {

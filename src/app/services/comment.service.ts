@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+import { cloneDeep, isEqual } from 'lodash';
+import { ProjectService } from './project.service';
+import { AuthService } from './auth.service';
+import { v4 as uuid } from 'uuid';
+import { Project } from '../models/classes/project.model';
 
 export type Comment = {
   id?: string;
@@ -10,7 +14,6 @@ export type Comment = {
       [key: string]: string;
     };
     filter: {
-      project: string;
       dateStart: string;
       dateEnd: string;
       dimension: string;
@@ -21,30 +24,84 @@ export type Comment = {
 
 export type CommentFilter = Comment['content'][number]['filter'];
 
+/** Finds the content that has a matching filter  */
+export const findContentIndexByFilter = (
+  comment: Comment | undefined,
+  filters: CommentFilter
+): number => {
+  return (
+    comment?.content.findIndex(c => {
+      const cFilters = c.filter;
+      return (
+        cFilters.dateStart === filters.dateStart &&
+        cFilters.dateEnd === filters.dateEnd &&
+        cFilters.dimension === filters.dimension &&
+        isEqual(cFilters.disaggregatedBy, filters.disaggregatedBy)
+      );
+    }) ?? -1
+  );
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
   public currFilters: Omit<CommentFilter, 'disaggregatedBy'> | null = null;
+  private cachedComments: Comment[] | null;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private projectService: ProjectService,
+    private authService: AuthService
+  ) {
+    this.projectService.projectId.subscribe(() => {
+      console.log('projectService.projectId.subscribe');
+      this.cachedComments = null;
+    })
+  }
 
-  public async loadComments(paths: string[]): Promise<(Comment | undefined)[]> {
-    const res = await this.apiService.post('/resources/comments', {
-      paths
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const comments = (res as any) as Comment[];
+  public getByPath(paths: string[]): (Comment | undefined)[] {
+    const comments = this.projectService.project.getValue().comments || [];
+    console.log('getByPath comments', comments);
     return paths.map(path => comments.find(comment => comment.path === path));
   }
 
-  public removeComment(id: string): void {
-    this.apiService.delete(`/resources/comment/${id}`);
-  }
+  public stashComment(comment: Comment): void {
+    console.log('stashComment', comment);
+    // Only admin accounts can touch comments.
+    const isAdmin = this.authService.user.getValue()?.role === 'admin';
+    if (!isAdmin) return;
 
-  public async saveComment(comment: Comment): Promise<void> {
-    console.log('saving comment', comment);
-    await this.apiService.put('/resources/comment', comment);
+    if (!this.cachedComments)
+      this.cachedComments = this.projectService.project
+        .getValue()
+        .serialize().comments;
+
+    const allComments = cloneDeep(this.cachedComments) || [];
+    console.log('project comments', this.projectService.project
+    .getValue()
+    .serialize().comments);
+
+    // Check if there's a comment with the same id
+    const oldComment = comment.id
+      ? allComments.find(c => c.id === comment.id)
+      : null;
+
+    // If there's no comment with the same id, create a new one
+    if (!oldComment) {
+      // Adds id to the comment
+      Object.assign(comment, { id: uuid() });
+
+      // Adds the comment to the project
+      this.projectService.setComments([...allComments, comment]);
+      this.cachedComments = [...allComments, comment];
+      console.log('new comment');
+      return;
+    }
+
+    // If there's a comment with the same id, just replace the content
+    oldComment.content = comment.content;
+    this.projectService.setComments(allComments);
+    this.cachedComments = allComments;
+    console.log('updated comment');
   }
 }

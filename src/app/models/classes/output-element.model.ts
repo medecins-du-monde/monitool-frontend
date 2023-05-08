@@ -24,6 +24,7 @@ export class OutputElement implements Deserializable {
 
     serialize() {
         return {
+            id: this.id,
             assumptions: this.assumptions || '',
             description: this.description || '',
             indicators: this.indicators.map(x => x.serialize()),
