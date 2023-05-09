@@ -67,11 +67,25 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       });
     }
 
+    // Always include the collection site groups option if the current project has groups
+    // and isn't already disaggregated by groups
+    if (
+      this.dimensionName !== 'entity' &&
+      this.dimensionName !== 'group' &&
+      !this.indicator.customFilter &&
+      currentProject.groups.length > 0
+    ) {
+      this.options.push({
+        value: `${this.translateService.instant('CollectionSiteGroups')}`,
+        action: this.collectionSiteGroupsOption
+      });
+    }
+
     /* We always put the collection site option if the current project has entities
-       and we didn t already choose the collection sites or groups filter */
+       and we didn't already choose the collection sites or groups filter */
     if (this.dimensionName !== 'entity'
         && this.dimensionName !== 'group'
-        && !this.indicator.customFilter
+        && (!this.indicator.customFilter || !!this.indicator.disaggregatedByGroup)
         && currentProject.entities.length > 0){
       this.options.push({
         value: `${this.translateService.instant('CollectionSites')}`,
@@ -255,6 +269,17 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         indicator: this.indicator,
         disaggregatedIndicators: [],
         splitBySites: true
+      } as AddedIndicators
+    );
+  }
+
+  collectionSiteGroupsOption = (): void => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit(
+      {
+        indicator: this.indicator,
+        disaggregatedIndicators: [],
+        splitBySiteGroups: true
       } as AddedIndicators
     );
   }

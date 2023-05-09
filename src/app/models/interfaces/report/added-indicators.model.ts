@@ -5,5 +5,6 @@ export interface AddedIndicators {
     indicator: InfoRow;
     disaggregatedIndicators?: ProjectIndicator[];
     splitBySites?: boolean;
+    splitBySiteGroups?: boolean;
     splitByTime?: string;
   }

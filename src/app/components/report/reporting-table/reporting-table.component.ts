@@ -297,7 +297,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             parentLevel = this.content[i].level;
           }
           if (this.content[i].level === parentLevel) {
-            console.log(this.content[i], parentLevel);
+            // console.log(this.content[i], parentLevel);
             this.content[i].isParent = parentLevel;
           }
         }
@@ -658,9 +658,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       const newIndicators = [];
       const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-    // getting the logical frame of current indicator to get all its entities.
+      // getting the logical frame of current indicator to get all its entities.
+      // or current entity if the indicator is disaggregated by group
       const group = this.getGroup(currentIndicator);
-      const groupEntities = (group?.entities || []).map(({id}) => id).filter(Boolean);
+      const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
       const ent = groupEntities.length ? groupEntities : entities;
 
       for (const entityId of ent) {
@@ -678,6 +679,34 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
         customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
         customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = false;
+        newIndicators.push(customIndicator);
+      }
+
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitBySiteGroups) {
+      const newIndicators = [];
+      const groups = currentProject.groups || [];
+
+      for (const group of groups) {
+        const customFilter = {
+          entity: group.members.map(x => x.id)
+        };
+
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = group.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = true;
         newIndicators.push(customIndicator);
       }
 
