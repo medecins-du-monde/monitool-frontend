@@ -85,7 +85,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
        and we didn't already choose the collection sites or groups filter */
     if (this.dimensionName !== 'entity'
         && this.dimensionName !== 'group'
-        && (!this.indicator.customFilter || !!this.indicator.disaggregatedByGroup)
+        && (!this.indicator.customFilter || this.indicator.disaggregatedByGroup)
         && currentProject.entities.length > 0){
       this.options.push({
         value: `${this.translateService.instant('CollectionSites')}`,

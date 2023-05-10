@@ -297,14 +297,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             parentLevel = this.content[i].level;
           }
           if (this.content[i].level === parentLevel) {
-            // console.log(this.content[i], parentLevel);
             this.content[i].isParent = parentLevel;
           }
         }
       }
+      // Filters displayed rows with the entities selected in the collection sites filter
+      // Disaggregations by collection sites and collection sites groups
       this.rows.next(this.content.filter(el => {
         if (el.customFilter && el.customFilter.entity) {
-          return this.currentFilter.entities.includes(el.customFilter.entity[0]);
+          return el.customFilter.entity.every(entity => this.currentFilter.entities.includes(entity));
         }
         return true;
       }));
@@ -635,7 +636,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     return data;
   }
 
-  // this method will return the input group for a given indicator
+  // This method will return the input group for a given indicator
   getGroup(indicator: InfoRow): any {
     const { logicalFrames } = this.project;
     const { forms } = this.project;
@@ -656,15 +657,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
     if (info.splitBySites) {
       const newIndicators = [];
-      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
+      // const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
       // getting the logical frame of current indicator to get all its entities.
       // or current entity if the indicator is disaggregated by group
       const group = this.getGroup(currentIndicator);
       const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
-      const ent = groupEntities.length ? groupEntities : entities;
 
-      for (const entityId of ent) {
+      for (const entityId of groupEntities) {
         const customFilter = {
           entity: [entityId]
         };
@@ -691,7 +691,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
     else if (info.splitBySiteGroups) {
       const newIndicators = [];
-      const groups = currentProject.groups || [];
+      const groups = [];
+
+      (currentProject.groups || []).map(projectGroup => {
+        if (projectGroup.members.every(entity => this.getGroup(currentIndicator).entities.includes(entity))) {
+          groups.push(projectGroup);
+        }
+      });
 
       for (const group of groups) {
         const customFilter = {
@@ -768,6 +774,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         }
         else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
+        }
+
+        if (currentIndicator.disaggregatedByGroup) {
+          newRow.disaggregatedByGroup = true;
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
