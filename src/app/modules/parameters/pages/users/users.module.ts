@@ -5,15 +5,19 @@ import { UserModule } from './components/user/user.module';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-    declarations: [UsersComponent],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        UsersRoutingModule,
-        UserModule,
-        MatTableModule,
-    ]
+  declarations: [UsersComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    UsersRoutingModule,
+    UserModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
+  ]
 })
-export class UsersModule { }
+export class UsersModule {}

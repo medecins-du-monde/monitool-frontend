@@ -12,7 +12,7 @@ export class LocalizedDatePipe implements PipeTransform {
 
   transform(value: any, pattern = 'longDate'): any {
     const currentLang = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-    const datePipe: DatePipe = new DatePipe(currentLang);
+    const datePipe: DatePipe = new DatePipe(currentLang || 'en-US');
     return datePipe.transform(value, pattern);
   }
 }

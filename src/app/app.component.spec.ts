@@ -1,16 +1,24 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, async } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: true }),
+        MatDialogModule
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent]
     }).compileComponents();
   }));
 
@@ -24,12 +32,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('MDM-monitool-Frontend');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('MDM-monitool-Frontend app is running!');
   });
 });

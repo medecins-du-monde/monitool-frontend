@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -211,7 +211,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.dataSourceForm.valid;
+      this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -292,12 +292,48 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     });
   }
 
+  private datesAreInRange(): boolean {
+    const dataSource = this.dataSourceForm.value;
+    if (dataSource.start && dataSource.end) {
+      const start = (dataSource.start as any)._d || dataSource.start ;
+      const end = (dataSource.end as any)._d || dataSource.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'DataSource'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldDataSource = res.forms.find(form => form.id === this.dataSourceForm.value.id);
+          if (start.getTime() > oldDataSource.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'DataSource'
+            };
+          } else if (end.getTime() < oldDataSource.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'DataSource'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
+  }
+
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>): void {
-    const selectedControl = this.elements.at(event.previousIndex);
-    const newControls = this.elements.at(event.currentIndex);
-    this.elements.setControl(event.previousIndex, newControls);
-    this.elements.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.elements.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.elements.at(0);
+    this.elements.setControl(0, control);
   }
 
   ngOnDestroy(): void {

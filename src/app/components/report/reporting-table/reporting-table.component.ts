@@ -1,6 +1,6 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ type Row = SectionTitle | GroupTitle | InfoRow;
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss']
 })
-export class ReportingTableComponent implements OnInit, OnDestroy {
+export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private projectService: ProjectService,
               private reportingService: ReportingService,
@@ -51,6 +51,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
+  @ViewChild('reportingTable') tableRef: ElementRef;
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
@@ -113,6 +114,55 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
   isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
 
+  get exportFilters(): any {
+    const filter: any = this.filter.getValue();
+    const filters: {
+      logicalFrames: string[];
+      dataSources: string[];
+      crossCutting: boolean;
+      extraIndicators: boolean;
+      dateRange: {
+        start: string;
+        end: string;
+      },
+      entities: string[];
+    } = {
+      logicalFrames: [],
+      dataSources: [],
+      crossCutting: false,
+      extraIndicators: false,
+      dateRange: {
+        start: filter._start._d ? filter._start._d.toLocaleDateString('fr-CA') : filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end._d ? filter._end._d.toLocaleDateString('fr-CA') : filter._end.toLocaleDateString('fr-CA')
+      },
+      entities: filter.entities || []
+    };
+    this.projectService.openedProject.subscribe((project: Project) => {
+      let i = 1;
+      project.logicalFrames.forEach(logicalFrame => {
+        if (this.openedSections[i]) {
+          filters.logicalFrames.push(logicalFrame.id);
+        }
+        i++;
+      });
+      if (this.openedSections[i]) {
+        filters.crossCutting = true;
+      }
+      i++;
+      if (this.openedSections[i]) {
+        filters.extraIndicators = true;
+      }
+      i++;
+      project.forms.forEach(dataSource => {
+        if (this.openedSections[i]) {
+          filters.dataSources.push(dataSource.id);
+        }
+        i++;
+      });
+    });
+
+    return filters;
+  }
   ngOnInit(): void {
     this.calculateOptimalColspan();
     this.subscription.add(
@@ -202,11 +252,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.reportingService.currReportTable.next(this.tableRef);
+  }
+
   updateTableContent(): void {
+    this.reportingService.exportFilters.next(this.exportFilters);
     // TODO: Check why this.tableContent and not this.content
     if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)) {
       let id = 0;
-
       this.content = this.content.map(this.convertToRow);
 
       for (const row of this.content) {
@@ -223,10 +277,29 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           this.content[0].level = 0;
         }
       }
+
+
+      // Used for getIndicator()
+      let parentLevel;
+
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1) {
         if (this.content[i].level === undefined) {
           this.content[i].level = this.content[i - 1].level;
+        }
+
+        // Info for getIndicator()
+        if (this.content[i].groupName) {
+          parentLevel = undefined;
+        }
+        if (this.content[i].name && (this.content[i].unit !== '%' || this.content[i].unit !== '‰')) {
+          if (parentLevel === undefined) {
+            parentLevel = this.content[i].level;
+          }
+          if (this.content[i].level === parentLevel) {
+            console.log(this.content[i], parentLevel);
+            this.content[i].isParent = parentLevel;
+          }
         }
       }
       this.rows.next(this.content.filter(el => {
@@ -304,7 +377,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create row of the table from a ProjectIndicator
-  indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow {
+  indicatorToRow(indicator: ProjectIndicator, currentIndicator?: any): InfoRow {
     const row = {
       icon: true,
       name: indicator.display,
@@ -322,8 +395,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       open: true
     } as InfoRow;
 
-    if (customFilter) {
-      row.customFilter = customFilter;
+    if (currentIndicator) {
+      row.customFilter = currentIndicator.customFilter;
+      row.start = currentIndicator.start;
+      row.end = currentIndicator.end;
     }
 
     return row;
@@ -527,6 +602,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
         const copyOfDataset = Object.assign({}, row.dataset);
         copyOfDataset.unit = row.unit;
+        copyOfDataset.baseline = row.baseline;
+        copyOfDataset.target = row.target;
 
         datasets.push(copyOfDataset);
       }
@@ -587,20 +664,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const ent = groupEntities.length ? groupEntities : entities;
 
       for (const entityId of ent) {
-      const customFilter = {
-        entity: [entityId]
-      };
+        const customFilter = {
+          entity: [entityId]
+        };
 
-      let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
-      customIndicator.level = info.indicator.level + 1;
-      customIndicator.onChart = false;
-      customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
-      customIndicator.customFilter = customFilter;
-      customIndicator.values = {};
-      customIndicator = this.updateRowValues(customIndicator);
-      newIndicators.push(customIndicator);
-    }
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
+        customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
+        customIndicator = this.updateRowValues(customIndicator);
+        newIndicators.push(customIndicator);
+      }
 
       this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
 
@@ -656,7 +735,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
         let newRow;
         if (currentIndicator.customFilter) {
-          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
+          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator);
         }
         else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
@@ -719,38 +798,58 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       return 'white';
     }
 
-    const distance = element.target - element.baseline;
-
     let r = 255;
     let g = 128;
     const b = 128;
 
-    // if the value is lower than the baseline, we choose red
-    if (element.values[column] <= element.baseline) {
-      r = 255;
-      g = 128;
-    }
-    // if it is higher than the target, we choose green
-    else if (element.values[column] >= element.target) {
-      g = 255;
-      r = 128;
-    }
-    // if it is somewhere in between, we calculate where and choose accordingly
-    else {
-      const myPosition = element.values[column] - element.baseline;
-      const normalizedDifference = (myPosition / distance) * 255;
-      if (normalizedDifference <= 127) {
-        g += normalizedDifference;
-      } else {
-        g = 255;
-        r -= (normalizedDifference - 127);
-      }
-    }
+    if (element.baseline <= element.target) {
+      const distance = element.target - element.baseline;
 
-    if (distance < 0) {
-      const aux = g;
-      g = r;
-      r = aux;
+      // if the value is lower than the baseline, we choose red
+      if (element.values[column] <= element.baseline) {
+        r = 255;
+        g = 128;
+      }
+      // if it is higher than the target, we choose green
+      else if (element.values[column] >= element.target) {
+        g = 255;
+        r = 128;
+      }
+      // if it is somewhere in between, we calculate where and choose accordingly
+      else {
+        const myPosition = element.values[column] - element.baseline;
+        const normalizedDifference = (myPosition / distance) * 255;
+        if (normalizedDifference <= 127) {
+          g += normalizedDifference;
+        } else {
+          g = 255;
+          r -= (normalizedDifference - 127);
+        }
+      }
+    } else { // If baseline is a higher value that the target we invert the calculations
+      const distance = element.baseline - element.target;
+
+      // if the value is higher than the baseline, we choose red
+      if (element.values[column] >= element.baseline) {
+        r = 255;
+        g = 128;
+      }
+      // if it is lower than the target, we choose green
+      else if (element.values[column] <= element.target) {
+        g = 255;
+        r = 128;
+      }
+      // if it is somewhere in between, we calculate where and choose accordingly
+      else {
+        const myPosition = element.baseline - element.values[column];
+        const normalizedDifference = (myPosition / distance) * 255;
+        if (normalizedDifference <= 127) {
+          g += normalizedDifference;
+        } else {
+          g = 255;
+          r -= (normalizedDifference - 127);
+        }
+      }
     }
 
     return `rgb(${r}, ${g}, ${b})`;
@@ -815,6 +914,25 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  isInRange(data, date): boolean {
+    let result = true;
+    const group = this.getGroup(data);
+    const currentDate = new Date(date);
+    currentDate.setHours(12);
+
+    if (group instanceof LogicalFrame) {
+      if (group.start.getTime() > currentDate.getTime() || group.end.getTime() < currentDate.getTime()) {
+        result = false;
+      }
+    }
+    if (data.start && data.end) {
+      if (data.start.getTime() > currentDate.getTime() || data.end.getTime() < currentDate.getTime()) {
+        result = false;
+      }
+    }
+    return result;
+  }
+
   styleValue(value, unit){
     if (value === undefined){
       return '';
@@ -868,6 +986,22 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  /**
+   * Gets the baseline value from an element
+   *
+   * @param element The element to get the baseline from
+   * @returns A string containing the baseline value
+   */
+  getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
+    const value = element[type];
+    // if (type === 'baseline') console.log(element);
+    if (value === null || value === undefined || (element.isParent !== element.level &&
+      element.unit !== '%' && element.unit !== '‰')) {
+      return '';
+    }
+    return value + (element.unit ?? '');
   }
 }
 

@@ -1,0 +1,93 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{'export-graph-modal.header' | translate}}</h2>
+<mat-dialog-content class="dialog-body">
+  <!-- Used to render the graph which will be downloaded -->
+  <div style="position: absolute; top:200vh; width: 1200px; height: 400px">
+    <canvas id="chartToDownload"></canvas>
+  </div>
+  <div>
+    <mat-expansion-panel hideToggle
+      (opened)="options.title.display = true"
+      (closed)="options.title.display = false"
+    >
+      <mat-expansion-panel-header>
+        <p class="panel-title">{{'export-graph-modal.title-display' | translate}}</p>
+        <mat-checkbox color="primary" style="position: absolute; right: 24px" (click)="$event.preventDefault()" [(ngModel)]="options.title.display"></mat-checkbox>
+      </mat-expansion-panel-header>
+      <div style="width: 100%;">
+        <div class="mdm-form-group">
+          <div class="mdm-form-label">{{'export-graph-modal.title' | translate}}</div>
+          <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput [(ngModel)]="options.title.text" [placeholder]="data.name">
+          </mat-form-field>
+        </div>
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{'export-graph-modal.position' | translate}}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field">
+                <mat-select disableOptionCentering panelClass="myPanelClass" [(ngModel)]="options.title.position">
+                  <mat-option value="top">{{'export-graph-modal.top' | translate}}</mat-option>
+                  <!-- <mat-option value="bottom">{{'export-graph-modal.bottom' | translate}}</mat-option> -->
+                  <mat-option value="left">{{'export-graph-modal.left' | translate}}</mat-option>
+                  <!-- <mat-option value="right">{{'export-graph-modal.right' | translate}}</mat-option> -->
+                </mat-select>
+            </mat-form-field>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle
+      (opened)="options.footnote.display = true"
+      (closed)="options.footnote.display = false"
+    >
+      <mat-expansion-panel-header>
+        <p class="panel-title">{{'export-graph-modal.footer-display' | translate}}</p>
+        <mat-checkbox color="primary" style="position: absolute; right: 24px" (click)="$event.preventDefault()" [(ngModel)]="options.footnote.display"></mat-checkbox>
+      </mat-expansion-panel-header>
+      <div style="width: 100%;">
+        <div class="mdm-form-group">
+          <div class="mdm-form-label">{{'export-graph-modal.footer' | translate}}</div>
+          <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput [(ngModel)]="options.footnote.text" [placeholder]="'export-graph-modal.footer-placeholder' | translate">
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle
+      (opened)="options.legend.display = true"
+      (closed)="options.legend.display = false"
+      [expanded]="options.legend.display"
+    >
+      <mat-expansion-panel-header>
+        <p class="panel-title">{{'export-graph-modal.legend-display' | translate}}</p>
+        <mat-checkbox color="primary" style="position: absolute; right: 24px" (click)="$event.preventDefault()" [(ngModel)]="options.legend.display"></mat-checkbox>
+      </mat-expansion-panel-header>
+      <div class="mdm-form-group">
+          <div class="mdm-form-label">{{'export-graph-modal.position' | translate}}</div>
+          <mat-form-field appearance="outline" class="mdm-form-field">
+              <mat-select disableOptionCentering panelClass="myPanelClass" [(ngModel)]="options.legend.position">
+                <mat-option value="top">{{'export-graph-modal.top' | translate}}</mat-option>
+                <!-- <mat-option value="bottom">{{'export-graph-modal.bottom' | translate}}</mat-option> -->
+                <!-- <mat-option value="left">{{'export-graph-modal.left' | translate}}</mat-option> -->
+                <mat-option value="right">{{'export-graph-modal.right' | translate}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+    <div class="single-option" (click)="options.dataLabels.display = !options.dataLabels.display">
+      <p class="panel-title">{{'export-graph-modal.data-labels-display' | translate}}</p>
+      <mat-checkbox color="primary" (click)="$event.preventDefault()" [(ngModel)]="options.dataLabels.display"></mat-checkbox>
+    </div>
+    <div class="single-option" (click)="options.scales.yAxis.display = !options.scales.yAxis.display">
+      <p class="panel-title">{{'export-graph-modal.yAxis-display' | translate}}</p>
+      <mat-checkbox color="primary" (click)="$event.preventDefault()" [(ngModel)]="options.scales.yAxis.display"></mat-checkbox>
+    </div>
+    <div class="single-option" (click)="options.scales.xAxis.display = !options.scales.xAxis.display">
+      <p class="panel-title">{{'export-graph-modal.xAxis-display' | translate}}</p>
+      <mat-checkbox color="primary" (click)="$event.preventDefault()" [(ngModel)]="options.scales.xAxis.display"></mat-checkbox>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button class="mdm-button save-button" (click)="onExport('pdf')">{{'export-graph-modal.pdf-export' | translate}}</button>
+  <button mat-stroked-button class="mdm-button save-button" (click)="onExport('png')">{{'export-graph-modal.png-export' | translate}}</button>
+</mat-dialog-actions>
+

@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
@@ -8,9 +9,9 @@ describe('BreadcrumbComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BreadcrumbComponent ]
-    })
-    .compileComponents();
+      declarations: [BreadcrumbComponent],
+      imports: [HttpClientTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

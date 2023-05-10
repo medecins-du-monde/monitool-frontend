@@ -1,5 +1,12 @@
 <mat-form-field [formGroup]="form" appearance="outline" class="mdm-form-field chip-list">
-    <mat-select formControlName="entities" placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}" multiple disableOptionCentering panelClass="basicsChipListPanelClass">
+    <mat-select
+      formControlName="entities"
+      placeholder="{{ 'DataSourceEdit.CollectionSitesPlaceholder' | translate }}"
+      multiple
+      disableOptionCentering
+      panelClass="basicsChipListPanelClass"
+      [disabled]="entities.length === 0"
+    >
         <mat-select-trigger>
             <mat-chip-list>
                 <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"
@@ -10,7 +17,7 @@
                 </mat-chip>
             </mat-chip-list>
         </mat-select-trigger>
-        <mat-option (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
+        <mat-option *ngIf="entities.length > 0" (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
         <mat-option *ngFor="let group of groups" (click)="toggleGroupOption(group)" [value]=group><mat-icon class="option">arrow_circle_down</mat-icon>{{ group.name }}</mat-option>
         <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>
     </mat-select>

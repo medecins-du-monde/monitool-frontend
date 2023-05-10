@@ -18,30 +18,78 @@
     }
     position: relative;
   }
-  .action-buttons{
-    display: flex;
-    flex-direction: column;
-    height: 60px;
-    margin: 0px 0px 0px 3%;
-    justify-content: space-between;
-    align-self: center;
-    @media screen and (max-width: $breakpoint-xs-sm) {
-      margin: 0;
-    }
-    @media screen and (max-width: $breakpoint-xs) {
-      width: 100%;
-      margin: 15px 0px 0px 0px;
-      flex-direction: row;
-      justify-content: space-around;
-    }
-    a, button{
+
+  .chart-extras {
+      position: relative;
+      height: 100%;
+      margin: 0px 0px 0px 3%;
       display: flex;
       align-items: center;
-      .mat-icon{
-        margin-right: 0px;
+      justify-content: space-around;
+
+      @media screen and (max-width: $breakpoint-xs-sm) {
+        margin: 0;
       }
-      span {
-        margin-left: 3px;
+      @media screen and (max-width: $breakpoint-xs) {
+        margin: 15px 0px 0px 0px;
+      }
+
+    .legend-box {
+      position: absolute;
+      top: 7px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      @media screen and (max-width: $breakpoint-xs) {
+        display: none;
+      }
+
+      .legend {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+
+        .identifier {
+          width: 36px;
+          height: 16px;
+        }
+
+        .baseline {
+          border: 2px dotted lightgrey;
+          box-sizing: border-box;
+        }
+
+        .target {
+          border: 2px dashed lightgrey;
+          box-sizing: border-box;
+        }
+
+        p {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .action-buttons{
+      display: flex;
+      flex-direction: column;
+
+      a, button{
+        display: flex;
+        align-items: center;
+        .mat-icon{
+          margin-right: 0px;
+        }
+        span {
+          margin-left: 3px;
+        }
+        mat-select {
+          position: absolute;
+          opacity: 0;
+        }
       }
     }
   }
@@ -57,4 +105,17 @@
 
 .hide-chart{
     display: none;
+}
+
+
+.selection-label {
+  width: 90px;
+
+  p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+    margin: 0 !important;
+  }
 }

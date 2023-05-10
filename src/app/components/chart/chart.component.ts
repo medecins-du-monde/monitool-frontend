@@ -3,7 +3,26 @@ import { ChartService } from 'src/app/services/chart.service';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
+import * as ChartAnnotation from 'chartjs-plugin-annotation';
+import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DownloadModalComponent } from './download-modal/download-modal.component';
 
+const BASELINE_LABEL = {
+  borderColor: 'rgba(0, 0, 0, .3)',
+  backgroundColor: 'white',
+  label: 'Baseline',
+  borderDash: [2, 4.62],
+  borderWidth: 2
+};
+
+const TARGET_LABEL = {
+  borderColor: 'rgba(0, 0, 0, .3)',
+  backgroundColor: 'white',
+  label: 'Target',
+  borderDash: [9.5, 5.9],
+  borderWidth: 2
+};
 
 @Component({
   selector: 'app-chart',
@@ -30,9 +49,18 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
   */
 
+  public selectedBaselines: any[] = [];
+  public selectedTargets: any[] = [];
+
+  public availableBaselines: any[] = [];
+  public availableTargets: any[] = [];
+
+
   private chart: Chart;
+  public higherPercentages: boolean;
 
   @Input() data: any;
+  @Input() name: string;
   unit: string;
   options: ChartOptions = {
 
@@ -46,6 +74,10 @@ export class ChartComponent implements OnInit, OnDestroy {
       }
     },
 
+    annotation: {
+      annotations: []
+    },
+
     scales: {
       // change fontSize of the labels in the xAxis
       xAxes: [{
@@ -55,15 +87,19 @@ export class ChartComponent implements OnInit, OnDestroy {
       }],
       // change fontSize of the labels in the yAxis
       yAxes: [{
-        id: 'A',
-        display: false
-      }, {
-        id: 'B',
-        display: false,
+          id: 'A',
+          display: false
+        }, {
+          id: 'B',
+          display: false,
+        }],
+    },
+    plugins: {
+      datalabels: {
+        color: 'rgba(0, 0, 0, 0)'
       }
-    ],
-  }
-  };
+    }
+  } as ChartOptions;
 
   /* which chart to choose from should always depend on the datatype */
   chartTypes = [
@@ -79,7 +115,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService) {
+  constructor(private chartService: ChartService, private translate: TranslateService, private dialog: MatDialog) {
     this.options.tooltips = {
       mode: 'index',
       intersect: false,
@@ -147,7 +183,12 @@ export class ChartComponent implements OnInit, OnDestroy {
 
               const name = body[0].split(':')[0];
               const value = body[0].split(':')[1];
-              const formattedValue = value.indexOf('%') === -1 ? Number(value.replace(/\s/g, '')).toLocaleString('de-DE') : value;
+              let formattedValue = 'NaN';
+              if (value.indexOf('%') !== -1) {
+                formattedValue = parseFloat(parseFloat(value.replace(',', '.')).toFixed(1)).toString().replace('.', ',') + '%';
+              } else {
+                formattedValue = Number(value.replace('null', '').replace(',', '.').replace(/\s/g, '')).toLocaleString('de-DE');
+              }
               innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
 
           });
@@ -181,10 +222,12 @@ export class ChartComponent implements OnInit, OnDestroy {
       type: this.chartService.type.value,
       data: this.data,
       options: this.options,
+      plugins: [ChartAnnotation]
     });
 
     this.subscription.add(
       this.chartService.currentData.subscribe(data => {
+
         if (!isEmpty(data)) {
           this.addData(data);
         }
@@ -203,20 +246,33 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   addData(data): void {
     if (this.chart){
+
+      // Setup targets and baselines
+      this.availableBaselines = [];
+      const previousSelectedBaselines = [...this.selectedBaselines];
+      this.selectedBaselines = [];
+      this.availableTargets = [];
+      const previousSelectedTargets = [...this.selectedTargets];
+      this.selectedTargets = [];
+      (this.chart.options as any).annotation.annotations = [];
+
       let onlyPercentages = true;
-      let higherPercentages = false;
+      this.higherPercentages = false;
       data.datasets.map(dataGroup => {
         if (dataGroup.unit === '%' || dataGroup.unit === '‰') {
           dataGroup.yAxisID = 'B';
           if (dataGroup.unit === '‰') {
-            higherPercentages = true;
+            this.higherPercentages = true;
           }
         } else {
           onlyPercentages = false;
           dataGroup.yAxisID = 'A';
         }
+        this.setBaseline(dataGroup, previousSelectedBaselines);
+        this.setTarget(dataGroup, previousSelectedTargets);
       });
-      this.chart.options.scales.yAxes = this.getYAxes({onlyPercentages, higherPercentages});
+      this.chart.options.scales.yAxes = this.getYAxes(data, {onlyPercentages});
+      this.loadLabels(data);
       this.chart.data = data;
       this.chart.update();
     }
@@ -237,7 +293,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       type,
       data: this.data,
       options: this.options,
-      plugins: [{
+      plugins: [
+        ChartAnnotation,
+        {
         afterRender: (c: Chart) => {
           const ctx = c.ctx;
           ctx.save();
@@ -250,13 +308,42 @@ export class ChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getYAxes(options?: any): any {
+  private getYAxes(data: any, options?: any): any {
+    // Gets max a min values of baselines/targets and uses them to set the max/min values of Y axes
+    let maxAValue = 0;
+    let minAValue = 0;
+    let maxBValue = this.getMaxPercentageValue(data);
+    let minBValue = 0;
+
+    this.selectedBaselines.map(baseline => {
+      if (baseline.scaleID === 'A') {
+        minAValue = minAValue > baseline.value ? baseline.value : minAValue;
+        maxAValue = maxAValue < baseline.value ? baseline.value : maxAValue;
+      } else {
+        minBValue = minBValue > baseline.value ? baseline.value : minBValue;
+        maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
+      }
+    });
+    this.selectedTargets.map(baseline => {
+      if (baseline.scaleID === 'A') {
+        minAValue = minAValue > baseline.value ? baseline.value : minAValue;
+        maxAValue = maxAValue < baseline.value ? baseline.value : maxAValue;
+      } else {
+        minBValue = minBValue > baseline.value ? baseline.value : minBValue;
+        maxBValue = maxBValue < baseline.value ? baseline.value : maxBValue;
+      }
+    });
+
+    maxBValue = this.getMaxDisplayedPercentage(maxBValue);
+
     return [{
         id: 'A',
         display: 'auto',
         ticks: {
           fontSize: 14,
           beginAtZero : true,
+          suggestedMax: maxAValue,
+          suggestedMin: minAValue
         }
       }, {
         id: 'B',
@@ -268,17 +355,117 @@ export class ChartComponent implements OnInit, OnDestroy {
         ticks: {
           fontSize: 14,
           beginAtZero : true,
-          suggestedMax: 100,
-          callback: (val) => {
-            return val + (options?.higherPercentages ? '‰' : '%');
-          },
+          suggestedMax: maxBValue,
+          suggestedMin: minBValue,
+          callback: (val) => val + (this.higherPercentages ? '‰' : '%'),
         }
       }
     ];
   }
 
-  get downloadChart(): string{
-    return this.chart.toBase64Image();
+  private getMaxPercentageValue(data: any): number {
+    let maxPrecentage = 0;
+    data.datasets.map(dataset => {
+      if (dataset.yAxisID === 'B') {
+        dataset.data.map(el => {
+          if (el.y && el.y > maxPrecentage) {
+            maxPrecentage = el.y;
+          }
+        });
+      }
+    });
+    return maxPrecentage;
+  }
+
+  private getMaxDisplayedPercentage(percentage: number): number {
+    if (percentage === 0) {
+      return 100;
+    }
+    let roundedUp = percentage;
+    if (percentage % 10 > 0) {
+      roundedUp = percentage - percentage % 10 + 10;
+    }
+    return roundedUp > 50 ? 100 : roundedUp;
+  }
+
+  private setBaseline(data: any, selectedBaselines: any[]): void {
+    if (typeof(data.baseline) === 'number') {
+      const baseline = {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: data.yAxisID,
+        value: data.baseline,
+        borderColor: data.borderColor,
+        borderWidth: 2,
+        borderDash: [3, 5],
+        label: data.label
+      };
+      this.availableBaselines.push(baseline);
+      if (selectedBaselines.find(el =>  JSON.stringify(el) === JSON.stringify(baseline))) {
+        (this.chart.options as any).annotation.annotations.push(baseline);
+        this.selectedBaselines.push(baseline);
+      }
+    }
+  }
+
+  private setTarget(data: any, selectedTargets: any[]): void {
+    if (typeof(data.target) === 'number') {
+      const target = {
+        type: 'line',
+        mode: 'horizontal',
+        scaleID: data.yAxisID,
+        value: data.target,
+        borderColor: data.borderColor,
+        borderWidth: 2,
+        borderDash: [12, 10],
+        label: data.label
+      };
+      this.availableTargets.push(target);
+      if (selectedTargets.find(el =>  JSON.stringify(el) === JSON.stringify(target))) {
+        (this.chart.options as any).annotation.annotations.push(target);
+        this.selectedTargets.push(target);
+      }
+    }
+  }
+
+  public loadAnnotations(): void {
+    this.addData(this.data);
+  }
+
+  private loadLabels(data: any) {
+
+    for (let i = data.datasets.length - 1; i >= 0; i--) {
+      if (
+        data.datasets[i].borderColor === 'rgba(0, 0, 0, .3)' &&
+        data.datasets[i].backgroundColor === 'white' ) {
+          data.datasets.splice(i, 1);
+      }
+    }
+
+    if (this.selectedBaselines.length > 0) {
+      data.datasets.push({
+        ...BASELINE_LABEL,
+        unit: data.datasets[0].unit,
+        yAxisID: data.datasets[0].yAxisID,
+        label: this.translate.instant(BASELINE_LABEL.label)
+      });
+    }
+
+    if (this.selectedTargets.length > 0) {
+      data.datasets.push({
+        ...TARGET_LABEL,
+        unit: data.datasets[0].unit,
+        yAxisID: data.datasets[0].yAxisID,
+        label: this.translate.instant(TARGET_LABEL.label)
+      });
+    }
+  }
+
+  public downloadChart(): void{
+    this.dialog.open(DownloadModalComponent, {
+      panelClass: 'no-overflow-dialog',
+      data: {chart: this.chart, name: this.name, higherPercentages: this.higherPercentages}
+    });
   }
 
   ngOnDestroy(): void{

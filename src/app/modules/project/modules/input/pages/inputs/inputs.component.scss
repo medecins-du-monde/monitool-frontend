@@ -115,3 +115,22 @@ td.mat-cell, td.mat-footer-cell{
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px $table_border;
 }
+
+.table-box {
+  position: relative;
+  max-width: 100%;
+
+  .table-container {
+    overflow: auto;
+  }
+
+  .footer-overlay {
+    position: absolute;
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+

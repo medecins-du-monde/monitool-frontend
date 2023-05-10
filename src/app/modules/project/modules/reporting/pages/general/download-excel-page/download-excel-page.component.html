@@ -1,5 +1,8 @@
-{{ pageText }}
+{{ pageText | translate}}
 
-<p *ngIf="this.status === 'done'">
-  If the download doesnt start automatically click on the button <button (click)="this.download()">Download</button>
+<p *ngIf="status === 'done' || localDownloadReady">
+  {{'export-aoutomatic-download' | translate}}
+  <button (click)="this.download()">
+    {{'DownloadPlot' | translate}}
+  </button>
 </p>
