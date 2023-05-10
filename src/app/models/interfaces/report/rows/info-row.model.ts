@@ -24,4 +24,5 @@ export interface InfoRow {
     start?: Date;
     end?: Date;
     isParent?: number;
+    disaggregatedByGroup?: boolean;
   }
