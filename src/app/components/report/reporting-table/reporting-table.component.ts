@@ -124,7 +124,7 @@ export class ReportingTableComponent
 
   /** @returns the comment for the selected cell */
   get selectedCellComment(): string | null {
-    if (!this.selectedCell) return null;
+    if (!this.selectedCell) { return null; }
     return (
       this.selectedCell.row.comment ||
       this.selectedCell.row.comments?.[this.selectedCell.col] ||
@@ -133,7 +133,7 @@ export class ReportingTableComponent
   }
 
   set selectedCellComment(comment: string) {
-    if (!this.selectedCell) return;
+    if (!this.selectedCell) { return; }
 
     const isIndicator = !!this.selectedCell.col;
     const commentInfo: Comment = this.selectedCell.row.commentInfo;
@@ -220,18 +220,18 @@ export class ReportingTableComponent
     this.calculateOptimalColspan();
   }
   isSectionTitle = (_index: number, item: Row): item is SectionTitle =>
-    (item as SectionTitle).title ? true : false;
+    (item as SectionTitle).title ? true : false
   isInfoRow = (_index: number, item: Row): item is InfoRow =>
-    (item as InfoRow).name ? true : false;
+    (item as InfoRow).name ? true : false
   isGroupTitle = (_index: number, item: Row): item is GroupTitle =>
-    (item as GroupTitle).groupName ? true : false;
+    (item as GroupTitle).groupName ? true : false
   isProjectIndicator = (item: unknown): item is ProjectIndicator =>
-    (item as ProjectIndicator).display ? true : false;
+    (item as ProjectIndicator).display ? true : false
 
   isInfoRowError = (_index: number, item: Row): boolean =>
-    this.isInfoRow(_index, item) && item.error !== undefined;
+    this.isInfoRow(_index, item) && item.error !== undefined
   isInfoRowNoError = (_index: number, item: Row): boolean =>
-    this.isInfoRow(_index, item) && item.error === undefined;
+    this.isInfoRow(_index, item) && item.error === undefined
 
   get exportFilters(): any {
     const filter: any = this.filter.getValue();
@@ -485,7 +485,7 @@ export class ReportingTableComponent
       };
     }
     return item;
-  };
+  }
 
   // Update all the table headers with the new dimensions
   updateDimensions(): void {
@@ -668,8 +668,8 @@ export class ReportingTableComponent
       pathArr[pathArr.length - 1].startsWith(prefix)
     );
 
-    if (isIndicator) row.comments = content.comments;
-    else row.comment = content.comment;
+    if (isIndicator) { row.comments = content.comments; }
+    else { row.comment = content.comment; }
 
     return row;
   }
@@ -1335,14 +1335,14 @@ export class ReportingTableComponent
   }
 
   public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
-    if (!this.selectedCell) return;
+    if (!this.selectedCell) { return; }
     const { row } = this.selectedCell;
     const comment = this.selectedCellComment || '';
 
     if (action === 'delete') {
       this.selectedCellComment = '';
       this.commentService.stashComment(row.commentInfo);
-    } else
+    } else {
       this.dialog
         .open(CommentModalComponent, {
           data: {
@@ -1352,9 +1352,56 @@ export class ReportingTableComponent
         })
         .afterClosed()
         .subscribe(result => {
-          if (result === null) return;
+          if (result === null) { return; }
           this.selectedCellComment = result || '';
           this.commentService.stashComment(row.commentInfo);
         });
+    }
+  }
+
+  public getTooltipText(originalTooltip?: string, comment?: string): any {
+    let tooltipContent = '';
+
+    if (this.showComments) {
+      if (originalTooltip) {
+        tooltipContent += `
+          <div style='opacity: .75; font-style: italic;'>
+            ${originalTooltip}
+          </div>`;
+      }
+      if (comment) {
+        tooltipContent += `<div>${comment}<div>`;
+      }
+    } else {
+      if (originalTooltip) {
+        tooltipContent += `<div>${originalTooltip}</div>`;
+      }
+    }
+
+    return tooltipContent !== '' ? tooltipContent : null;
+
+    // if ((!comment && !originalTooltip)||(!originalTooltip && !this.showComments)) {
+    //   return null;
+    // }
+    // if (!comment || !this.showComments) {
+    //   if (this.showComments) {
+    //     return `
+    //       <div style='opacity: .75; font-style: italic;'>
+    //         ${originalTooltip}
+    //       </div>
+    //     `;
+    //   } else {
+    //     return `<div>${originalTooltip}</div>`;
+    //   }
+    // } else if (!originalTooltip) {
+    //   return `<div>${comment}</div>`;
+    // } else {
+    //   return `
+    //     <div style='opacity: .75; font-style: italic;'>
+    //       ${originalTooltip}
+    //     </div>
+    //     <div>${comment}<div>
+    //   `;
+    // }
   }
 }

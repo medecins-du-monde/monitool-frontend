@@ -77,7 +77,7 @@ export class RevisionSummaryComponent implements OnInit {
               translationKey: 'HistoryRevision.comments_updated'
             });
           }
-        } else this.output.push(data);
+        } else { this.output.push(data); }
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;

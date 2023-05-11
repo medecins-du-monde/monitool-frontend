@@ -24,7 +24,7 @@ export class Purpose implements Deserializable {
 
     serialize() {
       return {
-            id: this.id,      
+            id: this.id,
             assumptions: this.assumptions || '',
             description: this.description || '',
             indicators: this.indicators.map(x => x.serialize()),

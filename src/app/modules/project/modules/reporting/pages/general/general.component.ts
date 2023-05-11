@@ -213,7 +213,7 @@ export class GeneralComponent implements OnInit {
 
           level += 1;
           for (const output of purpose.outputs) {
-            const pathAux = path;
+            const pathAux2 = path;
             path += '|output:' + output.id;
             rows.push({
               icon: false,
@@ -232,7 +232,7 @@ export class GeneralComponent implements OnInit {
 
             level += 1;
             for (const activity of output.activities) {
-              const pathAux = path;
+              const pathAux3 = path;
               path += '|activity:' + activity.id;
               rows.push({
                 icon: false,
@@ -250,12 +250,12 @@ export class GeneralComponent implements OnInit {
               });
 
               // Reset path to only the logical frame + purpose + output
-              path = pathAux;
+              path = pathAux3;
             }
             level -= 1;
 
             // Reset path to only the logical frame + purpose
-            path = pathAux;
+            path = pathAux2;
           }
           level -= 1;
 
@@ -401,7 +401,7 @@ export class GeneralComponent implements OnInit {
         rows[index].commentInfo = comment;
       }
     });
-    
+
     this.updateTableComments(rows);
   }
 
@@ -436,8 +436,8 @@ export class GeneralComponent implements OnInit {
         pathArr[pathArr.length - 1].startsWith(prefix)
       );
 
-      if (isIndicator) row.comments = content.comments;
-      else row.comment = content.comment;
+      if (isIndicator) { row.comments = content.comments; }
+      else { row.comment = content.comment; }
 
       return row;
     });

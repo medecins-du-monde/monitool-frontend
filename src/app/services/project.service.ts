@@ -245,7 +245,7 @@ export class ProjectService {
     this.projectId.next(id);
   }
 
-  public setComments (comments: Comment[]): void {
+  public setComments(comments: Comment[]): void {
     this.currentProject.comments = comments;
   }
 }

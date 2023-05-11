@@ -55,7 +55,7 @@ export class CommentService {
   ) {
     this.projectService.projectId.subscribe(() => {
       this.cachedComments = null;
-    })
+    });
   }
 
   public getByPath(paths: string[]): (Comment | undefined)[] {
@@ -66,12 +66,13 @@ export class CommentService {
   public stashComment(comment: Comment): void {
     // Only admin accounts can touch comments.
     const isAdmin = this.authService.user.getValue()?.role === 'admin';
-    if (!isAdmin) return;
+    if (!isAdmin) { return; }
 
-    if (!this.cachedComments)
+    if (!this.cachedComments) {
       this.cachedComments = this.projectService.project
         .getValue()
         .serialize().comments;
+    }
 
     const allComments = cloneDeep(this.cachedComments) || [];
 

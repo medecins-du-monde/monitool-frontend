@@ -5,10 +5,11 @@
 
 <mat-dialog-content class="dialog-body">
   <mat-form-field appearance="outline">
-    <mat-label>Comment</mat-label>
+    <!-- <mat-label>Comment</mat-label> -->
     <textarea
       matInput
-      placeholder="Write here your comment"
+      [placeholder]="'comment-placeholder' | translate"
+      maxlength="200"
       [(ngModel)]="comment"
     ></textarea>
   </mat-form-field>

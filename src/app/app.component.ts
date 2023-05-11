@@ -11,7 +11,17 @@ import { SwUpdate } from '@angular/service-worker';
 import { RefreshSnackbarComponent } from './components/refresh-snackbar/refresh-snackbar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
+import { TooltipComponent } from '@angular/material/tooltip';
 
+Object.defineProperty(TooltipComponent.prototype, 'message', {
+  set(v: any) {
+      const el = document.querySelectorAll('.mat-tooltip');
+
+      if (el) {
+          el[el.length - 1].innerHTML = v;
+      }
+  },
+});
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -205,4 +215,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
   }
+
+
 }

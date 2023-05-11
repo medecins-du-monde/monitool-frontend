@@ -34,9 +34,11 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'name')
         "
+        [matTooltip]="getTooltipText(element.name, element.comments?.name)"
+        [matTooltipShowDelay]="showComments && element.comments?.name ? 0 : 500"
       >
         <div class="menu">
-          <div matTooltip="{{ element.name }}" [matTooltipShowDelay]="500">
+          <div>
             {{ element.name }}
           </div>
           <app-reporting-menu
@@ -60,6 +62,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'baseline')
         "
+        [matTooltip]="getTooltipText(null, element.comments?.baseline)"
       >
         {{ getIndicator(element, "baseline") }}
       </td>
@@ -75,6 +78,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'target')
         "
+        [matTooltip]="getTooltipText(null, element.comments?.target)"
       >
         {{ getIndicator(element, "target") }}
       </td>
@@ -107,12 +111,6 @@
       <td
         mat-cell
         class="value-cell"
-        [matTooltip]="
-          isInRange(element, column)
-            ? (getTooltipMessage((element?.values)[column]) | translate)
-            : ''
-        "
-        matTooltipPosition="above"
         *matCellDef="let element"
         [ngStyle]="{
           backgroundColor:
@@ -125,6 +123,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
+        [matTooltip]="getTooltipText(isInRange(element, column) ? (getTooltipMessage((element?.values)[column]) | translate) : null, element.comments[column])"
       >
         <div
           style="position:relative;"
@@ -173,6 +172,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div class="title-row">
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -191,6 +191,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -209,6 +210,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -227,6 +229,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -245,6 +248,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -263,6 +267,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -281,6 +286,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -299,6 +305,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -317,6 +324,7 @@
           class="title"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           <div>
             <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
@@ -357,6 +365,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -377,6 +386,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -397,6 +407,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -417,6 +428,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -437,6 +449,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -457,6 +470,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -477,6 +491,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -497,6 +512,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -517,6 +533,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -537,6 +554,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -557,6 +575,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -577,6 +596,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>
@@ -597,6 +617,7 @@
           class="groupName"
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
           [class.comment-cell]="this.showComments && element.comment"
+          [matTooltip]="getTooltipText(null, element.comment)"
         >
           {{ formatGroupName(element.groupName) }}
         </td>

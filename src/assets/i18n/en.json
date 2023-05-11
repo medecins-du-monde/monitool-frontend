@@ -847,5 +847,6 @@
   },
   "display-comments": "Display comments",
   "add-comment": "Add comment",
-  "edit-comment": "Edit comment"
+  "edit-comment": "Edit comment",
+  "comment-placeholder": "Write here your comment"
 }

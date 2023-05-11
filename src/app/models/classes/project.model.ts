@@ -32,7 +32,7 @@ export class Project implements Deserializable {
     visibility: string;
     parsed?: boolean;
     comments: Comment[] = [];
-    
+
     get status(): string{
         if ( this.active ) {
             return this.end > new Date() ? 'Ongoing' : 'Finished';

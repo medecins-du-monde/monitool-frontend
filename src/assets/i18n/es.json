@@ -862,6 +862,7 @@
     "cancel": "Cancelar"
   },
   "display-comments": "Mostrar comentarios",
-  "add-comment": "Agregar comentario",
-  "edit-comment": "Editar comentario"
+  "add-comment": "Añadir comentario",
+  "edit-comment": "Editar comentario",
+  "comment-placeholder": "Escribe aquí tu comentario"
 }
