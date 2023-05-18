@@ -7,6 +7,7 @@ import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
 import InformationItem from '../models/interfaces/information-item';
+import { Comment } from './comment.service';
 
 @Injectable({
   providedIn: 'root'
@@ -242,5 +243,9 @@ export class ProjectService {
   // TODO: Check if this is really usefull
   public updateProjectId(id: string) {
     this.projectId.next(id);
+  }
+
+  public setComments(comments: Comment[]): void {
+    this.currentProject.comments = comments;
   }
 }

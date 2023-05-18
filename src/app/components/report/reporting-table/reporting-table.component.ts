@@ -1,15 +1,30 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { PERCENTAGE_FORMULA, ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import {
+  PERCENTAGE_FORMULA,
+  ProjectIndicator
+} from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
-import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
-import { isArray, isNaN, round } from 'lodash';
+import {
+  TimeSlotPeriodicity,
+  TimeSlotOrder
+} from 'src/app/utils/time-slot-periodicity';
+import { cloneDeep, isArray, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
@@ -21,34 +36,58 @@ import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.mo
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
-import {LogicalFrame} from '../../../models/classes/logical-frame.model';
+import { LogicalFrame } from '../../../models/classes/logical-frame.model';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
+import {
+  CommentFilter,
+  CommentService,
+  Comment,
+  findContentIndexByFilter
+} from 'src/app/services/comment.service';
+import { CommentModalComponent } from '../comment-modal/comment-modal.component';
+import { User } from 'src/app/models/classes/user.model';
 
+type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
-
-//  import * as XLSX from 'xlsx';
-
-type Row = SectionTitle | GroupTitle | InfoRow;
+type RowCommentInfo = {
+  comment?: string;
+  comments?: { [key in string]: string };
+  commentInfo?: Comment;
+  disaggregatedBy?: { [key in string]: string };
+};
 
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss']
 })
-export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit {
-
-  constructor(private projectService: ProjectService,
-              private reportingService: ReportingService,
-              private chartService: ChartService,
-              private translateService: TranslateService) {
-                registerLocaleData(localeDe, 'de-DE', localeDeExtra);
-              }
+export class ReportingTableComponent
+  implements OnInit, OnDestroy, AfterViewInit {
+  constructor(
+    private projectService: ProjectService,
+    private reportingService: ReportingService,
+    private chartService: ChartService,
+    private translateService: TranslateService,
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private commentService: CommentService
+  ) {
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
 
   get optimalColspanForGroupName(): number {
-    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen);
+    return Math.min(
+      this.columnsToDisplay.length - 2,
+      this.colsThatFitInTheScreen
+    );
   }
 
   get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+    return this.translateService.currentLang
+      ? this.translateService.currentLang
+      : this.translateService.defaultLang;
   }
 
   @ViewChild('reportingTable') tableRef: ElementRef;
@@ -56,10 +95,84 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
+  @Input() showComments: boolean;
   rows = new BehaviorSubject<Row[]>([]);
 
   clickedLogFrame;
   logFrameEntities = [];
+
+  public menuLeft = 0;
+  public menuTop = 0;
+
+  public userIsAdmin = false;
+  public selectedCell: {
+    row: any;
+    col?: string;
+  } | null = null;
+
+  get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
+    const dateStart = this.filter.getValue()._start.toISOString();
+    const dateEnd = this.filter.getValue()._end.toISOString();
+    const dimension = this.dimensionIds.getValue();
+
+    return {
+      dateStart,
+      dateEnd,
+      dimension,
+    };
+  }
+
+  /** @returns the comment for the selected cell */
+  get selectedCellComment(): string | null {
+    if (!this.selectedCell) { return null; }
+    return (
+      this.selectedCell.row.comment ||
+      this.selectedCell.row.comments?.[this.selectedCell.col] ||
+      null
+    );
+  }
+
+  set selectedCellComment(comment: string) {
+    if (!this.selectedCell) { return; }
+
+    const isIndicator = !!this.selectedCell.col;
+    const commentInfo: Comment = this.selectedCell.row.commentInfo;
+    const filters = {
+      ...this.globalCommentFilters,
+      disaggregatedBy: this.selectedCell.row.disaggregatedBy || {}
+    };
+    const contentIndex = findContentIndexByFilter(commentInfo, filters);
+
+    if (isIndicator) {
+      // Update the comments
+      const comments = this.selectedCell.row.comments || {};
+      comments[this.selectedCell.col] = comment;
+      this.selectedCell.row.comments = comments;
+
+      // Update the commentInfo
+      if (contentIndex !== -1) {
+        commentInfo.content[contentIndex].comments = comments;
+      } else {
+        commentInfo.content.push({
+          comments,
+          filter: filters
+        });
+      }
+    } else {
+      // Update the comment
+      this.selectedCell.row.comment = comment;
+
+      // Update the commentInfo
+      if (contentIndex !== -1) {
+        commentInfo.content[contentIndex].comment = comment;
+      } else {
+        commentInfo.content.push({
+          comment,
+          filter: filters
+        });
+      }
+    }
+  }
 
   dataSource = new MatTableDataSource([]);
 
@@ -73,7 +186,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     '#e377c2',
     '#7f7f7f',
     '#bcbd22',
-    '#17becf',
+    '#17becf'
   ];
 
   currentColorIndex = 0;
@@ -106,13 +219,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   onResize(event): void {
     this.calculateOptimalColspan();
   }
-  isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
-  isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
-  isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-  isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+  isSectionTitle = (_index: number, item: Row): item is SectionTitle =>
+    (item as SectionTitle).title ? true : false
+  isInfoRow = (_index: number, item: Row): item is InfoRow =>
+    (item as InfoRow).name ? true : false
+  isGroupTitle = (_index: number, item: Row): item is GroupTitle =>
+    (item as GroupTitle).groupName ? true : false
+  isProjectIndicator = (item: unknown): item is ProjectIndicator =>
+    (item as ProjectIndicator).display ? true : false
 
-  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
-  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
+  isInfoRowError = (_index: number, item: Row): boolean =>
+    this.isInfoRow(_index, item) && item.error !== undefined
+  isInfoRowNoError = (_index: number, item: Row): boolean =>
+    this.isInfoRow(_index, item) && item.error === undefined
 
   get exportFilters(): any {
     const filter: any = this.filter.getValue();
@@ -124,7 +243,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       dateRange: {
         start: string;
         end: string;
-      },
+      };
       entities: string[];
     } = {
       logicalFrames: [],
@@ -132,8 +251,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       crossCutting: false,
       extraIndicators: false,
       dateRange: {
-        start: filter._start._d ? filter._start._d.toLocaleDateString('fr-CA') : filter._start.toLocaleDateString('fr-CA'),
-        end: filter._end._d ? filter._end._d.toLocaleDateString('fr-CA') : filter._end.toLocaleDateString('fr-CA')
+        start: filter._start._d
+          ? filter._start._d.toLocaleDateString('fr-CA')
+          : filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end._d
+          ? filter._end._d.toLocaleDateString('fr-CA')
+          : filter._end.toLocaleDateString('fr-CA')
       },
       entities: filter.entities || []
     };
@@ -176,7 +299,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             if (this.isInfoRow(0, row)) {
               if (row.originProject) {
                 if (this.filter.value.finished) {
-                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished';
+                  return (
+                    row.originProject.status === 'Ongoing' ||
+                    row.originProject.status === 'Finished'
+                  );
                 } else {
                   return row.originProject.status === 'Ongoing';
                 }
@@ -200,6 +326,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             this.updateDimensions();
             this.refreshValues();
             this.updateTableContent();
+            const userSubscription = this.authService.currentUser.subscribe(
+              (user: User) => {
+                user.role === 'admin' || user.role === 'owner'
+                  ? (this.userIsAdmin = true)
+                  : (this.userIsAdmin = false);
+              }
+            );
+            userSubscription.unsubscribe();
           }
         })
       );
@@ -244,8 +378,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
             if (this.isInfoRow(0, row)) {
               row.onChart = false;
             }
-          }
-          );
+          });
           this.rows.next(updatedRows);
         }
       })
@@ -259,7 +392,12 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   updateTableContent(): void {
     this.reportingService.exportFilters.next(this.exportFilters);
     // TODO: Check why this.tableContent and not this.content
-    if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)) {
+    if (
+      this.tableContent &&
+      this.filter &&
+      this.dimensionIds &&
+      isArray(this.content)
+    ) {
       let id = 0;
       this.content = this.content.map(this.convertToRow);
 
@@ -278,7 +416,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }
 
-
       // Used for getIndicator()
       let parentLevel;
 
@@ -292,7 +429,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         if (this.content[i].groupName) {
           parentLevel = undefined;
         }
-        if (this.content[i].name && (this.content[i].unit !== '%' || this.content[i].unit !== '‰')) {
+        if (
+          this.content[i].name &&
+          (this.content[i].unit !== '%' || this.content[i].unit !== '‰')
+        ) {
           if (parentLevel === undefined) {
             parentLevel = this.content[i].level;
           }
@@ -303,12 +443,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       }
       // Filters displayed rows with the entities selected in the collection sites filter
       // Disaggregations by collection sites and collection sites groups
-      this.rows.next(this.content.filter(el => {
-        if (el.customFilter && el.customFilter.entity) {
-          return el.customFilter.entity.every(entity => this.currentFilter.entities.includes(entity));
-        }
-        return true;
-      }));
+      this.rows.next(
+        this.content.filter(el => {
+          if (el.customFilter && el.customFilter.entity) {
+            return el.customFilter.entity.every(entity =>
+              this.currentFilter.entities.includes(entity)
+            );
+          }
+          return true;
+        })
+      );
     }
   }
 
@@ -330,9 +474,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   // Create new row if it s an indicator
-  convertToRow = (item: Row | ProjectIndicator): Row => {
+  convertToRow = (
+    item: (Row | ProjectIndicator) & RowCommentInfo
+  ): Row & RowCommentInfo => {
     if (this.isProjectIndicator(item)) {
-      return this.indicatorToRow(item);
+      return {
+        ...this.indicatorToRow(item),
+        commentInfo: item.commentInfo,
+        disaggregatedBy: item.disaggregatedBy || {},
+        comments: item.comments,
+        comment: item.comment
+      };
     }
     return item;
   }
@@ -342,20 +494,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     if (this.dimensionIds.value === 'entity') {
       this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entities));
       this.dimensions.push('_total');
-    }
-    else if (this.dimensionIds.value === 'group') {
+    } else if (this.dimensionIds.value === 'group') {
       const entities = this.filter.value.entities;
-      this.dimensions = this.project.groups.filter(group => {
-        for (const e of group.members) {
-          if (entities.includes(e.id)) {
-            return true;
+      this.dimensions = this.project.groups
+        .filter(group => {
+          for (const e of group.members) {
+            if (entities.includes(e.id)) {
+              return true;
+            }
           }
-        }
-        return false;
-      }).map(x => x.id);
+          return false;
+        })
+        .map(x => x.id);
       this.dimensions.push('_total');
-    }
-    else {
+    } else {
       let startTimeSlot = TimeSlot.fromDate(
         DatesHelper.dateToString(this.filter.value._start),
         TimeSlotPeriodicity[this.dimensionIds.value]
@@ -392,7 +544,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       dataset: {},
       filterFlag: true,
       computation: indicator.computation,
-      originProject: indicator.originProject ? indicator.originProject : undefined,
+      originProject: indicator.originProject
+        ? indicator.originProject
+        : undefined,
       open: true
     } as InfoRow;
 
@@ -411,20 +565,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     const currentFilter = this.filter.value;
     let modifiedFilter;
 
-    const selectedLogFrames = this.project.logicalFrames.find(log =>
-      log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
+    const selectedLogFrames = this.project.logicalFrames.find(
+      log =>
+        log.name ===
+        this.clickedLogFrame.title
+          .substring(this.clickedLogFrame.title.indexOf(':') + 1)
+          .trim()
     );
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
-      selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
+      selectedLogFrames.entities.forEach(entity =>
+        this.logFrameEntities.push(entity.id)
+      );
       modifiedFilter = {
-        _start: new Date(selectedLogFrames.start) < new Date(currentFilter._start) ?
-          new Date(currentFilter._start).toLocaleDateString('fr-CA') :
-          new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-        _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
-          new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
-          new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-        entity: currentFilter.entities.filter(e => this.logFrameEntities.includes(e))
+        _start:
+          new Date(selectedLogFrames.start) < new Date(currentFilter._start)
+            ? new Date(currentFilter._start).toLocaleDateString('fr-CA')
+            : new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end:
+          new Date(selectedLogFrames.end) < new Date(currentFilter._start)
+            ? new Date(selectedLogFrames.end).toLocaleDateString('fr-CA')
+            : new Date(currentFilter._end).toLocaleDateString('fr-CA'),
+        entity: currentFilter.entities.filter(e =>
+          this.logFrameEntities.includes(e)
+        )
       };
     } else {
       modifiedFilter = {
@@ -440,18 +604,27 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       Object.assign(customFilter, row.customFilter);
     }
 
-
     if (this.checkPeriodicityIsValid(row)) {
       row.error = ['Loading'];
-      this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value], customFilter, true, false).then(
-        response => {
+      this.reportingService
+        .fetchData(
+          currentProject,
+          row.computation,
+          [this.dimensionIds.value],
+          customFilter,
+          true,
+          false
+        )
+        .then(response => {
           if (response) {
             // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
             row.dataset = {
               label: row.name,
               data,
-              labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+              labels: Object.keys(response)
+                .filter(x => x !== '_total')
+                .map(x => this.getSiteOrGroupName(x)),
               fill: false,
               unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
@@ -464,13 +637,41 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
               this.updateChart();
             }
           }
-        }
-      );
-    }
-    else if (row.onChart) {
+        });
+    } else if (row.onChart) {
       row.onChart = !row.onChart;
       this.updateChart();
     }
+
+    // Update comment
+    const commentInfo = row.commentInfo;
+
+    const filters: CommentFilter = {
+      ...this.globalCommentFilters,
+      disaggregatedBy: row.disaggregatedBy || {}
+    };
+
+    // Check if there is a comment with the same filters
+    const contentIndex = findContentIndexByFilter(commentInfo, filters);
+    const content =
+      contentIndex !== -1 ? commentInfo.content[contentIndex] : null;
+
+    // If no match, remove old comments, if any
+    if (!content) {
+      delete row.comment;
+      row.comments = {};
+      return row;
+    }
+
+    // Check if the row corresponds to an indicator
+    const path = row.commentInfo.path;
+    const pathArr = path.split('|');
+    const isIndicator = ['indicator:', 'element:'].some(prefix =>
+      pathArr[pathArr.length - 1].startsWith(prefix)
+    );
+
+    if (isIndicator) { row.comments = content.comments; }
+    else { row.comment = content.comment; }
 
     return row;
   }
@@ -501,7 +702,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       const varId = value['elementId'];
       currentProject.forms.forEach(form => {
         if (form.elements.find(element => element.id === varId)) {
-          if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]) {
+          if (
+            TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]
+          ) {
             highestPeriodicity = form.periodicity;
           }
         }
@@ -511,8 +714,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     // when the chosen periodicity and the row periodicity are both week-type,
     // they only work togheter if they are the same
 
-    if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]) {
-      row.error = ['ReportingError.DataNotAvailable', 'Filter.' + highestPeriodicity];
+    if (
+      TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]
+    ) {
+      row.error = [
+        'ReportingError.DataNotAvailable',
+        'Filter.' + highestPeriodicity
+      ];
       return false;
     }
     return true;
@@ -521,7 +729,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void {
     if (this.tableContent && this.filter && this.dimensionIds) {
-
       if (isArray(this.content)) {
         this.content.map(row => {
           if (this.isInfoRow(0, row)) {
@@ -550,12 +757,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           return row;
         });
       }
-
     }
   }
 
   getSiteOrGroupName(id: string): string {
-    if (this.project && (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group')) {
+    if (
+      this.project &&
+      (this.dimensionIds.value === 'entity' ||
+        this.dimensionIds.value === 'group')
+    ) {
       const site = this.project.entities.find(s => s.id === id);
       if (site !== undefined) {
         return site.name;
@@ -566,8 +776,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         return group.name;
       }
     }
-    if (id === '_total') { return 'Total'; }
-    if (this.dimensionIds.value !== 'entity' && this.dimensionIds.value !== 'group') {
+    if (id === '_total') {
+      return 'Total';
+    }
+    if (
+      this.dimensionIds.value !== 'entity' &&
+      this.dimensionIds.value !== 'group'
+    ) {
       const timeSlotAux = new TimeSlot(id);
       return timeSlotAux.humanizeValue(this.currentLang);
     }
@@ -576,14 +791,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void {
-
     // This element is set on the chart
     if (element && !element.error) {
       element.onChart = !element.onChart;
     }
 
     // Update of the chart type in function of the dimension that we have selected
-    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group') {
+    if (
+      this.dimensionIds.value === 'entity' ||
+      this.dimensionIds.value === 'group'
+    ) {
       this.chartService.changeType('bar');
     } else {
       this.chartService.changeType('line');
@@ -598,7 +815,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           row.dataset.borderColor = this.COLORS[this.currentColorIndex];
           row.dataset.backgroundColor = this.COLORS[this.currentColorIndex];
 
-          this.currentColorIndex = (this.currentColorIndex + 1) % this.COLORS.length;
+          this.currentColorIndex =
+            (this.currentColorIndex + 1) % this.COLORS.length;
         }
 
         const copyOfDataset = Object.assign({}, row.dataset);
@@ -610,7 +828,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       }
     }
     const data = {
-      labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+      labels: this.dimensions
+        .filter(x => x !== '_total')
+        .map(x => this.getSiteOrGroupName(x)),
       datasets
     };
     this.chartService.addData(data);
@@ -624,7 +844,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     return response;
   }
 
-  formatResponseToDataset(response: unknown): { x: string, y: number }[] {
+  formatResponseToDataset(response: unknown): { x: string; y: number }[] {
     const data = [];
     for (const dimension of this.dimensions.filter(x => x !== '_total')) {
       data.push({
@@ -641,10 +861,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     const { logicalFrames } = this.project;
     const { forms } = this.project;
     // We get the correct logical frame assuming that they will always be at the top
-    return logicalFrames[indicator.sectionId - 1] ?
-      logicalFrames[indicator.sectionId - 1] :
-      forms[indicator.sectionId - logicalFrames.length - 3];
-
+    return logicalFrames[indicator.sectionId - 1]
+      ? logicalFrames[indicator.sectionId - 1]
+      : forms[indicator.sectionId - logicalFrames.length - 3];
   }
 
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
@@ -652,7 +871,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
-    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
+    const currentProject = currentIndicator.originProject
+      ? currentIndicator.originProject
+      : this.project;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites) {
@@ -673,11 +894,26 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
-        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
+        customIndicator.name = currentProject.entities.find(
+          x => x.id === entityId
+        )?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
-        customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
-        customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
+        customIndicator.start = currentProject.entities.find(
+          x => x.id === entityId
+        )?.start;
+        customIndicator.end = currentProject.entities.find(
+          x => x.id === entityId
+        )?.end;
+
+        // Remove group from disaggregatedBy
+        const disaggregatedByWithoutGroup = cloneDeep(customIndicator.disaggregatedBy);
+        delete disaggregatedByWithoutGroup.group;
+
+        customIndicator.disaggregatedBy = Object.assign(
+          disaggregatedByWithoutGroup,
+          { entity: entityId }
+        );
         customIndicator = this.updateRowValues(customIndicator);
         customIndicator.disaggregatedByGroup = 0;
         newIndicators.push(customIndicator);
@@ -711,6 +947,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         customIndicator.name = group.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
+        customIndicator.disaggregatedBy = Object.assign(
+          cloneDeep(customIndicator.disaggregatedBy),
+          { group: group.id }
+        );
         customIndicator = this.updateRowValues(customIndicator);
         customIndicator.disaggregatedByGroup = 1;
         newIndicators.push(customIndicator);
@@ -723,8 +963,14 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     else if (info.splitByTime) {
-      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[info.splitByTime]);
-      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[info.splitByTime]);
+      let startTimeSlot = TimeSlot.fromDate(
+        this.filter.value._start,
+        TimeSlotPeriodicity[info.splitByTime]
+      );
+      let endTimeSlot = TimeSlot.fromDate(
+        this.filter.value._end,
+        TimeSlotPeriodicity[info.splitByTime]
+      );
       endTimeSlot = endTimeSlot.next();
 
       const newIndicators = [];
@@ -732,18 +978,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       while (startTimeSlot !== endTimeSlot) {
         counter++;
 
-        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        let customIndicator = JSON.parse(
+          JSON.stringify(info.indicator)
+        ) as InfoRow;
         customIndicator.level = info.indicator.level + 1;
 
-        const dateToCompare = new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[0] + '-'
-          + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
+        const dateToCompare =
+          new Date(this.filter.value._start)
+            .toLocaleDateString('fr-CA')
+            .split('-')[0] +
+          '-' +
+          new Date(this.filter.value._start)
+            .toLocaleDateString('fr-CA')
+            .split('-')[1];
 
         if (counter === 1) {
           if (dateToCompare === startTimeSlot.value) {
-            customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+            customIndicator.name = startTimeSlot.humanizeValue(
+              this.translateService.currentLang
+            );
           }
         } else {
-          customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+          customIndicator.name = startTimeSlot.humanizeValue(
+            this.translateService.currentLang
+          );
         }
         customIndicator.values = {};
 
@@ -751,6 +1009,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           customIndicator.customFilter = {};
         }
         customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
+
+        customIndicator.disaggregatedBy = Object.assign(
+          cloneDeep(customIndicator.disaggregatedBy),
+          { [info.splitByTime]: [startTimeSlot.value] }
+        );
 
         customIndicator = this.updateRowValues(customIndicator);
         if (customIndicator.name !== info.indicator.name) {
@@ -763,16 +1026,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
-    }
-    else {
+    } else {
       for (const disaggregatedIndicator of info.disaggregatedIndicators) {
         indicatorIndex += 1;
 
         let newRow;
         if (currentIndicator.customFilter) {
-          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator);
-        }
-        else {
+          newRow = this.indicatorToRow(
+            disaggregatedIndicator,
+            currentIndicator
+          );
+        } else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
         }
 
@@ -781,6 +1045,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
+        newRow.commentInfo = info.indicator.commentInfo;
+
+        newRow.disaggregatedBy = Object.assign(
+          cloneDeep(info.indicator.disaggregatedBy),
+          disaggregatedIndicator.partitionedBy || {}
+        );
+
         newRow = this.updateRowValues(newRow);
 
         this.content.splice(indicatorIndex, 0, newRow);
@@ -826,14 +1097,19 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
       return 'rgb(238, 238, 238)';
     }
 
-    if (element.values[column] === null || isNaN(Number(element.values[column]))) {
+    if (
+      element.values[column] === null ||
+      isNaN(Number(element.values[column]))
+    ) {
       return 'white';
     }
 
     // Set background color to white if the row doesn't want colors
-    if (!element.colorize
-      || element.target === null
-      || element.baseline === null) {
+    if (
+      !element.colorize ||
+      element.target === null ||
+      element.baseline === null
+    ) {
       return 'white';
     }
 
@@ -862,10 +1138,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           g += normalizedDifference;
         } else {
           g = 255;
-          r -= (normalizedDifference - 127);
+          r -= normalizedDifference - 127;
         }
       }
-    } else { // If baseline is a higher value that the target we invert the calculations
+    } else {
+      // If baseline is a higher value that the target we invert the calculations
       const distance = element.baseline - element.target;
 
       // if the value is higher than the baseline, we choose red
@@ -886,7 +1163,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           g += normalizedDifference;
         } else {
           g = 255;
-          r -= (normalizedDifference - 127);
+          r -= normalizedDifference - 127;
         }
       }
     }
@@ -895,13 +1172,18 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   randomNumberLimit(limit: number): number {
-    return Math.floor((Math.random() * limit) + 1);
+    return Math.floor(Math.random() * limit + 1);
   }
 
   randomColor(): string {
-    const col = 'rgba(' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255) + ', 1)';
+    const col =
+      'rgba(' +
+      this.randomNumberLimit(255) +
+      ',' +
+      this.randomNumberLimit(255) +
+      ',' +
+      this.randomNumberLimit(255) +
+      ', 1)';
     return col;
   }
 
@@ -914,29 +1196,55 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
 
     if (this.innerWidth < 640) {
       this.colsThatFitInTheScreen = 3;
-    }
-    else if (this.innerWidth < 1024) {
-      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 640) / 85);
-    }
-    else {
-      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
+    } else if (this.innerWidth < 1024) {
+      this.colsThatFitInTheScreen =
+        3 + Math.floor((this.innerWidth - 640) / 85);
+    } else {
+      this.colsThatFitInTheScreen =
+        3 + Math.floor((this.innerWidth - 874) / 85);
     }
   }
 
-
   formatGroupName(groupName: string) {
     if (groupName.charAt(0) === 'A') {
-      if (this.activities.indexOf(groupName) === -1) { this.activities.push(groupName); }
-      return groupName.split(':')[0] + ' ' + (this.activities.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+      if (this.activities.indexOf(groupName) === -1) {
+        this.activities.push(groupName);
+      }
+      return (
+        groupName.split(':')[0] +
+        ' ' +
+        (this.activities.indexOf(groupName) + 1) +
+        ' : ' +
+        groupName.split(':')[1]
+      );
     } else if (groupName.charAt(0) === 'R') {
       this.activities = [];
-      if (this.results.indexOf(groupName) === -1) { this.results.push(groupName); }
-      return groupName.split(':')[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
-    } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
+      if (this.results.indexOf(groupName) === -1) {
+        this.results.push(groupName);
+      }
+      return (
+        groupName.split(':')[0] +
+        ' ' +
+        (this.results.indexOf(groupName) + 1) +
+        ' : ' +
+        groupName.split(':')[1]
+      );
+    } else if (
+      groupName.charAt(0) === 'O' &&
+      groupName.split(' ')[1].charAt(0) === 'S'
+    ) {
       this.activities = [];
       this.results = [];
-      if (this.specificObjectif.indexOf(groupName) === -1) { this.specificObjectif.push(groupName); }
-      return groupName.split(':')[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
+      if (this.specificObjectif.indexOf(groupName) === -1) {
+        this.specificObjectif.push(groupName);
+      }
+      return (
+        groupName.split(':')[0] +
+        ' ' +
+        (this.specificObjectif.indexOf(groupName) + 1) +
+        ' : ' +
+        groupName.split(':')[1]
+      );
     } else {
       this.activities = [];
       this.specificObjectif = [];
@@ -945,9 +1253,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     return groupName;
   }
 
-
   isItalic(value): boolean {
-    if (typeof value === 'string' && !isNaN(Number(value))){
+    if (typeof value === 'string' && !isNaN(Number(value))) {
       return true;
     }
     return false;
@@ -960,60 +1267,65 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
     currentDate.setHours(12);
 
     if (group instanceof LogicalFrame) {
-      if (group.start.getTime() > currentDate.getTime() || group.end.getTime() < currentDate.getTime()) {
+      if (
+        group.start.getTime() > currentDate.getTime() ||
+        group.end.getTime() < currentDate.getTime()
+      ) {
         result = false;
       }
     }
     if (data.start && data.end) {
-      if (data.start.getTime() > currentDate.getTime() || data.end.getTime() < currentDate.getTime()) {
+      if (
+        data.start.getTime() > currentDate.getTime() ||
+        data.end.getTime() < currentDate.getTime()
+      ) {
         result = false;
       }
     }
     return result;
   }
 
-  styleValue(value, unit){
-    if (value === undefined){
+  styleValue(value, unit) {
+    if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number'){
+    if (value === 'Not a finite number') {
       return '!';
     }
 
-    if (value === null || isNaN(Number(value))){
+    if (value === null || isNaN(Number(value))) {
       return '?';
     }
 
     let newValue = formatNumber(Number(value), 'de-DE', '1.0-1');
 
-    if (unit){
+    if (unit) {
       newValue += unit;
     }
 
     return newValue;
   }
 
-  getTooltipMessage(value){
-    if (value === undefined){
+  getTooltipMessage(value) {
+    if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number'){
+    if (value === 'Not a finite number') {
       return 'DivisionByZero';
     }
 
-    if (value === null || isNaN(Number(value))){
+    if (value === null || isNaN(Number(value))) {
       return 'CannotBeComputed';
     }
 
-    if (typeof value === 'string' && !isNaN(Number(value))){
+    if (typeof value === 'string' && !isNaN(Number(value))) {
       return 'IncompleteData';
     }
 
     return '';
   }
-
 
   /* TEMPORARY
   exportTOExcel() {
@@ -1036,11 +1348,107 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
   getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
     const value = element[type];
     // if (type === 'baseline') console.log(element);
-    if (value === null || value === undefined || (element.isParent !== element.level &&
-      element.unit !== '%' && element.unit !== '‰')) {
+    if (
+      value === null ||
+      value === undefined ||
+      (element.isParent !== element.level &&
+        element.unit !== '%' &&
+        element.unit !== '‰')
+    ) {
       return '';
     }
     return value + (element.unit ?? '');
   }
-}
 
+  onRightClick(
+    event: MouseEvent,
+    trigger: MatMenuTrigger,
+    triggerElement: HTMLElement,
+    el?: any,
+    col?: string
+  ): void {
+    this.selectedCell = { row: el, col };
+    if (this.userIsAdmin) {
+      triggerElement.style.left = event.clientX + 5 + 'px';
+      triggerElement.style.top = event.clientY + 5 + 'px';
+      if (trigger.menuOpen) {
+        trigger.closeMenu();
+        trigger.openMenu();
+      } else {
+        trigger.openMenu();
+      }
+      event.preventDefault();
+    }
+  }
+
+  public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
+    if (!this.selectedCell) { return; }
+    const { row } = this.selectedCell;
+    const comment = this.selectedCellComment || '';
+
+    if (action === 'delete') {
+      this.selectedCellComment = '';
+      this.commentService.stashComment(row.commentInfo);
+    } else {
+      this.dialog
+        .open(CommentModalComponent, {
+          data: {
+            action,
+            comment
+          }
+        })
+        .afterClosed()
+        .subscribe(result => {
+          if (result === null) { return; }
+          this.selectedCellComment = result || '';
+          this.commentService.stashComment(row.commentInfo);
+        });
+    }
+  }
+
+  public getTooltipText(originalTooltip?: string, comment?: string): any {
+    let tooltipContent = '';
+
+    if (this.showComments) {
+      if (originalTooltip) {
+        tooltipContent += `
+          <div style='opacity: .75; font-style: italic;'>
+            ${originalTooltip}
+          </div>`;
+      }
+      if (comment) {
+        tooltipContent += `<div>${comment}<div>`;
+      }
+    } else {
+      if (originalTooltip) {
+        tooltipContent += `<div>${originalTooltip}</div>`;
+      }
+    }
+
+    return tooltipContent !== '' ? tooltipContent : null;
+
+    // if ((!comment && !originalTooltip)||(!originalTooltip && !this.showComments)) {
+    //   return null;
+    // }
+    // if (!comment || !this.showComments) {
+    //   if (this.showComments) {
+    //     return `
+    //       <div style='opacity: .75; font-style: italic;'>
+    //         ${originalTooltip}
+    //       </div>
+    //     `;
+    //   } else {
+    //     return `<div>${originalTooltip}</div>`;
+    //   }
+    // } else if (!originalTooltip) {
+    //   return `<div>${comment}</div>`;
+    // } else {
+    //   return `
+    //     <div style='opacity: .75; font-style: italic;'>
+    //       ${originalTooltip}
+    //     </div>
+    //     <div>${comment}<div>
+    //   `;
+    // }
+  }
+}

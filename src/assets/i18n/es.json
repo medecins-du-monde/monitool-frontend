@@ -193,6 +193,7 @@
       "end_replace": "Cambia el final del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "country_replace": "Cambia el país del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "visibility_replace": "Cambia la visibilidad del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+      "comments_updated": "Comentarios de la tabla de informes actualizados",
 
       "themes_add": "Añade una temática al proyecto",
       "themes_move": "Reordena las temáticas del proyecto",
@@ -860,5 +861,9 @@
     "description": "Si eliminas tu {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
     "confirm": "Confirmar",
     "cancel": "Cancelar"
-  }
+  },
+  "display-comments": "Mostrar comentarios",
+  "add-comment": "Añadir comentario",
+  "edit-comment": "Editar comentario",
+  "comment-placeholder": "Escribe aquí tu comentario"
 }

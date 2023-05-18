@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { Group } from './group.model';
 import { User } from './user.model';
 import DatesHelper from 'src/app/utils/dates-helper';
+import { Comment } from 'src/app/services/comment.service';
 
 export class Project implements Deserializable {
     id: string;
@@ -30,6 +31,7 @@ export class Project implements Deserializable {
     users: User[];
     visibility: string;
     parsed?: boolean;
+    comments: Comment[] = [];
 
     get status(): string{
         if ( this.active ) {
@@ -99,6 +101,7 @@ export class Project implements Deserializable {
             }
             return user;
         }) : [];
+        this.comments = (input && input.comments) ? input.comments :  [];
         return this;
     }
 
@@ -127,7 +130,8 @@ export class Project implements Deserializable {
             type: this.type,
             users: this.users.map(x => x.serialize()),
             visibility: this.visibility,
-            _id: this.id
+            _id: this.id,
+            comments: this.comments,
         };
         Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
         return serialized;

@@ -1,8 +1,17 @@
 <table>
     <tr>
-        <td>
-         <h2><mat-icon class="hover" (click)="toggleCollapsed()">{{collapsed ? 'add_circle' : 'remove_circle'}}</mat-icon>{{ 'Filters' | translate }}</h2>
-        </td>
+        <td style="display: flex; justify-content: space-between;">
+            <h2 (click)="toggleCollapsed()">
+             <mat-icon>
+               {{collapsed ? 'add_circle' : 'remove_circle'}}
+             </mat-icon>
+             {{ 'Filters' | translate }}
+           </h2>
+           <h2>
+             {{ 'display-comments' | translate}}
+             <mat-checkbox [(ngModel)]="showComments" (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
+           </h2>
+         </td>
     </tr>
     <tr>
         <td *ngIf="!collapsed" [formGroup]="filterForm">

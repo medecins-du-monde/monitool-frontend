@@ -189,6 +189,7 @@
       "end_replace": "Modifie la date de fin du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
       "country_replace": "Modifie le pays du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
       "visibility_replace": "Modifie la visibilité du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
+      "comments_updated": "Commentaires du tableau de rapport mis à jour",
 
       "themes_add": "Ajoute une thématique au projet",
       "themes_move": "Reordonne les thématiques du projet",
@@ -861,5 +862,9 @@
     "description": "Si vous supprimez votre {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez sauvegarder vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",
     "confirm": "Confirmer",
     "cancel": "Annuler"
-  }
+  },
+  "display-comments": "Afficher les commentaires",
+  "add-comment": "Ajouter un commentaire",
+  "edit-comment": "Modifier le commentaire",
+  "comment-placeholder": "Écrivez votre commentaire ici"
 }
