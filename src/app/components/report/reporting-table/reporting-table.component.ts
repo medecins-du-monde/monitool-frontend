@@ -679,7 +679,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         customIndicator.start = currentProject.entities.find(x => x.id === entityId)?.start;
         customIndicator.end = currentProject.entities.find(x => x.id === entityId)?.end;
         customIndicator = this.updateRowValues(customIndicator);
-        customIndicator.disaggregatedByGroup = false;
+        customIndicator.disaggregatedByGroup = 0;
         newIndicators.push(customIndicator);
       }
 
@@ -712,7 +712,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
         customIndicator = this.updateRowValues(customIndicator);
-        customIndicator.disaggregatedByGroup = true;
+        customIndicator.disaggregatedByGroup = 1;
         newIndicators.push(customIndicator);
       }
 
@@ -776,8 +776,8 @@ export class ReportingTableComponent implements OnInit, OnDestroy, AfterViewInit
           newRow = this.indicatorToRow(disaggregatedIndicator);
         }
 
-        if (currentIndicator.disaggregatedByGroup) {
-          newRow.disaggregatedByGroup = true;
+        if (currentIndicator.disaggregatedByGroup > 0) {
+          newRow.disaggregatedByGroup = currentIndicator.disaggregatedByGroup + 1;
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
