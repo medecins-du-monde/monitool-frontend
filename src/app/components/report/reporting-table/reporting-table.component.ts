@@ -905,8 +905,13 @@ export class ReportingTableComponent
         customIndicator.end = currentProject.entities.find(
           x => x.id === entityId
         )?.end;
+
+        // Remove group from disaggregatedBy
+        const disaggregatedByWithoutGroup = cloneDeep(customIndicator.disaggregatedBy);
+        delete disaggregatedByWithoutGroup.group;
+
         customIndicator.disaggregatedBy = Object.assign(
-          cloneDeep(customIndicator.disaggregatedBy),
+          disaggregatedByWithoutGroup,
           { entity: entityId }
         );
         customIndicator = this.updateRowValues(customIndicator);
@@ -942,6 +947,10 @@ export class ReportingTableComponent
         customIndicator.name = group.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
+        customIndicator.disaggregatedBy = Object.assign(
+          cloneDeep(customIndicator.disaggregatedBy),
+          { group: group.id }
+        );
         customIndicator = this.updateRowValues(customIndicator);
         customIndicator.disaggregatedByGroup = 1;
         newIndicators.push(customIndicator);
@@ -953,38 +962,7 @@ export class ReportingTableComponent
       this.updateTableContent();
     }
 
-    else if (info.splitBySiteGroups) {
-      const newIndicators = [];
-      const groups = [];
-
-      (currentProject.groups || []).map(projectGroup => {
-        if (projectGroup.members.every(entity => this.getGroup(currentIndicator).entities.includes(entity))) {
-          groups.push(projectGroup);
-        }
-      });
-
-      for (const group of groups) {
-        const customFilter = {
-          entity: group.members.map(x => x.id)
-        };
-
-        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
-
-        customIndicator.level = info.indicator.level + 1;
-        customIndicator.onChart = false;
-        customIndicator.name = group.name;
-        customIndicator.customFilter = customFilter;
-        customIndicator.values = {};
-        customIndicator = this.updateRowValues(customIndicator);
-        customIndicator.disaggregatedByGroup = 1;
-        newIndicators.push(customIndicator);
-      }
-
-      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
-
-      currentIndicator.open = !currentIndicator.open;
-      this.updateTableContent();
-    } else if (info.splitByTime) {
+    else if (info.splitByTime) {
       let startTimeSlot = TimeSlot.fromDate(
         this.filter.value._start,
         TimeSlotPeriodicity[info.splitByTime]
