@@ -83,6 +83,7 @@
     }
   }
 
+
   tr.mat-row {
     z-index: 3 !important;
     height: 26px !important;
@@ -145,14 +146,26 @@
   .menu {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 4px;
     padding: 0px 15px 0px 15px;
     height: 30px;
+
+    mat-icon {
+      transform: scale(.7);
+      opacity: .6;
+    }
+
     div {
+      margin-bottom: -2px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
+    app-reporting-menu {
+      margin-left: auto;
+    }
+
   }
 
   .mat-icon.NaN {

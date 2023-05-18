@@ -441,11 +441,13 @@ export class ReportingTableComponent
           }
         }
       }
+      // Filters displayed rows with the entities selected in the collection sites filter
+      // Disaggregations by collection sites and collection sites groups
       this.rows.next(
         this.content.filter(el => {
           if (el.customFilter && el.customFilter.entity) {
-            return this.currentFilter.entities.includes(
-              el.customFilter.entity[0]
+            return el.customFilter.entity.every(entity =>
+              this.currentFilter.entities.includes(entity)
             );
           }
           return true;
@@ -854,7 +856,7 @@ export class ReportingTableComponent
     return data;
   }
 
-  // this method will return the input group for a given indicator
+  // This method will return the input group for a given indicator
   getGroup(indicator: InfoRow): any {
     const { logicalFrames } = this.project;
     const { forms } = this.project;
@@ -876,18 +878,14 @@ export class ReportingTableComponent
 
     if (info.splitBySites) {
       const newIndicators = [];
-      const entities = info.indicator.originProject
-        ? info.indicator.originProject.entities.map(x => x.id)
-        : this.filter.value.entities;
+      // const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
       // getting the logical frame of current indicator to get all its entities.
+      // or current entity if the indicator is disaggregated by group
       const group = this.getGroup(currentIndicator);
-      const groupEntities = (group?.entities || [])
-        .map(({ id }) => id)
-        .filter(Boolean);
-      const ent = groupEntities.length ? groupEntities : entities;
+      const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
 
-      for (const entityId of ent) {
+      for (const entityId of groupEntities) {
         const customFilter = {
           entity: [entityId]
         };
@@ -912,6 +910,73 @@ export class ReportingTableComponent
           { entity: entityId }
         );
         customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = 0;
+        newIndicators.push(customIndicator);
+      }
+
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitBySiteGroups) {
+      const newIndicators = [];
+      const groups = [];
+
+      (currentProject.groups || []).map(projectGroup => {
+        if (projectGroup.members.every(entity => this.getGroup(currentIndicator).entities.includes(entity))) {
+          groups.push(projectGroup);
+        }
+      });
+
+      for (const group of groups) {
+        const customFilter = {
+          entity: group.members.map(x => x.id)
+        };
+
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = group.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = 1;
+        newIndicators.push(customIndicator);
+      }
+
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitBySiteGroups) {
+      const newIndicators = [];
+      const groups = [];
+
+      (currentProject.groups || []).map(projectGroup => {
+        if (projectGroup.members.every(entity => this.getGroup(currentIndicator).entities.includes(entity))) {
+          groups.push(projectGroup);
+        }
+      });
+
+      for (const group of groups) {
+        const customFilter = {
+          entity: group.members.map(x => x.id)
+        };
+
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = group.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = 1;
         newIndicators.push(customIndicator);
       }
 
@@ -995,6 +1060,10 @@ export class ReportingTableComponent
           );
         } else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
+        }
+
+        if (currentIndicator.disaggregatedByGroup > 0) {
+          newRow.disaggregatedByGroup = currentIndicator.disaggregatedByGroup + 1;
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;

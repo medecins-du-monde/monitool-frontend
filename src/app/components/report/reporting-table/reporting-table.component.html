@@ -38,7 +38,10 @@
         [matTooltipShowDelay]="showComments && element.comments?.name ? 0 : 500"
       >
         <div class="menu">
-          <div>
+          <mat-icon *ngIf="element.disaggregatedByGroup === 1"
+            >arrow_forward</mat-icon
+          >
+          <div matTooltip="{{ element.name }}" [matTooltipShowDelay]="500">
             {{ element.name }}
           </div>
           <app-reporting-menu
@@ -123,7 +126,14 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]="getTooltipText(isInRange(element, column) ? (getTooltipMessage((element?.values)[column]) | translate) : null, element.comments[column])"
+        [matTooltip]="
+          getTooltipText(
+            isInRange(element, column)
+              ? (getTooltipMessage((element?.values)[column]) | translate)
+              : null,
+            element.comments[column]
+          )
+        "
       >
         <div
           style="position:relative;"
