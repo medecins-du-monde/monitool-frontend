@@ -44,7 +44,6 @@
         *matHeaderCellDef>{{ getSiteOrGroupName(column) | translate }}</th>
       <td mat-cell class="value-cell"
         [matTooltip]="isInRange(element, column) ? (getTooltipMessage(element?.values[column]) | translate) : ''"
-        matTooltipPosition="above"
         *matCellDef="let element"
         [ngStyle]="{
           'backgroundColor': (element.values[column] !== undefined && isInRange(element, column)) ? calcColor(element, column) : 'rgb(238, 238, 238)',
@@ -79,105 +78,17 @@
 
     <!-- Sticky position doesnt allow a dynamic column span so they have been set as static-->
     <ng-container matColumnDef="title" [sticky]="true">
-      <ng-container *ngIf="columnsToDisplay.length === 4">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="3" class="title">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length >= 12 ? 14 : columnsToDisplay.length - 1" class="title">
           <div class="title-row">
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
+            <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
+            <ng-template #elseOpen>
+              <mat-icon>remove_circle</mat-icon>
+            </ng-template>
+            <p>
+              {{ element['title']}}
+            </p>
+          </div>
         </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 5">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="4" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 6">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="5" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 7">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="6" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 8">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="7" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 9">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="8" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 10">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="9" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length === 11">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="10" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
-      <ng-container *ngIf="columnsToDisplay.length >= 12">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="14" class="title">
-          <div>
-          <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
-          <ng-template #elseOpen>
-            <mat-icon>remove_circle</mat-icon>
-          </ng-template>
-             {{ element['title'] }}
-        </div>
-        </td>
-      </ng-container>
     </ng-container>
 
     <!--The rest of the row needs to be filled out to keep consistent styling -->
@@ -186,58 +97,15 @@
     </ng-container>
 
     <ng-container matColumnDef="groupName" [sticky]="true">
-      <ng-container *ngIf="optimalColspanForGroupName === 3">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="4" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 4" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="5" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 5">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="6" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 6">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="7" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 7" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="8" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 8" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="9" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 9" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="10" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 10" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="11" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 11" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="12" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 12" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="13" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 13" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="14" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-         class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName === 14" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="15" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
-      <ng-container *ngIf="optimalColspanForGroupName >= 15" >
-        <td mat-cell *matCellDef="let element" [attr.colspan]="16" [style]="calcPaddingLevel(element)" [ngStyle]="{ 'fontWeight': element.groupName.charAt(0) === 'R' || element.groupName.charAt(0) === 'O' ? 'bold' : ''}"
-        class="groupName">{{formatGroupName(element.groupName)}}</td>
-      </ng-container>
+      <td mat-cell *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length >= 15 ? 16 : columnsToDisplay.length + 1"
+        class="groupName">
+        <p
+          [matTooltip]="formatGroupName(element.groupName)"
+          [style]="calcPaddingLevel(element)"
+          [innerHTML]="formatGroupName(element.groupName)">
+        </p>
+        </td>
     </ng-container>
 
     <!--
