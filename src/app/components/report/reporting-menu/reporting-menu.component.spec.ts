@@ -61,10 +61,14 @@ describe('ReportingMenuComponent', () => {
         level: 1,
         click: () => {
           return;
-        }
+        },
+        comment: 'test',
+        commentID: 'testID'
       },
       open: true,
-      level: 1
+      level: 1,
+      disaggregatedBy: null,
+      commentInfo: null
     };
     component.dimensionName = 'test';
     fixture.detectChanges();
