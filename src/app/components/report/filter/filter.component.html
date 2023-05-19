@@ -9,7 +9,7 @@
            </h2>
            <h2>
              {{ 'display-comments' | translate}}
-             <mat-checkbox [(ngModel)]="showComments" (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
+             <mat-checkbox [(ngModel)]="showComments" ngDefaultControl (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
            </h2>
          </td>
     </tr>
@@ -34,7 +34,7 @@
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
             </div>
-                  
+
             <div *ngIf="filterForm.get('entities')" class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
                 <app-collection-sites-selector

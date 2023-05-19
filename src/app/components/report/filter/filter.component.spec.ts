@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FilterComponent } from './filter.component';
@@ -13,9 +14,11 @@ describe('FilterComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FilterComponent],
       imports: [
+        FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatCheckboxModule
       ]
     }).compileComponents();
   }));

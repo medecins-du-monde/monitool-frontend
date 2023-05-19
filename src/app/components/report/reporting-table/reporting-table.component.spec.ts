@@ -1,5 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -12,7 +14,12 @@ describe('ReportingTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ReportingTableComponent],
-      imports: [HttpClientTestingModule, TranslateModule.forRoot()]
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        MatDialogModule,
+        MatMenuModule
+      ]
     }).compileComponents();
   }));
 
