@@ -48,6 +48,7 @@ import {
 } from 'src/app/services/comment.service';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 import { User } from 'src/app/models/classes/user.model';
+import { Group } from 'src/app/models/classes/group.model';
 
 type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
@@ -446,7 +447,7 @@ export class ReportingTableComponent
       this.rows.next(
         this.content.filter(el => {
           if (el.customFilter && el.customFilter.entity) {
-            return el.customFilter.entity.every(entity =>
+            return el.customFilter.entity.some(entity =>
               this.currentFilter.entities.includes(entity)
             );
           }
@@ -877,6 +878,7 @@ export class ReportingTableComponent
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites) {
+      // console.log(currentProject);
       const newIndicators = [];
       // const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
@@ -885,7 +887,11 @@ export class ReportingTableComponent
       const group = this.getGroup(currentIndicator);
       const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
 
-      for (const entityId of groupEntities) {
+      // Filters the groups to only display groups that have to do with the indicator computation,
+      // if no computation is present we show all the groups.
+      const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
+
+      for (const entityId of filteredGroupEntities) {
         const customFilter = {
           entity: [entityId]
         };
@@ -929,8 +935,18 @@ export class ReportingTableComponent
       const newIndicators = [];
       const groups = [];
 
+      // getting the logical frame of current indicator to get all its entities.
+      // or current entity if the indicator is disaggregated by group
+      const groupEntities = currentIndicator.customFilter?.entity ||
+      (this.getGroup(currentIndicator)?.entities || []).map(({id}) => id).filter(Boolean);
+
+      // Filters the groups to only display groups that have to do with the indicator computation,
+      // if no computation is present we show all the groups.
+      const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
+
       (currentProject.groups || []).map(projectGroup => {
-        if (projectGroup.members.every(entity => this.getGroup(currentIndicator).entities.includes(entity))) {
+        console.log(projectGroup);
+        if (projectGroup.members.some(entity => filteredGroupEntities.includes(entity.id))) {
           groups.push(projectGroup);
         }
       });
@@ -1450,5 +1466,29 @@ export class ReportingTableComponent
     //     <div>${comment}<div>
     //   `;
     // }
+  }
+
+  private getRelevantGroups(groups: string[], indicator: any, project: any) {
+    if (indicator.computation && Object.values(indicator.computation.parameters).length > 0) {
+      console.log(indicator.computation);
+      const filteredGroups = [];
+
+      for (const value of Object.values(indicator.computation.parameters)) {
+        const varId = value['elementId'];
+        project.forms.forEach(form => {
+          if (form.elements.find(element => element.id === varId)) {
+            groups.map(groupId => {
+              if (form.entities.find(ent => ent.id === groupId) && filteredGroups.indexOf(groupId) === -1) {
+                filteredGroups.push(groupId);
+              }
+            });
+          }
+        });
+      }
+      console.log(groups.length, filteredGroups.length);
+      return filteredGroups;
+    } else {
+      return groups;
+    }
   }
 }
