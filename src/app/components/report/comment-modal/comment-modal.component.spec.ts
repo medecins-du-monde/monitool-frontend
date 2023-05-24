@@ -14,7 +14,7 @@ describe('CommentModalComponent', () => {
         MatDialogModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [CommentModalComponent,],
+      declarations: [CommentModalComponent, ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] }
