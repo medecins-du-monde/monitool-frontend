@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  
+  button {
+    align-self: flex-start;
+  }
+
+  .filter-section {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 40px;
+  }
+
+  .search-bar {
+    align-self: flex-end;
+  }
+}

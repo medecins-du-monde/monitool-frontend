@@ -865,5 +865,7 @@
   "display-comments": "Mostrar comentarios",
   "add-comment": "Añadir comentario",
   "edit-comment": "Editar comentario",
-  "comment-placeholder": "Escribe aquí tu comentario"
+  "comment-placeholder": "Escribe aquí tu comentario",
+  "showingResults": "Mostrando {{count}} resultados",
+  "search": "Buscar"
 }
