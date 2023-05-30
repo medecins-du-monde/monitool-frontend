@@ -862,8 +862,12 @@
     "confirm": "Confirmar",
     "cancel": "Cancelar"
   },
-  "display-comments": "Mostrar comentarios",
+  "display-comments": {
+    "title": "Mostrar comentarios",
+    "tooltip": "Para agregar un comentario en una celda, haga clic derecho sobre él"
+  },
   "add-comment": "Añadir comentario",
   "edit-comment": "Editar comentario",
+  "comment": "Comentario",
   "comment-placeholder": "Escribe aquí tu comentario"
 }

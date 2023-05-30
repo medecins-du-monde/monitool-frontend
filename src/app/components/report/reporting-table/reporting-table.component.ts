@@ -1417,7 +1417,10 @@ export class ReportingTableComponent
           </div>`;
       }
       if (comment) {
-        tooltipContent += `<div>${comment}<div>`;
+        const commentTitle = `${this.translateService.instant('comment')}:`;
+        tooltipContent += `${
+          tooltipContent ? '<br/>' : ''
+        }<div><b>${commentTitle}</b><br/>${comment}</div>`;
       }
     } else {
       if (originalTooltip) {
