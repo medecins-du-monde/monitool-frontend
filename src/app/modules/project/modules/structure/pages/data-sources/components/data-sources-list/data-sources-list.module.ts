@@ -7,7 +7,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DataSourceModule } from '../data-source/data-source.module';
-import { DeleteModalModule } from '../delete-modal/delete-modal.module';
+import { DeleteModalModule } from '../../../../components/delete-modal/delete-modal.module';
 
 
 

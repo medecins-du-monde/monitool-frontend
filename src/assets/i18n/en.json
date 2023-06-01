@@ -841,8 +841,11 @@
   },
   "delete-modal": {
     "datasource": "data source",
+    "data": "data",
+    "disaggregation": "disaggregation",
     "header": "Delete '{{item}}'",
     "description": "If you delete your {{type}} '{{item}}', all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
+    "description-plural": "If you delete your {{type}} '{{item}}', all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
