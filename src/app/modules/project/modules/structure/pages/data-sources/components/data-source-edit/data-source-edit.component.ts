@@ -252,8 +252,11 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'data', item: this.elements.value[i].name, plural: true } });
 
     dialogRef.afterClosed().subscribe(res => {
+      console.log(res);
       if (res && res.delete) {
         this.elements.removeAt(i);
+        // Workaraound to update the forms
+        this.elements.patchValue(this.elements.value);
       }
     });
   }
