@@ -858,8 +858,11 @@
   },
   "delete-modal": {
     "datasource": "source de données",
+    "data": "données",
+    "disaggregation": "désagrégation",
     "header": "Supprimer '{{item}}'",
     "description": "Si vous supprimez votre {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez sauvegarder vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",
+    "description-plural": "Si vous supprimez vos {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez sauvegarder vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",
     "confirm": "Confirmer",
     "cancel": "Annuler"
   },
