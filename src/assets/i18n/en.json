@@ -848,7 +848,7 @@
   },
   "display-comments": {
     "title": "Display comments",
-    "tooltip": "To add a comment in a cell, right-click on it"
+    "tooltip": "Right-click on a cell to add a comment"
   },
   "add-comment": "Add comment",
   "edit-comment": "Edit comment",

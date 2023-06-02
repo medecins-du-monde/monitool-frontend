@@ -2,12 +2,15 @@
 // tslint:disable:no-string-literal
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
@@ -72,7 +75,8 @@ export class ReportingTableComponent
     private translateService: TranslateService,
     private dialog: MatDialog,
     private authService: AuthService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     registerLocaleData(localeDe, 'de-DE', localeDeExtra);
   }
@@ -95,7 +99,9 @@ export class ReportingTableComponent
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
-  @Input() showComments: boolean;
+  @Input() showComments = false;
+  @Input() userIsAdmin = false;
+  @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
 
   clickedLogFrame;
@@ -104,7 +110,6 @@ export class ReportingTableComponent
   public menuLeft = 0;
   public menuTop = 0;
 
-  public userIsAdmin = false;
   public selectedCell: {
     row: any;
     col?: string;
@@ -331,6 +336,7 @@ export class ReportingTableComponent
                 user.role === 'admin' || user.role === 'owner'
                   ? (this.userIsAdmin = true)
                   : (this.userIsAdmin = false);
+                this.userIsAdminChange.emit(this.userIsAdmin);
               }
             );
             userSubscription.unsubscribe();
@@ -1390,6 +1396,7 @@ export class ReportingTableComponent
       this.selectedCellComment = '';
       this.commentService.stashComment(row.commentInfo);
     } else {
+      this.changeDetectorRef.detach();
       this.dialog
         .open(CommentModalComponent, {
           data: {
@@ -1399,6 +1406,7 @@ export class ReportingTableComponent
         })
         .afterClosed()
         .subscribe(result => {
+          this.changeDetectorRef.reattach();
           if (result === null) { return; }
           this.selectedCellComment = result || '';
           this.commentService.stashComment(row.commentInfo);
@@ -1412,19 +1420,18 @@ export class ReportingTableComponent
     if (this.showComments) {
       if (originalTooltip) {
         tooltipContent += `
-          <div style='opacity: .75; font-style: italic;'>
+          <div style='opacity: .75; font-style: italic; font-size: small'>
             ${originalTooltip}
           </div>`;
       }
       if (comment) {
-        const commentTitle = `${this.translateService.instant('comment')}:`;
         tooltipContent += `${
-          tooltipContent ? '<br/>' : ''
-        }<div><b>${commentTitle}</b><br/>${comment}</div>`;
+          tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 2px 0"></div>' : ''
+        }<div style='font-size: small'>${comment}</div>`;
       }
     } else {
       if (originalTooltip) {
-        tooltipContent += `<div>${originalTooltip}</div>`;
+        tooltipContent += `<div style='font-size: small'>${originalTooltip}</div>`;
       }
     }
 

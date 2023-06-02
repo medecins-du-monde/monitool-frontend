@@ -864,7 +864,7 @@
   },
   "display-comments": {
     "title": "Mostrar comentarios",
-    "tooltip": "Para agregar un comentario en una celda, haga clic derecho sobre él"
+    "tooltip": "Haz click derecho sobre una celda para añadir un comentario"
   },
   "add-comment": "Añadir comentario",
   "edit-comment": "Editar comentario",

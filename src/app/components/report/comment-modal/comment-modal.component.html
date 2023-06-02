@@ -5,13 +5,13 @@
 
 <mat-dialog-content class="dialog-body">
   <mat-form-field appearance="outline">
-    <!-- <mat-label>Comment</mat-label> -->
     <textarea
       matInput
       [placeholder]="'comment-placeholder' | translate"
-      maxlength="200"
+      [maxlength]="charLimit"
       [(ngModel)]="comment"
     ></textarea>
+    <p *ngIf="comment">{{(comment ? comment.length : 0) + '/' + charLimit}}</p>
   </mat-form-field>
 </mat-dialog-content>
 
