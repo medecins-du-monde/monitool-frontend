@@ -171,7 +171,6 @@ export class HistoryComponent implements OnInit {
   }
 
   onRevertClick(revisionIndex) {
-    console.log(this.saveConfirmElement);
     this.saveConfirmElement = revisionIndex;
     const patchedRevision = this.patchProject(revisionIndex + 1);
 

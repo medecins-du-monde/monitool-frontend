@@ -144,7 +144,7 @@ export class GeneralComponent implements OnInit {
       this.updateTableComments();
     });
     this.dimensionIds.subscribe(() => {
-      this.updateTableComments();
+      // this.updateTableComments();
     });
   }
 
