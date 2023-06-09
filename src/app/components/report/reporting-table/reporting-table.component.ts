@@ -1420,18 +1420,18 @@ export class ReportingTableComponent
     if (this.showComments) {
       if (originalTooltip) {
         tooltipContent += `
-          <div style='opacity: .75; font-style: italic; font-size: small'>
+          <div style='opacity: .75; font-style: italic; font-size: small; line-height: 1.1em'>
             ${originalTooltip}
           </div>`;
       }
       if (comment) {
         tooltipContent += `${
-          tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 2px 0"></div>' : ''
-        }<div style='font-size: small'>${comment}</div>`;
+          tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 3px 0"></div>' : ''
+        }<div style='font-size: small; line-height: 1.1em'>${comment}</div>`;
       }
     } else {
       if (originalTooltip) {
-        tooltipContent += `<div style='font-size: small'>${originalTooltip}</div>`;
+        tooltipContent += `<div style='font-size: small; line-height: 1.1em'>${originalTooltip}</div>`;
       }
     }
 
