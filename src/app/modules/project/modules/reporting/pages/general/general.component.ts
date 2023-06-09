@@ -108,7 +108,9 @@ export class GeneralComponent implements OnInit {
   crosscutting: Indicator[];
   multiThemesIndicators: Indicator[];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
+
   showComments = false;
+  userIsAdmin = false;
 
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
@@ -142,7 +144,7 @@ export class GeneralComponent implements OnInit {
       this.updateTableComments();
     });
     this.dimensionIds.subscribe(() => {
-      this.updateTableComments();
+      // this.updateTableComments();
     });
   }
 
@@ -499,5 +501,10 @@ export class GeneralComponent implements OnInit {
       } as BreadcrumbItem
     ];
     this.projectService.updateBreadCrumbs(breadCrumbs);
+  }
+
+  updateUserIsAdmin(value: boolean) {
+    this.userIsAdmin = value;
+    this.projectService.inBigPage.next(!value);
   }
 }

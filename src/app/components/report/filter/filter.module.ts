@@ -14,28 +14,28 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CollectionSitesSelectorModule } from 'src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.module';
-
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-    declarations: [FilterComponent],
-    exports: [FilterComponent],
-    imports: [
-        CommonModule,
-        CollectionSitesSelectorModule,
-        TranslateModule,
-        MatSelectModule,
-        MatIconModule,
-        MatGridListModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatNativeDateModule ,
-        MatChipsModule,
-        MatCheckboxModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ]
+  declarations: [FilterComponent],
+  exports: [FilterComponent],
+  imports: [
+    CommonModule,
+    CollectionSitesSelectorModule,
+    TranslateModule,
+    MatSelectModule,
+    MatIconModule,
+    MatGridListModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTooltipModule
+  ]
 })
-export class FilterModule { }
+export class FilterModule {}

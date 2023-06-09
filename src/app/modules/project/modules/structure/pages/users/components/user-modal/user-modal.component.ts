@@ -167,7 +167,6 @@ export class UserModalComponent implements OnInit {
       }
     }
     this.userForm.controls.entities.patchValue(this.userForm.value.entities.filter(entity => this.availableEntities.includes(entity)));
-    console.log(this.userForm.value);
   }
 
 }
