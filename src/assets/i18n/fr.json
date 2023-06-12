@@ -860,6 +860,7 @@
     "datasource": "source de données",
     "data": "données",
     "disaggregation": "désagrégation",
+    "element": "élément",
     "header": "Supprimer '{{item}}'",
     "description": "Si vous supprimez votre {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez sauvegarder vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",
     "description-plural": "Si vous supprimez vos {{type}} '{{item}}', toutes les données déjà saisies dans ce {{type}} seront supprimées. Après confirmation, vous devrez sauvegarder vos modifications pour que la suppression prenne effet. Cliquez sur 'Annuler' pour annuler la suppression.",

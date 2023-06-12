@@ -998,6 +998,11 @@ code {
   font-size: $very_small_text;
   line-height: 20px;
 }
+code.title{
+  position: absolute;
+  font-size: 80%;
+  margin-top: 3px;
+}
 
 // Management of dateGroups (custom dates and same as project)
 .dateGroup {

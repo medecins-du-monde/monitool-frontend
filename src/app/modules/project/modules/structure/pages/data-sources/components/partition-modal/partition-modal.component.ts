@@ -75,8 +75,14 @@ export class PartitionModalComponent implements OnInit {
   }
 
   onRemoveElement(i: number) {
-    this.elements.removeAt(i);
-    this.elementsDataSource.next(this.elements.controls);
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'element', item: this.elements.value[i].name} });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete) {
+        this.elements.removeAt(i);
+        this.elementsDataSource.next(this.elements.controls);
+      }
+    });
   }
 
   private newElement(): FormGroup {
