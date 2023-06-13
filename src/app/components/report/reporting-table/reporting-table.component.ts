@@ -884,7 +884,6 @@ export class ReportingTableComponent
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites) {
-      // console.log(currentProject);
       const newIndicators = [];
       // const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
@@ -951,15 +950,15 @@ export class ReportingTableComponent
       const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
 
       (currentProject.groups || []).map(projectGroup => {
-        console.log(projectGroup);
         if (projectGroup.members.some(entity => filteredGroupEntities.includes(entity.id))) {
           groups.push(projectGroup);
         }
       });
+      const parentEntities = (this.getGroup(currentIndicator).entities || []).map(({id}) => id).filter(Boolean);
 
       for (const group of groups) {
         const customFilter = {
-          entity: group.members.map(x => x.id)
+          entity: group.members.map(x => x.id).filter(entity => parentEntities.includes(entity))
         };
 
         let customIndicator = Object.assign({}, info.indicator) as InfoRow;
@@ -1369,7 +1368,6 @@ export class ReportingTableComponent
    */
   getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
     const value = element[type];
-    // if (type === 'baseline') console.log(element);
     if (
       value === null ||
       value === undefined ||
@@ -1480,7 +1478,6 @@ export class ReportingTableComponent
 
   private getRelevantGroups(groups: string[], indicator: any, project: any) {
     if (indicator.computation && Object.values(indicator.computation.parameters).length > 0) {
-      console.log(indicator.computation);
       const filteredGroups = [];
 
       for (const value of Object.values(indicator.computation.parameters)) {
@@ -1495,7 +1492,6 @@ export class ReportingTableComponent
           }
         });
       }
-      console.log(groups.length, filteredGroups.length);
       return filteredGroups;
     } else {
       return groups;
