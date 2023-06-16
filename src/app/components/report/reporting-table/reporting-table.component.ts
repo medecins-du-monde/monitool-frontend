@@ -2,6 +2,7 @@
 // tslint:disable:no-string-literal
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -65,7 +66,8 @@ type RowCommentInfo = {
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
-  styleUrls: ['./reporting-table.component.scss']
+  styleUrls: ['./reporting-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportingTableComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -373,6 +375,7 @@ export class ReportingTableComponent
         if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
           this.content = newContent;
           this.updateTableContent();
+          this.changeDetectorRef.detectChanges();
         }
       })
     );
