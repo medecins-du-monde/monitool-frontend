@@ -38,17 +38,20 @@
   .mat-column-title,
   .mat-column-groupName {
     border-right: none !important;
-    width: 100vw !important;
+    padding-left: 5px;
+    min-width: 100vw !important;
 
     mat-icon {
       margin-top: 6px;
       font-size: 18px;
+      width: 18px;
     }
   }
 
   .mat-column-title_stick,
   .mat-column-group_stick {
     border-left: none !important;
+    border-right: none !important;
   }
 
   th {
@@ -175,7 +178,24 @@
 
   .groupName {
     padding-left: 15px;
-    text-align: left;
+
+    p {
+      position: relative;
+      padding: 4px;
+      margin: -4px;
+      padding-right: 10px;
+      width: calc(100vw - 105px - 254px - 15px);
+      text-align: start;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: bold;
+
+      @media screen and (max-width: $breakpoint-sm) {
+        width: calc(100vw - 140px - 15px);
+      }
+    }
   }
 
   .title {
@@ -183,9 +203,26 @@
     font-size: 13px;
     color: $grey;
     div {
+      position: relative;
       display: flex;
       align-items: center;
+      padding-right: 10px;
+      gap: 5px;
+      width: calc(100vw - 60px - 254px - 15px);
+
+      p {
+        text-align: start;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      @media screen and (max-width: $breakpoint-sm) {
+        width: calc(100vw - 95px - 15px);
+      }
     }
+
   }
 
   .mdm-button {
