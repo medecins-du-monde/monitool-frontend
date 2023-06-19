@@ -184,7 +184,7 @@
       padding: 4px;
       margin: -4px;
       padding-right: 10px;
-      width: calc(100vw - 105px - 254px);
+      width: calc(100vw - 105px - 254px - 15px);
       text-align: start;
       margin: 0;
       overflow: hidden;
@@ -193,7 +193,7 @@
       font-weight: bold;
 
       @media screen and (max-width: $breakpoint-sm) {
-        width: calc(100vw - 140px);
+        width: calc(100vw - 140px - 15px);
       }
     }
   }
@@ -208,7 +208,7 @@
       align-items: center;
       padding-right: 10px;
       gap: 5px;
-      width: calc(100vw - 60px - 254px);
+      width: calc(100vw - 60px - 254px - 15px);
 
       p {
         text-align: start;
@@ -219,7 +219,7 @@
       }
 
       @media screen and (max-width: $breakpoint-sm) {
-        width: calc(100vw - 95px);
+        width: calc(100vw - 95px - 15px);
       }
     }
 
