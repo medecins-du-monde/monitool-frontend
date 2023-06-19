@@ -841,13 +841,21 @@
   },
   "delete-modal": {
     "datasource": "data source",
-    "header": "Delete '{{item}}'",
-    "description": "If you delete your {{type}} '{{item}}', all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
+    "data": "data",
+    "disaggregation": "disaggregation",
+    "element": "element",
+    "header": "Delete <code class='title'>{{item}}</code>",
+    "description": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
+    "description-plural": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
-  "display-comments": "Display comments",
+  "display-comments": {
+    "title": "Display comments",
+    "tooltip": "Right-click on a cell to add a comment"
+  },
   "add-comment": "Add comment",
   "edit-comment": "Edit comment",
+  "comment": "Comment",
   "comment-placeholder": "Write here your comment"
 }

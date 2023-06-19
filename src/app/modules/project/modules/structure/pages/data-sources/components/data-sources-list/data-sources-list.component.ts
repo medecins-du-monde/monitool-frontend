@@ -9,7 +9,7 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-data-sources-list',
@@ -100,7 +100,7 @@ export class DataSourcesListComponent implements OnInit {
   }
 
   onDelete(form: Form): void {
-    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { item: form.name } });
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'datasource', item: form.name } });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res && res.delete){

@@ -22,6 +22,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -128,7 +130,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     private dateService: DateService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   @HostListener('window:beforeunload')
@@ -246,7 +249,16 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   onRemoveElement(i: number): void {
-    this.elements.removeAt(i);
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'data', item: this.elements.value[i].name, plural: true } });
+
+    dialogRef.afterClosed().subscribe(res => {
+      console.log(res);
+      if (res && res.delete) {
+        this.elements.removeAt(i);
+        // Workaraound to update the forms
+        this.elements.patchValue(this.elements.value);
+      }
+    });
   }
 
   private newElement(element?: FormElement): FormGroup {

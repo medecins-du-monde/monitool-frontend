@@ -1,10 +1,11 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-partition-modal',
@@ -53,7 +54,8 @@ export class PartitionModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<PartitionModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: FormGroup
+    @Inject(MAT_DIALOG_DATA) public data: FormGroup,
+    private dialog: MatDialog
   ) {
     this.elementsDataSource.next(this.elements.controls);
     this.groupsDataSource.next(this.groups.controls);
@@ -73,8 +75,14 @@ export class PartitionModalComponent implements OnInit {
   }
 
   onRemoveElement(i: number) {
-    this.elements.removeAt(i);
-    this.elementsDataSource.next(this.elements.controls);
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'element', item: this.elements.value[i].name} });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete) {
+        this.elements.removeAt(i);
+        this.elementsDataSource.next(this.elements.controls);
+      }
+    });
   }
 
   private newElement(): FormGroup {
@@ -118,7 +126,13 @@ export class PartitionModalComponent implements OnInit {
   }
 
   onDelete() {
-    this.dialogRef.close({ save: false, data: this.data });
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'disaggregation', item: this.data.value.name} });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete) {
+        this.dialogRef.close({ save: false, data: this.data });
+      }
+    });
   }
 
   memberDisplay( member1: any, member2: any): string {

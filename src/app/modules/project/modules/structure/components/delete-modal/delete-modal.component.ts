@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserModalComponent } from '../../../users/components/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-delete-modal',
@@ -9,10 +8,20 @@ import { UserModalComponent } from '../../../users/components/user-modal/user-mo
 })
 export class DeleteModalComponent{
 
+  public description = 'description';
+
   constructor(
-    public dialogRef: MatDialogRef<UserModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      type: 'datasource' | 'data',
+      item: string,
+      plural: boolean
+    },
+  ) {
+    if (data.plural) {
+      this.description += '-plural';
+    }
+  }
 
   onSubmit(): void {
     this.dialogRef.close({ delete: true });

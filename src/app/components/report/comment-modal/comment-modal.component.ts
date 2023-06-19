@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+const CHAR_LIMIT = 450;
+
 type CommentModalInput = {
   action: 'add' | 'edit';
   comment?: string;
@@ -12,8 +14,11 @@ type CommentModalInput = {
   styleUrls: ['./comment-modal.component.scss']
 })
 export class CommentModalComponent {
+
   action: string;
   comment: string;
+
+  charLimit = CHAR_LIMIT;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: CommentModalInput) {
     this.action = data.action;

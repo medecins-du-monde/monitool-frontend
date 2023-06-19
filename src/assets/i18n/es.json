@@ -857,13 +857,21 @@
   },
   "delete-modal": {
     "datasource": "fuente de datos",
+    "data": "datos",
+    "disaggregation": "desagregación",
+    "element": "elemento",
     "header": "Eliminar '{{item}}'",
     "description": "Si eliminas tu {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
+    "description-plural": "Si eliminas tus {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
     "confirm": "Confirmar",
     "cancel": "Cancelar"
   },
-  "display-comments": "Mostrar comentarios",
+  "display-comments": {
+    "title": "Mostrar comentarios",
+    "tooltip": "Haz click derecho sobre una celda para añadir un comentario"
+  },
   "add-comment": "Añadir comentario",
   "edit-comment": "Editar comentario",
+  "comment": "Comentario",
   "comment-placeholder": "Escribe aquí tu comentario"
 }
