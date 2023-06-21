@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -31,7 +31,8 @@ describe('PartitionModalComponent', () => {
         MatInputModule,
         BrowserAnimationsModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDialogModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
