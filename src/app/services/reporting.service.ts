@@ -189,7 +189,7 @@ export class ReportingService {
     const headers: string[] = [];
     const ths = table.nativeElement.querySelectorAll('th');
     for (const th of Array.from(ths)) {
-      headers.push(th.innerText);
+      headers.push(th.innerText.trim());
     }
     headers.shift();
 
