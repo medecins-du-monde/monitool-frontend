@@ -1230,50 +1230,55 @@ export class ReportingTableComponent
   }
 
   formatGroupName(groupName: string) {
-    // if (groupName.charAt(0) === 'A') {
-    //   if (this.activities.indexOf(groupName) === -1) {
-    //     this.activities.push(groupName);
-    //   }
-    //   return (
-    //     groupName.split(':')[0] +
-    //     ' ' +
-    //     (this.activities.indexOf(groupName) + 1) +
-    //     ' : ' +
-    //     groupName.split(':')[1]
-    //   );
-    // } else if (groupName.charAt(0) === 'R') {
-    //   this.activities = [];
-    //   if (this.results.indexOf(groupName) === -1) {
-    //     this.results.push(groupName);
-    //   }
-    //   return (
-    //     groupName.split(':')[0] +
-    //     ' ' +
-    //     (this.results.indexOf(groupName) + 1) +
-    //     ' : ' +
-    //     groupName.split(':')[1]
-    //   );
-    // } else if (
-    //   groupName.charAt(0) === 'O' &&
-    //   groupName.split(' ')[1].charAt(0) === 'S'
-    // ) {
-    //   this.activities = [];
-    //   this.results = [];
-    //   if (this.specificObjectif.indexOf(groupName) === -1) {
-    //     this.specificObjectif.push(groupName);
-    //   }
-    //   return (
-    //     groupName.split(':')[0] +
-    //     ' ' +
-    //     (this.specificObjectif.indexOf(groupName) + 1) +
-    //     ' : ' +
-    //     groupName.split(':')[1]
-    //   );
-    // } else {
-    //   this.activities = [];
-    //   this.specificObjectif = [];
-    //   this.results = [];
-    // }
+    const group = groupName.split(':')[0];
+
+    switch (group) {
+      case this.translateService.instant('Activity'):
+        if (this.activities.indexOf(groupName) === -1) {
+          this.activities.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.activities.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      case this.translateService.instant('Result'):
+        this.activities = [];
+        if (this.results.indexOf(groupName) === -1) {
+          this.results.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.results.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      case this.translateService.instant('SpecificObjective'):
+        this.activities = [];
+        this.results = [];
+        if (this.specificObjectif.indexOf(groupName) === -1) {
+          this.specificObjectif.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.specificObjectif.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      default:
+        this.activities = [];
+        this.specificObjectif = [];
+        this.results = [];
+        break;
+    }
+
     return groupName;
   }
 
@@ -1501,3 +1506,4 @@ export class ReportingTableComponent
     }
   }
 }
+
