@@ -265,7 +265,6 @@ export class RevisionSummaryComponent implements OnInit {
       locationArray = data.item.path.split(/:|\|/);
     }
 
-
     // Sets the location variable
     if (locationArray.length > 0) {
       let parentElement: any = this.project;
@@ -284,7 +283,7 @@ export class RevisionSummaryComponent implements OnInit {
             break;
         }
 
-        if (parentElement && locationArray[i] !== 'purpose') {
+        if (parentElement && locationArray[i] !== 'purpose' && locationArray[i] !== 'name') {
           if (location !== '') {
             location += '→'
           }
@@ -306,7 +305,6 @@ export class RevisionSummaryComponent implements OnInit {
           data.type = this.translate.instant('HistoryRevision.comments_types.logicalFrame');
           break;
         case 'indicator':
-          console.log(this.project)
           data.type = this.translate.instant('HistoryRevision.comments_types.extraIndicator');
           break;
 
@@ -314,6 +312,8 @@ export class RevisionSummaryComponent implements OnInit {
           data.type = '';
           break;
       }
+
+      console.log(data);
 
       // Sets column name
       let column = '';
@@ -352,6 +352,7 @@ export class RevisionSummaryComponent implements OnInit {
             data.column = column;
             break;
         }
+        data.column = data.column[0].toUpperCase() + data.column.slice(1);
       }
     }
 
