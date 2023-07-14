@@ -123,7 +123,6 @@ export class InputsComponent implements OnInit, OnDestroy {
         this.form = this.project?.forms.find(x => x.id === this.formId);
 
         this.dataSource = [];
-        this.endDateReached = false;
 
         if (this.form && this.project) {
           const breadCrumbs = [
@@ -198,6 +197,7 @@ export class InputsComponent implements OnInit, OnDestroy {
         if (firstDate > this.form.end && this.form.end){
           firstDate = this.form.end;
         }
+        this.endDateReached = false;
 
         if (this.form.periodicity !== 'free'){
           // this represents the most recent available time slot of the form
