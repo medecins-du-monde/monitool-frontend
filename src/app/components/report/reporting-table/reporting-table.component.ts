@@ -67,7 +67,7 @@ type RowCommentInfo = {
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportingTableComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -373,8 +373,15 @@ export class ReportingTableComponent
     this.subscription.add(
       this.tableContent.subscribe(newContent => {
         if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
-          this.content = newContent;
-          this.updateTableContent();
+          if (this.content && this.content.length < newContent.length) {
+            console.log(this.content.length, newContent.length);
+            this.content = newContent;
+            this.updateTableContent();
+            this.changeDetectorRef.detectChanges();
+          } else {
+            this.content = newContent;
+            this.updateTableContent();
+          }
         }
       })
     );
