@@ -29,12 +29,12 @@
       <td
         mat-cell
         *matCellDef="let element"
-        [style]="calcPaddingLevel(element)"
+        [style]="element | calcPadding"
         [class.comment-cell]="this.showComments && element.comments?.name"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'name')
         "
-        [matTooltip]="getTooltipText(element.name, element.comments?.name)"
+        [matTooltip]="element.name | getTooltip : showComments : element.comments?.name"
         [matTooltipShowDelay]="showComments && element.comments?.name ? 0 : 500"
       >
         <div class="menu">
@@ -65,7 +65,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'baseline')
         "
-        [matTooltip]="getTooltipText(null, element.comments?.baseline)"
+        [matTooltip]="null | getTooltip :  showComments : element.comments?.baseline"
       >
         {{ getIndicator(element, "baseline") }}
       </td>
@@ -81,7 +81,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'target')
         "
-        [matTooltip]="getTooltipText(null, element.comments?.target)"
+        [matTooltip]="null | getTooltip :  showComments : element.comments?.target"
       >
         {{ getIndicator(element, "target") }}
       </td>
@@ -118,7 +118,7 @@
         [ngStyle]="{
           backgroundColor:
             element.values[column] !== undefined && isInRange(element, column)
-              ? calcColor(element, column)
+              ? (element | calcColor : column)
               : 'rgb(238, 238, 238)',
           fontWeight: column === '_total' ? 'bold' : '',
           'font-style': isItalic((element?.values)[column]) ? 'italic' : ''
@@ -127,12 +127,10 @@
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
         [matTooltip]="
-          getTooltipText(
-            isInRange(element, column)
-              ? (getTooltipMessage((element?.values)[column]) | translate)
-              : null,
-            element.comments[column]
-          )
+            (isInRange(element, column) ?
+              (getTooltipMessage((element?.values)[column]) | translate) :
+              null
+            ) | getTooltip : showComments : element.comments[column]
         "
       >
         <div
@@ -182,7 +180,7 @@
       >
         <div class="title-row"
           [class.comment-cell]="this.showComments && element.comment"
-          [matTooltip]="getTooltipText(element.title, element.comment)"
+          [matTooltip]="element.title | getTooltip : showComments : element.comment"
         >
           <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
           <ng-template #elseOpen>
@@ -213,9 +211,9 @@
           (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
         >
           <p
-            [style]="calcPaddingLevel(element)"
+            [style]="element | calcPadding"
             [class.comment-cell]="this.showComments && element.comment"
-            [matTooltip]="getTooltipText(formatGroupName(element.groupName), element.comment)"
+            [matTooltip]="formatGroupName(element.groupName) | getTooltip : showComments : element.comment"
             [innerHTML]="formatGroupName(element.groupName)">
           </p>
         </td>
@@ -297,7 +295,7 @@
       <span>Add comment</span>
     </button>
   </ng-container>
-  <ng-container *ngIf="!!selectedCellComment">
+  <ng-container *ngIf="selectedCellComment">
     <button mat-menu-item (click)="updateCellComment('edit')">
       <mat-icon>edit</mat-icon>
       <span>Edit comment</span>

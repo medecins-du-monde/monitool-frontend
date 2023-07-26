@@ -9,6 +9,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommentModalModule } from '../comment-modal/comment-modal.module';
 import { ProjectSaveModule } from 'src/app/modules/project/modules/structure/components/project-save/project-save.module';
+import { ReportTableTooltipPipeModule } from 'src/app/pipes/ReportTableTooltip/reportTableTooltipPipe.module';
+import { ReportTablePaddingPipeModule } from 'src/app/pipes/ReportTablePadding/reportTablePaddingPipe.module';
+import { ReportTableColorPipeModule } from 'src/app/pipes/ReportTableColor/reportTableColorPipe.module';
 
 @NgModule({
   declarations: [ReportingTableComponent],
@@ -21,7 +24,10 @@ import { ProjectSaveModule } from 'src/app/modules/project/modules/structure/com
     MatTooltipModule,
     MatMenuModule,
     CommentModalModule,
-    ProjectSaveModule
+    ProjectSaveModule,
+    ReportTableTooltipPipeModule,
+    ReportTablePaddingPipeModule,
+    ReportTableColorPipeModule
   ],
   exports: [ReportingTableComponent]
 })
