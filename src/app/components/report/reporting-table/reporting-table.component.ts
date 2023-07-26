@@ -67,7 +67,6 @@ type RowCommentInfo = {
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportingTableComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -373,15 +372,8 @@ export class ReportingTableComponent
     this.subscription.add(
       this.tableContent.subscribe(newContent => {
         if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
-          if (this.content && this.content.length < newContent.length) {
-            console.log(this.content.length, newContent.length);
-            this.content = newContent;
-            this.updateTableContent();
-            this.changeDetectorRef.detectChanges();
-          } else {
-            this.content = newContent;
-            this.updateTableContent();
-          }
+          this.content = newContent;
+          this.updateTableContent();
         }
       })
     );
@@ -1108,119 +1100,6 @@ export class ReportingTableComponent
     this.updateChart();
   }
 
-  calcPaddingLevel(element: Row): string {
-    if (element.level) {
-      return `padding-left: ${element.level * 20}px;`;
-    }
-    return '';
-  }
-
-  calcColor(element: InfoRow, column: string): string {
-    // the colors change in the following way:
-    // we start in the red: rgb(255, 128, 128)
-    // we go up increasing the value of the blue
-    // until we reach the yellow: rgb (255, 255, 128)
-    // after this we go down subtracting the value
-    // of the red until we get to the green: rgb (128, 255, 128)
-
-    if (this.checkIfNaN(element.values[column])) {
-      return 'rgb(238, 238, 238)';
-    }
-
-    if (
-      element.values[column] === null ||
-      isNaN(Number(element.values[column]))
-    ) {
-      return 'white';
-    }
-
-    // Set background color to white if the row doesn't want colors
-    if (
-      !element.colorize ||
-      element.target === null ||
-      element.baseline === null
-    ) {
-      return 'white';
-    }
-
-    let r = 255;
-    let g = 128;
-    const b = 128;
-
-    if (element.baseline <= element.target) {
-      const distance = element.target - element.baseline;
-
-      // if the value is lower than the baseline, we choose red
-      if (element.values[column] <= element.baseline) {
-        r = 255;
-        g = 128;
-      }
-      // if it is higher than the target, we choose green
-      else if (element.values[column] >= element.target) {
-        g = 255;
-        r = 128;
-      }
-      // if it is somewhere in between, we calculate where and choose accordingly
-      else {
-        const myPosition = element.values[column] - element.baseline;
-        const normalizedDifference = (myPosition / distance) * 255;
-        if (normalizedDifference <= 127) {
-          g += normalizedDifference;
-        } else {
-          g = 255;
-          r -= normalizedDifference - 127;
-        }
-      }
-    } else {
-      // If baseline is a higher value that the target we invert the calculations
-      const distance = element.baseline - element.target;
-
-      // if the value is higher than the baseline, we choose red
-      if (element.values[column] >= element.baseline) {
-        r = 255;
-        g = 128;
-      }
-      // if it is lower than the target, we choose green
-      else if (element.values[column] <= element.target) {
-        g = 255;
-        r = 128;
-      }
-      // if it is somewhere in between, we calculate where and choose accordingly
-      else {
-        const myPosition = element.baseline - element.values[column];
-        const normalizedDifference = (myPosition / distance) * 255;
-        if (normalizedDifference <= 127) {
-          g += normalizedDifference;
-        } else {
-          g = 255;
-          r -= normalizedDifference - 127;
-        }
-      }
-    }
-
-    return `rgb(${r}, ${g}, ${b})`;
-  }
-
-  randomNumberLimit(limit: number): number {
-    return Math.floor(Math.random() * limit + 1);
-  }
-
-  randomColor(): string {
-    const col =
-      'rgba(' +
-      this.randomNumberLimit(255) +
-      ',' +
-      this.randomNumberLimit(255) +
-      ',' +
-      this.randomNumberLimit(255) +
-      ', 1)';
-    return col;
-  }
-
-  checkIfNaN(x: unknown): boolean {
-    return isNaN(x);
-  }
-
   calculateOptimalColspan(): void {
     this.innerWidth = window.innerWidth;
 
@@ -1440,54 +1319,6 @@ export class ReportingTableComponent
           this.commentService.stashComment(row.commentInfo);
         });
     }
-  }
-
-  public getTooltipText(originalTooltip?: string, comment?: string): any {
-    let tooltipContent = '';
-
-    if (this.showComments) {
-      if (originalTooltip) {
-        tooltipContent += `
-          <div style='opacity: .75; font-style: italic; font-size: small; line-height: 1.1em'>
-            ${originalTooltip}
-          </div>`;
-      }
-      if (comment) {
-        tooltipContent += `${
-          tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 3px 0"></div>' : ''
-        }<div style='font-size: small; line-height: 1.1em'>${comment}</div>`;
-      }
-    } else {
-      if (originalTooltip) {
-        tooltipContent += `<div style='font-size: small; line-height: 1.1em'>${originalTooltip}</div>`;
-      }
-    }
-
-    return tooltipContent !== '' ? tooltipContent : null;
-
-    // if ((!comment && !originalTooltip)||(!originalTooltip && !this.showComments)) {
-    //   return null;
-    // }
-    // if (!comment || !this.showComments) {
-    //   if (this.showComments) {
-    //     return `
-    //       <div style='opacity: .75; font-style: italic;'>
-    //         ${originalTooltip}
-    //       </div>
-    //     `;
-    //   } else {
-    //     return `<div>${originalTooltip}</div>`;
-    //   }
-    // } else if (!originalTooltip) {
-    //   return `<div>${comment}</div>`;
-    // } else {
-    //   return `
-    //     <div style='opacity: .75; font-style: italic;'>
-    //       ${originalTooltip}
-    //     </div>
-    //     <div>${comment}<div>
-    //   `;
-    // }
   }
 
   private getRelevantGroups(groups: string[], indicator: any, project: any) {

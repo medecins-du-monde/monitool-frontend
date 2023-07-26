@@ -140,12 +140,12 @@ export class GeneralComponent implements OnInit {
     this.projectService.updateInformationPanel(this.informations);
 
     // Update the table comments when filters or dimension change
-    this.filter.subscribe(() => {
-      this.updateTableComments();
-    });
-    this.dimensionIds.subscribe(() => {
-      // this.updateTableComments();
-    });
+    // this.filter.subscribe(() => {
+    //   // this.updateTableComments();
+    // });
+    // this.dimensionIds.subscribe(() => {
+    //   // this.updateTableComments();
+    // });
   }
 
   buildIndicators(): void {
