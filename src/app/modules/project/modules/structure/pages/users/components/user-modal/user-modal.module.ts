@@ -12,6 +12,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 import { DataSourceSelectorModule } from '../../../../components/data-source-selector/data-source-selector.module';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { DataSourceSelectorModule } from '../../../../components/data-source-sel
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatExpansionModule,
+    NgxMatSelectSearchModule
   ],
   exports: [UserModalComponent]
 })

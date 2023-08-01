@@ -199,7 +199,7 @@ mat-hint {
   font-size: $small_text;
   display: flex;
   align-items: center;
-  padding-top: 5px;
+  padding-top: 8px;
 }
 
 .mat-select-value {
@@ -1243,4 +1243,8 @@ code.title{
 
 .no-overflow-dialog .mat-dialog-container {
   overflow: hidden;
+}
+
+.remove-mat-expansion-panel-padding .mat-expansion-panel-content .mat-expansion-panel-body{
+  padding: 0 !important;
 }

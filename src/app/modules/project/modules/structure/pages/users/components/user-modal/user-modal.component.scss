@@ -11,3 +11,60 @@ app-collection-sites-selector, app-data-source-selector{
 //     justify-content: center;
 //   }
 // }
+
+mat-hint {
+  mat-icon {
+    margin: 0;
+  }
+}
+
+.help-field {
+  color: #005ec5;
+  cursor: pointer;
+  margin-top: 4px;
+}
+.help-field:hover {
+  text-decoration: underline;
+}
+
+mat-accordion {
+  flex: 0.815; // Messy solution
+  margin-left: auto;
+  margin-top: -20px;
+  margin-bottom: 20px;
+
+  table, th, td {
+    border: 1px solid rgba(black, .1);
+    border-collapse: collapse;
+  }
+  th {
+    padding: 4px 6px;
+  }
+  td {
+    mat-icon {
+      margin-top: 6px;
+    }
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.red-icon {
+  color: red;
+  svg {
+      fill: red;
+  }
+}
+
+.green-icon {
+  color: green;
+  svg {
+      fill: green;
+  }
+}
+
+.centered {
+  text-align: center;
+}

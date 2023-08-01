@@ -15,7 +15,10 @@
             <div class="mdm-form-label">{{ 'User' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass">
-                    <mat-option *ngFor="let user of users" [value]="user.id">{{ user.name }}</mat-option>
+                  <mat-option>
+                    <ngx-mat-select-search [formControl]="userFilter"></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}</mat-option>
                 </mat-select>
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
             </mat-form-field>
@@ -56,8 +59,48 @@
             >
                 <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name | translate }}</mat-option>
             </mat-select>
-            <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Role' | translate }}</mat-hint>
+            <mat-hint>
+              <mat-icon>info</mat-icon>
+              <div>
+                {{ 'Tooltip.UserEdition.Role' | translate }}
+                <p class="help-field" (click)="panelOpenState = !panelOpenState">
+                  {{ panelOpenState ? ('TooltipRoleHint.PanelHide' | translate) : ('TooltipRoleHint.PanelShow' | translate) }}
+                </p>
+              </div>
+            </mat-hint>
         </mat-form-field>
+        <div class="mdm-form-group">
+          <mat-accordion>
+              <mat-expansion-panel [expanded]="panelOpenState" [disabled]="true" class="mat-elevation-z0 remove-mat-expansion-panel-padding">
+                <table>
+                  <tr>
+                    <th></th>
+                    <th class="centered">{{ 'Owner' | translate }}</th>
+                    <th class="centered">{{ 'DataEntryUser' | translate }}</th>
+                    <th class="centered">{{ 'ReadOnlyUser' | translate }}</th>
+                  </tr>
+                  <tr *ngFor="let element of hintUserData">
+                    <td style="padding-left: 6px;">{{ element.untitled | translate }}</td>
+                    <td class="centered">
+                        <mat-icon class="{{element.owner == true ? 'green-icon' : 'red-icon' }}">
+                            {{ element.owner == true ? 'done' : 'clear' }}
+                        </mat-icon>
+                    </td>
+                    <td class="centered">
+                        <mat-icon class="{{element.input == true ? 'green-icon' : 'red-icon' }}">
+                            {{ element.input == true ? 'done' : 'clear' }}
+                        </mat-icon>
+                    </td>
+                    <td class="centered">
+                        <mat-icon class="{{element.read == true ? 'green-icon' : 'red-icon' }}">
+                            {{ element.read == true ? 'done' : 'clear' }}
+                        </mat-icon>
+                    </td>
+                  </tr>
+                </table>
+              </mat-expansion-panel>
+          </mat-accordion>
+        </div>
     </div>
 
     <div *ngIf="userForm.value.role === roles[1].value">
