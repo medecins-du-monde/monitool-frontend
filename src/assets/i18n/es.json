@@ -726,7 +726,11 @@
           "DataSources": "Para que fuentes de datos podra este usuario entrar datos?",
           "Username": "El usuario usara este nombre para conectarse. No se autorizan direcciones de correo electronico (por ej. use \"apellido.nombre\", o \"puesto.país\")",
           "Fullname": "Entre aqui el nombre completo de la persona que va a usar la cuenta.",
-          "Password": "La contraseña debe ser al menos 6 letras. No use el mismo valor que el nombre de usuario"
+          "Password": "La contraseña debe ser al menos 6 letras. No use el mismo valor que el nombre de usuario",
+          "UserSearch": {
+            "Placeholder": "Selecciona un usuario",
+            "NoMatches": "No se han encontrado resultados"
+          }
       }
   },
   "TooltipRoleHint": {

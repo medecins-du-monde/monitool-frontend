@@ -735,7 +735,11 @@
       "CreateAndEditThematics": "Créer et éditer des thématiques",
       "CreateAndEditCrossCutting": "Créer et éditer des indicateurs transversaux",
       "EditOtherUsersRoles": "Éditer le rôle des autres utilisateurs",
-      "EditAllProjectsStructureAndData": "Éditer la structure et les données de tous les projets"
+      "EditAllProjectsStructureAndData": "Éditer la structure et les données de tous les projets",
+      "UserSearch": {
+        "Placeholder": "Sélectionner un utilisateur",
+        "NoMatches": "Aucun résultat trouvé"
+      }
   },
   "Type": "Type",
   "ThematicEdition": "Édition thématique",

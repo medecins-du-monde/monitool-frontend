@@ -740,7 +740,11 @@
           "DataSources": "For which data sources will this user enter data?",
           "Username": "This username will allow the user to connect. Email addresses are not allowed as usernames (i.e. your can use \"lastname.firstname\", ou \"job.country\")",
           "Fullname": "Enter here the full name of the person that will use the account.",
-          "Password": "The password must be at least 6 characters long. Do not use the same value than the username"
+          "Password": "The password must be at least 6 characters long. Do not use the same value than the username",
+          "UserSearch": {
+            "Placeholder": "Select an user",
+            "NoMatches": "No matches found"
+          }
       }
   },
   "TooltipRoleHint": {
@@ -752,7 +756,10 @@
       "CreateAndEditThematics": "Create and edit thematics",
       "CreateAndEditCrossCutting": "Create and edit cross-cutting indicators",
       "EditOtherUsersRoles": "Edit other users roles",
-      "EditAllProjectsStructureAndData": "Edit all projects structure and data"
+      "EditAllProjectsStructureAndData": "Edit all projects structure and data",
+      "EditProjectsStructureOnly": "Edit project's structure",
+      "DataInput": "Do data entry (possibility of selecting data entry by collection site and data source)",
+      "ViewGeneralReport": "View general report"
   },
   "Type": "Type",
   "UpdateUser": "Update the user",
