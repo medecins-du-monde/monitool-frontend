@@ -742,7 +742,10 @@
       "CreateAndEditThematics": "Crear y editar temáticas",
       "CreateAndEditCrossCutting": "Crear y editar indicadores transversales",
       "EditOtherUsersRoles": "Editar las permisiones de los demás usuarios",
-      "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos"
+      "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos",
+      "EditProjectsStructureOnly": "Editar la estructura del proyecto",
+      "DataInput": "Entrar datos (posibilidad de seleccionat la entrada de datos por lugar de colecta y fuente de datos)",
+      "ViewGeneralReport": "Consultar el reporte general"
   },
   "Type": "Tipo",
   "ThematicEdition": "Editar temática",

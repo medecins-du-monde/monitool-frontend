@@ -7,7 +7,7 @@
   "Activity-Activity-Result-SpecificObjective-Hint" : "Activité réalisée par l'ONG",
   "AddCustomDisaggregation": "Ajouter une désagrégation personnalisée",
   "AddIndicator": "Ajouter un indicateur",
-  "AddIndicator-GeneralObjective-Hint": "Rentrez ici les indicateurs permettant de mesurer l'objectif géneral",
+  "AddIndicator-GeneralObjective-Hint": "Rentrez ici les indicateurs permettant de mesurer l'objectif général",
   "AddIndicator-SpecificObjective-Hint": "Rentrez ici les indicateurs permettant de mesurer l'objectif spécifique",
   "AddIndicator-Result-SpecificObjective-Hint" : "Rentrez ici les indicateurs permettant de mesurer le résultat",
   "AddIndicator-Activity-Result-SpecificObjective-Hint": "Rentrez ici les indicateurs permettant de mesurer l'avancement de l'activité",
@@ -723,7 +723,11 @@
           "DataSources": "Sur quels sources de données cet utilisateur pourra-t'il saisir?",
           "Username": "Cet identifiant permettra à l'utilisateur de se connecter. Les adresses emails ne sont pas acceptés comme identifiant (utiliser par exemple: \"nom.prenom\", ou \"fonction.pays\")",
           "Fullname": "Rentrez ici le nom complet de la personne qui va utiliser ce compte.",
-          "Password": "Le mot de passe doit avoir 6 caractères au minimum. Ne pas utiliser la même valeur que l'identifiant"
+          "Password": "Le mot de passe doit avoir 6 caractères au minimum. Ne pas utiliser la même valeur que l'identifiant",
+          "UserSearch": {
+            "Placeholder": "Sélectionner un utilisateur",
+            "NoMatches": "Aucun résultat trouvé"
+          }
       }
   },
   "TooltipRoleHint": {
@@ -736,10 +740,9 @@
       "CreateAndEditCrossCutting": "Créer et éditer des indicateurs transversaux",
       "EditOtherUsersRoles": "Éditer le rôle des autres utilisateurs",
       "EditAllProjectsStructureAndData": "Éditer la structure et les données de tous les projets",
-      "UserSearch": {
-        "Placeholder": "Sélectionner un utilisateur",
-        "NoMatches": "Aucun résultat trouvé"
-      }
+      "EditProjectsStructureOnly": "Éditer la structure du projet",
+      "DataInput": "Saisir les données (possibilité de selectioner la saisie par lieux de collecte et source de données)",
+      "ViewGeneralReport": "Voir le rapport général"
   },
   "Type": "Type",
   "ThematicEdition": "Édition thématique",
