@@ -77,10 +77,11 @@ export class PartitionModalComponent implements OnInit {
   onRemoveElement(i: number) {
     const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'element', item: this.elements.value[i].name} });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.delete) {
         this.elements.removeAt(i);
         this.elementsDataSource.next(this.elements.controls);
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -128,9 +129,10 @@ export class PartitionModalComponent implements OnInit {
   onDelete() {
     const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'disaggregation', item: this.data.value.name} });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.delete) {
         this.dialogRef.close({ save: false, data: this.data });
+        dialogSubscription.unsubscribe();
       }
     });
   }

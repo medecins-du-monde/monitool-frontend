@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,18 +8,21 @@ import moment from 'moment/moment';
 import {ConfirmModalComponent} from '../../../../../../components/confirm-modal/confirm-modal.component';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-save',
   templateUrl: './project-save.component.html',
   styleUrls: ['./project-save.component.scss']
 })
-export class ProjectSaveComponent implements OnInit {
+export class ProjectSaveComponent implements OnInit, OnDestroy {
   projectSaved = false;
   errorWhileSaving = false;
   currentUser: User;
   savedProject: Project;
   currentProject: Project;
+
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private projectService: ProjectService,
@@ -30,12 +33,16 @@ export class ProjectSaveComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe(project => {
-      this.currentProject = project;
-    });
-    this.projectService.savedProject.subscribe(project => {
-      this.savedProject = project;
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe(project => {
+        this.currentProject = project;
+      })
+    );
+    this.subscription.add(
+      this.projectService.savedProject.subscribe(project => {
+        this.savedProject = project;
+      })
+    );
   }
 
   get hasChanges(): boolean{
@@ -70,7 +77,9 @@ export class ProjectSaveComponent implements OnInit {
     }
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
-      this.authService.currentUser.subscribe((user: User) => this.currentUser = user );
+      this.subscription.add(
+        this.authService.currentUser.subscribe((user: User) => this.currentUser = user )
+      );
       this.sidenavService.generateSidenav(this.currentUser, project);
       if (this.errorWhileSaving) {
         this.errorWhileSaving = false;
@@ -85,6 +94,10 @@ export class ProjectSaveComponent implements OnInit {
 
   onRevert(): void {
     this.projectService.revertChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -140,46 +140,48 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   ngOnInit(): void {
-    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
-      map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
-    ).subscribe((res: { project: Project, formId: string }) => {
-      this.project = res.project;
-      const oldForm = this.form;
-      this.form = res.project.forms.find(x => x.id === res.formId);
+    this.subscription.add(
+      combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+        map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
+      ).subscribe((res: { project: Project, formId: string }) => {
+        this.project = res.project;
+        const oldForm = this.form;
+        this.form = res.project.forms.find(x => x.id === res.formId);
 
-      if (this.form) {
-        const breadCrumbs = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: this.project.country,
-          } as BreadcrumbItem,
-          {
-            value: this.project.name,
-          } as BreadcrumbItem,
-          {
-            value: 'Structure',
-          } as BreadcrumbItem,
-          {
-            value: 'DataSources',
-            link: `./../../projects/${this.project.id}/structure/data-sources`
-          } as BreadcrumbItem,
-          {
-            value: this.form.name,
-          } as BreadcrumbItem,
-        ];
-        this.projectService.updateBreadCrumbs(breadCrumbs);
-      }
-      if (!this.form) {
-        this.router.navigate(['..'], { relativeTo: this.route });
-      } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
-        this.entities = res.project.entities;
-        this.groups = res.project.groups;
-        this.setForm();
-      }
-    });
+        if (this.form) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'DataSources',
+              link: `./../../projects/${this.project.id}/structure/data-sources`
+            } as BreadcrumbItem,
+            {
+              value: this.form.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        if (!this.form) {
+          this.router.navigate(['..'], { relativeTo: this.route });
+        } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
+          this.entities = res.project.entities;
+          this.groups = res.project.groups;
+          this.setForm();
+        }
+      })
+    );
 
     for (const value of Object.values(TimeSlotPeriodicity)) {
       this.periodicities.push({
@@ -251,12 +253,12 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   onRemoveElement(i: number): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'data', item: this.elements.value[i].name, plural: true } });
 
-    dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.delete) {
         this.elements.removeAt(i);
         // Workaraound to update the forms
         this.elements.patchValue(this.elements.value);
+        dialogSubscription.unsubscribe();
       }
     });
   }

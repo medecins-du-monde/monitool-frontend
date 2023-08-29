@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -18,28 +19,36 @@ export class HomeComponent implements OnInit {
     } as InformationItem
   ];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Reporting',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Reporting',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
