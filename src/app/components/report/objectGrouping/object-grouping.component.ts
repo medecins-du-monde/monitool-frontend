@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-object-grouping',
@@ -25,6 +26,8 @@ export class ObjectGroupingComponent implements OnInit {
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
+
+  private subscription: Subscription = new Subscription();
 
   win;
 
@@ -84,29 +87,31 @@ export class ObjectGroupingComponent implements OnInit {
     this.groupOptions = [];
     // If the page is not the cross
     if (!this.isCrossCuttingReport) {
-      this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.forms = project.forms;
-        let smallestIndex = this.periodicitiesList.length;
-        const newOptionsList = [];
-        for (const form of this.project.forms) {
-          const index = this.periodicitiesList.indexOf(form.periodicity);
-          if (index !== -1) {
-            smallestIndex = index < smallestIndex ? index : smallestIndex;
+      this.subscription.add(
+        this.projectService.openedProject.subscribe((project: Project) => {
+          this.project = project;
+          this.forms = project.forms;
+          let smallestIndex = this.periodicitiesList.length;
+          const newOptionsList = [];
+          for (const form of this.project.forms) {
+            const index = this.periodicitiesList.indexOf(form.periodicity);
+            if (index !== -1) {
+              smallestIndex = index < smallestIndex ? index : smallestIndex;
+            }
           }
-        }
-        const limitInf = smallestIndex === 0 ? 1 : smallestIndex;
-        for (let i = limitInf; i < this.periodicitiesList.length; i++) {
-          if (this.periodicitiesList[i]) {
-            newOptionsList.push({
-              value: this.periodicitiesList[i],
-              viewValue: `Filter.${this.periodicitiesList[i]}`,
-            });
+          const limitInf = smallestIndex === 0 ? 1 : smallestIndex;
+          for (let i = limitInf; i < this.periodicitiesList.length; i++) {
+            if (this.periodicitiesList[i]) {
+              newOptionsList.push({
+                value: this.periodicitiesList[i],
+                viewValue: `Filter.${this.periodicitiesList[i]}`,
+              });
+            }
           }
-        }
-        this.groupOptions = newOptionsList;
-        this.updateDimension(smallestIndex, this.periodicitiesList);
-      });
+          this.groupOptions = newOptionsList;
+          this.updateDimension(smallestIndex, this.periodicitiesList);
+        })
+      );
     }
     // This part is only of the cross cutting report, it may change later because we don t have many options
     else {
@@ -138,9 +143,11 @@ export class ObjectGroupingComponent implements OnInit {
       });
       this.dimensionEvent.emit('month');
     }
-    this.dimensionForm.get('dimensionId').valueChanges.subscribe(value => {
-      this.dimensionEvent.emit(value);
-    });
+    this.subscription.add(
+      this.dimensionForm.get('dimensionId').valueChanges.subscribe(value => {
+        this.dimensionEvent.emit(value);
+      })
+    );
   }
 
   downloadExcelSheet(): void {
@@ -148,11 +155,12 @@ export class ObjectGroupingComponent implements OnInit {
       data: {title: this.translateService.instant('export-complete')}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const url = 'api_export_' + this.currentProjectId + '_' + this.currentPeriodicity + '_' + this.currentLang + '_';
 
         window.open(this.router.url + '/download/' + url, '_blank');
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -162,7 +170,7 @@ export class ObjectGroupingComponent implements OnInit {
       data: {title: this.translateService.instant('export-minimized')}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const url =
           'api_export_' +
@@ -175,6 +183,7 @@ export class ObjectGroupingComponent implements OnInit {
           this.minimized;
 
         window.open(this.router.url + '/download/' + url, '_blank');
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -185,14 +194,19 @@ export class ObjectGroupingComponent implements OnInit {
       data: {title: this.translateService.instant('export-current-minimized')}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // save the current table html to the localStorage,
         // so it can be accessed from the new tab
         const tableID = this.reportingService.saveCurrentTableView();
         window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
+        dialogSubscription.unsubscribe();
       }
     });
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
 }

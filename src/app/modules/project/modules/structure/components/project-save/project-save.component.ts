@@ -8,6 +8,7 @@ import moment from 'moment/moment';
 import {ConfirmModalComponent} from '../../../../../../components/confirm-modal/confirm-modal.component';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-save',
@@ -21,6 +22,8 @@ export class ProjectSaveComponent implements OnInit {
   savedProject: Project;
   currentProject: Project;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private authService: AuthService,
@@ -30,12 +33,16 @@ export class ProjectSaveComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe(project => {
-      this.currentProject = project;
-    });
-    this.projectService.savedProject.subscribe(project => {
-      this.savedProject = project;
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe(project => {
+        this.currentProject = project;
+      })
+    );
+    this.subscription.add(
+      this.projectService.savedProject.subscribe(project => {
+        this.savedProject = project;
+      })
+    );
   }
 
   get hasChanges(): boolean{
@@ -70,7 +77,9 @@ export class ProjectSaveComponent implements OnInit {
     }
     this.projectService.saveCurrent().then((project: Project) => {
       this.projectService.project.next(project);
-      this.authService.currentUser.subscribe((user: User) => this.currentUser = user );
+      this.subscription.add(
+        this.authService.currentUser.subscribe((user: User) => this.currentUser = user )
+      );
       this.sidenavService.generateSidenav(this.currentUser, project);
       if (this.errorWhileSaving) {
         this.errorWhileSaving = false;
@@ -85,6 +94,10 @@ export class ProjectSaveComponent implements OnInit {
 
   onRevert(): void {
     this.projectService.revertChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

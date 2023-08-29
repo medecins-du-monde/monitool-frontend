@@ -114,9 +114,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
 
     this.getProjects();
-    this.filtersForm.valueChanges.subscribe(() => {
-      this.loadFilteredProjects();
-    });
+    this.subscription.add(
+      this.filtersForm.valueChanges.subscribe(() => {
+        this.loadFilteredProjects();
+      })
+    );
 
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {

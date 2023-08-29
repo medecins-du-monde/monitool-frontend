@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,6 +28,8 @@ export class ProjectComponent implements OnInit {
   projectOwner: boolean;
   lastEntry: string;
 
+  private subscription: Subscription = new Subscription();
+
   get currentLang(): string {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
@@ -40,10 +43,12 @@ export class ProjectComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe((user: User) => {
-      this.currentUser = new User(user);
-      this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
-    });
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.currentUser = new User(user);
+        this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
+      })
+    );
   }
 
   onOpen(): void {
@@ -55,9 +60,10 @@ export class ProjectComponent implements OnInit {
   onDelete(): void {
     const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'DeleteProject', infos: 'DeleteProjectInfo'} } );
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.delete.emit(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -69,9 +75,10 @@ export class ProjectComponent implements OnInit {
   onClone(): void {
     const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfo'} } );
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.clone.emit(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -79,9 +86,10 @@ export class ProjectComponent implements OnInit {
   onCloneWithData(): void {
     const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfoData'} } );
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.cloneWithData.emit(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -106,6 +114,10 @@ export class ProjectComponent implements OnInit {
         localStorage.removeItem('user::' + this.currentUser.id + 'favorite' + this.project.id);
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

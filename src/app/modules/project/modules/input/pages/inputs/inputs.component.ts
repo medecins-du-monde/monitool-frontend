@@ -100,10 +100,10 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.dateForm = new FormControl(new Date());
     this.projectService.inBigPage.next(true);
 
-    this.dateService.currentLang.subscribe(
-      lang => {
+    this.subscription.add(
+      this.dateService.currentLang.subscribe( lang => {
         this.adapter.setLocale(lang);
-      }
+      })
     );
 
     this.subscription.add(

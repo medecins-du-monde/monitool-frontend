@@ -4,7 +4,7 @@ import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Form } from 'src/app/models/classes/form.model';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { COPY_FORMULA, CUSTOM_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
@@ -24,6 +24,8 @@ export class IndicatorModalComponent implements OnInit {
   dataChanged = false;
   private initDataSource: any;
   allOption: PartitionElement = new PartitionElement({id: '0', name: 'All'});
+
+  private subscription: Subscription = new Subscription();
 
   public computationTypes = [
     {
@@ -134,9 +136,11 @@ export class IndicatorModalComponent implements OnInit {
       this.dataSource.next(newDataSource);
     }
     this.dataChanged = false;
-    this.data.indicator.valueChanges.subscribe(() => {
-      this.dataChanged = true;
-    });
+    this.subscription.add(
+      this.data.indicator.valueChanges.subscribe(() => {
+        this.dataChanged = true;
+      })
+    );
   }
 
   onReset(): void {
@@ -323,5 +327,9 @@ export class IndicatorModalComponent implements OnInit {
       }
     }
     this.dialogRef.close({ indicator: this.data.indicator });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

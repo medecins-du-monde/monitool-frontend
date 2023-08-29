@@ -35,7 +35,6 @@
           onRightClick($event, matTrigger, spanTrigger, element, 'name')
         "
         [matTooltip]="element.name | getTooltip : showComments : element.comments?.name"
-        [matTooltipShowDelay]="showComments && element.comments?.name ? 0 : 500"
       >
         <div class="menu">
           <mat-icon *ngIf="element.disaggregatedByGroup === 1"
@@ -105,7 +104,6 @@
     >
       <th
         matTooltip="{{ getSiteOrGroupName(column) | translate }}"
-        [matTooltipShowDelay]="500"
         mat-header-cell
         *matHeaderCellDef
       >

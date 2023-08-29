@@ -55,7 +55,7 @@ export class PurposeEditComponent implements OnInit {
   openDialog(indicator: FormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
@@ -63,6 +63,7 @@ export class PurposeEditComponent implements OnInit {
         else if (index !== null) {
           this.indicators.setControl(index, res.indicator);
         }
+        dialogSubscription.unsubscribe();
       }
       this.changeDetector.markForCheck();
     });

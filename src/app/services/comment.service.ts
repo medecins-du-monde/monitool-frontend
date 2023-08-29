@@ -4,6 +4,7 @@ import { ProjectService } from './project.service';
 import { AuthService } from './auth.service';
 import { v4 as uuid } from 'uuid';
 import { Project } from '../models/classes/project.model';
+import { Subscription } from 'rxjs';
 
 export type Comment = {
   id?: string;
@@ -49,13 +50,17 @@ export class CommentService {
   public currFilters: Omit<CommentFilter, 'disaggregatedBy'> | null = null;
   private cachedComments: Comment[] | null;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private authService: AuthService
   ) {
-    this.projectService.projectId.subscribe(() => {
-      this.cachedComments = null;
-    });
+    this.subscription.add(
+      this.projectService.projectId.subscribe(() => {
+        this.cachedComments = null;
+      })
+    );
   }
 
   public getByPath(paths: string[]): (Comment | undefined)[] {
@@ -96,5 +101,9 @@ export class CommentService {
     oldComment.content = comment.content;
     this.projectService.setComments(allComments);
     this.cachedComments = allComments;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

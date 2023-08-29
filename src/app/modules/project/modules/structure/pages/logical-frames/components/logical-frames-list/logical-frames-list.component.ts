@@ -7,6 +7,7 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { v4 as uuid } from 'uuid';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-logical-frames-list',
@@ -37,6 +38,8 @@ export class LogicalFramesListComponent implements OnInit {
     } as InformationItem
   ];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -44,33 +47,37 @@ export class LogicalFramesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'LogicalFrameworks',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'LogicalFrameworks',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.logicalFrames = project.logicalFrames;
-      this.changeDetector.markForCheck();
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.logicalFrames = project.logicalFrames;
+        this.changeDetector.markForCheck();
+      })
+    );
 
     this.projectService.updateInformationPanel(this.informations);
   }
@@ -109,6 +116,10 @@ export class LogicalFramesListComponent implements OnInit {
     moveItemInArray(this.logicalFrames, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

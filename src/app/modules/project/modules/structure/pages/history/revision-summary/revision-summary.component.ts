@@ -8,6 +8,7 @@ import { Operation } from 'fast-json-patch';
 import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
 import { isEqual, uniqWith } from 'lodash';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -25,12 +26,16 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+      })
+    );
     this.createDynamicRevisionText();
     this.output = uniqWith(this.output, isEqual);
     this.output = uniqWith(this.output, (a, b) => {
@@ -253,6 +258,10 @@ export class RevisionSummaryComponent implements OnInit {
 
   transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

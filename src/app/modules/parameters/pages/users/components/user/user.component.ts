@@ -8,7 +8,7 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 
   @Input() user: User;
 
@@ -17,14 +17,13 @@ export class UserComponent implements OnInit {
   constructor(private dialog: MatDialog) {
   }
 
-  ngOnInit(): void {}
-
-  openDialog() {
+  openDialog(): void {
     const dialogRef = this.dialog.open(UserModalComponent, { data: this.user });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.edit.emit(res.data);
+        dialogSubscription.unsubscribe();
       }
     });
   }

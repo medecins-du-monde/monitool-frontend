@@ -10,6 +10,7 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-sources-list',
@@ -49,6 +50,8 @@ export class DataSourcesListComponent implements OnInit {
   forms: Form[] = [];
   deletedFormVariables = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -57,33 +60,37 @@ export class DataSourcesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'DataSources',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'DataSources',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.forms = project.forms;
-      this.changeDetector.markForCheck();
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.forms = project.forms;
+        this.changeDetector.markForCheck();
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -102,7 +109,7 @@ export class DataSourcesListComponent implements OnInit {
   onDelete(form: Form): void {
     const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'datasource', item: form.name } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.delete){
 
         // Get all the variables id from the deleted datasource
@@ -137,6 +144,7 @@ export class DataSourcesListComponent implements OnInit {
 
         this.project.forms = this.project.forms.filter(x => x.id !== form.id);
         this.projectService.project.next(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
   }
@@ -188,5 +196,9 @@ export class DataSourcesListComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

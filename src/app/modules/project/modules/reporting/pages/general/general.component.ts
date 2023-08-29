@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -112,26 +112,34 @@ export class GeneralComponent implements OnInit {
   showComments = false;
   userIsAdmin = false;
 
+  private subscription: Subscription = new Subscription();
+
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
-    this.translateService.onLangChange.subscribe(() => {
-      this.updateBreadcrumbs(this.project);
-      this.buildIndicators();
-    });
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      this.updateBreadcrumbs(savedProject);
-    });
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.entities = this.project.entities;
-      this.indicatorService
-        .listForProject(this.project.themes.map(x => x.id))
-        .then((crosscutting: Indicator[]) => {
-          this.crosscutting = crosscutting;
-          this.buildIndicators();
-        });
-    });
+    this.subscription.add(
+      this.translateService.onLangChange.subscribe(() => {
+        this.updateBreadcrumbs(this.project);
+        this.buildIndicators();
+      })
+    );
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        this.updateBreadcrumbs(savedProject);
+      })
+    );
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.entities = this.project.entities;
+        this.indicatorService
+          .listForProject(this.project.themes.map(x => x.id))
+          .then((crosscutting: Indicator[]) => {
+            this.crosscutting = crosscutting;
+            this.buildIndicators();
+          });
+      })
+    );
 
     this.themeService.list().then((themes: Theme[]) => {
       this.themes = themes;
@@ -506,5 +514,9 @@ export class GeneralComponent implements OnInit {
   updateUserIsAdmin(value: boolean) {
     this.userIsAdmin = value;
     this.projectService.inBigPage.next(!value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

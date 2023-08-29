@@ -147,4 +147,8 @@ export class HomeComponent implements OnInit {
     this.projectService.updateInformationPanel(this.informations);
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 }

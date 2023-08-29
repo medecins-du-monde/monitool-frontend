@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 
@@ -10,11 +11,19 @@ import { ProjectService } from 'src/app/services/project.service';
 export class BreadcrumbComponent implements OnInit {
   items: BreadcrumbItem[] = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.projectService.getBreadcrumbsList.subscribe(val => {
-      this.items = val;
-    });
+    this.subscription.add(
+      this.projectService.getBreadcrumbsList.subscribe(val => {
+        this.items = val;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

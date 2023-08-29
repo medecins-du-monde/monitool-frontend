@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,8 @@ export class TableStructureComponent implements OnInit {
   partitions: any[] = [];
 
   savedStructure: number;
+
+  private subscription: Subscription = new Subscription();
 
   constructor(private projectService: ProjectService) { }
 
@@ -48,15 +51,17 @@ export class TableStructureComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.project.forms.filter(element => element.elements.filter(x => {
-        if (x.id === this.elementForm.value.id) {
-          this.partitions = x.partitions;
-          this.savedStructure = x.distribution ? x.distribution : 0;
-        }
-      }));
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.project.forms.filter(element => element.elements.filter(x => {
+          if (x.id === this.elementForm.value.id) {
+            this.partitions = x.partitions;
+            this.savedStructure = x.distribution ? x.distribution : 0;
+          }
+        }));
+      })
+    );
   }
 
   // swaps the form controls when the user reorder the partitions
@@ -92,6 +97,10 @@ export class TableStructureComponent implements OnInit {
 
   isCurrent(i) {
     return i === this.savedStructure;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 

@@ -116,9 +116,10 @@ export class UserComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(UserModalComponent, { data : this.user });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.edit.emit(res.data);
+        dialogSubscription.unsubscribe();
       }
     });
   }
