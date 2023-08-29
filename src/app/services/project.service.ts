@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
@@ -13,7 +13,7 @@ import { Comment } from './comment.service';
   providedIn: 'root'
 })
 
-export class ProjectService {
+export class ProjectService implements OnDestroy {
 
 
   private currentProject: Project;

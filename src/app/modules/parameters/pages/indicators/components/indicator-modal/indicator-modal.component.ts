@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { ThemeService } from 'src/app/services/theme.service';
   templateUrl: './indicator-modal.component.html',
   styleUrls: ['./indicator-modal.component.scss']
 })
-export class IndicatorModalComponent implements OnInit {
+export class IndicatorModalComponent implements OnInit, OnDestroy {
 
   indicatorForm: FormGroup;
 

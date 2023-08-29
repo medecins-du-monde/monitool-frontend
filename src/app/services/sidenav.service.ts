@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { Project } from '../models/classes/project.model';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SidenavService {
+export class SidenavService implements OnDestroy {
 
   sidenav: BehaviorSubject<Sidenav> = new BehaviorSubject({
     groups: []
@@ -227,7 +227,7 @@ export class SidenavService {
       this.projectService.projectUserCreatingProject.subscribe(canCreateProject => {
       // If a user has a project role but the project doesnt have its basics infos, it means it's being created
       // The sidenav needs to be displayed accordingly
-        hasBasicsInfosSubscription.unsubscribe()
+        hasBasicsInfosSubscription.unsubscribe();
         hasBasicsInfosSubscription.add(
           this.projectService.hasBasicsInfos.subscribe(hasBasicsInfos => {
             if ((user.role === 'project' && canCreateProject) || (user.role === 'project' && !hasBasicsInfos) || user.role === 'admin') {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { COPY_FORMULA, CUSTOM_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } fr
   templateUrl: './indicator-modal.component.html',
   styleUrls: ['./indicator-modal.component.scss']
 })
-export class IndicatorModalComponent implements OnInit {
+export class IndicatorModalComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['parameter', 'variable', 'disaggregations'];
   dataSource = new BehaviorSubject<any[]>([]);

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -8,7 +8,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   @Input() sidenav: Sidenav;
   @Input() structurePage: boolean;
 

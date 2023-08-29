@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DownloadService {
+export class DownloadService implements OnDestroy {
 
   url = new BehaviorSubject<string>('');
   status = new BehaviorSubject<string>('waiting');

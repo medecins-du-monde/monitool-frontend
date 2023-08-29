@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../models/classes/user.model';
@@ -8,7 +8,7 @@ import { ProjectService } from '../services/project.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, OnDestroy {
 
   user: User;
 

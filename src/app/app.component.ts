@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, AfterViewChecked, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewChecked, OnInit, OnDestroy } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angular/router';
@@ -27,7 +27,7 @@ Object.defineProperty(TooltipComponent.prototype, 'message', {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
   title = 'MDM-monitool-Frontend';
   preferredLanguage: string;
 

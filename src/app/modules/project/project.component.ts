@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit, AfterViewChecked {
+export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   public sidenav: Sidenav;
   project: Project;

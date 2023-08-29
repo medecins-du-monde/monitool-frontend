@@ -112,7 +112,7 @@ export class UsersComponent implements OnInit {
       if (res && res.data){
         this.project.users.push(res.data);
         this.projectService.project.next(this.project);
-        dialogSubscription.unsubscribe;
+        dialogSubscription.unsubscribe();
       }
     });
   }

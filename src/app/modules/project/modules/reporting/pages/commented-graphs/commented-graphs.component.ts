@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './commented-graphs.component.html',
   styleUrls: ['./commented-graphs.component.scss']
 })
-export class CommentedGraphsComponent implements OnInit {
+export class CommentedGraphsComponent implements OnInit, OnDestroy {
 
   project: Project;
   logicalFrames: LogicalFrame[] = [];

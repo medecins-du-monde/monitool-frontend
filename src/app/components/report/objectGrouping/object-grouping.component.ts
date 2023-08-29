@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './object-grouping.component.html',
   styleUrls: ['./object-grouping.component.scss']
 })
-export class ObjectGroupingComponent implements OnInit {
+export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   @ViewChild('dlMinimized') dlMinimized: TemplateRef<any>;
 

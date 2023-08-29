@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { combineLatest, Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './logframes-dashboard.component.html',
   styleUrls: ['./logframes-dashboard.component.scss']
 })
-export class LogframesDashboardComponent implements OnInit {
+export class LogframesDashboardComponent implements OnInit, OnDestroy {
 
   public logicalFrame: LogicalFrame;
   public project: Project;

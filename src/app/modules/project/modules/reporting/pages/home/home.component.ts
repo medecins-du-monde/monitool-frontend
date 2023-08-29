@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   informations = [
     {

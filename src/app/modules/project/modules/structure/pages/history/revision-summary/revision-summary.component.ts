@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Revision } from 'src/app/models/classes/revision.model';
 import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./revision-summary.component.scss'],
 })
 
-export class RevisionSummaryComponent implements OnInit {
+export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
   @Input() revision: Revision;
   @Input() revisions: Revision[];

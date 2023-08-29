@@ -117,7 +117,8 @@ export class BasicsComponent implements OnInit, OnDestroy {
                 form.end = new Date(form.end).getTime() === new Date(project.end).getTime() ? value.end._d : form.end;
               });
               project.logicalFrames.forEach(logicalFrame => {
-                logicalFrame.end = new Date(logicalFrame.end).getTime() === new Date(project.end).getTime() ? value.end._d : logicalFrame.end;
+                logicalFrame.end = new Date(logicalFrame.end).getTime() === new Date(project.end).getTime() ?
+                  value.end._d : logicalFrame.end;
               });
             }
             const selectedThemes = value.themes;

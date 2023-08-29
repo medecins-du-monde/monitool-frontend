@@ -1,7 +1,7 @@
 import { Project } from '../../../../../../models/classes/project.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './extra-indicators.component.html',
   styleUrls: ['./extra-indicators.component.scss']
 })
-export class ExtraIndicatorsComponent implements OnInit {
+export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
 
   informations = [
     {

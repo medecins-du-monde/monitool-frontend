@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './table-structure.component.html',
   styleUrls: ['./table-structure.component.scss']
 })
-export class TableStructureComponent implements OnInit {
+export class TableStructureComponent implements OnInit, OnDestroy {
 
   @Input() elementForm: FormGroup;
   @Input() tableStructure;

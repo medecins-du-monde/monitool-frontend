@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   public isMobile: boolean;
   user: User;
@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit {
           this.headerLinkList.push({routerLink: `/projects/${this.user.projectId}`, text: 'Project'});
         }
       })
-    )
+    );
   }
 
   getLangs(): string[]{

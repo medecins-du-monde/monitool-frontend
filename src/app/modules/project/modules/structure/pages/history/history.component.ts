@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -26,7 +26,7 @@ import { Subscription } from 'rxjs';
     ]),
   ],
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -115,7 +115,10 @@ export class HistoryComponent implements OnInit {
             revisions.forEach(revision => {
               const timeArr = [];
               const newDate = new Date(revision.time);
-              timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+              timeArr.push(
+                newDate.getUTCDate(), this.months[newDate.getMonth()],
+                newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]
+              );
               revision.displayedTime = timeArr;
             });
             this.revisions = revisions;

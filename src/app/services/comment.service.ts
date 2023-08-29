@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { cloneDeep, isEqual } from 'lodash';
 import { ProjectService } from './project.service';
 import { AuthService } from './auth.service';
@@ -46,7 +46,7 @@ export const findContentIndexByFilter = (
 @Injectable({
   providedIn: 'root'
 })
-export class CommentService {
+export class CommentService implements OnDestroy {
   public currFilters: Omit<CommentFilter, 'disaggregatedBy'> | null = null;
   private cachedComments: Comment[] | null;
 

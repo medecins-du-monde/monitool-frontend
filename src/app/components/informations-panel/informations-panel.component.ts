@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './informations-panel.component.html',
   styleUrls: ['./informations-panel.component.scss']
 })
-export class InformationsPanelComponent implements OnInit {
+export class InformationsPanelComponent implements OnInit, OnDestroy {
 
   displayed = false;
   firstDisplayed = true;

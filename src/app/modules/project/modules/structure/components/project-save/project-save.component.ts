@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './project-save.component.html',
   styleUrls: ['./project-save.component.scss']
 })
-export class ProjectSaveComponent implements OnInit {
+export class ProjectSaveComponent implements OnInit, OnDestroy {
   projectSaved = false;
   errorWhileSaving = false;
   currentUser: User;

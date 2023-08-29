@@ -1,7 +1,7 @@
 // tslint:disable: no-string-literal
 // tslint:disable: ban-types
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './data-sources-list.component.html',
   styleUrls: ['./data-sources-list.component.scss']
 })
-export class DataSourcesListComponent implements OnInit {
+export class DataSourcesListComponent implements OnInit, OnDestroy {
 
   informations = [
     {

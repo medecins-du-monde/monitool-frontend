@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
   templateUrl: './theme-modal.component.html',
   styleUrls: ['./theme-modal.component.scss']
 })
-export class ThemeModalComponent implements OnInit {
+export class ThemeModalComponent implements OnInit, OnDestroy {
 
   themeForm: FormGroup;
 

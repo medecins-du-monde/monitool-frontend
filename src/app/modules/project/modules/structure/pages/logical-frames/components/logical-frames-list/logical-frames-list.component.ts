@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './logical-frames-list.component.html',
   styleUrls: ['./logical-frames-list.component.scss']
 })
-export class LogicalFramesListComponent implements OnInit {
+export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
   project: Project;
   logicalFrames: LogicalFrame[] = [];
