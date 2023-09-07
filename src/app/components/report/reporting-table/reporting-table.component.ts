@@ -107,7 +107,6 @@ export class ReportingTableComponent
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
 
-  clickedLogFrame;
   logFrameEntities = [];
 
   public menuLeft = 0;
@@ -432,7 +431,7 @@ export class ReportingTableComponent
       }
 
       // Used for getIndicator()
-      let parentLevel;
+      let parentLevel: number | undefined;
 
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1) {
@@ -472,7 +471,6 @@ export class ReportingTableComponent
   }
 
   toggleSection(row: SectionTitle): void {
-    this.clickedLogFrame = row;
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -580,13 +578,7 @@ export class ReportingTableComponent
     const currentFilter = this.filter.value;
     let modifiedFilter;
 
-    const selectedLogFrames = this.project.logicalFrames.find(
-      log =>
-        log.name ===
-        this.clickedLogFrame.title
-          .substring(this.clickedLogFrame.title.indexOf(':') + 1)
-          .trim()
-    );
+    const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
       selectedLogFrames.entities.forEach(entity =>
