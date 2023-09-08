@@ -192,6 +192,7 @@ export class ReportingService {
       headers.push(th.innerText.trim());
     }
     headers.shift();
+    headers[0] = "Name";
 
     // get the padding values the tds in each row,
     // that will be used to determine the color of the row
@@ -227,9 +228,20 @@ export class ReportingService {
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
     json.forEach(row => {
+      // Section titles ex: Logframes
       if (row['']) {
         row['Name'] = row[''];
         delete row[''];
+      }
+      // French support for non title rows
+      else if (row['Nom']) {
+        row['Name'] = row['Nom'];
+        delete row['Nom'];
+      }
+      // Spanish support for non title rows
+      else if (row['Nombre']) {
+        row['Name'] = row['Nombre'];
+        delete row['Nombre'];
       }
     });
 
