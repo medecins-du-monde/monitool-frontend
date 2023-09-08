@@ -67,6 +67,7 @@ type RowCommentInfo = {
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
   styleUrls: ['./reporting-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportingTableComponent
   implements OnInit, OnDestroy, AfterViewInit {
@@ -106,7 +107,6 @@ export class ReportingTableComponent
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
 
-  clickedLogFrame;
   logFrameEntities = [];
 
   public menuLeft = 0;
@@ -267,29 +267,31 @@ export class ReportingTableComponent
       },
       entities: filter.entities || []
     };
-    this.projectService.openedProject.subscribe((project: Project) => {
-      let i = 1;
-      project.logicalFrames.forEach(logicalFrame => {
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        let i = 1;
+        project.logicalFrames.forEach(logicalFrame => {
+          if (this.openedSections[i]) {
+            filters.logicalFrames.push(logicalFrame.id);
+          }
+          i++;
+        });
         if (this.openedSections[i]) {
-          filters.logicalFrames.push(logicalFrame.id);
+          filters.crossCutting = true;
         }
         i++;
-      });
-      if (this.openedSections[i]) {
-        filters.crossCutting = true;
-      }
-      i++;
-      if (this.openedSections[i]) {
-        filters.extraIndicators = true;
-      }
-      i++;
-      project.forms.forEach(dataSource => {
         if (this.openedSections[i]) {
-          filters.dataSources.push(dataSource.id);
+          filters.extraIndicators = true;
         }
         i++;
-      });
-    });
+        project.forms.forEach(dataSource => {
+          if (this.openedSections[i]) {
+            filters.dataSources.push(dataSource.id);
+          }
+          i++;
+        });
+      })
+    );
 
     return filters;
   }
@@ -321,6 +323,9 @@ export class ReportingTableComponent
           }
         });
         this.dataSource = new MatTableDataSource(filteredRows);
+        if (value.length > 0) {
+          this.changeDetectorRef.detectChanges();
+        }
       })
     );
 
@@ -339,6 +344,7 @@ export class ReportingTableComponent
                   ? (this.userIsAdmin = true)
                   : (this.userIsAdmin = false);
                 this.userIsAdminChange.emit(this.userIsAdmin);
+                this.changeDetectorRef.detectChanges();
               }
             );
             userSubscription.unsubscribe();
@@ -425,7 +431,7 @@ export class ReportingTableComponent
       }
 
       // Used for getIndicator()
-      let parentLevel;
+      let parentLevel: number | undefined;
 
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1) {
@@ -465,7 +471,6 @@ export class ReportingTableComponent
   }
 
   toggleSection(row: SectionTitle): void {
-    this.clickedLogFrame = row;
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -573,13 +578,7 @@ export class ReportingTableComponent
     const currentFilter = this.filter.value;
     let modifiedFilter;
 
-    const selectedLogFrames = this.project.logicalFrames.find(
-      log =>
-        log.name ===
-        this.clickedLogFrame.title
-          .substring(this.clickedLogFrame.title.indexOf(':') + 1)
-          .trim()
-    );
+    const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
       selectedLogFrames.entities.forEach(entity =>
@@ -993,6 +992,23 @@ export class ReportingTableComponent
         this.filter.value._end,
         TimeSlotPeriodicity[info.splitByTime]
       );
+      const group = this.getGroup(currentIndicator);
+      if (group) {
+        const groupStartTimeSlot = TimeSlot.fromDate(
+          group.start,
+          TimeSlotPeriodicity[info.splitByTime]
+        );
+        const groupEndTimeSlot = TimeSlot.fromDate(
+          group.end,
+          TimeSlotPeriodicity[info.splitByTime]
+        );
+        if (startTimeSlot.firstDate < groupStartTimeSlot.firstDate) {
+          startTimeSlot = groupStartTimeSlot;
+        }
+        if (endTimeSlot.firstDate > groupEndTimeSlot.firstDate) {
+          endTimeSlot = groupEndTimeSlot;
+        }
+      }
       endTimeSlot = endTimeSlot.next();
 
       const newIndicators = [];
@@ -1249,10 +1265,6 @@ export class ReportingTableComponent
     XLSX.writeFile(wb, 'SheetJS.xlsx');
   } */
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   /**
    * Gets the baseline value from an element
    *
@@ -1304,7 +1316,7 @@ export class ReportingTableComponent
       this.commentService.stashComment(row.commentInfo);
     } else {
       this.changeDetectorRef.detach();
-      this.dialog
+      const dialogSubscription = this.dialog
         .open(CommentModalComponent, {
           data: {
             action,
@@ -1314,9 +1326,11 @@ export class ReportingTableComponent
         .afterClosed()
         .subscribe(result => {
           this.changeDetectorRef.reattach();
-          if (result === null) { return; }
-          this.selectedCellComment = result || '';
-          this.commentService.stashComment(row.commentInfo);
+          if (result !== null) {
+            this.selectedCellComment = result || '';
+            this.commentService.stashComment(row.commentInfo);
+          }
+          dialogSubscription.unsubscribe();
         });
     }
   }
@@ -1341,6 +1355,10 @@ export class ReportingTableComponent
     } else {
       return groups;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
 

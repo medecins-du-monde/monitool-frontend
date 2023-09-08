@@ -37,9 +37,11 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.open = this.indicator.open;
-    this.translateService.onLangChange.subscribe(() => {
-      this.createOptions();
-    });
+    this.subscription.add(
+      this.translateService.onLangChange.subscribe(() => {
+        this.createOptions();
+      })
+    );
     if (!this.isCrossCuttingReport) {
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {

@@ -90,13 +90,14 @@ export class FormElementEditComponent implements OnInit {
   openExistingPartitionDialog(){
     const dialogRef = this.dialog.open(ExistingPartitionModalComponent, { data: this.elementForm });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         for (const partition of res.selectedPartitions){
           this.partitions.push(this.newPartition(partition));
         }
       }
       this.changeDetector.markForCheck();
+      dialogSubscription.unsubscribe();
     });
   }
 
@@ -134,7 +135,7 @@ export class FormElementEditComponent implements OnInit {
   openDialog(partition: FormGroup) {
     const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         const existingPartitions = this.partitions.value.map(x => x.id);
         const index = existingPartitions.indexOf(res.data.value.id);
@@ -149,6 +150,7 @@ export class FormElementEditComponent implements OnInit {
       }
 
       this.changeDetector.markForCheck();
+      dialogSubscription.unsubscribe();
     });
   }
 

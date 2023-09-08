@@ -69,6 +69,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   private formSubscription: Subscription;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -86,51 +88,55 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
-      map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
-    ).subscribe((res: { project: Project, logicalFrameId: string }) => {
-      this.project = res.project;
-      const oldLogicalFrame = this.logicalFrame;
-      this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
+    this.subscription.add(
+      combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+        map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
+      ).subscribe((res: { project: Project, logicalFrameId: string }) => {
+        this.project = res.project;
+        const oldLogicalFrame = this.logicalFrame;
+        this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
 
-      if (this.logicalFrame) {
-        const breadCrumbs = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: this.project.country,
-          } as BreadcrumbItem,
-          {
-            value: this.project.name,
-          } as BreadcrumbItem,
-          {
-            value: 'Structure',
-          } as BreadcrumbItem,
-          {
-            value: 'LogicalFrameworks',
-            link: `./../../projects/${this.project.id}/structure/logical-frames`
-          } as BreadcrumbItem,
-          {
-            value: this.logicalFrame.name,
-          } as BreadcrumbItem,
-        ];
-        this.projectService.updateBreadCrumbs(breadCrumbs);
-      }
-      if (!this.logicalFrame) {
-        this.router.navigate(['..'], { relativeTo: this.route });
-      } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
-        this.entities = res.project.entities;
-        this.groups = res.project.groups;
-        this.setForm();
-      }
-    });
+        if (this.logicalFrame) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'LogicalFrameworks',
+              link: `./../../projects/${this.project.id}/structure/logical-frames`
+            } as BreadcrumbItem,
+            {
+              value: this.logicalFrame.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        if (!this.logicalFrame) {
+          this.router.navigate(['..'], { relativeTo: this.route });
+        } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
+          this.entities = res.project.entities;
+          this.groups = res.project.groups;
+          this.setForm();
+        }
+      })
+    );
 
-    this.dateService.currentLang.subscribe(
-      lang => {
-        this.adapter.setLocale(lang);
-      }
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang => {
+          this.adapter.setLocale(lang);
+        }
+      )
     );
   }
 
@@ -138,6 +144,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
     }
+    this.subscription.unsubscribe();
   }
 
   private setForm(): void {
@@ -211,7 +218,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
@@ -219,6 +226,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
         else if (index !== null) {
           this.indicators.setControl(index, res.indicator);
         }
+        dialogSubscription.unsubscribe();
       }
       this.changeDetector.markForCheck();
     });

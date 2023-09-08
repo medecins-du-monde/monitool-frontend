@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Revision } from 'src/app/models/classes/revision.model';
 import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
@@ -8,6 +8,7 @@ import { Operation } from 'fast-json-patch';
 import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
 import { isEqual, uniqWith } from 'lodash';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { isEqual, uniqWith } from 'lodash';
   styleUrls: ['./revision-summary.component.scss'],
 })
 
-export class RevisionSummaryComponent implements OnInit {
+export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
   @Input() revision: Revision;
   @Input() revisions: Revision[];
@@ -25,12 +26,16 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+      })
+    );
     this.createDynamicRevisionText();
     this.output = uniqWith(this.output, isEqual);
     this.output = uniqWith(this.output, (a, b) => {
@@ -253,6 +258,10 @@ export class RevisionSummaryComponent implements OnInit {
 
   transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

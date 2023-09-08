@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { User } from '../models/classes/user.model';
 import {AuthService} from '../services/auth.service';
 import { ProjectService } from '../services/project.service';
@@ -7,14 +8,18 @@ import { ProjectService } from '../services/project.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, OnDestroy {
 
   user: User;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private authService: AuthService, private route: Router, private projectService: ProjectService) {
-    this.authService.currentUser.subscribe((user: User) => {
-      this.user = user;
-    });
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.user = user;
+      })
+    );
   }
 
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean>{
@@ -39,5 +44,9 @@ export class AuthGuardService implements CanActivate {
     }
     this.route.navigate(['login']);
     return false;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

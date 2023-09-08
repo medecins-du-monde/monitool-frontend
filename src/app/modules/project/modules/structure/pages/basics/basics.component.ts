@@ -98,32 +98,35 @@ export class BasicsComponent implements OnInit, OnDestroy {
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
         }, { validators: [DatesHelper.orderedDates('start', 'end')] });
-        this.basicsForm.valueChanges.subscribe((value: any) => {
-          if (value.start._d) {
-            project.entities.forEach(entity => {
-              entity.start = new Date(entity.start).getTime() === new Date(project.start).getTime() ? value.start._d : entity.start;
-            });
-            project.forms.forEach(form => {
-              form.start = new Date(form.start).getTime() === new Date(project.start).getTime() ? value.start._d : form.start;
-            });
-          }
+        this.subscription.add(
+          this.basicsForm.valueChanges.subscribe((value: any) => {
+            if (value.start._d) {
+              project.entities.forEach(entity => {
+                entity.start = new Date(entity.start).getTime() === new Date(project.start).getTime() ? value.start._d : entity.start;
+              });
+              project.forms.forEach(form => {
+                form.start = new Date(form.start).getTime() === new Date(project.start).getTime() ? value.start._d : form.start;
+              });
+            }
 
-          if (value.end._d) {
-            project.entities.forEach(entity => {
-              entity.end = new Date(entity.end).getTime() === new Date(project.end).getTime() ? value.end._d : entity.end;
-            });
-            project.forms.forEach(form => {
-              form.end = new Date(form.end).getTime() === new Date(project.end).getTime() ? value.end._d : form.end;
-            });
-            project.logicalFrames.forEach(logicalFrame => {
-              logicalFrame.end = new Date(logicalFrame.end).getTime() === new Date(project.end).getTime() ? value.end._d : logicalFrame.end;
-            });
-          }
-          const selectedThemes = value.themes;
-          value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
-          this.projectService.valid = this.basicsForm.valid;
-          this.projectService.project.next(Object.assign(project, value));
-        });
+            if (value.end._d) {
+              project.entities.forEach(entity => {
+                entity.end = new Date(entity.end).getTime() === new Date(project.end).getTime() ? value.end._d : entity.end;
+              });
+              project.forms.forEach(form => {
+                form.end = new Date(form.end).getTime() === new Date(project.end).getTime() ? value.end._d : form.end;
+              });
+              project.logicalFrames.forEach(logicalFrame => {
+                logicalFrame.end = new Date(logicalFrame.end).getTime() === new Date(project.end).getTime() ?
+                  value.end._d : logicalFrame.end;
+              });
+            }
+            const selectedThemes = value.themes;
+            value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
+            this.projectService.valid = this.basicsForm.valid;
+            this.projectService.project.next(Object.assign(project, value));
+          })
+        );
         this.changeDetector.markForCheck();
       })
     );
@@ -157,10 +160,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
       this.changeDetector.markForCheck();
     });
 
-    this.dateService.currentLang.subscribe(
-      lang => {
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(lang => {
         this.adapter.setLocale(lang);
-      }
+      })
     );
     this.projectService.updateInformationPanel(this.informations);
   }

@@ -140,27 +140,29 @@ export class SitesComponent implements OnInit {
           });
           this.entitiesDataSource.data = this.entities.controls;
           this.groupsDataSource.data = this.groups.controls;
-          this.sitesForm.valueChanges.subscribe((value: any) => {
-            value.entities = value.entities.map(x => new Entity(x));
-            const groups = [];
-            value.groups.forEach(x => {
-              const group = new Group(x);
-              const members = x.members;
-              group.members = value.entities.filter(e => members.includes(e.id));
-              groups.push(group);
-            });
-            value.groups = groups;
-            this.projectService.valid = this.datesAreInRange() && this.sitesForm.valid;
-            this.projectService.project.next(Object.assign(project, value));
-          });
+          this.subscription.add(
+            this.sitesForm.valueChanges.subscribe((value: any) => {
+              value.entities = value.entities.map(x => new Entity(x));
+              const groups = [];
+              value.groups.forEach(x => {
+                const group = new Group(x);
+                const members = x.members;
+                group.members = value.entities.filter(e => members.includes(e.id));
+                groups.push(group);
+              });
+              value.groups = groups;
+              this.projectService.valid = this.datesAreInRange() && this.sitesForm.valid;
+              this.projectService.project.next(Object.assign(project, value));
+            })
+          );
         }
       })
     );
 
-    this.dateService.currentLang.subscribe(
-      lang => {
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(lang => {
         this.adapter.setLocale(lang);
-      }
+      })
     );
     this.projectService.updateInformationPanel(this.informations);
 

@@ -40,9 +40,10 @@ export class IndicatorsComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(IndicatorModalComponent);
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.indicatorService.save(res.data).then(() => this.getIndicators());
+        dialogSubscription.unsubscribe();
       }
     });
   }
