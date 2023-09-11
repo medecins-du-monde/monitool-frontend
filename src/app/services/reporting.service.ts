@@ -192,7 +192,7 @@ export class ReportingService {
       headers.push(th.innerText.trim());
     }
     headers.shift();
-    headers[0] = "Name";
+    headers[0] = 'Name';
 
     // get the padding values the tds in each row,
     // that will be used to determine the color of the row
