@@ -243,6 +243,11 @@ export class ReportingService {
         row['Name'] = row['Nombre'];
         delete row['Nombre'];
       }
+      // Remove arrow_forward for collection sites
+      if (row['Name'] && row['Name'].startsWith('arrow_forward')) {
+        row['Name'] = row['Name'].slice(13); // Length of arrow_forward
+      }
+
     });
 
     const file = await this.apiService.post(
