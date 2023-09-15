@@ -577,20 +577,21 @@ export class ReportingTableComponent
     this.logFrameEntities = [];
     const currentFilter = this.filter.value;
     let modifiedFilter;
-
     const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
+      console.log(selectedLogFrames);
+
       selectedLogFrames.entities.forEach(entity =>
         this.logFrameEntities.push(entity.id)
       );
       modifiedFilter = {
         _start:
-          new Date(selectedLogFrames.start) < new Date(currentFilter._start)
+          new Date(selectedLogFrames.start) < new Date(currentFilter._start) && selectedLogFrames.periodicity === 'free'
             ? new Date(currentFilter._start).toLocaleDateString('fr-CA')
             : new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
         _end:
-          new Date(selectedLogFrames.end) < new Date(currentFilter._start)
+          new Date(selectedLogFrames.end) < new Date(currentFilter._start) && selectedLogFrames.periodicity !== 'free'
             ? new Date(selectedLogFrames.end).toLocaleDateString('fr-CA')
             : new Date(currentFilter._end).toLocaleDateString('fr-CA'),
         entity: currentFilter.entities.filter(e =>
@@ -623,6 +624,7 @@ export class ReportingTableComponent
           false
         )
         .then(response => {
+          console.log(response);
           if (response) {
             // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
