@@ -34,6 +34,7 @@
   "Basics": "Basics",
   "Cancel": "Cancel",
   "CannotBeComputed": "This value cannot be computed because the data entry was not (fully) done",
+  "CannotBeComputedRule": "This value cannot be computed because one of the data agregation rule has been set as “It's not possible to compute this”",
   "Clone": "Clone",
   "CloneStructure": "Clone structure",
   "CloneStructureAndData": "Clone structure and sata",

@@ -1230,6 +1230,10 @@ export class ReportingTableComponent
       return '?';
     }
 
+    if (value === 'AGGREGATION_FORBIDDEN') {
+      return 'X';
+    }
+
     let newValue = formatNumber(Number(value), 'de-DE', '1.0-1');
 
     if (unit) {
@@ -1240,6 +1244,11 @@ export class ReportingTableComponent
   }
 
   getTooltipMessage(value) {
+
+    if (value === 'AGGREGATION_FORBIDDEN') {
+      return 'CannotBeComputedRule';
+    }
+
     if (value === undefined) {
       return '';
     }
