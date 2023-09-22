@@ -1,7 +1,7 @@
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions-group" [formGroup]="filtersForm">
-            <div class="action">
+            <!-- <div class="action">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'Countries' | translate }}</mat-label>
                     <mat-select [matTooltipShowDelay]="500" matTooltip="{{selectedCountries}}" formControlName="countries" multiple disableOptionCentering panelClass="myPanelClass">
@@ -9,8 +9,8 @@
                         <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country" [matTooltipShowDelay]="500" matTooltip="{{country}}" matTooltipPosition="above">{{country}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
-            <div class="action">
+            </div> -->
+            <div class="action" style="flex-grow: 1">
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">
                         {{ status.text | translate }}
@@ -21,7 +21,7 @@
             <div class="action-bar">
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
-            <div class="action" *ngIf="canCreateProject">
+            <div class="action new-project-btn" *ngIf="canCreateProject">
                 <button mat-raised-button color="primary" (click)="onCreate()">
                     <mat-icon svgIcon="add-folder"></mat-icon>
                     {{ 'CreateNewProject' | translate }}
