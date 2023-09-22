@@ -6,13 +6,31 @@
 
 .actions-group {
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 10px;
   flex-wrap: wrap;
   margin-top: 24px;
+}
 
-  @media screen and (max-width: 1120px) {
-    .action-bar {
-      order: 3
+@media(max-width: 1241px) {
+  .action-bar {
+    order: 3;
+  }
+}
+@media(max-width: 782px) {
+  .action {
+    flex-grow: 1;
+    button {
+      min-width: none;
+      width: 100%;
+    }
+    mat-button-toggle-group {
+      width: 100%;
+      flex-wrap: wrap;
+      mat-button-toggle {
+        flex-grow: 1;
+        min-width: none;
+      }
     }
   }
 }

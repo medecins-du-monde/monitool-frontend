@@ -10,19 +10,19 @@
                     </mat-select>
                 </mat-form-field>
             </div> -->
-            <div class="action" style="flex-grow: 1">
+            <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
-                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">
+                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" style="min-width: 135px;">
                         {{ status.text | translate }}
                         ({{ status.count }})
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
-            <div class="action-bar">
+            <div class="action-bar" style="flex-grow: 1">
                 <app-searchbar (search)="onSearch($event)"></app-searchbar>
             </div>
             <div class="action new-project-btn" *ngIf="canCreateProject">
-                <button mat-raised-button color="primary" (click)="onCreate()">
+                <button mat-raised-button color="primary" (click)="onCreate()" style="min-width: 230px;">
                     <mat-icon svgIcon="add-folder"></mat-icon>
                     {{ 'CreateNewProject' | translate }}
                 </button>
