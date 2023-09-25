@@ -144,8 +144,10 @@ export class ReportingService {
     if (!html) { throw new Error(); }
 
     // new div
-    const div = document.createElement('div');
+    const div = document.createElement('table');
     div.innerHTML = html;
+
+    console.log(div);
 
     const table = {
       nativeElement: div
@@ -293,7 +295,7 @@ export class ReportingService {
       .substring(2, 15);
 
     // get the table as a string
-    const html = document.getElementById('general-report-table').outerHTML;
+    const html = document.getElementById('general-report-table').innerHTML;
     console.log(document.getElementById('general-report-table'));
 
     // save the table in localStorage
