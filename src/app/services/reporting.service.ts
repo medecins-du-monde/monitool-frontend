@@ -166,13 +166,6 @@ export class ReportingService {
       ''
     );
 
-    // remove all arrow_forward icons
-    const arrowForwardRegex = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
-    table.innerHTML = table.innerHTML.replace(
-      arrowForwardRegex,
-      ''
-    );
-
     // remove inly add_circle and remove_circle icons
     const addRmBtnRegex = /<mat-icon.*?>(add_circle|remove_circle)<\/mat-icon>/g;
     table.innerHTML = table.innerHTML.replace(
@@ -186,6 +179,14 @@ export class ReportingService {
       doDisturbRegex,
       '🚫'
     );
+
+    // remove all arrow_forward icons
+    const arrowForwardRegex = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
+    table.innerHTML = table.innerHTML.replace(
+      arrowForwardRegex,
+      '►'
+    );
+
     // replace ‰ with decimal value
     const perThousandRegex = /(\d+)‰/g;
     table.innerHTML = table.innerHTML.replace(
@@ -229,6 +230,8 @@ export class ReportingService {
     paddingValues.shift();
 
     console.log(table);
+
+    return;
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
