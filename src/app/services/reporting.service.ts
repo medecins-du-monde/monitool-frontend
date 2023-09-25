@@ -247,10 +247,6 @@ export class ReportingService {
         row['Name'] = row['Nombre'];
         delete row['Nombre'];
       }
-      // Remove arrow_forward for collection sites
-      if (row['Name'] && row['Name'].startsWith('arrow_forward')) {
-        row['Name'] = row['Name'].slice(13); // Length of arrow_forward
-      }
 
     });
 
@@ -295,8 +291,15 @@ export class ReportingService {
       .substring(2, 15);
 
     // get the table as a string
-    const html = document.getElementById('general-report-table').innerHTML;
+    let html = document.getElementById('general-report-table').innerHTML;
     console.log(document.getElementById('general-report-table'));
+
+    // remove all buttons
+    const arrowForward = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
+    html = html.replace(
+      arrowForward,
+      ''
+    );
 
     // save the table in localStorage
     sessionStorage.setItem(
