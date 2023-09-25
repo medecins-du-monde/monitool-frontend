@@ -143,7 +143,7 @@ export class ReportingService {
     const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
-    console.log(document.createElement('table'));
+    console.log(html);
 
     // new div
     const table = document.createElement('table');
@@ -289,16 +289,16 @@ export class ReportingService {
       .substring(2, 15);
 
     // get the table as a string
-    let html = document.getElementById('general-report-table').innerHTML;
+    const html = document.getElementById('general-report-table').innerHTML;
     console.log(html);
 
     // remove all buttons
-    const arrowForward = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
-    html = html.replace(
-      arrowForward,
-      ''
-    );
-    console.log(html);
+    // const arrowForward = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
+    // html = html.replace(
+    //   arrowForward,
+    //   ''
+    // );
+    // console.log(html);
 
     // save the table in localStorage
     sessionStorage.setItem(
