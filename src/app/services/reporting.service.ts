@@ -293,7 +293,8 @@ export class ReportingService {
       .substring(2, 15);
 
     // get the table as a string
-    const html = this.currReportTable.getValue().nativeElement.outerHTML;
+    const html = this.currReportTable.getValue().nativeElement.innerHTML;
+    console.log(this.currReportTable.getValue().nativeElement, this.currReportTable.getValue().nativeElement.innerHTML);
 
     // save the table in localStorage
     localStorage.setItem(

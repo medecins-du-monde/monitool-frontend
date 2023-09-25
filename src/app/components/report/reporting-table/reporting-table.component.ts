@@ -468,7 +468,6 @@ export class ReportingTableComponent
         })
       );
     }
-    this.reportingService.currReportTable.next(this.tableRef);
   }
 
   toggleSection(row: SectionTitle): void {
