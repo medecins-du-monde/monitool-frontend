@@ -468,6 +468,7 @@ export class ReportingTableComponent
         })
       );
     }
+    this.reportingService.currReportTable.next(this.tableRef);
   }
 
   toggleSection(row: SectionTitle): void {
@@ -580,7 +581,6 @@ export class ReportingTableComponent
     const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
-      console.log(selectedLogFrames);
 
       selectedLogFrames.entities.forEach(entity =>
         this.logFrameEntities.push(entity.id)
@@ -624,7 +624,6 @@ export class ReportingTableComponent
           false
         )
         .then(response => {
-          console.log(response);
           if (response) {
             // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
