@@ -143,13 +143,13 @@ export class ReportingService {
     const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
-    console.log(html);
+    console.log(document.createElement('table'));
 
     // new div
     const table = document.createElement('table');
     table.innerHTML = html;
 
-    console.log(table);
+    // console.log(table);
 
     // remove all buttons
     const btnRegex = /<button.*?>(.*?)<\/button>/g;
