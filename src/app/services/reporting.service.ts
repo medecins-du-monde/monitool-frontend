@@ -140,7 +140,7 @@ export class ReportingService {
    /** Downloads current reporting table view */
    async downloadSavedTableView(id: string): Promise<void> {
     // retrieve html from localStorage
-    const {html, project} = JSON.parse(localStorage.getItem(`currView:${id}`));
+    const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
     // new div
@@ -299,7 +299,7 @@ export class ReportingService {
     console.log(document.getElementById('general-report-table'));
 
     // save the table in localStorage
-    localStorage.setItem(
+    sessionStorage.setItem(
       `currView:${id}`,
       JSON.stringify({
         html,
