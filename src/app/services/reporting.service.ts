@@ -250,6 +250,8 @@ export class ReportingService {
 
     });
 
+    console.log(json);
+
     const file = await this.apiService.post(
       '/export/currentView',
       {
