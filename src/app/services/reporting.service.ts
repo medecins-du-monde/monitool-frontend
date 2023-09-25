@@ -220,6 +220,8 @@ export class ReportingService {
     }
     paddingValues.shift();
 
+    console.log(table.nativeElement);
+
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table.nativeElement, {
       raw: true
     });
