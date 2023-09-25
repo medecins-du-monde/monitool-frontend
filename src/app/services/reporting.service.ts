@@ -143,53 +143,51 @@ export class ReportingService {
     const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
+    console.log(html);
+
     // new div
-    const div = document.createElement('table');
-    div.innerHTML = html;
+    const table = document.createElement('table');
+    table.innerHTML = html;
 
-    console.log(div);
-
-    const table = {
-      nativeElement: div
-    };
+    console.log(table);
 
     // remove all buttons
     const btnRegex = /<button.*?>(.*?)<\/button>/g;
-    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+    table.innerHTML = table.innerHTML.replace(
       btnRegex,
       ''
     );
 
     // remove all tooltips
     const tooltipRegex = /ng-reflect-message="(.*?)"/g;
-    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+    table.innerHTML = table.innerHTML.replace(
       tooltipRegex,
       ''
     );
 
     // remove inly add_circle and remove_circle icons
     const addRmBtnRegex = /<mat-icon.*?>(add_circle|remove_circle)<\/mat-icon>/g;
-    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+    table.innerHTML = table.innerHTML.replace(
       addRmBtnRegex,
       ''
     );
 
     // replace 'do_disturb' icon with '🚫'
     const doDisturbRegex = /<mat-icon.*?>do_disturb<\/mat-icon>/g;
-    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+    table.innerHTML = table.innerHTML.replace(
       doDisturbRegex,
       '🚫'
     );
     // replace ‰ with decimal value
     const perThousandRegex = /(\d+)‰/g;
-    table.nativeElement.innerHTML = table.nativeElement.innerHTML.replace(
+    table.innerHTML = table.innerHTML.replace(
       perThousandRegex,
       (_, p1) => `${parseInt(p1, 10) / 1000}`.replace('.', ',')
     );
 
     // get the header of the table
     const headers: string[] = [];
-    const ths = table.nativeElement.querySelectorAll('th');
+    const ths = table.querySelectorAll('th');
     for (const th of Array.from(ths)) {
       headers.push(th.innerText.trim());
     }
@@ -198,7 +196,7 @@ export class ReportingService {
 
     // get the padding values the tds in each row,
     // that will be used to determine the color of the row
-    const trs = table.nativeElement.querySelectorAll('tr');
+    const trs = table.querySelectorAll('tr');
     const paddingValues: number[] = [];
     for (const tr of Array.from(trs)) {
       const tds = tr.querySelectorAll('td');
@@ -222,9 +220,9 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(table.nativeElement);
+    console.log(table);
 
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table.nativeElement, {
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
 
@@ -292,7 +290,7 @@ export class ReportingService {
 
     // get the table as a string
     let html = document.getElementById('general-report-table').innerHTML;
-    console.log(document.getElementById('general-report-table'));
+    console.log(html);
 
     // remove all buttons
     const arrowForward = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
@@ -300,6 +298,7 @@ export class ReportingService {
       arrowForward,
       ''
     );
+    console.log(html);
 
     // save the table in localStorage
     sessionStorage.setItem(
