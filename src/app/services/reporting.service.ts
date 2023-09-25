@@ -165,6 +165,13 @@ export class ReportingService {
       ''
     );
 
+    // remove all arrow_forward icons
+    const arrowForwardRegex = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
+    table.innerHTML = table.innerHTML.replace(
+      arrowForwardRegex,
+      ''
+    );
+
     // remove inly add_circle and remove_circle icons
     const addRmBtnRegex = /<mat-icon.*?>(add_circle|remove_circle)<\/mat-icon>/g;
     table.innerHTML = table.innerHTML.replace(
