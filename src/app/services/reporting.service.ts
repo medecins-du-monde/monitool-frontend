@@ -143,12 +143,12 @@ export class ReportingService {
     const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
-    const tempTable = document.createElement('table');
+    const tempTable = document.createElement('TABLE');
     tempTable.innerHTML = html;
     console.log(tempTable);
 
     // new div
-    const table = document.createElement('table');
+    const table = document.createElement('TABLE');
     table.innerHTML = html;
 
 
@@ -229,9 +229,7 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(table);
-
-    return;
+    console.log({...table});
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
@@ -259,6 +257,7 @@ export class ReportingService {
 
     });
 
+    console.log({...table});
     console.log(json);
 
     const file = await this.apiService.post(
