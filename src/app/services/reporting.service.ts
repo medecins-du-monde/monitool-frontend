@@ -236,6 +236,8 @@ export class ReportingService {
     }
     paddingValues.shift();
 
+    console.log(table.cloneNode(true));
+
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
