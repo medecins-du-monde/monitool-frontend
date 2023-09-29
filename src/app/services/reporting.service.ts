@@ -239,7 +239,6 @@ export class ReportingService {
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
     json.forEach(row => {
-      console.log(row);
       // Section titles ex: Logframes
       if (row['']) {
         row['Name'] = row[''];
