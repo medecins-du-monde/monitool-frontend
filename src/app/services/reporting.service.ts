@@ -194,6 +194,13 @@ export class ReportingService {
       (_, p1) => `${parseInt(p1, 10) / 1000}`.replace('.', ',')
     );
 
+    // change ',' for custom csv import
+    const commaRegex = /,/g;
+    table.innerHTML = table.innerHTML.replace(
+      commaRegex,
+      '{{COMMA}}'
+    );
+
     // get the header of the table
     const headers: string[] = [];
     const ths = table.querySelectorAll('th');
@@ -229,16 +236,19 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(JSON.parse(JSON.stringify(table)));
-
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
 
+    const json = this.csvJSON(XLSX.utils.sheet_to_csv(ws));
+
     // parse table to json, in order to send it to the server
     // (we can't do style stuff with the front-end library)
-    const json = XLSX.utils.sheet_to_json(ws);
-    json.forEach(row => {
+    const json1 = XLSX.utils.sheet_to_json(ws);
+    console.log(json);
+    console.log(json1);
+
+    json1.forEach(row => {
       // Section titles ex: Logframes
       if (row['']) {
         row['Name'] = row[''];
@@ -256,8 +266,6 @@ export class ReportingService {
       }
 
     });
-
-    console.log(json);
 
     const file = await this.apiService.post(
       '/export/currentView',
@@ -318,6 +326,57 @@ export class ReportingService {
       })
     );
     return id;
+  }
+
+  // TODO: Improve commas solution
+  private csvJSON(csv: string){
+
+    const lines = csv.split("\n");
+
+    const result = [];
+
+    // NOTE: If your columns contain commas in their values, you'll need
+    // to deal with those before doing the next step
+    // (you might convert them to &&& or something, then covert them back later)
+    // jsfiddle showing the issue https://jsfiddle.net/
+    const headers = lines[0].split(",");
+
+    for(let i = 1; i < lines.length - 1; i++){
+
+        const obj = {};
+        const currentLine = lines[i].split(",");
+        // const parsedLine = [];
+
+        // for (let j = 0; j < line.length; j++) {
+        //   if (line[j][0] === '"' && line[j][line[j].length - 1] !== '"') {
+        //     let val = line[j];
+        //     while (line[j][line[j].length - 1] !== '"') {
+        //       j++;
+        //       val += line[j];
+        //     }
+        //     parsedLine.push(val.substring(1, val.length - 1));
+        //   } else {
+        //     parsedLine.push(line[j]);
+        //   }
+        // }
+
+        for(let j = 0; j < headers.length; j++) {
+          const val = currentLine[j].replace(/{{COMMA}}/g, ',');
+          if (val !== '') {
+            if (j < 2) {
+              obj['Name'] = val
+            } else {
+              obj[headers[j]] = val;
+            }
+          }
+        }
+
+        result.push(obj);
+
+    }
+
+    //return result; //JavaScript object
+    return result; //JSON
   }
 }
 
