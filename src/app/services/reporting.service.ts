@@ -331,7 +331,7 @@ export class ReportingService {
   // TODO: Improve commas solution
   private csvJSON(csv: string){
 
-    const lines = csv.split("\n");
+    const lines = csv.split('\n');
 
     const result = [];
 
@@ -339,12 +339,12 @@ export class ReportingService {
     // to deal with those before doing the next step
     // (you might convert them to &&& or something, then covert them back later)
     // jsfiddle showing the issue https://jsfiddle.net/
-    const headers = lines[0].split(",");
+    const headers = lines[0].split(',');
 
-    for(let i = 1; i < lines.length - 1; i++){
+    for (let i = 1; i < lines.length - 1; i++){
 
         const obj = {};
-        const currentLine = lines[i].split(",");
+        const currentLine = lines[i].split(',');
         // const parsedLine = [];
 
         // for (let j = 0; j < line.length; j++) {
@@ -360,11 +360,11 @@ export class ReportingService {
         //   }
         // }
 
-        for(let j = 0; j < headers.length; j++) {
+        for (let j = 0; j < headers.length; j++) {
           const val = currentLine[j].replace(/{{COMMA}}/g, ',');
           if (val !== '') {
             if (j < 2) {
-              obj['Name'] = val
+              obj['Name'] = val;
             } else {
               obj[headers[j]] = val;
             }
@@ -375,8 +375,8 @@ export class ReportingService {
 
     }
 
-    //return result; //JavaScript object
-    return result; //JSON
+    // return result; //JavaScript object
+    return result; // JSON
   }
 }
 
