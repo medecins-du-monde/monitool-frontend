@@ -229,7 +229,7 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log({...table});
+    console.log(JSON.parse(JSON.stringify(table)));
 
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
@@ -239,6 +239,7 @@ export class ReportingService {
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
     json.forEach(row => {
+      console.log(row);
       // Section titles ex: Logframes
       if (row['']) {
         row['Name'] = row[''];
@@ -257,7 +258,6 @@ export class ReportingService {
 
     });
 
-    console.log({...table});
     console.log(json);
 
     const file = await this.apiService.post(
