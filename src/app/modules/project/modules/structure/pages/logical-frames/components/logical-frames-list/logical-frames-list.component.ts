@@ -84,6 +84,9 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
   onCreate(): void {
     const newLogicalFrame = new LogicalFrame();
+    // initialize dates as project
+    newLogicalFrame.start = this.project.start;
+    newLogicalFrame.end = this.project.end;
     this.project.logicalFrames.push(newLogicalFrame);
     this.projectService.project.next(this.project);
     this.router.navigate([`${this.router.url}/${newLogicalFrame.id}`]);
