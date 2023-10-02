@@ -143,10 +143,6 @@ export class ReportingService {
     const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
-    const tempTable = document.createElement('TABLE');
-    tempTable.innerHTML = html;
-    console.log(tempTable);
-
     // new div
     const table = document.createElement('TABLE');
     table.innerHTML = html;
@@ -194,13 +190,6 @@ export class ReportingService {
       (_, p1) => `${parseInt(p1, 10) / 1000}`.replace('.', ',')
     );
 
-    // change ',' for custom csv import
-    const commaRegex = /,/g;
-    table.innerHTML = table.innerHTML.replace(
-      commaRegex,
-      '{{COMMA}}'
-    );
-
     // get the header of the table
     const headers: string[] = [];
     const ths = table.querySelectorAll('th');
@@ -236,21 +225,15 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(table.cloneNode(true));
-
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
 
-    const json = this.csvJSON(XLSX.utils.sheet_to_csv(ws));
-
     // parse table to json, in order to send it to the server
     // (we can't do style stuff with the front-end library)
-    const json1 = XLSX.utils.sheet_to_json(ws);
-    console.log(json);
-    console.log(json1);
+    const json = XLSX.utils.sheet_to_json(ws);
 
-    json1.forEach(row => {
+    json.forEach(row => {
       // Section titles ex: Logframes
       if (row['']) {
         row['Name'] = row[''];
@@ -309,7 +292,6 @@ export class ReportingService {
 
     // get the table as a string
     const html = document.getElementById('general-report-table').innerHTML;
-    console.log(html);
 
     // remove all buttons
     // const arrowForward = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
@@ -317,7 +299,6 @@ export class ReportingService {
     //   arrowForward,
     //   ''
     // );
-    // console.log(html);
 
     // save the table in localStorage
     sessionStorage.setItem(
