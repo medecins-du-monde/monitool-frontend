@@ -109,7 +109,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   multiThemesIndicators: Indicator[];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
 
-  showComments = false;
+  showComments = true;
   userIsAdmin = false;
 
   private subscription: Subscription = new Subscription();

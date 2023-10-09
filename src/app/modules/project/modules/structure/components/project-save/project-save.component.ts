@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit, OnDestroy} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,6 +21,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   currentUser: User;
   savedProject: Project;
   currentProject: Project;
+
+  @Input() reload = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -76,7 +78,9 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
       }
     }
     this.projectService.saveCurrent().then((project: Project) => {
-      this.projectService.project.next(project);
+      if (this.reload) {
+        this.projectService.project.next(project);
+      }
       this.subscription.add(
         this.authService.currentUser.subscribe((user: User) => this.currentUser = user )
       );

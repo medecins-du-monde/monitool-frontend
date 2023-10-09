@@ -102,7 +102,7 @@ export class ReportingTableComponent
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
-  @Input() showComments = false;
+  @Input() showComments;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
@@ -1336,6 +1336,7 @@ export class ReportingTableComponent
         .subscribe(result => {
           this.changeDetectorRef.reattach();
           if (result !== null) {
+            console.log(result, row.commentInfo),
             this.selectedCellComment = result || '';
             this.commentService.stashComment(row.commentInfo);
           }
