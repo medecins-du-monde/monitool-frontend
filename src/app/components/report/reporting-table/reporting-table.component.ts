@@ -118,13 +118,9 @@ export class ReportingTableComponent
   } | null = null;
 
   get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
-    const dateStart = this.filter.getValue()._start.toISOString();
-    const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
 
     return {
-      dateStart,
-      dateEnd,
       dimension,
     };
   }
