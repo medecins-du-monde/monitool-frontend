@@ -217,11 +217,12 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * We estimate that each logFrame will take 20 seconds to be processed, multiplying that for the number of collection sites in the detailed view
+   * We estimate that each logFrame will take 10 seconds to be processed,
+   * multiplying that for the number of collection sites in the detailed view
    *
-   * @param logFrames
-   * @param colSites
-   * @returns
+   * @param logFrames Number of logical frames
+   * @param colSites Number of Collection sites
+   * @returns Estimated time in minutes
    */
   private getEstimatedExportTime(logFrames: number, colSites?: number) {
     let time = logFrames * 10;
