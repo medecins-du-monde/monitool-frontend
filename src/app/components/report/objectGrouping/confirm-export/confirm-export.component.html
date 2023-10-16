@@ -2,8 +2,14 @@
   <button class="dialog-close" mat-icon-button mat-dialog-close>
     <mat-icon>close</mat-icon>
   </button>
-  <h2 mat-dialog-title>{{title}}</h2>
-  <mat-dialog-content>{{'export-warning' | translate}}</mat-dialog-content>
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <mat-dialog-content>
+    {{
+      data.type === 'current-view' ? 'export-warning.current-view' :
+      ('export-warning.time.' + (data.estimated > 1 ? '>1' : '1') | translate: { time: data.estimated }) +
+      ' ' + ('export-warning.' + data.type | translate)
+    }}
+  </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-stroked-button class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
         }}</button>

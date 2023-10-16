@@ -9,12 +9,16 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ConfirmExportComponent implements OnInit {
 
   public title: string;
+  public type = 'current-view';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     if (this.data.title) {
       this.title = this.data.title;
+    }
+    if (this.data.type) {
+      this.type = this.data.type;
     }
   }
 

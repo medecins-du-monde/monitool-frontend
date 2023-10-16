@@ -152,7 +152,11 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   downloadExcelSheet(): void {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
-      data: {title: this.translateService.instant('export-complete')}
+      data: {
+        title: this.translateService.instant('export-complete'),
+        type: 'detailed',
+        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
+      }
     });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
@@ -167,7 +171,11 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   dlMini(): void {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
-      data: {title: this.translateService.instant('export-minimized')}
+      data: {
+        title: this.translateService.instant('export-minimized'),
+        type: 'global',
+        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length)
+      }
     });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
@@ -191,7 +199,10 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
   /** Downloads the current view of the table */
   async dlCurrView(): Promise<void> {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
-      data: {title: this.translateService.instant('export-current-minimized')}
+      data: {
+        title: this.translateService.instant('export-current-minimized'),
+        type: 'current-view'
+      }
     });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
@@ -203,6 +214,26 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
         dialogSubscription.unsubscribe();
       }
     });
+  }
+
+  /**
+   * We estimate that each logFrame will take 20 seconds to be processed, multiplying that for the number of collection sites in the detailed view
+   *
+   * @param logFrames
+   * @param colSites
+   * @returns
+   */
+  private getEstimatedExportTime(logFrames: number, colSites?: number) {
+    let time = logFrames * 10;
+    if (colSites) {
+      time *= colSites;
+    }
+    time /= 60;
+    if (time <= 10) {
+      return time;
+    } else {
+      return Math.ceil(time / 5) * 5;
+    }
   }
 
   ngOnDestroy(): void{

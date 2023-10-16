@@ -839,7 +839,15 @@
   },
   "export-current-minimized": "Rapport Excel de la vue actuelle",
   "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",
-  "export-warning": "Le téléchargement de ce rapport peut être long en fonction de la quantité de données exportées. Voulez-vous continuer?",
+  "export-warning": {
+    "time": {
+      ">1": "Le téléchargement de ce rapport devrait prendre environ {{time}} minutes.",
+      "1": "Le téléchargement de ce rapport devrait prendre environ 1 minute."
+    },
+    "global": "Le temps nécessaire dépend de la quantité de données et du nombre de cadres logiques exportés. Voulez-vous continuer?",
+    "detailed": "Le temps nécessaire dépend de la quantité de données, du nombre de cadres logiques et des sites de collecte exportés. Voulez-vous continuer?",
+    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?"
+  },
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
   "export-error": "Quelque chose s’est mal passé",
   "export-generating-file": "Génération de la feuille Excel, veuillez patienter...",
