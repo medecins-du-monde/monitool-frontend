@@ -89,13 +89,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   });
 
   get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
-    const dateStart = this.filter.getValue()._start.toISOString();
-    const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
 
     return {
-      dateStart,
-      dateEnd,
       dimension
     };
   }
@@ -109,7 +105,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   multiThemesIndicators: Indicator[];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
 
-  showComments = false;
+  showComments = true;
   userIsAdmin = false;
 
   private subscription: Subscription = new Subscription();

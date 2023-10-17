@@ -102,7 +102,7 @@ export class ReportingTableComponent
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
-  @Input() showComments = false;
+  @Input() showComments;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
@@ -118,13 +118,9 @@ export class ReportingTableComponent
   } | null = null;
 
   get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
-    const dateStart = this.filter.getValue()._start.toISOString();
-    const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
 
     return {
-      dateStart,
-      dateEnd,
       dimension,
     };
   }
