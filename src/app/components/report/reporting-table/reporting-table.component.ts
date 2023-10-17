@@ -1332,7 +1332,6 @@ export class ReportingTableComponent
         .subscribe(result => {
           this.changeDetectorRef.reattach();
           if (result !== null) {
-            console.log(result, row.commentInfo),
             this.selectedCellComment = result || '';
             this.commentService.stashComment(row.commentInfo);
           }
