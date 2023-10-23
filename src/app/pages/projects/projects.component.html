@@ -12,9 +12,11 @@
             </div>
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
-                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value">
+                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" (click)="onToggleStatus(status.value)">
                         {{ status.text | translate }}
-                        ({{ status.count }})
+                        <ng-container *ngIf="status.count > 0">
+                            ({{ status.count }})
+                        </ng-container>
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
@@ -27,6 +29,19 @@
                     {{ 'CreateNewProject' | translate }}
                 </button>
             </div>
+    </div>
+    <div class="project-pagination" *ngIf="projects">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item" (click)="pageChange('prev')">Prev {{ pageNumber }}</li>
+              <li class="page-item" (click)="pageChange(pageNumber - 2)" *ngIf="pageNumber-2 > 0">{{ pageNumber - 2 }}</li>
+              <li class="page-item" (click)="pageChange(pageNumber - 1)" *ngIf="pageNumber-1 > 0">{{ pageNumber - 1 }}</li>
+              <li class="page-current-item" (click)="pageChange(pageNumber)">{{ pageNumber }}</li>
+              <li class="page-item" (click)="pageChange(pageNumber + 1)" *ngIf="(pageNumber + 1) < totalPage">{{ pageNumber + 1 }}</li>
+              <li class="page-item" (click)="pageChange(pageNumber + 2)" *ngIf="(pageNumber + 2) < totalPage">{{ pageNumber + 2 }}</li>
+              <li class="page-item" (click)="pageChange('next')">Next</li>
+            </ul>
+        </nav>
     </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"

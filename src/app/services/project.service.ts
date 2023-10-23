@@ -152,14 +152,31 @@ export class ProjectService implements OnDestroy {
     this.informations.next(list);
   }
 
-  public async list(): Promise<Project[]> {
+  public async list(status?: string, pageNumber?: number, itemPerPage?: number): Promise<any> {
     const themes = await this.themeService.list();
-    const response: any = await this.apiService.get('/resources/project/?mode=short');
-    return response.map(x => {
-      const project = new Project(x);
-      project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
-      return project;
-    });
+    let url = '/resources/project/?mode=short';
+    if (status) {
+      url = url + `&status=${status}`;
+    } else {
+      url = url + `&status=`;
+    }
+    if (pageNumber) {
+      url = url + `&page_number=${pageNumber}`;
+    }
+    if (itemPerPage) {
+      url = url + `&item_per_page=${itemPerPage}`;
+    }
+    const response: any = await this.apiService.get(url);
+    return {
+      // result: response.result.map(x => new Project(x)),
+      result: response.result.map(x => {
+        const project = new Project(x);
+        project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
+        return project;
+      }),
+      total_item: response.total_item,
+      total_page: response.total_page
+    };
   }
 
   public create(project: Project): void {

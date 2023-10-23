@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActionProjectModalModule } from './components/action-project-modal/action-project-modal.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InformationsPanelModule } from 'src/app/components/informations-panel/informations-panel.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [ProjectsComponent],
@@ -32,6 +33,7 @@ import { InformationsPanelModule } from 'src/app/components/informations-panel/i
         MatButtonModule,
         MatButtonToggleModule,
         MatTooltipModule,
+        NgxPaginationModule,
         SearchbarModule,
         ProjectModule,
         InformationsPanelModule
