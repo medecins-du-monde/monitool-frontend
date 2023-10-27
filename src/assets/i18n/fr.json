@@ -890,5 +890,7 @@
   "add-comment": "Ajouter un commentaire",
   "edit-comment": "Modifier le commentaire",
   "comment": "Commentaire",
-  "comment-placeholder": "Écrivez votre commentaire ici"
+  "comment-placeholder": "Écrivez votre commentaire ici",
+  "showingResults": "Affichage de {{count}} résultats",
+  "search": "Chercher"
 }
