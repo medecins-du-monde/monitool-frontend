@@ -57,8 +57,14 @@ import { Group } from 'src/app/models/classes/group.model';
 type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
 type RowCommentInfo = {
-  comment?: string;
-  comments?: { [key in string]: string };
+  comment?: {
+    value: string,
+    cellValue?: string
+  };
+  comments?: { [key in string]: {
+    value: string,
+    cellValue?: string
+  }};
   commentInfo?: Comment;
   disaggregatedBy?: { [key in string]: string };
 };
@@ -126,7 +132,7 @@ export class ReportingTableComponent
   }
 
   /** @returns the comment for the selected cell */
-  get selectedCellComment(): string | null {
+  get selectedCellComment(): { value: string, cellValue?: string } | null {
     if (!this.selectedCell) { return null; }
     return (
       this.selectedCell.row.comment ||
@@ -135,7 +141,7 @@ export class ReportingTableComponent
     );
   }
 
-  set selectedCellComment(comment: string) {
+  set selectedCellComment(comment: { value: string, cellValue?: string } | null) {
     if (!this.selectedCell) { return; }
 
     const isIndicator = !!this.selectedCell.col;
@@ -149,8 +155,14 @@ export class ReportingTableComponent
     if (isIndicator) {
       // Update the comments
       const comments = this.selectedCell.row.comments || {};
-      comments[this.selectedCell.col] = comment;
-      this.selectedCell.row.comments = comments;
+      if (!comment) {
+        if (comments[this.selectedCell.col]) {
+          delete comments[this.selectedCell.col];
+        }
+      } else {
+        comments[this.selectedCell.col] = comment;
+        this.selectedCell.row.comments = comments;
+      }
 
       // Update the commentInfo
       if (contentIndex !== -1) {
@@ -162,17 +174,21 @@ export class ReportingTableComponent
         });
       }
     } else {
-      // Update the comment
-      this.selectedCell.row.comment = comment;
-
-      // Update the commentInfo
-      if (contentIndex !== -1) {
-        commentInfo.content[contentIndex].comment = comment;
-      } else {
-        commentInfo.content.push({
-          comment,
-          filter: filters
-        });
+      if (comment) {
+        // Update the comment
+        this.selectedCell.row.comment = comment;
+  
+        // Update the commentInfo
+        if (contentIndex !== -1) {
+          commentInfo.content[contentIndex].comment = comment;
+        } else {
+          commentInfo.content.push({
+            comment,
+            filter: filters
+          });
+        }
+      } else if (contentIndex !== -1) {
+        delete commentInfo.content[contentIndex].comment;
       }
     }
   }
@@ -1328,7 +1344,7 @@ export class ReportingTableComponent
     const comment = this.selectedCellComment || '';
 
     if (action === 'delete') {
-      this.selectedCellComment = '';
+      this.selectedCellComment = null;
       this.commentService.stashComment(row.commentInfo);
     } else {
       this.changeDetectorRef.detach();
@@ -1343,7 +1359,7 @@ export class ReportingTableComponent
         .subscribe(result => {
           this.changeDetectorRef.reattach();
           if (result !== null) {
-            this.selectedCellComment = result || '';
+            this.selectedCellComment = result;
             this.commentService.stashComment(row.commentInfo);
           }
           dialogSubscription.unsubscribe();

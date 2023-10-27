@@ -10,9 +10,15 @@ export type Comment = {
   id?: string;
   path: string;
   content: {
-    comment?: string;
+    comment?: {
+      value: string,
+      cellValue?: string
+    };
     comments?: {
-      [key: string]: string;
+      [key: string]: {
+        value: string,
+        cellValue?: string
+      };
     };
     filter: {
       dimension: string;

@@ -9,9 +9,9 @@
       matInput
       [placeholder]="'comment-placeholder' | translate"
       [maxlength]="charLimit"
-      [(ngModel)]="comment"
+      [(ngModel)]="comment.value"
     ></textarea>
-    <p *ngIf="comment">{{(comment ? comment.length : 0) + '/' + charLimit}}</p>
+    <p *ngIf="comment">{{(comment.value ? comment.value.length : 0) + '/' + charLimit}}</p>
   </mat-form-field>
 </mat-dialog-content>
 

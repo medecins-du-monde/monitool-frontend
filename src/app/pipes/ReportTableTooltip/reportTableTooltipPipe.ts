@@ -14,7 +14,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'getTooltip'
 })
 export class ReportTableTooltipPipe implements PipeTransform {
-  transform(originalTooltip: string, showComments: boolean, comment?: string): string | null {
+  transform(originalTooltip: string, showComments: boolean, comment?: { value: string; cellValue?: string }): string | null {
     let tooltipContent = '';
 
     if (showComments) {
@@ -27,7 +27,7 @@ export class ReportTableTooltipPipe implements PipeTransform {
       if (comment) {
         tooltipContent += `${
           tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 3px 0"></div>' : ''
-        }<div style='font-size: small; line-height: 1.1em'>${comment}</div>`;
+        }<div style='font-size: small; line-height: 1.1em'>${comment.value}</div>`;
       }
     } else {
       if (originalTooltip) {

@@ -5,5 +5,8 @@ export interface SectionTitle{
     click: (id: number) => void;
     level: number;
     commentID: string;
-    comment: string;
+    comment: {
+      value: string,
+      cellValue?: string
+    };
   }

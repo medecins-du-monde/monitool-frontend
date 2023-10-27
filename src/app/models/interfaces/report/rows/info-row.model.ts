@@ -28,6 +28,12 @@ export interface InfoRow {
   disaggregatedByGroup?: number;
   disaggregatedBy: { [key in string]: string };
   commentInfo: Comment;
-  comment?: string;
-  comments?: { [key: string]: string };
+  comment?: {
+    value: string,
+    cellValue?: string
+  };
+  comments?: { [key: string]: {
+    value: string,
+    cellValue?: string
+  }};
 }
