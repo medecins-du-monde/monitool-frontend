@@ -46,7 +46,8 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  onSearchChange(): void {
+  onSearchChange($event: string): void {
+    this.searchQuery.setValue($event);
     clearTimeout(this.searchTimeout);
     this.searchTimeout = setTimeout(() => this.applyFilters(), 500);
   }
@@ -62,9 +63,9 @@ export class UsersComponent implements OnInit {
 
   handleUserFiltering(data: string[] | boolean): void {
     // Changed deleted users filter
-    if (typeof data === 'boolean') this.showDeleted = data;
+    if (typeof data === 'boolean') { this.showDeleted = data; }
     // Changed roles filter
-    else this.showByRoles = data;
+    else { this.showByRoles = data; }
 
     this.applyFilters();
   }

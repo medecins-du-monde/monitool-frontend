@@ -1,9 +1,24 @@
 :host {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: calc(100% - 25px);
+
+  .action-bar {
+    max-width: 250px;
+    width: 100%;
+    align-self: flex-end;
+  }
   
   button {
     align-self: flex-start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    mat-icon {
+      margin-top: 2px;
+    }
   }
 
   .filter-section {

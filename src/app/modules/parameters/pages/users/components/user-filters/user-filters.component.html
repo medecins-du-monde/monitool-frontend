@@ -6,7 +6,7 @@
       [style.background-color]="
         selectedRoles?.includes(role) ? roleColors[role] : 'transparent'
       "
-      [style.color]="selectedRoles?.includes(role) ? 'white' : 'var(--main)'"
+      [style.color]="selectedRoles?.includes(role) ? 'white' : roleColors[role]"
       [style.border-color]="roleColors[role]"
     >
       <mat-icon *ngIf="selectedRoles?.includes(role)">check</mat-icon>
@@ -15,7 +15,7 @@
     <mat-chip
       (click)="showDeleted = !showDeleted; showDeletedChange.emit(showDeleted)"
       [style.background-color]="showDeleted ? 'var(--danger)' : 'transparent'"
-      [style.color]="showDeleted ? 'white' : 'var(--main)'"
+      [style.color]="showDeleted ? 'white' : 'var(--danger)'"
       [style.border-color]="'var(--danger)'"
     >
       <mat-icon *ngIf="showDeleted">check</mat-icon>
