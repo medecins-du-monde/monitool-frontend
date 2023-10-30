@@ -1,4 +1,5 @@
-<mat-form-field appearance="outline" class="mdm-form-field search-bar">
+
+<!-- <mat-form-field appearance="outline">
     <mat-icon svgIcon="search" matPrefix></mat-icon>
     <input
       type="text"
@@ -7,7 +8,10 @@
       [formControl]="searchQuery"
       (ngModelChange)="onSearchChange()"
     />
-</mat-form-field>
+</mat-form-field> -->
+<div class="action-bar">
+  <app-searchbar (search)="onSearchChange($event)" [project]="false"></app-searchbar>
+</div>
 
 <div class="info-section blue">
   <p>{{ "SettingsUserInfo.0" | translate }}</p>
@@ -28,13 +32,15 @@
   ></app-user-filters>
   {{ "showingResults" | translate: { count: filteredUsers?.length } }}
 </span>
-<div class="mdm-cards">
-  <app-user
-    *ngFor="let user of filteredUsers"
-    [user]="user"
-    (edit)="onEdit($event)"
-    (delete)="onEdit($event)"
-    (restore)="onEdit($event)"
-    class="mdm-card"
-  ></app-user>
+<div style="overflow-y: auto; overflow-x: hidden;">
+  <div class="mdm-cards">
+    <app-user
+      *ngFor="let user of filteredUsers"
+      [user]="user"
+      (edit)="onEdit($event)"
+      (delete)="onEdit($event)"
+      (restore)="onEdit($event)"
+      class="mdm-card"
+    ></app-user>
+  </div>
 </div>
