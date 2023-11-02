@@ -890,5 +890,6 @@
   "add-comment": "Ajouter un commentaire",
   "edit-comment": "Modifier le commentaire",
   "comment": "Commentaire",
-  "comment-placeholder": "Écrivez votre commentaire ici"
+  "comment-placeholder": "Écrivez votre commentaire ici",
+  "comment-warning": "Attention! La valeur de cette cellule a changé depuis que le commentaire a été ajouté."
 }

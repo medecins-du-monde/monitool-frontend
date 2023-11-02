@@ -1142,7 +1142,11 @@ export class ReportingTableComponent
     }
   }
 
-  formatGroupName(groupName: string) {
+  formatGroupName(groupName: string, getName = false) {
+    if (getName) {
+      return groupName.split(': ')[1] || '';
+    }
+
     const group = groupName.split(':')[0];
 
     switch (group) {
@@ -1338,10 +1342,21 @@ export class ReportingTableComponent
     }
   }
 
+  /**
+   * Update a comment based on the action selected.
+   * 
+   * @param action Action executed in a comment, can be:
+   * - add - Creates a new comment, a modal will be open to write its content.
+   * - edit - Edits an existing comment, a modal will be open to edit its content.
+   * - delete - Deletes an existing comment.
+   * @returns 
+   */
   public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
     if (!this.selectedCell) { return; }
     const { row } = this.selectedCell;
-    const comment = this.selectedCellComment || '';
+    const comment = this.selectedCellComment || { value: '' };
+
+    console.log(this.getCellValueAsString());
 
     if (action === 'delete') {
       this.selectedCellComment = null;
@@ -1357,9 +1372,9 @@ export class ReportingTableComponent
         })
         .afterClosed()
         .subscribe(result => {
-          this.changeDetectorRef.reattach();
+          this.changeDetectorRef.reattach(); 
           if (result !== null) {
-            this.selectedCellComment = result;
+            this.selectedCellComment = { ...result, cellValue: this.getCellValueAsString() };
             this.commentService.stashComment(row.commentInfo);
           }
           dialogSubscription.unsubscribe();
@@ -1386,6 +1401,27 @@ export class ReportingTableComponent
       return filteredGroups;
     } else {
       return groups;
+    }
+  }
+
+  /**
+   * Gets the cell value for the selected cell.
+   * 
+   * @returns Formatted cell value as a string.
+   */
+  private getCellValueAsString(): string {
+    const { row, col } = this.selectedCell;
+    switch (col) {
+      case 'target':
+      case 'baseline':
+        return this.getIndicator(row, col);
+      case undefined:
+        let result: string = row.title || row.groupName;
+        return this.formatGroupName(result, true);
+      case 'name':
+        return row.name;
+      default:
+        return typeof row.values[col] === 'number' ? row.values[col].toString() : (row.values[col] || '');
     }
   }
 

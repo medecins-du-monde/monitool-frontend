@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 /*
@@ -14,7 +15,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'getTooltip'
 })
 export class ReportTableTooltipPipe implements PipeTransform {
-  transform(originalTooltip: string, showComments: boolean, comment?: { value: string; cellValue?: string }): string | null {
+  constructor(private translateService: TranslateService) { }
+
+  transform(originalTooltip: string, showComments: boolean, comment?: { value: string; cellValue?: string }, cellValue?: any): string | null {
     let tooltipContent = '';
 
     if (showComments) {
@@ -25,9 +28,20 @@ export class ReportTableTooltipPipe implements PipeTransform {
           </div>`;
       }
       if (comment) {
+        const formattedCellValue: string = typeof cellValue === 'number' ? cellValue.toString() : (cellValue || '');
+        const valueChanged = comment.cellValue ? comment.cellValue !== formattedCellValue : false;
+
         tooltipContent += `${
           tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 3px 0"></div>' : ''
-        }<div style='font-size: small; line-height: 1.1em'>${comment.value}</div>`;
+        }<div style='font-size: small; line-height: 1.1em;'>${comment.value}</div>`;
+
+        if (valueChanged) {
+          tooltipContent +=
+          `<div style='border: solid 1px rgb(255, 255, 128); color: rgb(255, 255, 128); opacity: .75; border-radius: 4px; margin-top: 4px;
+          padding: 2px 6px; font-size: small; line-height: 1.1em; overflow-wrap: break-word;'>
+            ${this.translateService.instant('comment-warning')}
+          </div>`;
+        }
       }
     } else {
       if (originalTooltip) {

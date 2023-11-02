@@ -19,7 +19,7 @@ type CommentModalInput = {
 export class CommentModalComponent {
 
   action: string;
-  comment: { value: string, cellValue?: string };
+  comment: { value: string, cellValue?: string } = { value: '' };
 
   charLimit = CHAR_LIMIT;
 
