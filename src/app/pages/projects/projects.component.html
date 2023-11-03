@@ -14,8 +14,8 @@
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" (click)="onToggleStatus(status.value)">
                         {{ status.text | translate }}
-                        <ng-container *ngIf="status.count > 0">
-                            ({{ status.count }})
+                        <ng-container *ngIf="status.checked == true">
+                        ({{ status.count }})
                         </ng-container>
                     </mat-button-toggle>
                 </mat-button-toggle-group>
@@ -30,7 +30,7 @@
                 </button>
             </div>
     </div>
-    <div class="project-pagination" *ngIf="projects">
+    <div class="project-pagination" *ngIf="projects.length > 0">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item" (click)="pageChange('prev')">Prev {{ pageNumber }}</li>

@@ -88,6 +88,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   itemPerPage = 10;
   totalPage: number;
   totalItem: number;
+  searchText: string;
 
   private subscription: Subscription = new Subscription();
 
@@ -121,9 +122,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.getProjects();
     this.subscription.add(
-      this.filtersForm.valueChanges.subscribe(() => {
-        this.loadFilteredProjects();
-      })
+      this.filtersForm.valueChanges.subscribe()
     );
 
     this.subscription.add(
@@ -148,11 +147,20 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   public getProjects() {
-    this.projectService.list(this.filtersForm.value.statuses, this.pageNumber, this.itemPerPage).then((res: any) => {
+    this.projectService.list(
+      this.filtersForm.value.statuses.sort(),
+      this.pageNumber, this.itemPerPage,
+      this.searchText
+    ).then((res: any) => {
       this.allProjects = res.result;
       this.totalPage = res.total_page;
       this.totalItem = res.total_item;
-      this.loadFilteredProjects();
+      this.setCountProjectStatus(res.categories);
+      this.projects = this.allProjects;
+
+      if (this.projects.length === 0) {
+        this.pageNumber = 1;
+      }
 
       if (this.projects) {
         this.projects.sort((a, b) => {
@@ -183,14 +191,13 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
       }
 
-      this.setCountProjectStatus(this.allProjects);
     });
   }
 
-  setCountProjectStatus(res: Project[]) {
-      this.statuses.forEach((value, index) => {
-        this.statuses[index].count = res.filter(project => project.status === value.value).length;
-      });
+  setCountProjectStatus(counter: any) {
+    this.statuses[0].count = counter.ongoing;
+    this.statuses[1].count = counter.finished;
+    this.statuses[2].count = counter.deleted;
   }
 
   onCreate(): void {
@@ -258,8 +265,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
     });
+    this.pageNumber = 1;
     this.getProjects();
-    this.loadFilteredProjects();
   }
 
   pageChange(event: any) {
@@ -267,18 +274,15 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       if (this.canloadPrevPage() === true) {
         this.pageNumber = this.pageNumber - 1;
         this.getProjects();
-        this.loadFilteredProjects();
       }
     } else if (event === 'next') {
       if (this.canloadNextPage() === true) {
         this.pageNumber = this.pageNumber + 1;
         this.getProjects();
-        this.loadFilteredProjects();
       }
     } else {
       this.pageNumber = event;
       this.getProjects();
-      this.loadFilteredProjects();
     }
   }
 
@@ -297,23 +301,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onSearch(e: any): void {
-    this.filtersForm.controls.search.setValue(e);
-  }
-
-  loadFilteredProjects(): void {
-    const filteredProjects = this.filterByText(this.allProjects);
-    // filteredProjects = this.filterByCountries(filteredProjects);
-    // filteredProjects = this.filterByStatuses(filteredProjects);
-    this.projects = filteredProjects;
-  }
-
-  private filterByText(projects: Project[]): Project[] {
-    const search = this.filtersForm.value.search.toLowerCase();
-    return projects.filter(project =>
-      project.name.toLowerCase().includes(search) ||
-      project.country.toLowerCase().includes(search) ||
-      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
-    );
+    this.searchText = e.toLowerCase();
+    this.pageNumber = 1;
+    this.getProjects();
   }
 
   private filterByCountries(projects: Project[]): Project[] {
@@ -329,21 +319,6 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     else {
       return [];
     }
-  }
-
-  private filterByStatuses(projects: Project[]): Project[] {
-    let filteredProjects = [];
-    const statuses = this.filtersForm.value.statuses;
-    if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
-    }
-    if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
-    }
-    if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
-    }
-    return filteredProjects;
   }
 
   private isOwner(user: User) {
