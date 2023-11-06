@@ -875,5 +875,14 @@
   "comment": "Comment",
   "comment-placeholder": "Write here your comment",
   "showingResults": "Showing {{count}} results",
-  "search": "Search"
+  "search": "Search",
+  "materialPaginator": {
+    "ITEMS_PER_PAGE_LABEL": "Items per page:",
+    "NEXT_PAGE_LABEL": "Next page",
+    "PREVIOUS_PAGE_LABEL": "Previous page",
+    "FIRST_PAGE_LABEL": "First page",
+    "LAST_PAGE_LABEL": "Last page",
+    "RANGE_PAGE_LABEL_1": "0 of {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
+  }
 }

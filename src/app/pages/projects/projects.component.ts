@@ -24,17 +24,19 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     {
       text: 'OngoingPlural',
       value: 'Ongoing',
-      count: 0
+      count: 0,
+      checked: true
     },
     {
       text: 'FinishedPlural',
       value: 'Finished',
-      count: 0
+      count: false
     },
     {
       text: 'DeletedPlural',
       value: 'Deleted',
-      count: 0
+      count: 0,
+      checked: false
     }
   ];
 
@@ -82,6 +84,12 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   allProjects: Project[];
   currentUser: User;
   canCreateProject = true;
+  pageNumber = 1;
+  itemPerPage = 12;
+  totalPage = 0;
+  totalItem = 0;
+  searchText: string;
+  loading = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -115,9 +123,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     this.getProjects();
     this.subscription.add(
-      this.filtersForm.valueChanges.subscribe(() => {
-        this.loadFilteredProjects();
-      })
+      this.filtersForm.valueChanges.subscribe()
     );
 
     this.subscription.add(
@@ -142,11 +148,22 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   public getProjects() {
-    this.projectService.list().then((res: Project[]) => {
-      this.allProjects = res;
-      this.loadFilteredProjects();
-      this.countries = [... new Set(res.map(x => x.country)
-        .sort((x: string, y: string) => x.toLocaleLowerCase().replace(/[\])}[{(]/g, '').localeCompare(y.toLocaleLowerCase().replace(/[\])}[{(]/g, ''))))];
+    this.projectService.list(
+      this.filtersForm.value.statuses.sort(),
+      this.pageNumber, this.itemPerPage,
+      this.searchText
+    ).then((res: any) => {
+      this.loading = false;
+
+      this.allProjects = res.result;
+      this.totalPage = res.total_page;
+      this.totalItem = res.total_item;
+      this.setCountProjectStatus(res.categories);
+      this.projects = this.allProjects;
+
+      if (this.projects.length === 0) {
+        this.pageNumber = 1;
+      }
 
       if (this.projects) {
         this.projects.sort((a, b) => {
@@ -177,14 +194,13 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
       }
 
-      this.setCountProjectStatus(res);
     });
   }
 
-  setCountProjectStatus(res: Project[]) {
-      this.statuses.forEach((value, index) => {
-        this.statuses[index].count = res.filter(project => project.status === value.value).length;
-      });
+  setCountProjectStatus(counter: any) {
+    this.statuses[0].count = counter.ongoing;
+    this.statuses[1].count = counter.finished;
+    this.statuses[2].count = counter.deleted;
   }
 
   onCreate(): void {
@@ -243,54 +259,45 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
+  onToggleStatus(value: string) {
+    this.statuses.forEach(element => {
+      if (element.value === value) {
+        element.checked = !element.checked;
+        if (element.checked === false) {
+          element.count = 0;
+        }
+      }
+    });
+    this.pageNumber = 1;
+    this.getProjects();
+  }
+
+  canloadPrevPage(){
+    if (this.pageNumber === 1) {
+      return false;
+    }
+    return true;
+  }
+
+  canloadNextPage(){
+    if (this.pageNumber === this.totalPage) {
+      return false;
+    }
+    return true;
+  }
+
   onSearch(e: any): void {
-    this.filtersForm.controls.search.setValue(e);
+      this.searchText = e.toLowerCase();
+      this.pageNumber = 1;
+      this.getProjects();
   }
 
-  loadFilteredProjects(): void {
-    let filteredProjects = this.filterByText(this.allProjects);
-    filteredProjects = this.filterByCountries(filteredProjects);
-    filteredProjects = this.filterByStatuses(filteredProjects);
-    this.projects = filteredProjects;
-  }
-
-  private filterByText(projects: Project[]): Project[] {
-    const search = this.filtersForm.value.search.toLowerCase();
-    return projects.filter(project =>
-      project.name.toLowerCase().includes(search) ||
-      project.country.toLowerCase().includes(search) ||
-      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
-    );
-  }
-
-  private filterByCountries(projects: Project[]): Project[] {
-    const countries = this.filtersForm.value.countries;
-    if (countries.length > 0) {
-      if (countries.includes('0')) {
-        return projects;
-      }
-      else {
-        return projects.filter(project => countries.includes(project.country));
-      }
+  paginationChange(e: any) {
+    if (e.pageIndex + 1 !== this.pageNumber) {
+      this.pageNumber = e.pageIndex + 1;
+      this.loading = true;
+      this.getProjects();
     }
-    else {
-      return [];
-    }
-  }
-
-  private filterByStatuses(projects: Project[]): Project[] {
-    let filteredProjects = [];
-    const statuses = this.filtersForm.value.statuses;
-    if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
-    }
-    if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
-    }
-    if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
-    }
-    return filteredProjects;
   }
 
   private isOwner(user: User) {
