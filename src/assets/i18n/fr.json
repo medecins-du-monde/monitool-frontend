@@ -892,5 +892,14 @@
   "comment": "Commentaire",
   "comment-placeholder": "Écrivez votre commentaire ici",
   "showingResults": "Affichage de {{count}} résultats",
-  "search": "Chercher"
+  "search": "Chercher",
+  "materialPaginator": {
+    "ITEMS_PER_PAGE_LABEL": "Eléments par page:",
+    "NEXT_PAGE_LABEL": "Page suivante",
+    "PREVIOUS_PAGE_LABEL": "Page précédente",
+    "FIRST_PAGE_LABEL": "Première page",
+    "LAST_PAGE_LABEL": "Dernière page",
+    "RANGE_PAGE_LABEL_1": "0 sur {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} sur {{length}}"
+  }
 }
