@@ -664,7 +664,7 @@
   "SaveIndicator": "Save indicator",
   "SaveThematic": "Save the thematic",
   "SaveUser": "Save user",
-  "Search": "Enter text here to filter the projects",
+  "SearchProject": "Enter text here to filter the projects",
   "SearchHelp": "Search a project by name of country or project or thematic.",
   "SeeOlderDates": "See older dates",
   "CreateNewDate": "Create (new date)",
@@ -822,7 +822,15 @@
   },
   "export-current-minimized": "Current View Excel Report",
   "current-minimized-tooltip": "Export the report respecting opened groups",
-  "export-warning": "The download of this report can be long depending on the amount of data exported. Do you want to continue?",
+  "export-warning": {
+    "time": {
+      ">1": "The download of this report should take about {{time}} minutes.",
+      "1": "The download of this report should take about 1 minute."
+    },
+    "global": "The time it takes depends on the amount of data and number of logical frames exported. Do you want to continue?",
+    "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
+    "current-view": "The download of this report can take a few minutes. Do you want to continue?"
+  },
   "dataInputNotAvilable": "There isn't any data input available at this time.",
   "export-error": "Something went wrong",
   "export-generating-file": "Generating excel sheet, please wait...",
@@ -865,5 +873,7 @@
   "add-comment": "Add comment",
   "edit-comment": "Edit comment",
   "comment": "Comment",
-  "comment-placeholder": "Write here your comment"
+  "comment-placeholder": "Write here your comment",
+  "showingResults": "Showing {{count}} results",
+  "search": "Search"
 }

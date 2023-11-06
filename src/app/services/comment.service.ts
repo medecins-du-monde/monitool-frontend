@@ -15,8 +15,6 @@ export type Comment = {
       [key: string]: string;
     };
     filter: {
-      dateStart: string;
-      dateEnd: string;
       dimension: string;
       disaggregatedBy: { [key: string]: string };
     };
@@ -34,8 +32,6 @@ export const findContentIndexByFilter = (
     comment?.content.findIndex(c => {
       const cFilters = c.filter;
       return (
-        cFilters.dateStart === filters.dateStart &&
-        cFilters.dateEnd === filters.dateEnd &&
         cFilters.dimension === filters.dimension &&
         isEqual(cFilters.disaggregatedBy, filters.disaggregatedBy)
       );

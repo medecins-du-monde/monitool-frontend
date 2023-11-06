@@ -102,7 +102,7 @@ export class ReportingTableComponent
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
-  @Input() showComments = false;
+  @Input() showComments;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
@@ -118,13 +118,9 @@ export class ReportingTableComponent
   } | null = null;
 
   get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
-    const dateStart = this.filter.getValue()._start.toISOString();
-    const dateEnd = this.filter.getValue()._end.toISOString();
     const dimension = this.dimensionIds.getValue();
 
     return {
-      dateStart,
-      dateEnd,
       dimension,
     };
   }
@@ -580,20 +576,19 @@ export class ReportingTableComponent
     const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
-      console.log(selectedLogFrames);
 
       selectedLogFrames.entities.forEach(entity =>
         this.logFrameEntities.push(entity.id)
       );
       modifiedFilter = {
         _start:
-          new Date(selectedLogFrames.start) < new Date(currentFilter._start) && selectedLogFrames.periodicity === 'free'
+          new Date(selectedLogFrames.start) < new Date(currentFilter._start) || selectedLogFrames.periodicity === 'free'
             ? new Date(currentFilter._start).toLocaleDateString('fr-CA')
             : new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
         _end:
-          new Date(selectedLogFrames.end) < new Date(currentFilter._start) && selectedLogFrames.periodicity !== 'free'
-            ? new Date(selectedLogFrames.end).toLocaleDateString('fr-CA')
-            : new Date(currentFilter._end).toLocaleDateString('fr-CA'),
+          new Date(selectedLogFrames.end) > new Date(currentFilter._end) || selectedLogFrames.periodicity === 'free'
+            ? new Date(currentFilter._end).toLocaleDateString('fr-CA')
+            : new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
         entity: currentFilter.entities.filter(e =>
           this.logFrameEntities.includes(e)
         )
@@ -624,7 +619,6 @@ export class ReportingTableComponent
           false
         )
         .then(response => {
-          console.log(response);
           if (response) {
             // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
@@ -1193,28 +1187,39 @@ export class ReportingTableComponent
   }
 
   isInRange(data, date): boolean {
-    let result = true;
     const group = this.getGroup(data);
     const currentDate = new Date(date);
     currentDate.setHours(12);
 
+    let startDate: Date;
+    let endDate: Date;
+
     if (group instanceof LogicalFrame) {
-      if (
-        group.start.getTime() > currentDate.getTime() ||
-        group.end.getTime() < currentDate.getTime()
-      ) {
-        result = false;
-      }
+      startDate = group.start;
+      endDate = group.end;
     }
     if (data.start && data.end) {
-      if (
-        data.start.getTime() > currentDate.getTime() ||
-        data.end.getTime() < currentDate.getTime()
-      ) {
-        result = false;
+      startDate = data.start;
+      endDate = data.end;
+    }
+
+    if (startDate && endDate) {
+
+      if (['month', 'quarter', 'semester'].includes(TimeSlotPeriodicity[this.dimensionIds.value])) {
+        startDate.setDate(1);
+        endDate.setMonth(endDate.getMonth() + 1, 0);
+      }
+
+      if (['year'].includes(TimeSlotPeriodicity[this.dimensionIds.value])) {
+        startDate.setMonth(0, 1);
+        endDate.setMonth(11, 31);
+      }
+
+      if ( startDate > currentDate || endDate < currentDate ) {
+        return false;
       }
     }
-    return result;
+    return true;
   }
 
   styleValue(value, unit) {

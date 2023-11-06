@@ -7,6 +7,7 @@
     [dataSource]="dataSource"
     multiTemplateDataRows
     class="mat-elevation-z8"
+    id="general-report-table"
   >
     <ng-container class="menu" matColumnDef="icon" [sticky]="true">
       <th mat-header-cell *matHeaderCellDef></th>
@@ -305,7 +306,7 @@
   </ng-container>
 </mat-menu>
 
-<app-project-save *ngIf="userIsAdmin" style="z-index: 10;"></app-project-save>
+<app-project-save *ngIf="userIsAdmin" style="z-index: 10;" [reload]="false"></app-project-save>
 <!--
 <button mat-raised-button color="primary" (click)="exportTOExcel()">Export as Excel</button>
 -->
