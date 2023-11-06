@@ -62,7 +62,7 @@ describe('ReportingMenuComponent', () => {
         click: () => {
           return;
         },
-        comment: {value:'test'},
+        comment: {value: 'test'},
         commentID: 'testID'
       },
       open: true,

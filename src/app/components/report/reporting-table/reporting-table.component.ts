@@ -177,7 +177,7 @@ export class ReportingTableComponent
       if (comment) {
         // Update the comment
         this.selectedCell.row.comment = comment;
-  
+
         // Update the commentInfo
         if (contentIndex !== -1) {
           commentInfo.content[contentIndex].comment = comment;
@@ -1344,12 +1344,11 @@ export class ReportingTableComponent
 
   /**
    * Update a comment based on the action selected.
-   * 
+   *
    * @param action Action executed in a comment, can be:
    * - add - Creates a new comment, a modal will be open to write its content.
    * - edit - Edits an existing comment, a modal will be open to edit its content.
    * - delete - Deletes an existing comment.
-   * @returns 
    */
   public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
     if (!this.selectedCell) { return; }
@@ -1372,7 +1371,7 @@ export class ReportingTableComponent
         })
         .afterClosed()
         .subscribe(result => {
-          this.changeDetectorRef.reattach(); 
+          this.changeDetectorRef.reattach();
           if (result !== null) {
             this.selectedCellComment = { ...result, cellValue: this.getCellValueAsString() };
             this.commentService.stashComment(row.commentInfo);
@@ -1406,7 +1405,7 @@ export class ReportingTableComponent
 
   /**
    * Gets the cell value for the selected cell.
-   * 
+   *
    * @returns Formatted cell value as a string.
    */
   private getCellValueAsString(): string {
@@ -1416,7 +1415,7 @@ export class ReportingTableComponent
       case 'baseline':
         return this.getIndicator(row, col);
       case undefined:
-        let result: string = row.title || row.groupName;
+        const result: string = row.title || row.groupName;
         return this.formatGroupName(result, true);
       case 'name':
         return row.name;
