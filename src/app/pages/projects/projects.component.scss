@@ -34,32 +34,3 @@
     }
   }
 }
-
-.project-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 12px;
-}
-
-.pagination {
-  margin: 0;
-}
-
-.page-item {
-  display: inline-block;
-  color: #007bff;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  // font-size: 1.2em;
-  padding: 0.5em 1em;
-}
-
-.page-current-item {
-  display: inline-block;
-  color: #007bff;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  font-size: 1.2em;
-  padding: 0.5em 1em;
-}

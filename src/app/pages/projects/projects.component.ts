@@ -85,10 +85,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   currentUser: User;
   canCreateProject = true;
   pageNumber = 1;
-  itemPerPage = 10;
-  totalPage: number;
-  totalItem: number;
+  itemPerPage = 12;
+  totalPage = 0;
+  totalItem = 0;
   searchText: string;
+  loading = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -152,6 +153,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.pageNumber, this.itemPerPage,
       this.searchText
     ).then((res: any) => {
+      this.loading = false;
+
       this.allProjects = res.result;
       this.totalPage = res.total_page;
       this.totalItem = res.total_item;
@@ -269,23 +272,6 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.getProjects();
   }
 
-  pageChange(event: any) {
-    if (event === 'prev') {
-      if (this.canloadPrevPage() === true) {
-        this.pageNumber = this.pageNumber - 1;
-        this.getProjects();
-      }
-    } else if (event === 'next') {
-      if (this.canloadNextPage() === true) {
-        this.pageNumber = this.pageNumber + 1;
-        this.getProjects();
-      }
-    } else {
-      this.pageNumber = event;
-      this.getProjects();
-    }
-  }
-
   canloadPrevPage(){
     if (this.pageNumber === 1) {
       return false;
@@ -301,23 +287,16 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   onSearch(e: any): void {
-    this.searchText = e.toLowerCase();
-    this.pageNumber = 1;
-    this.getProjects();
+      this.searchText = e.toLowerCase();
+      this.pageNumber = 1;
+      this.getProjects();
   }
 
-  private filterByCountries(projects: Project[]): Project[] {
-    const countries = this.filtersForm.value.countries;
-    if (countries.length > 0) {
-      if (countries.includes('0')) {
-        return projects;
-      }
-      else {
-        return projects.filter(project => countries.includes(project.country));
-      }
-    }
-    else {
-      return [];
+  paginationChange(e: any) {
+    if (e.pageIndex + 1 !== this.pageNumber) {
+      this.pageNumber = e.pageIndex + 1;
+      this.loading = true;
+      this.getProjects();
     }
   }
 

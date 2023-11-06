@@ -1,15 +1,6 @@
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions-group" [formGroup]="filtersForm">
-            <!-- <div class="action">
-                <mat-form-field appearance="outline" class="mdm-form-field">
-                    <mat-label>{{ 'Countries' | translate }}</mat-label>
-                    <mat-select [matTooltipShowDelay]="500" matTooltip="{{selectedCountries}}" formControlName="countries" multiple disableOptionCentering panelClass="myPanelClass">
-                        <mat-option #allSelected (click)="onToggleAllCountries()" value="0" [matTooltipShowDelay]="500" matTooltip="{{ 'AllCountries' | translate }} ({{countries.length}})">{{ 'AllCountries' | translate }} ({{countries.length}})</mat-option>
-                        <mat-option *ngFor="let country of countries" (click)="onToggleCountry()" [value]="country" [matTooltipShowDelay]="500" matTooltip="{{country}}" matTooltipPosition="above">{{country}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" (click)="onToggleStatus(status.value)" style="min-width: 135px;">
@@ -30,23 +21,19 @@
                 </button>
             </div>
     </div>
-    <div class="project-pagination" *ngIf="projects.length > 0">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" (click)="pageChange('prev')">Prev {{ pageNumber }}</li>
-              <li class="page-item" (click)="pageChange(pageNumber - 2)" *ngIf="pageNumber-2 > 0">{{ pageNumber - 2 }}</li>
-              <li class="page-item" (click)="pageChange(pageNumber - 1)" *ngIf="pageNumber-1 > 0">{{ pageNumber - 1 }}</li>
-              <li class="page-current-item" (click)="pageChange(pageNumber)">{{ pageNumber }}</li>
-              <li class="page-item" (click)="pageChange(pageNumber + 1)" *ngIf="(pageNumber + 1) < totalPage">{{ pageNumber + 1 }}</li>
-              <li class="page-item" (click)="pageChange(pageNumber + 2)" *ngIf="(pageNumber + 2) < totalPage">{{ pageNumber + 2 }}</li>
-              <li class="page-item" (click)="pageChange('next')">Next</li>
-            </ul>
-        </nav>
-    </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of projects" class="mdm-card" (getProjects)="getProjects()"
             [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"
         ></app-project>
     </div>
+    <mat-paginator
+        [disabled]="loading"
+        [pageIndex]="pageNumber - 1"
+        [length]="totalItem"
+        [pageSize]="itemPerPage"
+        [showFirstLastButtons]="true"
+        (page)="paginationChange($event)"    
+    >
+    </mat-paginator>
 </div>
 <app-informations-panel></app-informations-panel>
