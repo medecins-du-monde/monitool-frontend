@@ -664,7 +664,7 @@
   "SaveIndicator": "Save indicator",
   "SaveThematic": "Save the thematic",
   "SaveUser": "Save user",
-  "Search": "Enter text here to filter the projects",
+  "SearchProject": "Enter text here to filter the projects",
   "SearchHelp": "Search a project by name of country or project or thematic.",
   "SeeOlderDates": "See older dates",
   "CreateNewDate": "Create (new date)",
@@ -874,5 +874,16 @@
   "edit-comment": "Edit comment",
   "comment": "Comment",
   "comment-placeholder": "Write here your comment",
-  "comment-warning": "Warning! The value in this cell has changed since the comment was added."
+  "comment-warning": "Warning! The value in this cell has changed since the comment was added.",
+  "showingResults": "Showing {{count}} results",
+  "search": "Search",
+  "materialPaginator": {
+    "ITEMS_PER_PAGE_LABEL": "Items per page:",
+    "NEXT_PAGE_LABEL": "Next page",
+    "PREVIOUS_PAGE_LABEL": "Previous page",
+    "FIRST_PAGE_LABEL": "First page",
+    "LAST_PAGE_LABEL": "Last page",
+    "RANGE_PAGE_LABEL_1": "0 of {{length}}",
+    "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
+  }
 }
