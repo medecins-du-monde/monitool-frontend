@@ -292,18 +292,9 @@ mat-hint {
 }
 
 .mdm-card {
-  width: 22%;
+  min-width: 250px;
+  flex: 1 0 21%;
   margin: 0 1% 10px 1%;
-
-  @media screen and (max-width: $breakpoint-xs-sm) {
-    width: 47%;
-    margin: 0 1.5% 10px 1.5%;
-  }
-
-  @media screen and (max-width: $breakpoint-xs) {
-    width: 100%;
-    margin: 0 0 16px;
-  }
 }
 
 .cards-draghandle {
