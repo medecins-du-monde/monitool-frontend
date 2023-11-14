@@ -874,6 +874,7 @@
   "edit-comment": "Edit comment",
   "comment": "Comment",
   "comment-placeholder": "Write here your comment",
+  "comment-warning": "Warning! The value in this cell has changed since the comment was added.",
   "showingResults": "Showing {{count}} results",
   "search": "Search",
   "materialPaginator": {

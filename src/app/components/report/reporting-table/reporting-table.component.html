@@ -35,7 +35,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'name')
         "
-        [matTooltip]="element.name | getTooltip : showComments : element.comments?.name"
+        [matTooltip]="element.name | getTooltip : showComments : element.comments?.name : element.name"
       >
         <div class="menu">
           <mat-icon *ngIf="element.disaggregatedByGroup === 1"
@@ -65,7 +65,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'baseline')
         "
-        [matTooltip]="null | getTooltip :  showComments : element.comments?.baseline"
+        [matTooltip]="null | getTooltip :  showComments : element.comments?.baseline : getIndicator(element, 'baseline')"
       >
         {{ getIndicator(element, "baseline") }}
       </td>
@@ -81,7 +81,7 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'target')
         "
-        [matTooltip]="null | getTooltip :  showComments : element.comments?.target"
+        [matTooltip]="null | getTooltip :  showComments : element.comments?.target : getIndicator(element, 'target')"
       >
         {{ getIndicator(element, "target") }}
       </td>
@@ -129,7 +129,7 @@
             (isInRange(element, column) ?
               (getTooltipMessage((element?.values)[column]) | translate) :
               null
-            ) | getTooltip : showComments : element.comments[column]
+            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column]
         "
       >
         <div
@@ -179,7 +179,7 @@
       >
         <div class="title-row"
           [class.comment-cell]="this.showComments && element.comment"
-          [matTooltip]="element.title | getTooltip : showComments : element.comment"
+          [matTooltip]="element.title | getTooltip : showComments : element.comment :  formatGroupName(element.title, true)"
         >
           <mat-icon *ngIf="!element.open; else elseOpen">add_circle</mat-icon>
           <ng-template #elseOpen>
@@ -212,7 +212,7 @@
           <p
             [style]="element | calcPadding"
             [class.comment-cell]="this.showComments && element.comment"
-            [matTooltip]="formatGroupName(element.groupName) | getTooltip : showComments : element.comment"
+            [matTooltip]="formatGroupName(element.groupName) | getTooltip : showComments : element.comment : formatGroupName(element.groupName, true)"
             [innerHTML]="formatGroupName(element.groupName)">
           </p>
         </td>

@@ -57,8 +57,14 @@ import { Group } from 'src/app/models/classes/group.model';
 type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
 type RowCommentInfo = {
-  comment?: string;
-  comments?: { [key in string]: string };
+  comment?: {
+    value: string,
+    cellValue?: string
+  };
+  comments?: { [key in string]: {
+    value: string,
+    cellValue?: string
+  }};
   commentInfo?: Comment;
   disaggregatedBy?: { [key in string]: string };
 };
@@ -126,7 +132,7 @@ export class ReportingTableComponent
   }
 
   /** @returns the comment for the selected cell */
-  get selectedCellComment(): string | null {
+  get selectedCellComment(): { value: string, cellValue?: string } | null {
     if (!this.selectedCell) { return null; }
     return (
       this.selectedCell.row.comment ||
@@ -135,7 +141,7 @@ export class ReportingTableComponent
     );
   }
 
-  set selectedCellComment(comment: string) {
+  set selectedCellComment(comment: { value: string, cellValue?: string } | null) {
     if (!this.selectedCell) { return; }
 
     const isIndicator = !!this.selectedCell.col;
@@ -149,8 +155,14 @@ export class ReportingTableComponent
     if (isIndicator) {
       // Update the comments
       const comments = this.selectedCell.row.comments || {};
-      comments[this.selectedCell.col] = comment;
-      this.selectedCell.row.comments = comments;
+      if (!comment) {
+        if (comments[this.selectedCell.col]) {
+          delete comments[this.selectedCell.col];
+        }
+      } else {
+        comments[this.selectedCell.col] = comment;
+        this.selectedCell.row.comments = comments;
+      }
 
       // Update the commentInfo
       if (contentIndex !== -1) {
@@ -162,17 +174,21 @@ export class ReportingTableComponent
         });
       }
     } else {
-      // Update the comment
-      this.selectedCell.row.comment = comment;
+      if (comment) {
+        // Update the comment
+        this.selectedCell.row.comment = comment;
 
-      // Update the commentInfo
-      if (contentIndex !== -1) {
-        commentInfo.content[contentIndex].comment = comment;
-      } else {
-        commentInfo.content.push({
-          comment,
-          filter: filters
-        });
+        // Update the commentInfo
+        if (contentIndex !== -1) {
+          commentInfo.content[contentIndex].comment = comment;
+        } else {
+          commentInfo.content.push({
+            comment,
+            filter: filters
+          });
+        }
+      } else if (contentIndex !== -1) {
+        delete commentInfo.content[contentIndex].comment;
       }
     }
   }
@@ -1126,7 +1142,11 @@ export class ReportingTableComponent
     }
   }
 
-  formatGroupName(groupName: string) {
+  formatGroupName(groupName: string, getName = false) {
+    if (getName) {
+      return groupName.split(': ')[1] || '';
+    }
+
     const group = groupName.split(':')[0];
 
     switch (group) {
@@ -1322,13 +1342,23 @@ export class ReportingTableComponent
     }
   }
 
+  /**
+   * Update a comment based on the action selected.
+   *
+   * @param action Action executed in a comment, can be:
+   * - add - Creates a new comment, a modal will be open to write its content.
+   * - edit - Edits an existing comment, a modal will be open to edit its content.
+   * - delete - Deletes an existing comment.
+   */
   public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
     if (!this.selectedCell) { return; }
     const { row } = this.selectedCell;
-    const comment = this.selectedCellComment || '';
+    const comment = this.selectedCellComment || { value: '' };
+
+    console.log(this.getCellValueAsString());
 
     if (action === 'delete') {
-      this.selectedCellComment = '';
+      this.selectedCellComment = null;
       this.commentService.stashComment(row.commentInfo);
     } else {
       this.changeDetectorRef.detach();
@@ -1343,7 +1373,7 @@ export class ReportingTableComponent
         .subscribe(result => {
           this.changeDetectorRef.reattach();
           if (result !== null) {
-            this.selectedCellComment = result || '';
+            this.selectedCellComment = { ...result, cellValue: this.getCellValueAsString() };
             this.commentService.stashComment(row.commentInfo);
           }
           dialogSubscription.unsubscribe();
@@ -1370,6 +1400,27 @@ export class ReportingTableComponent
       return filteredGroups;
     } else {
       return groups;
+    }
+  }
+
+  /**
+   * Gets the cell value for the selected cell.
+   *
+   * @returns Formatted cell value as a string.
+   */
+  private getCellValueAsString(): string {
+    const { row, col } = this.selectedCell;
+    switch (col) {
+      case 'target':
+      case 'baseline':
+        return this.getIndicator(row, col);
+      case undefined:
+        const result: string = row.title || row.groupName;
+        return this.formatGroupName(result, true);
+      case 'name':
+        return row.name;
+      default:
+        return typeof row.values[col] === 'number' ? row.values[col].toString() : (row.values[col] || '');
     }
   }
 

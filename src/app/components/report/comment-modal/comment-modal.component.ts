@@ -5,7 +5,10 @@ const CHAR_LIMIT = 450;
 
 type CommentModalInput = {
   action: 'add' | 'edit';
-  comment?: string;
+  comment?: {
+    value: string,
+    cellValue?: string
+  };
 };
 
 @Component({
@@ -16,7 +19,7 @@ type CommentModalInput = {
 export class CommentModalComponent {
 
   action: string;
-  comment: string;
+  comment: { value: string, cellValue?: string } = { value: '' };
 
   charLimit = CHAR_LIMIT;
 
