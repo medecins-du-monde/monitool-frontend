@@ -17,7 +17,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class ReportTableTooltipPipe implements PipeTransform {
   constructor(private translateService: TranslateService) { }
 
-  transform(originalTooltip: string, showComments: boolean, comment?: { value: string; cellValue?: string }, cellValue?: any): string | null {
+  transform(
+    originalTooltip: string,
+    showComments: boolean,
+    comment?: { value: string; cellValue?: string },
+    cellValue?: any
+  ): string | null {
     let tooltipContent = '';
 
     if (showComments) {
