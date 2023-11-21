@@ -77,7 +77,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
           if (data.item && Array.isArray(data.item)) {
             data.item.map(item => {
               this.output.push(this.setCommentHistory({...data, item}));
-            })
+            });
           } else {
             this.output.push(this.setCommentHistory(data));
           }
@@ -291,7 +291,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
         if (parentElement && locationArray[i] !== 'purpose' && locationArray[i] !== 'name') {
           if (location !== '') {
-            location += '→'
+            location += '→';
           }
           const element = typeof(parentElement) === 'string' ?
             parentElement :
@@ -336,7 +336,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         }
       } else if (data.before) {
         if (data.conten && !data.conten.comment) {
-          column = Object.keys(data.conten.comments).find(key => data.conten.comments[key] === data.before)
+          column = Object.keys(data.conten.comments).find(key => data.conten.comments[key] === data.before);
           columnCategory = data.conten.filter.dimension;
         }
       }
@@ -351,7 +351,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
           case 'month':
             month = moment(new Date(column));
             if (month.isValid()) {
-              data.column = this.translate.instant(month.format("MMM")) + ' ' + month.format("YYYY");
+              data.column = this.translate.instant(month.format('MMM')) + ' ' + month.format('YYYY');
             } else {
               data.column = column;
             }
@@ -368,21 +368,21 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
     switch (true) {
       case data.translationKey.includes('add'):
         console.log(data);
-        data.translationKey = 'HistoryRevision.comments_add'
+        data.translationKey = 'HistoryRevision.comments_add';
         break;
       case data.translationKey.includes('replace'):
-        data.translationKey = 'HistoryRevision.comments_replace'
+        data.translationKey = 'HistoryRevision.comments_replace';
         break;
       case data.translationKey.includes('remove'):
-        data.translationKey = 'HistoryRevision.comments_remove'
+        data.translationKey = 'HistoryRevision.comments_remove';
         break;
 
       default:
-        data.translationKey = 'HistoryRevision.comments_updated'
+        data.translationKey = 'HistoryRevision.comments_updated';
         break;
     }
 
-    if (data.column) data.translationKey += '_column';
+    if (data.column) { data.translationKey += '_column'; }
 
     return data;
   }
