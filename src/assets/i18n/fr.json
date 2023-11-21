@@ -190,7 +190,19 @@
       "end_replace": "Modifie la date de fin du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
       "country_replace": "Modifie le pays du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
       "visibility_replace": "Modifie la visibilité du projet de <code>{{before}}</code> vers <code>{{after}}</code>",
-      "comments_updated": "Commentaires du tableau de rapport mis à jour",
+      "comments_updated": "Commentaires du rapport général mis à jour",
+      "comments_add": "Un commentaire a été ajouté au rapport général {{type}} {{location}}",
+      "comments_remove": "Un commentaire a été supprimé du rapport général {{type}} {{location}}",
+      "comments_replace": "Un commentaire a été modifié sur le rapport général {{type}} {{location}}",
+      "comments_add_column": "Un commentaire a été ajouté au rapport général {{type}} {{location}} à la colonne <em>\"{{column}}\"</em>",
+      "comments_remove_column": "Un commentaire a été supprimé du rapport général {{type}} {{location}} à la colonne <em>\"{{column}}\"</em>",
+      "comments_replace_column": "Un commentaire a été modifié sur le rapport général {{type}} {{location}} à la colonne <em>\"{{column}}\"</em>",
+      "comments_types": {
+        "logicalFrame": "au cadre logique",
+        "dataSource": "à la source des données",
+        "extraIndicator": "à l'indicateur annexé",
+        "crossCuttingIndicator": "sur un indicateur transversal"
+      },
 
       "themes_add": "Ajoute une thématique au projet",
       "themes_move": "Reordonne les thématiques du projet",

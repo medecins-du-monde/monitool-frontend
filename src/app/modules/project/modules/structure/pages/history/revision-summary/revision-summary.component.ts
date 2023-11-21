@@ -9,6 +9,8 @@ import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
 import { isEqual, uniqWith } from 'lodash';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import moment from 'moment';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private projectService: ProjectService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.subscription.add(
@@ -72,15 +74,12 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         // Simplify the comments to only show 'updated comment'
         // Check if there is already a key starting with 'HistoryRevision.comments'
         if (key.startsWith('HistoryRevision.comments')) {
-          const hasCommentPatch =
-            this.output.findIndex(x =>
-              x.translationKey.startsWith('HistoryRevision.comments_updated')
-            ) !== -1;
-          if (!hasCommentPatch) {
-            this.output.push({
-              ...data,
-              translationKey: 'HistoryRevision.comments_updated'
-            });
+          if (data.item && Array.isArray(data.item)) {
+            data.item.map(item => {
+              this.output.push(this.setCommentHistory({...data, item}));
+            })
+          } else {
+            this.output.push(this.setCommentHistory(data));
           }
         } else { this.output.push(data); }
       }
@@ -258,6 +257,134 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
   transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+  setCommentHistory(data): any {
+
+    let locationArray = [];
+    let location = '';
+
+    // Formats the comments locations array
+    if (data.comment) {
+      locationArray = data.comment.path.split(/:|\|/);
+    } else {
+      locationArray = data.item.path.split(/:|\|/);
+    }
+
+
+    // Sets the location variable
+    if (locationArray.length > 0) {
+      let parentElement: any = this.project;
+
+      for (let i = 0; locationArray[i] && parentElement; i += 2) {
+        switch (true) {
+          case !!parentElement[locationArray[i]]:
+            parentElement = parentElement[locationArray[i]];
+            break;
+          case !!parentElement[locationArray[i] + 's']:
+            parentElement = (parentElement[locationArray[i] + 's']).find(el => el.id === locationArray[i + 1]);
+            break;
+
+          default:
+            parentElement = null;
+            break;
+        }
+
+        if (parentElement && locationArray[i] !== 'purpose' && locationArray[i] !== 'name') {
+          if (location !== '') {
+            location += '→'
+          }
+          const element = typeof(parentElement) === 'string' ?
+            parentElement :
+            (parentElement.name || parentElement.description || parentElement.display || '');
+          location += element !== '' ? `<code>${element}</code>` : '';
+        }
+      }
+      data.location = location;
+
+      // Sets the type variable
+      switch (locationArray[0]) {
+        case 'form':
+          data.type = this.translate.instant('HistoryRevision.comments_types.dataSource');
+          break;
+        case 'logicalFrame':
+          data.type = this.translate.instant('HistoryRevision.comments_types.logicalFrame');
+          break;
+        case 'indicator':
+          data.type = this.translate.instant('HistoryRevision.comments_types.extraIndicator');
+          break;
+        case 'crossCutting':
+          data.type = this.translate.instant('HistoryRevision.comments_types.crossCuttingIndicator');
+          break;
+
+        default:
+          data.type = '';
+          break;
+      }
+
+      // Sets column name
+      let column = '';
+      let columnCategory: string;
+      let month: any; // Only used for month category
+
+      if (data.item) {
+        if (data.item.content && !data.item.content[0].comment) {
+          column = Object.keys(data.item.content[0].comments)[0];
+          columnCategory = data.item.content[0].filter.dimension;
+        } else if (data.item.comments) {
+          column = Object.keys(data.item.comments)[0];
+          columnCategory = data.item.filter.dimension;
+        }
+      } else if (data.before) {
+        if (data.conten && !data.conten.comment) {
+          column = Object.keys(data.conten.comments).find(key => data.conten.comments[key] === data.before)
+          columnCategory = data.conten.filter.dimension;
+        }
+      }
+      if (column.length > 0 && columnCategory) {
+        switch (columnCategory) {
+          case 'group':
+            data.column = this.project.groups.find(group => group.id === column)?.name || column;
+            break;
+          case 'entity':
+            data.column = this.project.entities.find(ent => ent.id === column)?.name || column;
+            break;
+          case 'month':
+            month = moment(new Date(column));
+            if (month.isValid()) {
+              data.column = this.translate.instant(month.format("MMM")) + ' ' + month.format("YYYY");
+            } else {
+              data.column = column;
+            }
+            break;
+          default:
+            data.column = column;
+            break;
+        }
+        data.column = data.column[0].toUpperCase() + data.column.slice(1);
+      }
+    }
+
+    // Sets the correct translation key
+    switch (true) {
+      case data.translationKey.includes('add'):
+        console.log(data);
+        data.translationKey = 'HistoryRevision.comments_add'
+        break;
+      case data.translationKey.includes('replace'):
+        data.translationKey = 'HistoryRevision.comments_replace'
+        break;
+      case data.translationKey.includes('remove'):
+        data.translationKey = 'HistoryRevision.comments_remove'
+        break;
+
+      default:
+        data.translationKey = 'HistoryRevision.comments_updated'
+        break;
+    }
+
+    if (data.column) data.translationKey += '_column';
+
+    return data;
   }
 
   ngOnDestroy(): void {
