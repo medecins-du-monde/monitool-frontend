@@ -308,7 +308,19 @@
       "users_remove": "Remove the user <code>{{item.id}}</code> from the project",
       "users_role_replace": "Change the role of  <code>{{user.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
       "visibility_replace": "Change the project visibility from <code>{{before}}</code> vers <code>{{after}}</code>",
-      "comments_updated": "Reporting table comments updated"
+      "comments_updated": "Reporting table comments updated",
+      "comments_add": "A comment was added to the general report {{type}} {{location}}",
+      "comments_remove": "A comment was deleted from the general report {{type}} {{location}}",
+      "comments_replace": "A comment was modified on the general report {{type}} {{location}}",
+      "comments_add_column": "A comment was added to the general report {{type}} {{location}} at column <em>\"{{column}}\"</em>",
+      "comments_remove_column": "A comment was deleted from the general report {{type}} {{location}} at column <em>\"{{column}}\"</em>",
+      "comments_replace_column": "A comment was modified on the general report {{type}} {{location}} at column <em>\"{{column}}\"</em>",
+      "comments_types": {
+        "logicalFrame": "at the logical framework",
+        "dataSource": "at the data source",
+        "extraIndicator": "at the extra indicator",
+        "crossCuttingIndicator": "at a cross cutting indicator"
+      }
     },
   "Home": "Home",
   "HomeSections": {

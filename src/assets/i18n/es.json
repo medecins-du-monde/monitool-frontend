@@ -194,7 +194,20 @@
       "end_replace": "Cambia el final del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "country_replace": "Cambia el país del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "visibility_replace": "Cambia la visibilidad del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+
       "comments_updated": "Comentarios de la tabla de informes actualizados",
+      "comments_add": "Un comentario ha sido añadido al reporte general {{type}} {{location}}",
+      "comments_remove": "Un comentario ha sido eliminado del reporte general {{type}} {{location}}",
+      "comments_replace": "Un comentario ha sido modificado en el reporte general {{type}} {{location}}",
+      "comments_add_column": "Un comentario ha sido añadido al reporte general {{type}} {{location}} en la columna <em>\"{{column}}\"</em>",
+      "comments_remove_column": "Un comentario ha sido eliminado del reporte general {{type}} {{location}} en la columna <em>\"{{column}}\"</em>",
+      "comments_replace_column": "Un comentario ha sido modificado en el reporte general {{type}} {{location}} en la columna <em>\"{{column}}\"</em>",
+      "comments_types": {
+        "logicalFrame": "en el marco lógico",
+        "dataSource": "en la fuente de datos",
+        "extraIndicator": "en el indicador adicional",
+        "crossCuttingIndicator": "en un indicador transversal"
+      },
 
       "themes_add": "Añade una temática al proyecto",
       "themes_move": "Reordena las temáticas del proyecto",
