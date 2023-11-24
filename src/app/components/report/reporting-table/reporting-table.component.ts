@@ -1372,7 +1372,7 @@ export class ReportingTableComponent
         .afterClosed()
         .subscribe(result => {
           this.changeDetectorRef.reattach();
-          if (result !== null) {
+          if (result !== undefined) {
             this.selectedCellComment = { ...result, cellValue: this.getCellValueAsString() };
             this.commentService.stashComment(row.commentInfo);
           }

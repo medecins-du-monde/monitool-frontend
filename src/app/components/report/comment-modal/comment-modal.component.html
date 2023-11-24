@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ action + "-comment" | translate }}</h1>
-<button class="dialog-close" mat-icon-button [mat-dialog-close]="null">
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
   <mat-icon>close</mat-icon>
 </button>
 
@@ -16,7 +16,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-stroked-button class="mdm-button" [mat-dialog-close]="null">
+  <button mat-stroked-button class="mdm-button" [mat-dialog-close]="undefined">
     {{ "Cancel" | translate }}
   </button>
   <button
