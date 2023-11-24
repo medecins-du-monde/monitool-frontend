@@ -24,6 +24,7 @@
     class="mdm-button save-button"
     [disabled]="!comment"
     [mat-dialog-close]="comment"
+    [disabled]="comment.value === '' || (originalComment && originalComment === comment.value)"
   >
     {{ "Save" | translate }}
   </button>

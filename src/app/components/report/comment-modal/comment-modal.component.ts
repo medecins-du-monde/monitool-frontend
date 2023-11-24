@@ -19,6 +19,7 @@ type CommentModalInput = {
 export class CommentModalComponent {
 
   action: string;
+  originalComment?: string;
   comment: { value: string, cellValue?: string } = { value: '' };
 
   charLimit = CHAR_LIMIT;
@@ -26,6 +27,7 @@ export class CommentModalComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: CommentModalInput) {
     this.action = data.action;
     if (this.action === 'edit') {
+      this.originalComment = data.comment.value;
       this.comment = data.comment;
     }
   }
