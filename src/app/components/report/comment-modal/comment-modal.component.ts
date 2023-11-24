@@ -28,7 +28,7 @@ export class CommentModalComponent {
     this.action = data.action;
     if (this.action === 'edit') {
       this.originalComment = data.comment.value;
-      this.comment = data.comment;
+      this.comment = {...data.comment};
     }
   }
 }
