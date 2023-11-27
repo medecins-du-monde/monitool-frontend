@@ -134,10 +134,17 @@ export class HistoryComponent implements OnInit, OnDestroy {
   mouseOver(element){
     this.expandedElement = element;
   }
-
+  
   sameVersion(i){
     const patchedProject = this.patchProject(i + 1);
-    const equal = isEqual(patchedProject, this.project);
+    let equal = false;
+    try {
+      equal = isEqual(patchedProject.serialize(), this.project.serialize());
+    }
+    catch {
+      equal = isEqual(patchedProject, this.project);
+    }
+    // console.log(patchedProject.serialize(), this.project.serialize());
     this.isSameVersion = equal;
     return (equal);
   }
@@ -161,17 +168,26 @@ export class HistoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  patchProject(revisionIndex) {
+  patchProject(revisionIndex, log?) {
     const revisedProject = this.project.copy();
     for (let i = 0; i < revisionIndex; i++) {
       try {
         const patch = this.revisions[i].backwards as Operation[];
+        if (log) console.log(patch)
         jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at index ', i);
         console.log(e);
       }
     }
+    revisedProject.entities.map(entity => {
+      if (typeof entity.start === 'string') {
+        entity.start = new Date(entity.start);
+      }
+      if (typeof entity.end === 'string') {
+        entity.end = new Date(entity.end);
+      }
+    });
     revisedProject.forms = revisedProject.forms.map(y => new Form(y, this.project.entities));
     return revisedProject;
   }
@@ -182,7 +198,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex + 1);
+    const patchedRevision = this.patchProject(revisionIndex + 1, true);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
