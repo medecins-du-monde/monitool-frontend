@@ -134,7 +134,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   mouseOver(element){
     this.expandedElement = element;
   }
-  
+
   sameVersion(i){
     const patchedProject = this.patchProject(i + 1);
     let equal = false;
@@ -144,7 +144,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
     catch {
       equal = isEqual(patchedProject, this.project);
     }
-    // console.log(patchedProject.serialize(), this.project.serialize());
     this.isSameVersion = equal;
     return (equal);
   }
@@ -168,12 +167,11 @@ export class HistoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  patchProject(revisionIndex, log?) {
+  patchProject(revisionIndex) {
     const revisedProject = this.project.copy();
     for (let i = 0; i < revisionIndex; i++) {
       try {
         const patch = this.revisions[i].backwards as Operation[];
-        if (log) console.log(patch)
         jsonpatch.applyPatch(revisedProject, patch);
       } catch (e) {
         console.log('Error in reverting to datasource at index ', i);
@@ -198,7 +196,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex + 1, true);
+    const patchedRevision = this.patchProject(revisionIndex + 1);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
