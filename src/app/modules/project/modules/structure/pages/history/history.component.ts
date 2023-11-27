@@ -137,7 +137,13 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   sameVersion(i){
     const patchedProject = this.patchProject(i + 1);
-    const equal = isEqual(patchedProject, this.project);
+    let equal = false;
+    try {
+      equal = isEqual(patchedProject.serialize(), this.project.serialize());
+    }
+    catch {
+      equal = isEqual(patchedProject, this.project);
+    }
     this.isSameVersion = equal;
     return (equal);
   }
@@ -172,6 +178,14 @@ export class HistoryComponent implements OnInit, OnDestroy {
         console.log(e);
       }
     }
+    revisedProject.entities.map(entity => {
+      if (typeof entity.start === 'string') {
+        entity.start = new Date(entity.start);
+      }
+      if (typeof entity.end === 'string') {
+        entity.end = new Date(entity.end);
+      }
+    });
     revisedProject.forms = revisedProject.forms.map(y => new Form(y, this.project.entities));
     return revisedProject;
   }
