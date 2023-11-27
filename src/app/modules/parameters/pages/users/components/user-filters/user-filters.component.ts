@@ -30,7 +30,10 @@ export class UserFiltersComponent {
 
   toggleRow(role: Roles): void {
     if (this.selectedRoles.includes(role)) {
-      this.selectedRoles = this.selectedRoles.filter(r => r !== role);
+      // We always want a role selected
+      if (this.selectedRoles.length > 1) {
+        this.selectedRoles = this.selectedRoles.filter(r => r !== role);
+      }
     } else {
       this.selectedRoles = [...this.selectedRoles, role];
     }
