@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { User } from 'src/app/models/classes/user.model';
 
 import { UserComponent } from './user.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -12,7 +13,11 @@ describe('UserComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UserComponent],
-      imports: [MatDialogModule, TranslateModule.forRoot()]
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot(),
+        MatMenuModule
+      ]
     }).compileComponents();
   }));
 

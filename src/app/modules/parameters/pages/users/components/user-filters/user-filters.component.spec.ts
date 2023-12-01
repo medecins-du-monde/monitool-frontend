@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFiltersComponent } from './user-filters.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UserFiltersComponent', () => {
   let component: UserFiltersComponent;
@@ -8,7 +9,8 @@ describe('UserFiltersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserFiltersComponent]
+      declarations: [UserFiltersComponent],
+      imports: [TranslateModule.forRoot()]
     }).compileComponents();
   }));
 

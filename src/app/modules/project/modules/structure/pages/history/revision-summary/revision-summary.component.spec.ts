@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Revision } from 'src/app/models/classes/revision.model';
 
 import { RevisionSummaryComponent } from './revision-summary.component';
-
+import { TranslateModule } from '@ngx-translate/core';
 const MOCK_REVISIONS: Revision[] = [
   new Revision({ user: 'user1', time: new Date(), backwards: [], forwards: [] }),
   new Revision({ user: 'user2', time: new Date(), backwards: [], forwards: [] }),
@@ -17,7 +17,10 @@ describe('RevisionSummary', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RevisionSummaryComponent],
-      imports: [HttpClientTestingModule]
+      imports: [
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents();
   }));
 
