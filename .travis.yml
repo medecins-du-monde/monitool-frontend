@@ -19,6 +19,7 @@ jobs:
       if: branch = uat
       before_script: npm i
       script:
+       - export CHROME_BIN=/usr/bin/chromium-browser
        - ng test --watch false --browsers ChromeHeadless
     - stage: deploy
       if: branch = dev
