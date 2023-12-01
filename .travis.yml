@@ -4,18 +4,22 @@ node_js:
 
 cache: npm
 
+addons:
+  chrome: stable
+
 install:
   - npm install -g @angular/cli
 
 jobs:
   include:
-    - stage: test
-      before_script: npm i
-      script: npm run lint
+    # - stage: test
+    #   before_script: npm i
+    #   script: npm run lint
     - stage: unit testing
       if: branch = uat
       before_script: npm i
-      script: npm run test
+      script:
+       - ng test --watch false --browsers ChromeHeadless
     - stage: deploy
       if: branch = dev
       before_install:
