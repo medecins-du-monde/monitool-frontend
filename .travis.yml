@@ -14,7 +14,9 @@ jobs:
     #   script: npm run lint
     - stage: unit testing
       if: branch = uat
-      before_script: npm i
+      before_script:
+       - npm i
+       - npm install -g puppeteer@18.1.0
       script:
        - ng test 
     - stage: deploy
