@@ -4,9 +4,6 @@ node_js:
 
 cache: npm
 
-addons:
-  chrome: stable
-
 install:
   - npm install -g @angular/cli
 
@@ -19,8 +16,7 @@ jobs:
       if: branch = uat
       before_script: npm i
       script:
-       - export CHROME_BIN=/usr/bin/chromium-browser
-       - ng test --watch false --browsers ChromeHeadless
+       - ng test 
     - stage: deploy
       if: branch = dev
       before_install:
