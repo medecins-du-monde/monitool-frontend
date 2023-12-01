@@ -16,7 +16,6 @@ jobs:
       if: branch = uat
       before_script:
        - npm i
-       - export CHROME_BIN=/usr/bin/google-chrome
       script:
        - ng test 
     - stage: deploy
