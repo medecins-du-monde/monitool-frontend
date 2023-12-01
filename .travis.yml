@@ -16,8 +16,8 @@ jobs:
       if: branch = uat
       before_script:
        - npm i
+       - export CHROME_BIN=/usr/bin/google-chrome
       script:
-       - npm install -g puppeteer@18.1.0
        - ng test 
     - stage: deploy
       if: branch = dev
