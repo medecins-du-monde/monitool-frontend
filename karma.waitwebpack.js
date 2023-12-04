@@ -4,7 +4,7 @@ function WebpackCompilerEventsPlugin(options) {
 
 WebpackCompilerEventsPlugin.prototype.apply = function(compiler) {
   console.log(Object.keys(compiler.hooks));
-  compiler.hooks.afterCompile.tap('webpack-compiler-events-plugin', this.options.afterDone)
+  compiler.hooks.done.tap('webpack-compiler-events-plugin', this.options.afterDone)
 };
 
 function waitWebpackFactory(config) {
