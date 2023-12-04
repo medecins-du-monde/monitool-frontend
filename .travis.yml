@@ -17,6 +17,7 @@ jobs:
       before_script:
        - npm i
       script:
+       - export NODE_OPTIONS="--max-old-space-size=8192"
        - ng test 
     - stage: deploy
       if: branch = dev
