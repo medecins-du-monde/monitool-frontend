@@ -262,7 +262,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
     let locationArray = [];
     let location = '';
-    
+
     // Gets the path for data without it
     const commentId = Number(operation.path.split('/')[2]);
     let commentPath = '';
