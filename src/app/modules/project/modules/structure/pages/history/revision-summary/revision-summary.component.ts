@@ -76,10 +76,10 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         if (key.startsWith('HistoryRevision.comments')) {
           if (data.item && Array.isArray(data.item)) {
             data.item.map(item => {
-              this.output.push(this.setCommentHistory({...data, item}));
+              this.output.push(this.setCommentHistory({...data, item}, operation, after));
             });
           } else {
-            this.output.push(this.setCommentHistory(data));
+            this.output.push(this.setCommentHistory(data, operation, after));
           }
         } else { this.output.push(data); }
       }
@@ -258,16 +258,25 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
   transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
-  setCommentHistory(data): any {
+  setCommentHistory(data, operation, project): any {
 
     let locationArray = [];
     let location = '';
+    
+    // Gets the path for data without it
+    const commentId = Number(operation.path.split('/')[2]);
+    let commentPath = '';
+    if (project.comments && project.comments[commentId] && project.comments[commentId].path) {
+      commentPath = project.comments[commentId].path;
+    }
 
     // Formats the comments locations array
-    if (data.comment) {
+    if (data.comment && data.comment.path) {
       locationArray = data.comment.path.split(/:|\|/);
-    } else {
+    } else if (data.item && data.item.path) {
       locationArray = data.item.path.split(/:|\|/);
+    } else {
+      locationArray = commentPath.split(/:|\|/);
     }
 
 
@@ -322,7 +331,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       }
 
       // Sets column name
-      let column = '';
+      let column;
       let columnCategory: string;
       let month: any; // Only used for month category
 
@@ -340,7 +349,7 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
           columnCategory = data.conten.filter.dimension;
         }
       }
-      if (column.length > 0 && columnCategory) {
+      if (column && columnCategory) {
         switch (columnCategory) {
           case 'group':
             data.column = this.project.groups.find(group => group.id === column)?.name || column;
@@ -367,7 +376,6 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
     // Sets the correct translation key
     switch (true) {
       case data.translationKey.includes('add'):
-        console.log(data);
         data.translationKey = 'HistoryRevision.comments_add';
         break;
       case data.translationKey.includes('replace'):
