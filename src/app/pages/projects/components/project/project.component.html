@@ -35,24 +35,24 @@
     <mat-card-actions align="end" class="grp">
         <ng-container *ngIf="project.active">
             <button mat-stroked-button (click)="onOpen()" class="open">{{ 'Open' | translate }}</button>
-            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand"><mat-icon>expand_more</mat-icon></button>
+            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand" *ngIf="showAction() === true"><mat-icon>expand_more</mat-icon></button>
         </ng-container>
-        <ng-container *ngIf="!project.active">
+        <ng-container *ngIf="!project.active && (canRestore() === true)">
             <button mat-stroked-button (click)="onRestore()" class="mdm-button"><mat-icon>restore</mat-icon>{{ 'Restore' | translate }}</button>
         </ng-container>
     </mat-card-actions>
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <button class="clone-button" mat-menu-item (click)="onClone()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item (click)="onClone()" *ngIf="project.active && (canClone() === true)">
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'CloneStructure' | translate }}</span>
     </button>
-    <button class="clone-button" mat-menu-item (click)="onCloneWithData()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item (click)="onCloneWithData()" *ngIf="project.active && (canClone() === true)">
       <mat-icon>content_copy</mat-icon>
       <span>{{ 'CloneStructureAndData' | translate }}</span>
   </button>
-    <button class="clone-button" mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active">
+    <button class="clone-button" mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active && (canDelete() === true)">
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>

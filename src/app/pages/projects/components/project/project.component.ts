@@ -57,6 +57,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.router.navigate(['/projects', this.project.id]);
   }
 
+  showAction() {
+    if (this.canClone() || this.canDelete() || this.canRestore()) {
+      return true;
+    }
+    return false;
+  }
+
   onDelete(): void {
     const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'DeleteProject', infos: 'DeleteProjectInfo'} } );
 
@@ -68,8 +75,60 @@ export class ProjectComponent implements OnInit, OnDestroy {
     });
   }
 
+  canDelete() {
+    /**
+     * to hide/show 'delete button' in project action
+     */
+    if (this.currentUser.type === 'user') {
+      // admin role
+      if (this.currentUser.role === 'admin') {
+        return true;
+      }
+      // common role
+      if (this.currentUser.role === 'common') {
+        return false;
+      }
+      // project-creation role
+      if (this.currentUser.role === 'project') {
+        // can only delete its own projects.
+        if (this.projectOwner === true) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
+  }
+
   onRestore(): void {
     this.restore.emit(this.project);
+  }
+
+  canRestore() {
+    /**
+     * to hide/show 'restore button' in project action
+    */
+    if (this.currentUser.type === 'user') {
+      // admin role
+      if (this.currentUser.role === 'admin') {
+        // admin can restore any projects
+        return true;
+      }
+      // common role
+      if (this.currentUser.role === 'common') {
+        // common-role cant restore assigned project
+        return false;
+      }
+      // project-creation role
+      if (this.currentUser.role === 'project') {
+        // can restore its own projects.
+        if (this.projectOwner === true) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
   }
 
   onClone(): void {
@@ -81,6 +140,31 @@ export class ProjectComponent implements OnInit, OnDestroy {
         dialogSubscription.unsubscribe();
       }
     });
+  }
+
+  canClone() {
+    /**
+     * to hide/show 'clone button' in project action
+    */
+    if (this.currentUser.type === 'user') {
+      // admin role
+      if (this.currentUser.role === 'admin') {
+        return true;
+      }
+      // common role
+      if (this.currentUser.role === 'common') {
+        return false;
+      }
+      // project-creation role
+      if (this.currentUser.role === 'project') {
+        // can only delete its own projects.
+        if (this.projectOwner === true) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
   }
 
   onCloneWithData(): void {

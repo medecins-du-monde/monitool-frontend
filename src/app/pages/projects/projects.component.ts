@@ -83,7 +83,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
-  canCreateProject = true;
+  canCreateProject = false;
   pageNumber = 1;
   itemPerPage = 12;
   totalPage = 0;
@@ -129,8 +129,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription.add(
       this.authService.currentUser.subscribe((user: User) => {
         this.currentUser = new User(user);
-        if (this.currentUser.type === 'user' && this.currentUser.role === 'common') {
-          this.canCreateProject = false;
+        // validate the user can create a project
+        if (this.currentUser.type === 'user') {
+          if (['admin', 'project'].includes(this.currentUser.role)) {
+            this.canCreateProject = true;
+          }
         }
       })
     );
