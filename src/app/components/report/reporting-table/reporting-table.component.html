@@ -38,10 +38,10 @@
         [matTooltip]="element.name | getTooltip : showComments : element.comments?.name : element.name"
       >
         <div class="menu">
-          <mat-icon *ngIf="element.disaggregatedByGroup === 1"
+          <mat-icon *ngIf="element.disaggregatedByGroup === 1 || element.isGroupDisaggregation"
             >arrow_forward</mat-icon
           >
-          <div>
+          <div (click)="log(element)">
             {{ element.name }}
           </div>
           <app-reporting-menu

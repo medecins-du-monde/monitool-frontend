@@ -36,6 +36,7 @@ export class ProjectIndicator implements Deserializable {
   originProject?: Project;
   disaggregatedBy?: { [key in string]: string };
   partitionedBy?: { [key in string]: string };
+  isGroup: false;
 
   constructor(input?: any) {
     this.deserialize(input);

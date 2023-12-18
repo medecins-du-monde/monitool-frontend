@@ -498,7 +498,7 @@ export class ReportingTableComponent
     }
   }
 
-  // Create new row if it s an indicator
+  // Create new row if it's an indicator
   convertToRow = (
     item: (Row | ProjectIndicator) & RowCommentInfo
   ): Row & RowCommentInfo => {
@@ -572,7 +572,8 @@ export class ReportingTableComponent
       originProject: indicator.originProject
         ? indicator.originProject
         : undefined,
-      open: true
+      open: true,
+      isGroupDisaggregation: indicator.isGroup,
     } as InfoRow;
 
     if (currentIndicator) {
@@ -915,6 +916,7 @@ export class ReportingTableComponent
 
         let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
+        customIndicator.isGroupDisaggregation = false;
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
         customIndicator.name = currentProject.entities.find(
@@ -1426,6 +1428,10 @@ export class ReportingTableComponent
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  log(el: any) {
+    console.log(el);
   }
 }
 
