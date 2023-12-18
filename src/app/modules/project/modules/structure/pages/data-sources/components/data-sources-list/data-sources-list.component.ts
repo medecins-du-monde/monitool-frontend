@@ -1,20 +1,23 @@
 // tslint:disable: no-string-literal
 // tslint:disable: ban-types
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
 import { Project } from 'src/app/models/classes/project.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-sources-list',
   templateUrl: './data-sources-list.component.html',
   styleUrls: ['./data-sources-list.component.scss']
 })
-export class DataSourcesListComponent implements OnInit {
+export class DataSourcesListComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -47,40 +50,47 @@ export class DataSourcesListComponent implements OnInit {
   forms: Form[] = [];
   deletedFormVariables = [];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'DataSources',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'DataSources',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.forms = project.forms;
-      this.changeDetector.markForCheck();
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.forms = project.forms;
+        this.changeDetector.markForCheck();
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -97,44 +107,51 @@ export class DataSourcesListComponent implements OnInit {
   }
 
   onDelete(form: Form): void {
-    // Get all the variables id from the deleted datasource
-    form.elements.forEach(el => {
-      this.deletedFormVariables.push(el.id);
-    });
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'datasource', item: form.name } });
 
-    // Delete datasource from extra indicators computation
-    this.project.extraIndicators.map(extraIndicator => {
-      if (extraIndicator.computation) {
-        const params = extraIndicator.computation.parameters;
-        // If the deleted datasource was used in the computation of this indicator, set computation to null
-        if (this.computationBroken(params)) {
-          extraIndicator.computation = null;
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete){
+
+        // Get all the variables id from the deleted datasource
+        form.elements.forEach(el => {
+          this.deletedFormVariables.push(el.id);
+        });
+
+        // Delete datasource from extra indicators computation
+        this.project.extraIndicators.map(extraIndicator => {
+          if (extraIndicator.computation) {
+            const params = extraIndicator.computation.parameters;
+            // If the deleted datasource was used in the computation of this indicator, set computation to null
+            if (this.computationBroken(params)) {
+              extraIndicator.computation = null;
+            }
+          }
+        });
+
+        // Delete datasource from cross-cutting indicators
+        for (const val of Object.values(this.project.crossCutting)) {
+          // Check for computation
+          if (val['computation']) {
+            const params = val['computation']['parameters'];
+            if (this.computationBroken(params)) {
+              val['computation'] = null;
+            }
+          }
         }
+
+        // Delete the datasource from logicalFrames
+        this.deleteDatasource(this.project.logicalFrames);
+
+        this.project.forms = this.project.forms.filter(x => x.id !== form.id);
+        this.projectService.project.next(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
-
-    // Delete datasource from cross-cutting indicators
-    for (const val of Object.values(this.project.crossCutting)) {
-      // Check for computation
-      if (val['computation']) {
-        const params = val['computation']['parameters'];
-        if (this.computationBroken(params)) {
-          val['computation'] = null;
-        }
-      }
-    }
-
-    // Delete the datasource from logicalFrames
-    this.deleteDatasource(this.project.logicalFrames);
-
-    this.project.forms = this.project.forms.filter(x => x.id !== form.id);
-    this.projectService.project.next(this.project);
   }
 
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.forms[event.previousContainer.data.index] = event.container.data.form;
-    this.forms[event.container.data.index] = event.previousContainer.data.form;
+    moveItemInArray(this.forms, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }
@@ -179,5 +196,9 @@ export class DataSourcesListComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

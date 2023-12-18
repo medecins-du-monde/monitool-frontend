@@ -1,21 +1,22 @@
 import { Project } from '../../../../../../models/classes/project.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-extra-indicators',
   templateUrl: './extra-indicators.component.html',
   styleUrls: ['./extra-indicators.component.scss']
 })
-export class ExtraIndicatorsComponent implements OnInit {
+export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -42,38 +43,44 @@ export class ExtraIndicatorsComponent implements OnInit {
   extraIndicators: ProjectIndicator[] = [];
   project: Project;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService,
               private fb: FormBuilder,
               public dialog: MatDialog,
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'ExtraIndicators',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.setForm();
-      this.changeDetector.markForCheck();
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'ExtraIndicators',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.setForm();
+        this.changeDetector.markForCheck();
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -103,7 +110,7 @@ export class ExtraIndicatorsComponent implements OnInit {
   openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.project.extraIndicators.push(new ProjectIndicator(res.indicator.value));
@@ -117,16 +124,21 @@ export class ExtraIndicatorsComponent implements OnInit {
           this.projectService.valid = this.extraIndicatorsForm.valid;
           this.projectService.project.next(this.project);
         }
+        dialogSubscription.unsubscribe();
       }
     });
   }
 
   // drag and drop function on a form array that can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
-    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    moveItemInArray(this.indicators.value, event.previousContainer.data.index, event.container.data.index);
     this.project.extraIndicators = this.indicators.value.map(x => new ProjectIndicator(x));
     this.projectService.project.next(this.project);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

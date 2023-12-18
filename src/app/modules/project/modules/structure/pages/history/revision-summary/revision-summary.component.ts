@@ -1,5 +1,5 @@
 // tslint:disable: no-string-literal
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Revision } from 'src/app/models/classes/revision.model';
 import * as jsonpatch from 'fast-json-patch';
 import { ProjectService } from 'src/app/services/project.service';
@@ -7,6 +7,10 @@ import { Project } from 'src/app/models/classes/project.model';
 import { Operation } from 'fast-json-patch';
 import { Form } from 'src/app/models/classes/form.model';
 import * as _ from 'lodash';
+import { isEqual, uniqWith } from 'lodash';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import moment from 'moment';
 
 
 @Component({
@@ -15,7 +19,7 @@ import * as _ from 'lodash';
   styleUrls: ['./revision-summary.component.scss'],
 })
 
-export class RevisionSummaryComponent implements OnInit {
+export class RevisionSummaryComponent implements OnInit, OnDestroy {
 
   @Input() revision: Revision;
   @Input() revisions: Revision[];
@@ -24,13 +28,26 @@ export class RevisionSummaryComponent implements OnInit {
   output = [];
   project: Project = null;
 
-  constructor(private projectService: ProjectService) { }
+  private subscription: Subscription = new Subscription();
+
+  constructor(private projectService: ProjectService, private translate: TranslateService) { }
 
   ngOnInit(): void {
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+      })
+    );
     this.createDynamicRevisionText();
+    this.output = uniqWith(this.output, isEqual);
+    this.output = uniqWith(this.output, (a, b) => {
+      const keyA = a['translationKey'];
+      const keyB = b['translationKey'];
+      if (keyA !== keyB) { return false; }
+
+      const uniqueKeys = ['HistoryRevision.users_move'];
+      return uniqueKeys.includes(keyA);
+    });
   }
 
 
@@ -53,8 +70,18 @@ export class RevisionSummaryComponent implements OnInit {
       }
 
       if (key) {
-        data['translationKey'] = key;
-        this.output.push(data);
+        data.translationKey = key;
+        // Simplify the comments to only show 'updated comment'
+        // Check if there is already a key starting with 'HistoryRevision.comments'
+        if (key.startsWith('HistoryRevision.comments')) {
+          if (data.item && Array.isArray(data.item)) {
+            data.item.map(item => {
+              this.output.push(this.setCommentHistory({...data, item}, operation, after));
+            });
+          } else {
+            this.output.push(this.setCommentHistory(data, operation, after));
+          }
+        } else { this.output.push(data); }
       }
 
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
@@ -64,13 +91,13 @@ export class RevisionSummaryComponent implements OnInit {
 
   getTranslationKey(operation): string {
     let editedField = operation.path
-      .substring(1) // Remove leading slash
-      .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
-      .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\//, '_')
-      .replace(/\/\d+$/, '')
-      .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/, '');	// Remove trailing numbers and trailing uuids
+    .substring(1) // Remove leading slash
+    .replace(/\/\d+\//g, '_') // Remove indexes and ids that are in the middle
+    .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\//, '_')
+    .replace(/\/\d+$/, '')
+    .replace(/\/[a-z]+:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/, '');	// Remove trailing numbers and trailing uuids
 
-    // Special case for indicators: we do as if all logframe indicators were on the general objective.
+  // Special case for indicators: we do as if all logframe indicators were on the general objective.
     const indicatorMatch = editedField.match(/^logicalFrames.*indicators(.*)$/);
     if (indicatorMatch) {
       editedField = 'logicalFrames_indicators' + indicatorMatch[1];
@@ -137,7 +164,9 @@ export class RevisionSummaryComponent implements OnInit {
     else if (operation.op === 'remove') {
       translationData['item'] = after;
       splitPath.forEach(path => {
-        translationData['item'] = translationData['item'][path];
+        if (translationData['item']) {
+          translationData['item'] = translationData['item'][path];
+        }
 
       });
 
@@ -173,6 +202,9 @@ export class RevisionSummaryComponent implements OnInit {
           }
         });
 
+      }
+      if (editedField === 'users' && operation.op === 'remove') {
+        translationData['item']['id'] = translationData['item']['id'] || translationData['item']['name'];
       }
       if (['groups_members', 'forms_entities', 'users_entities', 'logicalFrames_entities'].includes(editedField)) {
 
@@ -225,6 +257,146 @@ export class RevisionSummaryComponent implements OnInit {
 
   transformDate(date): string {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+  setCommentHistory(data, operation, project): any {
+
+    let locationArray = [];
+    let location = '';
+
+    // Gets the path for data without it
+    const commentId = Number(operation.path.split('/')[2]);
+    let commentPath = '';
+    if (project.comments && project.comments[commentId] && project.comments[commentId].path) {
+      commentPath = project.comments[commentId].path;
+    }
+
+    // Formats the comments locations array
+    if (data.comment && data.comment.path) {
+      locationArray = data.comment.path.split(/:|\|/);
+    } else if (data.item && data.item.path) {
+      locationArray = data.item.path.split(/:|\|/);
+    } else {
+      locationArray = commentPath.split(/:|\|/);
+    }
+
+
+    // Sets the location variable
+    if (locationArray.length > 0) {
+      let parentElement: any = this.project;
+
+      for (let i = 0; locationArray[i] && parentElement; i += 2) {
+        switch (true) {
+          case !!parentElement[locationArray[i]]:
+            parentElement = parentElement[locationArray[i]];
+            break;
+          case !!parentElement[locationArray[i] + 's']:
+            parentElement = (parentElement[locationArray[i] + 's']).find(el => el.id === locationArray[i + 1]);
+            break;
+
+          default:
+            parentElement = null;
+            break;
+        }
+
+        if (parentElement && locationArray[i] !== 'purpose' && locationArray[i] !== 'name') {
+          if (location !== '') {
+            location += '→';
+          }
+          const element = typeof(parentElement) === 'string' ?
+            parentElement :
+            (parentElement.name || parentElement.description || parentElement.display || '');
+          location += element !== '' ? `<code>${element}</code>` : '';
+        }
+      }
+      data.location = location;
+
+      // Sets the type variable
+      switch (locationArray[0]) {
+        case 'form':
+          data.type = this.translate.instant('HistoryRevision.comments_types.dataSource');
+          break;
+        case 'logicalFrame':
+          data.type = this.translate.instant('HistoryRevision.comments_types.logicalFrame');
+          break;
+        case 'indicator':
+          data.type = this.translate.instant('HistoryRevision.comments_types.extraIndicator');
+          break;
+        case 'crossCutting':
+          data.type = this.translate.instant('HistoryRevision.comments_types.crossCuttingIndicator');
+          break;
+
+        default:
+          data.type = '';
+          break;
+      }
+
+      // Sets column name
+      let column;
+      let columnCategory: string;
+      let month: any; // Only used for month category
+
+      if (data.item) {
+        if (data.item.content && !data.item.content[0].comment) {
+          column = Object.keys(data.item.content[0].comments)[0];
+          columnCategory = data.item.content[0].filter.dimension;
+        } else if (data.item.comments) {
+          column = Object.keys(data.item.comments)[0];
+          columnCategory = data.item.filter.dimension;
+        }
+      } else if (data.before) {
+        if (data.conten && !data.conten.comment) {
+          column = Object.keys(data.conten.comments).find(key => data.conten.comments[key] === data.before);
+          columnCategory = data.conten.filter.dimension;
+        }
+      }
+      if (column && columnCategory) {
+        switch (columnCategory) {
+          case 'group':
+            data.column = this.project.groups.find(group => group.id === column)?.name || column;
+            break;
+          case 'entity':
+            data.column = this.project.entities.find(ent => ent.id === column)?.name || column;
+            break;
+          case 'month':
+            month = moment(new Date(column));
+            if (month.isValid()) {
+              data.column = this.translate.instant(month.format('MMM')) + ' ' + month.format('YYYY');
+            } else {
+              data.column = column;
+            }
+            break;
+          default:
+            data.column = column;
+            break;
+        }
+        data.column = data.column[0].toUpperCase() + data.column.slice(1);
+      }
+    }
+
+    // Sets the correct translation key
+    switch (true) {
+      case data.translationKey.includes('add'):
+        data.translationKey = 'HistoryRevision.comments_add';
+        break;
+      case data.translationKey.includes('replace'):
+        data.translationKey = 'HistoryRevision.comments_replace';
+        break;
+      case data.translationKey.includes('remove'):
+        data.translationKey = 'HistoryRevision.comments_remove';
+        break;
+
+      default:
+        data.translationKey = 'HistoryRevision.comments_updated';
+        break;
+    }
+
+    if (data.column) { data.translationKey += '_column'; }
+
+    return data;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

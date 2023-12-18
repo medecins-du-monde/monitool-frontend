@@ -1,23 +1,33 @@
-import { Component, ChangeDetectorRef, AfterViewChecked, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewChecked, OnInit, OnDestroy } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from './services/loading.service';
 import { ProjectService } from './services/project.service';
-import { interval } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { RefreshSnackbarComponent } from './components/refresh-snackbar/refresh-snackbar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
+import { TooltipComponent } from '@angular/material/tooltip';
 
+Object.defineProperty(TooltipComponent.prototype, 'message', {
+  set(v: any) {
+      const el = document.querySelectorAll('.mat-tooltip');
+
+      if (el) {
+          el[el.length - 1].innerHTML = v;
+      }
+  },
+});
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
   title = 'MDM-monitool-Frontend';
   preferredLanguage: string;
 
@@ -25,6 +35,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   loadingComponent = false;
   httpLoading = false;
+
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -154,47 +166,57 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/dashboard.svg')
     );
 
-    this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val);
+    this.subscription.add(
+      this.projectService.infosPanelSpace.subscribe(val => this.needsInfosPanelSpace = val)
+    );
   }
 
   hasUpdate = false;
 
   ngOnInit(): void {
-    this.route.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        setTimeout(() => {
-          this.loadingComponent = true;
-        });
-      }
-      else if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+    this.subscription.add(
+      this.route.events.subscribe(event => {
+        if (event instanceof NavigationStart) {
+          setTimeout(() => {
+            this.loadingComponent = true;
+          });
+        }
+        else if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
+          setTimeout(() => {
+            this.loadingComponent = false;
+          });
+        }
+      },
+      error => {
         setTimeout(() => {
           this.loadingComponent = false;
         });
-      }
-    },
-    error => {
-      setTimeout(() => {
-        this.loadingComponent = false;
-      });
-      console.log('Error while loading : ' + error);
-    });
+        console.log('Error while loading : ' + error);
+      })
+    );
 
-    this.loadingService.loaded.subscribe( isLoading => {
-      setTimeout(() => {
-        this.httpLoading = isLoading;
-      }, 300);
-    });
+    this.subscription.add(
+      this.loadingService.loaded.subscribe( isLoading => {
+        setTimeout(() => {
+          this.httpLoading = isLoading;
+        }, 300);
+      })
+    );
 
     // check service worker for updates
     // if (this.swUpdate.isEnabled) {
-    //   interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
-    //     // checking for updates
-    //   }));
+    //   this.subscription.add(
+    //     interval(60000).subscribe(() => this.swUpdate.checkForUpdate().then(() => {
+    //       // checking for updates
+    //     }))
+    //   );
     // }
-    // this.swUpdate.available.subscribe(() => {
-    //   this.hasUpdate = true;
-    //   this.showSnackBar();
-    // });
+    // this.subscription.add(
+    //   this.swUpdate.available.subscribe(() => {
+    //     this.hasUpdate = true;
+    //     this.showSnackBar();
+    //   })
+    // );
   }
 
   // showSnackBar(): void{
@@ -205,4 +227,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     this.changeDetectorRef.detectChanges();
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 }

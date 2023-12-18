@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -22,6 +22,8 @@ import { ProjectService } from 'src/app/services/project.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
+import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -128,7 +130,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     private dateService: DateService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   @HostListener('window:beforeunload')
@@ -137,46 +140,48 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   ngOnInit(): void {
-    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
-      map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
-    ).subscribe((res: { project: Project, formId: string }) => {
-      this.project = res.project;
-      const oldForm = this.form;
-      this.form = res.project.forms.find(x => x.id === res.formId);
+    this.subscription.add(
+      combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+        map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))
+      ).subscribe((res: { project: Project, formId: string }) => {
+        this.project = res.project;
+        const oldForm = this.form;
+        this.form = res.project.forms.find(x => x.id === res.formId);
 
-      if (this.form) {
-        const breadCrumbs = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: this.project.country,
-          } as BreadcrumbItem,
-          {
-            value: this.project.name,
-          } as BreadcrumbItem,
-          {
-            value: 'Structure',
-          } as BreadcrumbItem,
-          {
-            value: 'DataSources',
-            link: `./../../projects/${this.project.id}/structure/data-sources`
-          } as BreadcrumbItem,
-          {
-            value: this.form.name,
-          } as BreadcrumbItem,
-        ];
-        this.projectService.updateBreadCrumbs(breadCrumbs);
-      }
-      if (!this.form) {
-        this.router.navigate(['..'], { relativeTo: this.route });
-      } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
-        this.entities = res.project.entities;
-        this.groups = res.project.groups;
-        this.setForm();
-      }
-    });
+        if (this.form) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'DataSources',
+              link: `./../../projects/${this.project.id}/structure/data-sources`
+            } as BreadcrumbItem,
+            {
+              value: this.form.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        if (!this.form) {
+          this.router.navigate(['..'], { relativeTo: this.route });
+        } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
+          this.entities = res.project.entities;
+          this.groups = res.project.groups;
+          this.setForm();
+        }
+      })
+    );
 
     for (const value of Object.values(TimeSlotPeriodicity)) {
       this.periodicities.push({
@@ -211,7 +216,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.dataSourceForm.valid;
+      this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -246,7 +251,16 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   onRemoveElement(i: number): void {
-    this.elements.removeAt(i);
+    const dialogRef = this.dialog.open(DeleteModalComponent, { data: { type: 'data', item: this.elements.value[i].name, plural: true } });
+
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+      if (res && res.delete) {
+        this.elements.removeAt(i);
+        // Workaraound to update the forms
+        this.elements.patchValue(this.elements.value);
+        dialogSubscription.unsubscribe();
+      }
+    });
   }
 
   private newElement(element?: FormElement): FormGroup {
@@ -292,12 +306,48 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     });
   }
 
+  private datesAreInRange(): boolean {
+    const dataSource = this.dataSourceForm.value;
+    if (dataSource.start && dataSource.end) {
+      const start = (dataSource.start as any)._d || dataSource.start ;
+      const end = (dataSource.end as any)._d || dataSource.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'DataSource'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldDataSource = res.forms.find(form => form.id === this.dataSourceForm.value.id);
+          if (start.getTime() > oldDataSource.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionStart',
+              type: 'DataSource'
+            };
+          } else if (end.getTime() < oldDataSource.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataDeletionEnd',
+              type: 'DataSource'
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
+  }
+
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>): void {
-    const selectedControl = this.elements.at(event.previousIndex);
-    const newControls = this.elements.at(event.currentIndex);
-    this.elements.setControl(event.previousIndex, newControls);
-    this.elements.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.elements.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.elements.at(0);
+    this.elements.setControl(0, control);
   }
 
   ngOnDestroy(): void {

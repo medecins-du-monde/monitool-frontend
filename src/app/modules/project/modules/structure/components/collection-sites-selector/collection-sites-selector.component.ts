@@ -56,7 +56,7 @@ export class CollectionSitesSelectorComponent implements OnInit {
       return [];
     }
     // if all entities are selected, just return all the options selected
-    if (this.form.controls.entities.value.length === this.entities.length){
+    if (this.form.controls.entities.value.length === this.entities.length && this.entities.length > 0){
       return [...this.entities, ...this.groups, this.allOption];
     }
 

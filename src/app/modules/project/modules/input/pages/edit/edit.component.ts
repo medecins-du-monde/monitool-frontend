@@ -170,9 +170,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   ngOnInit(): void {
     this.imageLink = 'assets/images/null-data-' + this.currentLang + '.png';
-    this.userService.showingInputModal.subscribe(val => {
-      this.showModal = val;
-    });
+    this.subscription.add(
+      this.userService.showingInputModal.subscribe(val => {
+        this.showModal = val;
+      })
+    );
     // Set the page with the normal size
     this.projectService.inBigPage.next(false);
 
@@ -253,12 +255,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         this.updateTotals(this.inputForm.value);
 
         // Subscribe to any changes in the form
-        this.inputForm.valueChanges.subscribe(val => {
-          // Convert the string input to a number
-          // this.convertToNumber(val);
-          // Update of the total cell of each row or column
-          this.updateTotals(val);
-        });
+        this.subscription.add(
+          this.inputForm.valueChanges.subscribe(val => {
+            // Convert the string input to a number
+            // this.convertToNumber(val);
+            // Update of the total cell of each row or column
+            this.updateTotals(val);
+          })
+        );
 
         // Update the breadcrumbs informations
         const breadCrumbs = [
@@ -488,7 +492,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             callback(false);
           }
         },
-        afterValidate: (core, isValid, value, row, prop, source) => {
+        afterValidate: (isValid, value, row, prop, source) => {
           this.validInputCell = isValid;
           if (value === '') {
             this.validInputCell = true;
@@ -522,7 +526,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           }
         },
         // updates the inputForm everytime we change something in the table
-        beforeChange: (core, changes) => {
+        beforeChange: (changes) => {
           if (changes !== null) {
             for (let i = 0; i < changes.length; i += 1) {
               const change = changes[i];
@@ -752,7 +756,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
     const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning' } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res?.confirm) {
         for (const e of this.form.elements) {
           const newValue = [];
@@ -767,6 +771,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         // this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
         this.createTable();
         this.updateTotals(this.inputForm.value);
+        dialogSubscription.unsubscribe();
       }
     });
 
@@ -809,9 +814,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
     this.createTable();
     this.updateTotals(this.inputForm.value);
-    this.inputForm.valueChanges.subscribe(val => {
-      this.updateTotals(val);
-    });
+    this.subscription.add(
+      this.inputForm.valueChanges.subscribe(val => {
+        this.updateTotals(val);
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -826,7 +833,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     if (this.showModal) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
 
-      dialogRef.afterClosed().subscribe(res => {
+      const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
         if (res?.confirm) {
           const inputToBeSaved = new Input(this.inputForm.value);
           this.inputService.save(inputToBeSaved).then(response => {
@@ -836,6 +843,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               this.router.navigate(['./../../../'], { relativeTo: this.route });
             }
           });
+          dialogSubscription.unsubscribe();
         }
       });
     } else {

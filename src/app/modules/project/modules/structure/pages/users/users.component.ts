@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
@@ -82,8 +82,14 @@ export class UsersComponent implements OnInit {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  onDelete(id: string) {
-    const oldUserIndex = this.project.users.findIndex(u => u.id === id);
+  onDelete(user: User) {
+    let oldUserIndex = null;
+    if (user.type === 'internal'){
+      oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
+    }
+    else {
+      oldUserIndex = this.project.users.findIndex(u => u.username === user.username);
+    }
     this.project.users.splice(oldUserIndex, 1);
     this.projectService.project.next(this.project);
   }
@@ -102,18 +108,18 @@ export class UsersComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(UserModalComponent);
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data){
         this.project.users.push(res.data);
         this.projectService.project.next(this.project);
+        dialogSubscription.unsubscribe();
       }
     });
   }
 
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>) {
-    this.users[event.previousContainer.data.index] = event.container.data.user;
-    this.users[event.container.data.index] = event.previousContainer.data.user;
+    moveItemInArray(this.users, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
   }

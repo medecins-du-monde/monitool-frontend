@@ -1,7 +1,19 @@
-<app-object-grouping (dimensionEvent)="receiveDimension($event)" [isCrossCuttingReport]="true"></app-object-grouping>
+<app-object-grouping
+  (dimensionEvent)="receiveDimension($event)"
+  [isCrossCuttingReport]="true"
+></app-object-grouping>
 
-<app-filter (filterEvent)="receiveFilter($event)" [isCrossCuttingReport]="true"></app-filter>
+<app-filter
+  (filterEvent)="receiveFilter($event)"
+  [isCrossCuttingReport]="true"
+></app-filter>
 
 <app-chart [data]="chartData"></app-chart>
 
-<app-reporting-table [dimensionIds]="dimensionIds" [filter]="filter" [tableContent]=tableContent [isCrossCuttingReport]="true"></app-reporting-table>
+<app-reporting-table
+  [dimensionIds]="dimensionIds"
+  [filter]="filter"
+  [tableContent]="tableContent"
+  [isCrossCuttingReport]="true"
+  (dimensionEvent)="receiveDimension($event)"
+></app-reporting-table>

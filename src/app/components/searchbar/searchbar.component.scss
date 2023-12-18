@@ -5,4 +5,9 @@
 
 .mat-form-field div{
     display: flex;
+    gap: 4px;
+}
+
+input {
+  text-overflow: ellipsis;
 }

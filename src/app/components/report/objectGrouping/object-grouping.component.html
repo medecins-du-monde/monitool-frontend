@@ -18,13 +18,12 @@
     <mat-grid-tile class="excel-download" colspan="6">
         <mat-form-field appearance="none" class="mdm-form-field" class="dl-select">
             <mat-select disableOptionCentering panelClass="filterClass" placeholder="{{ 'export-download' | translate }}">
-                <mat-option matTooltip="{{ 'minimized-tooltip' | translate }}" (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon>info</mat-icon></mat-option>
-                <!--
-                <mat-option matTooltip="{{ 'complete-tooltip' | translate }}" (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon>info</mat-icon></mat-option>
-                -->
+                <mat-option (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'minimized-tooltip' | translate }}">info</mat-icon></mat-option>
+                <mat-option (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'complete-tooltip' | translate }}">info</mat-icon></mat-option>
+                <mat-option (click)="dlCurrView()">{{ 'export-current-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'current-minimized-tooltip' | translate }}">info</mat-icon></mat-option>
             </mat-select>
         </mat-form-field>
-        <!-- Put just a different href later on 
+        <!-- Put just a different href later on
         <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button"
         [href]="'/api/export/' + currentProjectId + '/' + currentPeriodicity + '/' + currentLang + '/' + minimized" target="_blank"
         rel="noopener noreferrer">
@@ -39,7 +38,7 @@
     </mat-grid-tile>
     <mat-grid-tile colspan="4" (click)="downloadExcelSheet()">
     -->
-        <!-- Put just a different href later on 
+        <!-- Put just a different href later on
       <a *ngIf="project; else elseBlock" mat-stroked-button type="button" class="mdm-button">
       <mat-icon>insert_drive_file</mat-icon>{{'DownloadTable' | translate}}
       </a>
@@ -54,11 +53,11 @@
 
 </mat-grid-list>
 
-<ng-template #dlMinimized>
+<!-- <ng-template #dlMinimized>
     <p>This project contains too many data, the download by collection sites maybe impossible, do you want to download
         the minimized version ?</p>
     <div>
-        <button mat-button (click)="dlMini()">Yes</button>
+        <button mat-button (click)="dlMini('global')">Yes</button>
         <button mat-button mat-dialog-close>No</button>
     </div>
-</ng-template>
+</ng-template> -->

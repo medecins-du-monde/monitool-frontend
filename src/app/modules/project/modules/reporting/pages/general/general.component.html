@@ -1,8 +1,20 @@
     <app-object-grouping [project]="project" (dimensionEvent)="receiveDimension($event)"></app-object-grouping>
 
-    <app-filter (filterEvent)="receiveFilter($event)" [project]="project"></app-filter>
+    <app-filter
+      (filterEvent)="receiveFilter($event)"
+      [project]="project"
+      [showComments]="showComments"
+      (showCommentsChange)="showComments = $event"
+      [userIsAdmin]="userIsAdmin">
+    </app-filter>
 
-    <app-chart [data]="chartData"></app-chart>
+    <app-chart [data]="chartData" [name]="this.project.name"></app-chart>
 
-    <app-reporting-table [dimensionIds]="dimensionIds" [filter]="filter" [tableContent]=tableContent ></app-reporting-table>
-    
+    <app-reporting-table
+      [dimensionIds]="dimensionIds"
+      [filter]="filter"
+      [tableContent]=tableContent
+      [showComments]="showComments"
+      [userIsAdmin]="userIsAdmin"
+      (userIsAdminChange)="updateUserIsAdmin($event)">
+    </app-reporting-table>

@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserModalModule } from '../user-modal/user-modal.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [UserComponent],
@@ -19,8 +20,9 @@ import { UserModalModule } from '../user-modal/user-modal.module';
     MatButtonModule,
     MatIconModule,
     RouterModule,
-    UserModalModule
+    UserModalModule,
+    MatMenuModule
   ],
   exports: [UserComponent]
 })
-export class UserModule { }
+export class UserModule {}

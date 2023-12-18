@@ -1,4 +1,11 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { BasicsComponent } from './basics.component';
 
@@ -8,9 +15,17 @@ describe('BasicsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BasicsComponent ]
-    })
-    .compileComponents();
+      declarations: [BasicsComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        MatSelectModule
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

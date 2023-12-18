@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { LogicalFramesListComponent } from './logical-frames-list.component';
 
@@ -8,9 +11,13 @@ describe('LogicalFramesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogicalFramesListComponent ]
-    })
-    .compileComponents();
+      declarations: [LogicalFramesListComponent],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        TranslateModule.forRoot()
+      ]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

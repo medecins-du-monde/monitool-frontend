@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [PartitionModalComponent],
@@ -29,6 +30,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatInputModule,
     MatCheckboxModule,
     MatChipsModule,
+    DragDropModule
   ],
   exports: [PartitionModalComponent]
 })

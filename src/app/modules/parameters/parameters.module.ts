@@ -4,6 +4,7 @@ import { ParametersRoutingModule } from './parameters-routing.module';
 import { ParametersComponent } from './parameters.component';
 import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {InformationsPanelModule} from '../../components/informations-panel/informations-panel.module';
 
 @NgModule({
   declarations: [ParametersComponent],
@@ -11,7 +12,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     CommonModule,
     ParametersRoutingModule,
     SidenavModule,
-    MatSidenavModule
+    MatSidenavModule,
+    InformationsPanelModule
   ]
 })
 export class ParametersModule { }

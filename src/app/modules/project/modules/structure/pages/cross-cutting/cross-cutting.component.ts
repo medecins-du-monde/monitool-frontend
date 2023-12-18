@@ -161,7 +161,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
 
   openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         // Filling the formGroup
         if (!indexGroup) {
@@ -184,7 +184,8 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
         }
         // TODO: Add a control of validity here. Not really necessary for the moment because we will change the structure of this page soon.
         this.projectService.project.next(this.project);
-        }
+        dialogSubscription.unsubscribe();
+      }
     });
   }
 

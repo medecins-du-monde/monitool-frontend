@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -15,16 +15,24 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { Entity } from 'src/app/models/classes/entity.model';
+import {
+  CommentService,
+  Comment,
+  CommentFilter,
+  findContentIndexByFilter
+} from 'src/app/services/comment.service';
 
+type RowWithCommentInfo = {
+  commentInfo: Comment;
+  [key: string]: any;
+};
 
 @Component({
   selector: 'app-general',
   templateUrl: './general.component.html',
-  styleUrls: ['./general.component.scss'],
+  styleUrls: ['./general.component.scss']
 })
-
-export class GeneralComponent implements OnInit {
-
+export class GeneralComponent implements OnInit, OnDestroy {
   informations = [
     {
       res1: 'InformationPanel.General_reporting',
@@ -64,18 +72,29 @@ export class GeneralComponent implements OnInit {
     } as InformationItem
   ];
 
-  constructor(private projectService: ProjectService,
-              private indicatorService: IndicatorService,
-              private themeService: ThemeService,
-              private chartService: ChartService,
-              private translateService: TranslateService ) { }
+  constructor(
+    private projectService: ProjectService,
+    private indicatorService: IndicatorService,
+    private themeService: ThemeService,
+    private chartService: ChartService,
+    private translateService: TranslateService,
+    private commentService: CommentService
+  ) {}
 
   project: Project;
 
   filter = new BehaviorSubject<Filter>({
     _start: new Date(),
-    _end: new Date(),
+    _end: new Date()
   });
+
+  get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
+    const dimension = this.dimensionIds.getValue();
+
+    return {
+      dimension
+    };
+  }
 
   dimensionIds = new BehaviorSubject('');
   entities: Entity[];
@@ -84,108 +103,178 @@ export class GeneralComponent implements OnInit {
   themes: Theme[];
   crosscutting: Indicator[];
   multiThemesIndicators: Indicator[];
-  groups: { theme: Theme, indicators: Indicator[]}[] = [];
+  groups: { theme: Theme; indicators: Indicator[] }[] = [];
+
+  showComments = true;
+  userIsAdmin = false;
+
+  private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
-    this.translateService.onLangChange.subscribe(() => {
-      this.updateBreadcrumbs(this.project);
-      this.buildIndicators();
-    });
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      this.updateBreadcrumbs(savedProject);
-    });
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.entities = this.project.entities;
-      this.indicatorService.listForProject(this.project.themes.map(x => x.id))
-        .then((crosscutting: Indicator[]) => {
-          this.crosscutting = crosscutting;
-          this.buildIndicators();
-        });
-    });
+    this.subscription.add(
+      this.translateService.onLangChange.subscribe(() => {
+        this.updateBreadcrumbs(this.project);
+        this.buildIndicators();
+      })
+    );
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        this.updateBreadcrumbs(savedProject);
+      })
+    );
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.entities = this.project.entities;
+        this.indicatorService
+          .listForProject(this.project.themes.map(x => x.id))
+          .then((crosscutting: Indicator[]) => {
+            this.crosscutting = crosscutting;
+            this.buildIndicators();
+          });
+      })
+    );
 
-    this.themeService.list().then( (themes: Theme[]) => {
+    this.themeService.list().then((themes: Theme[]) => {
       this.themes = themes;
       this.buildIndicators();
     });
     this.projectService.updateInformationPanel(this.informations);
+
+    // Update the table comments when filters or dimension change
+    // this.filter.subscribe(() => {
+    //   // this.updateTableComments();
+    // });
+    // this.dimensionIds.subscribe(() => {
+    //   // this.updateTableComments();
+    // });
   }
 
-
-
-
-  buildIndicators(): void{
-    if (!(this.themes && this.crosscutting && this.project)){
+  buildIndicators(): void {
+    if (!(this.themes && this.crosscutting && this.project)) {
       return;
     }
-    let rows = [];
+    const rows = [];
     let id = 0;
     let level = 0;
 
-    if (this.project.logicalFrames){
-      for (const logicalFrame of this.project.logicalFrames){
+    // Paths of all the comments on the table
+    const commentsToLoad: string[] = [];
+
+    let path = '';
+    const addCommentToFetch = (p: string) => {
+      const newPath = p ? (path ? path + '|' : '') + p : path;
+      commentsToLoad.push(newPath);
+    };
+
+    if (this.project.logicalFrames) {
+      for (const logicalFrame of this.project.logicalFrames) {
+        path = `logicalFrame:${logicalFrame.id}`;
+
         rows.push({
-          title: `${this.translateService.instant('LogicalFramework')}: ${logicalFrame.name}`,
+          title: `${this.translateService.instant('LogicalFramework')}: ${
+            logicalFrame.name
+          }`,
           sectionId: id,
           open: false,
           level
         } as SectionTitle);
+        addCommentToFetch('name');
 
         rows.push({
           icon: false,
-          groupName: `${this.translateService.instant('GeneralObjective')}: ${logicalFrame.goal}`,
+          groupName: `${this.translateService.instant('GeneralObjective')}: ${
+            logicalFrame.goal
+          }`,
           sectionId: id,
           level
         } as GroupTitle);
+        addCommentToFetch('goal');
 
-        rows = rows.concat(logicalFrame.indicators);
+        logicalFrame.indicators.forEach(ind => {
+          rows.push(ind);
+          addCommentToFetch('indicator:' + ind.id);
+        });
 
         level += 1;
-        for (const purpose of logicalFrame.purposes){
+        for (const purpose of logicalFrame.purposes) {
+          const pathAux = path;
+          path += '|purpose:' + purpose.id;
           rows.push({
             icon: false,
-            groupName: `${this.translateService.instant('SpecificObjective')}: ${purpose.description}`,
+            groupName: `${this.translateService.instant(
+              'SpecificObjective'
+            )}: ${purpose.description}`,
             sectionId: id,
             level
           } as GroupTitle);
+          addCommentToFetch('');
 
-          rows = rows.concat(purpose.indicators);
+          purpose.indicators.forEach(ind => {
+            rows.push(ind);
+            addCommentToFetch('indicator:' + ind.id);
+          });
 
           level += 1;
-          for (const output of purpose.outputs){
+          for (const output of purpose.outputs) {
+            const pathAux2 = path;
+            path += '|output:' + output.id;
             rows.push({
               icon: false,
-              groupName: `${this.translateService.instant('Result')}: ${output.description}`,
+              groupName: `${this.translateService.instant('Result')}: ${
+                output.description
+              }`,
               sectionId: id,
               level
             } as GroupTitle);
+            addCommentToFetch('');
 
-            rows = rows.concat(output.indicators);
+            output.indicators.forEach(ind => {
+              rows.push(ind);
+              addCommentToFetch('indicator:' + ind.id);
+            });
 
             level += 1;
-            for (const activity of output.activities){
+            for (const activity of output.activities) {
+              const pathAux3 = path;
+              path += '|activity:' + activity.id;
               rows.push({
                 icon: false,
-                groupName: `${this.translateService.instant('Activity')}: ${activity.description}`,
+                groupName: `${this.translateService.instant('Activity')}: ${
+                  activity.description
+                }`,
                 sectionId: id,
                 level
               } as GroupTitle);
+              addCommentToFetch('');
 
-              rows = rows.concat(activity.indicators);
+              activity.indicators.forEach(ind => {
+                rows.push(ind);
+                addCommentToFetch('indicator:' + ind.id);
+              });
+
+              // Reset path to only the logical frame + purpose + output
+              path = pathAux3;
             }
             level -= 1;
+
+            // Reset path to only the logical frame + purpose
+            path = pathAux2;
           }
           level -= 1;
+
+          // Reset path to only the logical frame
+          path = pathAux;
         }
         id += 1;
         level -= 1;
       }
     }
 
-    if (this.project.crossCutting){
-
+    if (this.project.crossCutting) {
+      path = 'crossCutting';
       this.buildCrossCuttingIndicators();
 
       rows.push({
@@ -194,30 +283,36 @@ export class GeneralComponent implements OnInit {
         open: false,
         level
       } as SectionTitle);
+      addCommentToFetch('name');
 
-      if (this.multiThemesIndicators.length > 0){
+      if (this.multiThemesIndicators.length > 0) {
         rows.push({
           icon: false,
           groupName: `${this.translateService.instant('MultipleThematics')}`,
           sectionId: id,
           level
         } as GroupTitle);
+        addCommentToFetch('multiThematic');
 
-        for (const indicator of this.multiThemesIndicators){
-          if (indicator.id in this.project.crossCutting){
-            const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+        path = '';
+        for (const indicator of this.multiThemesIndicators) {
+          if (indicator.id in this.project.crossCutting) {
+            const projectIndicator = new ProjectIndicator(
+              this.project.crossCutting[indicator.id]
+            );
             // TODO: choose right language here
             projectIndicator.display = indicator.name.en;
             rows.push(projectIndicator);
-          }
-          else{
+          } else {
             rows.push(new ProjectIndicator(indicator));
           }
+          addCommentToFetch(indicator.id);
         }
       }
 
-      if (this.groups.length > 0){
-        for (const group of this.groups){
+      if (this.groups.length > 0) {
+        for (const group of this.groups) {
+          path = '';
           rows.push({
             icon: false,
             // TODO: choose right language here
@@ -225,47 +320,56 @@ export class GeneralComponent implements OnInit {
             sectionId: id,
             level
           });
+          addCommentToFetch(group.theme.id);
 
-          for (const indicator of group.indicators){
-            if (indicator.id in this.project.crossCutting){
-              const projectIndicator = new ProjectIndicator(this.project.crossCutting[indicator.id]);
+          for (const indicator of group.indicators) {
+            if (indicator.id in this.project.crossCutting) {
+              const projectIndicator = new ProjectIndicator(
+                this.project.crossCutting[indicator.id]
+              );
               // TODO: choose right language here
               projectIndicator.display = indicator.name.en;
               rows.push(projectIndicator);
-            }
-            else{
+            } else {
               rows.push(new ProjectIndicator(indicator));
             }
+            addCommentToFetch(indicator.id);
           }
         }
       }
-
     }
 
-    if (this.project.extraIndicators){
+    if (this.project.extraIndicators) {
+      path = '';
       rows.push({
         title: `${this.translateService.instant('ExtraIndicators')}`,
         sectionId: id,
         open: false,
         level: 0
-      }as SectionTitle);
+      } as SectionTitle);
+      addCommentToFetch('extraIndicators');
 
-      rows = rows.concat(this.project.extraIndicators);
+      this.project.extraIndicators.forEach(ind => {
+        rows.push(ind);
+        addCommentToFetch('indicator:' + ind.id);
+      });
       id += 1;
     }
 
-    if (this.project.forms){
-      for (const form of this.project.forms){
+    if (this.project.forms) {
+      for (const form of this.project.forms) {
+        path = `form:${form.id}`;
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,
           sectionId: id,
           open: false,
           level
         } as SectionTitle);
+        addCommentToFetch('name');
 
-        for (const element of form.elements){
+        for (const element of form.elements) {
           // TODO: Replace the a by another thing
-          const computation =  {
+          const computation = {
             formula: 'a',
             parameters: {
               a: {
@@ -274,33 +378,89 @@ export class GeneralComponent implements OnInit {
               }
             }
           };
-          rows.push(new ProjectIndicator({
-            display: element.name,
-            baseline: 0,
-            target: 0,
-            colorize: false,
-            computation
-          }));
+          rows.push(
+            new ProjectIndicator({
+              display: element.name,
+              baseline: 0,
+              target: 0,
+              colorize: false,
+              computation
+            })
+          );
+          addCommentToFetch('element:' + element.id);
         }
 
         id += 1;
       }
     }
     this.tableContent.next(rows);
+
+    const comments = this.commentService.getByPath(commentsToLoad);
+    // Update rows once comments are loaded
+    comments.forEach((comment, index) => {
+      if (!comment) {
+        rows[index].commentInfo = {
+          path: commentsToLoad[index],
+          content: []
+        };
+      } else {
+        rows[index].commentInfo = comment;
+      }
+    });
+
+    this.updateTableComments(rows);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  updateTableComments(rows?: RowWithCommentInfo[]): void {
+    const oldRows: RowWithCommentInfo[] = rows || this.tableContent.getValue();
+
+    const newRows = oldRows.map(row => {
+      const commentInfo = row.commentInfo;
+
+      const filters: CommentFilter = {
+        ...this.globalCommentFilters,
+        disaggregatedBy: row.disaggregatedBy || {}
+      };
+
+      // Check if there is a comment with the same filters
+      const contentIndex = findContentIndexByFilter(commentInfo, filters);
+      const content =
+        contentIndex !== -1 ? commentInfo.content[contentIndex] : null;
+
+      // If no match, remove old comments, if any
+      if (!content) {
+        delete row.comment;
+        row.comments = {};
+        return row;
+      }
+
+      // Check if the row corresponds to an indicator
+      const path = row.commentInfo.path;
+      const pathArr = path.split('|');
+      const isIndicator = ['indicator:', 'element:'].some(prefix =>
+        pathArr[pathArr.length - 1].startsWith(prefix)
+      );
+
+      if (isIndicator) { row.comments = content.comments; }
+      else { row.comment = content.comment; }
+
+      return row;
+    });
+
+    this.tableContent.next(newRows);
   }
 
   buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
-    for (const c of this.crosscutting){
-      if (c.multiThemes){
+    for (const c of this.crosscutting) {
+      if (c.multiThemes) {
         this.multiThemesIndicators.push(c);
-      }
-      else{
+      } else {
         const group = this.groups.find(g => g.theme === c.themes[0]);
-        if (group){
+        if (group) {
           group.indicators.push(c);
-        }
-        else{
+        } else {
           this.groups.push({
             theme: c.themes[0],
             indicators: [c]
@@ -310,16 +470,18 @@ export class GeneralComponent implements OnInit {
     }
   }
 
-  get chartData(){
+  get chartData() {
     return this.chartService.data.value;
   }
 
-  receiveFilter(value): void{
-    value.entities = value.entities.filter(e => this.entities.includes(e)).map(e => e.id);
+  receiveFilter(value): void {
+    value.entities = value.entities
+      .filter(e => this.entities.includes(e))
+      .map(e => e.id);
     this.filter.next(value);
   }
 
-  receiveDimension(value): void{
+  receiveDimension(value): void {
     this.dimensionIds.next(value);
   }
 
@@ -330,20 +492,27 @@ export class GeneralComponent implements OnInit {
         link: './../../projects'
       } as BreadcrumbItem,
       {
-        value: project.country,
+        value: project.country
       } as BreadcrumbItem,
       {
-        value: project.name,
+        value: project.name
       } as BreadcrumbItem,
       {
-        value: 'Reporting',
+        value: 'Reporting'
       } as BreadcrumbItem,
       {
-        value: 'General',
-      } as BreadcrumbItem,
+        value: 'General'
+      } as BreadcrumbItem
     ];
     this.projectService.updateBreadCrumbs(breadCrumbs);
   }
+
+  updateUserIsAdmin(value: boolean) {
+    this.userIsAdmin = value;
+    this.projectService.inBigPage.next(!value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }
-
-

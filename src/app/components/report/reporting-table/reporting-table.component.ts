@@ -1,15 +1,34 @@
 // tslint:disable: variable-name
 // tslint:disable:no-string-literal
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { PERCENTAGE_FORMULA, ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import {
+  PERCENTAGE_FORMULA,
+  ProjectIndicator
+} from 'src/app/models/classes/project-indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
 import TimeSlot from 'timeslot-dag';
-import { TimeSlotPeriodicity, TimeSlotOrder } from 'src/app/utils/time-slot-periodicity';
-import { isArray, isNaN, round } from 'lodash';
+import {
+  TimeSlotPeriodicity,
+  TimeSlotOrder
+} from 'src/app/utils/time-slot-periodicity';
+import { cloneDeep, isArray, isNaN, round } from 'lodash';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
@@ -21,43 +40,158 @@ import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.mo
 import { formatNumber, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
+import { LogicalFrame } from '../../../models/classes/logical-frame.model';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/services/auth.service';
+import {
+  CommentFilter,
+  CommentService,
+  Comment,
+  findContentIndexByFilter
+} from 'src/app/services/comment.service';
+import { CommentModalComponent } from '../comment-modal/comment-modal.component';
+import { User } from 'src/app/models/classes/user.model';
+import { Group } from 'src/app/models/classes/group.model';
 
+type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
-
-//  import * as XLSX from 'xlsx';
-
-type Row = SectionTitle | GroupTitle | InfoRow;
+type RowCommentInfo = {
+  comment?: {
+    value: string,
+    cellValue?: string
+  };
+  comments?: { [key in string]: {
+    value: string,
+    cellValue?: string
+  }};
+  commentInfo?: Comment;
+  disaggregatedBy?: { [key in string]: string };
+};
 
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
-  styleUrls: ['./reporting-table.component.scss']
+  styleUrls: ['./reporting-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ReportingTableComponent implements OnInit, OnDestroy {
-
-  constructor(private projectService: ProjectService,
-              private reportingService: ReportingService,
-              private chartService: ChartService,
-              private translateService: TranslateService) {
-                registerLocaleData(localeDe, 'de-DE', localeDeExtra);
-              }
+export class ReportingTableComponent
+  implements OnInit, OnDestroy, AfterViewInit {
+  constructor(
+    private projectService: ProjectService,
+    private reportingService: ReportingService,
+    private chartService: ChartService,
+    private translateService: TranslateService,
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private commentService: CommentService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
+    registerLocaleData(localeDe, 'de-DE', localeDeExtra);
+  }
 
   get optimalColspanForGroupName(): number {
-    return Math.min(this.columnsToDisplay.length - 2, this.colsThatFitInTheScreen);
+    return Math.min(
+      this.columnsToDisplay.length - 2,
+      this.colsThatFitInTheScreen
+    );
   }
 
   get currentLang(): string {
-    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+    return this.translateService.currentLang
+      ? this.translateService.currentLang
+      : this.translateService.defaultLang;
   }
 
+  @ViewChild('reportingTable') tableRef: ElementRef;
   @Input() tableContent: BehaviorSubject<any[]>;
   @Input() dimensionIds: BehaviorSubject<string>;
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
+  @Input() showComments;
+  @Input() userIsAdmin = false;
+  @Output() userIsAdminChange = new EventEmitter<boolean>();
   rows = new BehaviorSubject<Row[]>([]);
 
-  clickedLogFrame;
   logFrameEntities = [];
+
+  public menuLeft = 0;
+  public menuTop = 0;
+
+  public selectedCell: {
+    row: any;
+    col?: string;
+  } | null = null;
+
+  get globalCommentFilters(): Omit<CommentFilter, 'disaggregatedBy'> {
+    const dimension = this.dimensionIds.getValue();
+
+    return {
+      dimension,
+    };
+  }
+
+  /** @returns the comment for the selected cell */
+  get selectedCellComment(): { value: string, cellValue?: string } | null {
+    if (!this.selectedCell) { return null; }
+    return (
+      this.selectedCell.row.comment ||
+      this.selectedCell.row.comments?.[this.selectedCell.col] ||
+      null
+    );
+  }
+
+  set selectedCellComment(comment: { value: string, cellValue?: string } | null) {
+    if (!this.selectedCell) { return; }
+
+    const isIndicator = !!this.selectedCell.col;
+    const commentInfo: Comment = this.selectedCell.row.commentInfo;
+    const filters = {
+      ...this.globalCommentFilters,
+      disaggregatedBy: this.selectedCell.row.disaggregatedBy || {}
+    };
+    const contentIndex = findContentIndexByFilter(commentInfo, filters);
+
+    if (isIndicator) {
+      // Update the comments
+      const comments = this.selectedCell.row.comments || {};
+      if (!comment) {
+        if (comments[this.selectedCell.col]) {
+          delete comments[this.selectedCell.col];
+        }
+      } else {
+        comments[this.selectedCell.col] = comment;
+        this.selectedCell.row.comments = comments;
+      }
+
+      // Update the commentInfo
+      if (contentIndex !== -1) {
+        commentInfo.content[contentIndex].comments = comments;
+      } else {
+        commentInfo.content.push({
+          comments,
+          filter: filters
+        });
+      }
+    } else {
+      if (comment) {
+        // Update the comment
+        this.selectedCell.row.comment = comment;
+
+        // Update the commentInfo
+        if (contentIndex !== -1) {
+          commentInfo.content[contentIndex].comment = comment;
+        } else {
+          commentInfo.content.push({
+            comment,
+            filter: filters
+          });
+        }
+      } else if (contentIndex !== -1) {
+        delete commentInfo.content[contentIndex].comment;
+      }
+    }
+  }
 
   dataSource = new MatTableDataSource([]);
 
@@ -71,7 +205,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     '#e377c2',
     '#7f7f7f',
     '#bcbd22',
-    '#17becf',
+    '#17becf'
   ];
 
   currentColorIndex = 0;
@@ -87,6 +221,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   project: Project;
 
   results: any[] = [];
+  activities: any[] = [];
   specificObjectif: any[] = [];
 
   dimensions: string[];
@@ -97,21 +232,81 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   COLUMNS_TO_DISPLAY_TITLE = ['title', 'title_stick'];
   COLUMNS_TO_DISPLAY_GROUP = ['icon', 'groupName', 'group_stick'];
 
-
   //  @ViewChild('TABLE') table: ElementRef;
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.calculateOptimalColspan();
   }
-  isSectionTitle = (_index: number, item: Row): item is SectionTitle => (item as SectionTitle).title ? true : false;
-  isInfoRow = (_index: number, item: Row): item is InfoRow => (item as InfoRow).name ? true : false;
-  isGroupTitle = (_index: number, item: Row): item is GroupTitle => (item as GroupTitle).groupName ? true : false;
-  isProjectIndicator = (item: unknown): item is ProjectIndicator => (item as ProjectIndicator).display ? true : false;
+  isSectionTitle = (_index: number, item: Row): item is SectionTitle =>
+    (item as SectionTitle).title ? true : false
+  isInfoRow = (_index: number, item: Row): item is InfoRow =>
+    (item as InfoRow).name ? true : false
+  isGroupTitle = (_index: number, item: Row): item is GroupTitle =>
+    (item as GroupTitle).groupName ? true : false
+  isProjectIndicator = (item: unknown): item is ProjectIndicator =>
+    (item as ProjectIndicator).display ? true : false
 
-  isInfoRowError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error !== undefined);
-  isInfoRowNoError = (_index: number, item: Row): boolean => (this.isInfoRow(_index, item) && item.error === undefined);
+  isInfoRowError = (_index: number, item: Row): boolean =>
+    this.isInfoRow(_index, item) && item.error !== undefined
+  isInfoRowNoError = (_index: number, item: Row): boolean =>
+    this.isInfoRow(_index, item) && item.error === undefined
 
+  get exportFilters(): any {
+    const filter: any = this.filter.getValue();
+    const filters: {
+      logicalFrames: string[];
+      dataSources: string[];
+      crossCutting: boolean;
+      extraIndicators: boolean;
+      dateRange: {
+        start: string;
+        end: string;
+      };
+      entities: string[];
+    } = {
+      logicalFrames: [],
+      dataSources: [],
+      crossCutting: false,
+      extraIndicators: false,
+      dateRange: {
+        start: filter._start._d
+          ? filter._start._d.toLocaleDateString('fr-CA')
+          : filter._start.toLocaleDateString('fr-CA'),
+        end: filter._end._d
+          ? filter._end._d.toLocaleDateString('fr-CA')
+          : filter._end.toLocaleDateString('fr-CA')
+      },
+      entities: filter.entities || []
+    };
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        let i = 1;
+        project.logicalFrames.forEach(logicalFrame => {
+          if (this.openedSections[i]) {
+            filters.logicalFrames.push(logicalFrame.id);
+          }
+          i++;
+        });
+        if (this.openedSections[i]) {
+          filters.crossCutting = true;
+        }
+        i++;
+        if (this.openedSections[i]) {
+          filters.extraIndicators = true;
+        }
+        i++;
+        project.forms.forEach(dataSource => {
+          if (this.openedSections[i]) {
+            filters.dataSources.push(dataSource.id);
+          }
+          i++;
+        });
+      })
+    );
+
+    return filters;
+  }
   ngOnInit(): void {
     this.calculateOptimalColspan();
     this.subscription.add(
@@ -125,7 +320,10 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             if (this.isInfoRow(0, row)) {
               if (row.originProject) {
                 if (this.filter.value.finished) {
-                  return row.originProject.status === 'Ongoing' || row.originProject.status === 'Finished';
+                  return (
+                    row.originProject.status === 'Ongoing' ||
+                    row.originProject.status === 'Finished'
+                  );
                 } else {
                   return row.originProject.status === 'Ongoing';
                 }
@@ -137,6 +335,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           }
         });
         this.dataSource = new MatTableDataSource(filteredRows);
+        if (value.length > 0) {
+          this.changeDetectorRef.detectChanges();
+        }
       })
     );
 
@@ -149,6 +350,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             this.updateDimensions();
             this.refreshValues();
             this.updateTableContent();
+            const userSubscription = this.authService.currentUser.subscribe(
+              (user: User) => {
+                user.role === 'admin' || user.role === 'owner'
+                  ? (this.userIsAdmin = true)
+                  : (this.userIsAdmin = false);
+                this.userIsAdminChange.emit(this.userIsAdmin);
+                this.changeDetectorRef.detectChanges();
+              }
+            );
+            userSubscription.unsubscribe();
           }
         })
       );
@@ -193,19 +404,27 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
             if (this.isInfoRow(0, row)) {
               row.onChart = false;
             }
-          }
-          );
+          });
           this.rows.next(updatedRows);
         }
       })
     );
   }
 
-  updateTableContent(): void {
-    // TODO: Check why this.tableContent and not this.content
-    if (this.tableContent && this.filter && this.dimensionIds && isArray(this.content)) {
-      let id = 0;
+  ngAfterViewInit(): void {
+    this.reportingService.currReportTable.next(this.tableRef);
+  }
 
+  updateTableContent(): void {
+    this.reportingService.exportFilters.next(this.exportFilters);
+    // TODO: Check why this.tableContent and not this.content
+    if (
+      this.tableContent &&
+      this.filter &&
+      this.dimensionIds &&
+      isArray(this.content)
+    ) {
+      let id = 0;
       this.content = this.content.map(this.convertToRow);
 
       for (const row of this.content) {
@@ -222,18 +441,48 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           this.content[0].level = 0;
         }
       }
+
+      // Used for getIndicator()
+      let parentLevel: number | undefined;
+
       // if any row has the level undefined, it gets the level of the previous row
       for (let i = 1; i < this.content.length; i += 1) {
         if (this.content[i].level === undefined) {
           this.content[i].level = this.content[i - 1].level;
         }
+
+        // Info for getIndicator()
+        if (this.content[i].groupName) {
+          parentLevel = undefined;
+        }
+        if (
+          this.content[i].name &&
+          (this.content[i].unit !== '%' || this.content[i].unit !== '‰')
+        ) {
+          if (parentLevel === undefined) {
+            parentLevel = this.content[i].level;
+          }
+          if (this.content[i].level === parentLevel) {
+            this.content[i].isParent = parentLevel;
+          }
+        }
       }
-      this.rows.next(this.content);
+      // Filters displayed rows with the entities selected in the collection sites filter
+      // Disaggregations by collection sites and collection sites groups
+      this.rows.next(
+        this.content.filter(el => {
+          if (el.customFilter && el.customFilter.entity) {
+            return el.customFilter.entity.some(entity =>
+              this.currentFilter.entities.includes(entity)
+            );
+          }
+          return true;
+        })
+      );
     }
   }
 
   toggleSection(row: SectionTitle): void {
-    this.clickedLogFrame = row;
     row.open = !row.open;
     this.openedSections[row.sectionId] = row.open;
     this.updateTableContent();
@@ -250,9 +499,17 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create new row if it s an indicator
-  convertToRow = (item: Row | ProjectIndicator): Row => {
+  convertToRow = (
+    item: (Row | ProjectIndicator) & RowCommentInfo
+  ): Row & RowCommentInfo => {
     if (this.isProjectIndicator(item)) {
-      return this.indicatorToRow(item);
+      return {
+        ...this.indicatorToRow(item),
+        commentInfo: item.commentInfo,
+        disaggregatedBy: item.disaggregatedBy || {},
+        comments: item.comments,
+        comment: item.comment
+      };
     }
     return item;
   }
@@ -262,20 +519,20 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     if (this.dimensionIds.value === 'entity') {
       this.dimensions = JSON.parse(JSON.stringify(this.filter.value.entities));
       this.dimensions.push('_total');
-    }
-    else if (this.dimensionIds.value === 'group') {
+    } else if (this.dimensionIds.value === 'group') {
       const entities = this.filter.value.entities;
-      this.dimensions = this.project.groups.filter(group => {
-        for (const e of group.members) {
-          if (entities.includes(e.id)) {
-            return true;
+      this.dimensions = this.project.groups
+        .filter(group => {
+          for (const e of group.members) {
+            if (entities.includes(e.id)) {
+              return true;
+            }
           }
-        }
-        return false;
-      }).map(x => x.id);
+          return false;
+        })
+        .map(x => x.id);
       this.dimensions.push('_total');
-    }
-    else {
+    } else {
       let startTimeSlot = TimeSlot.fromDate(
         DatesHelper.dateToString(this.filter.value._start),
         TimeSlotPeriodicity[this.dimensionIds.value]
@@ -298,7 +555,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   }
 
   // Create row of the table from a ProjectIndicator
-  indicatorToRow(indicator: ProjectIndicator, customFilter?: undefined): InfoRow {
+  indicatorToRow(indicator: ProjectIndicator, currentIndicator?: any): InfoRow {
     const row = {
       icon: true,
       name: indicator.display,
@@ -312,12 +569,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       dataset: {},
       filterFlag: true,
       computation: indicator.computation,
-      originProject: indicator.originProject ? indicator.originProject : undefined,
+      originProject: indicator.originProject
+        ? indicator.originProject
+        : undefined,
       open: true
     } as InfoRow;
 
-    if (customFilter) {
-      row.customFilter = customFilter;
+    if (currentIndicator) {
+      row.customFilter = currentIndicator.customFilter;
+      row.start = currentIndicator.start;
+      row.end = currentIndicator.end;
     }
 
     return row;
@@ -328,21 +589,25 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.logFrameEntities = [];
     const currentFilter = this.filter.value;
     let modifiedFilter;
-
-    const selectedLogFrames = this.project.logicalFrames.find(log =>
-      log.name === this.clickedLogFrame.title.substring(this.clickedLogFrame.title.indexOf(':') + 1).trim()
-    );
+    const selectedLogFrames = this.getGroup(row);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
-      selectedLogFrames.entities.forEach(entity => this.logFrameEntities.push(entity.id));
+
+      selectedLogFrames.entities.forEach(entity =>
+        this.logFrameEntities.push(entity.id)
+      );
       modifiedFilter = {
-        _start: new Date(selectedLogFrames.start) < new Date(currentFilter._start) ?
-          new Date(currentFilter._start).toLocaleDateString('fr-CA') :
-          new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
-        _end: new Date(selectedLogFrames.end) < new Date(currentFilter._start) ?
-          new Date(selectedLogFrames.end).toLocaleDateString('fr-CA') :
-          new Date(currentFilter._end).toLocaleDateString('fr-CA'),
-        entity: this.logFrameEntities
+        _start:
+          new Date(selectedLogFrames.start) < new Date(currentFilter._start) || selectedLogFrames.periodicity === 'free'
+            ? new Date(currentFilter._start).toLocaleDateString('fr-CA')
+            : new Date(selectedLogFrames.start).toLocaleDateString('fr-CA'),
+        _end:
+          new Date(selectedLogFrames.end) > new Date(currentFilter._end) || selectedLogFrames.periodicity === 'free'
+            ? new Date(currentFilter._end).toLocaleDateString('fr-CA')
+            : new Date(selectedLogFrames.end).toLocaleDateString('fr-CA'),
+        entity: currentFilter.entities.filter(e =>
+          this.logFrameEntities.includes(e)
+        )
       };
     } else {
       modifiedFilter = {
@@ -358,18 +623,27 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       Object.assign(customFilter, row.customFilter);
     }
 
-
     if (this.checkPeriodicityIsValid(row)) {
       row.error = ['Loading'];
-      this.reportingService.fetchData(currentProject, row.computation, [this.dimensionIds.value], customFilter, true, false).then(
-        response => {
+      this.reportingService
+        .fetchData(
+          currentProject,
+          row.computation,
+          [this.dimensionIds.value],
+          customFilter,
+          true,
+          false
+        )
+        .then(response => {
           if (response) {
             // this.roundResponse(response);
             const data = this.formatResponseToDataset(response);
             row.dataset = {
               label: row.name,
               data,
-              labels: Object.keys(response).filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+              labels: Object.keys(response)
+                .filter(x => x !== '_total')
+                .map(x => this.getSiteOrGroupName(x)),
               fill: false,
               unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
@@ -382,13 +656,41 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
               this.updateChart();
             }
           }
-        }
-      );
-    }
-    else if (row.onChart) {
+        });
+    } else if (row.onChart) {
       row.onChart = !row.onChart;
       this.updateChart();
     }
+
+    // Update comment
+    const commentInfo = row.commentInfo;
+
+    const filters: CommentFilter = {
+      ...this.globalCommentFilters,
+      disaggregatedBy: row.disaggregatedBy || {}
+    };
+
+    // Check if there is a comment with the same filters
+    const contentIndex = findContentIndexByFilter(commentInfo, filters);
+    const content =
+      contentIndex !== -1 ? commentInfo.content[contentIndex] : null;
+
+    // If no match, remove old comments, if any
+    if (!content) {
+      delete row.comment;
+      row.comments = {};
+      return row;
+    }
+
+    // Check if the row corresponds to an indicator
+    const path = row.commentInfo.path;
+    const pathArr = path.split('|');
+    const isIndicator = ['indicator:', 'element:'].some(prefix =>
+      pathArr[pathArr.length - 1].startsWith(prefix)
+    );
+
+    if (isIndicator) { row.comments = content.comments; }
+    else { row.comment = content.comment; }
 
     return row;
   }
@@ -419,7 +721,9 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       const varId = value['elementId'];
       currentProject.forms.forEach(form => {
         if (form.elements.find(element => element.id === varId)) {
-          if (TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]) {
+          if (
+            TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]
+          ) {
             highestPeriodicity = form.periodicity;
           }
         }
@@ -429,8 +733,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // when the chosen periodicity and the row periodicity are both week-type,
     // they only work togheter if they are the same
 
-    if (TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]) {
-      row.error = ['ReportingError.DataNotAvailable', 'Filter.' + highestPeriodicity];
+    if (
+      TimeSlotOrder[this.dimensionIds.value] < TimeSlotOrder[highestPeriodicity]
+    ) {
+      row.error = [
+        'ReportingError.DataNotAvailable',
+        'Filter.' + highestPeriodicity
+      ];
       return false;
     }
     return true;
@@ -439,7 +748,6 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
   // Fetch all data in function of project, content, filter, dimension and update table and chart
   refreshValues(): void {
     if (this.tableContent && this.filter && this.dimensionIds) {
-
       if (isArray(this.content)) {
         this.content.map(row => {
           if (this.isInfoRow(0, row)) {
@@ -468,12 +776,15 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           return row;
         });
       }
-
     }
   }
 
   getSiteOrGroupName(id: string): string {
-    if (this.project && (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group')) {
+    if (
+      this.project &&
+      (this.dimensionIds.value === 'entity' ||
+        this.dimensionIds.value === 'group')
+    ) {
       const site = this.project.entities.find(s => s.id === id);
       if (site !== undefined) {
         return site.name;
@@ -484,8 +795,13 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
         return group.name;
       }
     }
-    if (id === '_total') { return 'Total'; }
-    if (this.dimensionIds.value !== 'entity' && this.dimensionIds.value !== 'group') {
+    if (id === '_total') {
+      return 'Total';
+    }
+    if (
+      this.dimensionIds.value !== 'entity' &&
+      this.dimensionIds.value !== 'group'
+    ) {
       const timeSlotAux = new TimeSlot(id);
       return timeSlotAux.humanizeValue(this.currentLang);
     }
@@ -494,14 +810,16 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
   // this method builds the chart again everytime there is a click in the chart button
   updateChart(element?: InfoRow): void {
-
     // This element is set on the chart
     if (element && !element.error) {
       element.onChart = !element.onChart;
     }
 
     // Update of the chart type in function of the dimension that we have selected
-    if (this.dimensionIds.value === 'entity' || this.dimensionIds.value === 'group') {
+    if (
+      this.dimensionIds.value === 'entity' ||
+      this.dimensionIds.value === 'group'
+    ) {
       this.chartService.changeType('bar');
     } else {
       this.chartService.changeType('line');
@@ -512,21 +830,26 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     // We take all the rows with the onChart attribute
     for (const row of this.dataSource.data) {
       if (row.onChart) {
-
         if (!row.dataset.backgroundColor) {
           row.dataset.borderColor = this.COLORS[this.currentColorIndex];
           row.dataset.backgroundColor = this.COLORS[this.currentColorIndex];
 
-          this.currentColorIndex = (this.currentColorIndex + 1) % this.COLORS.length;
+          this.currentColorIndex =
+            (this.currentColorIndex + 1) % this.COLORS.length;
         }
 
         const copyOfDataset = Object.assign({}, row.dataset);
+        copyOfDataset.unit = row.unit;
+        copyOfDataset.baseline = row.baseline;
+        copyOfDataset.target = row.target;
 
         datasets.push(copyOfDataset);
       }
     }
     const data = {
-      labels: this.dimensions.filter(x => x !== '_total').map(x => this.getSiteOrGroupName(x)),
+      labels: this.dimensions
+        .filter(x => x !== '_total')
+        .map(x => this.getSiteOrGroupName(x)),
       datasets
     };
     this.chartService.addData(data);
@@ -540,7 +863,7 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return response;
   }
 
-  formatResponseToDataset(response: unknown): { x: string, y: number }[] {
+  formatResponseToDataset(response: unknown): { x: string; y: number }[] {
     const data = [];
     for (const dimension of this.dimensions.filter(x => x !== '_total')) {
       data.push({
@@ -552,21 +875,40 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     return data;
   }
 
+  // This method will return the input group for a given indicator
+  getGroup(indicator: InfoRow): any {
+    const { logicalFrames } = this.project;
+    const { forms } = this.project;
+    // We get the correct logical frame assuming that they will always be at the top
+    return logicalFrames[indicator.sectionId - 1]
+      ? logicalFrames[indicator.sectionId - 1]
+      : forms[indicator.sectionId - logicalFrames.length - 3];
+  }
+
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
     // Getting the indicator information inside the content
     let indicatorIndex = this.content.indexOf(info.indicator);
     const currentIndicator = this.content[indicatorIndex];
-    const currentProject = currentIndicator.originProject ? currentIndicator.originProject : this.project;
+    const currentProject = currentIndicator.originProject
+      ? currentIndicator.originProject
+      : this.project;
     currentIndicator.nextRow = this.content[indicatorIndex + 1];
 
     if (info.splitBySites) {
       const newIndicators = [];
-      const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
+      // const entities = info.indicator.originProject ? info.indicator.originProject.entities.map(x => x.id) : this.filter.value.entities;
 
-      const ent = this.logFrameEntities.length ? this.logFrameEntities : entities;
+      // getting the logical frame of current indicator to get all its entities.
+      // or current entity if the indicator is disaggregated by group
+      const group = this.getGroup(currentIndicator);
+      const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
 
-      for (const entityId of ent) {
+      // Filters the groups to only display groups that have to do with the indicator computation,
+      // if no computation is present we show all the groups.
+      const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
+
+      for (const entityId of filteredGroupEntities) {
         const customFilter = {
           entity: [entityId]
         };
@@ -575,11 +917,75 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
-        customIndicator.name = currentProject.entities.find(x => x.id === entityId)?.name;
+        customIndicator.name = currentProject.entities.find(
+          x => x.id === entityId
+        )?.name;
         customIndicator.customFilter = customFilter;
         customIndicator.values = {};
-        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.start = currentProject.entities.find(
+          x => x.id === entityId
+        )?.start;
+        customIndicator.end = currentProject.entities.find(
+          x => x.id === entityId
+        )?.end;
 
+        // Remove group from disaggregatedBy
+        const disaggregatedByWithoutGroup = cloneDeep(customIndicator.disaggregatedBy);
+        delete disaggregatedByWithoutGroup.group;
+
+        customIndicator.disaggregatedBy = Object.assign(
+          disaggregatedByWithoutGroup,
+          { entity: entityId }
+        );
+        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = 0;
+        newIndicators.push(customIndicator);
+      }
+
+      this.content.splice(indicatorIndex + 1, 0, ...newIndicators);
+
+      currentIndicator.open = !currentIndicator.open;
+      this.updateTableContent();
+    }
+
+    else if (info.splitBySiteGroups) {
+      const newIndicators = [];
+      const groups = [];
+
+      // getting the logical frame of current indicator to get all its entities.
+      // or current entity if the indicator is disaggregated by group
+      const groupEntities = currentIndicator.customFilter?.entity ||
+      (this.getGroup(currentIndicator)?.entities || []).map(({id}) => id).filter(Boolean);
+
+      // Filters the groups to only display groups that have to do with the indicator computation,
+      // if no computation is present we show all the groups.
+      const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
+
+      (currentProject.groups || []).map(projectGroup => {
+        if (projectGroup.members.some(entity => filteredGroupEntities.includes(entity.id))) {
+          groups.push(projectGroup);
+        }
+      });
+      const parentEntities = (this.getGroup(currentIndicator).entities || []).map(({id}) => id).filter(Boolean);
+
+      for (const group of groups) {
+        const customFilter = {
+          entity: group.members.map(x => x.id).filter(entity => parentEntities.includes(entity))
+        };
+
+        let customIndicator = Object.assign({}, info.indicator) as InfoRow;
+
+        customIndicator.level = info.indicator.level + 1;
+        customIndicator.onChart = false;
+        customIndicator.name = group.name;
+        customIndicator.customFilter = customFilter;
+        customIndicator.values = {};
+        customIndicator.disaggregatedBy = Object.assign(
+          cloneDeep(customIndicator.disaggregatedBy),
+          { group: group.id }
+        );
+        customIndicator = this.updateRowValues(customIndicator);
+        customIndicator.disaggregatedByGroup = 1;
         newIndicators.push(customIndicator);
       }
 
@@ -590,8 +996,31 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     }
 
     else if (info.splitByTime) {
-      let startTimeSlot = TimeSlot.fromDate(this.filter.value._start, TimeSlotPeriodicity[info.splitByTime]);
-      let endTimeSlot = TimeSlot.fromDate(this.filter.value._end, TimeSlotPeriodicity[info.splitByTime]);
+      let startTimeSlot = TimeSlot.fromDate(
+        this.filter.value._start,
+        TimeSlotPeriodicity[info.splitByTime]
+      );
+      let endTimeSlot = TimeSlot.fromDate(
+        this.filter.value._end,
+        TimeSlotPeriodicity[info.splitByTime]
+      );
+      const group = this.getGroup(currentIndicator);
+      if (group) {
+        const groupStartTimeSlot = TimeSlot.fromDate(
+          group.start,
+          TimeSlotPeriodicity[info.splitByTime]
+        );
+        const groupEndTimeSlot = TimeSlot.fromDate(
+          group.end,
+          TimeSlotPeriodicity[info.splitByTime]
+        );
+        if (startTimeSlot.firstDate < groupStartTimeSlot.firstDate) {
+          startTimeSlot = groupStartTimeSlot;
+        }
+        if (endTimeSlot.firstDate > groupEndTimeSlot.firstDate) {
+          endTimeSlot = groupEndTimeSlot;
+        }
+      }
       endTimeSlot = endTimeSlot.next();
 
       const newIndicators = [];
@@ -599,18 +1028,30 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
       while (startTimeSlot !== endTimeSlot) {
         counter++;
 
-        let customIndicator = JSON.parse(JSON.stringify(info.indicator)) as InfoRow;
+        let customIndicator = JSON.parse(
+          JSON.stringify(info.indicator)
+        ) as InfoRow;
         customIndicator.level = info.indicator.level + 1;
 
-        const dateToCompare = new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[0] + '-'
-          + new Date(this.filter.value._start).toLocaleDateString('fr-CA').split('-')[1];
+        const dateToCompare =
+          new Date(this.filter.value._start)
+            .toLocaleDateString('fr-CA')
+            .split('-')[0] +
+          '-' +
+          new Date(this.filter.value._start)
+            .toLocaleDateString('fr-CA')
+            .split('-')[1];
 
         if (counter === 1) {
           if (dateToCompare === startTimeSlot.value) {
-            customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+            customIndicator.name = startTimeSlot.humanizeValue(
+              this.translateService.currentLang
+            );
           }
         } else {
-          customIndicator.name = startTimeSlot.humanizeValue(this.translateService.currentLang);
+          customIndicator.name = startTimeSlot.humanizeValue(
+            this.translateService.currentLang
+          );
         }
         customIndicator.values = {};
 
@@ -618,6 +1059,11 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
           customIndicator.customFilter = {};
         }
         customIndicator.customFilter[info.splitByTime] = [startTimeSlot.value];
+
+        customIndicator.disaggregatedBy = Object.assign(
+          cloneDeep(customIndicator.disaggregatedBy),
+          { [info.splitByTime]: [startTimeSlot.value] }
+        );
 
         customIndicator = this.updateRowValues(customIndicator);
         if (customIndicator.name !== info.indicator.name) {
@@ -630,20 +1076,32 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
 
       currentIndicator.open = !currentIndicator.open;
       this.updateTableContent();
-    }
-    else {
+    } else {
       for (const disaggregatedIndicator of info.disaggregatedIndicators) {
         indicatorIndex += 1;
 
         let newRow;
         if (currentIndicator.customFilter) {
-          newRow = this.indicatorToRow(disaggregatedIndicator, currentIndicator.customFilter);
-        }
-        else {
+          newRow = this.indicatorToRow(
+            disaggregatedIndicator,
+            currentIndicator
+          );
+        } else {
           newRow = this.indicatorToRow(disaggregatedIndicator);
+        }
+
+        if (currentIndicator.disaggregatedByGroup > 0) {
+          newRow.disaggregatedByGroup = currentIndicator.disaggregatedByGroup + 1;
         }
         newRow.sectionId = info.indicator.sectionId;
         newRow.level = info.indicator.level + 1;
+        newRow.commentInfo = info.indicator.commentInfo;
+
+        newRow.disaggregatedBy = Object.assign(
+          cloneDeep(info.indicator.disaggregatedBy),
+          disaggregatedIndicator.partitionedBy || {}
+        );
+
         newRow = this.updateRowValues(newRow);
 
         this.content.splice(indicatorIndex, 0, newRow);
@@ -670,167 +1128,170 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     this.updateChart();
   }
 
-  calcPaddingLevel(element: Row): string {
-    if (element.level) {
-      return `padding-left: ${element.level * 20}px;`;
-    }
-    return '';
-  }
-
-  calcColor(element: InfoRow, column: string): string {
-    // the colors change in the following way:
-    // we start in the red: rgb(255, 128, 128)
-    // we go up increasing the value of the blue
-    // until we reach the yellow: rgb (255, 255, 128)
-    // after this we go down subtracting the value
-    // of the red until we get to the green: rgb (128, 255, 128)
-
-    if (this.checkIfNaN(element.values[column])) {
-      return 'rgb(238, 238, 238)';
-    }
-
-    if (element.values[column] === null || isNaN(Number(element.values[column]))) {
-      return 'white';
-    }
-
-    // Set background color to white if the row doesn't want colors
-    if (!element.colorize
-      || element.target === null
-      || element.baseline === null) {
-      return 'white';
-    }
-
-    const distance = element.target - element.baseline;
-
-    let r = 255;
-    let g = 128;
-    const b = 128;
-
-    // if the value is lower than the baseline, we choose red
-    if (element.values[column] <= element.baseline) {
-      r = 255;
-      g = 128;
-    }
-    // if it is higher than the target, we choose green
-    else if (element.values[column] >= element.target) {
-      g = 255;
-      r = 128;
-    }
-    // if it is somewhere in between, we calculate where and choose accordingly
-    else {
-      const myPosition = element.values[column] - element.baseline;
-      const normalizedDifference = (myPosition / distance) * 255;
-      if (normalizedDifference <= 127) {
-        g += normalizedDifference;
-      } else {
-        g = 255;
-        r -= (normalizedDifference - 127);
-      }
-    }
-
-    if (distance < 0) {
-      const aux = g;
-      g = r;
-      r = aux;
-    }
-
-    return `rgb(${r}, ${g}, ${b})`;
-  }
-
-  randomNumberLimit(limit: number): number {
-    return Math.floor((Math.random() * limit) + 1);
-  }
-
-  randomColor(): string {
-    const col = 'rgba(' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255)
-      + ',' + this.randomNumberLimit(255) + ', 1)';
-    return col;
-  }
-
-  checkIfNaN(x: unknown): boolean {
-    return isNaN(x);
-  }
-
   calculateOptimalColspan(): void {
     this.innerWidth = window.innerWidth;
 
     if (this.innerWidth < 640) {
       this.colsThatFitInTheScreen = 3;
-    }
-    else if (this.innerWidth < 1024) {
-      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 640) / 85);
-    }
-    else {
-      this.colsThatFitInTheScreen = 3 + Math.floor((this.innerWidth - 874) / 85);
+    } else if (this.innerWidth < 1024) {
+      this.colsThatFitInTheScreen =
+        3 + Math.floor((this.innerWidth - 640) / 85);
+    } else {
+      this.colsThatFitInTheScreen =
+        3 + Math.floor((this.innerWidth - 874) / 85);
     }
   }
 
-  formatGroupName(groupName: string) {
-    if (groupName.charAt(0) === 'R') {
-      if (this.results.indexOf(groupName) === -1) { this.results.push(groupName); }
-      return groupName.split(':')[0] + ' ' + (this.results.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
-    } else if (groupName.charAt(0) === 'O' && groupName.split(' ')[1].charAt(0) === 'S') {
-      this.results = [];
-      if (this.specificObjectif.indexOf(groupName) === -1) { this.specificObjectif.push(groupName); }
-      return groupName.split(':')[0] + ' ' + (this.specificObjectif.indexOf(groupName) + 1) + ' : ' + groupName.split(':')[1];
-    } else {
-      this.specificObjectif = [];
-      this.results = [];
+  formatGroupName(groupName: string, getName = false) {
+    if (getName) {
+      return groupName.split(': ')[1] || '';
     }
+
+    const group = groupName.split(':')[0];
+
+    switch (group) {
+      case this.translateService.instant('Activity'):
+        if (this.activities.indexOf(groupName) === -1) {
+          this.activities.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.activities.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      case this.translateService.instant('Result'):
+        this.activities = [];
+        if (this.results.indexOf(groupName) === -1) {
+          this.results.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.results.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      case this.translateService.instant('SpecificObjective'):
+        this.activities = [];
+        this.results = [];
+        if (this.specificObjectif.indexOf(groupName) === -1) {
+          this.specificObjectif.push(groupName);
+        }
+        groupName =
+          groupName.split(':')[0] +
+          ' ' +
+          (this.specificObjectif.indexOf(groupName) + 1) +
+          ' : ' +
+          groupName.split(':')[1];
+        break;
+
+      default:
+        this.activities = [];
+        this.specificObjectif = [];
+        this.results = [];
+        break;
+    }
+
     return groupName;
   }
 
-
   isItalic(value): boolean {
-    if (typeof value === 'string' && !isNaN(Number(value))){
+    if (typeof value === 'string' && !isNaN(Number(value))) {
       return true;
     }
     return false;
   }
 
-  styleValue(value, unit){
-    if (value === undefined){
+  isInRange(data, date): boolean {
+    const group = this.getGroup(data);
+    const currentDate = new Date(date);
+    currentDate.setHours(12);
+
+    let startDate: Date;
+    let endDate: Date;
+
+    if (group instanceof LogicalFrame) {
+      startDate = group.start;
+      endDate = group.end;
+    }
+    if (data.start && data.end) {
+      startDate = data.start;
+      endDate = data.end;
+    }
+
+    if (startDate && endDate) {
+
+      if (['month', 'quarter', 'semester'].includes(TimeSlotPeriodicity[this.dimensionIds.value])) {
+        startDate.setDate(1);
+        endDate.setMonth(endDate.getMonth() + 1, 0);
+      }
+
+      if (['year'].includes(TimeSlotPeriodicity[this.dimensionIds.value])) {
+        startDate.setMonth(0, 1);
+        endDate.setMonth(11, 31);
+      }
+
+      if ( startDate > currentDate || endDate < currentDate ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  styleValue(value, unit) {
+    if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number'){
+    if (value === 'Not a finite number' || value === 'division-by-zero') {
       return '!';
     }
 
-    if (value === null || isNaN(Number(value))){
+    if (value === null || value === 'missing-data') {
       return '?';
+    }
+
+    if (value === 'AGGREGATION_FORBIDDEN') {
+      return 'X';
     }
 
     let newValue = formatNumber(Number(value), 'de-DE', '1.0-1');
 
-    if (unit){
+    if (unit) {
       newValue += unit;
     }
 
     return newValue;
   }
 
-  getTooltipMessage(value){
-    if (value === undefined){
+  getTooltipMessage(value) {
+
+    if (value === 'AGGREGATION_FORBIDDEN') {
+      return 'CannotBeComputedRule';
+    }
+
+    if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number'){
+    if (value === 'Not a finite number') {
       return 'DivisionByZero';
     }
 
-    if (value === null || isNaN(Number(value))){
+    if (value === null || isNaN(Number(value))) {
       return 'CannotBeComputed';
     }
 
-    if (typeof value === 'string' && !isNaN(Number(value))){
+    if (typeof value === 'string' && !isNaN(Number(value))) {
       return 'IncompleteData';
     }
 
     return '';
   }
-
 
   /* TEMPORARY
   exportTOExcel() {
@@ -839,6 +1300,129 @@ export class ReportingTableComponent implements OnInit, OnDestroy {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'SheetJS.xlsx');
   } */
+
+  /**
+   * Gets the baseline value from an element
+   *
+   * @param element The element to get the baseline from
+   * @returns A string containing the baseline value
+   */
+  getIndicator(element: InfoRow, type: 'baseline' | 'target'): string {
+    const value = element[type];
+    if (
+      value === null ||
+      value === undefined ||
+      (element.isParent !== element.level &&
+        element.unit !== '%' &&
+        element.unit !== '‰')
+    ) {
+      return '';
+    }
+    return value + (element.unit ?? '');
+  }
+
+  onRightClick(
+    event: MouseEvent,
+    trigger: MatMenuTrigger,
+    triggerElement: HTMLElement,
+    el?: any,
+    col?: string
+  ): void {
+    this.selectedCell = { row: el, col };
+    if (this.userIsAdmin) {
+      triggerElement.style.left = event.clientX + 5 + 'px';
+      triggerElement.style.top = event.clientY + 5 + 'px';
+      if (trigger.menuOpen) {
+        trigger.closeMenu();
+        trigger.openMenu();
+      } else {
+        trigger.openMenu();
+      }
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Update a comment based on the action selected.
+   *
+   * @param action Action executed in a comment, can be:
+   * - add - Creates a new comment, a modal will be open to write its content.
+   * - edit - Edits an existing comment, a modal will be open to edit its content.
+   * - delete - Deletes an existing comment.
+   */
+  public updateCellComment(action: 'add' | 'edit' | 'delete'): void {
+    if (!this.selectedCell) { return; }
+    const { row } = this.selectedCell;
+    const comment = this.selectedCellComment || { value: '' };
+
+    console.log(this.getCellValueAsString());
+
+    if (action === 'delete') {
+      this.selectedCellComment = null;
+      this.commentService.stashComment(row.commentInfo);
+    } else {
+      this.changeDetectorRef.detach();
+      const dialogSubscription = this.dialog
+        .open(CommentModalComponent, {
+          data: {
+            action,
+            comment
+          }
+        })
+        .afterClosed()
+        .subscribe(result => {
+          this.changeDetectorRef.reattach();
+          if (result !== undefined) {
+            this.selectedCellComment = { ...result, cellValue: this.getCellValueAsString() };
+            this.commentService.stashComment(row.commentInfo);
+          }
+          dialogSubscription.unsubscribe();
+        });
+    }
+  }
+
+  private getRelevantGroups(groups: string[], indicator: any, project: any) {
+    if (indicator.computation && Object.values(indicator.computation.parameters).length > 0) {
+      const filteredGroups = [];
+
+      for (const value of Object.values(indicator.computation.parameters)) {
+        const varId = value['elementId'];
+        project.forms.forEach(form => {
+          if (form.elements.find(element => element.id === varId)) {
+            groups.map(groupId => {
+              if (form.entities.find(ent => ent.id === groupId) && filteredGroups.indexOf(groupId) === -1) {
+                filteredGroups.push(groupId);
+              }
+            });
+          }
+        });
+      }
+      return filteredGroups;
+    } else {
+      return groups;
+    }
+  }
+
+  /**
+   * Gets the cell value for the selected cell.
+   *
+   * @returns Formatted cell value as a string.
+   */
+  private getCellValueAsString(): string {
+    const { row, col } = this.selectedCell;
+    switch (col) {
+      case 'target':
+      case 'baseline':
+        return this.getIndicator(row, col);
+      case undefined:
+        const result: string = row.title || row.groupName;
+        return this.formatGroupName(result, true);
+      case 'name':
+        return row.name;
+      default:
+        return typeof row.values[col] === 'number' ? row.values[col].toString() : (row.values[col] || '');
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

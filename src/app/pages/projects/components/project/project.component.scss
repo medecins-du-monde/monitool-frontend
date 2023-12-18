@@ -134,6 +134,7 @@
 .mat-chip {
   min-height: 24px !important;
   padding: 8px !important;
+  text-wrap: nowrap;
 
   &.mat-chip-selected {
     &.mat-accent {

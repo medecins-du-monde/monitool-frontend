@@ -14,6 +14,7 @@ export class User implements Deserializable {
     entities: Entity[];
     dataSources: Form[];
     projectId?: string;
+    active: boolean;
 
     get login(): string {
         return this.id.split(':')[1];
@@ -46,6 +47,7 @@ export class User implements Deserializable {
         const user = {
             type: this.type,
             role: this.role,
+            active: this.active,
         };
 
         if (this.type === 'internal'){

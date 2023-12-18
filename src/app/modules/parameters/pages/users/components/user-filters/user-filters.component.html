@@ -1,0 +1,27 @@
+<span>
+  <mat-chip-list>
+    <mat-chip
+      *ngFor="let role of roles"
+      (click)="toggleRow(role)"
+      [style.background-color]="
+        selectedRoles?.includes(role) ? roleColors[role] : 'transparent'
+      "
+      [style.color]="selectedRoles?.includes(role) ? 'white' : roleColors[role]"
+      [style.border-color]="roleColors[role]"
+      [disabled]="selectedRoles.length === 1 && selectedRoles?.includes(role)"
+    >
+      <mat-icon *ngIf="selectedRoles?.includes(role)">check</mat-icon>
+      {{ roleTranslations[role] | translate }}
+    </mat-chip>
+    <div style="width: 4px; height: 4px; background-color: rgba(0, 0, 0, .2); margin: 0 10px; border-radius: 100%;"></div>
+    <mat-chip
+      (click)="showDeleted = !showDeleted; showDeletedChange.emit(showDeleted)"
+      [style.background-color]="showDeleted ? 'var(--danger)' : 'transparent'"
+      [style.color]="showDeleted ? 'white' : 'var(--danger)'"
+      [style.border-color]="'var(--danger)'"
+    >
+      <mat-icon *ngIf="showDeleted">check</mat-icon>
+      {{ "Deleted" | translate }}
+    </mat-chip>
+  </mat-chip-list>
+</span>

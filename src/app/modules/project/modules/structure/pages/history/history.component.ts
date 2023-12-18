@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -11,6 +11,7 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -25,7 +26,7 @@ import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model
     ]),
   ],
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
 
   informations = [
     {
@@ -70,53 +71,63 @@ export class HistoryComponent implements OnInit {
 
   public showLoadMore: boolean;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(private projectService: ProjectService,
               private translateService: TranslateService,
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'History',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'History',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+        this.saveConfirmElement = undefined;
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.showLoadMore = true;
-      this.projectId = project.id;
-      this.project = project;
-      this.limit = 10;
-      if (project.id && project.rev) {
-        this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
-          const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-          revisions.forEach(revision => {
-            const timeArr = [];
-            const newDate = new Date(revision.time);
-            timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()], newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
-            revision.displayedTime = timeArr;
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.showLoadMore = true;
+        this.projectId = project.id;
+        this.project = project;
+        this.limit = 10;
+        if (project.id && project.rev) {
+          this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
+            const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+            revisions.forEach(revision => {
+              const timeArr = [];
+              const newDate = new Date(revision.time);
+              timeArr.push(
+                newDate.getUTCDate(), this.months[newDate.getMonth()],
+                newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]
+              );
+              revision.displayedTime = timeArr;
+            });
+            this.revisions = revisions;
+            this.showLoadMore = revisions.length < 10 ? false : true;
+            this.changeDetector.markForCheck();
           });
-          this.revisions = revisions;
-          this.showLoadMore = revisions.length < 10 ? false : true;
-          this.changeDetector.markForCheck();
-        });
-      }
-    });
+        }
+      })
+    );
     this.projectService.updateInformationPanel(this.informations);
   }
 
@@ -125,8 +136,14 @@ export class HistoryComponent implements OnInit {
   }
 
   sameVersion(i){
-    const patchedProject = this.patchProject(i);
-    const equal = isEqual(patchedProject, this.project);
+    const patchedProject = this.patchProject(i + 1);
+    let equal = false;
+    try {
+      equal = isEqual(patchedProject.serialize(), this.project.serialize());
+    }
+    catch {
+      equal = isEqual(patchedProject, this.project);
+    }
     this.isSameVersion = equal;
     return (equal);
   }
@@ -138,6 +155,13 @@ export class HistoryComponent implements OnInit {
   onLoadMore() {
     this.limit += 10;
     this.projectService.listRevisions(this.projectId, this.limit).then((revisions: Revision[]) => {
+      revisions.forEach(revision => {
+        const timeArr = [];
+        const newDate = new Date(revision.time);
+        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()],
+        newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
+        revision.displayedTime = timeArr;
+      });
       this.revisions = revisions;
       this.showLoadMore = revisions.length < 10 ? false : true;
     });
@@ -154,6 +178,14 @@ export class HistoryComponent implements OnInit {
         console.log(e);
       }
     }
+    revisedProject.entities.map(entity => {
+      if (typeof entity.start === 'string') {
+        entity.start = new Date(entity.start);
+      }
+      if (typeof entity.end === 'string') {
+        entity.end = new Date(entity.end);
+      }
+    });
     revisedProject.forms = revisedProject.forms.map(y => new Form(y, this.project.entities));
     return revisedProject;
   }
@@ -164,11 +196,15 @@ export class HistoryComponent implements OnInit {
 
   onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
-    const patchedRevision = this.patchProject(revisionIndex);
+    const patchedRevision = this.patchProject(revisionIndex + 1);
 
     patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
     patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
     this.projectService.project.next(patchedRevision);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

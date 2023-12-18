@@ -1,0 +1,13 @@
+mat-chip {
+  border: 1px solid;
+  font-weight: 600;
+  padding: 12px !important;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}

@@ -199,7 +199,7 @@ mat-hint {
   font-size: $small_text;
   display: flex;
   align-items: center;
-  padding-top: 5px;
+  padding-top: 8px;
 }
 
 .mat-select-value {
@@ -292,18 +292,10 @@ mat-hint {
 }
 
 .mdm-card {
-  width: 22%;
+  min-width: 250px;
+  max-width: 400px;
+  flex: 1 0 21%;
   margin: 0 1% 10px 1%;
-
-  @media screen and (max-width: $breakpoint-xs-sm) {
-    width: 47%;
-    margin: 0 1.5% 10px 1.5%;
-  }
-
-  @media screen and (max-width: $breakpoint-xs) {
-    width: 100%;
-    margin: 0 0 16px;
-  }
 }
 
 .cards-draghandle {
@@ -417,7 +409,7 @@ mat-hint {
     .mat-card-content {
       flex: 1;
     }
-  
+
     .mat-card-actions {
       padding: 0px 8px 16px 8px !important;
     }
@@ -569,25 +561,25 @@ mat-hint {
     th:not(:last-child) {
       border-right: 1px solid $table_border;
     }
-  
+
     td {
       color: $grey;
       font-size: $small_text;
     }
-  
+
     th {
       font-weight: bold;
       font-size: $small_text;
       color: var(--main);
     }
   }
-  
+
   .mdm-form-field {
     width: 100%;
-  
+
     .mat-form-field-wrapper {
       padding: 0 !important;
-  
+
       .mat-form-field-flex {
         align-items: center !important;
         .mat-form-field-infix {
@@ -668,11 +660,16 @@ code {
   }
 }
 
-// === HANDSONTABLE ===
+// // === HANDSONTABLE ===
 hot-table {
   width: 100%;
-  overflow: hidden;
+  // display: block;
+  // overflow: hidden;
   font-size: $small_text;
+}
+
+.wtHolder {
+  height: max-content !important;
 }
 
 .handsontable td{
@@ -993,6 +990,11 @@ code {
   font-size: $very_small_text;
   line-height: 20px;
 }
+code.title{
+  position: absolute;
+  font-size: 80%;
+  margin-top: 3px;
+}
 
 // Management of dateGroups (custom dates and same as project)
 .dateGroup {
@@ -1016,10 +1018,10 @@ code {
   width: 14px;
 }
 .dateGroup .mat-radio-button .mat-radio-ripple{
-  height: 20px; 
-  width: 20px; 
-  left: calc(50% - 10px); 
-  top: calc(50% - 10px); 
+  height: 20px;
+  width: 20px;
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
 }
 
 // Management of all radio buttons
@@ -1096,7 +1098,7 @@ code {
 .information-form {
   display: flex;
   align-items: center;
-  margin-left: 2%;
+  margin: 0 2%;
   font-size: $small_text;
   mat-icon {
     margin-right: 5px;
@@ -1181,7 +1183,7 @@ code {
 }
 
 .chipListPanelClass{
-  margin-top: 30px !important; 
+  margin-top: 30px !important;
   max-height: 300px !important;
   overflow-x: hidden !important;
   margin-left: 28px;
@@ -1190,7 +1192,7 @@ code {
 }
 
 .basicsChipListPanelClass {
-  margin-top: 63px !important; 
+  margin-top: 63px !important;
   max-height: 300px !important;
   overflow-x: hidden !important;
   margin-left: 28px;
@@ -1199,7 +1201,7 @@ code {
 }
 
 .filterClass {
-  margin-top: 30px !important; 
+  margin-top: 30px !important;
   overflow-x: hidden !important;
   margin-left: -5px !important;
   min-width: calc(100% + 20px) !important;
@@ -1229,4 +1231,16 @@ code {
 
 .mat-typography p {
   margin: 0 0 8px;
+}
+
+.no-overflow-dialog .mat-dialog-container {
+  overflow: hidden;
+}
+
+.remove-mat-expansion-panel-padding .mat-expansion-panel-content .mat-expansion-panel-body{
+  padding: 0 !important;
+}
+
+.searchbar .mat-form-field-infix {
+  padding: 3px 0 6.5px 0 !important;
 }

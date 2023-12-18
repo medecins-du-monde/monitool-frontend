@@ -39,10 +39,12 @@ export class ThematicsComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(ThemeModalComponent);
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubcription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.themeService.save(res.data).then(() => this.getThemes());
+        dialogSubcription.unsubscribe();
       }
     });
   }
 }
+

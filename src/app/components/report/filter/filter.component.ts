@@ -49,7 +49,10 @@ export class FilterComponent implements OnInit, OnDestroy{
 
   @Input() isCrossCuttingReport = false;
   @Input() project: Project;
+  @Input() showComments: boolean;
+  @Input() userIsAdmin = false;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
+  @Output() showCommentsChange = new EventEmitter<boolean>();
 
   private subscription: Subscription = new Subscription();
   entities: Entity[];
@@ -72,10 +75,12 @@ export class FilterComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this.dateService.currentLang.subscribe(
-      lang => {
-        this.adapter.setLocale(lang);
-      }
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang => {
+          this.adapter.setLocale(lang);
+        }
+      )
     );
     // by default the end date is the last day of the current year
     // and the start date is the first day of the previous year
@@ -118,18 +123,20 @@ export class FilterComponent implements OnInit, OnDestroy{
 
           let oldFilterFormValue = _.cloneDeep(this.filterForm).value;
 
-          this.filterForm.valueChanges.subscribe(newFilterValue => {
-            if (!DatesHelper.areEquals(oldFilterFormValue._start, newFilterValue._start)
-                || !DatesHelper.areEquals(oldFilterFormValue._end, newFilterValue._end)
-                || JSON.stringify(oldFilterFormValue.entities)
-                  !== JSON.stringify(newFilterValue.entities.filter(
-                    element => element instanceof Entity && element.id !== 'all')
-                    .map(entity => entity.id))) {
-                this.selectedSites = this.sites.filter( site => newFilterValue.entities.includes(site) );
-                oldFilterFormValue = newFilterValue;
-                this.filterEvent.emit(newFilterValue as Filter);
-            }
-          });
+          this.subscription.add(
+            this.filterForm.valueChanges.subscribe(newFilterValue => {
+              if (!DatesHelper.areEquals(oldFilterFormValue._start, newFilterValue._start)
+                  || !DatesHelper.areEquals(oldFilterFormValue._end, newFilterValue._end)
+                  || JSON.stringify(oldFilterFormValue.entities)
+                    !== JSON.stringify(newFilterValue.entities.filter(
+                      element => element instanceof Entity && element.id !== 'all')
+                      .map(entity => entity.id))) {
+                  this.selectedSites = this.sites.filter( site => newFilterValue.entities.includes(site) );
+                  oldFilterFormValue = newFilterValue;
+                  this.filterEvent.emit(newFilterValue as Filter);
+              }
+            })
+          );
         })
       );
     }

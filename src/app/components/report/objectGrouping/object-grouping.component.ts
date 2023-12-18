@@ -1,19 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
 import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ReportingService } from 'src/app/services/reporting.service';
+import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-object-grouping',
   templateUrl: './object-grouping.component.html',
   styleUrls: ['./object-grouping.component.scss']
 })
-export class ObjectGroupingComponent implements OnInit {
+export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   @ViewChild('dlMinimized') dlMinimized: TemplateRef<any>;
 
@@ -23,6 +26,8 @@ export class ObjectGroupingComponent implements OnInit {
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
+
+  private subscription: Subscription = new Subscription();
 
   win;
 
@@ -44,12 +49,16 @@ export class ObjectGroupingComponent implements OnInit {
     'group'
   ];
 
-  constructor(private projectService: ProjectService,
-              private fb: FormBuilder,
-              private translateService: TranslateService,
-              private downloadService: DownloadService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private projectService: ProjectService,
+    private fb: FormBuilder,
+    private translateService: TranslateService,
+    private downloadService: DownloadService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private reportingService: ReportingService,
+    private dialog: MatDialog
+  ) {}
 
 
   get currentLang(): string {
@@ -78,29 +87,31 @@ export class ObjectGroupingComponent implements OnInit {
     this.groupOptions = [];
     // If the page is not the cross
     if (!this.isCrossCuttingReport) {
-      this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
-        this.forms = project.forms;
-        let smallestIndex = this.periodicitiesList.length;
-        const newOptionsList = [];
-        for (const form of this.project.forms) {
-          const index = this.periodicitiesList.indexOf(form.periodicity);
-          if (index !== -1) {
-            smallestIndex = index < smallestIndex ? index : smallestIndex;
+      this.subscription.add(
+        this.projectService.openedProject.subscribe((project: Project) => {
+          this.project = project;
+          this.forms = project.forms;
+          let smallestIndex = this.periodicitiesList.length;
+          const newOptionsList = [];
+          for (const form of this.project.forms) {
+            const index = this.periodicitiesList.indexOf(form.periodicity);
+            if (index !== -1) {
+              smallestIndex = index < smallestIndex ? index : smallestIndex;
+            }
           }
-        }
-        const limitInf = smallestIndex === 0 ? 1 : smallestIndex;
-        for (let i = limitInf; i < this.periodicitiesList.length; i++) {
-          if (this.periodicitiesList[i]) {
-            newOptionsList.push({
-              value: this.periodicitiesList[i],
-              viewValue: `Filter.${this.periodicitiesList[i]}`,
-            });
+          const limitInf = smallestIndex === 0 ? 1 : smallestIndex;
+          for (let i = limitInf; i < this.periodicitiesList.length; i++) {
+            if (this.periodicitiesList[i]) {
+              newOptionsList.push({
+                value: this.periodicitiesList[i],
+                viewValue: `Filter.${this.periodicitiesList[i]}`,
+              });
+            }
           }
-        }
-        this.groupOptions = newOptionsList;
-        this.updateDimension(smallestIndex, this.periodicitiesList);
-      });
+          this.groupOptions = newOptionsList;
+          this.updateDimension(smallestIndex, this.periodicitiesList);
+        })
+      );
     }
     // This part is only of the cross cutting report, it may change later because we don t have many options
     else {
@@ -132,37 +143,102 @@ export class ObjectGroupingComponent implements OnInit {
       });
       this.dimensionEvent.emit('month');
     }
-    this.dimensionForm.get('dimensionId').valueChanges.subscribe(value => {
-      this.dimensionEvent.emit(value);
+    this.subscription.add(
+      this.dimensionForm.get('dimensionId').valueChanges.subscribe(value => {
+        this.dimensionEvent.emit(value);
+      })
+    );
+  }
+
+  downloadExcelSheet(): void {
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {
+        title: this.translateService.instant('export-complete'),
+        type: 'detailed',
+        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
+      }
+    });
+
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const url = 'api_export_' + this.currentProjectId + '_' + this.currentPeriodicity + '_' + this.currentLang + '_';
+
+        window.open(this.router.url + '/download/' + url, '_blank');
+        dialogSubscription.unsubscribe();
+      }
     });
   }
 
-  downloadExcelSheet() {
-    const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/';
+  dlMini(): void {
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {
+        title: this.translateService.instant('export-minimized'),
+        type: 'global',
+        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length)
+      }
+    });
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const url =
+          'api_export_' +
+          this.currentProjectId +
+          '_' +
+          this.currentPeriodicity +
+          '_' +
+          this.currentLang +
+          '_' +
+          this.minimized;
 
-
-    // const win = window.open(url, '_blank');
-
-    // const timer = setInterval(() => {
-    //   if (!win.closed) {
-    //     clearInterval(timer);
-    //     this.dialog.open(this.dlMinimized);
-    //     win.close();
-    //   }
-    // }, 500);
+        window.open(this.router.url + '/download/' + url, '_blank');
+        dialogSubscription.unsubscribe();
+      }
+    });
   }
 
-  dlMini() {
-    const url = '/api/export/' + this.currentProjectId + '/' + this.currentPeriodicity + '/' + this.currentLang + '/' + this.minimized;
+  /** Downloads the current view of the table */
+  async dlCurrView(): Promise<void> {
+    const dialogRef = this.dialog.open(ConfirmExportComponent, {
+      data: {
+        title: this.translateService.instant('export-current-minimized'),
+        type: 'current-view'
+      }
+    });
 
-    this.downloadService.url.next(url);
-    this.router.navigate(['./download'], { relativeTo: this.route });
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // save the current table html to the localStorage,
+        // so it can be accessed from the new tab
+        const tableID = this.reportingService.saveCurrentTableView();
+        window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
 
-    // window.open(url, '_blank');
-    // this.dialog.closeAll();
+  /**
+   * We estimate that each logFrame will take 10 seconds to be processed,
+   * multiplying that for the number of collection sites in the detailed view
+   *
+   * @param logFrames Number of logical frames
+   * @param colSites Number of Collection sites
+   * @returns Estimated time in minutes
+   */
+  private getEstimatedExportTime(logFrames: number, colSites?: number) {
+    let time = logFrames * 10;
+    if (colSites) {
+      time *= colSites;
+    }
+    time /= 60;
+    if (time <= 10) {
+      return time;
+    } else {
+      return Math.ceil(time / 5) * 5;
+    }
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
   }
 
 }

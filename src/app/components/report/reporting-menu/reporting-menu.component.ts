@@ -37,9 +37,11 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.open = this.indicator.open;
-    this.translateService.onLangChange.subscribe(() => {
-      this.createOptions();
-    });
+    this.subscription.add(
+      this.translateService.onLangChange.subscribe(() => {
+        this.createOptions();
+      })
+    );
     if (!this.isCrossCuttingReport) {
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
@@ -67,11 +69,25 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       });
     }
 
+    // Always include the collection site groups option if the current project has groups
+    // and isn't already disaggregated by groups
+    if (
+      this.dimensionName !== 'entity' &&
+      this.dimensionName !== 'group' &&
+      !this.indicator.customFilter &&
+      currentProject.groups.length > 0
+    ) {
+      this.options.push({
+        value: `${this.translateService.instant('CollectionSiteGroups')}`,
+        action: this.collectionSiteGroupsOption
+      });
+    }
+
     /* We always put the collection site option if the current project has entities
-       and we didn t already choose the collection sites or groups filter */
+       and we didn't already choose the collection sites or groups filter */
     if (this.dimensionName !== 'entity'
         && this.dimensionName !== 'group'
-        && !this.indicator.customFilter
+        && (!this.indicator.customFilter || this.indicator.disaggregatedByGroup > 0)
         && currentProject.entities.length > 0){
       this.options.push({
         value: `${this.translateService.instant('CollectionSites')}`,
@@ -184,6 +200,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         baseline: 0,
         target: 0 ,
         originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
+        partitionedBy: {[partition.id]: partitionElement.id},
       }));
     }
 
@@ -235,7 +252,8 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           display: fullName,
           baseline: 0,
           target: 0,
-          originProject: this.indicator.originProject
+          originProject: this.indicator.originProject,
+          partitionedBy: { parameter }
         }));
       }
       this.addIndicatorsEvent.emit(
@@ -255,6 +273,17 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         indicator: this.indicator,
         disaggregatedIndicators: [],
         splitBySites: true
+      } as AddedIndicators
+    );
+  }
+
+  collectionSiteGroupsOption = (): void => {
+    this.open = !this.open;
+    this.addIndicatorsEvent.emit(
+      {
+        indicator: this.indicator,
+        disaggregatedIndicators: [],
+        splitBySiteGroups: true
       } as AddedIndicators
     );
   }

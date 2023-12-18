@@ -1,5 +1,5 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -7,13 +7,14 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { v4 as uuid } from 'uuid';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-logical-frames-list',
   templateUrl: './logical-frames-list.component.html',
   styleUrls: ['./logical-frames-list.component.scss']
 })
-export class LogicalFramesListComponent implements OnInit {
+export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
   project: Project;
   logicalFrames: LogicalFrame[] = [];
@@ -37,6 +38,8 @@ export class LogicalFramesListComponent implements OnInit {
     } as InformationItem
   ];
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -44,39 +47,46 @@ export class LogicalFramesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
-      const breadCrumbs = [
-        {
-          value: 'Projects',
-          link: './../../projects'
-        } as BreadcrumbItem,
-        {
-          value: savedProject.country,
-        } as BreadcrumbItem,
-        {
-          value: savedProject.name,
-        } as BreadcrumbItem,
-        {
-          value: 'Structure',
-        } as BreadcrumbItem,
-        {
-          value: 'LogicalFrameworks',
-        } as BreadcrumbItem,
-      ];
-      this.projectService.updateBreadCrumbs(breadCrumbs);
-    });
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
+        const breadCrumbs = [
+          {
+            value: 'Projects',
+            link: './../../projects'
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: 'Structure',
+          } as BreadcrumbItem,
+          {
+            value: 'LogicalFrameworks',
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+      })
+    );
 
-    this.projectService.openedProject.subscribe((project: Project) => {
-      this.project = project;
-      this.logicalFrames = project.logicalFrames;
-      this.changeDetector.markForCheck();
-    });
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) => {
+        this.project = project;
+        this.logicalFrames = project.logicalFrames;
+        this.changeDetector.markForCheck();
+      })
+    );
 
     this.projectService.updateInformationPanel(this.informations);
   }
 
   onCreate(): void {
     const newLogicalFrame = new LogicalFrame();
+    // initialize dates as project
+    newLogicalFrame.start = this.project.start;
+    newLogicalFrame.end = this.project.end;
     this.project.logicalFrames.push(newLogicalFrame);
     this.projectService.project.next(this.project);
     this.router.navigate([`${this.router.url}/${newLogicalFrame.id}`]);
@@ -106,10 +116,13 @@ export class LogicalFramesListComponent implements OnInit {
 
   // drag and drop function on a list than can span accross multiple rows
   drop(event: CdkDragDrop<any>): void {
-    this.logicalFrames[event.previousContainer.data.index] = event.container.data.logicalFrame;
-    this.logicalFrames[event.container.data.index] = event.previousContainer.data.logicalFrame;
+    moveItemInArray(this.logicalFrames, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

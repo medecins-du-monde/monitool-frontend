@@ -24,6 +24,7 @@ export default class FormGroupBuilder {
       purpose = new Purpose();
     }
     return new FormGroup({
+      id: new FormControl(purpose.id),
       assumptions: new FormControl(purpose.assumptions),
       description: new FormControl(purpose.description, Validators.required),
       outputs: new FormArray(purpose.outputs.map(x => this.newOutput(x))),
@@ -36,6 +37,7 @@ export default class FormGroupBuilder {
       output = new OutputElement();
     }
     return new FormGroup({
+      id: new FormControl(output.id),
       assumptions: new FormControl(output.assumptions),
       description: new FormControl(output.description, Validators.required),
       activities: new FormArray(output.activities.map(x => this.newActivity(x))),
@@ -48,6 +50,7 @@ export default class FormGroupBuilder {
       activity = new Activity();
     }
     return new FormGroup({
+      id: new FormControl(activity.id),
       description: new FormControl(activity.description),
       indicators: new FormArray(activity.indicators.map(x => this.newIndicator(x))),
     });
@@ -98,6 +101,7 @@ export default class FormGroupBuilder {
     }
     else {
       resultFormGroup = new FormGroup({
+        id: new FormControl(indicator.id, Validators.required),
         display: new FormControl(indicator.display, Validators.required),
         baseline: new FormControl(indicator.baseline),
         target: new FormControl(indicator.target),

@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 
@@ -9,7 +10,7 @@ import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
   templateUrl: './theme-modal.component.html',
   styleUrls: ['./theme-modal.component.scss']
 })
-export class ThemeModalComponent implements OnInit {
+export class ThemeModalComponent implements OnInit, OnDestroy {
 
   themeForm: FormGroup;
 
@@ -17,6 +18,8 @@ export class ThemeModalComponent implements OnInit {
 
   languages = ['fr', 'en', 'es'];
   dictionary = {};
+
+  private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -41,9 +44,13 @@ export class ThemeModalComponent implements OnInit {
       _rev: this.data ? this.data.rev : null
     });
 
-    this.languages.forEach(language => this.forceTranslateService.getData(language).subscribe( data => {
-      this.dictionary[`${language}`] = data;
-    }));
+    this.languages.forEach(language => {
+      this.subscription.add(
+        this.forceTranslateService.getData(language).subscribe( data => {
+          this.dictionary[`${language}`] = data;
+        })
+      );
+    });
   }
 
   onSubmit() {
@@ -53,6 +60,10 @@ export class ThemeModalComponent implements OnInit {
 
   getLanguageDictionary(language: string) {
     return this.dictionary[`${language}`];
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

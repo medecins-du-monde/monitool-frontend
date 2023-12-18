@@ -12,6 +12,13 @@ jobs:
     - stage: test
       before_script: npm i
       script: npm run lint
+    - stage: unit testing
+      if: branch = uat
+      before_script:
+       - npm i
+       - export NODE_OPTIONS="--max-old-space-size=8192"
+      script:
+       - ng test --watch=false
     - stage: deploy
       if: branch = dev
       before_install:

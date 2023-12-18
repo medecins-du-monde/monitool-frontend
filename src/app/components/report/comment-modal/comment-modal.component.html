@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ action + "-comment" | translate }}</h1>
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+  <mat-form-field appearance="outline">
+    <textarea
+      matInput
+      [placeholder]="'comment-placeholder' | translate"
+      [maxlength]="charLimit"
+      [(ngModel)]="comment.value"
+    ></textarea>
+    <p *ngIf="comment">{{(comment.value ? comment.value.length : 0) + '/' + charLimit}}</p>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button class="mdm-button" [mat-dialog-close]="undefined">
+    {{ "Cancel" | translate }}
+  </button>
+  <button
+    mat-stroked-button
+    class="mdm-button save-button"
+    [disabled]="!comment"
+    [mat-dialog-close]="comment"
+    [disabled]="comment.value === '' || (originalComment && originalComment === comment.value)"
+  >
+    {{ "Save" | translate }}
+  </button>
+</mat-dialog-actions>

@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
 import InformationItem from '../models/interfaces/information-item';
+import { Comment } from './comment.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class ProjectService {
+export class ProjectService implements OnDestroy {
 
 
   private currentProject: Project;
@@ -23,6 +24,18 @@ export class ProjectService {
 
   // It s valid by default because we don t always have to check again if the form is valid. For example when we use the drag and drop
   valid = true;
+
+  // Error message to show when form isn't valid
+  errorMessage: undefined | {
+    message: string,
+    type: string
+  };
+
+  // Warning message
+  warningMessage: undefined | {
+    message: string,
+    type: string
+  };
 
   // This parameter allows to extend the page
   inBigPage: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -40,6 +53,8 @@ export class ProjectService {
 
   // Check if a project user is creating a new project
   projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  private subscription: Subscription = new Subscription();
 
   get openedProject(): Observable<Project> {
     return this.project.asObservable().pipe(filter(p => !!p));
@@ -86,37 +101,41 @@ export class ProjectService {
   }
 
   constructor(private apiService: ApiService, private themeService: ThemeService) {
-    this.openedProject.subscribe((project: Project) => {
-      if (!this.savedProject) {
-        this.savedProject.next(project.copy());
-        this.currentProject = project.copy();
-      } else {
-        if (project.id !== this.savedProject.value.id) {
+    this.subscription.add(
+      this.openedProject.subscribe((project: Project) => {
+        if (!this.savedProject) {
           this.savedProject.next(project.copy());
           this.currentProject = project.copy();
         } else {
-          this.currentProject = project.copy();
+          if (project.id !== this.savedProject.value.id) {
+            this.savedProject.next(project.copy());
+            this.currentProject = project.copy();
+          } else {
+            this.currentProject = project.copy();
+          }
         }
-      }
-    });
+      })
+    );
   }
 
   // used when changing pages and chosing to not save the changes
   public discardPendingChanges(): void {
     this.project = new BehaviorSubject(this.savedProject.value.copy());
-    this.openedProject.subscribe( (project: Project) => {
-      if (!this.savedProject) {
-        this.savedProject.next(project.copy());
-        this.currentProject = project.copy();
-      } else {
-        if ( project.id !== this.savedProject.value.id ) {
+    this.subscription.add(
+      this.openedProject.subscribe( (project: Project) => {
+        if (!this.savedProject) {
           this.savedProject.next(project.copy());
           this.currentProject = project.copy();
         } else {
-          this.currentProject = project.copy();
+          if ( project.id !== this.savedProject.value.id ) {
+            this.savedProject.next(project.copy());
+            this.currentProject = project.copy();
+          } else {
+            this.currentProject = project.copy();
+          }
         }
-      }
-    });
+      })
+    );
   }
 
   // Update the breadcrumbs list
@@ -133,14 +152,35 @@ export class ProjectService {
     this.informations.next(list);
   }
 
-  public async list(): Promise<Project[]> {
+  public async list(status?: string, pageNumber?: number, itemPerPage?: number, search?: string): Promise<any> {
     const themes = await this.themeService.list();
-    const response: any = await this.apiService.get('/resources/project/?mode=short');
-    return response.map(x => {
-      const project = new Project(x);
-      project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
-      return project;
-    });
+    let url = '/resources/project/?mode=short';
+    if (status) {
+      url = url + `&status=${status}`;
+    } else {
+      url = url + `&status=`;
+    }
+    if (pageNumber) {
+      url = url + `&page_number=${pageNumber}`;
+    }
+    if (itemPerPage) {
+      url = url + `&item_per_page=${itemPerPage}`;
+    }
+    if (search) {
+      url = url + `&search=${search}`;
+    }
+    const response: any = await this.apiService.get(url);
+    return {
+      // result: response.result.map(x => new Project(x)),
+      result: response.result.map(x => {
+        const project = new Project(x);
+        project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
+        return project;
+      }),
+      total_item: response.total_item,
+      total_page: response.total_page,
+      categories: response.categories
+    };
   }
 
   public create(project: Project): void {
@@ -167,9 +207,10 @@ export class ProjectService {
     return project;
   }
 
-  public async saveCurrent(): Promise<Project>{
+  public async saveCurrent(): Promise<Project> {
     const project = this.currentProject;
-    // console.log(this.currentProject);
+    // DISABLE CROSSCUTTING INDICATORS SAVING
+    project.crossCutting = {};
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
@@ -230,5 +271,13 @@ export class ProjectService {
   // TODO: Check if this is really usefull
   public updateProjectId(id: string) {
     this.projectId.next(id);
+  }
+
+  public setComments(comments: Comment[]): void {
+    this.currentProject.comments = comments;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

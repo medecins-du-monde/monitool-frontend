@@ -38,18 +38,20 @@ export class IndicatorComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: this.indicator });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res && res.data) {
         this.edit.emit(res.data);
+        dialogSubscription.unsubscribe();
       }
     });
   }
 
   confirmDeletion(): void {
     const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DeleteConfirmation'}});
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res.confirm){
         this.delete.emit(this.indicator.id);
+        dialogSubscription.unsubscribe();
       }
     });
   }

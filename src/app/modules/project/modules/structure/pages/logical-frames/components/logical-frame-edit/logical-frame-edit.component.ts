@@ -1,4 +1,4 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -69,6 +69,8 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   private formSubscription: Subscription;
 
+  private subscription: Subscription = new Subscription();
+
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -86,51 +88,55 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
-      map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
-    ).subscribe((res: { project: Project, logicalFrameId: string }) => {
-      this.project = res.project;
-      const oldLogicalFrame = this.logicalFrame;
-      this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
+    this.subscription.add(
+      combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+        map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))
+      ).subscribe((res: { project: Project, logicalFrameId: string }) => {
+        this.project = res.project;
+        const oldLogicalFrame = this.logicalFrame;
+        this.logicalFrame = res.project.logicalFrames.find(x => x.id === res.logicalFrameId);
 
-      if (this.logicalFrame) {
-        const breadCrumbs = [
-          {
-            value: 'Projects',
-            link: './../../projects'
-          } as BreadcrumbItem,
-          {
-            value: this.project.country,
-          } as BreadcrumbItem,
-          {
-            value: this.project.name,
-          } as BreadcrumbItem,
-          {
-            value: 'Structure',
-          } as BreadcrumbItem,
-          {
-            value: 'LogicalFrameworks',
-            link: `./../../projects/${this.project.id}/structure/logical-frames`
-          } as BreadcrumbItem,
-          {
-            value: this.logicalFrame.name,
-          } as BreadcrumbItem,
-        ];
-        this.projectService.updateBreadCrumbs(breadCrumbs);
-      }
-      if (!this.logicalFrame) {
-        this.router.navigate(['..'], { relativeTo: this.route });
-      } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
-        this.entities = res.project.entities;
-        this.groups = res.project.groups;
-        this.setForm();
-      }
-    });
+        if (this.logicalFrame) {
+          const breadCrumbs = [
+            {
+              value: 'Projects',
+              link: './../../projects'
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: 'Structure',
+            } as BreadcrumbItem,
+            {
+              value: 'LogicalFrameworks',
+              link: `./../../projects/${this.project.id}/structure/logical-frames`
+            } as BreadcrumbItem,
+            {
+              value: this.logicalFrame.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        if (!this.logicalFrame) {
+          this.router.navigate(['..'], { relativeTo: this.route });
+        } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
+          this.entities = res.project.entities;
+          this.groups = res.project.groups;
+          this.setForm();
+        }
+      })
+    );
 
-    this.dateService.currentLang.subscribe(
-      lang => {
-        this.adapter.setLocale(lang);
-      }
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang => {
+          this.adapter.setLocale(lang);
+        }
+      )
     );
   }
 
@@ -138,6 +144,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     if (this.formSubscription) {
       this.formSubscription.unsubscribe();
     }
+    this.subscription.unsubscribe();
   }
 
   private setForm(): void {
@@ -159,7 +166,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.formSubscription = this.logicalFrameForm.valueChanges.subscribe((value: any) => {
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
-      this.projectService.valid = this.logicalFrameForm.valid;
+      this.projectService.valid = this.datesAreInRange() && this.logicalFrameForm.valid;
       this.logicalFrame.deserialize(value);
       this.projectService.project.next(this.project);
     });
@@ -211,7 +218,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
-    dialogRef.afterClosed().subscribe(res => {
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         if (add) {
           this.indicators.push(res.indicator);
@@ -219,6 +226,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
         else if (index !== null) {
           this.indicators.setControl(index, res.indicator);
         }
+        dialogSubscription.unsubscribe();
       }
       this.changeDetector.markForCheck();
     });
@@ -226,16 +234,18 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   // drag and drop function on a form array displayed in one column
   drop(event: CdkDragDrop<string[]>) {
-    const selectedControl = this.purposes.at(event.previousIndex);
-    const newControls = this.purposes.at(event.currentIndex);
-    this.purposes.setControl(event.previousIndex, newControls);
-    this.purposes.setControl(event.currentIndex, selectedControl);
+    moveItemInArray(this.purposes.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control = this.purposes.at(0);
+    this.purposes.setControl(0, control);
   }
 
   // drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
-    this.indicators.setControl(event.previousContainer.data.index, event.container.data.indicator);
-    this.indicators.setControl(event.container.data.index, event.previousContainer.data.indicator);
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    // Dummy code so the save button is available
+    const control = this.indicators.at(0);
+    this.indicators.setControl(0, control);
   }
 
   get logFrameName() {
@@ -246,4 +256,39 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     return this.logicalFrameForm.value.goal;
   }
 
+  private datesAreInRange(): boolean {
+    const logicalFrame = this.logicalFrameForm.value;
+    if (logicalFrame.start && logicalFrame.end) {
+      const start = (logicalFrame.start as any)._d || logicalFrame.start ;
+      const end = (logicalFrame.end as any)._d || logicalFrame.end ;
+      if (start.getTime() < this.project.start.getTime() ||
+          end.getTime() > this.project.end.getTime()) {
+        this.projectService.errorMessage = {
+          message: 'DatesOutOfRange',
+          type: 'LogicalFramework'
+        };
+        return false;
+      } else {
+        const subscription = this.projectService.lastSavedVersion.subscribe(res => {
+          const oldLogicalFrame = res.logicalFrames.find(logFrame => logFrame.id === logicalFrame.id);
+          if (start.getTime() > oldLogicalFrame.start.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenStart',
+              type: ''
+            };
+          } else if (end.getTime() < oldLogicalFrame.end.getTime()) {
+            this.projectService.warningMessage = {
+              message: 'DataHiddenEnd',
+              type: ''
+            };
+          } else {
+            this.projectService.warningMessage = undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage = undefined;
+    return true;
+  }
 }
