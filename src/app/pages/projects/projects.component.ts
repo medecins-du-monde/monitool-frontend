@@ -148,7 +148,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.countries = [... new Set(res.map(x => x.country)
       .sort((x: string, y: string) => x.toLocaleLowerCase().replace(/[\])}[{(]/g, '').localeCompare(y.toLocaleLowerCase().replace(/[\])}[{(]/g, ''))))];
 
-      if (this.projects) {
+    if (this.projects) {
         this.projects.sort((a, b) => {
           // If owner of at least one of both project
           if (a.users.find(user => this.isOwner(user))
@@ -177,7 +177,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
       }
 
-      this.setCountProjectStatus(res);
+    this.setCountProjectStatus(res);
     });
   }
 
