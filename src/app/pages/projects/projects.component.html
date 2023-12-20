@@ -3,11 +3,9 @@
     <div class="actions-group" [formGroup]="filtersForm">
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
-                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" (click)="onToggleStatus(status.value)" style="min-width: 135px;">
+                    <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" style="min-width: 135px;">
                         {{ status.text | translate }}
-                        <ng-container *ngIf="status.checked == true">
                         ({{ status.count }})
-                        </ng-container>
                     </mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
@@ -26,15 +24,5 @@
             [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"
         ></app-project>
     </div>
-    <mat-paginator
-        [disabled]="loading"
-        [pageIndex]="pageNumber - 1"
-        [length]="totalItem"
-        [pageSize]="itemPerPage"
-        [hidePageSize]="true"
-        [showFirstLastButtons]="true"
-        (page)="paginationChange($event)"    
-    >
-    </mat-paginator>
 </div>
 <app-informations-panel></app-informations-panel>
