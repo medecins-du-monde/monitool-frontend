@@ -12,6 +12,7 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Subscription } from 'rxjs';
+import { Entity } from 'src/app/models/classes/entity.model';
 
 
 @Component({
@@ -186,7 +187,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
         entity.end = new Date(entity.end);
       }
     });
-    revisedProject.forms = revisedProject.forms.map(y => new Form(y, this.project.entities));
+    revisedProject.entities = revisedProject.entities.map(y => new Entity(y));
+    revisedProject.forms = revisedProject.forms.map(y => new Form(y, revisedProject.entities));
+    revisedProject.extraIndicators = revisedProject.extraIndicators.map(y => new ProjectIndicator(y));
     return revisedProject;
   }
 
@@ -198,8 +201,38 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.saveConfirmElement = revisionIndex;
     const patchedRevision = this.patchProject(revisionIndex + 1);
 
-    patchedRevision.forms = patchedRevision.forms.map(y => new Form(y));
-    patchedRevision.extraIndicators = patchedRevision.extraIndicators.map(y => new ProjectIndicator(y));
+    // Fix user entities and data sources
+    patchedRevision.users = patchedRevision.users.map(user => {
+      if (user.entities) {
+        user.entities = user.entities.map(entity => {
+          if (typeof entity === 'string') {
+            entity = patchedRevision.entities.find(el => el.id as any === entity)
+          }
+          return entity;
+        })
+      }
+      if (user.dataSources) {
+        user.dataSources = user.dataSources.map(dataSource => {
+          if (typeof dataSource === 'string') {
+            dataSource = patchedRevision.forms.find(el => el.id as any === dataSource)
+          }
+          return dataSource;
+        })
+      }
+      return user;
+    })
+    // Fix group entities
+    patchedRevision.groups = patchedRevision.groups.map(group => {
+      if (group.members) {
+        group.members = group.members.map(entity => {
+          if (typeof entity === 'string') {
+            entity = patchedRevision.entities.find(el => el.id as any === entity)
+          }
+          return entity;
+        })
+      }
+      return group;
+    })
     this.projectService.project.next(patchedRevision);
   }
 
