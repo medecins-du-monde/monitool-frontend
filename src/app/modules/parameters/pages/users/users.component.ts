@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
     // Apply role and deleted filters
     this.filteredUsers = this.users.filter(
       u =>
-        (this.showDeleted ? !u.active : u.active) &&
+        (this.showDeleted ? (u.hasOwnProperty('active') && !u.active) : (!u.hasOwnProperty('active') || u.active)) &&
         this.showByRoles.includes(u.role)
     );
 
