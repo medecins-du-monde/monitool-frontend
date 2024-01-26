@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -110,6 +110,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.projectService.hasPendingChanges;
+  }
+
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
     this.chartService.clearChart();
@@ -126,7 +131,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project;
+        this.project = new Project(project.serialize());
         this.entities = this.project.entities;
         this.indicatorService
           .listForProject(this.project.themes.map(x => x.id))

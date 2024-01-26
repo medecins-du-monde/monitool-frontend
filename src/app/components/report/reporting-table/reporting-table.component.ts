@@ -279,32 +279,27 @@ export class ReportingTableComponent
       },
       entities: filter.entities || []
     };
-    this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        let i = 1;
-        project.logicalFrames.forEach(logicalFrame => {
-          if (this.openedSections[i]) {
-            filters.logicalFrames.push(logicalFrame.id);
-          }
-          i++;
-        });
-        if (this.openedSections[i]) {
-          filters.crossCutting = true;
-        }
-        i++;
-        if (this.openedSections[i]) {
-          filters.extraIndicators = true;
-        }
-        i++;
-        project.forms.forEach(dataSource => {
-          if (this.openedSections[i]) {
-            filters.dataSources.push(dataSource.id);
-          }
-          i++;
-        });
-      })
-    );
-
+    let i = 1;
+    this.project.logicalFrames.forEach(logicalFrame => {
+      if (this.openedSections[i]) {
+        filters.logicalFrames.push(logicalFrame.id);
+      }
+      i++;
+    });
+    if (this.openedSections[i]) {
+      filters.crossCutting = true;
+    }
+    i++;
+    if (this.openedSections[i]) {
+      filters.extraIndicators = true;
+    }
+    i++;
+    this.project.forms.forEach(dataSource => {
+      if (this.openedSections[i]) {
+        filters.dataSources.push(dataSource.id);
+      }
+      i++;
+    });
     return filters;
   }
   ngOnInit(): void {
@@ -346,7 +341,7 @@ export class ReportingTableComponent
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
           if (JSON.stringify(this.project) !== JSON.stringify(project)) {
-            this.project = project;
+            this.project = new Project(project.serialize());
             this.updateDimensions();
             this.refreshValues();
             this.updateTableContent();
