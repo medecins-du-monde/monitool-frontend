@@ -22,6 +22,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   savedProject: Project;
   currentProject: Project;
 
+  private storedProject: Project;
+
   @Input() reload = true;
 
   private subscription: Subscription = new Subscription();
@@ -80,6 +82,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     this.projectService.saveCurrent().then((project: Project) => {
       if (this.reload) {
         this.projectService.project.next(project);
+      } else {
+        this.storedProject = project;
       }
       this.subscription.add(
         this.authService.currentUser.subscribe((user: User) => this.currentUser = user )
@@ -101,6 +105,9 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (!this.reload && this.storedProject) {
+      this.projectService.project.next(this.storedProject);
+    }
     this.subscription.unsubscribe();
   }
 

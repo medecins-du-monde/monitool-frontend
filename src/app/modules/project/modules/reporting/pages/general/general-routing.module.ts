@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DownloadExcelPageComponent } from './download-excel-page/download-excel-page.component';
 import { GeneralComponent } from './general.component';
+import { PendingChangesGuard } from 'src/app/guards/pending-changes.guard';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: GeneralComponent
+    component: GeneralComponent,
+    canDeactivate: [PendingChangesGuard]
   }
 ];
 
