@@ -131,7 +131,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        this.project = project//new Project(project.serialize());
+        this.project = project;
         this.entities = this.project.entities;
         this.indicatorService
           .listForProject(this.project.themes.map(x => x.id))
