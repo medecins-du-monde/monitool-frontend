@@ -37,7 +37,6 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    console.log('create component')
     this.subscription.add(
       this.projectService.openedProject.subscribe(project => {
         this.currentProject = project;
@@ -106,7 +105,6 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy component')
     if (!this.reload) {
       if (this.storedProject) {
         this.projectService.project.next(this.storedProject);
