@@ -140,6 +140,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   }
 
   ngOnInit(): void {
+    this.projectService.revertChanges();
     this.subscription.add(
       combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
         map(results => ({ project: results[0], formId: (results[1] as ParamMap).get('id') }))

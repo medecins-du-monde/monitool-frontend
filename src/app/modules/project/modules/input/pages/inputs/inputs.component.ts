@@ -108,9 +108,7 @@ export class InputsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        // Project is cloned, otherwised the original project was modified somewhere in updateData()
-        // TO DO: Investigate
-        this.project = new Project(project.serialize());
+        this.project = project;
         this.updateData();
       })
     );

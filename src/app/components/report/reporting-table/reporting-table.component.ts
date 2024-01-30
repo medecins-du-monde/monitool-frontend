@@ -341,7 +341,7 @@ export class ReportingTableComponent
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
           if (JSON.stringify(this.project) !== JSON.stringify(project)) {
-            this.project = new Project(project.serialize());
+            this.project = project;
             this.updateDimensions();
             this.refreshValues();
             this.updateTableContent();
