@@ -914,5 +914,9 @@
     "LAST_PAGE_LABEL": "Última página",
     "RANGE_PAGE_LABEL_1": "0 de {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}"
-  }
+  },
+  "lastUpdate": "Última actualizacion",
+  "justUpdated": "Se acaba de actualizar",
+  "minutesAgo": "Hace {{minutes}}m",
+  "refreshCacheInfo": "Refresca los valores guardados en el caché"
 }
