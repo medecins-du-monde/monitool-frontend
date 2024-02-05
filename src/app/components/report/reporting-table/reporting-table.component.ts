@@ -644,7 +644,7 @@ export class ReportingTableComponent
         .then(response => {
           if (response) {
             // this.roundResponse(response);
-            response.cachedItems.forEach(item => this.lastCachedTime = item.time)
+            response.cachedItems.forEach(item => this.lastCachedTime = item.time);
             const data = this.formatResponseToDataset(response.items);
             row.dataset = {
               label: row.name,
@@ -657,8 +657,9 @@ export class ReportingTableComponent
             };
             row.values = response.items;
             row.error = undefined;
-            if (row.refreshCache)
+            if (row.refreshCache) {
               delete row.refreshCache;
+            }
 
             // TODO: Check why we have this row below?
             this.rows.next(this.rows.value);
@@ -1443,8 +1444,9 @@ export class ReportingTableComponent
   }
 
   getLastCache(): number {
-    if (this.lastCachedTime === undefined)
+    if (this.lastCachedTime === undefined) {
       return undefined;
+    }
     const currTime = new Date().getTime();
     return Math.floor((currTime - this.lastCachedTime) / 60000);
   }
