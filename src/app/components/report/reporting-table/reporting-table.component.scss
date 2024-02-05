@@ -303,3 +303,34 @@ tr.mat-header-row {
   align-items: center;
   justify-content: center;
 }
+
+.lastUpdate {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 10px;
+  height: 28.5px;
+
+  p {
+    margin: 0;
+
+    span {
+      text-transform: uppercase;
+    }
+  }
+
+  mat-icon {
+    cursor: pointer;
+    margin-top: -2px;
+  }
+  mat-icon:hover {
+    color: #005ec5;
+  }
+
+  .disabled {
+    opacity: .5;
+  }
+  .disabled:hover {
+    color: unset;
+    opacity: .5;
+  }
+}

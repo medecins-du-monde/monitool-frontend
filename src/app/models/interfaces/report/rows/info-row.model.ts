@@ -37,4 +37,5 @@ export interface InfoRow {
     value: string,
     cellValue?: string
   }};
+  refreshCache?: boolean;
 }

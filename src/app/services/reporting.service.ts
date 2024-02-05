@@ -35,7 +35,7 @@ export class ReportingService {
     'week_mon', 'month', 'quarter', 'semester', 'year'
   ];
 
-  public async fetchData(project, computation,  dimensionIds, filter, withTotals, withGroups) {
+  public async fetchData(project, computation,  dimensionIds, filter, withTotals, withGroups, refreshCache) {
 
     // Missing information will return null for now. //
     if (!computation) {
@@ -93,7 +93,8 @@ export class ReportingService {
       dimensionIds,
       filter,
       withTotals,
-      withGroups
+      withGroups,
+      refreshCache
     };
 
     try {

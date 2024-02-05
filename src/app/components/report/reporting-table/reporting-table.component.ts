@@ -214,6 +214,16 @@ export class ReportingTableComponent
 
   private subscription: Subscription = new Subscription();
 
+  private _lastCachedTime: number = null;
+  public get lastCachedTime() {
+    return this._lastCachedTime;
+  }
+  public set lastCachedTime(time: number) {
+    if (this._lastCachedTime === null || time < this._lastCachedTime || time === null) {
+      this._lastCachedTime = time;
+    }
+  }
+
   // These values are used to check if the value changed in the subscribe
   currentDimension: string;
   currentFilter: any;
@@ -628,23 +638,29 @@ export class ReportingTableComponent
           [this.dimensionIds.value],
           customFilter,
           true,
-          false
+          false,
+          row.refreshCache || false
         )
         .then(response => {
           if (response) {
             // this.roundResponse(response);
-            const data = this.formatResponseToDataset(response);
+            response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+            const data = this.formatResponseToDataset(response.items);
             row.dataset = {
               label: row.name,
               data,
-              labels: Object.keys(response)
+              labels: Object.keys(response.items)
                 .filter(x => x !== '_total')
                 .map(x => this.getSiteOrGroupName(x)),
               fill: false,
               unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
-            row.values = response;
+            row.values = response.items;
             row.error = undefined;
+            if (row.refreshCache) {
+              delete row.refreshCache;
+            }
+
             // TODO: Check why we have this row below?
             this.rows.next(this.rows.value);
 
@@ -1419,6 +1435,20 @@ export class ReportingTableComponent
       default:
         return typeof row.values[col] === 'number' ? row.values[col].toString() : (row.values[col] || '');
     }
+  }
+
+  public reloadTableAndCache(): void {
+    this.content.forEach(row => row.refreshCache = true);
+    this.refreshValues();
+    this.lastCachedTime = null;
+  }
+
+  getLastCache(): number {
+    if (this.lastCachedTime === undefined) {
+      return undefined;
+    }
+    const currTime = new Date().getTime();
+    return Math.floor((currTime - this.lastCachedTime) / 60000);
   }
 
   ngOnDestroy(): void {

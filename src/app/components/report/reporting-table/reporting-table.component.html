@@ -1,3 +1,19 @@
+<div class="lastUpdate" *ngIf="lastCachedTime !== null">
+  <p>
+    <span>{{'lastUpdate' | translate}}:</span>
+    {{ getLastCache() > 0 ? ('minutesAgo' | translate : { minutes: getLastCache() }) : ('justUpdated' | translate) }}
+  </p>
+  <mat-icon
+    (click)="reloadTableAndCache()"
+    [matTooltip]="'refreshCacheInfo' | translate"
+  >refresh</mat-icon>
+  <!-- <mat-icon
+    *ngIf="getLastCache() === 0"
+    class="disabled"
+    [matTooltip]="'refreshCacheInfo' | translate"
+  >refresh</mat-icon> -->
+</div>
+
 <div
   #reportingTable
   class="table-scroll {{ isCrossCuttingReport ? 'big-table' : null }}"
