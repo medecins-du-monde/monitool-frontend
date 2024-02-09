@@ -207,45 +207,45 @@ export class HistoryComponent implements OnInit, OnDestroy {
       if (user.entities) {
         user.entities = user.entities.map(entity => {
           if (typeof entity === 'string') {
-            entity = patchedRevision.entities.find(el => el.id as any === entity)
+            entity = patchedRevision.entities.find(el => el.id as any === entity);
           }
           return entity;
-        })
+        });
       }
       if (user.dataSources) {
         user.dataSources = user.dataSources.map(dataSource => {
           if (typeof dataSource === 'string') {
-            dataSource = patchedRevision.forms.find(el => el.id as any === dataSource)
+            dataSource = patchedRevision.forms.find(el => el.id as any === dataSource);
           }
           return dataSource;
-        })
+        });
       }
       return user;
-    })
+    });
     // Fix group entities
     patchedRevision.groups = patchedRevision.groups.map(group => {
       if (group.members) {
         group.members = group.members.map(entity => {
           if (typeof entity === 'string') {
-            entity = patchedRevision.entities.find(el => el.id as any === entity)
+            entity = patchedRevision.entities.find(el => el.id as any === entity);
           }
           return entity;
-        })
+        });
       }
       return group;
-    })
+    });
     // Fix logical frames
     patchedRevision.logicalFrames = patchedRevision.logicalFrames.map(logFrame => {
       if (logFrame.entities) {
         logFrame.entities = logFrame.entities.map(entity => {
           if (typeof entity === 'string') {
-            entity = patchedRevision.entities.find(el => el.id as any === entity)
+            entity = patchedRevision.entities.find(el => el.id as any === entity);
           }
           return entity;
-        })
+        });
       }
       return new LogicalFrame(logFrame);
-    })
+    });
 
     console.log(patchedRevision);
     this.projectService.project.next(patchedRevision);

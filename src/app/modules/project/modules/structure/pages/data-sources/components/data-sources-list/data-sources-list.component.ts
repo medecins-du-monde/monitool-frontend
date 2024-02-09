@@ -145,7 +145,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         // Delete the datasource from users
         this.project.users.map(user => {
             if (user.dataSources) {
-              const dataSourcePosition = user.dataSources.findIndex(el => el.id === form.id)
+              const dataSourcePosition = user.dataSources.findIndex(el => el.id === form.id);
               if (dataSourcePosition > -1) {
                 user.dataSources.splice(dataSourcePosition, 1);
               }
