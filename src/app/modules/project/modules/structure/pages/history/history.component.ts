@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Subscription } from 'rxjs';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 
 
 @Component({
@@ -233,6 +234,20 @@ export class HistoryComponent implements OnInit, OnDestroy {
       }
       return group;
     })
+    // Fix logical frames
+    patchedRevision.logicalFrames = patchedRevision.logicalFrames.map(logFrame => {
+      if (logFrame.entities) {
+        logFrame.entities = logFrame.entities.map(entity => {
+          if (typeof entity === 'string') {
+            entity = patchedRevision.entities.find(el => el.id as any === entity)
+          }
+          return entity;
+        })
+      }
+      return new LogicalFrame(logFrame);
+    })
+
+    console.log(patchedRevision);
     this.projectService.project.next(patchedRevision);
   }
 
