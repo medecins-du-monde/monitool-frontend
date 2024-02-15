@@ -88,7 +88,6 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.projectService.revertChanges();
     this.subscription.add(
       combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
         map(results => ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get('id') }))

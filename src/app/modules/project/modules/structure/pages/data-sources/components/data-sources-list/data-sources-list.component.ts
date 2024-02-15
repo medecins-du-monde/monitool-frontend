@@ -103,6 +103,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
 
   onEdit(form: Form): void {
     this.projectService.project.next(this.project);
+    this.projectService.revertChanges();
     this.router.navigate([`${this.router.url}/${form.id}`]);
   }
 
