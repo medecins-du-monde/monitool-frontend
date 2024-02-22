@@ -795,7 +795,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
     if (response) {
-      this.router.navigate(['./../../../'], { relativeTo: this.route });
+      // this.router.navigate(['./../../../'], { relativeTo: this.route });
+      window.close();
     }
   }
 
@@ -840,7 +841,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             if (response) {
               this.input = new Input(response);
               this.inputForm.get('rev').setValue(this.input.rev);
-              this.router.navigate(['./../../../'], { relativeTo: this.route });
+              // this.router.navigate(['./../../../'], { relativeTo: this.route });
             }
           });
           dialogSubscription.unsubscribe();
@@ -852,7 +853,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         if (response) {
           this.input = new Input(response);
           this.inputForm.get('rev').setValue(this.input.rev);
-          this.router.navigate(['./../../../'], { relativeTo: this.route });
+          // this.router.navigate(['./../../../'], { relativeTo: this.route });
         }
       });
     }

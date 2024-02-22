@@ -668,6 +668,7 @@
   "SeeReport": "Voir le rapport",
   "SeeOlderDates": "Voir les dates précedentes",
   "CreateNewDate": "Saisir (nouvelle date)",
+  "DateHasEntry": "Ce site de collecte a déjà une entrée pour la date sélectionnée.",
   "Settings": "Paramètres",
   "SettingsIndicatorEdit": "Cette page vous permet de modifier la définition d'un indicateur transversal. Si vous réalisez des changements, attention de bien mettre à jour les champs dans toutes les langues.",
   "SettingsIndicatorsInfo": [
