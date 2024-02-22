@@ -150,7 +150,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     );
     this.projectService.updateInformationPanel(this.informations);
 
-    window.addEventListener("focus", () => {
+    window.addEventListener('focus', () => {
       this.updateData();
     });
   }
@@ -323,12 +323,12 @@ export class InputsComponent implements OnInit, OnDestroy {
   }
 
   openLinkInNewWindow(column, date) {
-    // Converts the route into a string that can be used 
+    // Converts the route into a string that can be used
     // with the window.open() function
     const url = this.router.serializeUrl(
       this.router.createUrlTree([this.router.url, 'edit', column, date])
     );
-  
+
     window.open(url, '_blank');
   }
 
