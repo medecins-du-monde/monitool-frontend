@@ -1,6 +1,6 @@
 // tslint:disable: no-string-literal
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Subscription } from 'rxjs';
@@ -77,6 +77,8 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   lastDates = {};
 
+  private isFocused = false;
+
 
   get currentDate(): string {
     return DatesHelper.dateToString(this.dateForm.value);
@@ -88,6 +90,7 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private projectService: ProjectService,
     private translateService: TranslateService,
@@ -146,6 +149,10 @@ export class InputsComponent implements OnInit, OnDestroy {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
+
+    window.addEventListener('focus', () => {
+      this.updateData();
+    });
   }
 
   get currentLang(): string {
@@ -256,12 +263,14 @@ export class InputsComponent implements OnInit, OnDestroy {
           if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
             current[site.name] = {
               value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
-              routerLink: `./edit/${site.id}/${date.value}`
+              column: site.id,
+              date: date.value,
             };
           } else{
             current[site.name] = {
               value: -1,
-              routerLink: `./edit/${site.id}/${date.value}`
+              column: site.id,
+              date: date.value,
             };
           }
           if (date.date <= site.start.setHours(12)) {
@@ -313,6 +322,23 @@ export class InputsComponent implements OnInit, OnDestroy {
     return dates;
   }
 
+  openLinkInNewWindow(column, date) {
+    // Converts the route into a string that can be used
+    // with the window.open() function
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([this.router.url, 'edit', column, date])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  dateAlreadyExist(column, date) {
+    const inputId = `input:${this.project.id}:${this.formId}`;
+    if (this.inputProgress && `${inputId}:${column}:${date}` in this.inputProgress){
+      return true;
+    }
+    return false;
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
