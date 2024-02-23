@@ -76,7 +76,7 @@
       <td
         mat-cell
         *matCellDef="let element"
-        class="gradient-background"
+        class="gradient-background readable-text"
         [class.comment-cell]="this.showComments && element.comments?.baseline"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'baseline')
@@ -92,7 +92,7 @@
       <td
         mat-cell
         *matCellDef="let element"
-        class="gradient-background"
+        class="gradient-background readable-text"
         [class.comment-cell]="this.showComments && element.comments?.target"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'target')
@@ -128,7 +128,7 @@
       </th>
       <td
         mat-cell
-        class="value-cell"
+        class="value-cell readable-text"
         *matCellDef="let element"
         [ngStyle]="{
           backgroundColor:
