@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input, Output, EventEmitter} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -25,6 +25,12 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   private storedProject: Project;
 
   @Input() reload = true;
+  @Input() isAdmin = true;
+
+  // Cache general report table
+  @Input() cache = false;
+  @Input() lastCache: null | number = null;
+  @Output() refreshCache = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
 
@@ -102,6 +108,14 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
 
   onRevert(): void {
     this.projectService.revertChanges();
+  }
+
+  getLastCache(): number {
+    if (this.lastCache === undefined) {
+      return undefined;
+    }
+    const currTime = new Date().getTime();
+    return Math.floor((currTime - this.lastCache) / 60000);
   }
 
   ngOnDestroy(): void {
