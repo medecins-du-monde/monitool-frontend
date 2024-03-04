@@ -30,12 +30,12 @@
     (selectedRolesChange)="handleUserFiltering($event)"
     (showDeletedChange)="handleUserFiltering($event)"
   ></app-user-filters>
-  {{ "showingResults" | translate: { count: filteredUsers?.length } }}
+  <!-- {{ "showingResults" | translate: { count: filteredUsers?.length } }} -->
 </span>
 <div style="overflow-y: auto; overflow-x: hidden;">
   <div class="mdm-cards">
     <app-user
-      *ngFor="let user of filteredUsers"
+      *ngFor="let user of shownUsers"
       [user]="user"
       (edit)="onEdit($event)"
       (delete)="onEdit($event)"
@@ -43,4 +43,13 @@
       class="mdm-card"
     ></app-user>
   </div>
+  <mat-paginator
+      [pageIndex]="pageNumber"
+      [length]="totalItem"
+      [pageSize]="12"
+      [hidePageSize]="true"
+      [showFirstLastButtons]="true"
+      (page)="paginationChange($event)"    
+  >
+  </mat-paginator>
 </div>

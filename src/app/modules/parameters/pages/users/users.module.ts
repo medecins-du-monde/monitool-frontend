@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [UsersComponent],
@@ -28,7 +29,8 @@ import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    SearchbarModule
+    SearchbarModule,
+    MatPaginatorModule
   ]
 })
 export class UsersModule {}
