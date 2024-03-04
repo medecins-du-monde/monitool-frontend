@@ -17,6 +17,10 @@ export class UsersComponent implements OnInit {
   public searchQuery = new FormControl('');
   private searchTimeout: NodeJS.Timeout;
 
+  pageNumber = 0;
+  totalItem = 0;
+  shownUsers: User[];
+
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -44,6 +48,9 @@ export class UsersComponent implements OnInit {
         u.name.toLowerCase().includes(this.searchQuery.value.toLowerCase()) ||
         u.id.toLowerCase().includes(this.searchQuery.value.toLowerCase())
     );
+
+    this.pageNumber = 0;
+    this.setPagination();
   }
 
   onSearchChange($event: string): void {
@@ -68,5 +75,17 @@ export class UsersComponent implements OnInit {
     else { this.showByRoles = data; }
 
     this.applyFilters();
+  }
+
+  paginationChange(e: any) {
+    if (e.pageIndex !== this.pageNumber) {
+      this.pageNumber = e.pageIndex;
+      this.setPagination();
+    }
+  }
+
+  private setPagination() {
+    this.totalItem = this.filteredUsers.length;
+    this.shownUsers = this.filteredUsers.slice(this.pageNumber * 12, this.pageNumber * 12 + 12);
   }
 }
