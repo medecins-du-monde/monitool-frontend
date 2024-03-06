@@ -919,6 +919,6 @@
   "lastUpdate": "Dernière mise à jour",
   "justUpdated": "Vient d'être mis à jour",
   "minutesAgo": "Il y a {{minutes}}m",
-  "refreshCache": "Actualiser le cache",
-  "refreshCacheInfo": "Actualiser les valeurs mises en cache pour afficher les valeurs les plus récentes disponibles"
+  "refreshCache": "Actualiser les valeurs",
+  "refreshCacheInfo": "Actualiser avec les dernières valeurs saisies"
 }
