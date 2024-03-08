@@ -918,7 +918,7 @@
   },
   "lastUpdate": "Dernière mise à jour",
   "justUpdated": "Vient d'être mis à jour",
-  "minutesAgo": "Il y a {{minutes}}m",
+  "minutesAgo": "Il y a {{minutes}}min",
   "refreshCache": "Actualiser les valeurs",
   "refreshCacheInfo": "Actualiser avec les dernières valeurs saisies"
 }

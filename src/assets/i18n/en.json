@@ -901,7 +901,7 @@
   },
   "lastUpdate": "Last update",
   "justUpdated": "Just updated",
-  "minutesAgo": "{{minutes}}m ago",
+  "minutesAgo": "{{minutes}}min ago",
   "refreshCache": "Refresh data",
   "refreshCacheInfo": "Refresh with the last data inputed"
 }
