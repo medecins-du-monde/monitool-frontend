@@ -49,7 +49,7 @@ export class FilterComponent implements OnInit, OnDestroy{
 
   @Input() isCrossCuttingReport = false;
   @Input() project: Project;
-  @Input() showComments: boolean;
+  @Input() showComments = false;
   @Input() userIsAdmin = false;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
   @Output() showCommentsChange = new EventEmitter<boolean>();

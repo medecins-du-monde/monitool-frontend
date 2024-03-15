@@ -7,7 +7,7 @@
              </mat-icon>
              {{ 'Filters' | translate }}
            </h2>
-           <h2 [matTooltip]="userIsAdmin ? ('display-comments.tooltip' | translate) : null">
+           <h2 *ngIf="!isCrossCuttingReport"  [matTooltip]="userIsAdmin ? ('display-comments.tooltip' | translate) : null">
              {{ 'display-comments.title' | translate}}
              <mat-checkbox [(ngModel)]="showComments" ngDefaultControl (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
            </h2>

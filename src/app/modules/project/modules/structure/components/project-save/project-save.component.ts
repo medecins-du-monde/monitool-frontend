@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input, Output, EventEmitter} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input, Output, EventEmitter, Renderer2, ElementRef} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -26,6 +26,7 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
 
   @Input() reload = true;
   @Input() isAdmin = true;
+  @Input() fullScreen = false;
 
   // Cache general report table
   @Input() cache = false;
@@ -39,7 +40,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private sidenavService: SidenavService,
     private changeDetector: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private elRef: ElementRef, private renderer: Renderer2
     ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,9 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
         this.savedProject = project;
       })
     );
+    if (this.fullScreen) {
+      this.renderer.setStyle(this.elRef.nativeElement, 'width', '100%');
+    }
   }
 
   get hasChanges(): boolean{

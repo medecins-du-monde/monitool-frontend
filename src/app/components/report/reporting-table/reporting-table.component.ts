@@ -397,6 +397,11 @@ export class ReportingTableComponent
         if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
           this.content = newContent;
           this.updateTableContent();
+          if (this.isCrossCuttingReport) {
+            this.content.map(c => {
+              c = this.updateRowValues(c);
+            });
+          }
         }
       })
     );
@@ -421,7 +426,9 @@ export class ReportingTableComponent
   }
 
   updateTableContent(): void {
-    this.reportingService.exportFilters.next(this.exportFilters);
+    if (!this.isCrossCuttingReport) {
+      this.reportingService.exportFilters.next(this.exportFilters);
+    }
     // TODO: Check why this.tableContent and not this.content
     if (
       this.tableContent &&
@@ -644,7 +651,9 @@ export class ReportingTableComponent
         .then(response => {
           if (response) {
             // this.roundResponse(response);
-            response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+            if (response.cachedItems) {
+              response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+            }
             const data = this.formatResponseToDataset(response.items);
             row.dataset = {
               label: row.name,
@@ -889,8 +898,9 @@ export class ReportingTableComponent
 
   // This method will return the input group for a given indicator
   getGroup(indicator: InfoRow): any {
-    const { logicalFrames } = this.project;
-    const { forms } = this.project;
+    const project = this.isCrossCuttingReport ? indicator.originProject : this.project;
+    const { logicalFrames } = project;
+    const { forms } = project;
     // We get the correct logical frame assuming that they will always be at the top
     return logicalFrames[indicator.sectionId - 1]
       ? logicalFrames[indicator.sectionId - 1]
@@ -1213,7 +1223,7 @@ export class ReportingTableComponent
   }
 
   isItalic(value): boolean {
-    if (typeof value === 'string' && !isNaN(Number(value))) {
+    if (value && typeof value === 'string' && !isNaN(Number(value))) {
       return true;
     }
     return false;
@@ -1234,6 +1244,13 @@ export class ReportingTableComponent
     if (data.start && data.end) {
       startDate = data.start;
       endDate = data.end;
+    }
+    // cross cutting report table
+    if (this.isCrossCuttingReport && data.originProject) {
+      if (data.originProject.start && data.originProject.end) {
+        startDate = data.originProject.start;
+        endDate = data.originProject.end;
+      }
     }
 
     if (startDate && endDate) {
@@ -1367,8 +1384,6 @@ export class ReportingTableComponent
     if (!this.selectedCell) { return; }
     const { row } = this.selectedCell;
     const comment = this.selectedCellComment || { value: '' };
-
-    console.log(this.getCellValueAsString());
 
     if (action === 'delete') {
       this.selectedCellComment = null;

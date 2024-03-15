@@ -188,8 +188,6 @@ export class ProjectService implements OnDestroy {
 
   public async saveCurrent(): Promise<Project> {
     const project = this.currentProject;
-    // DISABLE CROSSCUTTING INDICATORS SAVING
-    project.crossCutting = {};
     const response: any = await this.apiService.put(`/resources/project/${project.id}`, project.serialize());
     const themes = await this.themeService.list();
     const savedProject = new Project(response);
