@@ -23,10 +23,15 @@ export class UserService {
 
   constructor(private apiService: ApiService, private translateService: TranslateService) {}
 
-  public async list(): Promise<User[]> {
+  public async list(filterByActive: boolean = false): Promise<User[]> {
     const response: any = await this.apiService.get('/resources/user');
-    return (response.map(x => new User(x)) as User[])
-    .sort((x: User, y: User) => x.name.toLocaleLowerCase().localeCompare(y.name.toLocaleLowerCase()));
+    const result: User[] = [];
+    for (let user of response) {
+      if ((filterByActive && user.active) || !filterByActive) {
+        result.push(new User(user));
+      }
+    }
+    return result.sort((x: User, y: User) => x.name.toLocaleLowerCase().localeCompare(y.name.toLocaleLowerCase()));
   }
 
   public async save(user: User): Promise<void> {
