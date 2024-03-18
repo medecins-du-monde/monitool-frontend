@@ -329,8 +329,8 @@ export class InputsComponent implements OnInit, OnDestroy {
     console.log(url);
     alert('Debug alert for input issue\n\nGenerated url:\n' + url);
 
-    // window.open(url, '_blank');
-    this.router.navigate([url]);
+    window.open(url, '_blank');
+    // this.router.navigate([url]);
   }
 
   dateAlreadyExist(column, date) {
