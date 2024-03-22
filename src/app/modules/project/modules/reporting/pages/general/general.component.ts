@@ -102,7 +102,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   themes: Theme[];
   crosscutting: Indicator[];
-  multiThemesIndicators: Indicator[];
+  multiThemesIndicators: Indicator[] = [];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
 
   showComments = true;
@@ -398,7 +398,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
         id += 1;
       }
     }
-    console.log(rows);
     this.tableContent.next(rows);
 
     const comments = this.commentService.getByPath(commentsToLoad);
@@ -458,8 +457,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   buildCrossCuttingIndicators(): void {
+    this.multiThemesIndicators = [];
     for (const c of this.crosscutting) {
-      this.multiThemesIndicators = [];
       if (c.multiThemes) {
         this.multiThemesIndicators.push(c);
       } else {

@@ -51,7 +51,9 @@ export class PermissionsGuard implements CanActivate {
     const module = route.routeConfig.path;
 
     // Guard is required to fetch the project before loading
-    await this.projectService.get(route.parent.params.id).then((project: Project) => {});
+    if (route.parent.params.id) {
+      await this.projectService.get(route.parent.params.id).then((project: Project) => {});
+    }
 
     // Redirect the user based on its role and the permission it gives them
     switch (module) {
