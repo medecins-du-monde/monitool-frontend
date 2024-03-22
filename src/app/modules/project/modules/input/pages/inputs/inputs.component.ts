@@ -327,8 +327,7 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.router.createUrlTree(['edit', column, date], { relativeTo: this.route })
     );
 
-    // window.open(url, '_blank');
-    this.router.navigate([url]);
+    window.open(url, '_blank');
   }
 
   dateAlreadyExist(column, date) {
