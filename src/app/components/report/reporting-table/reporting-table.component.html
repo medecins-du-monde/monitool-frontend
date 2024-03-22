@@ -47,7 +47,7 @@
           <app-reporting-menu
             [indicator]="element"
             [dimensionName]="dimensionIds.value"
-            (addIndicatorsEvent)="receiveIndicators($event)"
+            (addIndicatorsEvent)="receiveIndicators($event) "
             (collapseIndicatorsEvent)="collapseIndicators($event)"
             [isCrossCuttingReport]="isCrossCuttingReport"
           ></app-reporting-menu>
@@ -125,11 +125,12 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]="
-            (isInRange(element, column) ?
+        [matTooltip]=" (element?.values)[column] ?
+            ((isInRange(element, column) ?
               (getTooltipMessage((element?.values)[column]) | translate) :
               null
-            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column]
+            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column])
+            : ''
         "
       >
         <div
@@ -145,13 +146,6 @@
               : ""
           }}
         </div>
-        <!-- <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
-          <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
-        </div>
-        <ng-template #elseNumber>
-          {{ element.values[column] !== undefined &&  element.values[column] !== null ? (element.values[column].toLocaleString("de-DE") ) : null }}
-          {{ (element.unit && element.values[column]) ? element.unit : null }}
-        </ng-template> -->
       </td>
     </ng-container>
 
@@ -307,11 +301,12 @@
 </mat-menu>
 
 <app-project-save style="z-index: 10;"
-  [isAdmin]="userIsAdmin"
+  [isAdmin]="userIsAdmin && !isCrossCuttingReport"
   [reload]="false"
   [cache]="true"
   [lastCache]="lastCachedTime"
   (refreshCache)="reloadTableAndCache()"
+  [fullScreen]="isCrossCuttingReport"
 ></app-project-save>
 <!--
 <button mat-raised-button color="primary" (click)="exportTOExcel()">Export as Excel</button>

@@ -83,7 +83,7 @@ export class ReportingService {
         }
         result = newResult;
       }
-      return result;
+      return {items: result};
     }
 
 

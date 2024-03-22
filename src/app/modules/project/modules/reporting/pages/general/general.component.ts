@@ -398,6 +398,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         id += 1;
       }
     }
+    console.log(rows);
     this.tableContent.next(rows);
 
     const comments = this.commentService.getByPath(commentsToLoad);
@@ -457,14 +458,16 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   buildCrossCuttingIndicators(): void {
-    this.multiThemesIndicators = [];
     for (const c of this.crosscutting) {
+      this.multiThemesIndicators = [];
       if (c.multiThemes) {
         this.multiThemesIndicators.push(c);
       } else {
-        const group = this.groups.find(g => g.theme === c.themes[0]);
+        const group = this.groups.find(g => g.theme.id === c.themes[0].id);
         if (group) {
-          group.indicators.push(c);
+          if (!group.indicators.find(i => i.id === c.id)) {
+            group.indicators.push(c);
+          }
         } else {
           this.groups.push({
             theme: c.themes[0],
