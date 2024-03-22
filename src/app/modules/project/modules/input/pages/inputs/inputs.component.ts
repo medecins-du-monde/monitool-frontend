@@ -324,11 +324,11 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   openLinkInNewWindow(column, date) {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([this.router.url, 'edit', column, date])
+      this.router.createUrlTree(['edit', column, date], { relativeTo: this.route })
     );
 
-    window.open(url, '_blank');
-    // this.router.navigate(['edit', column, date], { relativeTo: this.route });
+    // window.open(url, '_blank');
+    this.router.navigate([url]);
   }
 
   dateAlreadyExist(column, date) {
