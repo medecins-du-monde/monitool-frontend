@@ -81,7 +81,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
         this.filteredUsers = users;
         this.userFilter.patchValue('');
       })
-    )
+    );
 
     this.originalForm = this.userForm.value;
 

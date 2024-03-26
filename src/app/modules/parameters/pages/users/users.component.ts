@@ -27,13 +27,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.list()
+    this.userService.list();
     this.subscriptions.push(
       this.userService.userList.subscribe((users: User[]) => {
         this.users = users;
         this.applyFilters();
       })
-    )
+    );
   }
 
   public applyFilters(resetPage = true): void {
