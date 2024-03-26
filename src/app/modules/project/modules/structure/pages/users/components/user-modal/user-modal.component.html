@@ -14,7 +14,7 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'User' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass">
+                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass" [disabled]="users.length <= 0">
                   <mat-option>
                     <ngx-mat-select-search
                       [formControl]="userFilter"

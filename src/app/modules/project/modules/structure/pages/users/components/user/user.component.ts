@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 import { UserService } from 'src/app/services/user.service';
@@ -7,13 +7,14 @@ import { rolesList } from '../../constants/role';
 import { Project } from 'src/app/models/classes/project.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
   @Input() user: User;
   @Input() project: Project;
@@ -25,6 +26,8 @@ export class UserComponent implements OnInit {
   groups: Group[];
   entities: any[] = [];
   dataSources: any = {};
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -59,9 +62,11 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.list().then( users => {
-      this.MDMusers = users;
-    });
+    this.subscriptions.push(
+      this.userService.userList.subscribe((users: User[]) => {
+        this.MDMusers = users;
+      })
+    );
 
     if (this.user.role === 'input'){
       this.groups = this.getGroupsSelected();
@@ -124,4 +129,7 @@ export class UserComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
+  }
 }

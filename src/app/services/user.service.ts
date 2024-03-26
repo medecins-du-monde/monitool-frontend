@@ -13,6 +13,8 @@ export class UserService {
 
   public displayInfoPanel: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
+  public userList: BehaviorSubject<User[]> = new BehaviorSubject([]);
+
   get showingInputModal(): Observable<boolean> {
     return this.showInputWarningModal.asObservable();
   }
@@ -21,12 +23,16 @@ export class UserService {
     return this.displayInfoPanel.asObservable();
   }
 
-  constructor(private apiService: ApiService, private translateService: TranslateService) {}
+  constructor(private apiService: ApiService, private translateService: TranslateService) {
+    this.list();
+  }
 
   public async list(): Promise<User[]> {
     const response: any = await this.apiService.get('/resources/user');
-    return (response.map(x => new User(x)) as User[])
+    const formattedResponse = (response.map(x => new User(x)) as User[])
     .sort((x: User, y: User) => x.name.toLocaleLowerCase().localeCompare(y.name.toLocaleLowerCase()));
+    this.userList.next(formattedResponse);
+    return formattedResponse;
   }
 
   public async save(user: User): Promise<void> {
