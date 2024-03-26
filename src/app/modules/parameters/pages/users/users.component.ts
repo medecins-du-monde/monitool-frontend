@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/classes/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -8,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   users: User[];
   filteredUsers: User[];
 
@@ -17,6 +18,8 @@ export class UsersComponent implements OnInit {
   public searchQuery = new FormControl('');
   private searchTimeout: NodeJS.Timeout;
 
+  private subscriptions: Subscription[] = [];
+
   pageNumber = 0;
   totalItem = 0;
   shownUsers: User[];
@@ -24,17 +27,16 @@ export class UsersComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.getUsers();
+    this.userService.list()
+    this.subscriptions.push(
+      this.userService.userList.subscribe((users: User[]) => {
+        this.users = users;
+        this.applyFilters();
+      })
+    )
   }
 
-  private getUsers() {
-    this.userService.list().then((res: User[]) => {
-      this.users = res;
-      this.applyFilters();
-    });
-  }
-
-  public applyFilters(): void {
+  public applyFilters(resetPage = true): void {
     // Apply role and deleted filters
     this.filteredUsers = this.users.filter(
       u =>
@@ -48,8 +50,9 @@ export class UsersComponent implements OnInit {
         u.name.toLowerCase().includes(this.searchQuery.value.toLowerCase()) ||
         u.id.toLowerCase().includes(this.searchQuery.value.toLowerCase())
     );
-
-    this.pageNumber = 0;
+    if (resetPage) {
+      this.pageNumber = 0;
+    }
     this.setPagination();
   }
 
@@ -60,7 +63,8 @@ export class UsersComponent implements OnInit {
   }
 
   onEdit(user: User): void {
-    this.userService.save(user).then(() => this.getUsers());
+    this.userService.save(user);
+    this.applyFilters(false);
   }
 
   /** Export EXCEL file with the application users */
@@ -87,5 +91,9 @@ export class UsersComponent implements OnInit {
   private setPagination() {
     this.totalItem = this.filteredUsers.length;
     this.shownUsers = this.filteredUsers.slice(this.pageNumber * 12, this.pageNumber * 12 + 12);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.map(subscription => subscription.unsubscribe());
   }
 }
