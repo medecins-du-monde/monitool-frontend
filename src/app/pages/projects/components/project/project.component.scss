@@ -175,6 +175,13 @@
 }
 
 .clone-button {
-  font-size: 14px;
+  font-size: 14px !important;
+}
+
+.download-button {
+  color: goldenrod;
+  mat-icon {
+    color: goldenrod;
+  }
 }
 
