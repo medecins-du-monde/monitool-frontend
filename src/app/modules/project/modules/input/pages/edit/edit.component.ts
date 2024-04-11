@@ -796,6 +796,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     const response = await this.inputService.delete(inputToBeDeleted);
     if (response) {
       this.router.navigate(['./../../../'], { relativeTo: this.route });
+      // window.close();
     }
   }
 

@@ -103,6 +103,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
 
   onEdit(form: Form): void {
     this.projectService.project.next(this.project);
+    this.projectService.revertChanges();
     this.router.navigate([`${this.router.url}/${form.id}`]);
   }
 
@@ -141,6 +142,16 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
 
         // Delete the datasource from logicalFrames
         this.deleteDatasource(this.project.logicalFrames);
+
+        // Delete the datasource from users
+        this.project.users.map(user => {
+            if (user.dataSources) {
+              const dataSourcePosition = user.dataSources.findIndex(el => el.id === form.id);
+              if (dataSourcePosition > -1) {
+                user.dataSources.splice(dataSourcePosition, 1);
+              }
+            }
+        });
 
         this.project.forms = this.project.forms.filter(x => x.id !== form.id);
         this.projectService.project.next(this.project);

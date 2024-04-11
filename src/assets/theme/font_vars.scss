@@ -18,4 +18,8 @@
     font-family: "Neutra-Text-Light-Demi";
     src: url("/assets/fonts/Neutra-Text-Light-Demi_32117.ttf") format("truetype"); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
 }
+@font-face {
+    font-family: Calibri;
+    src: url("https://fonts.googleapis.com/css?family=Calibri:400,700,400italic,700italic");
+}
 $main-font: "Neutra-Text", "Neutra", sans-serif;

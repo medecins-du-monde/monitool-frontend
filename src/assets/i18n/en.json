@@ -680,6 +680,7 @@
   "SearchHelp": "Search a project by name of country or project or thematic.",
   "SeeOlderDates": "See older dates",
   "CreateNewDate": "Create (new date)",
+  "DateHasEntry": "This collection site has already an entry for the selected date.",
   "SeeReport": "See report",
   "Settings": "Settings",
   "SettingsIndicatorEdit": "This page allows changing the definition of a cross-cutting indicator. If you make changes, take care to update all languages.",
@@ -897,5 +898,10 @@
     "LAST_PAGE_LABEL": "Last page",
     "RANGE_PAGE_LABEL_1": "0 of {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} of {{length}}"
-  }
+  },
+  "lastUpdate": "Last update",
+  "justUpdated": "Just updated",
+  "minutesAgo": "{{minutes}}min ago",
+  "refreshCache": "Refresh data",
+  "refreshCacheInfo": "Refresh with the last data inputed"
 }

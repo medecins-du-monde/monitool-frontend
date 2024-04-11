@@ -4,6 +4,7 @@ import { ProjectSaveComponent } from './project-save.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -13,7 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     TranslateModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   exports: [ProjectSaveComponent]
 })

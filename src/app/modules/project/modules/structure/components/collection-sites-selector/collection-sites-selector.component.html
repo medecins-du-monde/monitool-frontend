@@ -5,7 +5,7 @@
       multiple
       disableOptionCentering
       panelClass="basicsChipListPanelClass"
-      [disabled]="entities.length === 0"
+      [disabled]="!entities || entities.length === 0"
     >
         <mat-select-trigger>
             <mat-chip-list>

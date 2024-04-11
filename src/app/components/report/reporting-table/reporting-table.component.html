@@ -38,16 +38,16 @@
         [matTooltip]="element.name | getTooltip : showComments : element.comments?.name : element.name"
       >
         <div class="menu">
-          <mat-icon *ngIf="element.disaggregatedByGroup === 1"
+          <mat-icon *ngIf="element.disaggregatedByGroup === 1 || element.isGroupDisaggregation"
             >arrow_forward</mat-icon
           >
-          <div>
+          <div (click)="log(element)">
             {{ element.name }}
           </div>
           <app-reporting-menu
             [indicator]="element"
             [dimensionName]="dimensionIds.value"
-            (addIndicatorsEvent)="receiveIndicators($event)"
+            (addIndicatorsEvent)="receiveIndicators($event) "
             (collapseIndicatorsEvent)="collapseIndicators($event)"
             [isCrossCuttingReport]="isCrossCuttingReport"
           ></app-reporting-menu>
@@ -60,7 +60,7 @@
       <td
         mat-cell
         *matCellDef="let element"
-        class="gradient-background"
+        class="gradient-background readable-text"
         [class.comment-cell]="this.showComments && element.comments?.baseline"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'baseline')
@@ -76,7 +76,7 @@
       <td
         mat-cell
         *matCellDef="let element"
-        class="gradient-background"
+        class="gradient-background readable-text"
         [class.comment-cell]="this.showComments && element.comments?.target"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, 'target')
@@ -112,7 +112,7 @@
       </th>
       <td
         mat-cell
-        class="value-cell"
+        class="value-cell readable-text"
         *matCellDef="let element"
         [ngStyle]="{
           backgroundColor:
@@ -125,11 +125,12 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]="
-            (isInRange(element, column) ?
+        [matTooltip]=" (element?.values)[column] ?
+            ((isInRange(element, column) ?
               (getTooltipMessage((element?.values)[column]) | translate) :
               null
-            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column]
+            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column])
+            : ''
         "
       >
         <div
@@ -145,13 +146,6 @@
               : ""
           }}
         </div>
-        <!-- <div *ngIf="checkIfNaN(element?.values[column]); else elseNumber">
-          <mat-icon class="mat-icon NaN">do_disturb</mat-icon>
-        </div>
-        <ng-template #elseNumber>
-          {{ element.values[column] !== undefined &&  element.values[column] !== null ? (element.values[column].toLocaleString("de-DE") ) : null }}
-          {{ (element.unit && element.values[column]) ? element.unit : null }}
-        </ng-template> -->
       </td>
     </ng-container>
 
@@ -306,7 +300,14 @@
   </ng-container>
 </mat-menu>
 
-<app-project-save *ngIf="userIsAdmin" style="z-index: 10;" [reload]="false"></app-project-save>
+<app-project-save style="z-index: 10;"
+  [isAdmin]="userIsAdmin && !isCrossCuttingReport"
+  [reload]="false"
+  [cache]="true"
+  [lastCache]="lastCachedTime"
+  (refreshCache)="reloadTableAndCache()"
+  [fullScreen]="isCrossCuttingReport"
+></app-project-save>
 <!--
 <button mat-raised-button color="primary" (click)="exportTOExcel()">Export as Excel</button>
 -->

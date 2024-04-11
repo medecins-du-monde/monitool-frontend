@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { ProjectService } from 'src/app/services/project.service';
@@ -102,13 +102,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   themes: Theme[];
   crosscutting: Indicator[];
-  multiThemesIndicators: Indicator[];
+  multiThemesIndicators: Indicator[] = [];
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
 
   showComments = true;
   userIsAdmin = false;
 
   private subscription: Subscription = new Subscription();
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.projectService.hasPendingChanges;
+  }
 
   ngOnInit(): void {
     this.projectService.inBigPage.next(true);
@@ -457,9 +462,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
       if (c.multiThemes) {
         this.multiThemesIndicators.push(c);
       } else {
-        const group = this.groups.find(g => g.theme === c.themes[0]);
+        const group = this.groups.find(g => g.theme.id === c.themes[0].id);
         if (group) {
-          group.indicators.push(c);
+          if (!group.indicators.find(i => i.id === c.id)) {
+            group.indicators.push(c);
+          }
         } else {
           this.groups.push({
             theme: c.themes[0],

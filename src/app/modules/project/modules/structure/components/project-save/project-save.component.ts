@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input} from '@angular/core';
+import {Component, ChangeDetectorRef, OnInit, OnDestroy, Input, Output, EventEmitter, Renderer2, ElementRef} from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,7 +22,16 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
   savedProject: Project;
   currentProject: Project;
 
+  private storedProject: Project;
+
   @Input() reload = true;
+  @Input() isAdmin = true;
+  @Input() fullScreen = false;
+
+  // Cache general report table
+  @Input() cache = false;
+  @Input() lastCache: null | number = null;
+  @Output() refreshCache = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
 
@@ -31,7 +40,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private sidenavService: SidenavService,
     private changeDetector: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private elRef: ElementRef, private renderer: Renderer2
     ) { }
 
   ngOnInit(): void {
@@ -45,6 +55,9 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
         this.savedProject = project;
       })
     );
+    if (this.fullScreen) {
+      this.renderer.setStyle(this.elRef.nativeElement, 'width', '100%');
+    }
   }
 
   get hasChanges(): boolean{
@@ -80,6 +93,8 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     this.projectService.saveCurrent().then((project: Project) => {
       if (this.reload) {
         this.projectService.project.next(project);
+      } else {
+        this.storedProject = project;
       }
       this.subscription.add(
         this.authService.currentUser.subscribe((user: User) => this.currentUser = user )
@@ -100,7 +115,20 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
     this.projectService.revertChanges();
   }
 
+  getLastCache(): number {
+    if (this.lastCache === undefined) {
+      return undefined;
+    }
+    const currTime = new Date().getTime();
+    return Math.floor((currTime - this.lastCache) / 60000);
+  }
+
   ngOnDestroy(): void {
+    if (!this.reload) {
+      if (this.storedProject) {
+        this.projectService.project.next(this.storedProject);
+      }
+    }
     this.subscription.unsubscribe();
   }
 

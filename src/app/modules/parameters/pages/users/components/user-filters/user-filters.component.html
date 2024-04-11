@@ -8,7 +8,6 @@
       "
       [style.color]="selectedRoles?.includes(role) ? 'white' : roleColors[role]"
       [style.border-color]="roleColors[role]"
-      [disabled]="selectedRoles.length === 1 && selectedRoles?.includes(role)"
     >
       <mat-icon *ngIf="selectedRoles?.includes(role)">check</mat-icon>
       {{ roleTranslations[role] | translate }}

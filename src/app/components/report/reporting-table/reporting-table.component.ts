@@ -214,6 +214,16 @@ export class ReportingTableComponent
 
   private subscription: Subscription = new Subscription();
 
+  private _lastCachedTime: number = null;
+  public get lastCachedTime() {
+    return this._lastCachedTime;
+  }
+  public set lastCachedTime(time: number) {
+    if (this._lastCachedTime === null || time < this._lastCachedTime || time === null) {
+      this._lastCachedTime = time;
+    }
+  }
+
   // These values are used to check if the value changed in the subscribe
   currentDimension: string;
   currentFilter: any;
@@ -279,32 +289,27 @@ export class ReportingTableComponent
       },
       entities: filter.entities || []
     };
-    this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        let i = 1;
-        project.logicalFrames.forEach(logicalFrame => {
-          if (this.openedSections[i]) {
-            filters.logicalFrames.push(logicalFrame.id);
-          }
-          i++;
-        });
-        if (this.openedSections[i]) {
-          filters.crossCutting = true;
-        }
-        i++;
-        if (this.openedSections[i]) {
-          filters.extraIndicators = true;
-        }
-        i++;
-        project.forms.forEach(dataSource => {
-          if (this.openedSections[i]) {
-            filters.dataSources.push(dataSource.id);
-          }
-          i++;
-        });
-      })
-    );
-
+    let i = 1;
+    this.project.logicalFrames.forEach(logicalFrame => {
+      if (this.openedSections[i]) {
+        filters.logicalFrames.push(logicalFrame.id);
+      }
+      i++;
+    });
+    if (this.openedSections[i]) {
+      filters.crossCutting = true;
+    }
+    i++;
+    if (this.openedSections[i]) {
+      filters.extraIndicators = true;
+    }
+    i++;
+    this.project.forms.forEach(dataSource => {
+      if (this.openedSections[i]) {
+        filters.dataSources.push(dataSource.id);
+      }
+      i++;
+    });
     return filters;
   }
   ngOnInit(): void {
@@ -392,6 +397,11 @@ export class ReportingTableComponent
         if (JSON.stringify(this.content) !== JSON.stringify(newContent)) {
           this.content = newContent;
           this.updateTableContent();
+          if (this.isCrossCuttingReport) {
+            this.content.map(c => {
+              c = this.updateRowValues(c);
+            });
+          }
         }
       })
     );
@@ -416,7 +426,9 @@ export class ReportingTableComponent
   }
 
   updateTableContent(): void {
-    this.reportingService.exportFilters.next(this.exportFilters);
+    if (!this.isCrossCuttingReport) {
+      this.reportingService.exportFilters.next(this.exportFilters);
+    }
     // TODO: Check why this.tableContent and not this.content
     if (
       this.tableContent &&
@@ -498,7 +510,7 @@ export class ReportingTableComponent
     }
   }
 
-  // Create new row if it s an indicator
+  // Create new row if it's an indicator
   convertToRow = (
     item: (Row | ProjectIndicator) & RowCommentInfo
   ): Row & RowCommentInfo => {
@@ -572,7 +584,8 @@ export class ReportingTableComponent
       originProject: indicator.originProject
         ? indicator.originProject
         : undefined,
-      open: true
+      open: true,
+      isGroupDisaggregation: indicator.isGroup,
     } as InfoRow;
 
     if (currentIndicator) {
@@ -632,23 +645,31 @@ export class ReportingTableComponent
           [this.dimensionIds.value],
           customFilter,
           true,
-          false
+          false,
+          row.refreshCache || false
         )
         .then(response => {
           if (response) {
             // this.roundResponse(response);
-            const data = this.formatResponseToDataset(response);
+            if (response.cachedItems) {
+              response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+            }
+            const data = this.formatResponseToDataset(response.items);
             row.dataset = {
               label: row.name,
               data,
-              labels: Object.keys(response)
+              labels: Object.keys(response.items)
                 .filter(x => x !== '_total')
                 .map(x => this.getSiteOrGroupName(x)),
               fill: false,
               unit: row.computation.formula === PERCENTAGE_FORMULA ? '%' : ''
             };
-            row.values = response;
+            row.values = response.items;
             row.error = undefined;
+            if (row.refreshCache) {
+              delete row.refreshCache;
+            }
+
             // TODO: Check why we have this row below?
             this.rows.next(this.rows.value);
 
@@ -877,8 +898,9 @@ export class ReportingTableComponent
 
   // This method will return the input group for a given indicator
   getGroup(indicator: InfoRow): any {
-    const { logicalFrames } = this.project;
-    const { forms } = this.project;
+    const project = this.isCrossCuttingReport ? indicator.originProject : this.project;
+    const { logicalFrames } = project;
+    const { forms } = project;
     // We get the correct logical frame assuming that they will always be at the top
     return logicalFrames[indicator.sectionId - 1]
       ? logicalFrames[indicator.sectionId - 1]
@@ -915,6 +937,7 @@ export class ReportingTableComponent
 
         let customIndicator = Object.assign({}, info.indicator) as InfoRow;
 
+        customIndicator.isGroupDisaggregation = false;
         customIndicator.level = info.indicator.level + 1;
         customIndicator.onChart = false;
         customIndicator.name = currentProject.entities.find(
@@ -1200,7 +1223,7 @@ export class ReportingTableComponent
   }
 
   isItalic(value): boolean {
-    if (typeof value === 'string' && !isNaN(Number(value))) {
+    if (value && typeof value === 'string' && !isNaN(Number(value))) {
       return true;
     }
     return false;
@@ -1221,6 +1244,13 @@ export class ReportingTableComponent
     if (data.start && data.end) {
       startDate = data.start;
       endDate = data.end;
+    }
+    // cross cutting report table
+    if (this.isCrossCuttingReport && data.originProject) {
+      if (data.originProject.start && data.originProject.end) {
+        startDate = data.originProject.start;
+        endDate = data.originProject.end;
+      }
     }
 
     if (startDate && endDate) {
@@ -1355,8 +1385,6 @@ export class ReportingTableComponent
     const { row } = this.selectedCell;
     const comment = this.selectedCellComment || { value: '' };
 
-    console.log(this.getCellValueAsString());
-
     if (action === 'delete') {
       this.selectedCellComment = null;
       this.commentService.stashComment(row.commentInfo);
@@ -1424,8 +1452,26 @@ export class ReportingTableComponent
     }
   }
 
+  public reloadTableAndCache(): void {
+    this.content.forEach(row => row.refreshCache = true);
+    this.refreshValues();
+    this.lastCachedTime = null;
+  }
+
+  getLastCache(): number {
+    if (this.lastCachedTime === undefined) {
+      return undefined;
+    }
+    const currTime = new Date().getTime();
+    return Math.floor((currTime - this.lastCachedTime) / 60000);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  log(el: any) {
+    console.log(el);
   }
 }
 

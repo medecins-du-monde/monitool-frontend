@@ -82,6 +82,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   allProjects: Project[];
   currentUser: User;
   canCreateProject = true;
+  pageNumber = 0;
+  totalItem = 0;
+  shownProjects: Project[];
 
   private subscription: Subscription = new Subscription();
 
@@ -117,6 +120,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscription.add(
       this.filtersForm.valueChanges.subscribe(() => {
         this.loadFilteredProjects();
+        this.pageNumber = 0;
+        this.setPagination();
       })
     );
 
@@ -175,9 +180,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
             return 1;
           }
         });
+        this.setPagination();
       }
-
-    this.setCountProjectStatus(res);
     });
   }
 
@@ -250,8 +254,34 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   loadFilteredProjects(): void {
     let filteredProjects = this.filterByText(this.allProjects);
     filteredProjects = this.filterByCountries(filteredProjects);
+    this.setCountProjectStatus(filteredProjects);
     filteredProjects = this.filterByStatuses(filteredProjects);
     this.projects = filteredProjects;
+  }
+
+  paginationChange(e: any) {
+    if (e.pageIndex !== this.pageNumber) {
+      this.pageNumber = e.pageIndex;
+      this.setPagination();
+    }
+    else {
+      return [];
+    }
+  }
+
+  private filterByStatuses(projects: Project[]): Project[] {
+    let filteredProjects = [];
+    const statuses = this.filtersForm.value.statuses;
+    if (statuses.includes('Ongoing')) {
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
+    }
+    if (statuses.includes('Finished')) {
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
+    }
+    if (statuses.includes('Deleted')) {
+      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
+    }
+    return filteredProjects;
   }
 
   private filterByText(projects: Project[]): Project[] {
@@ -278,22 +308,12 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
-  private filterByStatuses(projects: Project[]): Project[] {
-    let filteredProjects = [];
-    const statuses = this.filtersForm.value.statuses;
-    if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
-    }
-    if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
-    }
-    if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
-    }
-    return filteredProjects;
-  }
-
   private isOwner(user: User) {
     return user.role === 'owner' && user.id === this.currentUser.id;
+  }
+
+  private setPagination() {
+    this.totalItem = this.projects.length;
+    this.shownProjects = this.projects.slice(this.pageNumber * 12, this.pageNumber * 12 + 12);
   }
 }

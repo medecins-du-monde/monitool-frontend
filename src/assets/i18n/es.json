@@ -672,8 +672,9 @@
   "SeeReport": "Ver el informe",
   "SeeOlderDates": "Ver la fechas anteriores",
   "CreateNewDate": "Crear (nueva fecha)",
+  "DateHasEntry": "Este sitio de colecta ya tiene una entrada en la fecha seleccionada.",
   "Settings": "Configuración",
-  "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si have cambios, tenga cuidado en poner todos los idiomas a día.",
+  "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si tiene cambios, tenga cuidado en poner todos los idiomas a día.",
   "SettingsIndicatorsInfo": [
       "Esta página contiene la lista de todos los indicadores transversales de la ONG.",
       "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos una temática en común con ese.",
@@ -914,5 +915,10 @@
     "LAST_PAGE_LABEL": "Última página",
     "RANGE_PAGE_LABEL_1": "0 de {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} de {{length}}"
-  }
+  },
+  "lastUpdate": "Última actualizacion",
+  "justUpdated": "Se acaba de actualizar",
+  "minutesAgo": "Hace {{minutes}}min",
+  "refreshCache": "Refrescar valores",
+  "refreshCacheInfo": "Refrescar con los últimos valores guardados"
 }

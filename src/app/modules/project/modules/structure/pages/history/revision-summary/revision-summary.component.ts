@@ -38,6 +38,11 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         this.project = project;
       })
     );
+    this.subscription.add(
+      this.translate.onLangChange.subscribe((lang: any) => {
+        this.translateElements(this.output);
+      })
+    );
     this.createDynamicRevisionText();
     this.output = uniqWith(this.output, isEqual);
     this.output = uniqWith(this.output, (a, b) => {
@@ -87,6 +92,8 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       before = jsonpatch.applyOperation(before, operation as Operation).newDocument;
       before.forms = before.forms.map(y => new Form(y));
     });
+
+    this.translateElements(this.output);
   }
 
   getTranslationKey(operation): string {
@@ -313,16 +320,16 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       // Sets the type variable
       switch (locationArray[0]) {
         case 'form':
-          data.type = this.translate.instant('HistoryRevision.comments_types.dataSource');
+          data.typeKey = 'HistoryRevision.comments_types.dataSource';
           break;
         case 'logicalFrame':
-          data.type = this.translate.instant('HistoryRevision.comments_types.logicalFrame');
+          data.typeKey = 'HistoryRevision.comments_types.logicalFrame';
           break;
         case 'indicator':
-          data.type = this.translate.instant('HistoryRevision.comments_types.extraIndicator');
+          data.typeKey = 'HistoryRevision.comments_types.extraIndicator';
           break;
         case 'crossCutting':
-          data.type = this.translate.instant('HistoryRevision.comments_types.crossCuttingIndicator');
+          data.typeKey = 'HistoryRevision.comments_types.crossCuttingIndicator';
           break;
 
         default:
@@ -359,8 +366,9 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
             break;
           case 'month':
             month = moment(new Date(column));
-            if (month.isValid()) {
-              data.column = this.translate.instant(month.format('MMM')) + ' ' + month.format('YYYY');
+            if (month.isValid()) { // We save the month appart so it can be translated dynamically in translateElements()
+              data.columnMonthKey = month.format('MMM');
+              data.columnKey = ' ' + month.format('YYYY');
             } else {
               data.column = column;
             }
@@ -369,7 +377,9 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
             data.column = column;
             break;
         }
-        data.column = data.column[0].toUpperCase() + data.column.slice(1);
+        if (data.column) {
+          data.column = data.column[0].toUpperCase() + data.column.slice(1);
+        }
       }
     }
 
@@ -390,9 +400,21 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if (data.column) { data.translationKey += '_column'; }
+    if (data.column || data.columnKey) { data.translationKey += '_column'; }
 
     return data;
+  }
+
+  private translateElements(elements: any) {
+    elements.map(element => {
+      if (element.typeKey) {
+        element.type = this.translate.instant(element.typeKey);
+      }
+      if (element.columnKey) {
+        element.column = this.translate.instant(element.columnMonthKey) + element.columnKey;
+        element.column = element.column[0].toUpperCase() + element.column.slice(1); // Capitalize month
+      }
+    });
   }
 
   ngOnDestroy(): void {

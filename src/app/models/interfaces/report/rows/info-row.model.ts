@@ -32,8 +32,10 @@ export interface InfoRow {
     value: string,
     cellValue?: string
   };
+  isGroupDisaggregation: boolean;
   comments?: { [key: string]: {
     value: string,
     cellValue?: string
   }};
+  refreshCache?: boolean;
 }

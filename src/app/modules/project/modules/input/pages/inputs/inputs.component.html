@@ -22,16 +22,16 @@
     <table mat-table [dataSource]="dataSource" class="mdm-table">
         <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}" [sticky]="column === 'Date'">
             <th mat-header-cell *matHeaderCellDef>{{ column | translate }}</th>
-            <td mat-cell *matCellDef="let element" id="{{column}}">
+            <td mat-cell *matCellDef="let element" id="{{column}}" [ngClass]="column === 'Date'? 'first-row':''">
                 <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
                 <ng-template #elseBlock>
                     <div *ngIf="element[column]?.value === -1">
-                        <button mat-stroked-button [routerLink]="element[column]?.routerLink"
+                        <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
                             class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                     </div>
                     <div *ngIf="element[column]?.value === -2" style="height: 24px"></div>
                     <div *ngIf="element[column]?.value >= 0">
-                        <button mat-stroked-button [routerLink]="element[column]?.routerLink"
+                        <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
                             class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>
                     </div>
                 </ng-template>
@@ -48,9 +48,8 @@
                 </ng-template> -->
             </td>
         </ng-container>
-
-        <ng-container *ngFor="let column of footerColumns" matColumnDef="{{column}}">
-            <td mat-footer-cell *matFooterCellDef [ngClass]="column === 'footerDate'? 'datepicker-cell':''">
+        <ng-container *ngFor="let column of footerColumns" matColumnDef="{{column}}" [sticky]="column === 'footerDate'">
+            <td mat-footer-cell *matFooterCellDef [ngClass]="column === 'footerDate'? 'first-row': ''">
                 <div *ngIf="column === 'footerDate'; else elseBlockFooter">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput [matDatepicker]="startPicker" [formControl]="dateForm">
@@ -59,7 +58,10 @@
                     </mat-form-field>
                 </div>
                 <ng-template #elseBlockFooter>
-                    <button mat-stroked-button [routerLink]=" './edit/' + column + '/' + currentDate"
+                    <button mat-stroked-button
+                        (click)="openLinkInNewWindow(column, currentDate)"
+                        [disabled]="dateAlreadyExist(column, currentDate)"
+                        [matTooltip]="dateAlreadyExist(column, currentDate) ? ('DateHasEntry' | translate) : ''"
                         class="mdm-button small-button create-newdate-button">
                         {{ 'CreateNewDate' | translate }}
                     </button>

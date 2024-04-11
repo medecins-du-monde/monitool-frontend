@@ -68,7 +68,8 @@ describe('ReportingMenuComponent', () => {
       open: true,
       level: 1,
       disaggregatedBy: null,
-      commentInfo: null
+      commentInfo: null,
+      isGroupDisaggregation: false,
     };
     component.dimensionName = 'test';
     fixture.detectChanges();

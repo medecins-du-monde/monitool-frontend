@@ -106,6 +106,7 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
   onEdit(logicalFrame: LogicalFrame): void {
     this.projectService.project.next(this.project);
+    this.projectService.revertChanges();
     this.router.navigate([`${this.router.url}/${logicalFrame.id}`]);
   }
 

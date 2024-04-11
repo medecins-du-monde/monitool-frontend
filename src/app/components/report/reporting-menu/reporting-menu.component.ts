@@ -162,8 +162,15 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         }
 
         for (const partition of element?.partitions) {
+
+          // Search if the partition containes any of the opened groups, so we still show that partition
+          let isInGroup = false;
+          if (parameterValue.openGroups) {
+            isInGroup = Object.keys(parameterValue.openGroups).includes(partition.id);
+          }
+
           if (parameterValue.filter &&
-             (!(partition.id in parameterValue.filter) ||
+             (!(partition.id in parameterValue.filter && !isInGroup) ||
                parameterValue.filter[partition.id]?.length === partition.elements?.length)){
 
             this.options.push({
@@ -184,14 +191,35 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
     const disaggregatedIndicators = [];
     let newComputation;
 
-    for (const partitionElement of partition.elements){
+    for (const partitionElement of partition.elements) {
       // clones the computation
       newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
       const parameterValue: any = Object.values(newComputation.parameters)[0];
 
+      // Prevents showing elements outside a group
+      let elementInGroup = true;
+      if (parameterValue.openGroups && parameterValue.openGroups[partition.id]) {
+        for (const groupId of parameterValue.openGroups[partition.id]) {
+          const group = partition.groups.find(g => g.id === groupId);
+          console.log(group);
+          if (group && group.members.findIndex(member => member.id === partitionElement.id) < 0) {
+            elementInGroup = false;
+            break;
+          }
+        }
+      }
+      if (!elementInGroup) {
+        continue;
+      }
+
       if (parameterValue.filter) {
         parameterValue.filter[partition.id] = [partitionElement.id];
+      }
+
+      // Prevents showing the same partition on non-group elements
+      if (parameterValue.openGroups && parameterValue.openGroups[partition.id]) {
+        delete parameterValue.openGroups[partition.id];
       }
 
       disaggregatedIndicators.push(new ProjectIndicator({
@@ -203,7 +231,38 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         partitionedBy: {[partition.id]: partitionElement.id},
       }));
     }
+    for (const partitionGroup of partition.groups) {
+      // clones the computation
+      newComputation = JSON.parse(JSON.stringify(this.indicator.computation));
 
+      const parameterValue: any = Object.values(newComputation.parameters)[0];
+
+      // Skips the group if it's already opened
+      if (
+        parameterValue.openGroups &&
+        parameterValue.openGroups[partition.id] &&
+        parameterValue.openGroups[partition.id].includes(partitionGroup.id)
+      ) {
+        continue;
+      }
+
+      if (parameterValue.filter) {
+        parameterValue.filter[partition.id] = partitionGroup.members.map(member => member.id);
+        if (!parameterValue.openGroups) { parameterValue.openGroups = {}; }
+        if (!parameterValue.openGroups[partition.id]) { parameterValue.openGroups[partition.id] = []; }
+        parameterValue.openGroups[partition.id].push(partitionGroup.id);
+      }
+
+      disaggregatedIndicators.push(new ProjectIndicator({
+        computation: newComputation,
+        display: partitionGroup.name,
+        baseline: 0,
+        target: 0 ,
+        originProject: this.indicator.originProject ? this.indicator.originProject : undefined,
+        partitionedBy: {[partition.id]: partitionGroup.id},
+        isGroup: true,
+      }));
+    }
     this.addIndicatorsEvent.emit(
       {
         indicator: this.indicator,
@@ -230,7 +289,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
         let originElement: FormElement;
         if (this.project){
           currentProject = this.project;
-        }else if (this.indicator.originProject){
+        } else if (this.indicator.originProject){
           currentProject = this.indicator.originProject;
         }
 

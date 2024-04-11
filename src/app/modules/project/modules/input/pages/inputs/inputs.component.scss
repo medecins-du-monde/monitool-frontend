@@ -36,6 +36,11 @@
     border-color: #4cae4c !important;
 }
 
+.create-newdate-button:disabled {
+    color: white;
+    opacity: .6;
+}
+
 .info-section {
     flex-direction: row;
     span {
@@ -76,6 +81,7 @@ th {
     &.mat-header-cell {
         padding: 0px !important;
         text-align: center;
+        width: unset;
     }
 }
 td {
@@ -89,15 +95,17 @@ tr {
         height: auto;
     }
 }
+
+.first-row {
+    width: 200px !important;
+    align-items: center;
+}
+
 td.mat-cell, td.mat-footer-cell{
     padding: 0px !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    &.datepicker-cell{
-        align-items: baseline;
-    }
-
 }
 
 .tr.mat-footer-row{

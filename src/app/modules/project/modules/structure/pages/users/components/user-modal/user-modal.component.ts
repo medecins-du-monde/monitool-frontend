@@ -74,13 +74,14 @@ export class UserModalComponent implements OnInit, OnDestroy {
 
       })
     );
-
-    this.userService.list().then((users: User[]) => {
-      users = users.filter((x: User) => x.active);
-      this.users = users;
-      this.filteredUsers = users;
-      this.userFilter.patchValue('');
-    });
+    this.subscriptions.push(
+      this.userService.userList.subscribe((users: User[]) => {
+        users = users.filter((x: User) => x.active);
+        this.users = users;
+        this.filteredUsers = users;
+        this.userFilter.patchValue('');
+      })
+    );
 
     this.originalForm = this.userForm.value;
 
