@@ -8,6 +8,11 @@
 
 .mat-expansion-panel {
   margin: 16px 0;
+
+  mat-icon {
+    line-height: 24px;
+    font-size: 20px;
+  }
 }
 .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
   display: flex !important;
@@ -17,6 +22,10 @@
   font-size: 16px !important;
   font-weight: bold !important;
   color: $variable_expansion_panel_color;
+}
+.mat-expansion-panel-header-description {
+  justify-content: end;
+  margin-right: 0 !important;
 }
 .mat-expansion-panel-header:not([aria-disabled=true]) {
   cursor: pointer;

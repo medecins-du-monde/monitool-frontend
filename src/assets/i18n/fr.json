@@ -33,6 +33,7 @@
   "Cancel": "Annuler",
   "CannotBeComputed": "Cette valeur ne peut pas être calculée car la saisie des données n'a pas été (entièrement) effectuée",
   "CannotBeComputedRule": "Cette valeur ne peut pas être calculée car une des règles d’agrégation de la donnée a été paramétré comme “Il n'est pas possible de faire ce calcul”",
+  "Duplicate": "Dupliquer",
   "Clone": "Dupliquer",
   "CloneStructure": "Dupliquer structure",
   "CloneStructureAndData": "Dupliquer structure et données",
