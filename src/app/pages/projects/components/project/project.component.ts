@@ -94,6 +94,19 @@ export class ProjectComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDownload(): void {
+    const dlAnchorElem = document.getElementById('downloadAnchorElem');
+    this.projectService.get(this.project.id).then((project: Project) => {
+      if (project) {
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(project, null, 2));
+        dlAnchorElem.setAttribute('href',     dataStr     );
+        dlAnchorElem.setAttribute('download', `${project.country} - ${project.name}.json`);
+        dlAnchorElem.click();
+      }
+    });
+    return;
+  }
+
   projectCardAvatar(): string {
     if (this.projectOwner) {
       return 'person';

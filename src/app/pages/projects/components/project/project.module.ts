@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -23,7 +24,8 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
     MatIconModule,
     MatMenuModule,
     RouterModule,
-    LocalizedDatePipeModule
+    LocalizedDatePipeModule,
+    MatTooltipModule
   ],
   exports: [ProjectComponent]
 })
