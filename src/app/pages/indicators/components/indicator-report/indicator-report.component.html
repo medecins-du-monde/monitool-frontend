@@ -1,19 +1,22 @@
-<app-object-grouping
+
+<div style="height: calc(100% - 56px); overflow: auto;">
+  <app-object-grouping
   (dimensionEvent)="receiveDimension($event)"
   [isCrossCuttingReport]="true"
-></app-object-grouping>
+  ></app-object-grouping>
 
-<app-filter
+  <app-filter
   (filterEvent)="receiveFilter($event)"
   [isCrossCuttingReport]="true"
-></app-filter>
+  ></app-filter>
 
-<app-chart [data]="chartData"></app-chart>
+  <app-chart [data]="chartData"></app-chart>
 
-<app-reporting-table
+  <app-reporting-table
   [dimensionIds]="dimensionIds"
   [filter]="filter"
   [tableContent]="tableContent"
   [isCrossCuttingReport]="true"
   (dimensionEvent)="receiveDimension($event)"
-></app-reporting-table>
+  ></app-reporting-table>
+</div>
