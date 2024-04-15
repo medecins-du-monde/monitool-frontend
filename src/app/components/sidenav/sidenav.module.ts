@@ -4,6 +4,7 @@ import { SidenavComponent } from './sidenav.component';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
     CommonModule,
     TranslateModule,
     RouterModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   exports: [
     SidenavComponent

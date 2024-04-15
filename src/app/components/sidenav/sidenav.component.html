@@ -5,7 +5,12 @@
         <mat-icon *ngIf="group.name === 'Structure' || enableAllSidenavLink" class="collapse-icon" [ngClass]="{'collapsed': activeGroup === group.title}">expand_more</mat-icon>
     </div>
     <div class="sidenav-items" *ngIf="activeGroup === group.title">
-        <a class="sidenav-item" *ngFor="let item of group.items" [ngClass]="{'disabledLink' : item.name !== 'Home' && item.name !== 'Basics' && !enableAllSidenavLink}" [routerLink]="item.routerLink" routerLinkActive="active-link">
+        <a class="sidenav-item"
+            *ngFor="let item of group.items"
+            [ngClass]="{'disabledLink' : item.name !== 'Home' && item.name !== 'Basics' && !enableAllSidenavLink}"
+            [routerLink]="item.routerLink" routerLinkActive="active-link"
+            [matTooltip]="item.name | translate"
+            >
             <mat-icon [svgIcon]="item.icon" class="sidenav-icon"></mat-icon>
             <div class="sidenav-name"> {{ item.name | translate }} </div>
         </a>
