@@ -32,6 +32,7 @@ jobs:
         - eval "$(ssh-agent -s)"
         # Add the key to the authentication agent
         - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontuat </dev/null
+      before_script: npm i
       script:
         - echo -e 'Generating documentation...'
         - npm run compodoc:build
