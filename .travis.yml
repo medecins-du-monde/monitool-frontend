@@ -37,7 +37,7 @@ jobs:
         - npm run compodoc:build
         - echo -e 'Documentation generated'
         - echo -e 'Deploying documentation...'
-        - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete documentation/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-documentation
+        - rsync -e "ssh -i /tmp/monitoolfrontuat -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete documentation/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-documentation
         - echo -e 'Documentation deployed'
     - stage: deploy
       if: branch = dev
