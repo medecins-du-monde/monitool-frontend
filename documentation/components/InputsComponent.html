@@ -1,0 +1,2172 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  InputsComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/project/modules/input/pages/inputs/inputs.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                            <code>{
+    provide: DateAdapter, useClass: MomentDateAdapter, deps: [
+        MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS
+    ]
+}</code>
+                                <code><a href="../miscellaneous/variables.html#MY_DATE_FORMATS" target="_self" >{
+    provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS
+}</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-inputs</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./inputs.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./inputs.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#allDates" >allDates</a>
+                            </li>
+                            <li>
+                                <a href="#allowedEntities" >allowedEntities</a>
+                            </li>
+                            <li>
+                                <a href="#dataSource" >dataSource</a>
+                            </li>
+                            <li>
+                                <a href="#dateForm" >dateForm</a>
+                            </li>
+                            <li>
+                                <a href="#differentInputDates" >differentInputDates</a>
+                            </li>
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#endDateReached" >endDateReached</a>
+                            </li>
+                            <li>
+                                <a href="#footerColumns" >footerColumns</a>
+                            </li>
+                            <li>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <a href="#formId" >formId</a>
+                            </li>
+                            <li>
+                                <a href="#informations" >informations</a>
+                            </li>
+                            <li>
+                                <a href="#inputProgress" >inputProgress</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isFocused" >isFocused</a>
+                            </li>
+                            <li>
+                                <a href="#lastDates" >lastDates</a>
+                            </li>
+                            <li>
+                                <a href="#project" >project</a>
+                            </li>
+                            <li>
+                                <a href="#sites" >sites</a>
+                            </li>
+                            <li>
+                                <a href="#slotEnd" >slotEnd</a>
+                            </li>
+                            <li>
+                                <a href="#slotStart" >slotStart</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscription" >subscription</a>
+                            </li>
+                            <li>
+                                <a href="#user" >user</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#dateAlreadyExist" >dateAlreadyExist</a>
+                            </li>
+                            <li>
+                                <a href="#getNext10dates" >getNext10dates</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openLinkInNewWindow" >openLinkInNewWindow</a>
+                            </li>
+                            <li>
+                                <a href="#seeOlderDates" >seeOlderDates</a>
+                            </li>
+                            <li>
+                                <a href="#updateData" >updateData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#currentDate" >currentDate</a>
+                                </li>
+                                <li>
+                                    <a href="#periodicityIsFree" >periodicityIsFree</a>
+                                </li>
+                                <li>
+                                    <a href="#currentLang" >currentLang</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(route: ActivatedRoute, router: Router, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, projectService: <a href="../injectables/ProjectService.html" target="_self">ProjectService</a>, translateService: TranslateService, inputService: <a href="../injectables/InputService.html" target="_self">InputService</a>, adapter: DateAdapter<any>, dateService: <a href="../injectables/DateService.html" target="_self">DateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:89</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>inputService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/InputService.html" target="_self" >InputService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>adapter</td>
+                                                  
+                                                        <td>
+                                                                    <code>DateAdapter&lt;any&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dateService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DateService.html" target="_self" >DateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dateAlreadyExist"></a>
+                    <span class="name">
+                        <span ><b>dateAlreadyExist</b></span>
+                        <a href="#dateAlreadyExist"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dateAlreadyExist(column, date)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="333"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:333</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>column</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>date</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNext10dates"></a>
+                    <span class="name">
+                        <span ><b>getNext10dates</b></span>
+                        <a href="#getNext10dates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getNext10dates()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="291"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{}</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="341"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:341</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openLinkInNewWindow"></a>
+                    <span class="name">
+                        <span ><b>openLinkInNewWindow</b></span>
+                        <a href="#openLinkInNewWindow"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openLinkInNewWindow(column, date)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="325"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:325</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>column</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>date</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="seeOlderDates"></a>
+                    <span class="name">
+                        <span ><b>seeOlderDates</b></span>
+                        <a href="#seeOlderDates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>seeOlderDates()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="252"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateData"></a>
+                    <span class="name">
+                        <span ><b>updateData</b></span>
+                        <a href="#updateData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>updateData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="162"
+                                    class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:162</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allDates"></a>
+                    <span class="name">
+                        <span ><b>allDates</b></span>
+                        <a href="#allDates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allowedEntities"></a>
+                    <span class="name">
+                        <span ><b>allowedEntities</b></span>
+                        <a href="#allowedEntities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataSource"></a>
+                    <span class="name">
+                        <span ><b>dataSource</b></span>
+                        <a href="#dataSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dateForm"></a>
+                    <span class="name">
+                        <span ><b>dateForm</b></span>
+                        <a href="#dateForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Form.html" target="_self" >FormControl</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="differentInputDates"></a>
+                    <span class="name">
+                        <span ><b>differentInputDates</b></span>
+                        <a href="#differentInputDates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="endDateReached"></a>
+                    <span class="name">
+                        <span ><b>endDateReached</b></span>
+                        <a href="#endDateReached"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="footerColumns"></a>
+                    <span class="name">
+                        <span ><b>footerColumns</b></span>
+                        <a href="#footerColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Form.html" target="_self" >Form</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formId"></a>
+                    <span class="name">
+                        <span ><b>formId</b></span>
+                        <a href="#formId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="informations"></a>
+                    <span class="name">
+                        <span ><b>informations</b></span>
+                        <a href="#informations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      res1: &#x27;InformationPanel.Calendar_entry&#x27;,
+      res2: &#x27;InformationPanel.Calendar_entry_description&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.Calendar_entry_question1&#x27;,
+      res2: &#x27;InformationPanel.Calendar_entry_response1&#x27;
+    } as InformationItem
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inputProgress"></a>
+                    <span class="name">
+                        <span ><b>inputProgress</b></span>
+                        <a href="#inputProgress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ArrayBuffer</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isFocused"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>isFocused</b></span>
+                        <a href="#isFocused"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastDates"></a>
+                    <span class="name">
+                        <span ><b>lastDates</b></span>
+                        <a href="#lastDates"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="project"></a>
+                    <span class="name">
+                        <span ><b>project</b></span>
+                        <a href="#project"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sites"></a>
+                    <span class="name">
+                        <span ><b>sites</b></span>
+                        <a href="#sites"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="slotEnd"></a>
+                    <span class="name">
+                        <span ><b>slotEnd</b></span>
+                        <a href="#slotEnd"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TimeSlot</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="slotStart"></a>
+                    <span class="name">
+                        <span ><b>slotStart</b></span>
+                        <a href="#slotStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>TimeSlot</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscription</b></span>
+                        <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="user"></a>
+                    <span class="name">
+                        <span ><b>user</b></span>
+                        <a href="#user"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentDate"></a>
+                        <span class="name"><b>currentDate</b><a href="#currentDate"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentDate()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:83</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="periodicityIsFree"></a>
+                        <span class="name"><b>periodicityIsFree</b><a href="#periodicityIsFree"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>periodicityIsFree()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:87</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentLang"></a>
+                        <span class="name"><b>currentLang</b><a href="#currentLang"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentLang()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="158" class="link-to-prism">src/app/modules/project/modules/input/pages/inputs/inputs.component.ts:158</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, OnDestroy } from &#x27;@angular/core&#x27;;
+import { ActivatedRoute, Router } from &#x27;@angular/router&#x27;;
+import { ProjectService } from &#x27;src/app/services/project.service&#x27;;
+import { Project } from &#x27;src/app/models/classes/project.model&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import TimeSlot from &#x27;timeslot-dag&#x27;;
+import { Form } from &#x27;src/app/models/classes/form.model&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { InputService } from &#x27;src/app/services/input.service&#x27;;
+import { TimeSlotPeriodicity } from &#x27;src/app/utils/time-slot-periodicity&#x27;;
+import InformationItem from &#x27;src/app/models/interfaces/information-item&#x27;;
+import { User } from &#x27;src/app/models/classes/user.model&#x27;;
+import { Entity } from &#x27;src/app/models/classes/entity.model&#x27;;
+import { AuthService } from &#x27;src/app/services/auth.service&#x27;;
+import BreadcrumbItem from &#x27;src/app/models/interfaces/breadcrumb-item.model&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
+import DatesHelper from &#x27;src/app/utils/dates-helper&#x27;;
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from &#x27;@angular/material/core&#x27;;
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from &#x27;@angular/material-moment-adapter&#x27;;
+import { MY_DATE_FORMATS } from &#x27;src/app/utils/format-datepicker-helper&#x27;;
+import { DateService } from &#x27;src/app/services/date.service&#x27;;
+
+
+
+@Component({
+  selector: &#x27;app-inputs&#x27;,
+  templateUrl: &#x27;./inputs.component.html&#x27;,
+  styleUrls: [&#x27;./inputs.component.scss&#x27;],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
+})
+export class InputsComponent implements OnInit, OnDestroy {
+
+  informations &#x3D; [
+    {
+      res1: &#x27;InformationPanel.Calendar_entry&#x27;,
+      res2: &#x27;InformationPanel.Calendar_entry_description&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.Calendar_entry_question1&#x27;,
+      res2: &#x27;InformationPanel.Calendar_entry_response1&#x27;
+    } as InformationItem
+  ];
+  // TODO: Check if possible to clean and make simplify this component
+  displayedColumns &#x3D; [];
+  dataSource &#x3D; [];
+
+  formId: any;
+
+  sites &#x3D; [];
+  private subscription: Subscription &#x3D; new Subscription();
+
+  project: Project;
+  form: Form;
+  user: User;
+  allDates: any[];
+  inputProgress: ArrayBuffer;
+  allowedEntities: any[];
+  footerColumns: string[] &#x3D; [];
+  dateForm: FormControl;
+  slotStart: TimeSlot;
+  slotEnd: TimeSlot;
+  differentInputDates: { humanValue: string; value: string; }[] &#x3D; [];
+  endDateReached &#x3D; false;
+
+  lastDates &#x3D; {};
+
+  private isFocused &#x3D; false;
+
+
+  get currentDate(): string {
+    return DatesHelper.dateToString(this.dateForm.value);
+  }
+
+  get periodicityIsFree(): boolean{
+    return this.form?.periodicity &#x3D;&#x3D;&#x3D; &#x27;free&#x27;;
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+    private projectService: ProjectService,
+    private translateService: TranslateService,
+    private inputService: InputService,
+    private adapter: DateAdapter&lt;any&gt;,
+    private dateService: DateService,
+  ) { }
+
+  ngOnInit(): void {
+    this.dateForm &#x3D; new FormControl(new Date());
+    this.projectService.inBigPage.next(true);
+
+    this.subscription.add(
+      this.dateService.currentLang.subscribe( lang &#x3D;&gt; {
+        this.adapter.setLocale(lang);
+      })
+    );
+
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) &#x3D;&gt; {
+        this.project &#x3D; project;
+        this.updateData();
+      })
+    );
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) &#x3D;&gt; {
+        this.user &#x3D; user;
+      })
+    );
+    this.subscription.add(
+      this.route.params.subscribe(params &#x3D;&gt; {
+        this.formId &#x3D; params.formId;
+        this.form &#x3D; this.project?.forms.find(x &#x3D;&gt; x.id &#x3D;&#x3D;&#x3D; this.formId);
+
+        this.dataSource &#x3D; [];
+
+        if (this.form &amp;&amp; this.project) {
+          const breadCrumbs &#x3D; [
+            {
+              value: &#x27;Projects&#x27;,
+              link: &#x27;./../../projects&#x27;
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: this.form.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        this.updateData();
+      })
+    );
+    this.projectService.updateInformationPanel(this.informations);
+
+    window.addEventListener(&#x27;focus&#x27;, () &#x3D;&gt; {
+      this.updateData();
+    });
+  }
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  updateData(){
+    this.lastDates &#x3D; {};
+    if (this.formId &amp;&amp; this.project &amp;&amp; this.user){
+
+      this.form &#x3D; this.project.forms.find(x &#x3D;&gt; x.id &#x3D;&#x3D;&#x3D; this.formId);
+      this.sites &#x3D; this.form ? this.form.entities : [];
+
+      this.allowedEntities &#x3D; this.sites;
+
+
+      // We show only columns of data in which the current user has rights
+      let projectUser;
+
+      // const projectUser &#x3D; this.project.users.filter(user &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; this.user[&#x27;_id&#x27;]);
+      if (this.user.type &#x3D;&#x3D;&#x3D; &#x27;partner&#x27;) {
+        projectUser &#x3D; this.project.users.find(user &#x3D;&gt; user.username &#x3D;&#x3D;&#x3D; this.user.username);
+      } else {
+        projectUser &#x3D; this.project.users.find(user &#x3D;&gt; user.id &#x3D;&#x3D;&#x3D; this.user[&#x27;_id&#x27;]);
+      }
+
+
+      if (this.user.role !&#x3D;&#x3D; &#x27;admin&#x27;) {
+        if (projectUser.role &#x3D;&#x3D;&#x3D; &#x27;input&#x27;) {
+          this.allowedEntities &#x3D; this.sites.filter(e &#x3D;&gt; projectUser.entities.find((entity: Entity) &#x3D;&gt; entity.id &#x3D;&#x3D;&#x3D; e.id));
+        }
+        else if (projectUser.role &#x3D;&#x3D;&#x3D; &#x27;read&#x27;) {
+          this.allowedEntities &#x3D;  [];
+        }
+      }
+
+      this.displayedColumns &#x3D; [&#x27;Date&#x27;].concat(this.allowedEntities.map(x &#x3D;&gt; x.name));
+      this.footerColumns &#x3D; [&#x27;footerDate&#x27;].concat(this.allowedEntities.map(x &#x3D;&gt; x.id));
+    }
+
+    if (this.form){
+      // get the inputs from the backend
+      this.inputService.list(this.project.id, this.formId).then(input &#x3D;&gt; {
+        this.inputProgress &#x3D; input;
+
+        // get the date of today and compares it with the end date of the form to see which one happens first
+        this.allDates &#x3D; [];
+        let firstDate &#x3D; new Date();
+        if (firstDate &gt; this.form.end &amp;&amp; this.form.end){
+          firstDate &#x3D; this.form.end;
+        }
+        this.endDateReached &#x3D; false;
+
+        if (this.form.periodicity !&#x3D;&#x3D; &#x27;free&#x27;){
+          // this represents the most recent available time slot of the form
+          this.slotStart &#x3D; TimeSlot.fromDate(firstDate, TimeSlotPeriodicity[this.form.periodicity]);
+
+          // this is the oldest date of the form
+          this.slotEnd &#x3D; TimeSlot.fromDate(this.form.start, TimeSlotPeriodicity[this.form.periodicity]);
+        }
+
+        // in this case we can&#x27;t use timeSlots to give us all dates
+        // we take all the dates already existent in the inputs saved
+        // and remove the duplicates by adding them to a set
+        if (this.form.periodicity &#x3D;&#x3D;&#x3D; &#x27;free&#x27;){
+
+          // if we dont have anything saved we just return
+          if (Object.keys(this.inputProgress).length &#x3D;&#x3D;&#x3D; 0){
+            this.endDateReached &#x3D; true;
+            return;
+          }
+
+          // remove duplicate dates
+          const datesSet &#x3D; new Set();
+          for (const key of Object.keys(this.inputProgress)){
+            const [ , , , , , inputDateStr] &#x3D; key.split(&#x27;:&#x27;);
+            datesSet.add(inputDateStr);
+          }
+
+          // sort the dates and store them in an array in the timeSlot format
+          this.differentInputDates &#x3D; Array.from(datesSet).sort((a: string, b: string) &#x3D;&gt; b.localeCompare(a)).map((inputDateStr: string) &#x3D;&gt; {
+            const dayPeriodicity &#x3D; TimeSlotPeriodicity[&#x27;day&#x27;];
+            const dateSlot &#x3D; TimeSlot.fromDate(inputDateStr, dayPeriodicity as any);
+            return {
+              humanValue: dateSlot.humanizeValue(this.currentLang),
+              value:  dateSlot.value
+            };
+          });
+        }
+        this.dataSource &#x3D; [];
+        this.seeOlderDates();
+      });
+    }
+  }
+
+  // add new rows to the table
+  seeOlderDates(): void{
+    const nextDates &#x3D; this.getNext10dates();
+    this.allDates &#x3D; this.allDates.concat(nextDates);
+
+    const inputId &#x3D; &#x60;input:${this.project.id}:${this.formId}&#x60;;
+    const newDataSource &#x3D; [];
+    for (const date of nextDates){
+      const current &#x3D; { Date: date.humanValue };
+
+      for (const site of this.sites){
+        if (!this.lastDates[site.id] &amp;&amp; date.date &lt;&#x3D; site.end || this.form.periodicity &#x3D;&#x3D;&#x3D; &#x27;free&#x27;) {
+          if (&#x60;${inputId}:${site.id}:${date.value}&#x60; in this.inputProgress){
+            current[site.name] &#x3D; {
+              value: 100 * this.inputProgress[&#x60;${inputId}:${site.id}:${date.value}&#x60;],
+              column: site.id,
+              date: date.value,
+            };
+          } else{
+            current[site.name] &#x3D; {
+              value: -1,
+              column: site.id,
+              date: date.value,
+            };
+          }
+          if (date.date &lt;&#x3D; site.start.setHours(12)) {
+            this.lastDates[site.id] &#x3D; true;
+          }
+        } else {
+          current[site.name] &#x3D; {
+            value: -2
+          };
+        }
+      }
+      newDataSource.push(current);
+    }
+    this.dataSource &#x3D; this.dataSource.concat(newDataSource);
+  }
+
+  // get the next 10 valid dates for the form
+  getNext10dates(){
+    const dates &#x3D; [];
+    if (this.form.periodicity !&#x3D;&#x3D; &#x27;free&#x27;){
+      let datesAdded &#x3D; 0;
+      while (datesAdded &lt; 10 &amp;&amp; !this.endDateReached){
+        if (this.slotStart.firstDate &lt;&#x3D; this.slotEnd.firstDate){
+          this.endDateReached &#x3D; true;
+          break;
+        }
+        dates.push({
+          humanValue: this.slotStart.humanizeValue(this.currentLang),
+          value: this.slotStart.value,
+          date: this.slotStart.firstDate
+        });
+        this.slotStart &#x3D; this.slotStart.previous();
+        datesAdded +&#x3D; 1;
+      }
+
+    } else {
+      let datesAdded &#x3D; 0;
+
+      while (datesAdded &lt; 10 &amp;&amp; !this.endDateReached){
+        dates.push(this.differentInputDates.shift());
+
+        if (this.differentInputDates.length &#x3D;&#x3D;&#x3D; 0){
+          this.endDateReached &#x3D; true;
+        }
+        datesAdded +&#x3D; 1;
+      }
+
+    }
+    return dates;
+  }
+
+  openLinkInNewWindow(column, date) {
+    const url &#x3D; this.router.serializeUrl(
+      this.router.createUrlTree([&#x27;edit&#x27;, column, date], { relativeTo: this.route })
+    );
+
+    window.open(url, &#x27;_blank&#x27;);
+  }
+
+  dateAlreadyExist(column, date) {
+    const inputId &#x3D; &#x60;input:${this.project.id}:${this.formId}&#x60;;
+    if (this.inputProgress &amp;&amp; &#x60;${inputId}:${column}:${date}&#x60; in this.inputProgress){
+      return true;
+    }
+    return false;
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;info-section blue&quot;&gt;
+    &lt;span&gt;
+        &lt;p&gt;{{ &#x27;InputsInfo.0&#x27; | translate }} &lt;span *ngIf&#x3D;&quot;this.form&quot;&gt;&quot;{{this.form.name}}&quot;&lt;/span&gt;&lt;/p&gt;
+        &lt;p&gt;{{ &#x27;InputsInfo.1&#x27; | translate }}&lt;/p&gt;
+        &lt;p&gt;{{ &#x27;InputsInfo.2&#x27; | translate }}&lt;/p&gt;
+    &lt;/span&gt;
+    &lt;div class&#x3D;&quot;info-buttons&quot;&gt;
+        &lt;a mat-stroked-button type&#x3D;&quot;button&quot; class&#x3D;&quot;mdm-button&quot;
+            href&#x3D;&quot;/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation&#x3D;portrait&quot; target&#x3D;&quot;_blank&quot;
+            rel&#x3D;&quot;noopener noreferrer&quot;&gt;
+            &lt;mat-icon&gt;insert_drive_file&lt;/mat-icon&gt;{{&#x27;DownloadPdfPortrait&#x27; | translate}}
+        &lt;/a&gt;
+        &lt;a mat-stroked-button type&#x3D;&quot;button&quot; class&#x3D;&quot;mdm-button&quot;
+        href&#x3D;&quot;/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation&#x3D;landscape&quot; target&#x3D;&quot;_blank&quot;
+        rel&#x3D;&quot;noopener noreferrer&quot;&gt;
+        &lt;mat-icon&gt;note&lt;/mat-icon&gt;{{&#x27;DownloadPdfLandscape&#x27; | translate}}
+    &lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div *ngIf&#x3D;&quot;this.sites?.length &gt; 0; else elseBlockError&quot; class&#x3D;&quot;table-box&quot;&gt;
+  &lt;div class&#x3D;&quot;table-container&quot;&gt;
+    &lt;table mat-table [dataSource]&#x3D;&quot;dataSource&quot; class&#x3D;&quot;mdm-table&quot;&gt;
+        &lt;ng-container *ngFor&#x3D;&quot;let column of displayedColumns&quot; matColumnDef&#x3D;&quot;{{column}}&quot; [sticky]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;Date&#x27;&quot;&gt;
+            &lt;th mat-header-cell *matHeaderCellDef&gt;{{ column | translate }}&lt;/th&gt;
+            &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot; id&#x3D;&quot;{{column}}&quot; [ngClass]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;Date&#x27;? &#x27;first-row&#x27;:&#x27;&#x27;&quot;&gt;
+                &lt;div *ngIf&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;Date&#x27;; else elseBlock&quot;&gt;{{ element[column] }}&lt;/div&gt;
+                &lt;ng-template #elseBlock&gt;
+                    &lt;div *ngIf&#x3D;&quot;element[column]?.value &#x3D;&#x3D;&#x3D; -1&quot;&gt;
+                        &lt;button mat-stroked-button (click)&#x3D;&quot;openLinkInNewWindow(element[column].column, element[column].date)&quot;
+                            class&#x3D;&quot;mdm-button small-button create-button&quot;&gt;{{ &#x27;Create&#x27; | translate }}&lt;/button&gt;
+                    &lt;/div&gt;
+                    &lt;div *ngIf&#x3D;&quot;element[column]?.value &#x3D;&#x3D;&#x3D; -2&quot; style&#x3D;&quot;height: 24px&quot;&gt;&lt;/div&gt;
+                    &lt;div *ngIf&#x3D;&quot;element[column]?.value &gt;&#x3D; 0&quot;&gt;
+                        &lt;button mat-stroked-button (click)&#x3D;&quot;openLinkInNewWindow(element[column].column, element[column].date)&quot;
+                            class&#x3D;&quot;mdm-button small-button&quot;&gt;{{ &#x27;Edit&#x27; | translate }} ({{ element[column]?.value.toFixed(0) }}%)&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/ng-template&gt;
+            &lt;/td&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-container matColumnDef&#x3D;&quot;expandedDates&quot;&gt;
+            &lt;td mat-footer-cell *matFooterCellDef [attr.colspan]&#x3D;&quot;displayedColumns.length&quot; class&#x3D;&quot;expand-row&quot;&gt;
+                &lt;!-- &lt;ng-template [ngIf]&#x3D;&quot;!endDateReached &amp;&amp; this.allDates.length &gt; 0&quot;&gt;
+                    &lt;button mat-stroked-button (click)&#x3D;&quot;seeOlderDates()&quot; class&#x3D;&quot;mdm-button small-button&quot;&gt;{{ &#x27;SeeOlderDates&#x27;
+                        | translate }}&lt;/button&gt;
+                &lt;/ng-template&gt;
+                &lt;ng-template [ngIf]&#x3D;&quot;this.allDates.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+                    &lt;div&gt;{{ &#x27;dataInputNotAvilable&#x27; | translate }}&lt;/div&gt;
+                &lt;/ng-template&gt; --&gt;
+            &lt;/td&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-container *ngFor&#x3D;&quot;let column of footerColumns&quot; matColumnDef&#x3D;&quot;{{column}}&quot; [sticky]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;footerDate&#x27;&quot;&gt;
+            &lt;td mat-footer-cell *matFooterCellDef [ngClass]&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;footerDate&#x27;? &#x27;first-row&#x27;: &#x27;&#x27;&quot;&gt;
+                &lt;div *ngIf&#x3D;&quot;column &#x3D;&#x3D;&#x3D; &#x27;footerDate&#x27;; else elseBlockFooter&quot;&gt;
+                    &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput [matDatepicker]&#x3D;&quot;startPicker&quot; [formControl]&#x3D;&quot;dateForm&quot;&gt;
+                        &lt;mat-datepicker-toggle matPrefix [for]&#x3D;&quot;startPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                        &lt;mat-datepicker #startPicker&gt;&lt;/mat-datepicker&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/div&gt;
+                &lt;ng-template #elseBlockFooter&gt;
+                    &lt;button mat-stroked-button
+                        (click)&#x3D;&quot;openLinkInNewWindow(column, currentDate)&quot;
+                        [disabled]&#x3D;&quot;dateAlreadyExist(column, currentDate)&quot;
+                        [matTooltip]&#x3D;&quot;dateAlreadyExist(column, currentDate) ? (&#x27;DateHasEntry&#x27; | translate) : &#x27;&#x27;&quot;
+                        class&#x3D;&quot;mdm-button small-button create-newdate-button&quot;&gt;
+                        {{ &#x27;CreateNewDate&#x27; | translate }}
+                    &lt;/button&gt;
+                &lt;/ng-template&gt;
+            &lt;/td&gt;
+        &lt;/ng-container&gt;
+        &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot;&gt;&lt;/tr&gt;
+        &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: displayedColumns;&quot;&gt;&lt;/tr&gt;
+        &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;footerColumns&quot; [ngClass]&#x3D;&quot;!periodicityIsFree ? &#x27;hidden&#x27; : &#x27;&#x27;&quot;&gt;&lt;/tr&gt;
+        &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;[&#x27;expandedDates&#x27;]&quot;&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;div
+    *ngIf&#x3D;&quot;this.allDates &amp;&amp; (
+      (!endDateReached &amp;&amp; this.allDates.length &gt; 0) ||
+      this.allDates.length &#x3D;&#x3D;&#x3D; 0
+    )&quot;
+    class&#x3D;&quot;footer-overlay&quot;
+    [style]&#x3D;&quot;&#x27;top: &#x27; + (56 + 15 + 25 * (this.allDates.length || 0) + (
+      form.periodicity &#x3D;&#x3D;&#x3D; &#x27;free&#x27; ? 48 : 0
+    )) + &#x27;px&#x27;&quot;&gt;
+    &lt;ng-template [ngIf]&#x3D;&quot;!endDateReached &amp;&amp; this.allDates.length &gt; 0&quot;&gt;
+        &lt;button mat-stroked-button (click)&#x3D;&quot;seeOlderDates()&quot; class&#x3D;&quot;mdm-button small-button&quot;&gt;{{ &#x27;SeeOlderDates&#x27;
+            | translate }}&lt;/button&gt;
+    &lt;/ng-template&gt;
+    &lt;ng-template [ngIf]&#x3D;&quot;this.allDates.length &#x3D;&#x3D;&#x3D; 0&quot;&gt;
+        &lt;div&gt;{{ &#x27;dataInputNotAvilable&#x27; | translate }}&lt;/div&gt;
+    &lt;/ng-template&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;ng-template #elseBlockError&gt;
+    {{ &#x27;ErrorNoCollectionSiteAssociated&#x27; | translate }}
+&lt;/ng-template&gt;
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./inputs.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/size_vars&quot;;
+@import &quot;src/assets/theme/color_vars&quot;;
+
+.mdm-table {
+    tr {
+
+        td:first-child {
+            font-weight: bold;
+            width: 15%;
+          }
+
+        th {
+            text-align: center;
+          min-width: 120px; // taking into account the width of max length of word possible.
+        }
+        td{
+            text-align: center;
+            &amp;:not(.expand-row) {
+                div, button{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.create-button{
+    color: white;
+    background-color: rgb(49, 112, 143);
+    border-color: rgb(49, 112, 143) !important;
+}
+
+.create-newdate-button{
+    color: white;
+    background-color: #5cb85c;
+    border-color: #4cae4c !important;
+}
+
+.create-newdate-button:disabled {
+    color: white;
+    opacity: .6;
+}
+
+.info-section {
+    flex-direction: row;
+    span {
+        margin-right: 10px;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+        flex-direction: column;
+        span {
+            margin: 0px 0px 10px 0px;
+        }
+        .info-buttons {
+            width: 80%;
+            align-self: center;
+        }
+    }
+}
+
+.mdm-form-field {
+    width: 100%;
+
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+
+      .mat-form-field-flex {
+        .mat-form-field-infix {
+          width: auto;
+        }
+      }
+    }
+}
+
+th {
+    font-weight: bold;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &amp;.mat-header-cell {
+        padding: 0px !important;
+        text-align: center;
+        width: unset;
+    }
+}
+td {
+    flex: 1;
+}
+tr {
+    display: flex;
+    width: 100%;
+    background: $table_background_white;
+    &amp;.mat-row{
+        height: auto;
+    }
+}
+
+.first-row {
+    width: 200px !important;
+    align-items: center;
+}
+
+td.mat-cell, td.mat-footer-cell{
+    padding: 0px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tr.mat-footer-row{
+    height: 48px;
+}
+
+.hidden{
+    display: none;
+}
+
+
+.mdm-table {
+    width: 100%;
+    margin-top: 15px;
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px $table_border;
+}
+
+.table-box {
+  position: relative;
+  max-width: 100%;
+
+  .table-container {
+    overflow: auto;
+  }
+
+  .footer-overlay {
+    position: absolute;
+    height: 48px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="info-section blue">    <span>        <p>{{ \'InputsInfo.0\' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>        <p>{{ \'InputsInfo.1\' | translate }}</p>        <p>{{ \'InputsInfo.2\' | translate }}</p>    </span>    <div class="info-buttons">        <a mat-stroked-button type="button" class="mdm-button"            href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"            rel="noopener noreferrer">            <mat-icon>insert_drive_file</mat-icon>{{\'DownloadPdfPortrait\' | translate}}        </a>        <a mat-stroked-button type="button" class="mdm-button"        href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"        rel="noopener noreferrer">        <mat-icon>note</mat-icon>{{\'DownloadPdfLandscape\' | translate}}    </a>    </div></div><div *ngIf="this.sites?.length > 0; else elseBlockError" class="table-box">  <div class="table-container">    <table mat-table [dataSource]="dataSource" class="mdm-table">        <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}" [sticky]="column === \'Date\'">            <th mat-header-cell *matHeaderCellDef>{{ column | translate }}</th>            <td mat-cell *matCellDef="let element" id="{{column}}" [ngClass]="column === \'Date\'? \'first-row\':\'\'">                <div *ngIf="column === \'Date\'; else elseBlock">{{ element[column] }}</div>                <ng-template #elseBlock>                    <div *ngIf="element[column]?.value === -1">                        <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"                            class="mdm-button small-button create-button">{{ \'Create\' | translate }}</button>                    </div>                    <div *ngIf="element[column]?.value === -2" style="height: 24px"></div>                    <div *ngIf="element[column]?.value >= 0">                        <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"                            class="mdm-button small-button">{{ \'Edit\' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>                    </div>                </ng-template>            </td>        </ng-container>        <ng-container matColumnDef="expandedDates">            <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">                <!-- <ng-template [ngIf]="!endDateReached && this.allDates.length > 0">                    <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ \'SeeOlderDates\'                        | translate }}</button>                </ng-template>                <ng-template [ngIf]="this.allDates.length === 0">                    <div>{{ \'dataInputNotAvilable\' | translate }}</div>                </ng-template> -->            </td>        </ng-container>        <ng-container *ngFor="let column of footerColumns" matColumnDef="{{column}}" [sticky]="column === \'footerDate\'">            <td mat-footer-cell *matFooterCellDef [ngClass]="column === \'footerDate\'? \'first-row\': \'\'">                <div *ngIf="column === \'footerDate\'; else elseBlockFooter">                    <mat-form-field appearance="outline" class="mdm-form-field">                        <input matInput [matDatepicker]="startPicker" [formControl]="dateForm">                        <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>                        <mat-datepicker #startPicker></mat-datepicker>                    </mat-form-field>                </div>                <ng-template #elseBlockFooter>                    <button mat-stroked-button                        (click)="openLinkInNewWindow(column, currentDate)"                        [disabled]="dateAlreadyExist(column, currentDate)"                        [matTooltip]="dateAlreadyExist(column, currentDate) ? (\'DateHasEntry\' | translate) : \'\'"                        class="mdm-button small-button create-newdate-button">                        {{ \'CreateNewDate\' | translate }}                    </button>                </ng-template>            </td>        </ng-container>        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>        <tr mat-footer-row *matFooterRowDef="footerColumns" [ngClass]="!periodicityIsFree ? \'hidden\' : \'\'"></tr>        <tr mat-footer-row *matFooterRowDef="[\'expandedDates\']"></tr>    </table>  </div>  <div    *ngIf="this.allDates && (      (!endDateReached && this.allDates.length > 0) ||      this.allDates.length === 0    )"    class="footer-overlay"    [style]="\'top: \' + (56 + 15 + 25 * (this.allDates.length || 0) + (      form.periodicity === \'free\' ? 48 : 0    )) + \'px\'">    <ng-template [ngIf]="!endDateReached && this.allDates.length > 0">        <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ \'SeeOlderDates\'            | translate }}</button>    </ng-template>    <ng-template [ngIf]="this.allDates.length === 0">        <div>{{ \'dataInputNotAvilable\' | translate }}</div>    </ng-template>  </div></div><ng-template #elseBlockError>    {{ \'ErrorNoCollectionSiteAssociated\' | translate }}</ng-template></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'InputsComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'InputsComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

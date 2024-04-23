@@ -1,0 +1,1250 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  CollectionSitesSelectorComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-collection-sites-selector</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./collection-sites-selector.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./collection-sites-selector.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#allOption" >allOption</a>
+                            </li>
+                            <li>
+                                <a href="#updatedForm" >updatedForm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#checkIfGroup" >checkIfGroup</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getGroupedEntities" >getGroupedEntities</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onEntityRemoved" >onEntityRemoved</a>
+                            </li>
+                            <li>
+                                <a href="#toggleAllSelection" >toggleAllSelection</a>
+                            </li>
+                            <li>
+                                <a href="#toggleGroupOption" >toggleGroupOption</a>
+                            </li>
+                            <li>
+                                <a href="#toggleNormalOption" >toggleNormalOption</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#entities" >entities</a>
+                            </li>
+                            <li>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <a href="#groups" >groups</a>
+                            </li>
+                            <li>
+                                <a href="#hint" >hint</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#selectedEntities" >selectedEntities</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="entities"></a>
+                        <b>entities</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>{}</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:16</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="form"></a>
+                        <b>form</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:15</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="groups"></a>
+                        <b>groups</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>{}</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:17</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="hint"></a>
+                        <b>hint</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:18</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkIfGroup"></a>
+                    <span class="name">
+                        <span ><b>checkIfGroup</b></span>
+                        <a href="#checkIfGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>checkIfGroup(entity)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>entity</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getGroupedEntities"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getGroupedEntities</b></span>
+                        <a href="#getGroupedEntities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getGroupedEntities()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{}</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEntityRemoved"></a>
+                    <span class="name">
+                        <span ><b>onEntityRemoved</b></span>
+                        <a href="#onEntityRemoved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEntityRemoved(entity)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="76"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>entity</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleAllSelection"></a>
+                    <span class="name">
+                        <span ><b>toggleAllSelection</b></span>
+                        <a href="#toggleAllSelection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleAllSelection()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleGroupOption"></a>
+                    <span class="name">
+                        <span ><b>toggleGroupOption</b></span>
+                        <a href="#toggleGroupOption"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleGroupOption(group: <a href="../classes/Group.html" target="_self">Group</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>group</td>
+                                            <td>
+                                                            <code><a href="../classes/Group.html" target="_self" >Group</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleNormalOption"></a>
+                    <span class="name">
+                        <span ><b>toggleNormalOption</b></span>
+                        <a href="#toggleNormalOption"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleNormalOption(entityClicked: <a href="../classes/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>entityClicked</td>
+                                            <td>
+                                                            <code><a href="../classes/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="allOption"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>allOption</b></span>
+                        <a href="#allOption"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Entity.html" target="_self" >Entity</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Entity({id: &#x27;all&#x27;, name: &#x27;All&#x27;})</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updatedForm"></a>
+                    <span class="name">
+                        <span ><b>updatedForm</b></span>
+                        <a href="#updatedForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedEntities"></a>
+                        <span class="name"><b>selectedEntities</b><a href="#selectedEntities"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>selectedEntities()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.component.ts:22</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, OnInit } from &#x27;@angular/core&#x27;;
+import { FormGroup } from &#x27;@angular/forms&#x27;;
+import { Entity } from &#x27;src/app/models/classes/entity.model&#x27;;
+import { Group } from &#x27;src/app/models/classes/group.model&#x27;;
+
+@Component({
+  selector: &#x27;app-collection-sites-selector&#x27;,
+  templateUrl: &#x27;./collection-sites-selector.component.html&#x27;,
+  styleUrls: [&#x27;./collection-sites-selector.component.scss&#x27;]
+})
+export class CollectionSitesSelectorComponent implements OnInit {
+
+  public allOption: Entity &#x3D; new Entity({id: &#x27;all&#x27;, name: &#x27;All&#x27;});
+
+  @Input() form: FormGroup;
+  @Input() entities &#x3D; [];
+  @Input() groups &#x3D; [];
+  @Input() hint &#x3D; &#x27;&#x27;;
+  updatedForm: FormGroup;
+
+  // This method check which data will be displayed, Example : all, groups, entity
+  get selectedEntities(): Entity[] {
+    if (this.form.controls.entities.value &#x3D;&#x3D;&#x3D; null){
+      return [];
+    }
+
+    let entities &#x3D; [...this.form.controls.entities.value];
+
+    // if the &#x27;allOption&#x27; is selected it should be the only one displayed
+    if (entities &amp;&amp; entities.includes(this.allOption)){
+      return [this.allOption];
+    }
+
+    // if a group is selected, we don&#x27;t show it&#x27;s members
+    for (const group of entities){
+      if (group instanceof Group){
+        entities &#x3D; entities.filter(e &#x3D;&gt; !group.members.includes(e));
+      }
+    }
+
+    return entities;
+  }
+
+  checkIfGroup(entity){
+    return entity instanceof Group || entity.id &#x3D;&#x3D;&#x3D; this.allOption.id;
+  }
+
+  ngOnInit(): void {
+    this.form.controls.entities.setValue(this.getGroupedEntities());
+  }
+
+  // This method check which group and entities have already been selected
+  // and update the form
+  private getGroupedEntities(){
+    if (this.form &#x3D;&#x3D;&#x3D; null || this.form.controls.entities.value &#x3D;&#x3D;&#x3D; null){
+      return [];
+    }
+    // if all entities are selected, just return all the options selected
+    if (this.form.controls.entities.value.length &#x3D;&#x3D;&#x3D; this.entities.length &amp;&amp; this.entities.length &gt; 0){
+      return [...this.entities, ...this.groups, this.allOption];
+    }
+
+    // get the groups that have all members selected
+    const groups &#x3D; this.groups.filter(g &#x3D;&gt; {
+      for (const member of g.members){
+        if (!this.form.controls.entities.value.includes(member) ){
+          return false;
+        }
+      }
+      return true;
+    });
+
+    return [ ...groups, ...this.form.controls.entities.value ];
+  }
+
+  onEntityRemoved(entity): void {
+    const currentEntities &#x3D; this.form.controls.entities;
+    if (entity &#x3D;&#x3D;&#x3D; this.allOption){
+      this.form.controls.entities.setValue([]);
+    }
+    // Checking if a group has been removed
+    else if (this.groups.find(g &#x3D;&gt; g.id &#x3D;&#x3D;&#x3D; entity.id)){
+      const newValue &#x3D; currentEntities.value.filter(x &#x3D;&gt; x.id !&#x3D;&#x3D; entity.id);
+      const entitiesBelongingToGroups &#x3D; [];
+      for (const group of newValue){
+        if (group instanceof Group){
+          for (const member of group.members){
+            if (!entitiesBelongingToGroups.includes(member)){
+              entitiesBelongingToGroups.push(member);
+            }
+          }
+        }
+      }
+
+      currentEntities.setValue(
+        newValue.filter(e &#x3D;&gt; e.id !&#x3D;&#x3D; this.allOption.id
+          &amp;&amp; !(e instanceof Entity &amp;&amp; entity.members.includes(e)
+          &amp;&amp; !entitiesBelongingToGroups.includes(e)))
+      );
+    }
+    else{
+      this.form.controls.entities.setValue(currentEntities.value.filter(x &#x3D;&gt; x.id !&#x3D;&#x3D; entity.id));
+    }
+  }
+
+  toggleAllSelection(): void{
+    const currentEntities &#x3D; this.form.controls.entities;
+
+    // when the &#x27;all&#x27; option is selected we select all the others too
+    if (currentEntities.value.includes(this.allOption)){
+      currentEntities.setValue([...this.entities, ...this.groups, this.allOption]);
+    }
+    // when it its unselected we remove all the others
+    else{
+      currentEntities.setValue([]);
+    }
+  }
+
+
+  toggleNormalOption(entityClicked: Entity){
+    const currentEntities &#x3D; this.form.controls.entities;
+    // this means it is selecting a new option
+    if (currentEntities.value.includes(entityClicked)){
+      // if selecting this option make we have all entities selected we must add the &#x27;allOption&#x27; and all the groups
+      if (currentEntities.value.filter(e &#x3D;&gt; e instanceof Entity).length &#x3D;&#x3D;&#x3D; this.entities.length){
+        currentEntities.setValue([...currentEntities.value, ...this.groups, this.allOption]);
+      }else{
+        // we need to add all the groups that have all members selected
+        currentEntities.setValue([...currentEntities.value, ...this.groups.filter(g &#x3D;&gt; !currentEntities.value.includes(g)).filter(g &#x3D;&gt; {
+          for (const member of g.members){
+            // if one member is not present we can return false and the group won&#x27;t be selected
+            if (!currentEntities.value.includes(member)){
+              return false;
+            }
+          }
+          return true;
+        })]);
+      }
+    }
+    // this means we are deselecting an option
+    else{
+      // if the &#x27;allOption&#x27; is selected and we click on a normal option, we have to remove the &#x27;allOption&#x27;
+      const newOptions &#x3D; currentEntities.value.filter((e) &#x3D;&gt; {
+        return e.id !&#x3D;&#x3D; this.allOption.id &amp;&amp;
+        // and also remove the groups that have that option as a member
+        !(e instanceof Group &amp;&amp; e.members.includes(entityClicked));
+      });
+      currentEntities.setValue(newOptions);
+    }
+  }
+
+
+  toggleGroupOption(group: Group){
+    const currentEntities &#x3D; this.form.controls.entities;
+
+    // adding a new group
+    if (currentEntities.value.includes(group)){
+      // add all members of that group that are not selected already
+      const entitiesToBeAdded &#x3D; this.entities.filter((e: Entity) &#x3D;&gt; group.members.includes(e));
+
+      // add allOption if necessary
+      let newValues &#x3D; currentEntities.value.concat(entitiesToBeAdded.filter(e &#x3D;&gt; !currentEntities.value.includes(e)));
+      if (newValues.filter(e &#x3D;&gt; this.entities.includes(e)).length &#x3D;&#x3D;&#x3D; this.entities.length){
+        newValues &#x3D; [...this.entities, ...this.groups, this.allOption];
+      }
+      else{
+        // add all the groups that have all members selected
+        const newGroups &#x3D; this.groups.filter(g &#x3D;&gt; {
+          if (newValues.includes(g)){
+            return false;
+          }
+          for (const member of g.members){
+            if (!newValues.includes(member)){
+              return false;
+            }
+          }
+          return true;
+        });
+        newValues &#x3D; newValues.concat(newGroups);
+      }
+      currentEntities.setValue(newValues);
+    }
+    // removing a group
+    else{
+      const entitiesBelongingToGroups &#x3D; [];
+      for (const entityGroup of currentEntities.value){
+        if (entityGroup instanceof Group){
+          for (const member of entityGroup.members){
+            if (!entitiesBelongingToGroups.includes(member)){
+              entitiesBelongingToGroups.push(member);
+            }
+          }
+        }
+      }
+      currentEntities.setValue(
+        currentEntities.value.filter(e &#x3D;&gt; e.id !&#x3D;&#x3D; this.allOption.id
+          &amp;&amp; !(e instanceof Entity &amp;&amp; group.members.includes(e)
+          &amp;&amp; !entitiesBelongingToGroups.includes(e)))
+      );
+    }
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-form-field [formGroup]&#x3D;&quot;form&quot; appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field chip-list&quot;&gt;
+    &lt;mat-select
+      formControlName&#x3D;&quot;entities&quot;
+      placeholder&#x3D;&quot;{{ &#x27;DataSourceEdit.CollectionSitesPlaceholder&#x27; | translate }}&quot;
+      multiple
+      disableOptionCentering
+      panelClass&#x3D;&quot;basicsChipListPanelClass&quot;
+      [disabled]&#x3D;&quot;!entities || entities.length &#x3D;&#x3D;&#x3D; 0&quot;
+    &gt;
+        &lt;mat-select-trigger&gt;
+            &lt;mat-chip-list&gt;
+                &lt;mat-chip *ngFor&#x3D;&quot;let entity of selectedEntities&quot; [removable]&#x3D;&quot;true&quot;
+                    (removed)&#x3D;&quot;onEntityRemoved(entity)&quot; &gt;
+                    &lt;mat-icon class&#x3D;&quot;chip&quot; *ngIf&#x3D;&quot;checkIfGroup(entity)&quot;&gt;arrow_circle_down&lt;/mat-icon&gt;
+                    {{ entity.name | translate }}
+                    &lt;mat-icon matChipRemove&gt;cancel&lt;/mat-icon&gt;
+                &lt;/mat-chip&gt;
+            &lt;/mat-chip-list&gt;
+        &lt;/mat-select-trigger&gt;
+        &lt;mat-option *ngIf&#x3D;&quot;entities.length &gt; 0&quot; (click)&#x3D;&quot;toggleAllSelection()&quot; [value]&#x3D;&quot;allOption&quot;&gt;&lt;mat-icon class&#x3D;&quot;option&quot;&gt;arrow_circle_down&lt;/mat-icon&gt;{{ &#x27;All&#x27; | translate }}&lt;/mat-option&gt;
+        &lt;mat-option *ngFor&#x3D;&quot;let group of groups&quot; (click)&#x3D;&quot;toggleGroupOption(group)&quot; [value]&#x3D;group&gt;&lt;mat-icon class&#x3D;&quot;option&quot;&gt;arrow_circle_down&lt;/mat-icon&gt;{{ group.name }}&lt;/mat-option&gt;
+        &lt;mat-option *ngFor&#x3D;&quot;let entity of entities&quot; (click)&#x3D;&quot;toggleNormalOption(entity)&quot; [value]&#x3D;&quot;entity&quot;&gt;{{ entity.name }}&lt;/mat-option&gt;
+    &lt;/mat-select&gt;
+    &lt;mat-hint *ngIf&#x3D;&quot;hint&quot;&gt;
+        &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ hint | translate }}
+    &lt;/mat-hint&gt;
+&lt;/mat-form-field&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./collection-sites-selector.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;./../../../../../../../assets/theme/size_vars.scss&quot;;
+mat-icon.option{
+    height: 14px;
+    width: 14px;
+    font-size: $small_text;
+    line-height: 12px;
+    margin-right: 5px !important;
+    transform: rotate(-90deg);
+}
+
+mat-icon.chip{
+    transform: rotate(-90deg);
+    height: 14px;
+    width: 14px;
+    font-size: $small_text;
+    line-height: 12px;
+    margin-right: 5px !important;
+    margin-bottom: 2px;
+}
+
+
+.chip-list {
+    ::ng-deep .mat-form-field-flex &gt; .mat-form-field-infix { max-width: 100% !important;
+        .mat-chip-list-wrapper{
+            flex-wrap: wrap !important;
+        }}
+  }
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-form-field [formGroup]="form" appearance="outline" class="mdm-form-field chip-list">    <mat-select      formControlName="entities"      placeholder="{{ \'DataSourceEdit.CollectionSitesPlaceholder\' | translate }}"      multiple      disableOptionCentering      panelClass="basicsChipListPanelClass"      [disabled]="!entities || entities.length === 0"    >        <mat-select-trigger>            <mat-chip-list>                <mat-chip *ngFor="let entity of selectedEntities" [removable]="true"                    (removed)="onEntityRemoved(entity)" >                    <mat-icon class="chip" *ngIf="checkIfGroup(entity)">arrow_circle_down</mat-icon>                    {{ entity.name | translate }}                    <mat-icon matChipRemove>cancel</mat-icon>                </mat-chip>            </mat-chip-list>        </mat-select-trigger>        <mat-option *ngIf="entities.length > 0" (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ \'All\' | translate }}</mat-option>        <mat-option *ngFor="let group of groups" (click)="toggleGroupOption(group)" [value]=group><mat-icon class="option">arrow_circle_down</mat-icon>{{ group.name }}</mat-option>        <mat-option *ngFor="let entity of entities" (click)="toggleNormalOption(entity)" [value]="entity">{{ entity.name }}</mat-option>    </mat-select>    <mat-hint *ngIf="hint">        <mat-icon>info</mat-icon>{{ hint | translate }}    </mat-hint></mat-form-field></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CollectionSitesSelectorComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CollectionSitesSelectorComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

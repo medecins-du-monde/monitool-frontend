@@ -1,0 +1,1323 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  FilterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/report/filter/filter.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                            <code>{
+    provide: DateAdapter, useClass: MomentDateAdapter, deps: [
+        MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS
+    ]
+}</code>
+                                <code><a href="../miscellaneous/variables.html#MY_DATE_FORMATS" target="_self" >{
+    provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS
+}</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-filter</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./filter.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./filter.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#collapsed" >collapsed</a>
+                            </li>
+                            <li>
+                                <a href="#entities" >entities</a>
+                            </li>
+                            <li>
+                                <a href="#filterForm" >filterForm</a>
+                            </li>
+                            <li>
+                                <a href="#groups" >groups</a>
+                            </li>
+                            <li>
+                                <a href="#selectedSites" >selectedSites</a>
+                            </li>
+                            <li>
+                                <a href="#sites" >sites</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscription" >subscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onEntityRemoved" >onEntityRemoved</a>
+                            </li>
+                            <li>
+                                <a href="#toggleCollapsed" >toggleCollapsed</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#isCrossCuttingReport" >isCrossCuttingReport</a>
+                            </li>
+                            <li>
+                                <a href="#project" >project</a>
+                            </li>
+                            <li>
+                                <a href="#showComments" >showComments</a>
+                            </li>
+                            <li>
+                                <a href="#userIsAdmin" >userIsAdmin</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#filterEvent" >filterEvent</a>
+                            </li>
+                            <li>
+                                <a href="#showCommentsChange" >showCommentsChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="../classes/Form.html" target="_self">FormBuilder</a>, projectService: <a href="../injectables/ProjectService.html" target="_self">ProjectService</a>, adapter: DateAdapter<any>, dateService: <a href="../injectables/DateService.html" target="_self">DateService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/report/filter/filter.component.ts:59</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Form.html" target="_self" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>adapter</td>
+                                                  
+                                                        <td>
+                                                                    <code>DateAdapter&lt;any&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dateService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DateService.html" target="_self" >DateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isCrossCuttingReport"></a>
+                        <b>isCrossCuttingReport</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/report/filter/filter.component.ts:50</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="project"></a>
+                        <b>project</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/components/report/filter/filter.component.ts:51</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showComments"></a>
+                        <b>showComments</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/components/report/filter/filter.component.ts:52</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="userIsAdmin"></a>
+                        <b>userIsAdmin</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/report/filter/filter.component.ts:53</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="filterEvent"></a>
+                        <b>filterEvent</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Filter.html" target="_self" >EventEmitter&lt;Filter&gt;</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/components/report/filter/filter.component.ts:54</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showCommentsChange"></a>
+                        <b>showCommentsChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/components/report/filter/filter.component.ts:55</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/components/report/filter/filter.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/components/report/filter/filter.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEntityRemoved"></a>
+                    <span class="name">
+                        <span ><b>onEntityRemoved</b></span>
+                        <a href="#onEntityRemoved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEntityRemoved(entity: <a href="../classes/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/components/report/filter/filter.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>entity</td>
+                                            <td>
+                                                            <code><a href="../classes/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleCollapsed"></a>
+                    <span class="name">
+                        <span ><b>toggleCollapsed</b></span>
+                        <a href="#toggleCollapsed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleCollapsed()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/components/report/filter/filter.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="collapsed"></a>
+                    <span class="name">
+                        <span ><b>collapsed</b></span>
+                        <a href="#collapsed"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/components/report/filter/filter.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="entities"></a>
+                    <span class="name">
+                        <span ><b>entities</b></span>
+                        <a href="#entities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Entity.html" target="_self" >Entity[]</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/components/report/filter/filter.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterForm"></a>
+                    <span class="name">
+                        <span ><b>filterForm</b></span>
+                        <a href="#filterForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/components/report/filter/filter.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groups"></a>
+                    <span class="name">
+                        <span ><b>groups</b></span>
+                        <a href="#groups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Group.html" target="_self" >Group[]</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/report/filter/filter.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedSites"></a>
+                    <span class="name">
+                        <span ><b>selectedSites</b></span>
+                        <a href="#selectedSites"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/components/report/filter/filter.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sites"></a>
+                    <span class="name">
+                        <span ><b>sites</b></span>
+                        <a href="#sites"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Entity.html" target="_self" >Entity[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/components/report/filter/filter.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscription</b></span>
+                        <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/components/report/filter/filter.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, EventEmitter, Input, Output, OnDestroy} from &#x27;@angular/core&#x27;;
+import {  FormGroup, FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { Project } from &#x27;src/app/models/classes/project.model&#x27;;
+import { ProjectService } from &#x27;src/app/services/project.service&#x27;;
+import { Entity } from &#x27;src/app/models/classes/entity.model&#x27;;
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from &#x27;@angular/material/core&#x27;;
+import { MY_DATE_FORMATS } from &#x27;src/app/utils/format-datepicker-helper&#x27;;
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from &#x27;@angular/material-moment-adapter&#x27;;
+import { DateService} from &#x27;src/app/services/date.service&#x27;;
+import { Group } from &#x27;src/app/models/classes/group.model&#x27;;
+import _ from &#x27;lodash&#x27;;
+import DatesHelper from &#x27;src/app/utils/dates-helper&#x27;;
+
+
+export interface Filter{
+  _start: Date;
+  _end: Date;
+  entities?: string[];
+  finished?: boolean;
+}
+
+@Component({
+  selector: &#x27;app-filter&#x27;,
+  templateUrl: &#x27;./filter.component.html&#x27;,
+  styleUrls: [&#x27;./filter.component.scss&#x27;],
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
+})
+export class FilterComponent implements OnInit, OnDestroy{
+
+  collapsed &#x3D; true;
+
+  selectedSites &#x3D; [];
+
+  sites: Entity[] &#x3D; [];
+  filterForm: FormGroup;
+
+  @Input() isCrossCuttingReport &#x3D; false;
+  @Input() project: Project;
+  @Input() showComments &#x3D; false;
+  @Input() userIsAdmin &#x3D; false;
+  @Output() filterEvent: EventEmitter&lt;Filter&gt; &#x3D; new EventEmitter&lt;Filter&gt;();
+  @Output() showCommentsChange &#x3D; new EventEmitter&lt;boolean&gt;();
+
+  private subscription: Subscription &#x3D; new Subscription();
+  entities: Entity[];
+  groups: Group[];
+
+  constructor(
+    private fb: FormBuilder,
+    private projectService: ProjectService,
+    private adapter: DateAdapter&lt;any&gt;,
+    private dateService: DateService,
+  ) { }
+
+  onEntityRemoved(entity: Entity): void {
+    this.selectedSites &#x3D; this.selectedSites.filter(site &#x3D;&gt; site.id !&#x3D;&#x3D; entity.id);
+    this.filterForm.get(&#x27;entities&#x27;).setValue(this.selectedSites.map(x &#x3D;&gt; x.id));
+  }
+
+  toggleCollapsed(): void {
+    this.collapsed &#x3D; this.collapsed ? false : true;
+  }
+
+  ngOnInit(): void {
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang &#x3D;&gt; {
+          this.adapter.setLocale(lang);
+        }
+      )
+    );
+    // by default the end date is the last day of the current year
+    // and the start date is the first day of the previous year
+    let endDate &#x3D; new Date((new Date()).getFullYear(), 11, 31);
+    let startDate &#x3D; new Date((new Date()).getFullYear() - 1, 0, 1);
+
+    if (this.isCrossCuttingReport){
+      this.filterForm &#x3D; this.fb.group({
+        _start: [startDate, Validators.required],
+        _end: [endDate, Validators.required],
+        finished: [false, Validators.required],
+      });
+      this.filterEvent.emit(this.filterForm.value);
+
+      this.filterForm.valueChanges.subscribe(value &#x3D;&gt; {
+        this.selectedSites &#x3D; this.sites.filter( site &#x3D;&gt; value.entities.includes(site.id) );
+        this.filterEvent.emit(value as Filter);
+      });
+    } else {
+      this.subscription.add(
+        this.projectService.openedProject.subscribe( (project: Project): void &#x3D;&gt; {
+          this.project &#x3D; project;
+
+          if (this.project){
+            this.sites &#x3D; this.project.entities;
+            this.entities &#x3D; this.project.entities;
+            this.groups &#x3D; this.project.groups;
+            endDate &#x3D; this.project.end;
+            startDate &#x3D; this.project.start;
+            this.selectedSites &#x3D; this.project.entities.map(entity &#x3D;&gt; entity);
+          }
+
+          this.filterForm &#x3D; this.fb.group({
+            _start: [startDate, Validators.required],
+            _end: [endDate, Validators.required ],
+            entities: [this.project.entities, Validators.required]
+          });
+
+          this.filterEvent.emit(this.filterForm.value);
+
+          let oldFilterFormValue &#x3D; _.cloneDeep(this.filterForm).value;
+
+          this.subscription.add(
+            this.filterForm.valueChanges.subscribe(newFilterValue &#x3D;&gt; {
+              if (!DatesHelper.areEquals(oldFilterFormValue._start, newFilterValue._start)
+                  || !DatesHelper.areEquals(oldFilterFormValue._end, newFilterValue._end)
+                  || JSON.stringify(oldFilterFormValue.entities)
+                    !&#x3D;&#x3D; JSON.stringify(newFilterValue.entities.filter(
+                      element &#x3D;&gt; element instanceof Entity &amp;&amp; element.id !&#x3D;&#x3D; &#x27;all&#x27;)
+                      .map(entity &#x3D;&gt; entity.id))) {
+                  this.selectedSites &#x3D; this.sites.filter( site &#x3D;&gt; newFilterValue.entities.includes(site) );
+                  oldFilterFormValue &#x3D; newFilterValue;
+                  this.filterEvent.emit(newFilterValue as Filter);
+              }
+            })
+          );
+        })
+      );
+    }
+
+  }
+
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td style&#x3D;&quot;display: flex; justify-content: space-between;&quot;&gt;
+            &lt;h2 (click)&#x3D;&quot;toggleCollapsed()&quot;&gt;
+             &lt;mat-icon&gt;
+               {{collapsed ? &#x27;add_circle&#x27; : &#x27;remove_circle&#x27;}}
+             &lt;/mat-icon&gt;
+             {{ &#x27;Filters&#x27; | translate }}
+           &lt;/h2&gt;
+           &lt;h2 *ngIf&#x3D;&quot;!isCrossCuttingReport&quot;  [matTooltip]&#x3D;&quot;userIsAdmin ? (&#x27;display-comments.tooltip&#x27; | translate) : null&quot;&gt;
+             {{ &#x27;display-comments.title&#x27; | translate}}
+             &lt;mat-checkbox [(ngModel)]&#x3D;&quot;showComments&quot; ngDefaultControl (change)&#x3D;&quot;showCommentsChange.emit(showComments)&quot;&gt;&lt;/mat-checkbox&gt;
+           &lt;/h2&gt;
+         &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td *ngIf&#x3D;&quot;!collapsed&quot; [formGroup]&#x3D;&quot;filterForm&quot;&gt;
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;Start&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                    &lt;mat-label&gt;{{ &#x27;ChooseStartDate&#x27; | translate }}&lt;/mat-label&gt;
+                    &lt;input matInput [matDatepicker]&#x3D;&quot;start&quot; formControlName&#x3D;&quot;_start&quot;&gt;
+                    &lt;mat-datepicker-toggle matPrefix [for]&#x3D;&quot;start&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                    &lt;mat-datepicker #start&gt;&lt;/mat-datepicker&gt;
+                &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;End&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                    &lt;mat-label&gt;{{ &#x27;ChooseEndDate&#x27; | translate }}&lt;/mat-label&gt;
+                    &lt;input matInput [matDatepicker]&#x3D;&quot;end&quot; formControlName&#x3D;&quot;_end&quot;&gt;
+                    &lt;mat-datepicker-toggle matPrefix [for]&#x3D;&quot;end&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                    &lt;mat-datepicker #end&gt;&lt;/mat-datepicker&gt;
+                &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+
+            &lt;div *ngIf&#x3D;&quot;filterForm.get(&#x27;entities&#x27;)&quot; class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;CollectionSites&#x27; | translate }}&lt;/div&gt;
+                &lt;app-collection-sites-selector
+                    [form]&#x3D;&quot;filterForm&quot;
+                    [entities]&#x3D;&quot;entities&quot;
+                    [groups]&#x3D;&quot;groups&quot;&gt;
+                &lt;/app-collection-sites-selector&gt;
+            &lt;/div&gt;
+
+            &lt;div *ngIf&#x3D;&quot;filterForm.get(&#x27;finished&#x27;)&quot; class&#x3D;&quot;mdm-form-group finished-projects&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;ShowFinishedProjects&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-checkbox formControlName&#x3D;&quot;finished&quot;&gt;&lt;/mat-checkbox&gt;
+            &lt;/div&gt;
+
+        &lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./filter.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/size_vars.scss&quot;;
+@import &quot;src/assets/theme/color_vars.scss&quot;;
+
+.hover {
+  cursor: pointer;
+  padding: 5px;
+}
+
+table {
+  padding-bottom: 5px;
+  width: 100%;
+  font-size: $small_text;
+}
+
+td {
+  border: solid 1px $table_border !important;
+  background: $filters_background;
+}
+
+.mdm-form-group:first-child {
+  padding-top: 1em;
+}
+
+.mdm-form-group {
+  padding: 0em 2em 0em 2em;
+}
+
+h2 {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: $small_text;
+  cursor: pointer;
+  margin-top: 4px;
+
+  mat-icon {
+    margin-top: -4px;
+  }
+
+  mat-checkbox {
+    margin-top: -4px;
+  }
+}
+
+app-collection-sites-selector {
+  flex: 1;
+  display: flex;
+}
+.finished-projects {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  .mdm-form-label {
+    flex: 0.7;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><table>    <tr>        <td style="display: flex; justify-content: space-between;">            <h2 (click)="toggleCollapsed()">             <mat-icon>               {{collapsed ? \'add_circle\' : \'remove_circle\'}}             </mat-icon>             {{ \'Filters\' | translate }}           </h2>           <h2 *ngIf="!isCrossCuttingReport"  [matTooltip]="userIsAdmin ? (\'display-comments.tooltip\' | translate) : null">             {{ \'display-comments.title\' | translate}}             <mat-checkbox [(ngModel)]="showComments" ngDefaultControl (change)="showCommentsChange.emit(showComments)"></mat-checkbox>           </h2>         </td>    </tr>    <tr>        <td *ngIf="!collapsed" [formGroup]="filterForm">            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'Start\' | translate }}</div>                <mat-form-field appearance="outline" class="mdm-form-field">                    <mat-label>{{ \'ChooseStartDate\' | translate }}</mat-label>                    <input matInput [matDatepicker]="start" formControlName="_start">                    <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>                    <mat-datepicker #start></mat-datepicker>                </mat-form-field>            </div>            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'End\' | translate }}</div>                <mat-form-field appearance="outline" class="mdm-form-field">                    <mat-label>{{ \'ChooseEndDate\' | translate }}</mat-label>                    <input matInput [matDatepicker]="end" formControlName="_end">                    <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>                    <mat-datepicker #end></mat-datepicker>                </mat-form-field>            </div>            <div *ngIf="filterForm.get(\'entities\')" class="mdm-form-group">                <div class="mdm-form-label">{{ \'CollectionSites\' | translate }}</div>                <app-collection-sites-selector                    [form]="filterForm"                    [entities]="entities"                    [groups]="groups">                </app-collection-sites-selector>            </div>            <div *ngIf="filterForm.get(\'finished\')" class="mdm-form-group finished-projects">                <div class="mdm-form-label">{{ \'ShowFinishedProjects\' | translate }}</div>                <mat-checkbox formControlName="finished"></mat-checkbox>            </div>        </td>    </tr></table></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FilterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FilterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

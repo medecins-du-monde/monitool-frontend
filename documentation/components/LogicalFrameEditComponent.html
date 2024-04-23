@@ -1,0 +1,2516 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  LogicalFrameEditComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">providers</td>
+                <td class="col-md-9">
+                            <code>{
+    provide: DateAdapter, useClass: MomentDateAdapter, deps: [
+        MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS
+    ]
+}</code>
+                                <code><a href="../miscellaneous/variables.html#MY_DATE_FORMATS" target="_self" >{
+    provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS
+}</a></code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-logical-frame-edit</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./logical-frame-edit.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./logical-frame-edit.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#entities" >entities</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#formSubscription" >formSubscription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#groups" >groups</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#logicalFrame" >logicalFrame</a>
+                            </li>
+                            <li>
+                                <a href="#logicalFrameForm" >logicalFrameForm</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#project" >project</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscription" >subscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#canDeactivate" >canDeactivate</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#datesAreInRange" >datesAreInRange</a>
+                            </li>
+                            <li>
+                                <a href="#drop" >drop</a>
+                            </li>
+                            <li>
+                                <a href="#dropIndicators" >dropIndicators</a>
+                            </li>
+                            <li>
+                                <a href="#isCustom" >isCustom</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onAddNewIndicator" >onAddNewIndicator</a>
+                            </li>
+                            <li>
+                                <a href="#onAddNewPurpose" >onAddNewPurpose</a>
+                            </li>
+                            <li>
+                                <a href="#onDeleteIndicator" >onDeleteIndicator</a>
+                            </li>
+                            <li>
+                                <a href="#onEditIndicator" >onEditIndicator</a>
+                            </li>
+                            <li>
+                                <a href="#onEditPurpose" >onEditPurpose</a>
+                            </li>
+                            <li>
+                                <a href="#onEntityRemoved" >onEntityRemoved</a>
+                            </li>
+                            <li>
+                                <a href="#onRemovePurpose" >onRemovePurpose</a>
+                            </li>
+                            <li>
+                                <a href="#openDialog" >openDialog</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#setForm" >setForm</a>
+                            </li>
+                            <li>
+                                <a href="#toggleCustomDate" >toggleCustomDate</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>HostListeners</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#window:beforeunload" >window:beforeunload</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#purposes" >purposes</a>
+                                </li>
+                                <li>
+                                    <a href="#indicators" >indicators</a>
+                                </li>
+                                <li>
+                                    <a href="#logFrameName" >logFrameName</a>
+                                </li>
+                                <li>
+                                    <a href="#logFrameGoal" >logFrameGoal</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="../classes/Form.html" target="_self">FormBuilder</a>, dialog: MatDialog, adapter: DateAdapter<any>, dateService: <a href="../injectables/DateService.html" target="_self">DateService</a>, projectService: <a href="../injectables/ProjectService.html" target="_self">ProjectService</a>, route: ActivatedRoute, router: Router, changeDetector: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:72</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Form.html" target="_self" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>adapter</td>
+                                                  
+                                                        <td>
+                                                                    <code>DateAdapter&lt;any&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dateService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DateService.html" target="_self" >DateService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                    <code>ActivatedRoute</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>changeDetector</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="window:beforeunload"></a>
+                    <span class="name">
+                        <span ><b>window:beforeunload</b></span>
+                        <a href="#window:beforeunload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>window:beforeunload()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canDeactivate"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>canDeactivate</b></span>
+                        <a href="#canDeactivate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>canDeactivate()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decorators : </b>
+                    <br />
+                    <code>@HostListener(&#x27;window:beforeunload&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable | boolean</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="datesAreInRange"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>datesAreInRange</b></span>
+                        <a href="#datesAreInRange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>datesAreInRange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:259</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="drop"></a>
+                    <span class="name">
+                        <span ><b>drop</b></span>
+                        <a href="#drop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>drop(event: CdkDragDrop<string[]>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="236"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:236</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>CdkDragDrop&lt;string[]&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dropIndicators"></a>
+                    <span class="name">
+                        <span ><b>dropIndicators</b></span>
+                        <a href="#dropIndicators"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>dropIndicators(event: CdkDragDrop<any>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>CdkDragDrop&lt;any&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isCustom"></a>
+                    <span class="name">
+                        <span ><b>isCustom</b></span>
+                        <a href="#isCustom"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isCustom(selected: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="184"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:184</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>selected</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="143"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="90"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onAddNewIndicator"></a>
+                    <span class="name">
+                        <span ><b>onAddNewIndicator</b></span>
+                        <a href="#onAddNewIndicator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onAddNewIndicator()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="206"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:206</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onAddNewPurpose"></a>
+                    <span class="name">
+                        <span ><b>onAddNewPurpose</b></span>
+                        <a href="#onAddNewPurpose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onAddNewPurpose()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="194"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:194</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDeleteIndicator"></a>
+                    <span class="name">
+                        <span ><b>onDeleteIndicator</b></span>
+                        <a href="#onDeleteIndicator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDeleteIndicator(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEditIndicator"></a>
+                    <span class="name">
+                        <span ><b>onEditIndicator</b></span>
+                        <a href="#onEditIndicator"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEditIndicator(indicator: FormGroup, index?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="210"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:210</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>indicator</td>
+                                            <td>
+                                                        <code>FormGroup</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEditPurpose"></a>
+                    <span class="name">
+                        <span ><b>onEditPurpose</b></span>
+                        <a href="#onEditPurpose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEditPurpose(purpose: <a href="../classes/Purpose.html" target="_self">Purpose</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="198"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>purpose</td>
+                                            <td>
+                                                            <code><a href="../classes/Purpose.html" target="_self" >Purpose</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onEntityRemoved"></a>
+                    <span class="name">
+                        <span ><b>onEntityRemoved</b></span>
+                        <a href="#onEntityRemoved"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onEntityRemoved(entity: <a href="../classes/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>entity</td>
+                                            <td>
+                                                            <code><a href="../classes/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRemovePurpose"></a>
+                    <span class="name">
+                        <span ><b>onRemovePurpose</b></span>
+                        <a href="#onRemovePurpose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRemovePurpose(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openDialog"></a>
+                    <span class="name">
+                        <span ><b>openDialog</b></span>
+                        <a href="#openDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openDialog(indicator: FormGroup, add?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>, index?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="218"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:218</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>indicator</td>
+                                            <td>
+                                                        <code>FormGroup</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>add</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setForm"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>setForm</b></span>
+                        <a href="#setForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>setForm()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleCustomDate"></a>
+                    <span class="name">
+                        <span ><b>toggleCustomDate</b></span>
+                        <a href="#toggleCustomDate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleCustomDate(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, selected: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="175"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:175</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>selected</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="entities"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>entities</b></span>
+                        <a href="#entities"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Entity.html" target="_self" >Entity[]</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formSubscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>formSubscription</b></span>
+                        <a href="#formSubscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groups"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>groups</b></span>
+                        <a href="#groups"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Group.html" target="_self" >Group[]</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logicalFrame"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>logicalFrame</b></span>
+                        <a href="#logicalFrame"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/LogicalFrame.html" target="_self" >LogicalFrame</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="logicalFrameForm"></a>
+                    <span class="name">
+                        <span ><b>logicalFrameForm</b></span>
+                        <a href="#logicalFrameForm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    entities: new FormControl(null, [Validators.required]),
+    periodicity: new FormControl(null, [Validators.required]),
+    start: new FormControl(null, [Validators.required]),
+    end: new FormControl(null, [Validators.required]),
+    goal: new FormControl(null, [Validators.required]),
+    indicators: new FormArray([]),
+    purposes: new FormArray([])
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="project"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>project</b></span>
+                        <a href="#project"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscription</b></span>
+                        <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="purposes"></a>
+                        <span class="name"><b>purposes</b><a href="#purposes"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>purposes()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:62</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="indicators"></a>
+                        <span class="name"><b>indicators</b><a href="#indicators"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>indicators()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:66</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="logFrameName"></a>
+                        <span class="name"><b>logFrameName</b><a href="#logFrameName"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>logFrameName()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="251" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:251</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="logFrameGoal"></a>
+                        <span class="name"><b>logFrameGoal</b><a href="#logFrameGoal"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>logFrameGoal()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="255" class="link-to-prism">src/app/modules/project/modules/structure/pages/logical-frames/components/logical-frame-edit/logical-frame-edit.component.ts:255</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CdkDragDrop, moveItemInArray } from &#x27;@angular/cdk/drag-drop&#x27;;
+import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from &#x27;@angular/core&#x27;;
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from &#x27;@angular/material-moment-adapter&#x27;;
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from &#x27;@angular/material/core&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { ActivatedRoute, ParamMap, Router } from &#x27;@angular/router&#x27;;
+import * as _ from &#x27;lodash&#x27;;
+import { combineLatest, Observable, Subscription } from &#x27;rxjs&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
+import { Entity } from &#x27;src/app/models/classes/entity.model&#x27;;
+import { Group } from &#x27;src/app/models/classes/group.model&#x27;;
+import { LogicalFrame } from &#x27;src/app/models/classes/logical-frame.model&#x27;;
+import { Project } from &#x27;src/app/models/classes/project.model&#x27;;
+import { Purpose } from &#x27;src/app/models/classes/purpose.model&#x27;;
+import BreadcrumbItem from &#x27;src/app/models/interfaces/breadcrumb-item.model&#x27;;
+import { DateService } from &#x27;src/app/services/date.service&#x27;;
+import { ProjectService } from &#x27;src/app/services/project.service&#x27;;
+import DatesHelper from &#x27;src/app/utils/dates-helper&#x27;;
+import FormGroupBuilder from &#x27;src/app/utils/form-group-builder&#x27;;
+import { MY_DATE_FORMATS } from &#x27;src/app/utils/format-datepicker-helper&#x27;;
+import { IndicatorModalComponent } from &#x27;../indicator-modal/indicator-modal.component&#x27;;
+
+@Component({
+  selector: &#x27;app-logical-frame-edit&#x27;,
+  templateUrl: &#x27;./logical-frame-edit.component.html&#x27;,
+  styleUrls: [&#x27;./logical-frame-edit.component.scss&#x27;],
+  // TODO: put the provided information in a shared component if possible
+  providers: [
+    {
+      provide: DateAdapter, useClass: MomentDateAdapter,
+      deps: [
+        MAT_DATE_LOCALE,
+        MAT_MOMENT_DATE_ADAPTER_OPTIONS
+      ]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_DATE_FORMATS
+    }
+  ]
+})
+export class LogicalFrameEditComponent implements OnInit, OnDestroy {
+
+  logicalFrameForm: FormGroup &#x3D; new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null, [Validators.required]),
+    entities: new FormControl(null, [Validators.required]),
+    periodicity: new FormControl(null, [Validators.required]),
+    start: new FormControl(null, [Validators.required]),
+    end: new FormControl(null, [Validators.required]),
+    goal: new FormControl(null, [Validators.required]),
+    indicators: new FormArray([]),
+    purposes: new FormArray([])
+  });
+
+  public project: Project;
+  public entities: Entity[];
+  public groups: Group[];
+  public logicalFrame: LogicalFrame;
+
+  get purposes(): FormArray {
+    return this.logicalFrameForm.controls.purposes as FormArray;
+  }
+
+  get indicators(): FormArray {
+    return this.logicalFrameForm.controls.indicators as FormArray;
+  }
+
+  private formSubscription: Subscription;
+
+  private subscription: Subscription &#x3D; new Subscription();
+
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private adapter: DateAdapter&lt;any&gt;,
+    private dateService: DateService,
+    private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
+  ) { }
+
+  @HostListener(&#x27;window:beforeunload&#x27;)
+  canDeactivate(): Observable&lt;boolean&gt; | boolean {
+    return !this.projectService.hasPendingChanges;
+  }
+
+  ngOnInit(): void {
+    this.subscription.add(
+      combineLatest([this.projectService.openedProject, this.route.paramMap]).pipe(
+        map(results &#x3D;&gt; ({ project: results[0], logicalFrameId: (results[1] as ParamMap).get(&#x27;id&#x27;) }))
+      ).subscribe((res: { project: Project, logicalFrameId: string }) &#x3D;&gt; {
+        this.project &#x3D; res.project;
+        const oldLogicalFrame &#x3D; this.logicalFrame;
+        this.logicalFrame &#x3D; res.project.logicalFrames.find(x &#x3D;&gt; x.id &#x3D;&#x3D;&#x3D; res.logicalFrameId);
+
+        if (this.logicalFrame) {
+          const breadCrumbs &#x3D; [
+            {
+              value: &#x27;Projects&#x27;,
+              link: &#x27;./../../projects&#x27;
+            } as BreadcrumbItem,
+            {
+              value: this.project.country,
+            } as BreadcrumbItem,
+            {
+              value: this.project.name,
+            } as BreadcrumbItem,
+            {
+              value: &#x27;Structure&#x27;,
+            } as BreadcrumbItem,
+            {
+              value: &#x27;LogicalFrameworks&#x27;,
+              link: &#x60;./../../projects/${this.project.id}/structure/logical-frames&#x60;
+            } as BreadcrumbItem,
+            {
+              value: this.logicalFrame.name,
+            } as BreadcrumbItem,
+          ];
+          this.projectService.updateBreadCrumbs(breadCrumbs);
+        }
+        if (!this.logicalFrame) {
+          this.router.navigate([&#x27;..&#x27;], { relativeTo: this.route });
+        } else if ( !oldLogicalFrame || !oldLogicalFrame.equals(this.logicalFrame) ) {
+          this.entities &#x3D; res.project.entities;
+          this.groups &#x3D; res.project.groups;
+          this.setForm();
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.dateService.currentLang.subscribe(
+        lang &#x3D;&gt; {
+          this.adapter.setLocale(lang);
+        }
+      )
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+    this.subscription.unsubscribe();
+  }
+
+  private setForm(): void {
+    if (this.formSubscription) {
+      this.formSubscription.unsubscribe();
+    }
+
+    this.logicalFrameForm &#x3D; this.fb.group({
+      id: [this.logicalFrame.id],
+      name: [this.logicalFrame.name, Validators.required],
+      entities: [this.entities.filter(x &#x3D;&gt; this.logicalFrame.entities.map(e &#x3D;&gt; e.id).includes(x.id))],
+      start: [this.logicalFrame.start, Validators.required],
+      end: [this.logicalFrame.end, Validators.required],
+      goal: [this.logicalFrame.goal, Validators.required],
+      indicators: this.fb.array(this.logicalFrame.indicators.map(x &#x3D;&gt; FormGroupBuilder.newIndicator(x))),
+      purposes: this.fb.array(this.logicalFrame.purposes.map(x &#x3D;&gt; FormGroupBuilder.newPurpose(x)))
+    }, { validators: [DatesHelper.orderedDates(&#x27;start&#x27;, &#x27;end&#x27;)] });
+
+    this.formSubscription &#x3D; this.logicalFrameForm.valueChanges.subscribe((value: any) &#x3D;&gt; {
+      // preventing &#x27;allOption&#x27; and groups from being saved inside the project
+      value.entities &#x3D; value.entities.filter(e &#x3D;&gt; this.entities.includes(e));
+      this.projectService.valid &#x3D; this.datesAreInRange() &amp;&amp; this.logicalFrameForm.valid;
+      this.logicalFrame.deserialize(value);
+      this.projectService.project.next(this.project);
+    });
+  }
+
+  toggleCustomDate(event: any, selected: string): void {
+    if (event.value &#x3D;&#x3D;&#x3D; &#x27;false&#x27;) {
+      this.logicalFrameForm.get(selected).setValue(this.project[selected]);
+    }
+    else {
+      this.logicalFrameForm.get(selected).setValue(null);
+    }
+  }
+
+  isCustom(selected: string): boolean {
+    return this.project &amp;&amp; this.logicalFrameForm
+      &amp;&amp; !DatesHelper.areEquals(new Date(this.logicalFrameForm.get(selected).value), new Date(this.project[selected]));
+  }
+
+  onEntityRemoved(entity: Entity): void {
+    const entities &#x3D; this.logicalFrameForm.controls.entities.value;
+    this.logicalFrameForm.controls.entities.setValue(entities.filter(x &#x3D;&gt; x.id !&#x3D;&#x3D; entity.id));
+  }
+
+  onAddNewPurpose(): void {
+    this.purposes.push(FormGroupBuilder.newPurpose());
+  }
+
+  onEditPurpose(purpose: Purpose, index: number): void {
+    this.purposes.setControl(index, _.cloneDeep(FormGroupBuilder.newPurpose(purpose)));
+  }
+
+  onRemovePurpose(i: number): void {
+    this.purposes.removeAt(i);
+  }
+
+  onAddNewIndicator(): void {
+    this.openDialog(FormGroupBuilder.newIndicator(), true);
+  }
+
+  onEditIndicator(indicator: FormGroup, index?: number): void {
+    this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
+  }
+
+  onDeleteIndicator(i: number): void {
+    this.indicators.removeAt(i);
+  }
+
+  openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
+    const dialogRef &#x3D; this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res) {
+        if (add) {
+          this.indicators.push(res.indicator);
+        }
+        else if (index !&#x3D;&#x3D; null) {
+          this.indicators.setControl(index, res.indicator);
+        }
+        dialogSubscription.unsubscribe();
+      }
+      this.changeDetector.markForCheck();
+    });
+  }
+
+  // drag and drop function on a form array displayed in one column
+  drop(event: CdkDragDrop&lt;string[]&gt;) {
+    moveItemInArray(this.purposes.controls, event.previousIndex, event.currentIndex);
+    // Dummy code so the save button is available
+    const control &#x3D; this.purposes.at(0);
+    this.purposes.setControl(0, control);
+  }
+
+  // drag and drop function on a form array that can span accross multiple rows
+  dropIndicators(event: CdkDragDrop&lt;any&gt;) {
+    moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
+    // Dummy code so the save button is available
+    const control &#x3D; this.indicators.at(0);
+    this.indicators.setControl(0, control);
+  }
+
+  get logFrameName() {
+    return this.logicalFrameForm.value.name;
+  }
+
+  get logFrameGoal() {
+    return this.logicalFrameForm.value.goal;
+  }
+
+  private datesAreInRange(): boolean {
+    const logicalFrame &#x3D; this.logicalFrameForm.value;
+    if (logicalFrame.start &amp;&amp; logicalFrame.end) {
+      const start &#x3D; (logicalFrame.start as any)._d || logicalFrame.start ;
+      const end &#x3D; (logicalFrame.end as any)._d || logicalFrame.end ;
+      if (start.getTime() &lt; this.project.start.getTime() ||
+          end.getTime() &gt; this.project.end.getTime()) {
+        this.projectService.errorMessage &#x3D; {
+          message: &#x27;DatesOutOfRange&#x27;,
+          type: &#x27;LogicalFramework&#x27;
+        };
+        return false;
+      } else {
+        const subscription &#x3D; this.projectService.lastSavedVersion.subscribe(res &#x3D;&gt; {
+          const oldLogicalFrame &#x3D; res.logicalFrames.find(logFrame &#x3D;&gt; logFrame.id &#x3D;&#x3D;&#x3D; logicalFrame.id);
+          if (start.getTime() &gt; oldLogicalFrame.start.getTime()) {
+            this.projectService.warningMessage &#x3D; {
+              message: &#x27;DataHiddenStart&#x27;,
+              type: &#x27;&#x27;
+            };
+          } else if (end.getTime() &lt; oldLogicalFrame.end.getTime()) {
+            this.projectService.warningMessage &#x3D; {
+              message: &#x27;DataHiddenEnd&#x27;,
+              type: &#x27;&#x27;
+            };
+          } else {
+            this.projectService.warningMessage &#x3D; undefined;
+          }
+        });
+        subscription.unsubscribe();
+      }
+    }
+    this.projectService.errorMessage &#x3D; undefined;
+    return true;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-accordion class&#x3D;&quot;blue-accordion&quot;&gt;
+    &lt;mat-expansion-panel [expanded]&#x3D;&quot;true&quot;&gt;
+        &lt;mat-expansion-panel-header&gt;
+            &lt;mat-panel-title&gt;&lt;div class&#x3D;&quot;header-title&quot;&gt;&lt;p&gt;{{ &#x27;GeneralInformations&#x27; | translate }} : {{ logFrameName }}&lt;/p&gt;&lt;/div&gt;&lt;/mat-panel-title&gt;
+        &lt;/mat-expansion-panel-header&gt;
+        &lt;div [formGroup]&#x3D;&quot;logicalFrameForm&quot; class&#x3D;&quot;mdm-form-expansion&quot;&gt;
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;Name&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                    &lt;input matInput formControlName&#x3D;&quot;name&quot;
+                        placeholder&#x3D;&quot;{{ &#x27;Placeholder.LogicalFrame.Name&#x27; | translate }}&quot;&gt;
+                    &lt;mat-hint&gt;
+                        &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;NameLogicalFramework-Hint&#x27; | translate }}
+                    &lt;/mat-hint&gt;
+                &lt;/mat-form-field&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;CollectionSites&#x27; | translate }}&lt;/div&gt;
+                &lt;app-collection-sites-selector [form]&#x3D;&quot;logicalFrameForm&quot; [entities]&#x3D;&quot;entities&quot; [groups]&#x3D;&quot;groups&quot;
+                    [hint]&#x3D;&quot;&#x27;CollectionSites-Hint&#x27;&quot;&gt;
+                &lt;/app-collection-sites-selector&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;SpecificStartDate&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-radio-group class&#x3D;&quot;dateGroup&quot;&gt;
+                    &lt;mat-radio-button (change)&#x3D;&quot;toggleCustomDate($event, &#x27;start&#x27;)&quot; [checked]&#x3D;&quot;!isCustom(&#x27;start&#x27;)&quot;
+                    value&#x3D;&quot;false&quot;&gt;{{ &#x27;SameAsProject&#x27; | translate : {date: project.start | localizedDate} }}
+                    &lt;/mat-radio-button&gt;
+                    &lt;mat-radio-button (change)&#x3D;&quot;toggleCustomDate($event, &#x27;start&#x27;)&quot; [checked]&#x3D;&quot;isCustom(&#x27;start&#x27;)&quot;
+                        value&#x3D;&quot;true&quot;&gt;{{ &#x27;CustomDate&#x27; | translate }}&lt;/mat-radio-button&gt;
+                    &lt;mat-form-field *ngIf&#x3D;&quot;isCustom(&#x27;start&#x27;)&quot; appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput [matDatepicker]&#x3D;&quot;startPicker&quot; formControlName&#x3D;&quot;start&quot;
+                            placeholder&#x3D;&quot;{{ &#x27;StartDate&#x27; | translate }}&quot;&gt;
+                        &lt;mat-datepicker-toggle matPrefix [for]&#x3D;&quot;startPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                        &lt;mat-datepicker #startPicker&gt;&lt;/mat-datepicker&gt;
+                        &lt;mat-hint&gt;
+                            &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;specific-date-start&#x27; | translate }}
+                        &lt;/mat-hint&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/mat-radio-group&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;SpecificEndDate&#x27; | translate }}&lt;/div&gt;
+                &lt;mat-radio-group class&#x3D;&quot;dateGroup&quot;&gt;
+                    &lt;mat-radio-button (change)&#x3D;&quot;toggleCustomDate($event, &#x27;end&#x27;)&quot; [checked]&#x3D;&quot;!isCustom(&#x27;end&#x27;)&quot;
+                    value&#x3D;&quot;false&quot;&gt;{{ &#x27;SameAsProject&#x27; | translate : {date: project.end | localizedDate} }}
+                    &lt;/mat-radio-button&gt;
+                    &lt;mat-radio-button (change)&#x3D;&quot;toggleCustomDate($event, &#x27;end&#x27;)&quot; [checked]&#x3D;&quot;isCustom(&#x27;end&#x27;)&quot;
+                        value&#x3D;&quot;true&quot;&gt;{{ &#x27;CustomDate&#x27; | translate }}&lt;/mat-radio-button&gt;
+                    &lt;mat-form-field *ngIf&#x3D;&quot;isCustom(&#x27;end&#x27;)&quot; appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput [matDatepicker]&#x3D;&quot;endPicker&quot; formControlName&#x3D;&quot;end&quot;
+                            placeholder&#x3D;&quot;{{ &#x27;EndDate&#x27; | translate }}&quot;&gt;
+                        &lt;mat-datepicker-toggle matPrefix [for]&#x3D;&quot;endPicker&quot;&gt;&lt;/mat-datepicker-toggle&gt;
+                        &lt;mat-datepicker #endPicker&gt;&lt;/mat-datepicker&gt;
+                        &lt;mat-hint&gt;
+                            &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;specific-date-end&#x27; | translate }}
+                        &lt;/mat-hint&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/mat-radio-group&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/mat-expansion-panel&gt;
+&lt;/mat-accordion&gt;
+&lt;div class&#x3D;&quot;mdm-section blue-accordion&quot;&gt;
+    &lt;mat-accordion&gt;
+        &lt;mat-expansion-panel [expanded]&#x3D;&quot;true&quot;&gt;
+            &lt;mat-expansion-panel-header&gt;
+                &lt;mat-panel-title&gt;&lt;div class&#x3D;&quot;header-title&quot;&gt;&lt;p&gt;{{ &#x27;GeneralObjective&#x27; | translate }}: {{ logFrameGoal }}&lt;/p&gt;&lt;/div&gt;&lt;/mat-panel-title&gt;
+            &lt;/mat-expansion-panel-header&gt;
+            &lt;div [formGroup]&#x3D;&quot;logicalFrameForm&quot; class&#x3D;&quot;mdm-form-expansion&quot;&gt;
+                &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                    &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;GeneralObjective&#x27; | translate }}&lt;/div&gt;
+                    &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;goal&quot;
+                            placeholder&#x3D;&quot;{{ &#x27;Placeholder.LogicalFrame.GeneralObjective&#x27; | translate }}&quot;&gt;
+                        &lt;mat-hint&gt;
+                            &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;GeneralObjective-Hint&#x27; | translate }}
+                        &lt;/mat-hint&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/div&gt;
+                &lt;div class&#x3D;&quot;mdm-section&quot;&gt;
+                    &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+                        &lt;div class&#x3D;&quot;mdm-form-label&quot;&gt;{{ &#x27;Indicators&#x27; | translate }}&lt;/div&gt;
+                        &lt;div class&#x3D;&quot;indicators-list&quot; formArrayName&#x3D;&quot;indicators&quot;&gt;
+                            &lt;div class&#x3D;&quot;mdm-cards objective-cards&quot; cdkDropListGroup&gt;
+                                &lt;div class&#x3D;&quot;mdm-card objective&quot; *ngFor&#x3D;&quot;let indicator of indicators.controls; let i&#x3D;index&quot;
+                                    [cdkDropListData]&#x3D;&quot;{indicator:indicator,index:i}&quot; cdkDropList
+                                    cdkDropListOrientation&#x3D;&quot;horizontal&quot; (cdkDropListDropped)&#x3D;&quot;dropIndicators($event)&quot;&gt;
+                                    &lt;app-extra-indicator cdkDrag cdkDragBoundary&#x3D;&quot;.mdm-cards&quot;
+                                        [extraIndicator]&#x3D;&quot;indicator.value&quot; (edit)&#x3D;&quot;onEditIndicator(indicator, i)&quot;
+                                        (delete)&#x3D;&quot;onDeleteIndicator(i)&quot;&gt;
+                                        &lt;div *cdkDragPlaceholder&gt;&lt;/div&gt;
+                                        &lt;div class&#x3D;&quot;cards-draghandle&quot; cdkDragHandle&gt;
+                                            &lt;mat-icon&gt;drag_indicator&lt;/mat-icon&gt;
+                                        &lt;/div&gt;
+                                    &lt;/app-extra-indicator&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;button mat-stroked-button class&#x3D;&quot;mdm-button&quot; (click)&#x3D;&quot;onAddNewIndicator()&quot;&gt;
+                                &lt;mat-icon&gt;add&lt;/mat-icon&gt;{{ &#x27;AddIndicator&#x27; | translate }}
+                            &lt;/button&gt;
+                            &lt;mat-hint&gt;
+                                &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;AddIndicator-GeneralObjective-Hint&#x27; | translate }}
+                            &lt;/mat-hint&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/mat-expansion-panel&gt;
+    &lt;/mat-accordion&gt;
+
+&lt;/div&gt;
+&lt;div class&#x3D;&quot;mdm-section&quot;&gt;
+    &lt;div [formGroup]&#x3D;&quot;logicalFrameForm&quot; class&#x3D;&quot;specific-accordion&quot;&gt;
+        &lt;mat-accordion formArrayName&#x3D;&quot;purposes&quot; cdkDropList (cdkDropListDropped)&#x3D;&quot;drop($event)&quot;&gt;
+            &lt;mat-expansion-panel *ngFor&#x3D;&quot;let purpose of purposes.controls; let i&#x3D;index;&quot; [formGroupName]&#x3D;&quot;i&quot; cdkDrag
+                [expanded]&#x3D;&quot;i &#x3D;&#x3D;&#x3D; 0 ? true: false&quot;&gt;
+                &lt;mat-expansion-panel-header&gt;
+                    &lt;mat-panel-title&gt;
+                        &lt;mat-icon cdkDragHandle&gt;drag_indicator&lt;/mat-icon&gt;&lt;div class&#x3D;&quot;header-title&quot;&gt;&lt;p&gt;{{ &#x27;SpecificObjective&#x27; | translate }} {{i +
+                        1}}: {{purpose.value.description}}&lt;/p&gt;&lt;/div&gt;
+                    &lt;/mat-panel-title&gt;
+                    &lt;mat-panel-description&gt;
+                        &lt;button mat-stroked-button class&#x3D;&quot;mdm-button delete-button&quot; (click)&#x3D;&quot;onRemovePurpose(i)&quot;&gt;
+                            &lt;mat-icon&gt;delete&lt;/mat-icon&gt;{{ &#x27;RemovePurpose&#x27; | translate }}
+                        &lt;/button&gt;
+                    &lt;/mat-panel-description&gt;
+                &lt;/mat-expansion-panel-header&gt;
+                &lt;div class&#x3D;&quot;purpose&quot;&gt;
+                    &lt;app-purpose-edit [purposeForm]&#x3D;&quot;purpose&quot; [forms]&#x3D;&quot;project.forms&quot; (edit)&#x3D;&quot;onEditPurpose($event, i)&quot;&gt;
+                    &lt;/app-purpose-edit&gt;
+                &lt;/div&gt;
+            &lt;/mat-expansion-panel&gt;
+        &lt;/mat-accordion&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;button mat-stroked-button class&#x3D;&quot;mdm-button&quot; (click)&#x3D;&quot;onAddNewPurpose()&quot;&gt;
+    &lt;mat-icon&gt;add&lt;/mat-icon&gt;{{ &#x27;AddPurpose&#x27; | translate }}
+&lt;/button&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./logical-frame-edit.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/color_vars.scss&quot;;
+
+.mdm-section {
+  margin-bottom: 0px !important;
+}
+
+.mat-expansion-panel-header-description {
+  button {
+    margin-top: 10px;
+    color: $specific_obj_panel_button_color;
+  }
+}
+
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+  color: $specific_obj_panel_color;
+}
+
+
+.blue-accordion, .purpose, .specific-accordion{
+
+  .mat-expansion-panel-header-title {
+    display: flex !important;
+    margin-right: 16px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    height: 50px;
+    white-space:normal;
+    align-items: center;
+    width: 80%;
+    mat-icon {
+      align-self: center;
+      margin-right: 10px;
+      margin-top: 30px;
+      height: 100%;
+    }
+  }
+} 
+
+.blue-accordion, .purpose {
+
+  .mat-expansion-panel-header {
+    vertical-align: middle;
+    .header-title {
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      p {
+        margin: 0 0 0px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+  .mat-expansion-panel-header:not([aria-disabled&#x3D;true]) {
+    background-color: $specific_obj_panel_background !important;
+  }
+}
+
+app-collection-sites-selector{
+  flex: 1;
+  display: flex;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 50px !important;
+}
+
+.mdm-form-expansion {
+  padding: 10px;
+  width: 100%;
+}
+
+.indicators-list {
+  flex: 1;
+  width: 100%;
+  display: inline-block;
+}
+
+.purpose {
+  width: 100%;
+}
+
+.objective {
+  width: 30%;
+}
+
+.mdm-button {
+  mat-icon {
+    font-size: 14px !important;
+  }
+}
+
+.specific-accordion {
+
+  .mat-expansion-panel-header, .mat-expansion-panel-header:not([aria-disabled&#x3D;true]){
+    background-color: #73bde9;
+
+    .header-title {
+      height: 40px;
+      vertical-align: middle;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+
+      p {
+        margin: 0 0 0px !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-accordion class="blue-accordion">    <mat-expansion-panel [expanded]="true">        <mat-expansion-panel-header>            <mat-panel-title><div class="header-title"><p>{{ \'GeneralInformations\' | translate }} : {{ logFrameName }}</p></div></mat-panel-title>        </mat-expansion-panel-header>        <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'Name\' | translate }}</div>                <mat-form-field appearance="outline" class="mdm-form-field">                    <input matInput formControlName="name"                        placeholder="{{ \'Placeholder.LogicalFrame.Name\' | translate }}">                    <mat-hint>                        <mat-icon>info</mat-icon>{{ \'NameLogicalFramework-Hint\' | translate }}                    </mat-hint>                </mat-form-field>            </div>            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'CollectionSites\' | translate }}</div>                <app-collection-sites-selector [form]="logicalFrameForm" [entities]="entities" [groups]="groups"                    [hint]="\'CollectionSites-Hint\'">                </app-collection-sites-selector>            </div>            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'SpecificStartDate\' | translate }}</div>                <mat-radio-group class="dateGroup">                    <mat-radio-button (change)="toggleCustomDate($event, \'start\')" [checked]="!isCustom(\'start\')"                    value="false">{{ \'SameAsProject\' | translate : {date: project.start | localizedDate} }}                    </mat-radio-button>                    <mat-radio-button (change)="toggleCustomDate($event, \'start\')" [checked]="isCustom(\'start\')"                        value="true">{{ \'CustomDate\' | translate }}</mat-radio-button>                    <mat-form-field *ngIf="isCustom(\'start\')" appearance="outline" class="mdm-form-field">                        <input matInput [matDatepicker]="startPicker" formControlName="start"                            placeholder="{{ \'StartDate\' | translate }}">                        <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>                        <mat-datepicker #startPicker></mat-datepicker>                        <mat-hint>                            <mat-icon>info</mat-icon>{{ \'specific-date-start\' | translate }}                        </mat-hint>                    </mat-form-field>                </mat-radio-group>            </div>            <div class="mdm-form-group">                <div class="mdm-form-label">{{ \'SpecificEndDate\' | translate }}</div>                <mat-radio-group class="dateGroup">                    <mat-radio-button (change)="toggleCustomDate($event, \'end\')" [checked]="!isCustom(\'end\')"                    value="false">{{ \'SameAsProject\' | translate : {date: project.end | localizedDate} }}                    </mat-radio-button>                    <mat-radio-button (change)="toggleCustomDate($event, \'end\')" [checked]="isCustom(\'end\')"                        value="true">{{ \'CustomDate\' | translate }}</mat-radio-button>                    <mat-form-field *ngIf="isCustom(\'end\')" appearance="outline" class="mdm-form-field">                        <input matInput [matDatepicker]="endPicker" formControlName="end"                            placeholder="{{ \'EndDate\' | translate }}">                        <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>                        <mat-datepicker #endPicker></mat-datepicker>                        <mat-hint>                            <mat-icon>info</mat-icon>{{ \'specific-date-end\' | translate }}                        </mat-hint>                    </mat-form-field>                </mat-radio-group>            </div>        </div>    </mat-expansion-panel></mat-accordion><div class="mdm-section blue-accordion">    <mat-accordion>        <mat-expansion-panel [expanded]="true">            <mat-expansion-panel-header>                <mat-panel-title><div class="header-title"><p>{{ \'GeneralObjective\' | translate }}: {{ logFrameGoal }}</p></div></mat-panel-title>            </mat-expansion-panel-header>            <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">                <div class="mdm-form-group">                    <div class="mdm-form-label">{{ \'GeneralObjective\' | translate }}</div>                    <mat-form-field appearance="outline" class="mdm-form-field">                        <input matInput formControlName="goal"                            placeholder="{{ \'Placeholder.LogicalFrame.GeneralObjective\' | translate }}">                        <mat-hint>                            <mat-icon>info</mat-icon>{{ \'GeneralObjective-Hint\' | translate }}                        </mat-hint>                    </mat-form-field>                </div>                <div class="mdm-section">                    <div class="mdm-form-group">                        <div class="mdm-form-label">{{ \'Indicators\' | translate }}</div>                        <div class="indicators-list" formArrayName="indicators">                            <div class="mdm-cards objective-cards" cdkDropListGroup>                                <div class="mdm-card objective" *ngFor="let indicator of indicators.controls; let i=index"                                    [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList                                    cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">                                    <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards"                                        [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)"                                        (delete)="onDeleteIndicator(i)">                                        <div *cdkDragPlaceholder></div>                                        <div class="cards-draghandle" cdkDragHandle>                                            <mat-icon>drag_indicator</mat-icon>                                        </div>                                    </app-extra-indicator>                                </div>                            </div>                            <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()">                                <mat-icon>add</mat-icon>{{ \'AddIndicator\' | translate }}                            </button>                            <mat-hint>                                <mat-icon>info</mat-icon>{{ \'AddIndicator-GeneralObjective-Hint\' | translate }}                            </mat-hint>                        </div>                    </div>                </div>            </div>        </mat-expansion-panel>    </mat-accordion></div><div class="mdm-section">    <div [formGroup]="logicalFrameForm" class="specific-accordion">        <mat-accordion formArrayName="purposes" cdkDropList (cdkDropListDropped)="drop($event)">            <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag                [expanded]="i === 0 ? true: false">                <mat-expansion-panel-header>                    <mat-panel-title>                        <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p>{{ \'SpecificObjective\' | translate }} {{i +                        1}}: {{purpose.value.description}}</p></div>                    </mat-panel-title>                    <mat-panel-description>                        <button mat-stroked-button class="mdm-button delete-button" (click)="onRemovePurpose(i)">                            <mat-icon>delete</mat-icon>{{ \'RemovePurpose\' | translate }}                        </button>                    </mat-panel-description>                </mat-expansion-panel-header>                <div class="purpose">                    <app-purpose-edit [purposeForm]="purpose" [forms]="project.forms" (edit)="onEditPurpose($event, i)">                    </app-purpose-edit>                </div>            </mat-expansion-panel>        </mat-accordion>    </div></div><button mat-stroked-button class="mdm-button" (click)="onAddNewPurpose()">    <mat-icon>add</mat-icon>{{ \'AddPurpose\' | translate }}</button></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LogicalFrameEditComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LogicalFrameEditComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

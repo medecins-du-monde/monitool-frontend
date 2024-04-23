@@ -1,0 +1,1726 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  HistoryComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/project/modules/structure/pages/history/history.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-history</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./history.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./history.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#displayedColumns" >displayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#expandedElement" >expandedElement</a>
+                            </li>
+                            <li>
+                                <a href="#informations" >informations</a>
+                            </li>
+                            <li>
+                                <a href="#isSameVersion" >isSameVersion</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#limit" >limit</a>
+                            </li>
+                            <li>
+                                <a href="#months" >months</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#project" >project</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#projectId" >projectId</a>
+                            </li>
+                            <li>
+                                <a href="#revisions" >revisions</a>
+                            </li>
+                            <li>
+                                <a href="#saveConfirmElement" >saveConfirmElement</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#showLoadMore" >showLoadMore</a>
+                            </li>
+                            <li>
+                                <a href="#showSaveConfirm" >showSaveConfirm</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscription" >subscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#expand" >expand</a>
+                            </li>
+                            <li>
+                                <a href="#mouseLeave" >mouseLeave</a>
+                            </li>
+                            <li>
+                                <a href="#mouseOver" >mouseOver</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onLoadMore" >onLoadMore</a>
+                            </li>
+                            <li>
+                                <a href="#onRevertClick" >onRevertClick</a>
+                            </li>
+                            <li>
+                                <a href="#patchProject" >patchProject</a>
+                            </li>
+                            <li>
+                                <a href="#sameVersion" >sameVersion</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(projectService: <a href="../injectables/ProjectService.html" target="_self">ProjectService</a>, translateService: TranslateService, changeDetector: ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:76</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>changeDetector</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expand"></a>
+                    <span class="name">
+                        <span ><b>expand</b></span>
+                        <a href="#expand"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>expand(element)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="197"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:197</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mouseLeave"></a>
+                    <span class="name">
+                        <span ><b>mouseLeave</b></span>
+                        <a href="#mouseLeave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mouseLeave()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mouseOver"></a>
+                    <span class="name">
+                        <span ><b>mouseOver</b></span>
+                        <a href="#mouseOver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mouseOver(element)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>element</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="254"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:254</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onLoadMore"></a>
+                    <span class="name">
+                        <span ><b>onLoadMore</b></span>
+                        <a href="#onLoadMore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onLoadMore()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="157"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:157</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRevertClick"></a>
+                    <span class="name">
+                        <span ><b>onRevertClick</b></span>
+                        <a href="#onRevertClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRevertClick(revisionIndex)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="201"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:201</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>revisionIndex</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="patchProject"></a>
+                    <span class="name">
+                        <span ><b>patchProject</b></span>
+                        <a href="#patchProject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>patchProject(revisionIndex)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="172"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:172</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>revisionIndex</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sameVersion"></a>
+                    <span class="name">
+                        <span ><b>sameVersion</b></span>
+                        <a href="#sameVersion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>sameVersion(i)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayedColumns"></a>
+                    <span class="name">
+                        <span ><b>displayedColumns</b></span>
+                        <a href="#displayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;date&#x27;, &#x27;changes&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="expandedElement"></a>
+                    <span class="name">
+                        <span ><b>expandedElement</b></span>
+                        <a href="#expandedElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="informations"></a>
+                    <span class="name">
+                        <span ><b>informations</b></span>
+                        <a href="#informations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      res1: &#x27;InformationPanel.History&#x27;,
+      res2: &#x27;InformationPanel.History_description&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_Naming_convention_question&#x27;,
+      res2: &#x27;InformationPanel.General_Naming_convention_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_accidental_delete_question&#x27;,
+      res2: &#x27;InformationPanel.General_accidental_delete_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_delete_saved_question&#x27;,
+      res2: &#x27;InformationPanel.General_delete_saved_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.History_question1&#x27;,
+      res2: &#x27;InformationPanel.History_response1&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.History_question2&#x27;,
+      res2: &#x27;InformationPanel.History_response2&#x27;
+    } as InformationItem
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSameVersion"></a>
+                    <span class="name">
+                        <span ><b>isSameVersion</b></span>
+                        <a href="#isSameVersion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="limit"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>limit</b></span>
+                        <a href="#limit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="months"></a>
+                    <span class="name">
+                        <span ><b>months</b></span>
+                        <a href="#months"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;Jan&#x27;, &#x27;Feb&#x27;, &#x27;Mar&#x27;, &#x27;Apr&#x27;, &#x27;May&#x27;, &#x27;June&#x27;, &#x27;Jul&#x27;, &#x27;Aug&#x27;, &#x27;Sept&#x27;, &#x27;Oct&#x27;, &#x27;Nov&#x27;, &#x27;Dec&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="project"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>project</b></span>
+                        <a href="#project"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="projectId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>projectId</b></span>
+                        <a href="#projectId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revisions"></a>
+                    <span class="name">
+                        <span ><b>revisions</b></span>
+                        <a href="#revisions"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Revision.html" target="_self" >Revision[]</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveConfirmElement"></a>
+                    <span class="name">
+                        <span ><b>saveConfirmElement</b></span>
+                        <a href="#saveConfirmElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showLoadMore"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>showLoadMore</b></span>
+                        <a href="#showLoadMore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="showSaveConfirm"></a>
+                    <span class="name">
+                        <span ><b>showSaveConfirm</b></span>
+                        <a href="#showSaveConfirm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscription</b></span>
+                        <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/modules/project/modules/structure/pages/history/history.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, OnDestroy, OnInit } from &#x27;@angular/core&#x27;;
+import {animate, state, style, transition, trigger} from &#x27;@angular/animations&#x27;;
+import { ProjectService } from &#x27;src/app/services/project.service&#x27;;
+import { Project } from &#x27;src/app/models/classes/project.model&#x27;;
+import { Revision } from &#x27;src/app/models/classes/revision.model&#x27;;
+import { Operation } from &#x27;fast-json-patch&#x27;;
+import * as jsonpatch from &#x27;fast-json-patch&#x27;;
+import { isEqual } from &#x27;lodash&#x27;;
+import { Form } from &#x27;src/app/models/classes/form.model&#x27;;
+import InformationItem from &#x27;src/app/models/interfaces/information-item&#x27;;
+import BreadcrumbItem from &#x27;src/app/models/interfaces/breadcrumb-item.model&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { ProjectIndicator } from &#x27;src/app/models/classes/project-indicator.model&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { Entity } from &#x27;src/app/models/classes/entity.model&#x27;;
+import { LogicalFrame } from &#x27;src/app/models/classes/logical-frame.model&#x27;;
+
+
+@Component({
+  selector: &#x27;app-history&#x27;,
+  templateUrl: &#x27;./history.component.html&#x27;,
+  styleUrls: [&#x27;./history.component.scss&#x27;],
+  animations: [
+    trigger(&#x27;detailExpand&#x27;, [
+      state(&#x27;collapsed&#x27;, style({height: &#x27;0px&#x27;, minHeight: &#x27;0&#x27;, padding: &#x27;0px&#x27;})),
+      state(&#x27;expanded&#x27;, style({height: &#x27;*&#x27;})),
+      transition(&#x27;expanded &lt;&#x3D;&gt; collapsed&#x27;, animate(&#x27;225ms cubic-bezier(0.4, 0.0, 0.2, 1)&#x27;)),
+    ]),
+  ],
+})
+export class HistoryComponent implements OnInit, OnDestroy {
+
+  informations &#x3D; [
+    {
+      res1: &#x27;InformationPanel.History&#x27;,
+      res2: &#x27;InformationPanel.History_description&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_Naming_convention_question&#x27;,
+      res2: &#x27;InformationPanel.General_Naming_convention_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_accidental_delete_question&#x27;,
+      res2: &#x27;InformationPanel.General_accidental_delete_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.General_delete_saved_question&#x27;,
+      res2: &#x27;InformationPanel.General_delete_saved_response&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.History_question1&#x27;,
+      res2: &#x27;InformationPanel.History_response1&#x27;
+    } as InformationItem,
+    {
+      res1: &#x27;InformationPanel.History_question2&#x27;,
+      res2: &#x27;InformationPanel.History_response2&#x27;
+    } as InformationItem
+  ];
+
+  displayedColumns: string[] &#x3D; [&#x27;date&#x27;, &#x27;changes&#x27;];
+  revisions: Revision[];
+
+  expandedElement: null;
+  isSameVersion: boolean;
+  showSaveConfirm: boolean;
+  saveConfirmElement: number;
+
+  months &#x3D; [&#x27;Jan&#x27;, &#x27;Feb&#x27;, &#x27;Mar&#x27;, &#x27;Apr&#x27;, &#x27;May&#x27;, &#x27;June&#x27;, &#x27;Jul&#x27;, &#x27;Aug&#x27;, &#x27;Sept&#x27;, &#x27;Oct&#x27;, &#x27;Nov&#x27;, &#x27;Dec&#x27;];
+
+  private projectId: string;
+  private project: Project;
+  private limit: number;
+
+  public showLoadMore: boolean;
+
+  private subscription: Subscription &#x3D; new Subscription();
+
+  constructor(private projectService: ProjectService,
+              private translateService: TranslateService,
+              private changeDetector: ChangeDetectorRef) { }
+
+  ngOnInit(): void {
+    this.subscription.add(
+      this.projectService.lastSavedVersion.subscribe((savedProject: Project) &#x3D;&gt; {
+        const breadCrumbs &#x3D; [
+          {
+            value: &#x27;Projects&#x27;,
+            link: &#x27;./../../projects&#x27;
+          } as BreadcrumbItem,
+          {
+            value: savedProject.country,
+          } as BreadcrumbItem,
+          {
+            value: savedProject.name,
+          } as BreadcrumbItem,
+          {
+            value: &#x27;Structure&#x27;,
+          } as BreadcrumbItem,
+          {
+            value: &#x27;History&#x27;,
+          } as BreadcrumbItem,
+        ];
+        this.projectService.updateBreadCrumbs(breadCrumbs);
+        this.saveConfirmElement &#x3D; undefined;
+      })
+    );
+
+    this.subscription.add(
+      this.projectService.openedProject.subscribe((project: Project) &#x3D;&gt; {
+        this.showLoadMore &#x3D; true;
+        this.projectId &#x3D; project.id;
+        this.project &#x3D; project;
+        this.limit &#x3D; 10;
+        if (project.id &amp;&amp; project.rev) {
+          this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) &#x3D;&gt; {
+            const language &#x3D; this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+            revisions.forEach(revision &#x3D;&gt; {
+              const timeArr &#x3D; [];
+              const newDate &#x3D; new Date(revision.time);
+              timeArr.push(
+                newDate.getUTCDate(), this.months[newDate.getMonth()],
+                newDate.getFullYear() + &#x27; &#x27; + newDate.toTimeString().split(&#x27; &#x27;)[0]
+              );
+              revision.displayedTime &#x3D; timeArr;
+            });
+            this.revisions &#x3D; revisions;
+            this.showLoadMore &#x3D; revisions.length &lt; 10 ? false : true;
+            this.changeDetector.markForCheck();
+          });
+        }
+      })
+    );
+    this.projectService.updateInformationPanel(this.informations);
+  }
+
+  mouseOver(element){
+    this.expandedElement &#x3D; element;
+  }
+
+  sameVersion(i){
+    const patchedProject &#x3D; this.patchProject(i + 1);
+    let equal &#x3D; false;
+    try {
+      equal &#x3D; isEqual(patchedProject.serialize(), this.project.serialize());
+    }
+    catch {
+      equal &#x3D; isEqual(patchedProject, this.project);
+    }
+    this.isSameVersion &#x3D; equal;
+    return (equal);
+  }
+
+  mouseLeave(){
+    this.expandedElement &#x3D; null;
+  }
+
+  onLoadMore() {
+    this.limit +&#x3D; 10;
+    this.projectService.listRevisions(this.projectId, this.limit).then((revisions: Revision[]) &#x3D;&gt; {
+      revisions.forEach(revision &#x3D;&gt; {
+        const timeArr &#x3D; [];
+        const newDate &#x3D; new Date(revision.time);
+        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()],
+        newDate.getFullYear() + &#x27; &#x27; + newDate.toTimeString().split(&#x27; &#x27;)[0]);
+        revision.displayedTime &#x3D; timeArr;
+      });
+      this.revisions &#x3D; revisions;
+      this.showLoadMore &#x3D; revisions.length &lt; 10 ? false : true;
+    });
+  }
+
+  patchProject(revisionIndex) {
+    const revisedProject &#x3D; this.project.copy();
+    for (let i &#x3D; 0; i &lt; revisionIndex; i++) {
+      try {
+        const patch &#x3D; this.revisions[i].backwards as Operation[];
+        jsonpatch.applyPatch(revisedProject, patch);
+      } catch (e) {
+        console.log(&#x27;Error in reverting to datasource at index &#x27;, i);
+        console.log(e);
+      }
+    }
+    revisedProject.entities.map(entity &#x3D;&gt; {
+      if (typeof entity.start &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        entity.start &#x3D; new Date(entity.start);
+      }
+      if (typeof entity.end &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+        entity.end &#x3D; new Date(entity.end);
+      }
+    });
+    revisedProject.entities &#x3D; revisedProject.entities.map(y &#x3D;&gt; new Entity(y));
+    revisedProject.forms &#x3D; revisedProject.forms.map(y &#x3D;&gt; new Form(y, revisedProject.entities));
+    revisedProject.extraIndicators &#x3D; revisedProject.extraIndicators.map(y &#x3D;&gt; new ProjectIndicator(y));
+    return revisedProject;
+  }
+
+  expand(element) {
+    return this.saveConfirmElement &#x3D;&#x3D;&#x3D; element ? true : false;
+  }
+
+  onRevertClick(revisionIndex) {
+    this.saveConfirmElement &#x3D; revisionIndex;
+    const patchedRevision &#x3D; this.patchProject(revisionIndex + 1);
+
+    // Fix user entities and data sources
+    patchedRevision.users &#x3D; patchedRevision.users.map(user &#x3D;&gt; {
+      if (user.entities) {
+        user.entities &#x3D; user.entities.map(entity &#x3D;&gt; {
+          if (typeof entity &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            entity &#x3D; patchedRevision.entities.find(el &#x3D;&gt; el.id as any &#x3D;&#x3D;&#x3D; entity);
+          }
+          return entity;
+        });
+      }
+      if (user.dataSources) {
+        user.dataSources &#x3D; user.dataSources.map(dataSource &#x3D;&gt; {
+          if (typeof dataSource &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            dataSource &#x3D; patchedRevision.forms.find(el &#x3D;&gt; el.id as any &#x3D;&#x3D;&#x3D; dataSource);
+          }
+          return dataSource;
+        });
+      }
+      return user;
+    });
+    // Fix group entities
+    patchedRevision.groups &#x3D; patchedRevision.groups.map(group &#x3D;&gt; {
+      if (group.members) {
+        group.members &#x3D; group.members.map(entity &#x3D;&gt; {
+          if (typeof entity &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            entity &#x3D; patchedRevision.entities.find(el &#x3D;&gt; el.id as any &#x3D;&#x3D;&#x3D; entity);
+          }
+          return entity;
+        });
+      }
+      return group;
+    });
+    // Fix logical frames
+    patchedRevision.logicalFrames &#x3D; patchedRevision.logicalFrames.map(logFrame &#x3D;&gt; {
+      if (logFrame.entities) {
+        logFrame.entities &#x3D; logFrame.entities.map(entity &#x3D;&gt; {
+          if (typeof entity &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+            entity &#x3D; patchedRevision.entities.find(el &#x3D;&gt; el.id as any &#x3D;&#x3D;&#x3D; entity);
+          }
+          return entity;
+        });
+      }
+      return new LogicalFrame(logFrame);
+    });
+
+    console.log(patchedRevision);
+    this.projectService.project.next(patchedRevision);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;info-section blue&quot;&gt;{{ &#x27;ProjectHistoryInfo&#x27; | translate }}&lt;/div&gt;
+
+&lt;div class&#x3D;&quot;mdm-title&quot;&gt;{{ &#x27;History&#x27; | translate }}&lt;/div&gt;
+&lt;table mat-table multiTemplateDataRows fixedLayout&#x3D;&quot;true&quot; class&#x3D;&quot;mdm-table history-table&quot;
+    [dataSource]&#x3D;&quot;revisions&quot; (mouseleave)&#x3D;&#x27;mouseLeave()&#x27;&gt;
+    &lt;!-- Task Column --&gt;
+    &lt;ng-container matColumnDef&#x3D;&quot;date&quot;&gt;
+        &lt;th mat-header-cell *matHeaderCellDef&gt;{{ &#x27;Date&#x27;| translate}} &amp; {{ &#x27;User&#x27; | translate }}&lt;/th&gt;
+        &lt;td mat-cell *matCellDef&#x3D;&quot;let element&quot; id&#x3D;&quot;date&quot;&gt;
+            &lt;p *ngIf&#x3D;&quot;element.displayedTime&quot;&gt;{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}&lt;/p&gt;
+            &lt;p&gt;{{ element.username }}&lt;/p&gt;
+        &lt;/td&gt;
+    &lt;/ng-container&gt;
+
+    &lt;!-- Status Column --&gt;
+    &lt;ng-container matColumnDef&#x3D;&quot;changes&quot;&gt;
+        &lt;th mat-header-cell *matHeaderCellDef&gt;{{ &#x27;HistoryChanges&#x27; | translate }}&lt;/th&gt;
+        &lt;td mat-cell *matCellDef&#x3D;&quot;let element; let i &#x3D; dataIndex&quot; id&#x3D;&quot;changes&quot;&gt;
+
+            &lt;app-revision-summary [revision]&#x3D;&quot;element&quot; [revisions]&#x3D;&quot;revisions&quot; [index]&#x3D;&quot;i&quot;&gt;&lt;/app-revision-summary&gt;
+        &lt;/td&gt;
+    &lt;/ng-container&gt;
+
+    &lt;!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns --&gt;
+    &lt;ng-container matColumnDef&#x3D;&quot;expandedDetail&quot;&gt;
+        &lt;td mat-cell *matCellDef&#x3D;&quot;let element; let i &#x3D; dataIndex&quot; [attr.colspan]&#x3D;&quot;displayedColumns.length&quot;&gt;
+            &lt;div class&#x3D;&quot;example-element-detail&quot;
+              [@detailExpand]&#x3D;&quot;element &#x3D;&#x3D; expandedElement ? &#x27;expanded&#x27; : &#x27;collapsed&#x27;&quot;
+              *ngIf&#x3D;&quot;i !&#x3D;&#x3D; saveConfirmElement&quot;
+              &gt;
+                &lt;span *ngIf&#x3D;&quot;sameVersion(i); else revert_button&quot; &gt;{{ &#x27;EquivalentVersion&#x27; | translate }}&lt;/span&gt;
+                &lt;ng-template #revert_button&gt;
+                    &lt;button mat-stroked-button *ngIf&#x3D;&quot;!sameVersion(i)&quot; (click)&#x3D;&quot;onRevertClick(i)&quot; class&#x3D;&quot;mdm-button small-button&quot;&gt;{{ &#x27;RevertToVersion&#x27; | translate }}&lt;/button&gt;
+                &lt;/ng-template&gt;
+            &lt;/div&gt;
+            &lt;div class&#x3D;&quot;static-row&quot; *ngIf&#x3D;&quot;i &#x3D;&#x3D;&#x3D; saveConfirmElement&quot;&gt;{{ &#x27;SaveConfirm&#x27; | translate }}&lt;/div&gt;
+        &lt;/td&gt;
+    &lt;/ng-container&gt;
+
+    &lt;ng-container matColumnDef&#x3D;&quot;expandedRevisions&quot;&gt;
+        &lt;td mat-footer-cell *matFooterCellDef [attr.colspan]&#x3D;&quot;displayedColumns.length&quot; class&#x3D;&quot;expand-row&quot;&gt;
+            &lt;button mat-stroked-button class&#x3D;&quot;mdm-button small-button&quot; (click)&#x3D;&quot;onLoadMore()&quot; *ngIf&#x3D;&quot;showLoadMore&quot;&gt;{{ &#x27;LoadMoreRevisions&#x27; | translate }}&lt;/button&gt;
+        &lt;/td&gt;
+    &lt;/ng-container&gt;
+
+    &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;displayedColumns&quot; (mouseover)&#x3D;&quot;mouseLeave()&quot;&gt;&lt;/tr&gt;
+    &lt;tr mat-row *matRowDef&#x3D;&quot;let element; columns: displayedColumns;&quot;
+      class&#x3D;&quot;example-element-row&quot;
+      [class.example-expanded-row]&#x3D;&quot;expandedElement &#x3D;&#x3D;&#x3D; element&quot;
+      (mouseover)&#x3D;&#x27;mouseOver(element)&#x27;&gt;
+    &lt;/tr&gt;
+    &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: [&#x27;expandedDetail&#x27;]&quot; class&#x3D;&quot;example-detail-row&quot;&gt;&lt;/tr&gt;
+    &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;[&#x27;expandedRevisions&#x27;]&quot; [ngClass]&#x3D;&quot;{&#x27;hidden-row&#x27;: !showLoadMore }&quot;&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./history.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/color_vars.scss&quot;;
+
+.mat-column-date {
+  width: 200px !important;
+  max-width: 200px !important;
+}
+
+#date {
+  width: 20%;
+}
+
+#changes {
+  ul {
+    margin: 0;
+  }
+}
+
+.expand-row {
+  text-align: center;
+}
+
+.hidden-row {
+  display: none;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: $table_hover_background;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: $table_history_background;
+}
+
+.example-element-row td {
+  border-bottom-width: 1px;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+}
+
+.mat-column-expandedDetail {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.static-row {
+  text-align: center;
+  padding: 10px 0px 2px 0px;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="info-section blue">{{ \'ProjectHistoryInfo\' | translate }}</div><div class="mdm-title">{{ \'History\' | translate }}</div><table mat-table multiTemplateDataRows fixedLayout="true" class="mdm-table history-table"    [dataSource]="revisions" (mouseleave)=\'mouseLeave()\'>    <!-- Task Column -->    <ng-container matColumnDef="date">        <th mat-header-cell *matHeaderCellDef>{{ \'Date\'| translate}} & {{ \'User\' | translate }}</th>        <td mat-cell *matCellDef="let element" id="date">            <p *ngIf="element.displayedTime">{{ element.displayedTime[0] }} {{ element.displayedTime[1] | translate }} {{ element.displayedTime[2] }}</p>            <p>{{ element.username }}</p>        </td>    </ng-container>    <!-- Status Column -->    <ng-container matColumnDef="changes">        <th mat-header-cell *matHeaderCellDef>{{ \'HistoryChanges\' | translate }}</th>        <td mat-cell *matCellDef="let element; let i = dataIndex" id="changes">            <app-revision-summary [revision]="element" [revisions]="revisions" [index]="i"></app-revision-summary>        </td>    </ng-container>    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->    <ng-container matColumnDef="expandedDetail">        <td mat-cell *matCellDef="let element; let i = dataIndex" [attr.colspan]="displayedColumns.length">            <div class="example-element-detail"              [@detailExpand]="element == expandedElement ? \'expanded\' : \'collapsed\'"              *ngIf="i !== saveConfirmElement"              >                <span *ngIf="sameVersion(i); else revert_button" >{{ \'EquivalentVersion\' | translate }}</span>                <ng-template #revert_button>                    <button mat-stroked-button *ngIf="!sameVersion(i)" (click)="onRevertClick(i)" class="mdm-button small-button">{{ \'RevertToVersion\' | translate }}</button>                </ng-template>            </div>            <div class="static-row" *ngIf="i === saveConfirmElement">{{ \'SaveConfirm\' | translate }}</div>        </td>    </ng-container>    <ng-container matColumnDef="expandedRevisions">        <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ \'LoadMoreRevisions\' | translate }}</button>        </td>    </ng-container>    <tr mat-header-row *matHeaderRowDef="displayedColumns" (mouseover)="mouseLeave()"></tr>    <tr mat-row *matRowDef="let element; columns: displayedColumns;"      class="example-element-row"      [class.example-expanded-row]="expandedElement === element"      (mouseover)=\'mouseOver(element)\'>    </tr>    <tr mat-row *matRowDef="let row; columns: [\'expandedDetail\']" class="example-detail-row"></tr>    <tr mat-footer-row *matFooterRowDef="[\'expandedRevisions\']" [ngClass]="{\'hidden-row\': !showLoadMore }"></tr></table></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'HistoryComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'HistoryComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

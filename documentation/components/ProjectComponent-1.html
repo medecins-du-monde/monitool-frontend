@@ -1,0 +1,1591 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ProjectComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/projects/components/project/project.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-project</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./project.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./project.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#currentUser" >currentUser</a>
+                            </li>
+                            <li>
+                                <a href="#lastEntry" >lastEntry</a>
+                            </li>
+                            <li>
+                                <a href="#projectOwner" >projectOwner</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#subscription" >subscription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onClone" >onClone</a>
+                            </li>
+                            <li>
+                                <a href="#onCloneWithData" >onCloneWithData</a>
+                            </li>
+                            <li>
+                                <a href="#onDelete" >onDelete</a>
+                            </li>
+                            <li>
+                                <a href="#onDownload" >onDownload</a>
+                            </li>
+                            <li>
+                                <a href="#onOpen" >onOpen</a>
+                            </li>
+                            <li>
+                                <a href="#onRestore" >onRestore</a>
+                            </li>
+                            <li>
+                                <a href="#projectCardAvatar" >projectCardAvatar</a>
+                            </li>
+                            <li>
+                                <a href="#toggleFavourite" >toggleFavourite</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#project" >project</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#clone" >clone</a>
+                            </li>
+                            <li>
+                                <a href="#cloneWithData" >cloneWithData</a>
+                            </li>
+                            <li>
+                                <a href="#delete" >delete</a>
+                            </li>
+                            <li>
+                                <a href="#getProjects" >getProjects</a>
+                            </li>
+                            <li>
+                                <a href="#restore" >restore</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#currentLang" >currentLang</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(translateService: TranslateService, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>, router: Router, dialog: MatDialog, projectService: <a href="../injectables/ProjectService.html" target="_self">ProjectService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:35</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>translateService</td>
+                                                  
+                                                        <td>
+                                                                    <code>TranslateService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>projectService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ProjectService.html" target="_self" >ProjectService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="project"></a>
+                        <b>project</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Project.html" target="_self" >Project</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:20</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="clone"></a>
+                        <b>clone</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:23</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="cloneWithData"></a>
+                        <b>cloneWithData</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:24</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="delete"></a>
+                        <b>delete</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:21</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="getProjects"></a>
+                        <b>getProjects</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:25</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="restore"></a>
+                        <b>restore</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:22</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="132"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClone"></a>
+                    <span class="name">
+                        <span ><b>onClone</b></span>
+                        <a href="#onClone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClone()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="75"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onCloneWithData"></a>
+                    <span class="name">
+                        <span ><b>onCloneWithData</b></span>
+                        <a href="#onCloneWithData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onCloneWithData()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDelete"></a>
+                    <span class="name">
+                        <span ><b>onDelete</b></span>
+                        <a href="#onDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDelete()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="60"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDownload"></a>
+                    <span class="name">
+                        <span ><b>onDownload</b></span>
+                        <a href="#onDownload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDownload()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onOpen"></a>
+                    <span class="name">
+                        <span ><b>onOpen</b></span>
+                        <a href="#onOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onOpen()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="54"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRestore"></a>
+                    <span class="name">
+                        <span ><b>onRestore</b></span>
+                        <a href="#onRestore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRestore()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="71"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="projectCardAvatar"></a>
+                    <span class="name">
+                        <span ><b>projectCardAvatar</b></span>
+                        <a href="#projectCardAvatar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>projectCardAvatar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toggleFavourite"></a>
+                    <span class="name">
+                        <span ><b>toggleFavourite</b></span>
+                        <a href="#toggleFavourite"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toggleFavourite()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:121</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentUser"></a>
+                    <span class="name">
+                        <span ><b>currentUser</b></span>
+                        <a href="#currentUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/User.html" target="_self" >User</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastEntry"></a>
+                    <span class="name">
+                        <span ><b>lastEntry</b></span>
+                        <a href="#lastEntry"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:29</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="projectOwner"></a>
+                    <span class="name">
+                        <span ><b>projectOwner</b></span>
+                        <a href="#projectOwner"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subscription"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>subscription</b></span>
+                        <a href="#subscription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Subscription()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="currentLang"></a>
+                        <span class="name"><b>currentLang</b><a href="#currentLang"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>currentLang()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/pages/projects/components/project/project.component.ts:33</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from &#x27;@angular/core&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { TranslateService } from &#x27;@ngx-translate/core&#x27;;
+import { Subscription } from &#x27;rxjs&#x27;;
+import { Project } from &#x27;src/app/models/classes/project.model&#x27;;
+import { User } from &#x27;src/app/models/classes/user.model&#x27;;
+import { AuthService } from &#x27;src/app/services/auth.service&#x27;;
+import { ProjectService } from &#x27;src/app/services/project.service&#x27;;
+import { ActionProjectModalComponent } from &#x27;../action-project-modal/action-project-modal.component&#x27;;
+
+@Component({
+  selector: &#x27;app-project&#x27;,
+  templateUrl: &#x27;./project.component.html&#x27;,
+  styleUrls: [&#x27;./project.component.scss&#x27;]
+})
+
+export class ProjectComponent implements OnInit, OnDestroy {
+
+  @Input() project: Project;
+  @Output() delete &#x3D; new EventEmitter();
+  @Output() restore &#x3D; new EventEmitter();
+  @Output() clone &#x3D; new EventEmitter();
+  @Output() cloneWithData &#x3D; new EventEmitter();
+  @Output() getProjects: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
+
+  currentUser: User;
+  projectOwner: boolean;
+  lastEntry: string;
+
+  private subscription: Subscription &#x3D; new Subscription();
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(
+    private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog,
+    private projectService: ProjectService,
+  ) { }
+
+  ngOnInit(): void {
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) &#x3D;&gt; {
+        this.currentUser &#x3D; new User(user);
+        this.projectOwner &#x3D; (this.project.users.filter(projectUser &#x3D;&gt; projectUser.id &#x3D;&#x3D;&#x3D; this.currentUser.id).length &gt; 0);
+      })
+    );
+  }
+
+  onOpen(): void {
+    // Get the project id to redirect MDM Account properly if needed
+    this.projectService.updateProjectId(this.project.id);
+    this.router.navigate([&#x27;/projects&#x27;, this.project.id]);
+  }
+
+  onDelete(): void {
+    const dialogRef &#x3D; this.dialog.open(ActionProjectModalComponent, { data: {title: &#x27;DeleteProject&#x27;, infos: &#x27;DeleteProjectInfo&#x27;} } );
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res) {
+        this.delete.emit(this.project);
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
+
+  onRestore(): void {
+    this.restore.emit(this.project);
+  }
+
+  onClone(): void {
+    const dialogRef &#x3D; this.dialog.open(ActionProjectModalComponent, { data: {title: &#x27;CloneProject&#x27;, infos: &#x27;CloneProjectInfo&#x27;} } );
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res) {
+        this.clone.emit(this.project);
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
+
+  onCloneWithData(): void {
+    const dialogRef &#x3D; this.dialog.open(ActionProjectModalComponent, { data: {title: &#x27;CloneProject&#x27;, infos: &#x27;CloneProjectInfoData&#x27;} } );
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res) {
+        this.cloneWithData.emit(this.project);
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
+
+  onDownload(): void {
+    const dlAnchorElem &#x3D; document.getElementById(&#x27;downloadAnchorElem&#x27;);
+    this.projectService.get(this.project.id).then((project: Project) &#x3D;&gt; {
+      if (project) {
+        const dataStr &#x3D; &#x27;data:text/json;charset&#x3D;utf-8,&#x27; + encodeURIComponent(JSON.stringify(project, null, 2));
+        dlAnchorElem.setAttribute(&#x27;href&#x27;,     dataStr     );
+        dlAnchorElem.setAttribute(&#x27;download&#x27;, &#x60;${project.country} - ${project.name}.json&#x60;);
+        dlAnchorElem.click();
+      }
+    });
+    return;
+  }
+
+  projectCardAvatar(): string {
+    if (this.projectOwner) {
+      return &#x27;person&#x27;;
+    }
+    else if (localStorage.getItem(&#x27;user::&#x27; + this.currentUser.id + &#x27;favorite&#x27; + this.project.id)) {
+      return &#x27;star&#x27;;
+    } else {
+      return &#x27;star_border&#x27;;
+    }
+  }
+
+  toggleFavourite(): void {
+    if (!this.projectOwner) {
+      this.getProjects.emit();
+      if (!localStorage.getItem(&#x27;user::&#x27; + this.currentUser.id + &#x27;favorite&#x27; + this.project.id)) {
+        localStorage.setItem(&#x27;user::&#x27; + this.currentUser.id + &#x27;favorite&#x27; + this.project.id, &#x27;true&#x27;);
+      } else {
+        localStorage.removeItem(&#x27;user::&#x27; + this.currentUser.id + &#x27;favorite&#x27; + this.project.id);
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;mat-card class&#x3D;&quot;project&quot;&gt;
+    &lt;mat-card-header class&#x3D;&quot;card-header&quot;&gt;
+        &lt;div mat-card-avatar class&#x3D;&quot;project-icon&quot;&gt;
+            &lt;mat-icon class&#x3D;&quot;{{projectOwner ? &#x27;icon-default&#x27; : &#x27;icon-button&#x27;}}&quot; (click)&#x3D;&quot;toggleFavourite()&quot;&gt;{{projectCardAvatar()}}&lt;/mat-icon&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;project-title&quot;&gt;
+            &lt;mat-card-title&gt;
+                {{project.country}}
+            &lt;/mat-card-title&gt;
+        &lt;/div&gt;
+        &lt;mat-chip-list class&#x3D;&quot;project-status&quot;&gt;
+            &lt;mat-chip [ngStyle]&#x3D;&quot;{&#x27;background-color&#x27;: (project.status &#x3D;&#x3D; &#x27;Ongoing&#x27;) ? &#x27;green&#x27; : (project.status &#x3D;&#x3D; &#x27;Finished&#x27;) ? &#x27;#929223&#x27; : &#x27;red&#x27;}&quot; selected&gt;{{ project.status | translate }}&lt;/mat-chip&gt;
+        &lt;/mat-chip-list&gt;
+    &lt;/mat-card-header&gt;
+    &lt;mat-card-content&gt;
+        &lt;div class&#x3D;&quot;card-info&quot;&gt;
+            &lt;div class&#x3D;&quot;card-info-title&quot;&gt;{{ &#x27;Name&#x27; | translate }}&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-info-value&quot;&gt;{{ project.name }}&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-info&quot;&gt;
+            &lt;div class&#x3D;&quot;card-info-title&quot;&gt;{{ &#x27;Date&#x27; | translate }}&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-info-value&quot;&gt;{{project.start  | localizedDate}} - {{project.end  | localizedDate}}&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-info&quot;&gt;
+            &lt;div class&#x3D;&quot;card-info-title&quot;&gt;{{ &#x27;Thematics&#x27; | translate }}&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-info-value&quot;&gt;
+                &lt;div *ngFor&#x3D;&quot;let theme of project.themes&quot;&gt;{{theme.shortName[currentLang]}}&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;card-info&quot;&gt;
+            &lt;div class&#x3D;&quot;card-info-title&quot;&gt;{{ &#x27;LastEntry&#x27; | translate }}&lt;/div&gt;
+            &lt;div class&#x3D;&quot;card-info-value&quot;&gt;{{ !project.inputDate ? ( &#x27;None&#x27; | translate ) : (project.inputDate | localizedDate)  }}&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/mat-card-content&gt;
+    &lt;mat-card-actions align&#x3D;&quot;end&quot; class&#x3D;&quot;grp&quot;&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;project.active&quot;&gt;
+            &lt;button mat-stroked-button (click)&#x3D;&quot;onOpen()&quot; class&#x3D;&quot;open&quot;&gt;{{ &#x27;Open&#x27; | translate }}&lt;/button&gt;
+            &lt;button mat-stroked-button mat-icon-button [matMenuTriggerFor]&#x3D;&quot;menu&quot; class&#x3D;&quot;expand&quot;&gt;&lt;mat-icon&gt;expand_more&lt;/mat-icon&gt;&lt;/button&gt;
+        &lt;/ng-container&gt;
+        &lt;ng-container *ngIf&#x3D;&quot;!project.active&quot;&gt;
+            &lt;button mat-stroked-button (click)&#x3D;&quot;onRestore()&quot; class&#x3D;&quot;mdm-button&quot;&gt;&lt;mat-icon&gt;restore&lt;/mat-icon&gt;{{ &#x27;Restore&#x27; | translate }}&lt;/button&gt;
+        &lt;/ng-container&gt;
+    &lt;/mat-card-actions&gt;
+&lt;/mat-card&gt;
+
+&lt;mat-menu #menu&#x3D;&quot;matMenu&quot;&gt;
+    &lt;button class&#x3D;&quot;clone-button&quot; mat-menu-item (click)&#x3D;&quot;onClone()&quot; *ngIf&#x3D;&quot;project.active&quot;&gt;
+        &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+        &lt;span&gt;{{ &#x27;CloneStructure&#x27; | translate }}&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class&#x3D;&quot;clone-button&quot; mat-menu-item (click)&#x3D;&quot;onCloneWithData()&quot; *ngIf&#x3D;&quot;project.active&quot;&gt;
+        &lt;mat-icon&gt;content_copy&lt;/mat-icon&gt;
+        &lt;span&gt;{{ &#x27;CloneStructureAndData&#x27; | translate }}&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class&#x3D;&quot;clone-button delete&quot; mat-menu-item (click)&#x3D;&quot;onDelete()&quot; *ngIf&#x3D;&quot;project.active&quot;&gt;
+        &lt;mat-icon class&#x3D;&quot;delete&quot;&gt;delete&lt;/mat-icon&gt;
+        &lt;span&gt;{{ &#x27;Delete&#x27; | translate }}&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button class&#x3D;&quot;clone-button download-button&quot;
+        mat-menu-item
+        (click)&#x3D;&quot;onDownload()&quot;
+        *ngIf&#x3D;&quot;project.active &amp;&amp; currentUser.role &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;&quot;
+        [matTooltip]&#x3D;&quot;&#x27;Get a JSON file with the structure of the project&#x27;&quot;
+    &gt;
+        &lt;mat-icon&gt;download&lt;/mat-icon&gt;
+        &lt;span&gt;{{ &#x27;Download Project&#x27; }}&lt;/span&gt;
+        &lt;a id&#x3D;&quot;downloadAnchorElem&quot; style&#x3D;&quot;display:none&quot;&gt;&lt;/a&gt;
+    &lt;/button&gt;
+&lt;/mat-menu&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./project.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/size_vars.scss&quot;;
+@import &quot;src/assets/theme/color_vars.scss&quot;;
+
+.card-header {
+  padding: 16px;
+  align-items: center;
+
+  .project-country {
+    height: 24px;
+    width: 24px;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  .project-title {
+    width: 58%;
+    @media screen and (max-width: 1360px) {
+      width: 54%;
+    }
+    @media screen and (max-width: 1230px) {
+      width: 62%;
+    }
+    @media screen and (max-width: 1130px) {
+      width: 58%;
+    }
+    @media screen and (max-width: 1050px) {
+      width: 45%;
+    }
+    @media screen and (max-width: $breakpoint-xs-sm) {
+      width: 60%;
+    }
+    @media screen and (max-width: 720px) {
+      width: 50%;
+    }
+    @media screen and (max-width: 655px) {
+      width: 48%;
+    }
+    @media screen and (max-width: $breakpoint-xs) {
+      width: 74%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 69%;
+    }
+    @media screen and (max-width: 430px) {
+      width: 64%;
+    }
+    @media screen and (max-width: 370px) {
+      width: 50%;
+    }
+  }
+}
+
+.card-info {
+  flex-direction: row;
+}
+
+.card-info-value {
+  width: 70% !important;
+}
+
+.icon-button {
+  cursor: pointer;
+
+}
+
+.icon-default {
+  cursor: default;
+
+
+}
+
+.boton.mdm-button.mat-icon-button:not(.small-button) {
+  height: 25px;
+  width: 32px;
+  line-height: 32px;
+}
+
+
+.project.mat-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  display: block;
+  position: relative;
+  padding: 0px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
+  .card-header {
+    align-items: center;
+    background-color: $card_header_background;
+    padding: 16px 5px;
+
+    .project-icon {
+      height: 24px;
+      width: 24px;
+
+      img {
+        height: 100%;
+      }
+    }
+  }
+
+  .mat-card-content {
+    flex: 1;
+  }
+
+  .mat-card-actions {
+    flex: 0;
+    padding: 16px;
+  }
+
+}
+
+.mat-button-toggle-appearance-standard {
+  .mat-button-toggle-label-content {
+    line-height: 38px;
+  }
+}
+
+.mat-raised-button {
+  line-height: 40px !important;
+}
+
+.mat-card-actions .mat-button,
+.mat-card-actions .mat-raised-button,
+.mat-card-actions .mat-stroked-button {
+  &amp;:last-child {
+    margin-left: 0;
+  }
+}
+
+.mat-chip {
+  min-height: 24px !important;
+  padding: 8px !important;
+  text-wrap: nowrap;
+
+  &amp;.mat-chip-selected {
+    &amp;.mat-accent {
+      color: white !important;
+    }
+  }
+}
+
+.open.mat-stroked-button {
+  border: 1px solid currentColor;
+  padding: 0 15px;
+  line-height: 27px !important;
+  background-color: white;
+  border: 1px solid #c8c9cc !important;
+  height: 26px;
+  padding: 0 12px !important;
+  margin-right: 0px;
+  margin-bottom: 4px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+  border-bottom-left-radius: 3px;
+}
+
+
+.expand.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 27px;
+  height: 26px;
+  flex-shrink: 0;
+  line-height: 26px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 1px;
+  border: 1px solid #c8c9cc !important;
+}
+
+.clone-button {
+  font-size: 14px !important;
+}
+
+.download-button {
+  color: goldenrod;
+  mat-icon {
+    color: goldenrod;
+  }
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><mat-card class="project">    <mat-card-header class="card-header">        <div mat-card-avatar class="project-icon">            <mat-icon class="{{projectOwner ? \'icon-default\' : \'icon-button\'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>        </div>        <div class="project-title">            <mat-card-title>                {{project.country}}            </mat-card-title>        </div>        <mat-chip-list class="project-status">            <mat-chip [ngStyle]="{\'background-color\': (project.status == \'Ongoing\') ? \'green\' : (project.status == \'Finished\') ? \'#929223\' : \'red\'}" selected>{{ project.status | translate }}</mat-chip>        </mat-chip-list>    </mat-card-header>    <mat-card-content>        <div class="card-info">            <div class="card-info-title">{{ \'Name\' | translate }}</div>            <div class="card-info-value">{{ project.name }}</div>        </div>        <div class="card-info">            <div class="card-info-title">{{ \'Date\' | translate }}</div>            <div class="card-info-value">{{project.start  | localizedDate}} - {{project.end  | localizedDate}}</div>        </div>        <div class="card-info">            <div class="card-info-title">{{ \'Thematics\' | translate }}</div>            <div class="card-info-value">                <div *ngFor="let theme of project.themes">{{theme.shortName[currentLang]}}</div>            </div>        </div>        <div class="card-info">            <div class="card-info-title">{{ \'LastEntry\' | translate }}</div>            <div class="card-info-value">{{ !project.inputDate ? ( \'None\' | translate ) : (project.inputDate | localizedDate)  }}</div>        </div>    </mat-card-content>    <mat-card-actions align="end" class="grp">        <ng-container *ngIf="project.active">            <button mat-stroked-button (click)="onOpen()" class="open">{{ \'Open\' | translate }}</button>            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand"><mat-icon>expand_more</mat-icon></button>        </ng-container>        <ng-container *ngIf="!project.active">            <button mat-stroked-button (click)="onRestore()" class="mdm-button"><mat-icon>restore</mat-icon>{{ \'Restore\' | translate }}</button>        </ng-container>    </mat-card-actions></mat-card><mat-menu #menu="matMenu">    <button class="clone-button" mat-menu-item (click)="onClone()" *ngIf="project.active">        <mat-icon>content_copy</mat-icon>        <span>{{ \'CloneStructure\' | translate }}</span>    </button>    <button class="clone-button" mat-menu-item (click)="onCloneWithData()" *ngIf="project.active">        <mat-icon>content_copy</mat-icon>        <span>{{ \'CloneStructureAndData\' | translate }}</span>    </button>    <button class="clone-button delete" mat-menu-item (click)="onDelete()" *ngIf="project.active">        <mat-icon class="delete">delete</mat-icon>        <span>{{ \'Delete\' | translate }}</span>    </button>    <button class="clone-button download-button"        mat-menu-item        (click)="onDownload()"        *ngIf="project.active && currentUser.role === \'admin\'"        [matTooltip]="\'Get a JSON file with the structure of the project\'"    >        <mat-icon>download</mat-icon>        <span>{{ \'Download Project\' }}</span>        <a id="downloadAnchorElem" style="display:none"></a>    </button></mat-menu></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ProjectComponent-1'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProjectComponent-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1826 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  PartitionModalComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-partition-modal</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./partition-modal.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./partition-modal.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#aggregations" >aggregations</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Public</span>
+                                <a href="#data" >data</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#dialogRef" >dialogRef</a>
+                            </li>
+                            <li>
+                                <a href="#elementsDataSource" >elementsDataSource</a>
+                            </li>
+                            <li>
+                                <a href="#elementsDisplayedColumns" >elementsDisplayedColumns</a>
+                            </li>
+                            <li>
+                                <a href="#groupsDataSource" >groupsDataSource</a>
+                            </li>
+                            <li>
+                                <a href="#groupsDisplayedColumns" >groupsDisplayedColumns</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#previousData" >previousData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#memberDisplay" >memberDisplay</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#newElement" >newElement</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#newGroup" >newGroup</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onAddNewElement" >onAddNewElement</a>
+                            </li>
+                            <li>
+                                <a href="#onAddNewGroup" >onAddNewGroup</a>
+                            </li>
+                            <li>
+                                <a href="#onDelete" >onDelete</a>
+                            </li>
+                            <li>
+                                <a href="#onMoveElement" >onMoveElement</a>
+                            </li>
+                            <li>
+                                <a href="#onRemoveElement" >onRemoveElement</a>
+                            </li>
+                            <li>
+                                <a href="#onRemoveGroup" >onRemoveGroup</a>
+                            </li>
+                            <li>
+                                <a href="#onReset" >onReset</a>
+                            </li>
+                            <li>
+                                <a href="#onSubmit" >onSubmit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#elements" >elements</a>
+                                </li>
+                                <li>
+                                    <a href="#groups" >groups</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(fb: <a href="../classes/Form.html" target="_self">FormBuilder</a>, dialogRef: <a href="../classes/Partition.html" target="_self">MatDialogRef&lt;PartitionModalComponent&gt;</a>, data: FormGroup, dialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>fb</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Form.html" target="_self" >FormBuilder</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialogRef</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../classes/Partition.html" target="_self" >MatDialogRef&lt;PartitionModalComponent&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>data</td>
+                                                  
+                                                        <td>
+                                                                    <code>FormGroup</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="memberDisplay"></a>
+                    <span class="name">
+                        <span ><b>memberDisplay</b></span>
+                        <a href="#memberDisplay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>memberDisplay(member1: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, member2: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>member1</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>member2</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newElement"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>newElement</b></span>
+                        <a href="#newElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newElement()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="89"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:89</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>FormGroup</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newGroup"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>newGroup</b></span>
+                        <a href="#newGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>newGroup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="116"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>FormGroup</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onAddNewElement"></a>
+                    <span class="name">
+                        <span ><b>onAddNewElement</b></span>
+                        <a href="#onAddNewElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onAddNewElement()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onAddNewGroup"></a>
+                    <span class="name">
+                        <span ><b>onAddNewGroup</b></span>
+                        <a href="#onAddNewGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onAddNewGroup()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDelete"></a>
+                    <span class="name">
+                        <span ><b>onDelete</b></span>
+                        <a href="#onDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDelete()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onMoveElement"></a>
+                    <span class="name">
+                        <span ><b>onMoveElement</b></span>
+                        <a href="#onMoveElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onMoveElement(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRemoveElement"></a>
+                    <span class="name">
+                        <span ><b>onRemoveElement</b></span>
+                        <a href="#onRemoveElement"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRemoveElement(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onRemoveGroup"></a>
+                    <span class="name">
+                        <span ><b>onRemoveGroup</b></span>
+                        <a href="#onRemoveGroup"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onRemoveGroup(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:111</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onReset"></a>
+                    <span class="name">
+                        <span ><b>onReset</b></span>
+                        <a href="#onReset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onReset()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="148"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSubmit"></a>
+                    <span class="name">
+                        <span ><b>onSubmit</b></span>
+                        <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSubmit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="125"
+                                    class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:125</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="aggregations"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>aggregations</b></span>
+                        <a href="#aggregations"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      value: &#x27;sum&#x27;,
+      display: &#x27;Enum.Aggregation.sum&#x27;
+    },
+    {
+      value: &#x27;average&#x27;,
+      display: &#x27;Enum.Aggregation.average&#x27;
+    },
+    {
+      value: &#x27;highest&#x27;,
+      display: &#x27;Enum.Aggregation.highest&#x27;
+    },
+    {
+      value: &#x27;lowest&#x27;,
+      display: &#x27;Enum.Aggregation.lowest&#x27;
+    }
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Public</span>
+                        <span ><b>data</b></span>
+                        <a href="#data"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>FormGroup</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @Inject(MAT_DIALOG_DATA)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dialogRef"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>dialogRef</b></span>
+                        <a href="#dialogRef"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/Partition.html" target="_self" >MatDialogRef&lt;PartitionModalComponent&gt;</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="elementsDataSource"></a>
+                    <span class="name">
+                        <span ><b>elementsDataSource</b></span>
+                        <a href="#elementsDataSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject&lt;AbstractControl[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="elementsDisplayedColumns"></a>
+                    <span class="name">
+                        <span ><b>elementsDisplayedColumns</b></span>
+                        <a href="#elementsDisplayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;position&#x27;, &#x27;name&#x27;, &#x27;delete&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupsDataSource"></a>
+                    <span class="name">
+                        <span ><b>groupsDataSource</b></span>
+                        <a href="#groupsDataSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject&lt;AbstractControl[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="groupsDisplayedColumns"></a>
+                    <span class="name">
+                        <span ><b>groupsDisplayedColumns</b></span>
+                        <a href="#groupsDisplayedColumns"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;position&#x27;, &#x27;name&#x27;, &#x27;members&#x27;, &#x27;delete&#x27;]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousData"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>previousData</b></span>
+                        <a href="#previousData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="elements"></a>
+                        <span class="name"><b>elements</b><a href="#elements"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>elements()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:40</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="groups"></a>
+                        <span class="name"><b>groups</b><a href="#groups"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>groups()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/modules/project/modules/structure/pages/data-sources/components/partition-modal/partition-modal.component.ts:48</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { moveItemInArray } from &#x27;@angular/cdk/drag-drop&#x27;;
+import { Component, Inject, OnInit } from &#x27;@angular/core&#x27;;
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from &#x27;@angular/forms&#x27;;
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from &#x27;@angular/material/dialog&#x27;;
+import { BehaviorSubject } from &#x27;rxjs&#x27;;
+import { PartitionElement } from &#x27;src/app/models/classes/partition-element.model&#x27;;
+import { PartitionGroup } from &#x27;src/app/models/classes/partition-group.model&#x27;;
+import { DeleteModalComponent } from &#x27;../../../../components/delete-modal/delete-modal.component&#x27;;
+
+@Component({
+  selector: &#x27;app-partition-modal&#x27;,
+  templateUrl: &#x27;./partition-modal.component.html&#x27;,
+  styleUrls: [&#x27;./partition-modal.component.scss&#x27;]
+})
+export class PartitionModalComponent implements OnInit {
+
+  private previousData: any;
+
+  public aggregations &#x3D; [
+    {
+      value: &#x27;sum&#x27;,
+      display: &#x27;Enum.Aggregation.sum&#x27;
+    },
+    {
+      value: &#x27;average&#x27;,
+      display: &#x27;Enum.Aggregation.average&#x27;
+    },
+    {
+      value: &#x27;highest&#x27;,
+      display: &#x27;Enum.Aggregation.highest&#x27;
+    },
+    {
+      value: &#x27;lowest&#x27;,
+      display: &#x27;Enum.Aggregation.lowest&#x27;
+    }
+  ];
+
+  elementsDisplayedColumns: string[] &#x3D; [&#x27;position&#x27;, &#x27;name&#x27;, &#x27;delete&#x27;];
+
+  get elements(): FormArray {
+    return this.data.controls.elements as FormArray;
+  }
+
+  elementsDataSource &#x3D; new BehaviorSubject&lt;AbstractControl[]&gt;([]);
+
+  groupsDisplayedColumns: string[] &#x3D; [&#x27;position&#x27;, &#x27;name&#x27;, &#x27;members&#x27;, &#x27;delete&#x27;];
+
+  get groups(): FormArray {
+    return this.data.controls.groups as FormArray;
+  }
+
+  groupsDataSource &#x3D; new BehaviorSubject&lt;AbstractControl[]&gt;([]);
+
+  constructor(
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef&lt;PartitionModalComponent&gt;,
+    @Inject(MAT_DIALOG_DATA) public data: FormGroup,
+    private dialog: MatDialog
+  ) {
+    this.elementsDataSource.next(this.elements.controls);
+    this.groupsDataSource.next(this.groups.controls);
+  }
+
+  ngOnInit(): void {
+    this.previousData &#x3D; {...this.data.value};
+    if (!this.elements.value.length) {
+      this.elements.push(this.newElement());
+      this.elements.push(this.newElement());
+    }
+  }
+
+  onAddNewElement() {
+    this.elements.push(this.newElement());
+    this.elementsDataSource.next(this.elements.controls);
+  }
+
+  onRemoveElement(i: number) {
+    const dialogRef &#x3D; this.dialog.open(DeleteModalComponent, { data: { type: &#x27;element&#x27;, item: this.elements.value[i].name} });
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res &amp;&amp; res.delete) {
+        this.elements.removeAt(i);
+        this.elementsDataSource.next(this.elements.controls);
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
+
+  private newElement(): FormGroup {
+    const element &#x3D; new PartitionElement();
+    return this.fb.group({
+      id: [element.id],
+      name: [element.name, Validators.required]
+    });
+  }
+
+  onMoveElement(event: any) {
+    moveItemInArray(this.elements.controls, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.elements.value, event.previousIndex, event.currentIndex);
+    this.elementsDataSource.next(this.elements.controls);
+    // const array &#x3D; this.elementsDataSource.getValue();
+    // moveItemInArray(array, event.previousIndex, event.currentIndex);
+    // this.elementsDataSource.next(array);
+  }
+
+  onAddNewGroup() {
+    this.groups.push(this.newGroup());
+    this.groupsDataSource.next(this.groups.controls);
+  }
+
+  onRemoveGroup(i: number) {
+    this.groups.removeAt(i);
+    this.groupsDataSource.next(this.groups.controls);
+  }
+
+  private newGroup(): FormGroup {
+    const group &#x3D; new PartitionGroup();
+    return this.fb.group({
+      id: [group.id],
+      name: [group.name, Validators.required],
+      members: [[]]
+    });
+  }
+
+  onSubmit() {
+    this.dialogRef.close({ save: true, data: this.data });
+  }
+
+  onDelete() {
+    const dialogRef &#x3D; this.dialog.open(DeleteModalComponent, { data: { type: &#x27;disaggregation&#x27;, item: this.data.value.name} });
+
+    const dialogSubscription &#x3D; dialogRef.afterClosed().subscribe(res &#x3D;&gt; {
+      if (res &amp;&amp; res.delete) {
+        this.dialogRef.close({ save: false, data: this.data });
+        dialogSubscription.unsubscribe();
+      }
+    });
+  }
+
+  memberDisplay( member1: any, member2: any): string {
+    if (member1.id &#x3D;&#x3D;&#x3D; member2.id) {
+      return member1.name;
+    } else {
+      return &#x27;&#x27;;
+    }
+  }
+
+  onReset() {
+    this.data.patchValue(this.previousData);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;button class&#x3D;&quot;dialog-close&quot; mat-icon-button mat-dialog-close (click)&#x3D;&quot;onReset()&quot;&gt;
+    &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+&lt;/button&gt;
+&lt;h2 mat-dialog-title&gt;{{ &#x27;PartitionEdition&#x27; | translate }}&lt;/h2&gt;
+&lt;mat-dialog-content [formGroup]&#x3D;&quot;data&quot; class&#x3D;&quot;mdm-dialog partition-dialog&quot;&gt;
+    &lt;div class&#x3D;&quot;mdm-form-group&quot;&gt;
+        &lt;div class&#x3D;&quot;mdm-form-label-edition&quot;&gt;{{ &#x27;Name&#x27; | translate }}&lt;/div&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field partition-content&quot;&gt;
+            &lt;input matInput formControlName&#x3D;&quot;name&quot; placeholder&#x3D;&quot;{{ &#x27;Disaggregation.AddNamePlaceholder&#x27; | translate }}&quot;&gt;
+            &lt;mat-hint&gt;
+                &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;Disaggregation.AddNameHint&#x27; | translate }}
+            &lt;/mat-hint&gt;
+        &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;mdm-form-group partition-group&quot;&gt;
+        &lt;div class&#x3D;&quot;partition-label&quot;&gt;{{ &#x27;Elements&#x27; | translate }}&lt;/div&gt;
+        &lt;table mat-table [dataSource]&#x3D;&quot;elementsDataSource&quot; class&#x3D;&quot;mdm-table partition-content&quot; formArrayName&#x3D;&quot;elements&quot; cdkDropList (cdkDropListDropped)&#x3D;&quot;onMoveElement($event)&quot;&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;position&quot;&gt;
+                &lt;th class&#x3D;&quot;w-10&quot; mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-10&quot; mat-cell *matCellDef&#x3D;&quot;let element&quot; id&#x3D;&quot;position&quot; style&#x3D;&quot;cursor: pointer&quot;&gt;
+                    &lt;mat-icon&gt;unfold_more&lt;/mat-icon&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;name&quot;&gt;
+                &lt;th class&#x3D;&quot;w-80&quot; mat-header-cell *matHeaderCellDef&gt;{{ &#x27;Name&#x27; | translate }}&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-80&quot; mat-cell *matCellDef&#x3D;&quot;let element; let index &#x3D; index&quot; id&#x3D;&quot;name&quot; [formGroupName]&#x3D;&quot;index&quot;&gt;
+                    &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;name&quot; placeholder&#x3D;&quot;{{ &#x27;Disaggregation.Placeholder.Name&#x27; | translate }}&quot;&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;delete&quot;&gt;
+                &lt;th class&#x3D;&quot;w-10&quot; mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-10&quot; mat-cell *matCellDef&#x3D;&quot;let element; let i&#x3D;index&quot; id&#x3D;&quot;delete&quot;&gt;
+                    &lt;button mat-icon-button class&#x3D;&quot;delete-button&quot; (click)&#x3D;&quot;onRemoveElement(i)&quot;&gt;
+                        &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;add&quot;&gt;
+                &lt;td mat-footer-cell *matFooterCellDef [attr.colspan]&#x3D;&quot;elementsDisplayedColumns.length&quot; class&#x3D;&quot;add-row&quot;&gt;
+                    &lt;button mat-stroked-button class&#x3D;&quot;mdm-button small-button&quot; (click)&#x3D;&quot;onAddNewElement()&quot;&gt;
+                        &lt;mat-icon&gt;add&lt;/mat-icon&gt;{{ &#x27;Add&#x27; | translate }}
+                    &lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+
+            &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;elementsDisplayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: elementsDisplayedColumns;&quot; cdkDrag&gt;&lt;/tr&gt;
+            &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;[&#x27;add&#x27;]&quot;&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &lt;mat-hint class&#x3D;&quot;table-hint&quot;&gt;
+            &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;Disaggregation.ElementsHint&#x27; | translate }}
+        &lt;/mat-hint&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;mdm-form-group partition-group&quot;&gt;
+        &lt;div class&#x3D;&quot;mdm-form-label-edition&quot;&gt;{{ &#x27;Aggregation&#x27; | translate }}&lt;/div&gt;
+        &lt;div class&#x3D;&quot;mdm-form-field partition-content&quot;&gt;
+            &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+                &lt;mat-select formControlName&#x3D;&quot;aggregation&quot; placeholder&#x3D;&quot;{{ &#x27;MissingComputation&#x27; | translate }}&quot;
+                    disableOptionCentering panelClass&#x3D;&quot;myPanelClass&quot;&gt;
+                    &lt;mat-option *ngFor&#x3D;&quot;let aggregation of aggregations&quot; [value]&#x3D;&quot;aggregation.value&quot;&gt;{{
+                        aggregation.display | translate }}
+                    &lt;/mat-option&gt;
+                &lt;/mat-select&gt;
+            &lt;/mat-form-field&gt;
+            &lt;mat-hint class&#x3D;&quot;aggregation-hint&quot;&gt;
+                &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;Disaggregation.AggregationHint&#x27; | translate }}
+            &lt;/mat-hint&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;mdm-form-group partition-group&quot;&gt;
+        &lt;div class&#x3D;&quot;mdm-form-label-edition&quot;&gt;{{ &#x27;Groups&#x27; | translate }}&lt;/div&gt;
+        &lt;div class&#x3D;&quot;mdm-form-field partition-content&quot;&gt;
+            &lt;mat-checkbox formControlName&#x3D;&quot;useGroups&quot;&gt;{{ &#x27;UseGroups&#x27; | translate }}&lt;/mat-checkbox&gt;
+            &lt;mat-hint class&#x3D;&quot;aggregation-hint&quot;&gt;
+                &lt;mat-icon&gt;info&lt;/mat-icon&gt;{{ &#x27;Disaggregation.GroupsHint&#x27; | translate }}
+            &lt;/mat-hint&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;mdm-form-group partition-group&quot; *ngIf&#x3D;&quot;data.value.useGroups&quot;&gt;
+        &lt;div class&#x3D;&quot;mdm-form-label-edition&quot;&gt;&lt;/div&gt;
+        &lt;table mat-table [dataSource]&#x3D;&quot;groupsDataSource&quot; class&#x3D;&quot;mdm-table&quot; formArrayName&#x3D;&quot;groups&quot;&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;position&quot;&gt;
+                &lt;th class&#x3D;&quot;w-10&quot; mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-10&quot; mat-cell *matCellDef&#x3D;&quot;let element&quot; id&#x3D;&quot;position&quot;&gt;
+                    &lt;mat-icon&gt;unfold_more&lt;/mat-icon&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;name&quot;&gt;
+                &lt;th class&#x3D;&quot;w-40&quot; mat-header-cell *matHeaderCellDef&gt;{{ &#x27;Name&#x27; | translate }}&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-40&quot; mat-cell *matCellDef&#x3D;&quot;let element; let i&#x3D;index&quot; id&#x3D;&quot;name&quot; [formGroupName]&#x3D;&quot;i&quot;&gt;
+                    &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;input matInput formControlName&#x3D;&quot;name&quot; placeholder&#x3D;&quot;{{ &#x27;Name&#x27; | translate }}&quot;&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;members&quot;&gt;
+                &lt;th class&#x3D;&quot;w-40&quot; mat-header-cell *matHeaderCellDef&gt;{{ &#x27;Members&#x27; | translate }}&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-40&quot; mat-cell *matCellDef&#x3D;&quot;let element; let i&#x3D;index&quot; id&#x3D;&quot;members&quot; [formGroupName]&#x3D;&quot;i&quot;&gt;
+                    &lt;mat-form-field appearance&#x3D;&quot;outline&quot; class&#x3D;&quot;mdm-form-field&quot;&gt;
+                        &lt;mat-select formControlName&#x3D;&quot;members&quot; placeholder&#x3D;&quot;{{ &#x27;Members&#x27; | translate }}&quot; multiple [compareWith]&#x3D;&quot;memberDisplay&quot;&gt;
+                          &lt;mat-option *ngFor&#x3D;&quot;let element of elements.value&quot; [value]&#x3D;&quot;element&quot;&gt;{{ element.name }}
+                          &lt;/mat-option&gt;
+                        &lt;/mat-select&gt;
+                    &lt;/mat-form-field&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;delete&quot;&gt;
+                &lt;th class&#x3D;&quot;w-10&quot; mat-header-cell *matHeaderCellDef&gt;&lt;/th&gt;
+                &lt;td class&#x3D;&quot;w-10&quot; mat-cell *matCellDef&#x3D;&quot;let element; let i&#x3D;index&quot; id&#x3D;&quot;delete&quot;&gt;
+                    &lt;button mat-icon-button class&#x3D;&quot;delete-button&quot; (click)&#x3D;&quot;onRemoveGroup(i)&quot;&gt;
+                        &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+                    &lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+            &lt;ng-container matColumnDef&#x3D;&quot;add&quot;&gt;
+                &lt;td mat-footer-cell *matFooterCellDef [attr.colspan]&#x3D;&quot;groupsDisplayedColumns.length&quot; class&#x3D;&quot;add-row&quot;&gt;
+                    &lt;button mat-stroked-button class&#x3D;&quot;mdm-button small-button&quot; (click)&#x3D;&quot;onAddNewGroup()&quot;&gt;
+                        &lt;mat-icon&gt;add&lt;/mat-icon&gt;{{ &#x27;Add&#x27; | translate }}
+                    &lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/ng-container&gt;
+
+            &lt;tr mat-header-row *matHeaderRowDef&#x3D;&quot;groupsDisplayedColumns&quot;&gt;&lt;/tr&gt;
+            &lt;tr mat-row *matRowDef&#x3D;&quot;let row; columns: groupsDisplayedColumns;&quot;&gt;&lt;/tr&gt;
+            &lt;tr mat-footer-row *matFooterRowDef&#x3D;&quot;[&#x27;add&#x27;]&quot;&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/mat-dialog-content&gt;
+&lt;mat-dialog-actions align&#x3D;&quot;end&quot;&gt;
+    &lt;button mat-stroked-button class&#x3D;&quot;mdm-button save-button&quot; (click)&#x3D;&quot;onSubmit()&quot;&gt;
+        &lt;mat-icon&gt;save&lt;/mat-icon&gt;{{ &#x27;ApplyChanges&#x27; | translate }}
+    &lt;/button&gt;
+    &lt;button mat-stroked-button class&#x3D;&quot;mdm-button&quot; (click)&#x3D;&quot;onReset()&quot;&gt;
+        &lt;mat-icon&gt;undo&lt;/mat-icon&gt;{{ &#x27;ResetChanges&#x27; | translate }}
+    &lt;/button&gt;
+    &lt;button mat-stroked-button class&#x3D;&quot;mdm-button delete-button&quot; (click)&#x3D;&quot;onDelete()&quot;&gt;
+        &lt;mat-icon&gt;delete&lt;/mat-icon&gt;{{ &#x27;Delete&#x27; | translate }}
+    &lt;/button&gt;
+&lt;/mat-dialog-actions&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./partition-modal.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@import &quot;src/assets/theme/size_vars.scss&quot;;
+
+.partition-dialog {
+  display: flex;
+  flex-direction: column;
+
+  .partition-group {
+    display: flex;
+    justify-content: space-between;
+
+    .partition-label {
+      width: 10%;
+      text-align: end;
+      font-weight: bold;
+    }
+  }
+
+  .partition-content {
+    width: 88%;
+  }
+}
+
+.mat-footer-cell {
+  text-align: center;
+}
+
+th {
+  font-size: $small_text;
+  font-weight: bold;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &amp;.mat-header-cell {
+    text-align: center;
+  }
+}
+
+tr {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: white;
+}
+
+.td-icon {
+  flex: 0.2;
+}
+
+.w-10 {
+  width: 5% !important;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.w-80 {
+  width: 90% !important;
+}
+
+tr.mat-row {
+  height: 40px !important;
+}
+tr.mat-header-row {
+  height: 45px !important;
+}
+
+tr.mat-foot-row {
+  height: 45px !important;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type  {
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-icon-button {
+  border-radius: 5px;
+  width: 40px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-icon {
+  width: unset;
+  height: unset;
+  font-size: 16px;
+}
+
+.hint {
+  margin-left: 19%;
+}
+
+.mdm-form-label-edition {
+  flex: 0.1;
+  font-size: $small_text;
+  text-align: right;
+  padding-right: 35px;
+  font-weight: bold;
+}
+
+.table-hint {
+  margin-left: 13%;
+  margin-bottom: 0.3em;
+}
+
+.aggregation-hint {
+  margin-top: -12px;
+  margin-left: 11px;
+  margin-bottom: 0.3em;
+}
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><button class="dialog-close" mat-icon-button mat-dialog-close (click)="onReset()">    <mat-icon>close</mat-icon></button><h2 mat-dialog-title>{{ \'PartitionEdition\' | translate }}</h2><mat-dialog-content [formGroup]="data" class="mdm-dialog partition-dialog">    <div class="mdm-form-group">        <div class="mdm-form-label-edition">{{ \'Name\' | translate }}</div>        <mat-form-field appearance="outline" class="mdm-form-field partition-content">            <input matInput formControlName="name" placeholder="{{ \'Disaggregation.AddNamePlaceholder\' | translate }}">            <mat-hint>                <mat-icon>info</mat-icon>{{ \'Disaggregation.AddNameHint\' | translate }}            </mat-hint>        </mat-form-field>    </div>    <div class="mdm-form-group partition-group">        <div class="partition-label">{{ \'Elements\' | translate }}</div>        <table mat-table [dataSource]="elementsDataSource" class="mdm-table partition-content" formArrayName="elements" cdkDropList (cdkDropListDropped)="onMoveElement($event)">            <ng-container matColumnDef="position">                <th class="w-10" mat-header-cell *matHeaderCellDef></th>                <td class="w-10" mat-cell *matCellDef="let element" id="position" style="cursor: pointer">                    <mat-icon>unfold_more</mat-icon>                </td>            </ng-container>            <ng-container matColumnDef="name">                <th class="w-80" mat-header-cell *matHeaderCellDef>{{ \'Name\' | translate }}</th>                <td class="w-80" mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">                    <mat-form-field appearance="outline" class="mdm-form-field">                        <input matInput formControlName="name" placeholder="{{ \'Disaggregation.Placeholder.Name\' | translate }}">                    </mat-form-field>                </td>            </ng-container>            <ng-container matColumnDef="delete">                <th class="w-10" mat-header-cell *matHeaderCellDef></th>                <td class="w-10" mat-cell *matCellDef="let element; let i=index" id="delete">                    <button mat-icon-button class="delete-button" (click)="onRemoveElement(i)">                        <mat-icon>close</mat-icon>                    </button>                </td>            </ng-container>            <ng-container matColumnDef="add">                <td mat-footer-cell *matFooterCellDef [attr.colspan]="elementsDisplayedColumns.length" class="add-row">                    <button mat-stroked-button class="mdm-button small-button" (click)="onAddNewElement()">                        <mat-icon>add</mat-icon>{{ \'Add\' | translate }}                    </button>                </td>            </ng-container>            <tr mat-header-row *matHeaderRowDef="elementsDisplayedColumns"></tr>            <tr mat-row *matRowDef="let row; columns: elementsDisplayedColumns;" cdkDrag></tr>            <tr mat-footer-row *matFooterRowDef="[\'add\']"></tr>        </table>        <mat-hint class="table-hint">            <mat-icon>info</mat-icon>{{ \'Disaggregation.ElementsHint\' | translate }}        </mat-hint>    </div>    <div class="mdm-form-group partition-group">        <div class="mdm-form-label-edition">{{ \'Aggregation\' | translate }}</div>        <div class="mdm-form-field partition-content">            <mat-form-field appearance="outline">                <mat-select formControlName="aggregation" placeholder="{{ \'MissingComputation\' | translate }}"                    disableOptionCentering panelClass="myPanelClass">                    <mat-option *ngFor="let aggregation of aggregations" [value]="aggregation.value">{{                        aggregation.display | translate }}                    </mat-option>                </mat-select>            </mat-form-field>            <mat-hint class="aggregation-hint">                <mat-icon>info</mat-icon>{{ \'Disaggregation.AggregationHint\' | translate }}            </mat-hint>        </div>    </div>    <div class="mdm-form-group partition-group">        <div class="mdm-form-label-edition">{{ \'Groups\' | translate }}</div>        <div class="mdm-form-field partition-content">            <mat-checkbox formControlName="useGroups">{{ \'UseGroups\' | translate }}</mat-checkbox>            <mat-hint class="aggregation-hint">                <mat-icon>info</mat-icon>{{ \'Disaggregation.GroupsHint\' | translate }}            </mat-hint>        </div>    </div>    <div class="mdm-form-group partition-group" *ngIf="data.value.useGroups">        <div class="mdm-form-label-edition"></div>        <table mat-table [dataSource]="groupsDataSource" class="mdm-table" formArrayName="groups">            <ng-container matColumnDef="position">                <th class="w-10" mat-header-cell *matHeaderCellDef></th>                <td class="w-10" mat-cell *matCellDef="let element" id="position">                    <mat-icon>unfold_more</mat-icon>                </td>            </ng-container>            <ng-container matColumnDef="name">                <th class="w-40" mat-header-cell *matHeaderCellDef>{{ \'Name\' | translate }}</th>                <td class="w-40" mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">                    <mat-form-field appearance="outline" class="mdm-form-field">                        <input matInput formControlName="name" placeholder="{{ \'Name\' | translate }}">                    </mat-form-field>                </td>            </ng-container>            <ng-container matColumnDef="members">                <th class="w-40" mat-header-cell *matHeaderCellDef>{{ \'Members\' | translate }}</th>                <td class="w-40" mat-cell *matCellDef="let element; let i=index" id="members" [formGroupName]="i">                    <mat-form-field appearance="outline" class="mdm-form-field">                        <mat-select formControlName="members" placeholder="{{ \'Members\' | translate }}" multiple [compareWith]="memberDisplay">                          <mat-option *ngFor="let element of elements.value" [value]="element">{{ element.name }}                          </mat-option>                        </mat-select>                    </mat-form-field>                </td>            </ng-container>            <ng-container matColumnDef="delete">                <th class="w-10" mat-header-cell *matHeaderCellDef></th>                <td class="w-10" mat-cell *matCellDef="let element; let i=index" id="delete">                    <button mat-icon-button class="delete-button" (click)="onRemoveGroup(i)">                        <mat-icon>close</mat-icon>                    </button>                </td>            </ng-container>            <ng-container matColumnDef="add">                <td mat-footer-cell *matFooterCellDef [attr.colspan]="groupsDisplayedColumns.length" class="add-row">                    <button mat-stroked-button class="mdm-button small-button" (click)="onAddNewGroup()">                        <mat-icon>add</mat-icon>{{ \'Add\' | translate }}                    </button>                </td>            </ng-container>            <tr mat-header-row *matHeaderRowDef="groupsDisplayedColumns"></tr>            <tr mat-row *matRowDef="let row; columns: groupsDisplayedColumns;"></tr>            <tr mat-footer-row *matFooterRowDef="[\'add\']"></tr>        </table>    </div></mat-dialog-content><mat-dialog-actions align="end">    <button mat-stroked-button class="mdm-button save-button" (click)="onSubmit()">        <mat-icon>save</mat-icon>{{ \'ApplyChanges\' | translate }}    </button>    <button mat-stroked-button class="mdm-button" (click)="onReset()">        <mat-icon>undo</mat-icon>{{ \'ResetChanges\' | translate }}    </button>    <button mat-stroked-button class="mdm-button delete-button" (click)="onDelete()">        <mat-icon>delete</mat-icon>{{ \'Delete\' | translate }}    </button></mat-dialog-actions></div>'
+    var COMPONENTS = [{'name': 'ActionProjectModalComponent', 'selector': 'app-action-project-modal'},{'name': 'ActivityEditComponent', 'selector': 'app-activity-edit'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'BasicsComponent', 'selector': 'app-basics'},{'name': 'BreadcrumbComponent', 'selector': 'app-breadcrumb'},{'name': 'ChartComponent', 'selector': 'app-chart'},{'name': 'CollectionSitesSelectorComponent', 'selector': 'app-collection-sites-selector'},{'name': 'CommentedGraphsComponent', 'selector': 'app-commented-graphs'},{'name': 'CommentModalComponent', 'selector': 'app-comment-modal'},{'name': 'ConfirmExportComponent', 'selector': 'app-confirm-export'},{'name': 'ConfirmModalComponent', 'selector': 'app-confirm-modal'},{'name': 'CrossCuttingComponent', 'selector': 'app-cross-cutting'},{'name': 'DataSourceComponent', 'selector': 'app-data-source'},{'name': 'DataSourceEditComponent', 'selector': 'app-data-source-edit'},{'name': 'DataSourcesComponent', 'selector': 'app-data-sources'},{'name': 'DataSourceSelectorComponent', 'selector': 'app-data-source-selector'},{'name': 'DataSourcesListComponent', 'selector': 'app-data-sources-list'},{'name': 'DeleteModalComponent', 'selector': 'app-delete-modal'},{'name': 'DownloadExcelPageComponent', 'selector': 'app-download-excel-page'},{'name': 'DownloadModalComponent', 'selector': 'app-download-modal'},{'name': 'EditComponent', 'selector': 'app-edit'},{'name': 'ExistingPartitionModalComponent', 'selector': 'app-existing-partition-modal'},{'name': 'ExtraIndicatorComponent', 'selector': 'app-extra-indicator'},{'name': 'ExtraIndicatorsComponent', 'selector': 'app-extra-indicators'},{'name': 'FilterComponent', 'selector': 'app-filter'},{'name': 'FormElementEditComponent', 'selector': 'app-form-element-edit'},{'name': 'GeneralComponent', 'selector': 'app-general'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HistoryComponent', 'selector': 'app-history'},{'name': 'HomeCardComponent', 'selector': 'app-home-card'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'HomeIllustrationComponent', 'selector': 'app-home-illustration'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorComponent', 'selector': 'app-indicator'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorModalComponent', 'selector': 'app-indicator-modal'},{'name': 'IndicatorReportComponent', 'selector': 'app-indicator-report'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'IndicatorsComponent', 'selector': 'app-indicators'},{'name': 'InformationsPanelComponent', 'selector': 'app-informations-panel'},{'name': 'InputsComponent', 'selector': 'app-inputs'},{'name': 'LoadingBarComponent', 'selector': 'app-loading-bar'},{'name': 'LogframesDashboardComponent', 'selector': 'app-logframes-dashboard'},{'name': 'LogicalFrameComponent', 'selector': 'app-logical-frame'},{'name': 'LogicalFrameEditComponent', 'selector': 'app-logical-frame-edit'},{'name': 'LogicalFramesComponent', 'selector': 'app-logical-frames'},{'name': 'LogicalFramesListComponent', 'selector': 'app-logical-frames-list'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ObjectGroupingComponent', 'selector': 'app-object-grouping'},{'name': 'OutputEditComponent', 'selector': 'app-output-edit'},{'name': 'ParametersComponent', 'selector': 'app-parameters'},{'name': 'PartitionModalComponent', 'selector': 'app-partition-modal'},{'name': 'PersonalDashboardComponent', 'selector': 'app-personal-dashboard'},{'name': 'ProgressBarComponent', 'selector': 'app-progress-bar'},{'name': 'ProgressBarTripleComponent', 'selector': 'app-progress-bar-triple'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectComponent', 'selector': 'app-project'},{'name': 'ProjectSaveComponent', 'selector': 'app-project-save'},{'name': 'ProjectsComponent', 'selector': 'app-projects'},{'name': 'PurposeEditComponent', 'selector': 'app-purpose-edit'},{'name': 'RefreshSnackbarComponent', 'selector': 'app-refresh-snackbar'},{'name': 'ReportingMenuComponent', 'selector': 'app-reporting-menu'},{'name': 'ReportingTableComponent', 'selector': 'app-reporting-table'},{'name': 'RevisionSummaryComponent', 'selector': 'app-revision-summary'},{'name': 'SearchbarComponent', 'selector': 'app-searchbar'},{'name': 'SidenavComponent', 'selector': 'app-sidenav'},{'name': 'SitesComponent', 'selector': 'app-sites'},{'name': 'StructureComponent', 'selector': 'app-structure'},{'name': 'TableStructureComponent', 'selector': 'app-table-structure'},{'name': 'ThematicsComponent', 'selector': 'app-thematics'},{'name': 'ThemeComponent', 'selector': 'app-theme'},{'name': 'ThemeModalComponent', 'selector': 'app-theme-modal'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserComponent', 'selector': 'app-user'},{'name': 'UserFiltersComponent', 'selector': 'app-user-filters'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UserModalComponent', 'selector': 'app-user-modal'},{'name': 'UsersComponent', 'selector': 'app-users'},{'name': 'UsersComponent', 'selector': 'app-users'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'PartitionModalComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'PartitionModalComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

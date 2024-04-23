@@ -1,0 +1,1351 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mdm-monitool-frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">mdm-monitool-frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#BASELINE_LABEL" title="src/app/components/chart/chart.component.ts" ><b>BASELINE_LABEL</b>&nbsp;&nbsp;&nbsp;(src/.../chart.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CHAR_LIMIT" title="src/app/components/report/comment-modal/comment-modal.component.ts" ><b>CHAR_LIMIT</b>&nbsp;&nbsp;&nbsp;(src/.../comment-modal.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#context" title="src/test.ts" ><b>context</b>&nbsp;&nbsp;&nbsp;(src/.../test.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#COPY" title="src/app/models/classes/project-indicator.model.ts" ><b>COPY</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#COPY_FORMULA" title="src/app/models/classes/project-indicator.model.ts" ><b>COPY_FORMULA</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#CUSTOM_FORMULA" title="src/app/models/classes/project-indicator.model.ts" ><b>CUSTOM_FORMULA</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#dataLabelsConfig" title="src/app/components/chart/download-modal/download-modal.component.ts" ><b>dataLabelsConfig</b>&nbsp;&nbsp;&nbsp;(src/.../download-modal.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.beta.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.beta.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.prod.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.prod.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.uat.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.uat.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#findContentIndexByFilter" title="src/app/services/comment.service.ts" ><b>findContentIndexByFilter</b>&nbsp;&nbsp;&nbsp;(src/.../comment.service.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FIXED" title="src/app/models/classes/project-indicator.model.ts" ><b>FIXED</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#FORMULA" title="src/app/models/classes/project-indicator.model.ts" ><b>FORMULA</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HintUserData" title="src/app/mocked/hint-user-element.mocked.ts" ><b>HintUserData</b>&nbsp;&nbsp;&nbsp;(src/.../hint-user-element.mocked.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HintUserData" title="src/app/mocked/hint-user-project-element.mocked.ts" ><b>HintUserData</b>&nbsp;&nbsp;&nbsp;(src/.../hint-user-project-element.mocked.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isIE" title="src/app/app.module.ts" ><b>isIE</b>&nbsp;&nbsp;&nbsp;(src/.../app.module.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MY_DATE_FORMATS" title="src/app/utils/format-datepicker-helper.ts" ><b>MY_DATE_FORMATS</b>&nbsp;&nbsp;&nbsp;(src/.../format-datepicker-helper.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PERCENTAGE" title="src/app/models/classes/project-indicator.model.ts" ><b>PERCENTAGE</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PERCENTAGE_FORMULA" title="src/app/models/classes/project-indicator.model.ts" ><b>PERCENTAGE_FORMULA</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PERMILLE" title="src/app/models/classes/project-indicator.model.ts" ><b>PERMILLE</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#PERMILLE_FORMULA" title="src/app/models/classes/project-indicator.model.ts" ><b>PERMILLE_FORMULA</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#require" title="src/test.ts" ><b>require</b>&nbsp;&nbsp;&nbsp;(src/.../test.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ROLE_COLORS" title="src/app/modules/parameters/pages/users/components/user-filters/user-filters.component.ts" ><b>ROLE_COLORS</b>&nbsp;&nbsp;&nbsp;(src/.../user-filters.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ROLES" title="src/app/modules/parameters/pages/users/components/user-filters/user-filters.component.ts" ><b>ROLES</b>&nbsp;&nbsp;&nbsp;(src/.../user-filters.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#ROLES_TRANSLATIONS" title="src/app/modules/parameters/pages/users/components/user-filters/user-filters.component.ts" ><b>ROLES_TRANSLATIONS</b>&nbsp;&nbsp;&nbsp;(src/.../user-filters.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#rolesList" title="src/app/modules/project/modules/structure/pages/users/constants/role.ts" ><b>rolesList</b>&nbsp;&nbsp;&nbsp;(src/.../role.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TARGET_LABEL" title="src/app/components/chart/chart.component.ts" ><b>TARGET_LABEL</b>&nbsp;&nbsp;&nbsp;(src/.../chart.component.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#typesList" title="src/app/modules/project/modules/structure/pages/users/constants/type.ts" ><b>typesList</b>&nbsp;&nbsp;&nbsp;(src/.../type.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UNAVAILABLE" title="src/app/models/classes/project-indicator.model.ts" ><b>UNAVAILABLE</b>&nbsp;&nbsp;&nbsp;(src/.../project-indicator.model.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#usersList" title="src/app/mocked/users.mocked.ts" ><b>usersList</b>&nbsp;&nbsp;&nbsp;(src/.../users.mocked.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#whiteBackgroundPlugin" title="src/app/components/chart/download-modal/download-modal.component.ts" ><b>whiteBackgroundPlugin</b>&nbsp;&nbsp;&nbsp;(src/.../download-modal.component.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/components/chart/chart.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="BASELINE_LABEL"></a>
+                    <span class="name">
+                        <span ><b>BASELINE_LABEL</b></span>
+                        <a href="#BASELINE_LABEL"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  borderColor: &#x27;rgba(0, 0, 0, .3)&#x27;,
+  backgroundColor: &#x27;white&#x27;,
+  label: &#x27;Baseline&#x27;,
+  borderDash: [2, 4.62],
+  borderWidth: 2
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TARGET_LABEL"></a>
+                    <span class="name">
+                        <span ><b>TARGET_LABEL</b></span>
+                        <a href="#TARGET_LABEL"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  borderColor: &#x27;rgba(0, 0, 0, .3)&#x27;,
+  backgroundColor: &#x27;white&#x27;,
+  label: &#x27;Target&#x27;,
+  borderDash: [9.5, 5.9],
+  borderWidth: 2
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/components/report/comment-modal/comment-modal.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CHAR_LIMIT"></a>
+                    <span class="name">
+                        <span ><b>CHAR_LIMIT</b></span>
+                        <a href="#CHAR_LIMIT"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>450</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/test.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="context"></a>
+                    <span class="name">
+                        <span ><b>context</b></span>
+                        <a href="#context"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>require.context(&#x27;./&#x27;, true, /\.spec\.ts$/)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="require"></a>
+                    <span class="name">
+                        <span ><b>require</b></span>
+                        <a href="#require"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type</code>
+
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/models/classes/project-indicator.model.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="COPY"></a>
+                    <span class="name">
+                        <span ><b>COPY</b></span>
+                        <a href="#COPY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;copy&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="COPY_FORMULA"></a>
+                    <span class="name">
+                        <span ><b>COPY_FORMULA</b></span>
+                        <a href="#COPY_FORMULA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;copied_value&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="CUSTOM_FORMULA"></a>
+                    <span class="name">
+                        <span ><b>CUSTOM_FORMULA</b></span>
+                        <a href="#CUSTOM_FORMULA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;A+B+C&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FIXED"></a>
+                    <span class="name">
+                        <span ><b>FIXED</b></span>
+                        <a href="#FIXED"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;fixed&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="FORMULA"></a>
+                    <span class="name">
+                        <span ><b>FORMULA</b></span>
+                        <a href="#FORMULA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;formula&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PERCENTAGE"></a>
+                    <span class="name">
+                        <span ><b>PERCENTAGE</b></span>
+                        <a href="#PERCENTAGE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;percentage&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PERCENTAGE_FORMULA"></a>
+                    <span class="name">
+                        <span ><b>PERCENTAGE_FORMULA</b></span>
+                        <a href="#PERCENTAGE_FORMULA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;100 * numerator / denominator&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PERMILLE"></a>
+                    <span class="name">
+                        <span ><b>PERMILLE</b></span>
+                        <a href="#PERMILLE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;permille&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="PERMILLE_FORMULA"></a>
+                    <span class="name">
+                        <span ><b>PERMILLE_FORMULA</b></span>
+                        <a href="#PERMILLE_FORMULA"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;1000 * numerator / denominator&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UNAVAILABLE"></a>
+                    <span class="name">
+                        <span ><b>UNAVAILABLE</b></span>
+                        <a href="#UNAVAILABLE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;unavailable&#x27;</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/components/chart/download-modal/download-modal.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataLabelsConfig"></a>
+                    <span class="name">
+                        <span ><b>dataLabelsConfig</b></span>
+                        <a href="#dataLabelsConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  backgroundColor: &#x27;white&#x27;,
+  borderRadius: 100,
+  align: &#x27;right&#x27;,
+  font: {
+    size: 10
+  },
+  formatter(value, context) {
+    return Math.round(value.y * 10) / 10 + context.dataset.unit;
+  }
+
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="whiteBackgroundPlugin"></a>
+                    <span class="name">
+                        <span ><b>whiteBackgroundPlugin</b></span>
+                        <a href="#whiteBackgroundPlugin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  id: &#x27;customCanvasBackgroundColor&#x27;,
+  beforeDraw: (chart: any) &#x3D;&gt; {
+    const {ctx} &#x3D; chart;
+    ctx.save();
+    ctx.globalCompositeOperation &#x3D; &#x27;destination-over&#x27;;
+    ctx.fillStyle &#x3D; &#x27;white&#x27;;
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  }
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Custom plugin for having a white background on the charts</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.beta.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  production: false,
+  API_URL: &#x27;/api&#x27;,
+  clientId: &#x27;ec380c9b-e98c-4de9-a311-9fa2495e6daf&#x27;,
+  authority: &#x27;https://login.microsoftonline.com/3c3a3c6a-8d0a-446a-ae82-cee5b605904e&#x27;,
+  redirectUrl: &#x27;https://monitool.test.humanitarian.tech/api/authentication/login-callback&#x27;,
+  postLogoutRedirectUri: &#x27;https://monitool.test.humanitarian.tech/login&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.prod.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  production: true,
+  API_URL: &#x27;/api&#x27;,
+  clientId: &#x27;ec380c9b-e98c-4de9-a311-9fa2495e6daf&#x27;,
+  authority: &#x27;https://login.microsoftonline.com/3c3a3c6a-8d0a-446a-ae82-cee5b605904e&#x27;,
+  redirectUrl: &#x27;https://monitool.medecinsdumonde.net/api/authentication/login-callback&#x27;,
+  postLogoutRedirectUri: &#x27;https://monitool.medecinsdumonde.net/login&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  production: false,
+  API_URL: &#x27;/api&#x27;,
+  clientId: &#x27;ec380c9b-e98c-4de9-a311-9fa2495e6daf&#x27;,
+  authority: &#x27;https://login.microsoftonline.com/3c3a3c6a-8d0a-446a-ae82-cee5b605904e&#x27;,
+  redirectUrl: &#x27;http://localhost:4200/api/authentication/login-callback&#x27;,
+  postLogoutRedirectUri: &#x27;http://localhost:4200/login&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.uat.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    production: true,
+    API_URL: &#x27;/api&#x27;,
+    clientId: &#x27;ec380c9b-e98c-4de9-a311-9fa2495e6daf&#x27;,
+    authority: &#x27;https://login.microsoftonline.com/3c3a3c6a-8d0a-446a-ae82-cee5b605904e&#x27;,
+    redirectUrl: &#x27;https://monitool-uat.medecinsdumonde.net/api/authentication/login-callback&#x27;,
+    postLogoutRedirectUri: &#x27;https://monitool-uat.medecinsdumonde.net/login&#x27;
+  }</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/services/comment.service.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findContentIndexByFilter"></a>
+                    <span class="name">
+                        <span ><b>findContentIndexByFilter</b></span>
+                        <a href="#findContentIndexByFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(
+  comment: Comment | undefined,
+  filters: CommentFilter
+): number &#x3D;&gt; {
+  return (
+    comment?.content.findIndex(c &#x3D;&gt; {
+      const cFilters &#x3D; c.filter;
+      return (
+        cFilters.dimension &#x3D;&#x3D;&#x3D; filters.dimension &amp;&amp;
+        isEqual(cFilters.disaggregatedBy, filters.disaggregatedBy)
+      );
+    }) ?? -1
+  );
+}</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Finds the content that has a matching filter</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/mocked/hint-user-element.mocked.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HintUserData"></a>
+                    <span class="name">
+                        <span ><b>HintUserData</b></span>
+                        <a href="#HintUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../classes/User.html" target="_self" >HintUserElement[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {untitled: &#x27;TooltipRoleHint.EditProjectsStructure&#x27;, admin: true, project: true, common: true},
+    {untitled: &#x27;TooltipRoleHint.SeeAllProjectsReporting&#x27;, admin: true, project: true, common: true},
+    {untitled: &#x27;TooltipRoleHint.CreateProjects&#x27;, admin: true, project: true, common: false},
+    {untitled: &#x27;TooltipRoleHint.CreateAndEditThematics&#x27;, admin: true, project: false, common: false},
+    {untitled: &#x27;TooltipRoleHint.CreateAndEditCrossCutting&#x27;, admin: true, project: false, common: false},
+    {untitled: &#x27;TooltipRoleHint.EditOtherUsersRoles&#x27;, admin: true, project: false, common: false},
+    {untitled: &#x27;TooltipRoleHint.EditAllProjectsStructureAndData&#x27;, admin: true, project: false, common: false},
+  ]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/mocked/hint-user-project-element.mocked.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HintUserData"></a>
+                    <span class="name">
+                        <span ><b>HintUserData</b></span>
+                        <a href="#HintUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {untitled: &#x27;TooltipRoleHint.EditProjectsStructureOnly&#x27;, owner: true, input: false, read: false},
+    {untitled: &#x27;TooltipRoleHint.DataInput&#x27;, owner: true, input: true, read: false},
+    {untitled: &#x27;TooltipRoleHint.ViewGeneralReport&#x27;, owner: true, input: true, read: true},
+  ]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/app.module.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isIE"></a>
+                    <span class="name">
+                        <span ><b>isIE</b></span>
+                        <a href="#isIE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>window.navigator.userAgent.indexOf(&#x27;MSIE &#x27;) &gt; -1 || window.navigator.userAgent.indexOf(&#x27;Trident/&#x27;) &gt; -1</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/utils/format-datepicker-helper.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MY_DATE_FORMATS"></a>
+                    <span class="name">
+                        <span ><b>MY_DATE_FORMATS</b></span>
+                        <a href="#MY_DATE_FORMATS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    parse: {
+      dateInput: &#x27;LL&#x27;,
+    },
+    display: {
+      dateInput: &#x27;LL&#x27;,
+      monthYearLabel: &#x27;MMM YYYY&#x27;,
+      dateA11yLabel: &#x27;LL&#x27;,
+      monthYearA11yLabel: &#x27;MMMM YYYY&#x27;,
+    },
+  }</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/modules/parameters/pages/users/components/user-filters/user-filters.component.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ROLE_COLORS"></a>
+                    <span class="name">
+                        <span ><b>ROLE_COLORS</b></span>
+                        <a href="#ROLE_COLORS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Roles" target="_self" >Record&lt;Roles, string&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  admin: &#x27;#337ab7&#x27;,
+  common: &#x27;#8a6d3b&#x27;,
+  project: &#x27;#3c763d&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ROLES"></a>
+                    <span class="name">
+                        <span ><b>ROLES</b></span>
+                        <a href="#ROLES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[&#x27;admin&#x27;, &#x27;common&#x27;, &#x27;project&#x27;] as const</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ROLES_TRANSLATIONS"></a>
+                    <span class="name">
+                        <span ><b>ROLES_TRANSLATIONS</b></span>
+                        <a href="#ROLES_TRANSLATIONS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#Roles" target="_self" >Record&lt;Roles, string&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  admin: &#x27;AdminRole&#x27;,
+  common: &#x27;CommonRole&#x27;,
+  project: &#x27;ProjectRole&#x27;
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/modules/project/modules/structure/pages/users/constants/role.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rolesList"></a>
+                    <span class="name">
+                        <span ><b>rolesList</b></span>
+                        <a href="#rolesList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+        name: &#x27;Owner&#x27;,
+        value: &#x27;owner&#x27;
+    },
+    {
+        name: &#x27;DataEntryUser&#x27;,
+        value: &#x27;input&#x27;
+    },
+    {
+        name: &#x27;ReadOnlyUser&#x27;,
+        value: &#x27;read&#x27;
+    }
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/modules/project/modules/structure/pages/users/constants/type.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="typesList"></a>
+                    <span class="name">
+                        <span ><b>typesList</b></span>
+                        <a href="#typesList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+        name: &#x27;AccountMDM&#x27;,
+        value: &#x27;internal&#x27;
+    },
+    {
+        name: &#x27;AccountPartner&#x27;,
+        value: &#x27;partner&#x27;
+    }
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/mocked/users.mocked.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="usersList"></a>
+                    <span class="name">
+                        <span ><b>usersList</b></span>
+                        <a href="#usersList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/User.html" target="_self" >User[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+        name: &#x27;Clémence Malet&#x27;,
+        role: &#x27;Owner&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:clemence.malet&#x27;,
+        _rev: &#x27;1-542f022fde78a435d40b8fd72e8d647e&#x27;
+    },
+    {
+        name: &#x27;Deputy Genco MDM Myanmar&#x27;,
+        role: &#x27;DataEntryUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:deputy-genco.myanmar&#x27;,
+        _rev: &#x27;1-1f9fd89e5925bb210e0252f6215b0c01&#x27;,
+    },
+    {
+        name: &#x27;Fieldco MDM Pakistan KPK&#x27;,
+        role: &#x27;DataEntryUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:fieldco.kpk.pakistan&#x27;,
+        _rev: &#x27;1-78696fd9cb20935c73042c0e0c52359e&#x27;,
+    },
+    {
+        name: &#x27;GenCo MDM Niger&#x27;,
+        role: &#x27;ReadOnlyUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:genco.niger&#x27;,
+        _rev: &#x27;1-e6c32c5e1ecae827638a71e79abd197c&#x27;,
+    },
+    {
+        name: &#x27;MedCo MDM Niger&#x27;,
+        role: &#x27;ReadOnlyUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:medco.niger&#x27;,
+        _rev: &#x27;1-aa9b5cac10e9796cb10642be99b2340d&#x27;,
+    },
+    {
+        name: &#x27;MedCo MDM Russia&#x27;,
+        role: &#x27;ReadOnlyUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:medco.russia&#x27;,
+        _rev: &#x27;1-f621a7960e0224ed0f0957aef939fdfd&#x27;,
+    },
+    {
+        name: &#x27;Program Manager MDM Niger Tahoua&#x27;,
+        role: &#x27;DataEntryUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:pm.tahoua.niger&#x27;,
+        _rev: &#x27;1-5ac6b10ce756f0bf7d4474b9d8d9a6d5&#x27;,
+    },
+    {
+        name: &#x27;Romain Gilliotte&#x27;,
+        role: &#x27;DataEntryUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:romain.gilliotte&#x27;,
+        _rev: &#x27;1-e942ec766616619136248d46764d3a56&#x27;,
+    },
+    {
+        name: &#x27;team burkina-faso&#x27;,
+        role: &#x27;DataEntryUser&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:team.burkinafaso&#x27;,
+        _rev: &#x27;1-9df61852d55b3f2ba03b3dd158dd93fe&#x27;,
+    },
+    {
+        name: &#x27;Training account&#x27;,
+        role: &#x27;Owner&#x27;,
+        type: &#x27;user&#x27;,
+        id: &#x27;user:training_account&#x27;,
+        _rev: &#x27;3-ddb19cb3e0a66887043ff731bd4885c5&#x27;,
+    }
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
