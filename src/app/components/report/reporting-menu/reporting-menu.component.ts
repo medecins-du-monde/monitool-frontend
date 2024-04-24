@@ -202,7 +202,6 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
       if (parameterValue.openGroups && parameterValue.openGroups[partition.id]) {
         for (const groupId of parameterValue.openGroups[partition.id]) {
           const group = partition.groups.find(g => g.id === groupId);
-          console.log(group);
           if (group && group.members.findIndex(member => member.id === partitionElement.id) < 0) {
             elementInGroup = false;
             break;

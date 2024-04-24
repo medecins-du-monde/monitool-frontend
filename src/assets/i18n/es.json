@@ -35,7 +35,7 @@
   "Cancel": "Cancelar",
   "CannotBeComputed": "Este valor no puede ser calculado porque la entrada de datos no fue hecha (completamente)",
   "CannotBeComputedRule": "Este valor no puede ser calculado porque una de las reglas de agregación de datos se ha establecido como “No es posible compilar”",
-  "Duplicate": "Duplicar",
+  "Duplicate": "Clonar",
   "Clone": "Clonar",
   "CloneStructure": "Clonar estructura",
   "CloneStructureAndData": "Clonar estructura y datos",
