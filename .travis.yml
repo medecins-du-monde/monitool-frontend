@@ -19,27 +19,6 @@ jobs:
        - export NODE_OPTIONS="--max-old-space-size=8192"
       script:
        - ng test --watch=false
-    - stage: documentation
-      if: branch = uat
-      before_install:
-        # Decrypt the git_deploy_key.enc key into /tmp/monitoolfrontuat
-        - openssl aes-256-cbc -K $encrypted_bea0181439c1_key -iv $encrypted_bea0181439c1_iv -in keys/monitoolfrontuat.enc -out /tmp/monitoolfrontuat -d
-        # Make sure only the current user can read the private key
-        - chmod 600 /tmp/monitoolfrontuat
-        # Create a script to return the passphrase environment variable to ssh-add
-        - echo 'echo ${SSH_PASSPHRASE_UAT}' > /tmp/askpass && chmod +x /tmp/askpass
-        # Start the authentication agent
-        - eval "$(ssh-agent -s)"
-        # Add the key to the authentication agent
-        - DISPLAY=":0.0" SSH_ASKPASS="/tmp/askpass" setsid ssh-add /tmp/monitoolfrontuat </dev/null
-      before_script: npm i
-      script:
-        - echo -e 'Generating documentation...'
-        - npm run compodoc:build
-        - echo -e 'Documentation generated'
-        - echo -e 'Deploying documentation...'
-        - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete documentation/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-documentation
-        - echo -e 'Documentation deployed'
     - stage: deploy
       if: branch = dev
       before_install:
