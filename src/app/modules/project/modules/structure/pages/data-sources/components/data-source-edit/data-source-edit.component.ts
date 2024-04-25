@@ -24,6 +24,7 @@ import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -248,6 +249,13 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
 
   onAddNewElement(): void {
     this.elements.push(this.newElement());
+  }
+
+  onDupElement(i: number): void {
+    const dupElement = {...this.elements.value[i]};
+    dupElement.id = uuid();
+    dupElement.name += ' - copy';
+    this.elements.push(this.newElement(dupElement));
   }
 
   onRemoveElement(i: number): void {

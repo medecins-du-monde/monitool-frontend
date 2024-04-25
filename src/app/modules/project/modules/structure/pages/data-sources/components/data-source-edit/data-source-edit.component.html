@@ -68,12 +68,19 @@
 <div class="mdm-section">
     <div class="mdm-title">{{ 'DataSourceStructureTitle' | translate }}</div>
     <div [formGroup]="dataSourceForm">
-        <mat-accordion formArrayName="elements" cdkDropList (cdkDropListDropped)="drop($event)">
+        <mat-accordion formArrayName="elements" cdkDropList (cdkDropListDropped)="drop($event)" [hideToggle]="true">
             <mat-expansion-panel *ngFor="let element of elements.controls; let i=index" [formGroupName]="i" cdkDrag>
                 <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon cdkDragHandle>drag_indicator</mat-icon> {{ 'Data' | translate }} {{i + 1}}: {{element.value.name}}</mat-panel-title>
+                    <mat-panel-title>
+                        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+                        {{ 'Data' | translate }} {{i + 1}}: {{element.value.name}}
+                     </mat-panel-title>
                     <mat-panel-description>
-                        <button mat-stroked-button class="mdm-button delete-button" (click)="$event.stopPropagation();onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button>
+                        <button mat-icon-button [matMenuTriggerFor]="optionsMenu" [matMenuTriggerData]="{el: i}" (click)="$event.stopPropagation()">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <!-- <button mat-stroked-button class="mdm-button" (click)="$event.stopPropagation();onDupElement(i)">{{ 'Duplicate' }}</button>
+                        <button mat-stroked-button class="mdm-button delete-button" (click)="$event.stopPropagation();onRemoveElement(i)"><mat-icon>delete</mat-icon>{{ 'RemoveVariable' | translate }}</button> -->
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <app-form-element-edit [elementForm]="element" [dataSourceName]="dataSourceForm.value.name"></app-form-element-edit>
@@ -82,3 +89,16 @@
     </div>
 </div>
 <button mat-stroked-button class="mdm-button" (click)="onAddNewElement()"><mat-icon>add</mat-icon>{{ 'AddData' | translate }}</button>
+
+<mat-menu #optionsMenu="matMenu">
+    <ng-template matMenuContent let-el="el">
+        <button mat-menu-item (click)="onDupElement(el)">
+            <mat-icon>content_copy</mat-icon>
+            <span>{{ 'Duplicate' | translate }}</span>
+        </button>
+        <button class="delete" mat-menu-item (click)="onRemoveElement(el)">
+            <mat-icon class="delete">delete</mat-icon>
+            <span>{{ 'RemoveVariable' | translate }}</span>
+        </button>
+    </ng-template>
+  </mat-menu>

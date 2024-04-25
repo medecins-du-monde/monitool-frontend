@@ -17,6 +17,7 @@ import { FormElementEditModule } from '../form-element-edit/form-element-edit.mo
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [DataSourceEditComponent],
@@ -39,6 +40,7 @@ import { CollectionSitesSelectorModule } from '../../../../components/collection
     FormElementEditModule,
     DragDropModule,
     LocalizedDatePipeModule,
+    MatMenuModule
   ],
   exports: [DataSourceEditComponent]
 })

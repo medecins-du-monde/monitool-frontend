@@ -15,7 +15,7 @@
   flex-direction: column;
   background-color: white;
   margin-bottom: 12px;
-  min-width: 250px;
+  width: 250px;
     
   .sidenav-title{
     font-size: $normal_text;
@@ -47,6 +47,13 @@
     font-size: $normal_text;
     text-decoration: none;
     color: var(--main);
+
+    .sidenav-name {
+      text-overflow: ellipsis;
+      text-wrap: nowrap;
+      width: 170px;
+      overflow: hidden;
+    }
 
     .sidenav-icon {
       margin-right: 18px;

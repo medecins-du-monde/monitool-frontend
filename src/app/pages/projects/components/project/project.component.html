@@ -49,11 +49,21 @@
         <span>{{ 'CloneStructure' | translate }}</span>
     </button>
     <button class="clone-button" mat-menu-item (click)="onCloneWithData()" *ngIf="project.active">
-      <mat-icon>content_copy</mat-icon>
-      <span>{{ 'CloneStructureAndData' | translate }}</span>
-  </button>
-    <button class="clone-button" mat-menu-item class="delete" (click)="onDelete()" *ngIf="project.active">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'CloneStructureAndData' | translate }}</span>
+    </button>
+    <button class="clone-button delete" mat-menu-item (click)="onDelete()" *ngIf="project.active">
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
     </button>
+    <!-- <button class="clone-button download-button"
+        mat-menu-item
+        (click)="onDownload()"
+        *ngIf="project.active && currentUser.role === 'admin'"
+        [matTooltip]="'Get a JSON file with the structure of the project'"
+    >
+        <mat-icon>download</mat-icon>
+        <span>{{ 'Download Project' }}</span>
+        <a id="downloadAnchorElem" style="display:none"></a>
+    </button> -->
 </mat-menu>

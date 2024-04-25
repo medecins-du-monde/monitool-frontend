@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 import { DataSourceEditComponent } from './data-source-edit.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('DataSourceEditComponent', () => {
   let component: DataSourceEditComponent;
@@ -29,7 +30,8 @@ describe('DataSourceEditComponent', () => {
         BrowserAnimationsModule,
         MatSelectModule,
         LocalizedDatePipeModule,
-        MatDialogModule
+        MatDialogModule,
+        MatMenuModule
       ],
     }).compileComponents();
   }));

@@ -10,7 +10,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate-icons": "svg-to-ts"
+    "generate-icons": "svg-to-ts",
+    "compodoc:build": "compodoc -p tsconfig.doc.json",
+    "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
+    "compodoc:serve": "compodoc -s"
   },
   "private": true,
   "dependencies": {
@@ -54,6 +57,7 @@
     "@angular/cli": "~10.0.8",
     "@angular/compiler-cli": "~10.0.14",
     "@angular/language-service": "~10.0.14",
+    "@compodoc/compodoc": "^1.1.23",
     "@types/chart.js": "^2.9.30",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
