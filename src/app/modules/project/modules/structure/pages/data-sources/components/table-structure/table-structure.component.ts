@@ -51,7 +51,7 @@ export class TableStructureComponent implements OnInit, OnDestroy {
   }
 
   getTopValue(index: number) {
-    return index + this.toNumber(this.tableStructure)
+    return index + this.toNumber(this.tableStructure);
   }
 
   ngOnInit(): void {
