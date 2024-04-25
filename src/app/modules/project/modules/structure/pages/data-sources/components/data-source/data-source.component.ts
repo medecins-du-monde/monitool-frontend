@@ -96,14 +96,8 @@ export class DataSourceComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let cloneCount = 0;
-    this.project.forms.forEach(el => {
-      if (el.name.includes(this.formToClone.name)) {
-        cloneCount++;
-      }
-    });
     const newForm = new Form();
-    newForm.name = 'Clone ' + (cloneCount === 0 ? '' : cloneCount) + ' - ' + this.formToClone.name;
+    newForm.name = 'CLONE - ' + this.formToClone.name;
     newForm.end = this.formToClone.end;
     newForm.periodicity = this.formToClone.periodicity;
     newForm.start = this.formToClone.start;

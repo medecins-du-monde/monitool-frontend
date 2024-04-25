@@ -254,7 +254,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   onDupElement(i: number): void {
     const dupElement = {...this.elements.value[i]};
     dupElement.id = uuid();
-    dupElement.name += ' - copy';
+    dupElement.name = 'CLONE - ' + dupElement.name;
     this.elements.push(this.newElement(dupElement));
   }
 
