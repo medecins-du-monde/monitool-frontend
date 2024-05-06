@@ -97,7 +97,7 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
     // we change the id and the name to not have the same in the clone
     clonedLogicalFrame.id = uuid();
-    clonedLogicalFrame.name += ' (Copy)';
+    clonedLogicalFrame.name = 'CLONE ' + clonedLogicalFrame.name;
 
     this.project.logicalFrames.push(clonedLogicalFrame);
     this.projectService.project.next(this.project);
