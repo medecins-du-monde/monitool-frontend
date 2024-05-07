@@ -15,11 +15,11 @@ export class UserRightsTableComponent implements OnDestroy {
   /**
    * Datasource for the rights table
    */
-  public dataSource = []
+  public dataSource = [];
   /**
    * Table users
    */
-  public users = []
+  public users = [];
 
   /**
    * Keeps all subscriptions
@@ -28,7 +28,7 @@ export class UserRightsTableComponent implements OnDestroy {
 
   /**
    * Sets the datasource and subscribes to the route
-   * 
+   *
    * @param router Used to get the current route and update it
    */
   constructor(
@@ -41,7 +41,7 @@ export class UserRightsTableComponent implements OnDestroy {
           this.setDatasource();
         }
       })
-    )
+    );
   }
 
   /**
@@ -59,7 +59,7 @@ export class UserRightsTableComponent implements OnDestroy {
 
   /**
    * Checks if the current route is inside a project
-   * 
+   *
    * @returns Boolean indicating if the route is inside a project
    */
   public insideProject(): boolean {
