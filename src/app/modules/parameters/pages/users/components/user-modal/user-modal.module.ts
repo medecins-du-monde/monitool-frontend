@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
+import { UserRightsTableModule } from 'src/app/components/user-rights-table/user-rights-table.module';
 
 @NgModule({
   declarations: [UserModalComponent],
@@ -28,6 +29,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSelectModule,
     MatExpansionModule,
     MatTableModule,
+    UserRightsTableModule
   ],
   exports: [UserModalComponent]
 })

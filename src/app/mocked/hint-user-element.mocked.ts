@@ -1,5 +1,10 @@
 import { HintUserElement } from 'src/app/models/interfaces/hint-user-element.model';
 
+export const HintUsers = [
+  {value: 'admin', translation: 'AdminRole'},
+  {value: 'project', translation: 'ProjectRole'},
+  {value: 'common', translation: 'CommonRole'},
+];
 
 export const HintUserData: HintUserElement[] = [
     {untitled: 'TooltipRoleHint.EditProjectsStructure', admin: true, project: true, common: true},

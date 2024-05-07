@@ -77,32 +77,7 @@
         <div class="mdm-form-group">
           <mat-accordion>
               <mat-expansion-panel [expanded]="panelOpenState" [disabled]="true" class="mat-elevation-z0 remove-mat-expansion-panel-padding">
-                <table>
-                  <tr>
-                    <th></th>
-                    <th class="centered">{{ 'Owner' | translate }}</th>
-                    <th class="centered">{{ 'DataEntryUser' | translate }}</th>
-                    <th class="centered">{{ 'ReadOnlyUser' | translate }}</th>
-                  </tr>
-                  <tr *ngFor="let element of hintUserData">
-                    <td style="padding-left: 6px;">{{ element.untitled | translate }}</td>
-                    <td class="centered">
-                        <mat-icon class="{{element.owner == true ? 'green-icon' : 'red-icon' }}">
-                            {{ element.owner == true ? 'done' : 'clear' }}
-                        </mat-icon>
-                    </td>
-                    <td class="centered">
-                        <mat-icon class="{{element.input == true ? 'green-icon' : 'red-icon' }}">
-                            {{ element.input == true ? 'done' : 'clear' }}
-                        </mat-icon>
-                    </td>
-                    <td class="centered">
-                        <mat-icon class="{{element.read == true ? 'green-icon' : 'red-icon' }}">
-                            {{ element.read == true ? 'done' : 'clear' }}
-                        </mat-icon>
-                    </td>
-                  </tr>
-                </table>
+                <app-user-rights-table></app-user-rights-table>
               </mat-expansion-panel>
           </mat-accordion>
         </div>
