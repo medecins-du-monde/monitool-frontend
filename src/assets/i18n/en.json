@@ -499,7 +499,8 @@
       "Structure_home": "Structure home",
       "Structure_home_description": "Check how far along you are in the project's structure",
       "User_list": "Users list",
-      "User_list_description": "Several types of users are involved in setting up and monitoring a project: coordination, M&E staff, data entry operators, partners, ... <br> List here all the users who must have access to the monitoring of this project."
+      "User_list_description": "Several types of users are involved in setting up and monitoring a project: coordination, M&E staff, data entry operators, partners, ... <br> List here all the users who must have access to the monitoring of this project.",
+      "Rights": "What rights do I have?"
   },
   "Input": "Input",
   "InputHomeInfo": [

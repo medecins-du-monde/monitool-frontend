@@ -14,6 +14,7 @@ import { CollectionSitesSelectorModule } from '../../../../components/collection
 import { DataSourceSelectorModule } from '../../../../components/data-source-selector/data-source-selector.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { UserRightsTableModule } from 'src/app/components/user-rights-table/user-rights-table.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatButtonModule,
     MatDialogModule,
     MatExpansionModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    UserRightsTableModule
   ],
   exports: [UserModalComponent]
 })

@@ -507,7 +507,8 @@
       "Structure_home": "Accueil configuration",
       "Structure_home_description": "Visualisez votre avancement dans la configuration de votre projet.",
       "User_list": "Liste des utilisateurs",
-      "User_list_description": "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ... <br>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet."
+      "User_list_description": "Plusieurs types d'utilisateurs interviennent dans la mise en place et dans le suivi d'un projet: coordination, staff M&E, opérateurs de saisie, partenaires, ... <br>Listez ici tous les utilisateurs qui doivent avoir accès au monitoring de ce projet.",
+      "Rights": "Quels sont mes droits?"
   },
   "Input": "Saisir",
   "InputsInfo": [
