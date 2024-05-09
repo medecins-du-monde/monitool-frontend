@@ -37,6 +37,28 @@ export class InputService {
     return response;
   }
 
+  /**
+   * Clones all datasource inputs to the indicated datasource
+   *
+   * @param projectId Project where the clone is happening
+   * @param datasourceToClone Id of the datasource to clone
+   * @param newDatasource Id of the new datasource
+   * @returns Response of the query
+   */
+  public async cloneDatasourceInputs(projectId: string, datasourceToClone: string, newDatasource: string){
+    const response = await this.apiService.put(
+      `/resources/input`,
+      {
+        mode: 'clone_datasource_input',
+        projectId,
+        formId: datasourceToClone,
+        newFormId: newDatasource
+      }
+    );
+    // TODO: Convert it to an object to not have to manage arrayBuffer.
+    return response;
+  }
+
   public async get(projectId: string, entityId: string, formId: string, period: string){
     const response: any = await this.apiService.get(
       `/resources/input?mode=current%2Blast`,
