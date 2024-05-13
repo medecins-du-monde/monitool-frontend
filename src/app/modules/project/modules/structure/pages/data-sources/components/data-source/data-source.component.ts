@@ -104,7 +104,7 @@ export class DataSourceComponent implements OnInit {
 
   onSubmit( cloneDS = false ): void {
     const newForm = new Form();
-    newForm.name = 'CLONE - ' + this.formToClone.name;
+    newForm.name = (cloneDS ? 'CLONE STRUCTURE & DATA - ' : 'CLONE STRUCTURE - ') + this.formToClone.name;
     newForm.end = this.formToClone.end;
     newForm.periodicity = this.formToClone.periodicity;
     newForm.start = this.formToClone.start;
