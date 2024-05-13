@@ -55,6 +55,12 @@ export class ProjectSaveComponent implements OnInit, OnDestroy {
         this.savedProject = project;
       })
     );
+    this.subscription.add(
+      this.projectService.saveClickedEvent
+      .subscribe(() => {
+        this.onSave();
+      })
+    );
     if (this.fullScreen) {
       this.renderer.setStyle(this.elRef.nativeElement, 'width', '100%');
     }

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { clone } from 'lodash';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { InputService } from 'src/app/services/input.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { environment } from 'src/environments/environment';
 
@@ -28,6 +28,7 @@ export class DataSourceComponent implements OnInit {
   groups: Group[];
   entities: Entity[];
   private formToClone;
+  public cloneDS = false;
 
   private getGroupsSelected(){
     if (this.form === null || this.form.entities === null){
@@ -62,7 +63,12 @@ export class DataSourceComponent implements OnInit {
     return entities;
   }
 
-  constructor(private translateService: TranslateService, private dialog: MatDialog, private projectService: ProjectService, ) { }
+  constructor(
+    private translateService: TranslateService,
+    private dialog: MatDialog,
+    private projectService: ProjectService,
+    private inputService: InputService
+  ) { }
 
   ngOnInit(): void {
     this.allOption.members = this.form.entities;
@@ -90,14 +96,15 @@ export class DataSourceComponent implements OnInit {
     this.delete.emit(this.form);
   }
 
-  onClone(form) {
+  onClone(form, cloneDS = false) {
     this.formToClone = form;
+    this.cloneDS = cloneDS;
     this.dialog.open(this.cloneDatasourceDialog);
   }
 
-  onSubmit(): void {
+  onSubmit( cloneDS = false ): void {
     const newForm = new Form();
-    newForm.name = 'CLONE - ' + this.formToClone.name;
+    newForm.name = (cloneDS ? 'CLONE STRUCTURE & DATA - ' : 'CLONE STRUCTURE - ') + this.formToClone.name;
     newForm.end = this.formToClone.end;
     newForm.periodicity = this.formToClone.periodicity;
     newForm.start = this.formToClone.start;
@@ -115,6 +122,14 @@ export class DataSourceComponent implements OnInit {
 
     this.project.forms.push(newForm);
     this.projectService.project.next(this.project);
+
+    if (cloneDS) {
+      this.inputService.cloneDatasourceInputs(this.project.id, this.formToClone.id, newForm.id).then(result => {
+        if (result) {
+          this.projectService.triggerSave();
+        }
+      });
+    }
   }
 
 }
