@@ -54,6 +54,8 @@ export class ProjectService implements OnDestroy {
   // Check if a project user is creating a new project
   projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  newProject = false;
+
   @Output() saveClickedEvent = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
@@ -165,12 +167,18 @@ export class ProjectService implements OnDestroy {
   }
 
   public create(project: Project): void {
-    this.apiService.post(`/resources/project/${project.id}`, project.serialize());
     this.basicInfos.next(false);
+    this.newProject = true;
     this.project.next(project);
   }
 
   public async get(id: string): Promise<Project> {
+
+    if (this.newProject) {
+      this.newProject = false;
+      return new Promise(() => this.project);
+    }
+
     const themes = await this.themeService.list();
     const response: any = await this.apiService.get(`/resources/project/${id}`);
     const project = new Project(response);
