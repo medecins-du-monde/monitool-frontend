@@ -51,7 +51,7 @@ export class PermissionsGuard implements CanActivate {
     const module = route.routeConfig.path;
 
     // Guard is required to fetch the project before loading
-    if (route.parent.params.id) {
+    if (route.parent.params.id && !this.projectService.newProject) {
       await this.projectService.get(route.parent.params.id).then((project: Project) => {});
     }
 
