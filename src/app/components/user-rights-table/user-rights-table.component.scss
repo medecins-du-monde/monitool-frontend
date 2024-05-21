@@ -5,6 +5,7 @@ table {
 table, th, td {
     border: 1px solid rgba(black, .1);
     border-collapse: collapse;
+    text-align: start;
 }
 
 th {
@@ -33,4 +34,9 @@ td {
 
 .centered {
     text-align: center;
+    width: 90px;
+}
+
+.highlight {
+    background-color: #d9edf7;
 }
