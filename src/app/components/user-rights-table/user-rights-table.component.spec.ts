@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserRightsTableComponent } from './user-rights-table.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('UserRightsTableComponent', () => {
   let component: UserRightsTableComponent;
@@ -12,6 +13,7 @@ describe('UserRightsTableComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserRightsTableComponent ],
       imports: [
+        HttpClientTestingModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
       ]
