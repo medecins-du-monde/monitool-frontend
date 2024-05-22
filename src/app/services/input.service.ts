@@ -76,4 +76,18 @@ export class InputService {
 // TODO: Convert it to an object to not have to manage arrayBuffer.
     return response;
   }
+
+  public async getForDownload(projectId: string, formId: string){
+    const response: any = await this.apiService.get(
+      `/resources/input?mode=all`,
+      {
+        params: {
+          projectId,
+          formId
+        }
+      }
+    );
+// TODO: Convert it to an object to not have to manage arrayBuffer.
+    return response;
+  }
 }
