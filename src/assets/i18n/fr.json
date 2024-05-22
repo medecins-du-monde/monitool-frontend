@@ -35,7 +35,6 @@
   "CannotBeComputedRule": "Cette valeur ne peut pas être calculée car une des règles d’agrégation de la donnée a été paramétré comme “Il n'est pas possible de faire ce calcul”",
   "Duplicate": "Dupliquer",
   "Clone": "Dupliquer",
-  "CloneWithData": "Dupliquer avec des données",
   "CloneStructure": "Dupliquer structure",
   "CloneStructureAndData": "Dupliquer structure et données",
   "CloneProject": "Dupliquer le projet rojet",

@@ -124,7 +124,12 @@ export class DataSourceComponent implements OnInit {
     this.projectService.project.next(this.project);
 
     if (cloneDS) {
-      this.inputService.cloneDatasourceInputs(this.project.id, this.formToClone.id, newForm.id).then(result => {
+      this.inputService.cloneDatasourceInputs(
+        this.project.id,
+        this.formToClone.id,
+        newForm.id,
+        newForm.elements.map(el => el.id))
+      .then(result => {
         if (result) {
           this.projectService.triggerSave();
         }

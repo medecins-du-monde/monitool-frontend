@@ -43,16 +43,18 @@ export class InputService {
    * @param projectId Project where the clone is happening
    * @param datasourceToClone Id of the datasource to clone
    * @param newDatasource Id of the new datasource
+   * @param newElements Array of dds for the new elements
    * @returns Response of the query
    */
-  public async cloneDatasourceInputs(projectId: string, datasourceToClone: string, newDatasource: string){
+  public async cloneDatasourceInputs(projectId: string, datasourceToClone: string, newDatasource: string, newElements: string[]){
     const response = await this.apiService.put(
       `/resources/input`,
       {
         mode: 'clone_datasource_input',
         projectId,
         formId: datasourceToClone,
-        newFormId: newDatasource
+        newFormId: newDatasource,
+        newElementsId: newElements
       }
     );
     // TODO: Convert it to an object to not have to manage arrayBuffer.

@@ -37,7 +37,6 @@
   "CannotBeComputedRule": "Este valor no puede ser calculado porque una de las reglas de agregación de datos se ha establecido como “No es posible compilar”",
   "Duplicate": "Clonar",
   "Clone": "Clonar",
-  "CloneWithData": "Clonar con datos de entrada",
   "CloneStructure": "Clonar estructura",
   "CloneStructureAndData": "Clonar estructura y datos",
   "CloneProject": "Clonar Proyecto",

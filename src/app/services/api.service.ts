@@ -43,7 +43,6 @@ export class ApiService {
     if (headers) {
       options ? options.headers = headers : options = headers;
     }
-    console.log(body);
     return this.http.put(url, body, options).toPromise();
   }
 
