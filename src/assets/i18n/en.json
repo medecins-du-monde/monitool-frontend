@@ -39,6 +39,8 @@
   "Clone": "Clone",
   "CloneStructure": "Clone structure",
   "CloneStructureAndData": "Clone structure and data",
+  "DownloadProject": "Download project",
+  "DownloadProjectInfo": "Get a JSON file with the structure and data of the project",
   "CloneProject": "Clone Project",
   "CloneProjectInfo": "This action will clone only the structure of this project, without the entries. Confirm to clone.",
   "CloneProjectInfoData": "This action will clone this project, and all related input. Confirm to clone.",
