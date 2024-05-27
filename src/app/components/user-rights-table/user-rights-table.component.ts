@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HintUserData, HintUsers } from 'src/app/mocked/hint-user-element.mocked';
 import { HintUserData as HintUserDataProject, HintUsers as HintUsersProject } from 'src/app/mocked/hint-user-project-element.mocked';
 import { NavigationEnd, Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { ProjectService } from 'src/app/services/project.service';
   templateUrl: './user-rights-table.component.html',
   styleUrls: ['./user-rights-table.component.scss']
 })
-export class UserRightsTableComponent implements OnDestroy {
+export class UserRightsTableComponent implements OnDestroy, OnInit {
 
   /**
    * Boolean indicating if the table needs to highlight the role for an specific user.
@@ -21,6 +21,14 @@ export class UserRightsTableComponent implements OnDestroy {
    * Pass a string with a specific role to highlight that one.
    */
   @Input() higlight: boolean | string = false;
+
+  /**
+   * String indicating the type of table to show.
+   * By default the selection will be automatic.
+   * Pass 'project' to show the roles of a project.
+   * Pass 'platform' to show the roles of the platform.
+   */
+  @Input() type?: 'project' | 'platform';
 
   /**
    * Datasource for the rights table
@@ -63,9 +71,12 @@ export class UserRightsTableComponent implements OnDestroy {
       id: '',
     };
     this.setRole();
+  }
+
+  ngOnInit(): void {
     this.setDatasource();
     this.subscription.add(
-      router.events.subscribe(event => {
+      this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
           this.setDatasource();
         }
@@ -126,7 +137,8 @@ export class UserRightsTableComponent implements OnDestroy {
    * @returns Boolean indicating if the route is inside a project
    */
   public insideProject(): boolean {
-    return this.router.url.includes('project:');
+    console.log(this.type);
+    return this.type ? this.type === 'project' : this.router.url.includes('project:');
   }
 
   /**

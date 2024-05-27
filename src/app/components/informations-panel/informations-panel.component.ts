@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import InformationItem from 'src/app/models/interfaces/information-item';
@@ -22,6 +23,7 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private domSanitizer: DomSanitizer,
               private translateService: TranslateService,
+              private router: Router,
               private userService: UserService) { }
 
   ngOnInit(): void {
@@ -50,6 +52,15 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
   // We need the domSanitizer so that angular will display html tags in innerHTML
   transform(translatekey: string): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
+  }
+
+  /**
+   * Checks if the current route is inside a project
+   *
+   * @returns Boolean indicating if the route is inside a project
+   */
+  public insideProject(): boolean {
+    return this.router.url.includes('project:');
   }
 
   ngOnDestroy(): void {

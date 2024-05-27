@@ -519,7 +519,8 @@
       "Structure_home_description": "Visualice su progreso en la configuración de su proyecto.",
       "User_list": "Lista de usuarios",
       "User_list_description": "Varios tipos de usuarios están involucrados en la configuración y seguimiento de un proyecto: coordinación, personal de M&E, operadores de entrada de datos, socios, ... <br> Enumere aquí todos los usuarios que deben tener acceso al seguimiento de este proyecto.",
-      "Rights": "Que derechos tengo?"
+      "PlatformRights": "ROLES DE USUARIO para la PLATAFORMA MONITOOL",
+      "ProjectRights": "ROLES DE USUARIO para un <u>PROYECTO</u> en la PLATAFORMA MONITOOL"
   },
   "Input": "Entrada",
   "InputsInfo": [
