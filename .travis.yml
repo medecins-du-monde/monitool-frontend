@@ -53,7 +53,7 @@ jobs:
       before_script: npm i 
       script:
         - npm run build:uat
-        - rm /tmp/monitoolfrontprod/assets/version.txt
+        - rm -f /tmp/monitoolfrontprod/assets/version.txt
         - echo "$TRAVIS_BUILD_ID" > /tmp/monitoolfrontprod/assets/version.txt
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@52.148.234.173:/var/www/html/mdm-monitool-frontend
         # Remove prev build number
@@ -74,7 +74,7 @@ jobs:
       before_script: npm i 
       script:
         - npm run build -- --prod
-        - rm /tmp/monitoolfrontprod/assets/version.txt
+        - rm -f /tmp/monitoolfrontprod/assets/version.txt
         - echo "$TRAVIS_BUILD_ID" > /tmp/monitoolfrontprod/assets/version.txt
         - rsync -e "ssh -i /tmp/monitoolfrontprod -o StrictHostKeyChecking=no -o PubkeyAuthentication=yes" -avzr --delete dist/mdm-monitool-frontend/* medecinsdumonde@monitool.medecinsdumonde.net:/var/www/html/mdm-monitool-frontend
         - echo -e 'deployed in production environment !!!'
