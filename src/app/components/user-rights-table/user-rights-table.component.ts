@@ -137,7 +137,6 @@ export class UserRightsTableComponent implements OnDestroy, OnInit {
    * @returns Boolean indicating if the route is inside a project
    */
   public insideProject(): boolean {
-    console.log(this.type);
     return this.type ? this.type === 'project' : this.router.url.includes('project:');
   }
 
