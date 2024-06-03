@@ -57,8 +57,7 @@ export class AppVersionService {
           if (!localStorage['appVersion']) {
             localStorage['appVersion'] = version;
           }
-        });
-      })
+        });      })
     );
   }
 

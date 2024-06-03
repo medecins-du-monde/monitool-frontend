@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RefreshModalComponent } from './refresh-modal.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RefreshModalComponent', () => {
   let component: RefreshModalComponent;
@@ -8,7 +10,12 @@ describe('RefreshModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RefreshModalComponent ]
+      imports: [ TranslateModule.forRoot() ],
+      declarations: [ RefreshModalComponent ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+      ]
     })
     .compileComponents();
   }));
