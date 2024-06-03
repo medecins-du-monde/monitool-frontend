@@ -5,7 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
-describe('AppVersionService', () => { 
+describe('AppVersionService', () => {
   let service: AppVersionService;
 
   beforeEach(() => {
