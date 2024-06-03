@@ -12,8 +12,8 @@ import { take } from 'rxjs/operators';
 export class AppVersionService {
 
   private subscription: Subscription = new Subscription();
-
   private dialogRef: any;
+  private ignoreCache = false;
 
   constructor(
     private http: HttpClient,
@@ -43,7 +43,9 @@ export class AppVersionService {
       if (localStorage['appVersion'] && version !== localStorage['appVersion']) {
         this.showDialog();
       }
-      localStorage['appVersion'] = version;
+      if (!localStorage['appVersion']) {
+        localStorage['appVersion'] = version;
+      }
     });
     this.subscription.add(
       interval(60000).subscribe(() => {
@@ -52,14 +54,15 @@ export class AppVersionService {
           if (localStorage['appVersion'] && version !== localStorage['appVersion']) {
             this.showDialog();
           }
-          localStorage['appVersion'] = version;
-        });
-      })
+          if (!localStorage['appVersion']) {
+            localStorage['appVersion'] = version;
+          }
+        });      })
     );
   }
 
   showDialog(): void{
-    if (this.dialogRef) {
+    if (this.ignoreCache || this.dialogRef) {
       return;
     }
     this.dialogRef = this.dialog.open(RefreshModalComponent, {
@@ -68,6 +71,8 @@ export class AppVersionService {
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
         location.reload();
+      } else {
+        this.ignoreCache = true;
       }
       this.dialogRef = undefined;
     });
