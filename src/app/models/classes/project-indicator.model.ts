@@ -31,7 +31,7 @@ export class ProjectIndicator implements Deserializable {
   };
   unit: string;
   type = UNAVAILABLE;
-  typeList = [ FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
+  typeList = [FIXED, COPY, PERCENTAGE, PERMILLE, FORMULA];
   themes: Theme[] = [];
   originProject?: Project;
   disaggregatedBy?: { [key in string]: string };

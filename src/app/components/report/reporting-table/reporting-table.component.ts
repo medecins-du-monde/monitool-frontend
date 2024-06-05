@@ -738,17 +738,19 @@ export class ReportingTableComponent
     // constitute the parameters to the computation
     let highestPeriodicity = 'day';
 
-    for (const value of Object.values(row.computation.parameters)) {
-      const varId = value['elementId'];
-      currentProject.forms.forEach(form => {
-        if (form.elements.find(element => element.id === varId)) {
-          if (
-            TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]
-          ) {
-            highestPeriodicity = form.periodicity;
+    if (row.computation.parameters && Object.keys(row.computation.parameters).length > 0) {
+      for (const value of Object.values(row.computation.parameters)) {
+        const varId = value['elementId'];
+        currentProject.forms.forEach(form => {
+          if (form.elements.find(element => element.id === varId)) {
+            if (
+              TimeSlotOrder[form.periodicity] > TimeSlotOrder[highestPeriodicity]
+            ) {
+              highestPeriodicity = form.periodicity;
+            }
           }
-        }
-      });
+        });
+      }
     }
 
     // when the chosen periodicity and the row periodicity are both week-type,

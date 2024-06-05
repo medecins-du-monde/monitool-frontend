@@ -14,6 +14,15 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { Subscription } from 'rxjs';
 
+class CCProjectIndicator extends ProjectIndicator {
+  configured = false;
+
+  constructor(input?: any) {
+    super(input);
+    this.configured = input.configured ? true : false;
+  }
+}
+
 @Component({
   selector: 'app-cross-cutting',
   templateUrl: './cross-cutting.component.html',
@@ -29,11 +38,11 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   ];
 
   project: Project;
-  indicators: ProjectIndicator[] = [];
+  indicators: CCProjectIndicator[] = [];
 
-  groups: { theme: Theme, indicators: ProjectIndicator[]}[] = [];
+  groups: { theme: Theme, indicators: CCProjectIndicator[]}[] = [];
 
-  multiThemesIndicators: ProjectIndicator[] = [];
+  multiThemesIndicators: CCProjectIndicator[] = [];
 
   crossCuttingForm: FormGroup;
 
@@ -122,10 +131,11 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
               // TODO: Filling it with the name in the right language
               indicatorFound.display = indicator.name.en;
               indicatorFound.description = indicator.description;
-              this.indicators.push(new ProjectIndicator(indicatorFound));
+              indicatorFound.configured = true;
+              this.indicators.push(new CCProjectIndicator(indicatorFound));
             }
             else {
-              this.indicators.push(new ProjectIndicator(indicator));
+              this.indicators.push(new CCProjectIndicator(indicator));
             }
           });
           this.indicators.forEach(x => {
@@ -149,6 +159,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   }
 
   private setForm(): void {
+    console.log(this.indicators);
     this.crossCuttingForm = this.fb.group({
       groupsArray: this.fb.array(this.groups.map(indicatorGroup => FormGroupBuilder.newIndicatorGroup(indicatorGroup))),
       multiThemesArray: this.fb.array(this.multiThemesIndicators.map(indicator => FormGroupBuilder.newIndicator(indicator, true))),
@@ -159,8 +170,14 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value, true), index, indexGroup);
   }
 
+  onDelete(indicator: FormGroup, index?: number, indexGroup?: number): void {
+    delete this.project.crossCutting[indicator.value.id];
+    this.projectService.project.next(this.project);
+  }
+
   openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
-    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
+    console.log(indicator);
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms, isCC: true } });
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         // Filling the formGroup

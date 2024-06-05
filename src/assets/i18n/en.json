@@ -128,7 +128,7 @@
   "DuplicateDatasourceTitleWithData": "Clone the datasource with input data",
   "DuplicateDatasourceWithData": "This datasource will be cloned with the input data already entered. This requires to save the project, confirm to clone and save.",
   "DuplicateDatasourceWithDataWarning": "This action will save the project automatically",
-  "ResetGraph": "Reset",
+  "Reset": "Reset",
   "EMail-Hint": "Enter your e-mail address", 
   "Edit": "Edit",
   "Email": "Email",

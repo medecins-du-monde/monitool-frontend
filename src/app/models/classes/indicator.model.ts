@@ -9,7 +9,12 @@ export class Indicator implements Deserializable {
     name: MultiLanguage;
     description: MultiLanguage;
     themes: Theme[];
+    computation: {
+        type: string;
+        formula: string;
+    }
     rev: string;
+
 
     get multiThemes() {
         return this.themes.length > 1;
@@ -25,6 +30,10 @@ export class Indicator implements Deserializable {
         this.name = ( input && input.name ) ? new MultiLanguage().deserialize(input.name) : new MultiLanguage();
         this.description = ( input && input.description ) ? new MultiLanguage().deserialize(input.description) : new MultiLanguage();
         this.rev = (input && input._rev) ? input._rev : null;
+        this.computation = (input && input.computation) ? {
+            type: input.computation.type,
+            formula: input.computation.formula
+        } : null;
         return this;
     }
 
@@ -35,6 +44,7 @@ export class Indicator implements Deserializable {
             name: this.name,
             description: this.description,
             themes: this.themes.map(x => x.id),
+            computation: this.computation
         };
 
         if (this.rev){

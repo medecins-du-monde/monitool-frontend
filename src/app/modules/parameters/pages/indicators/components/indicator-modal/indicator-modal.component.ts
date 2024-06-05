@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Indicator } from 'src/app/models/classes/indicator.model';
+import { COPY_FORMULA, CUSTOM_FORMULA, PERCENTAGE_FORMULA, PERMILLE_FORMULA } from 'src/app/models/classes/project-indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
@@ -24,6 +25,33 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   dictionary = {};
 
   private subscription: Subscription = new Subscription();
+
+  public computationTypes = [
+    {
+      value: 'unavailable',
+      display: 'Enum.Computation.unavailable'
+    },
+    {
+      value: 'fixed',
+      display: 'Enum.Computation.fixed'
+    },
+    {
+      value: 'copy',
+      display: 'Enum.Computation.copy'
+    },
+    {
+      value: 'percentage',
+      display: 'Enum.Computation.percentage'
+    },
+    {
+      value: 'permille',
+      display: 'Enum.Computation.permille'
+    },
+    {
+      value: 'formula',
+      display: 'Enum.Computation.formula'
+    },
+  ];
 
   get currentLang() {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
@@ -56,6 +84,10 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
         es: [this.data ? this.data.description.es : ''],
         fr: [this.data ? this.data.description.fr : '']
       }),
+      computation: this.fb.group({
+        type: [this.data && this.data.computation ? this.data.computation.type : '', Validators.required],
+        formula: [this.data && this.data.computation ? this.data.computation.formula : '', Validators.required],
+      }),
       _rev: this.data ? this.data.rev : null
     });
     this.themeService.list().then((res: Theme[]) => {
@@ -72,6 +104,8 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
         })
       );
     });
+
+    this.onTypeChange({value: this.indicatorForm.value.computation.type}, true)
   }
 
   getLanguageDictionary(language: string) {
@@ -79,13 +113,51 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const computation = this.indicatorForm.controls.computation as FormGroup;
+    computation.controls.formula.enable();
     const indicator = new Indicator(this.indicatorForm.value);
+    console.log(indicator);
     this.dialogRef.close({ data: indicator });
   }
 
   onThemeRemoved(theme: Theme) {
     const themes = this.indicatorForm.controls.themes.value;
     this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));
+  }
+
+  onTypeChange(type: any, init = false): void {
+    const computation = this.indicatorForm.controls.computation as FormGroup;
+
+    computation.controls.formula.clearValidators();
+    computation.controls.formula.enable();
+
+    if (!init) {
+      // Updating the formula in function of the type
+      if (type.value === 'fixed' && (isNaN(computation.value.formula) || computation.value.formula === null)) {
+        computation.controls.formula.setValue('0');
+      }
+      else if (type.value === 'copy') {
+        computation.controls.formula.setValue(COPY_FORMULA);
+      }
+      else if (type.value === 'percentage') {
+        computation.controls.formula.setValue(PERCENTAGE_FORMULA);
+      }
+      else if (type.value === 'permille') {
+        computation.controls.formula.setValue(PERMILLE_FORMULA);
+      }
+      else if (type.value === 'unavailable') {
+        computation.controls.formula.setValue(null);
+      }
+      else if (type.value === 'formula'){
+        computation.controls.formula.setValue(CUSTOM_FORMULA);
+      }
+    }
+
+    if (type.value === 'fixed' || type.value === 'formula') {
+      computation.controls.formula.setValidators(Validators.required);
+    } else {
+      computation.controls.formula.disable();
+    }
   }
 
   ngOnDestroy(): void {

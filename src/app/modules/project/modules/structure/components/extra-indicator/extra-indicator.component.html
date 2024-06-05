@@ -36,7 +36,13 @@
 
 <mat-menu #menu="matMenu">
     <button mat-menu-item class="delete" (click)="onDelete()">
-        <mat-icon class="delete">delete</mat-icon>
-        <span>{{ 'Delete' | translate }}</span>
+        <ng-container *ngIf="reset">
+            <mat-icon class="delete">restart_alt</mat-icon>
+            <span>{{ 'Reset' | translate }}</span>
+        </ng-container>
+        <ng-container *ngIf="!reset">
+            <mat-icon class="delete">delete</mat-icon>
+            <span>{{ 'Delete' | translate }}</span>
+        </ng-container>
     </button>
 </mat-menu>

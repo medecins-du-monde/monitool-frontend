@@ -122,7 +122,7 @@
   "DuplicateDatasourceTitleWithData": "Dupliquer la source de données avec les données d'entrée",
   "DuplicateDatasourceWithData": "Cette source de données sera dupliquée avec les données d'entrée déjà saisies. Cela nécessite de sauvegarder le projet. Confirmez pour dupliquer et sauvegarder.",
   "DuplicateDatasourceWithDataWarning": "Cette action sauvegardera automatiquement le projet",
-  "ResetGraph": "Réinitialiser",
+  "Reset": "Restaurer",
   "Edit": "Modifier",
   "Email": "Email",
   "en": "Anglais",
