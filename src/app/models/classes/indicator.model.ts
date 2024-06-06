@@ -12,7 +12,7 @@ export class Indicator implements Deserializable {
     computation: {
         type: string;
         formula: string;
-    }
+    };
     rev: string;
 
 

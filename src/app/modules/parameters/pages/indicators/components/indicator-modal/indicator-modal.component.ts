@@ -1,6 +1,6 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Indicator } from 'src/app/models/classes/indicator.model';
@@ -16,6 +16,10 @@ import { ThemeService } from 'src/app/services/theme.service';
 })
 export class IndicatorModalComponent implements OnInit, OnDestroy {
 
+  @ViewChild('warningModal') warningModal: TemplateRef<any>;
+
+  warningDialogRef: MatDialogRef<any>;
+
   indicatorForm: FormGroup;
 
   languages = ['fr', 'en', 'es'];
@@ -23,6 +27,10 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   themes: Theme[];
 
   dictionary = {};
+
+  dataChanged = false;
+
+  prevForm;
 
   private subscription: Subscription = new Subscription();
 
@@ -67,6 +75,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     private forceTranslateService: ForceTranslateService,
     private themeService: ThemeService,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: Indicator
   ) { }
 
@@ -93,7 +102,13 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     this.themeService.list().then((res: Theme[]) => {
       this.themes = res;
       if (this.data) {
-        this.indicatorForm.controls.themes.setValue(this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id)));
+        const themes = this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id));
+        // Set the original of prevForm;
+        if (!this.prevForm) {
+          this.prevForm = this.indicatorForm.value;
+          this.prevForm.themes = themes;
+        }
+        this.indicatorForm.controls.themes.setValue(themes);
       }
     });
 
@@ -105,7 +120,17 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       );
     });
 
-    this.onTypeChange({value: this.indicatorForm.value.computation.type}, true)
+    this.onTypeChange({value: this.indicatorForm.value.computation.type}, true);
+
+    this.subscription.add(
+      this.indicatorForm.valueChanges.subscribe((res) => {
+        if (JSON.stringify(res) === JSON.stringify(this.prevForm)) {
+          this.dataChanged = false;
+        } else {
+          this.dataChanged = true;
+        }
+      })
+    );
   }
 
   getLanguageDictionary(language: string) {
@@ -116,10 +141,23 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     const computation = this.indicatorForm.controls.computation as FormGroup;
     computation.controls.formula.enable();
     const indicator = new Indicator(this.indicatorForm.value);
-    console.log(indicator);
-    this.dialogRef.close({ data: indicator });
-  }
+    // Show warning for indicators using prev formula
+    if (
+      this.data.computation && // Legacy indicators don't have a formula.
+      this.data.computation.type !== 'unavailable' && // If formula was unavailable, no indicator could be configured.
+      this.data.computation.formula !== indicator.computation.formula) {
+        this.warningDialogRef = this.dialog.open(this.warningModal);
+        this.warningDialogRef.afterClosed().subscribe((res) => {
+          if (res) {
+            console.log(res);
+            this.dialogRef.close({ data: indicator });
+          }
+        });
 
+    } else {
+      this.dialogRef.close({ data: indicator });
+    }
+  }
   onThemeRemoved(theme: Theme) {
     const themes = this.indicatorForm.controls.themes.value;
     this.indicatorForm.controls.themes.setValue(themes.filter(t => t.id !== theme.id));

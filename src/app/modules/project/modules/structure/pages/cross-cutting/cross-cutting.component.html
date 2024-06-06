@@ -17,6 +17,8 @@
                   (delete)="onDelete(indicator)"
                   [reset]="true"
                   [deletable]="indicator.value.configured"
+                  [disabled]="indicator.value.type === 'unavailable'"
+                  [notConfigured]="!indicator.value.configured"
                 ></app-extra-indicator>
               </ng-container>
             </div>
@@ -37,6 +39,8 @@
                 (delete)="onDelete(indicator)"
                 [reset]="true"
                 [deletable]="indicator.value.configured"
+                [disabled]="indicator.value.type === 'unavailable'"
+                [notConfigured]="!indicator.value.configured"
               >
               </app-extra-indicator>
             </ng-container>

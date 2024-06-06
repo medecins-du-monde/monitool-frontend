@@ -11,6 +11,8 @@ export class ExtraIndicatorComponent implements OnInit {
   @Input() deletable = true;
   @Input() extraIndicator: ProjectIndicator;
   @Input() reset = false;
+  @Input() notConfigured = false;
+  @Input() disabled = false;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
 

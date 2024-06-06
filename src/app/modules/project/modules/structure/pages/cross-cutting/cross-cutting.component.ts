@@ -159,7 +159,6 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   }
 
   private setForm(): void {
-    console.log(this.indicators);
     this.crossCuttingForm = this.fb.group({
       groupsArray: this.fb.array(this.groups.map(indicatorGroup => FormGroupBuilder.newIndicatorGroup(indicatorGroup))),
       multiThemesArray: this.fb.array(this.multiThemesIndicators.map(indicator => FormGroupBuilder.newIndicator(indicator, true))),

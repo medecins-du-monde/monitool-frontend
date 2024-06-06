@@ -399,6 +399,10 @@
       "Thematics": "i.e. Primary health care"
   },
   "IndicatorMissingDescription": "The description of this indicator was not filled",
+  "IndicatorFormulaWarningModal": {
+    "title": "The formula has changed",
+    "content": "Since the formula was changed, all projects that have this crosscutting indicator configured will have it automatically removed. The cross cutting indicator will need to be configured again."
+  },
   "Indicators": "Indicators",
   "InformationPanel": {
       "Basics": "Basics",

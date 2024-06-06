@@ -408,6 +408,10 @@
       "Thematics": "ex: Soins de santé primaire"
   },
   "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
+  "IndicatorFormulaWarningModal": {
+    "title": "Le calcul a changé",
+    "content": "Depuis que le calcul a été modifiée, tous les projets pour lesquels cet indicateur transversal est configuré le supprimeront automatiquement. L'indicateur transversal devra être configuré à nouveau."
+  },
   "InformationPanel": {
       "Basics": "Données de base",
       "Basics_description": "Les données de bases permettent de classer votre projet parmi les autres de l'ONG.",

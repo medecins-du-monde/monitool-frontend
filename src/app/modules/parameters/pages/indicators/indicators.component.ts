@@ -25,6 +25,7 @@ export class IndicatorsComponent implements OnInit {
 
   private getIndicators() {
     this.indicatorService.list().then((res: Indicator[]) => {
+      console.log(res);
       this.indicators = res;
     });
   }
