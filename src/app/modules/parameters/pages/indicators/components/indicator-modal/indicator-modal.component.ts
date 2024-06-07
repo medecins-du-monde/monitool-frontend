@@ -149,7 +149,6 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
         this.warningDialogRef = this.dialog.open(this.warningModal);
         this.warningDialogRef.afterClosed().subscribe((res) => {
           if (res) {
-            console.log(res);
             this.dialogRef.close({ data: indicator });
           }
         });

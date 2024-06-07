@@ -175,7 +175,6 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   }
 
   openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
-    console.log(indicator);
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms, isCC: true } });
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {

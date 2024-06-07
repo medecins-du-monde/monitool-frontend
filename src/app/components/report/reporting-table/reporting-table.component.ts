@@ -1471,9 +1471,5 @@ export class ReportingTableComponent
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
-  log(el: any) {
-    console.log(el);
-  }
 }
 
