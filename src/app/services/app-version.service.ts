@@ -40,6 +40,7 @@ export class AppVersionService {
     // Second system for cache
     this.http.get('/assets/version.txt').pipe(take(1)).subscribe(data => {
       const version = `${data}`;
+      console.log(version, localStorage['appVersion']);
       if (localStorage['appVersion'] && version !== localStorage['appVersion']) {
         this.showDialog();
       }
@@ -70,6 +71,7 @@ export class AppVersionService {
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        localStorage.removeItem('appVersion');
         location.reload();
       } else {
         this.ignoreCache = true;
