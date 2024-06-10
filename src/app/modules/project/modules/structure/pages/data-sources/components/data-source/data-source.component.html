@@ -43,7 +43,11 @@
     </button>
     <button mat-menu-item (click)="onClone(form)">
         <mat-icon>content_copy</mat-icon>
-        <span>{{ 'Clone' | translate }}</span>
+        <span>{{ 'CloneStructure' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="onClone(form, true)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'CloneStructureAndData' | translate }}</span>
     </button>
 </mat-menu>
 
@@ -52,14 +56,17 @@
         <button class="dialog-close" mat-icon-button mat-dialog-close>
             <mat-icon>close</mat-icon>
         </button>
-        <h2 mat-dialog-title>{{ 'DuplicateDatasourceTitle' | translate }}</h2>
-
-        <p>{{ 'DuplicateDatasource' | translate }}</p>
+        <h2 mat-dialog-title>{{ (cloneDS ? 'DuplicateDatasourceTitleWithData' : 'DuplicateDatasourceTitle') | translate }}</h2>
+        <div class="warning" *ngIf="cloneDS">
+            <mat-icon>warning</mat-icon>
+            <p>{{'DuplicateDatasourceWithDataWarning' | translate}}</p>
+        </div>
+        <p>{{ (cloneDS ? 'DuplicateDatasourceWithData' : 'DuplicateDatasource') | translate }}</p>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
         <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'Cancel' | translate }}</button>
-        <button mat-flat-button mat-dialog-close color="primary" (click)="onSubmit()" class="mdm-button">{{ 'Confirm' | translate
+        <button mat-flat-button mat-dialog-close color="primary" (click)="onSubmit(cloneDS)" class="mdm-button">{{ (cloneDS ? 'ConfirmSave' : 'Confirm') | translate
             }}</button>
     </mat-dialog-actions>
 </ng-template>

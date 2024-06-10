@@ -42,32 +42,7 @@
     <div class="mdm-form-group">
       <mat-accordion>
           <mat-expansion-panel [expanded]="panelOpenState" [disabled]="true" class="mat-elevation-z0 remove-mat-expansion-panel-padding">
-            <table>
-              <tr>
-                <th></th>
-                <th class="centered">{{ 'AdminRole' | translate }}</th>
-                <th class="centered">{{ 'ProjectRole' | translate }}</th>
-                <th class="centered">{{ 'CommonRole' | translate }}</th>
-              </tr>
-              <tr *ngFor="let element of dataSource">
-                <td style="padding-left: 6px;">{{ element.untitled | translate }}</td>
-                <td class="centered">
-                    <mat-icon class="{{element.admin == true ? 'green-icon' : 'red-icon' }}">
-                        {{ element.admin == true ? 'done' : 'clear' }}
-                    </mat-icon>
-                </td>
-                <td class="centered">
-                    <mat-icon class="{{element.project == true ? 'green-icon' : 'red-icon' }}">
-                        {{ element.project == true ? 'done' : 'clear' }}
-                    </mat-icon>
-                </td>
-                <td class="centered">
-                    <mat-icon class="{{element.common == true ? 'green-icon' : 'red-icon' }}">
-                        {{ element.common == true ? 'done' : 'clear' }}
-                    </mat-icon>
-                </td>
-              </tr>
-            </table>
+            <app-user-rights-table></app-user-rights-table>
           </mat-expansion-panel>
       </mat-accordion>
     </div>

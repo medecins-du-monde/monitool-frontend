@@ -5,6 +5,8 @@ import { ParametersComponent } from './parameters.component';
 import { SidenavModule } from 'src/app/components/sidenav/sidenav.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import {InformationsPanelModule} from '../../components/informations-panel/informations-panel.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ParametersComponent],
@@ -13,7 +15,9 @@ import {InformationsPanelModule} from '../../components/informations-panel/infor
     ParametersRoutingModule,
     SidenavModule,
     MatSidenavModule,
-    InformationsPanelModule
+    InformationsPanelModule,
+    TranslateModule,
+    MatIconModule
   ]
 })
 export class ParametersModule { }

@@ -37,8 +37,10 @@
             <td class="title">
                 <div class="auto-width">
                     <mat-select formArrayName="partitions"
-                        [(value)]="partitions[(rowIndex + toNumber(tableStructure))].id"
+                        [(value)]="partitions[getTopValue(rowIndex)].id"
                         (selectionChange)="reorderPartitions($event.value, (rowIndex + toNumber(tableStructure)))"
+                        [matTooltip]="partitions[getTopValue(rowIndex)].name + ' (' + partitions[getTopValue(rowIndex)].elements.length + ')'"
+                        matTooltipPosition="above"
                         disableOptionCentering panelClass="myPanelClass">
                         <mat-option *ngFor="let part of partitions" [value]="part.id">
                             {{ part.name }} ({{part.elements.length}})
@@ -50,7 +52,10 @@
         <tr>
             <td *ngFor="let partition of partitions.slice(0, tableStructure); let lastRowIndex = index" class="title">
                 <div class="auto-width">
-                    <mat-select formArrayName="partitions" [(value)]="partitions[lastRowIndex].id"
+                    <mat-select
+                        formArrayName="partitions"
+                        [(value)]="partitions[lastRowIndex].id"
+                        [matTooltip]="partitions[lastRowIndex].name + ' (' + partitions[lastRowIndex].elements.length + ')'"
                         (selectionChange)="reorderPartitions($event.value, lastRowIndex)">
                         <mat-option *ngFor="let part of partitions" [value]="part.id">
                             {{ part.name }} ({{part.elements.length}})

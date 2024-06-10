@@ -1,0 +1,42 @@
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid rgba(black, .1);
+    border-collapse: collapse;
+    text-align: start;
+}
+
+th {
+    padding: 4px 6px;
+}
+
+td {
+    mat-icon {
+        margin-top: 6px;
+    }
+}
+
+.red-icon {
+    color: red;
+    svg {
+        fill: red;
+    }
+}
+
+.green-icon {
+    color: green;
+    svg {
+        fill: green;
+    }
+}
+
+.centered {
+    text-align: center;
+    width: 90px;
+}
+
+.highlight {
+    background-color: #d9edf7;
+}

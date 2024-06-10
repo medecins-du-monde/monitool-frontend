@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <th></th>
+        <th class="centered" *ngFor="let user of users" [ngClass]="{'highlight': higlight && user.value === role}">{{ user.translation | translate }}</th>
+    </tr>
+    <tr *ngFor="let element of dataSource">
+        <td style="padding: 0 6px;">{{ element.untitled | translate }}</td>
+        <td class="centered" *ngFor="let user of users" [ngClass]="{'highlight': higlight && user.value === role}">
+            <mat-icon class="{{element[user.value] == true ? 'green-icon' : 'red-icon' }}">
+                {{ element[user.value] == true ? 'done' : 'clear' }}
+            </mat-icon>
+        </td>
+    </tr>
+</table>

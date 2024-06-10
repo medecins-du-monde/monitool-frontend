@@ -50,6 +50,10 @@ export class TableStructureComponent implements OnInit, OnDestroy {
     return total;
   }
 
+  getTopValue(index: number) {
+    return index + this.toNumber(this.tableStructure);
+  }
+
   ngOnInit(): void {
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {

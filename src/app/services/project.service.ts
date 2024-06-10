@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
@@ -55,6 +55,8 @@ export class ProjectService implements OnDestroy {
   projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   newProject = false;
+
+  @Output() saveClickedEvent = new EventEmitter();
 
   private subscription: Subscription = new Subscription();
 
@@ -260,6 +262,10 @@ export class ProjectService implements OnDestroy {
 
   public setComments(comments: Comment[]): void {
     this.currentProject.comments = comments;
+  }
+
+  public triggerSave() {
+    this.saveClickedEvent.emit();
   }
 
   ngOnDestroy(): void {

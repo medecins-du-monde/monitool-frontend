@@ -288,7 +288,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const search = this.filtersForm.value.search.toLowerCase();
     return projects.filter(project =>
       project.name.toLowerCase().includes(search) ||
-      project.country.toLowerCase().includes(search) ||
+      project.country && project.country.toLowerCase().includes(search) ||
       project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
     );
   }

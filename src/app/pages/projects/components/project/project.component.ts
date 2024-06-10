@@ -8,6 +8,7 @@ import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
+import { InputService } from 'src/app/services/input.service';
 
 @Component({
   selector: 'app-project',
@@ -40,6 +41,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private projectService: ProjectService,
+    private inputService: InputService
   ) { }
 
   ngOnInit(): void {
@@ -96,8 +98,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   onDownload(): void {
     const dlAnchorElem = document.getElementById('downloadAnchorElem');
-    this.projectService.get(this.project.id).then((project: Project) => {
+    this.projectService.get(this.project.id).then(async (project: Project) => {
       if (project) {
+        for (const form of project.forms) {
+          await this.inputService.getForDownload(project.id, form.id).then(val => {
+            if (val) {
+              form['inputData'] = val;
+            }
+          });
+        }
         const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(project, null, 2));
         dlAnchorElem.setAttribute('href',     dataStr     );
         dlAnchorElem.setAttribute('download', `${project.country} - ${project.name}.json`);
