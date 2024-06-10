@@ -24,6 +24,8 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   dataChanged = false;
   private initDataSource: any;
   allOption: PartitionElement = new PartitionElement({id: '0', name: 'All'});
+  public isCC = false;
+  public canSaveWithoutChanges = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -61,14 +63,20 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[] }
+    @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[], isCC?: boolean }
   ) { }
 
   ngOnInit(): void {
+    if (this.data.isCC) {
+      this.isCC = true;
+    }
     this.loadData();
     // Creation of the init value for the reset
     this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
     this.initDataSource = this.dataSource.getValue();
+    if (this.data.isCC && this.data.indicator.value.configured === false) {
+      this.dataChanged = true;
+    }
   }
 
   loadData(): void {
@@ -92,7 +100,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
     // Updating all the variable part in the DOM in case we already have variables
     const parameters = this.data.indicator.value.computation.parameters;
-    if (parameters) {
+    if (parameters && Object.keys(parameters).length > 0) {
       const newDataSource = this.dataSource.getValue();
       newDataSource.forEach(data => {
         // We look for the variable in every dataSources
@@ -134,6 +142,8 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       });
 
       this.dataSource.next(newDataSource);
+    } else if (parameters && this.isCC) {
+      this.onFormulaChange();
     }
     this.dataChanged = false;
     this.subscription.add(

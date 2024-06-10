@@ -21,6 +21,7 @@ import {
   CommentFilter,
   findContentIndexByFilter
 } from 'src/app/services/comment.service';
+import { skip } from 'rxjs/operators';
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -459,19 +460,21 @@ export class GeneralComponent implements OnInit, OnDestroy {
   buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
     for (const c of this.crosscutting) {
-      if (c.multiThemes) {
-        this.multiThemesIndicators.push(c);
-      } else {
-        const group = this.groups.find(g => g.theme.id === c.themes[0].id);
-        if (group) {
-          if (!group.indicators.find(i => i.id === c.id)) {
-            group.indicators.push(c);
-          }
+      if (this.project.crossCutting[c.id]) {
+        if (c.multiThemes) {
+          this.multiThemesIndicators.push(c);
         } else {
-          this.groups.push({
-            theme: c.themes[0],
-            indicators: [c]
-          });
+          const group = this.groups.find(g => g.theme.id === c.themes[0].id);
+          if (group) {
+            if (!group.indicators.find(i => i.id === c.id)) {
+              group.indicators.push(c);
+            }
+          } else {
+            this.groups.push({
+              theme: c.themes[0],
+              indicators: [c]
+            });
+          }
         }
       }
     }

@@ -10,7 +10,16 @@
           <div class="indicators-list" formArrayName="indicators">
             <div class="mdm-cards">
               <ng-container class="mdm-card"  *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
-                <app-extra-indicator class="mdm-card"  [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i, groupNumber)" [deletable]="false"></app-extra-indicator>
+                <app-extra-indicator
+                  class="mdm-card"
+                  [extraIndicator]="indicator.value"
+                  (edit)="onEditIndicator(indicator, i, groupNumber)"
+                  (delete)="onDelete(indicator)"
+                  [reset]="true"
+                  [deletable]="indicator.value.configured"
+                  [disabled]="indicator.value.type === 'unavailable'"
+                  [notConfigured]="!indicator.value.configured"
+                ></app-extra-indicator>
               </ng-container>
             </div>
           </div>
@@ -23,7 +32,17 @@
         <div class="indicators-list">
           <div class="mdm-cards">
             <ng-container class="mdm-card" *ngFor="let indicator of multiThemesArray.controls; let i=index">
-              <app-extra-indicator class="mdm-card" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" [deletable]="false"></app-extra-indicator>
+              <app-extra-indicator
+                class="mdm-card"
+                [extraIndicator]="indicator.value"
+                (edit)="onEditIndicator(indicator, i)"
+                (delete)="onDelete(indicator)"
+                [reset]="true"
+                [deletable]="indicator.value.configured"
+                [disabled]="indicator.value.type === 'unavailable'"
+                [notConfigured]="!indicator.value.configured"
+              >
+              </app-extra-indicator>
             </ng-container>
           </div>
         </div>

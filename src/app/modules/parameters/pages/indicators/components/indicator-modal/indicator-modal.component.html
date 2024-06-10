@@ -38,7 +38,51 @@
             </mat-form-field>
         </div>
     </ng-container>
+    <ng-container formGroupName="computation">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
+            <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
+                <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
+                    <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>
+                    <mat-icon>info</mat-icon>{{ 'Computation-Hint' | translate }}
+                </mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="mdm-form-group" *ngIf="indicatorForm.value.computation.type">
+            <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field" *ngIf="indicatorForm.value.computation.type === 'fixed'">
+                <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
+            </mat-form-field>
+            <mat-form-field
+                appearance="outline"
+                class="mdm-form-field indicator-modal-form-field-table"
+                *ngIf="indicatorForm.value.computation.type !== 'fixed'
+                    && indicatorForm.value.computation.type !== 'unavailable'"
+                >
+                <input matInput formControlName="formula"
+                    placeholder="{{ 'Formula' | translate }}" [readonly]="indicatorForm.value.computation.type !== 'formula'">
+            </mat-form-field>
+        </div>
+    </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-stroked-button (click)="onSubmit()" class="mdm-button save-button" [disabled]="indicatorForm.invalid">{{ 'SaveIndicator' | translate }}</button>
+    <button mat-stroked-button (click)="onSubmit()" class="mdm-button save-button" [disabled]="indicatorForm.invalid || !dataChanged">{{ 'SaveIndicator' | translate }}</button>
 </mat-dialog-actions>
+
+<ng-template #warningModal>
+    <mat-dialog-content style="max-width: 600px;">
+        <button class="dialog-close" mat-icon-button (click)="warningDialogRef.close()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <h2 mat-dialog-title>{{ 'IndicatorFormulaWarningModal.title' | translate}}</h2>
+        <p>{{ 'IndicatorFormulaWarningModal.content' | translate }}</p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-stroked-button (click)="warningDialogRef.close()" class="mdm-button">{{ 'Cancel' | translate }}</button>
+        <button mat-flat-button color="primary" (click)="warningDialogRef.close(true)" class="mdm-button">{{ 'Confirm' | translate
+            }}</button>
+    </mat-dialog-actions>
+</ng-template>

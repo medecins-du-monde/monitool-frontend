@@ -96,7 +96,8 @@ export default class FormGroupBuilder {
           formula: new FormControl(indicator.computation ? indicator.computation.formula : null),
           parameters: indicator.computation ? _.cloneDeep(parametersFormGroup) as FormGroup : new FormGroup({}),
         }),
-        type: new FormControl(indicator.type)
+        type: new FormControl(indicator.type),
+        configured: new FormControl(indicatorToEdit.configured)
       });
     }
     else {

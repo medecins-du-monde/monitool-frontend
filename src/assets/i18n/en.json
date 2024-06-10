@@ -128,7 +128,7 @@
   "DuplicateDatasourceTitleWithData": "Clone the datasource with input data",
   "DuplicateDatasourceWithData": "This datasource will be cloned with the input data already entered. This requires to save the project, confirm to clone and save.",
   "DuplicateDatasourceWithDataWarning": "This action will save the project automatically",
-  "ResetGraph": "Reset",
+  "Reset": "Reset",
   "EMail-Hint": "Enter your e-mail address", 
   "Edit": "Edit",
   "Email": "Email",
@@ -399,6 +399,10 @@
       "Thematics": "i.e. Primary health care"
   },
   "IndicatorMissingDescription": "The description of this indicator was not filled",
+  "IndicatorFormulaWarningModal": {
+    "title": "The formula has changed",
+    "content": "Since the formula was changed, all projects that have this crosscutting indicator configured will have it automatically removed. The cross cutting indicator will need to be configured again."
+  },
   "Indicators": "Indicators",
   "InformationPanel": {
       "Basics": "Basics",

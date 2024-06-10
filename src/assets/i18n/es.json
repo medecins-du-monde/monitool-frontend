@@ -117,7 +117,7 @@
   "DownloadPdfLandscape": "Descargar PDF (horizontal)",
   "DownloadPdfPortrait": "Descargar PDF (vertical)",
   "DownloadPlot": "Descargar",
-  "ResetGraph": "Reiniciar",
+  "Reset": "Restablecer",
   "DivisionByZero": "División por cero",
   "Done": "Realizado",
   "Download":"Descargar",
@@ -413,6 +413,10 @@
       "Thematics": "Selectione una o varias temáticas"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
+  "IndicatorFormulaWarningModal": {
+    "title": "El cálculo ha cambiado",
+    "content": "Debido al cambio del cálculo, todos los proyectos que tienen este indicador transversal configurado van a eliminarlo automaticamente. El indicador transversal tendra que ser configurado de nuevo."
+  },
   "InformationPanel": {
       "Basics": "Base de datos",
       "Basics_description": "Los datos básicos permiten clasificar su proyecto entre los demás de la ONG.",
