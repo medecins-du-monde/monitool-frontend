@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class InformationComponent implements OnInit {
 
   constructor() {
-    console.log('yeah')
   }
 
   ngOnInit(): void {
