@@ -524,8 +524,16 @@
       "User_list": "Lista de usuarios",
       "User_list_description": "Varios tipos de usuarios están involucrados en la configuración y seguimiento de un proyecto: coordinación, personal de M&E, operadores de entrada de datos, socios, ... <br> Enumere aquí todos los usuarios que deben tener acceso al seguimiento de este proyecto.",
       "PlatformRights": "ROLES DE USUARIO para la PLATAFORMA MONITOOL",
-      "ProjectRights": "ROLES DE USUARIO para un <u>PROYECTO</u> en la PLATAFORMA MONITOOL"
-  },
+      "ProjectRights": "ROLES DE USUARIO para un <u>PROYECTO</u> en la PLATAFORMA MONITOOL",
+      "Cache_question": "Tengo problemas con Monitool. ¿Que debería hacer?",
+      "Cache_response": {
+        "Point1": "En primer lugar, compruebe que dispone de los derechos necesarios para la acción deseada consultando la tabla de derechos que figura en este FAQ, en las dos secciones de ROLES DE USUARIO.",
+        "Point2": "Si no es debido a un problema de permisos, prueba a refrescar el cache, haz clic aqui: ",
+        "Refresh": "¿Qué es el cache y cómo puedo refrescarlo en cualquier momento?",
+        "RefreshButton": "Refrescar cache",
+        "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica."
+        }
+    },
   "Input": "Entrada",
   "InputsInfo": [
       "Este calendario de entrada hace la lista de todas las entradas de datos programadas para la fuente de datos ",

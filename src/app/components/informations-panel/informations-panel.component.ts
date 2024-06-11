@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-informations-panel',
   templateUrl: './informations-panel.component.html',
-  styleUrls: ['./informations-panel.component.scss']
+  styleUrls: ['./informations-panel.component.scss'],
 })
 export class InformationsPanelComponent implements OnInit, OnDestroy {
 
@@ -52,6 +52,11 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
   // We need the domSanitizer so that angular will display html tags in innerHTML
   transform(translatekey: string): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
+  }
+
+  refreshCache(): void {
+    localStorage.removeItem('appVersion');
+    location.reload();
   }
 
   /**

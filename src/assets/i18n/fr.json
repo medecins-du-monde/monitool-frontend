@@ -518,7 +518,15 @@
       "Structure_home_description": "Visualisez votre avancement dans la configuration de votre projet.",
       "User_list": "Liste des utilisateurs",
       "PlatformRights": "ROLES UTILISATEUR pour la PLATEFORME MONITOOL",
-      "ProjectRights": "ROLES UTILISATEUR pour un <u>PROJET</u> dans  la PLATEFORME MONITOOL"
+      "ProjectRights": "ROLES UTILISATEUR pour un <u>PROJET</u> dans  la PLATEFORME MONITOOL",
+      "Cache_question": "J’ai des difficultés avec monitool, comment faire?",
+      "Cache_response": {
+        "Point1": "D’abord vérifiez que vous avez les droits nécessaire pour l’action souhaitée en consultant dans cette FAQ les 2 rubriques ROLES UTILISATEUR.",
+        "Point2": "S’il ne s’agit pas d’un problèmes de droits, essayez de rafraîchir le cache en cliquant ici:",
+        "Refresh": "Qu’est-ce que le cache et comment puis-je le rafraîchir à tout moment?",
+        "RefreshButton": "Rafraîchir cache",
+        "Point3": "Si cela ne fonctionne toujours pas contacter l'équipe support."
+        }
   },
   "Input": "Saisir",
   "InputsInfo": [
