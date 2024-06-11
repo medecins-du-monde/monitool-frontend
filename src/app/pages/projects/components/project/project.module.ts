@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -25,7 +26,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatMenuModule,
     RouterModule,
     LocalizedDatePipeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   exports: [ProjectComponent]
 })

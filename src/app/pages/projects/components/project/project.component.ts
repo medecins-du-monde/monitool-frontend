@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
 import { InputService } from 'src/app/services/input.service';
+import * as JSZip from 'jszip';
 
 @Component({
   selector: 'app-project',
@@ -28,6 +29,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   currentUser: User;
   projectOwner: boolean;
   lastEntry: string;
+  loading = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -97,23 +99,48 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   onDownload(): void {
+    this.loading = true;
     const dlAnchorElem = document.getElementById('downloadAnchorElem');
     this.projectService.get(this.project.id).then(async (project: Project) => {
       if (project) {
+        const jszip = new JSZip();
+        jszip.file(`${project.country}.json`, this.stringifyJSONObj(project));
         for (const form of project.forms) {
           await this.inputService.getForDownload(project.id, form.id).then(val => {
             if (val) {
-              form['inputData'] = val;
+              jszip.folder('Inputs').file(`${form.name}-value.json`, this.stringifyJSONObj(val), {createFolders: false});
             }
           });
         }
-        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(project, null, 2));
-        dlAnchorElem.setAttribute('href',     dataStr     );
-        dlAnchorElem.setAttribute('download', `${project.country} - ${project.name}.json`);
-        dlAnchorElem.click();
+        jszip.generateAsync({ type: 'blob' }).then((content) => {
+          this.loading = false;
+          // see FileSaver.js
+          const url = window.URL.createObjectURL(content);
+          dlAnchorElem.setAttribute('href', url);
+          dlAnchorElem.setAttribute('download', `${project.country}.zip`);
+          dlAnchorElem.click();
+        });
       }
     });
     return;
+  }
+
+  private stringifyJSONObj(obj: object) {
+    let result = '{';
+    const objEntries = Object.entries(obj);
+    for (const [i, value] of objEntries.entries()) {
+      result += `"${value[0]}": `;
+      if (typeof value[1] === 'object' && value[1] !== null) {
+        result += this.stringifyJSONObj(value[1]);
+      } else {
+        result += JSON.stringify(value[1]);
+      }
+      if (i !== objEntries.length - 1) {
+        result += ',';
+      }
+    }
+    result += '}';
+    return result;
   }
 
   projectCardAvatar(): string {

@@ -13,32 +13,37 @@
         </mat-chip-list>
     </mat-card-header>
     <mat-card-content>
-        <div class="card-info">
-            <div class="card-info-title">{{ 'Name' | translate }}</div>
-            <div class="card-info-value">{{ project.name }}</div>
-        </div>
-        <div class="card-info">
-            <div class="card-info-title">{{ 'Date' | translate }}</div>
-            <div class="card-info-value">{{project.start  | localizedDate}} - {{project.end  | localizedDate}}</div>
-        </div>
-        <div class="card-info">
-            <div class="card-info-title">{{ 'Thematics' | translate }}</div>
-            <div class="card-info-value">
-                <div *ngFor="let theme of project.themes">{{theme.shortName[currentLang]}}</div>
+        <div [style.opacity]="loading ? '60%' : '100%'">
+            <div class="card-info">
+                <div class="card-info-title">{{ 'Name' | translate }}</div>
+                <div class="card-info-value">{{ project.name }}</div>
+            </div>
+            <div class="card-info">
+                <div class="card-info-title">{{ 'Date' | translate }}</div>
+                <div class="card-info-value">{{project.start  | localizedDate}} - {{project.end  | localizedDate}}</div>
+            </div>
+            <div class="card-info">
+                <div class="card-info-title">{{ 'Thematics' | translate }}</div>
+                <div class="card-info-value">
+                    <div *ngFor="let theme of project.themes">{{theme.shortName[currentLang]}}</div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
+                <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | localizedDate)  }}</div>
             </div>
         </div>
-        <div class="card-info">
-            <div class="card-info-title">{{ 'LastEntry' | translate }}</div>
-            <div class="card-info-value">{{ !project.inputDate ? ( 'None' | translate ) : (project.inputDate | localizedDate)  }}</div>
+        <div class="loading-container" *ngIf="loading">
+            <div class="loader"></div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="grp">
         <ng-container *ngIf="project.active">
-            <button mat-stroked-button (click)="onOpen()" class="open">{{ 'Open' | translate }}</button>
-            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand"><mat-icon>expand_more</mat-icon></button>
+            <button mat-stroked-button (click)="onOpen()" class="open" [disabled]="loading">{{ 'Open' | translate }}</button>
+            <button mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="expand" [disabled]="loading"><mat-icon>expand_more</mat-icon></button>
         </ng-container>
         <ng-container *ngIf="!project.active">
-            <button mat-stroked-button (click)="onRestore()" class="mdm-button"><mat-icon>restore</mat-icon>{{ 'Restore' | translate }}</button>
+            <button mat-stroked-button (click)="onRestore()" class="mdm-button" [disabled]="loading"><mat-icon>restore</mat-icon>{{ 'Restore' | translate }}</button>
         </ng-container>
     </mat-card-actions>
 </mat-card>
