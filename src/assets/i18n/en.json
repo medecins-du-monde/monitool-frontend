@@ -511,8 +511,16 @@
       "User_list": "Users list",
       "User_list_description": "Several types of users are involved in setting up and monitoring a project: coordination, M&E staff, data entry operators, partners, ... <br> List here all the users who must have access to the monitoring of this project.",
       "PlatformRights": "USER ROLES for the MONITOOL PLATFORM",
-      "ProjectRights": "USER ROLES for a <u>PROJECT</u> in the MONITOOL PLATFORM"
-  },
+      "ProjectRights": "USER ROLES for a <u>PROJECT</u> in the MONITOOL PLATFORM",
+      "Cache_question": "I'm having problems with monitool. What should I do?",
+      "Cache_response": {
+        "Point1": "First check that you have the necessary rights for the requested action by checking in this FAQ both sections on USER’s ROLES.",
+        "Point2": "If it’s not due to a rights issue, try to refresh the cache, click: ",
+        "Refresh": "What is cache and how can I refresh it at any time?",
+        "RefreshButton": "Refresh cache",
+        "Point3": "If this still doesn't work, contact the support team."
+        }
+    },
   "Input": "Input",
   "InputHomeInfo": [
       "This section's goal is providing the data that will allow to compute your indicators to Monitool.",
