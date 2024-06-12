@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-information',
@@ -7,10 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InformationComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private translateService: TranslateService,
+  ) {
   }
 
   ngOnInit(): void {
+  }
+
+  // We need the domSanitizer so that angular will display html tags in innerHTML
+  transform(translatekey: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
   }
 
 }
