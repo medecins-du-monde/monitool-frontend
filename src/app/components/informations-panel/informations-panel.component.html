@@ -12,8 +12,12 @@
         </div>
         <mat-accordion>
             <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <p class="panel-title" [innerHTML]="transform('InformationPanel.Cache_question')"></p>
+                <mat-expansion-panel-header>
+                    <div class="new">
+                        <mat-icon>flare</mat-icon>
+                        <p>{{'NEW'}}</p>
+                    </div>
+                    <p class="panel-title" [innerHTML]="transform('InformationPanel.Cache_question')"></p>
                 </mat-expansion-panel-header>
                 <div class="panel-answer">
                     <ol>
@@ -40,8 +44,11 @@
             <ng-container *ngFor="let information of informations  | slice:1; let i = index">
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
-                    <p class="panel-title" [innerHTML]="transform(information.res1)">
-                    </p>
+                        <div class="new" *ngIf="information.new">
+                            <mat-icon>flare</mat-icon>
+                            <p>{{'NEW'}}</p>
+                        </div>
+                        <p class="panel-title" [innerHTML]="transform(information.res1)"></p>
                     </mat-expansion-panel-header>
                     <div class="panel-answer" [innerHTML]="transform(information.res2)"></div>
                 </mat-expansion-panel>
