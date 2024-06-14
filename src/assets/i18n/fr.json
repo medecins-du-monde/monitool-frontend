@@ -794,6 +794,7 @@
       "CreateProjects": "Créer des projets",
       "CloneProjects": "Dupliquer un projet (structure)",
       "CloneProjectsData": "Dupliquer un projet (structure et données saisies)",
+      "DeleteProject": "Supprimer/Restaurer un projet",
       "CreateAndEditThematics": "Créer et éditer des thématiques",
       "CreateAndEditCrossCutting": "Créer et éditer des indicateurs transversaux",
       "EditOtherUsersRoles": "Éditer le rôle des autres utilisateurs",
