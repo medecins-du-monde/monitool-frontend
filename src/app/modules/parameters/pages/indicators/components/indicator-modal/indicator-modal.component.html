@@ -53,7 +53,7 @@
         </div>
         <div class="mdm-form-group" *ngIf="indicatorForm.value.computation.type">
             <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field" *ngIf="indicatorForm.value.computation.type === 'fixed'">
-                <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
+                <input matInput type="number" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
             </mat-form-field>
             <mat-form-field
                 appearance="outline"

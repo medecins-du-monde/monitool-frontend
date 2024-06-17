@@ -140,9 +140,11 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     const computation = this.indicatorForm.controls.computation as FormGroup;
     computation.controls.formula.enable();
+    computation.controls.formula.patchValue(String(computation.value.formula));
     const indicator = new Indicator(this.indicatorForm.value);
     // Show warning for indicators using prev formula
     if (
+      this.data && // Is not a new indicator
       this.data.computation && // Legacy indicators don't have a formula.
       this.data.computation.type !== 'unavailable' && // If formula was unavailable, no indicator could be configured.
       this.data.computation.formula !== indicator.computation.formula) {
