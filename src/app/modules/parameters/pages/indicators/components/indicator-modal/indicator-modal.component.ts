@@ -143,6 +143,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     const indicator = new Indicator(this.indicatorForm.value);
     // Show warning for indicators using prev formula
     if (
+      this.data && // Is not a new indicator
       this.data.computation && // Legacy indicators don't have a formula.
       this.data.computation.type !== 'unavailable' && // If formula was unavailable, no indicator could be configured.
       this.data.computation.formula !== indicator.computation.formula) {
