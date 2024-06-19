@@ -120,7 +120,7 @@
   "DuplicateDatasourceTitle": "Dupliquer structure",
   "DuplicateDatasource": "Cette action dupliquera la structure de cette source de données sans les données. Confirmez pour dupliquer.",
   "DuplicateDatasourceTitleWithData": "Dupliquer structure et données",
-  "DuplicateDatasourceWithData": "Cette source de données sera dupliquée avec les données d'entrée. Cela nécessite de sauvegarder le projet. Confirmez pour dupliquer et sauvegarder.",
+  "DuplicateDatasourceWithData": "Cette source de données sera dupliquée avec les données d'entrée déjà saisies. Cela nécessite de sauvegarder le projet. Confirmez pour dupliquer et sauvegarder.",
   "DuplicateDatasourceWithDataWarning": "Cette action sauvegardera automatiquement le projet",
   "Reset": "Restaurer",
   "Edit": "Modifier",
