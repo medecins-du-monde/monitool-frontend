@@ -34,6 +34,14 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
         this.informations = val;
       })
     );
+    this.subscription.add(
+      this.projectService.toggleDisplay
+      .subscribe(() => {
+        if (!this.displayed) {
+          this.toggleDisplay();
+        }
+      })
+    );
   }
 
   toggleDisplay(): void {

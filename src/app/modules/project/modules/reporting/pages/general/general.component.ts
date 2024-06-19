@@ -153,6 +153,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       this.buildIndicators();
     });
     this.projectService.updateInformationPanel(this.informations);
+    this.projectService.toggleInfoDisplay();
 
     // Update the table comments when filters or dimension change
     // this.filter.subscribe(() => {
