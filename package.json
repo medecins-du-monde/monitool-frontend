@@ -43,7 +43,7 @@
     "install": "^0.13.0",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "msal": "^1.4.4",
     "ngx-mat-select-search": "^3.3.3",
     "ngx-spinner": "^10.0.1",
