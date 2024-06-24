@@ -528,18 +528,18 @@
             "Title": "FAQ cache",
             "Section1": {
                 "Title": "What is cache?",
-                "Content": "Web browsers assume the internet is slow. Since many websites use the same elements (like logos) on multiple pages, browsers download them only on the first encounter so they need not be downloaded every time. The cache is where these downloaded elements are kept. Sometimes the browser loses track of what's in the cache, resulting in display problems. Each browser allows you to clear the cache to start over, hopefully resolving those issues."
+                "Content": "Web browsers function in a way to work despite a low internet connection. Since many websites use the same elements (like logos) on multiple pages, browsers download them only on the first encounter, so that they do not need to be downloaded every time. The cache is where these downloaded elements are kept. Sometimes the browser loses track of what is in the cache, resulting in display problems. Each browser allows you to clear the cache to start over, hopefully resolving those issues."
             },
             "Section2": {
-                "Title": "How to refresh the page cache (hard refresh)?",
-                "Content1": "In most browsers, you can perform a simple action to force a hard refresh. Hold down the Shift key on your keyboard and click on the reload icon on your browser's toolbar.",
-                "Content2": "There are also keyboard shortcuts to perform the equivalent hard refresh.&nbsp;Because there are multiple ways to do the same action, they will be listed below:",
+                "Title": "How to refresh the page cache?",
+                "Content1": "In most browsers, you can perform a simple action to refresh the cache. Hold down the Shift key on your keyboard and click on the reload icon on your browser's toolbar.",
+                "Content2": "There are also keyboard shortcuts to refresh your cache. Below are the different ways to do it, according to your browser and software:",
                 "List": {
-                    "1": "<strong>Chrome, Firefox, or Edge on Windows:</strong>Press <em>Ctrl+F5</em> (If that doesn't work, try <em>Shift+F5</em> or <em>Ctrl+Shift+R</em>).",
+                    "1": "<strong>Chrome, Firefox, or Edge on Windows:</strong>Press <em>Ctrl+F5</em> (If that does not work, try <em>Shift+F5</em> or <em>Ctrl+Shift+R</em>).",
                     "2": "<strong>Chrome or Firefox on Mac:</strong> Press <em>Shift+Command+R</em>.",
-                    "3": "<strong>Safari on Mac:</strong> There is no simple keyboard shortcut to force a hard refresh. Instead, press <em>Command+Option+E</em> to empty the cache, then hold down Shift and click Reload in the toolbar."
+                    "3": "<strong>Safari on Mac:</strong> There is no simple keyboard shortcut to refresh the cache. Instead, press <em>Command+Option+E</em> to empty the cache, then hold down Shift and click Reload in the toolbar."
                 },
-                "Content3": "After you perform the hard refresh, you should see the web page go blank, and the reloading process will take longer than usual. That's because the browser is redownloading all of the data and images on the site."
+                "Content3": "After you refresh the page, you should see the web page go blank, and the reloading process will take longer than usual. That's because the browser is redownloading all of the data and images on the site."
             }
         }
     },
