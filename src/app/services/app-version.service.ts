@@ -40,29 +40,23 @@ export class AppVersionService {
     // Second system for cache
     this.http.get('/assets/version.txt').pipe(take(1)).subscribe(data => {
       const version = `${data}`;
-      console.log(version, localStorage['appVersion']);
-      if (localStorage['appVersion'] && version !== localStorage['appVersion']) {
-        this.showDialog();
-      }
-      if (!localStorage['appVersion']) {
-        localStorage['appVersion'] = version;
+      if (!localStorage['appVersion'] || version !== localStorage['appVersion']) {
+        this.showDialog(version);
       }
     });
     this.subscription.add(
       interval(60000).subscribe(() => {
         this.http.get('/assets/version.txt').pipe(take(1)).subscribe(data => {
           const version = `${data}`;
-          if (localStorage['appVersion'] && version !== localStorage['appVersion']) {
-            this.showDialog();
+          if (!localStorage['appVersion'] || version !== localStorage['appVersion']) {
+            this.showDialog(version);
           }
-          if (!localStorage['appVersion']) {
-            localStorage['appVersion'] = version;
-          }
-        });      })
+        });
+      })
     );
   }
 
-  showDialog(): void{
+  showDialog(version?: string): void{
     if (this.ignoreCache || this.dialogRef) {
       return;
     }
@@ -71,8 +65,11 @@ export class AppVersionService {
     });
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        localStorage.removeItem('appVersion');
-        location.reload();
+        if (version) {
+          localStorage['appVersion'] = version;
+        }
+        window.location.replace(window.location.href);
+        window.location.reload();
       } else {
         this.ignoreCache = true;
       }
