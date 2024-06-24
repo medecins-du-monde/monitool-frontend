@@ -21,6 +21,7 @@ import {
   CommentFilter,
   findContentIndexByFilter
 } from 'src/app/services/comment.service';
+import { skip } from 'rxjs/operators';
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -37,6 +38,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     {
       res1: 'InformationPanel.General_reporting',
       res2: 'InformationPanel.General_reporting_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.General_reporting_question9',
+      res2: 'InformationPanel.General_reporting_response9',
+      new: true
     } as InformationItem,
     {
       res1: 'InformationPanel.General_reporting_question1',
@@ -147,6 +153,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       this.buildIndicators();
     });
     this.projectService.updateInformationPanel(this.informations);
+    this.projectService.toggleInfoDisplay();
 
     // Update the table comments when filters or dimension change
     // this.filter.subscribe(() => {
@@ -459,19 +466,21 @@ export class GeneralComponent implements OnInit, OnDestroy {
   buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
     for (const c of this.crosscutting) {
-      if (c.multiThemes) {
-        this.multiThemesIndicators.push(c);
-      } else {
-        const group = this.groups.find(g => g.theme.id === c.themes[0].id);
-        if (group) {
-          if (!group.indicators.find(i => i.id === c.id)) {
-            group.indicators.push(c);
-          }
+      if (this.project.crossCutting[c.id]) {
+        if (c.multiThemes) {
+          this.multiThemesIndicators.push(c);
         } else {
-          this.groups.push({
-            theme: c.themes[0],
-            indicators: [c]
-          });
+          const group = this.groups.find(g => g.theme.id === c.themes[0].id);
+          if (group) {
+            if (!group.indicators.find(i => i.id === c.id)) {
+              group.indicators.push(c);
+            }
+          } else {
+            this.groups.push({
+              theme: c.themes[0],
+              indicators: [c]
+            });
+          }
         }
       }
     }

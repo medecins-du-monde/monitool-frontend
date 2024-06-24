@@ -19,6 +19,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RefreshSnackbarModule } from './components/refresh-snackbar/refresh-snackbar.module';
 import { UserRightsTableModule } from './components/user-rights-table/user-rights-table.module';
+import { RefreshModalModule } from './components/refresh-modal/refresh-modal.module';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -47,6 +48,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     NoopAnimationsModule,
     MatSnackBarModule,
     RefreshSnackbarModule,
+    RefreshModalModule,
     UserRightsTableModule,
     MsalModule.forRoot({
       auth: {

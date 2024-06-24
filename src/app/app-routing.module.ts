@@ -46,6 +46,12 @@ const routes: Routes = [{
   canActivate : [AuthGuard]
 },
 {
+  path: 'info',
+  loadChildren: () => import('./pages/information/information.module')
+    .then(m => m.InformationModule),
+  canActivate : [AuthGuard]
+},
+{
   path: '**',
   redirectTo: 'home',
   pathMatch: 'full'

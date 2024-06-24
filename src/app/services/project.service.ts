@@ -58,6 +58,8 @@ export class ProjectService implements OnDestroy {
 
   @Output() saveClickedEvent = new EventEmitter();
 
+  @Output() toggleDisplay = new EventEmitter();
+
   private subscription: Subscription = new Subscription();
 
   get openedProject(): Observable<Project> {
@@ -266,6 +268,10 @@ export class ProjectService implements OnDestroy {
 
   public triggerSave() {
     this.saveClickedEvent.emit();
+  }
+
+  public toggleInfoDisplay() {
+    this.toggleDisplay.emit();
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,9 @@
+<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+<h2 mat-dialog-title>{{ 'newVersionAvailable' | translate }}</h2>
+
+<!-- <p>{{ 'newVersionAvailable' | translate }}</p> -->
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'updateLater' | translate }}</button>
+    <button mat-flat-button color="primary" (click)="reload()" class="mdm-button">{{ 'updateNow' | translate }}</button>
+</mat-dialog-actions>

@@ -117,13 +117,13 @@
   "DownloadPdfLandscape": "Descargar PDF (horizontal)",
   "DownloadPdfPortrait": "Descargar PDF (vertical)",
   "DownloadPlot": "Descargar",
-  "ResetGraph": "Reiniciar",
+  "Reset": "Restablecer",
   "DivisionByZero": "División por cero",
   "Done": "Realizado",
   "Download":"Descargar",
-  "DuplicateDatasourceTitle": "Clonar la fuente de datos",
+  "DuplicateDatasourceTitle": "Clonar estructura",
   "DuplicateDatasource": "Va a clonar el estructura de esta fuente de datos sin entradas. Confirme para clonar.",
-  "DuplicateDatasourceTitleWithData": "Clonar la fuente de datos y datos de entrada",
+  "DuplicateDatasourceTitleWithData": "Clonar estructura y datos",
   "DuplicateDatasourceWithData": "La fuente de datos sera clonada con todos los datos entrados. Esto requiere guardar el proyecto, confirma para clonar y guardar.",
   "DuplicateDatasourceWithDataWarning": "Esta acción guardara el proyecto automaticamente",
   "Edit": "Modificar",
@@ -413,6 +413,10 @@
       "Thematics": "Selectione una o varias temáticas"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
+  "IndicatorFormulaWarningModal": {
+    "title": "El cálculo ha cambiado",
+    "content": "Debido al cambio del cálculo, todos los proyectos que tienen este indicador transversal configurado van a eliminarlo automaticamente. El indicador transversal tendra que ser configurado de nuevo."
+  },
   "InformationPanel": {
       "Basics": "Base de datos",
       "Basics_description": "Los datos básicos permiten clasificar su proyecto entre los demás de la ONG.",
@@ -488,6 +492,8 @@
       "General_reporting_response7": "¡Está viendo estos datos en un nivel de agregación que es más bajo que donde los recopiló! <br> Por ejemplo, realizó la recolección trimestralmente, pero consulte estos datos en una tabla que los muestra mensualmente. <br> En este caso, los datos se 'interpolan' para permitirle tener órdenes de magnitud y poder comparar indicadores que no recolecta con los mismos intervalos entre ellos. <br> Esto también sucede si ve una medida calculada, por ejemplo, un porcentaje, pero el numerador y el denominador no se recopilan con la misma periodicidad. <br> Para tomar un ejemplo, si ha recopilado una cantidad de nacimientos esperados en una sala de maternidad por trimestre, pero lo está viendo por mes, monitool distribuirá la cantidad de nacimientos trimestrales en cada mes, corrigiendo por la cantidad de días que ellos entienden. <br> Por lo tanto, el símbolo ≈ se muestra permanentemente para recordarle que los datos que está viendo son aproximaciones aproximadas de la realidad y que solo se pueden usar para tener órdenes de magnitud.",
       "General_reporting_question8": "¿Por qué algunos datos se muestran en <i> cursiva </i>?",
       "General_reporting_response8": "Los datos que se muestran en <i> cursiva </i> solo se han introducido parcialmente. La mayoría de las veces, esto significa que solo se han ingresado algunas de las ubicaciones de recolección esperadas. El caso también puede ocurrir si consulta una versión agregada (por ejemplo, por trimestre) de los datos recopilados con una periodicidad más corta (por ejemplo, por mes) y no se han ingresado todos los meses del trimestre considerado. <br> Al desagregar la línea con el botón, puede encontrar fácilmente las entradas que faltan.",
+      "General_reporting_question9": "¿Cómo puedo añadir un comentario?",
+      "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Los comentarios permiten al personal de entrada de datos proporcionar información adicional que puede ser relevante para el análisis de datos. Los analistas también pueden utilizar comentarios para hacer anotaciones.</li><li>Este texto es visible para todos, por lo que permite que las personas más cercanas a las actividades contribuyan al análisis, que sera centralizado por los coordinadores del proyecto.</li><li>Simplemente haga clic derecho en la celda deseada y añada el texto. No olvide guardar.</li><li>Debe tener el rol de propietario o de entrada de datos. Consulte la sección ROLES DE USUARIO para un PROYECTO en este FAQ.</li></ul>",
       "History": "Histórico",
       "History_description": "El historial de modificaciones le permite consultar la lista de modificaciones realizadas a la estructura de su proyecto.",
       "History_question1": "Algunas modificaciones a la estructura del proyecto las realiza un usuario que no debería tener acceso a ellas.",
@@ -520,8 +526,36 @@
       "User_list": "Lista de usuarios",
       "User_list_description": "Varios tipos de usuarios están involucrados en la configuración y seguimiento de un proyecto: coordinación, personal de M&E, operadores de entrada de datos, socios, ... <br> Enumere aquí todos los usuarios que deben tener acceso al seguimiento de este proyecto.",
       "PlatformRights": "ROLES DE USUARIO para la PLATAFORMA MONITOOL",
-      "ProjectRights": "ROLES DE USUARIO para un <u>PROYECTO</u> en la PLATAFORMA MONITOOL"
-  },
+      "ProjectRights": "ROLES DE USUARIO para un <u>PROYECTO</u> en la PLATAFORMA MONITOOL",
+      "Cache_question": "Tengo problemas con Monitool. ¿Que debería hacer?",
+      "Cache_response": {
+        "Point1": "En primer lugar, compruebe que dispone de los derechos necesarios para la acción deseada consultando la tabla de derechos que figura en este FAQ, en las dos secciones de ROLES DE USUARIO.",
+        "Point2": "Si no es debido a un problema de permisos, prueba a refrescar el cache, haz clic aqui: ",
+        "Refresh": "¿Qué es el cache y cómo puedo refrescarlo en cualquier momento?",
+        "RefreshButton": "Refrescar cache",
+        "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica."
+        }
+    },
+    "Informations": {
+        "Cache": {
+            "Title": "FAQ caché",
+            "Section1": {
+                "Title": "Que es el caché?",
+                "Content": "Los navegadores web suponen que Internet es lento. Debido a que muchos sitios web utilizan los mismos elementos (como logotipos) en varias páginas, los navegadores los descargan sólo en el primer encuentro, por lo que no es necesario descargarlos cada vez. El caché es donde se guardan estos elementos descargados. A veces, el navegador pierde la pista de lo que hay en el caché, lo que genera problemas de visualización. Cada navegador permite borrar el caché para comenzar de nuevo y, con suerte, resolver esos problemas."
+            },
+            "Section2": {
+                "Title": "¿Cómo actualizar el caché de la página?",
+                "Content1": "En la mayoría de los navegadores, puede realizar una acción simple para recargar el caché. Mantenga presionada la tecla Shift en su teclado y haga clic en el ícono de recarga en la barra de herramientas de su navegador.",
+                "Content2": "También existen combinaciones de teclas para refrecar el caché.&nbsp;Debido a que hay varias formas de realizar la misma acción, se enumerarán a continuación:",
+                "List": {
+                    "1": "<strong>Chrome, Firefox, o Edge en Windows:</strong>Presione <em>Ctrl+F5</em> (Si eso no funciona, pruebe <em>Shift+F5</em> o <em>Ctrl+Shift+R</em>).",
+                    "2": "<strong>Chrome o Firefox en Mac:</strong> Presione <em>Shift+Command+R</em>.",
+                    "3": "<strong>Safari en Mac:</strong> No existe una combinación de teclas pare refrecar el caché. En su lugar, presione <em>Command+Option+E</em> para eliminar el caché, luego, mantenga la tecla Shift y haga clic en Recargar en la barra de herramientas."
+                },
+                "Content3": "Después de refrecar el caché, debería ver que la página web se queda en blanco y el proceso de recarga tarda más de lo habitual. Esto se debe a que el navegador vuelve a descargar todos los datos e imágenes del sitio."
+            }
+        }
+    },
   "Input": "Entrada",
   "InputsInfo": [
       "Este calendario de entrada hace la lista de todas las entradas de datos programadas para la fuente de datos ",
@@ -552,7 +586,9 @@
   "MultipleThematics": "Varias temáticas",
   "MyAccount": "Mi cuenta",
   "Name": "Nombre",
-  "newVersionAvailable": "Una nueva version esta disponible",
+  "newVersionAvailable": "Una actualización de Monitool esta disponible",
+  "updateNow": "Actualizar ahora",
+  "updateLater": "Actualizar más tarde",
   "NoExtraIndicator": "Ningún indicador adicional ha sido creado. ¡Haga click en \"Añadir un indicador\" para agregar uno!",
   "None": "Ninguna",
   "Ongoing": "En curso",
@@ -765,14 +801,15 @@
       "CreateProjects": "Crear proyectos",
       "CloneProjects": "Clonar un proyecto (estructura)",
       "CloneProjectsData": "Clonar un proyecto (estructura y datos introducidos)",
+      "DeleteProject": "Eliminar/Restaurar un proyecto",
       "CreateAndEditThematics": "Crear y editar temáticas",
       "CreateAndEditCrossCutting": "Crear y editar indicadores transversales",
       "EditOtherUsersRoles": "Editar las permisiones de los demás usuarios",
       "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos",
       "EditProjectsStructureOnly": "Editar la estructura del proyecto",
-      "PrintProjectsStructure": "- Imprimir fuentes de datos y marcos lógicos (.pdf)",
-      "ViewProjectsHistory": "- Consultar/Modificar el historial de modificaciones",
-      "EditUsers": "- Crear/Modificar/Eliminar roles de usuario (MdM o cuenta de socio)",
+      "PrintProjectsStructure": "Imprimir fuentes de datos y marcos lógicos (.pdf)",
+      "ViewProjectsHistory": "Consultar/Modificar el historial de modificaciones",
+      "EditUsers": "Crear/Modificar/Eliminar roles de usuario (MdM o cuenta de socio)",
       "CloneDs": "Clonar una fuente de datos (estructura)",
       "CloneDsData": "Clonar una fuente de datos (estructura y datos introducidos)",
       "CloneLogFrame": "Clonar un marco lógico (estructura y cálculo de indicadores)",
@@ -901,7 +938,7 @@
     "data-labels-display": "Mostrar etiquetas de datos",
     "yAxis-display": "Mostrar yAxis",
     "xAxis-display": "Mostrar xAxis",
-    "pdf-export": "Esportar como PDF",
+    "pdf-export": "Exportar como PDF",
     "png-export": "Exportar como PNG",
     "footer-placeholder": "Gráfico de Monitool"
   },

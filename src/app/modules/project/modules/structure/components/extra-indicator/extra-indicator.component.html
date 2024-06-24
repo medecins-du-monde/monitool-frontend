@@ -29,14 +29,27 @@
         </div>
     </mat-card-content>
     <mat-card-actions align="end" class="mdm-button-group">
-        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()"><mat-icon svgIcon="edit"></mat-icon>{{ 'Edit' | translate }}</button>
-        <button *ngIf="deletable" mat-stroked-button mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
+        <button mat-stroked-button class="mdm-button small-button" (click)="onEdit()" [disabled]="disabled">
+            <ng-container *ngIf="notConfigured">
+                <mat-icon>add</mat-icon>{{ 'Add' | translate }}
+            </ng-container>
+            <ng-container *ngIf="!notConfigured">
+                <mat-icon svgIcon="edit"></mat-icon>{{ 'Edit' | translate }}
+            </ng-container>
+        </button>
+        <button *ngIf="deletable" mat-icon-button [matMenuTriggerFor]="menu" class="mdm-button small-button"><mat-icon>expand_more</mat-icon></button>
     </mat-card-actions>
 </mat-card>
 
 <mat-menu #menu="matMenu">
     <button mat-menu-item class="delete" (click)="onDelete()">
-        <mat-icon class="delete">delete</mat-icon>
-        <span>{{ 'Delete' | translate }}</span>
+        <ng-container *ngIf="reset">
+            <mat-icon class="delete">restart_alt</mat-icon>
+            <span>{{ 'Reset' | translate }}</span>
+        </ng-container>
+        <ng-container *ngIf="!reset">
+            <mat-icon class="delete">delete</mat-icon>
+            <span>{{ 'Delete' | translate }}</span>
+        </ng-container>
     </button>
 </mat-menu>

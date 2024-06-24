@@ -15,7 +15,10 @@
     "lib": [
       "es2019",
       "dom"
-    ]
+    ],
+    "paths": {
+      "jszip": ["../node_modules/jszip/dist/jszip.min.js"]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

@@ -123,12 +123,12 @@
   "DownloadPdfLandscape": "Download PDF (landscape)",
   "DownloadPdfPortrait": "Download PDF (portrait)",
   "DownloadPlot": "Download",
-  "DuplicateDatasourceTitle": "Clone the datasource",
-  "DuplicateDatasource": "This action will clone this datasource without the data already entered. Confirm to clone.",
-  "DuplicateDatasourceTitleWithData": "Clone the datasource with input data",
-  "DuplicateDatasourceWithData": "This datasource will be cloned with the input data already entered. This requires to save the project, confirm to clone and save.",
+  "DuplicateDatasourceTitle": "Clone structure",
+  "DuplicateDatasource": "This action will clone this data source without the data already entered. Confirm to clone.",
+  "DuplicateDatasourceTitleWithData": "Clone structure and data",
+  "DuplicateDatasourceWithData": "This data source will be cloned with the input data already entered. This requires to save the project, confirm to clone and save.",
   "DuplicateDatasourceWithDataWarning": "This action will save the project automatically",
-  "ResetGraph": "Reset",
+  "Reset": "Reset",
   "EMail-Hint": "Enter your e-mail address", 
   "Edit": "Edit",
   "Email": "Email",
@@ -399,6 +399,10 @@
       "Thematics": "i.e. Primary health care"
   },
   "IndicatorMissingDescription": "The description of this indicator was not filled",
+  "IndicatorFormulaWarningModal": {
+    "title": "The formula has changed",
+    "content": "Since the formula was changed, all projects that have this crosscutting indicator configured will have it automatically removed. The cross cutting indicator will need to be configured again."
+  },
   "Indicators": "Indicators",
   "InformationPanel": {
       "Basics": "Basics",
@@ -475,6 +479,8 @@
       "General_reporting_response7": "You are viewing this data at an aggregation level that is lower than where you collected it! <br> For example, you carried out the collection quarterly, but consult this data on a table which displays them monthly. <br> In this case, the data are 'interpolated' in order to allow you to have orders of magnitude, and to be able to compare indicators that you do not collect with the same intervals between them. <br> This also happens if you see a calculated measure, for example a percentage, but the numerator and denominator are not collected with the same periodicity. <br> To take an example, if you have collected a number of expected births in a maternity ward by quarter, but you are viewing it by month, monitool will distribute the number of quarterly births in each month, correcting for the number of days that they understand. <br> The symbol ≈ is therefore permanently displayed to remind you that the data you are viewing are rough approximations of reality, and that they can only be used to have orders of magnitude.",
       "General_reporting_question8": "Why is some data displayed in <i> italics </i>?",
       "General_reporting_response8": "Data shown in <i> italics </i> has only been partially entered. Most often, this means that only some of the expected collection locations have been entered. The case can also occur if you consult an aggregated version (eg: by quarter) of data collected at a shorter periodicity (eg: by month) and all the months of the quarter considered have not been entered. <br> By disaggregating the line with the button you can easily find the missing entries.",
+      "General_reporting_question9": "How do I add a comment to one of the cells?",
+      "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Comments allow data entry personnel to provide additional information that may be relevant for data analysis. Analysts can also use comments to share their insights.</li><li>This text is visible to everyone, so it enables the people closest to the activities to contribute to the analysis, which will be centralized at project coordination level.</li><li>Simply right-click on the desired cell and add the text. Don't forget to save.</li><li>You must have the role of owner or project manager. See the section USER ROLES for a PROJECT in this FAQ.</li></ul>",
       "History": "History",
       "History_description": "The changes history allow you to consult the changes made to the structure of your project.",
       "History_question1": "Some changes to the project have been made by a user that shouldn't have access?",
@@ -507,8 +513,36 @@
       "User_list": "Users list",
       "User_list_description": "Several types of users are involved in setting up and monitoring a project: coordination, M&E staff, data entry operators, partners, ... <br> List here all the users who must have access to the monitoring of this project.",
       "PlatformRights": "USER ROLES for the MONITOOL PLATFORM",
-      "ProjectRights": "USER ROLES for a <u>PROJECT</u> in the MONITOOL PLATFORM"
-  },
+      "ProjectRights": "USER ROLES for a <u>PROJECT</u> in the MONITOOL PLATFORM",
+      "Cache_question": "I'm having problems with monitool. What should I do?",
+      "Cache_response": {
+        "Point1": "First check that you have the necessary rights for the requested action by checking in this FAQ both sections on USER’s ROLES.",
+        "Point2": "If it’s not due to a rights issue, try to refresh the cache, click: ",
+        "Refresh": "What is cache and how can I refresh it at any time?",
+        "RefreshButton": "Refresh cache",
+        "Point3": "If this still doesn't work, contact the support team."
+        }
+    },
+    "Informations": {
+        "Cache": {
+            "Title": "FAQ cache",
+            "Section1": {
+                "Title": "What is cache?",
+                "Content": "Web browsers assume the internet is slow. Since many websites use the same elements (like logos) on multiple pages, browsers download them only on the first encounter so they need not be downloaded every time. The cache is where these downloaded elements are kept. Sometimes the browser loses track of what's in the cache, resulting in display problems. Each browser allows you to clear the cache to start over, hopefully resolving those issues."
+            },
+            "Section2": {
+                "Title": "How to refresh the page cache (hard refresh)?",
+                "Content1": "In most browsers, you can perform a simple action to force a hard refresh. Hold down the Shift key on your keyboard and click on the reload icon on your browser's toolbar.",
+                "Content2": "There are also keyboard shortcuts to perform the equivalent hard refresh.&nbsp;Because there are multiple ways to do the same action, they will be listed below:",
+                "List": {
+                    "1": "<strong>Chrome, Firefox, or Edge on Windows:</strong>Press <em>Ctrl+F5</em> (If that doesn't work, try <em>Shift+F5</em> or <em>Ctrl+Shift+R</em>).",
+                    "2": "<strong>Chrome or Firefox on Mac:</strong> Press <em>Shift+Command+R</em>.",
+                    "3": "<strong>Safari on Mac:</strong> There is no simple keyboard shortcut to force a hard refresh. Instead, press <em>Command+Option+E</em> to empty the cache, then hold down Shift and click Reload in the toolbar."
+                },
+                "Content3": "After you perform the hard refresh, you should see the web page go blank, and the reloading process will take longer than usual. That's because the browser is redownloading all of the data and images on the site."
+            }
+        }
+    },
   "Input": "Input",
   "InputHomeInfo": [
       "This section's goal is providing the data that will allow to compute your indicators to Monitool.",
@@ -552,7 +586,9 @@
   "Name": "Name",
   "Name-Hint": "Indicate your Full Name",
   "NameLogicalFramework-Hint": "Name this logical framework to be able to identify it easily. For instance, with the name of the relevant donor",
-  "newVersionAvailable": "A new version is available",
+  "newVersionAvailable": "A new update of Monitool is available",
+  "updateNow": "Update now",
+  "updateLater": "Update later",
   "NoExtraIndicator": "No extra indicator has been created yet. Click on \"Add indicator\" to create one!",
   "None": "None",
   "Ongoing": "On going",
@@ -778,14 +814,15 @@
       "CreateProjects": "Create projects",
       "CloneProjects": "Clone a project (structure)",
       "CloneProjectsData": "Clone a project (structure and data entered)",
+      "DeleteProject": "Delete/Restore a project",
       "CreateAndEditThematics": "Create and edit thematics",
       "CreateAndEditCrossCutting": "Create and edit cross-cutting indicators",
       "EditOtherUsersRoles": "Edit other users roles",
       "EditAllProjectsStructureAndData": "Edit all projects structure and data",
       "EditProjectsStructureOnly": "Edit project's structure",
-      "PrintProjectsStructure": "- Print data sources and logical frameworks (.pdf)",
-      "ViewProjectsHistory": "- View/Modify history",
-      "EditUsers": "- Create/Modify/Delete user roles (MdM or partner account)",
+      "PrintProjectsStructure": "Print data sources and logical frameworks (.pdf)",
+      "ViewProjectsHistory": "View/Modify history",
+      "EditUsers": "Create/Modify/Delete user roles (MdM or partner account)",
       "CloneDs": "Clone a data source (structure)",
       "CloneDsData": "Clone a data source (structure and entered data)",
       "CloneLogFrame": "Clone a logical framework (structure and calculation of indicators)",
