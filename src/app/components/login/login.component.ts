@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { MsalService, BroadcastService } from '@azure/msal-angular';
+import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
     private configService: ConfigService,
     private router: Router,
     private fb: FormBuilder,
-    private broadcastService: BroadcastService,
     private azureService: MsalService,
   ) { }
 
@@ -50,9 +49,10 @@ export class LoginComponent implements OnInit {
   }
 
   loginAzure() {
-      this.azureService.loginRedirect({
-        extraScopesToConsent: ['user.read', 'openid', 'profile']
-      });
+      this.azureService.loginRedirect({scopes: ['user.read', 'openid', 'profile']});
+      // {
+      //   extraScopesToConsent: ['user.read', 'openid', 'profile']
+      // });
   }
 
   loginPartner(){
