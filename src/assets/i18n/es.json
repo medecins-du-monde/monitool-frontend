@@ -533,7 +533,7 @@
         "Point2": "Si no es debido a un problema de permisos, prueba a refrescar el cache, haz clic aqui: ",
         "Refresh": "¿Qué es el cache y cómo puedo refrescarlo en cualquier momento?",
         "RefreshButton": "Refrescar cache",
-        "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica."
+        "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica:"
         }
     },
     "Informations": {
@@ -541,18 +541,18 @@
             "Title": "FAQ caché",
             "Section1": {
                 "Title": "Que es el caché?",
-                "Content": "Los navegadores web suponen que Internet es lento. Debido a que muchos sitios web utilizan los mismos elementos (como logotipos) en varias páginas, los navegadores los descargan sólo en el primer encuentro, por lo que no es necesario descargarlos cada vez. El caché es donde se guardan estos elementos descargados. A veces, el navegador pierde la pista de lo que hay en el caché, lo que genera problemas de visualización. Cada navegador permite borrar el caché para comenzar de nuevo y, con suerte, resolver esos problemas."
+                "Content": "Los navegadores web funcionan de manera que pueden ser utilizados con conexiones lentas e inestables. Debido a que muchos sitios web utilizan los mismos elementos (como logotipos) en varias páginas, los navegadores los descargan sólo en el primer encuentro, por lo que no es necesario descargarlos cada vez. El caché es donde se guardan estos elementos descargados. A veces, el navegador pierde la pista de lo que hay en el caché, lo que genera problemas de visualización. Cada navegador permite borrar el caché para comenzar de nuevo y, con suerte, resolver esos problemas."
             },
             "Section2": {
                 "Title": "¿Cómo actualizar el caché de la página?",
                 "Content1": "En la mayoría de los navegadores, puede realizar una acción simple para recargar el caché. Mantenga presionada la tecla Shift en su teclado y haga clic en el ícono de recarga en la barra de herramientas de su navegador.",
-                "Content2": "También existen combinaciones de teclas para refrecar el caché.&nbsp;Debido a que hay varias formas de realizar la misma acción, se enumerarán a continuación:",
+                "Content2": "También existen combinaciones de teclas para refrecar el caché. Debido a que hay varias formas de realizar la misma acción, se enumerarán a continuación:",
                 "List": {
-                    "1": "<strong>Chrome, Firefox, o Edge en Windows:</strong>Presione <em>Ctrl+F5</em> (Si eso no funciona, pruebe <em>Shift+F5</em> o <em>Ctrl+Shift+R</em>).",
+                    "1": "<strong>Chrome, Firefox, o Edge en Windows:</strong> Presione <em>Ctrl+F5</em> (Si eso no funciona, pruebe <em>Shift+F5</em> o <em>Ctrl+Shift+R</em>).",
                     "2": "<strong>Chrome o Firefox en Mac:</strong> Presione <em>Shift+Command+R</em>.",
                     "3": "<strong>Safari en Mac:</strong> No existe una combinación de teclas pare refrecar el caché. En su lugar, presione <em>Command+Option+E</em> para eliminar el caché, luego, mantenga la tecla Shift y haga clic en Recargar en la barra de herramientas."
                 },
-                "Content3": "Después de refrecar el caché, debería ver que la página web se queda en blanco y el proceso de recarga tarda más de lo habitual. Esto se debe a que el navegador vuelve a descargar todos los datos e imágenes del sitio."
+                "Content3": "Después de refrescar el caché, debería ver que la página web se queda en blanco y el proceso de recarga tarda más de lo habitual. Esto se debe a que el navegador vuelve a descargar todos los datos e imágenes del sitio."
             }
         }
     },

@@ -527,7 +527,7 @@
         "Point2": "S’il ne s’agit pas d’un problèmes de droits, essayez de rafraîchir le cache en cliquant ici:",
         "Refresh": "Qu’est-ce que le cache et comment puis-je le rafraîchir à tout moment?",
         "RefreshButton": "Rafraîchir cache",
-        "Point3": "Si cela ne fonctionne toujours pas contacter l'équipe support."
+        "Point3": "Si cela ne fonctionne toujours pas contacter l'équipe support:"
         }
   },
   "Informations": {
@@ -535,18 +535,18 @@
           "Title": "FAQ cache",
           "Section1": {
               "Title": "Qu’est-ce que le cache?",
-              "Content": "Les navigateurs Web supposent qu'Internet est lent. Étant donné que de nombreux sites Web utilisent les mêmes éléments (comme des logos) sur plusieurs pages, les navigateurs ne les téléchargent que lors de la première rencontre, de sorte qu'ils n'ont pas besoin d'être téléchargés à chaque fois. Le cache est l’endroit où sont conservés ces éléments téléchargés. Parfois, le navigateur perd la trace du contenu du cache, ce qui entraîne des problèmes d'affichage. Chaque navigateur vous permet de vider le cache pour recommencer, ce qui, espérons-le, résoudra ces problèmes."
+              "Content": "Les navigateurs Web fonctionnent de manière à pallier une connexion internet potentiellement limitée. Étant donné que de nombreux sites Web utilisent les mêmes éléments (comme des logos) sur plusieurs pages, les navigateurs ne les téléchargent que lors de la première rencontre, de sorte qu'ils n'ont pas besoin d'être téléchargés à chaque fois. Le cache est l’endroit où sont conservés ces éléments téléchargés. Parfois, le navigateur perd la trace du contenu du cache, ce qui entraîne des problèmes d'affichage. Chaque navigateur vous permet de vider le cache pour recommencer, ce qui, espérons-le, résoudra ces problèmes."
           },
           "Section2": {
               "Title": "Comment rafraîchir le cache des pages?",
-              "Content1": "Dans la plupart des navigateurs, vous pouvez effectuer une action simple pour forcer l'actualisation du cache. Maintenez la touche Shift e votre clavier enfoncée et cliquez sur l'icône de rechargement dans la barre d'outils de votre navigateur.",
-              "Content2": "Il existe également des raccourcis clavier pour effectuer l'actualisation matérielle équivalente. Comme il existe plusieurs façons d'effectuer la même action, elles seront répertoriées ci-dessous:",
+              "Content1": "Dans la plupart des navigateurs, vous pouvez effectuer une action simple pour forcer l'actualisation du cache. Maintenez la touche Shift de votre clavier enfoncée et rafraîchissez la page de votre navigateur.",
+              "Content2": "Il existe également des raccourcis clavier pour rafraîchir votre cache. Ci-dessous les différents raccourcis claviers selon votre navigateur et votre système d’exploitation :",
               "List": {
-                  "1": "<strong>Chrome, Firefox, ou Edge sous Windows:</strong>Appuyez sur <em>Ctrl+F5</em> (Si ça ne marche pas, essayé <em>Shift+F5</em> ou <em>Ctrl+Shift+R</em>).",
+                  "1": "<strong>Chrome, Firefox, ou Edge sous Windows:</strong> Appuyez sur <em>Ctrl+F5</em> (Si ça ne marche pas, essayé <em>Shift+F5</em> ou <em>Ctrl+Shift+R</em>).",
                   "2": "<strong>Chrome ou Firefox sous Mac:</strong> Appuyez sur <em>Shift+Command+R</em>.",
                   "3": "<strong>Safari sous Mac:</strong> Il n’existe pas de raccourci clavier simple pour rafraîchir le cache. Au lieu de cela, appuyez sur <em>Command+Option+E</em> pour vider le cache, puis maintenez la touche Shift et cliquez sur Recharger dans la barre d'outils."
               },
-              "Content3": "Après avoir actualisé le cache, vous devriez voir la page Web devenir vide et le processus de rechargement prendra plus de temps que d'habitude. En effet, le navigateur télécharge à nouveau toutes les données et images du site."
+              "Content3": "Après avoir actualisé le cache, vous devriez voir la page Web devenir vide et la page prendra plus de temps à se charger que d’habitude. En effet, le navigateur télécharge à nouveau toutes les données et images du site."
           }
       }
   },
