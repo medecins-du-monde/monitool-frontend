@@ -11,7 +11,7 @@
             <p [innerHTML]="informations[0]?.res2 | translate"></p>
         </div>
         <mat-accordion>
-            <!-- <mat-expansion-panel hideToggle>
+            <mat-expansion-panel hideToggle>
                 <mat-expansion-panel-header>
                     <div class="new">
                         <mat-icon>flare</mat-icon>
@@ -43,7 +43,7 @@
                         </li>
                     </ol>
                 </div>
-            </mat-expansion-panel> -->
+            </mat-expansion-panel>
             <ng-container *ngFor="let information of informations  | slice:1; let i = index">
                 <mat-expansion-panel hideToggle>
                     <mat-expansion-panel-header>
