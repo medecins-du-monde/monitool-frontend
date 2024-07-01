@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,7 +9,7 @@ describe('OutputEditComponent', () => {
   let component: OutputEditComponent;
   let fixture: ComponentFixture<OutputEditComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [OutputEditComponent],
       imports: [MatDialogModule, ReactiveFormsModule, TranslateModule.forRoot()]

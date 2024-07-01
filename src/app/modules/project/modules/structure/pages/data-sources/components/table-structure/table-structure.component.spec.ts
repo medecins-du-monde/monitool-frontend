@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -9,7 +9,7 @@ describe('TableStructureComponent', () => {
   let component: TableStructureComponent;
   let fixture: ComponentFixture<TableStructureComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TableStructureComponent],
       imports: [HttpClientTestingModule, TranslateModule.forRoot()]

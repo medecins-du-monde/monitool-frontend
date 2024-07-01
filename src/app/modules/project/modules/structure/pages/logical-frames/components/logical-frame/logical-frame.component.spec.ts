@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
@@ -13,7 +13,7 @@ describe('LogicalFrameComponent', () => {
   let component: LogicalFrameComponent;
   let fixture: ComponentFixture<LogicalFrameComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LogicalFrameComponent],
       imports: [
