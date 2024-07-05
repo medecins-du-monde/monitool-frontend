@@ -34,7 +34,7 @@
         <div class="mdm-form-group" *ngFor="let language of languages">
             <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}">
+                <textarea style="resize: none;" matInput [formControlName]="language" rows=5 placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}"></textarea>
             </mat-form-field>
         </div>
     </ng-container>
