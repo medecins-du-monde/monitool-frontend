@@ -83,11 +83,11 @@ export function loggerCallback(logLevel, message) {
             'profile',
           ]
         },
-        loginFailedRoute: "/login" 
+        loginFailedRoute: '/login'
     }, {
       interactionType: InteractionType.Redirect, // MSAL Guard Configuration
       protectedResourceMap: new Map([['https://graph.microsoft.com/v1.0/me', ['user.read']]])
-        
+
     }),
     // Enabled in every environments
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })

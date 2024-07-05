@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
     if (this.azureLoginSubscription) {
       this.azureLoginSubscription = this.msalBroadcastService.inProgress$
         .pipe(
-          filter((status: InteractionStatus) => {console.log(status); return status === InteractionStatus.None}),
+          filter((status: InteractionStatus) => status === InteractionStatus.None),
         )
         .subscribe(() => {
           this.azureService.loginRedirect({scopes: ['user.read', 'openid', 'profile']});
