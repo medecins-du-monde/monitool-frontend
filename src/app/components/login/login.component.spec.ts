@@ -22,14 +22,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 /**
- * MSAL Angular will automatically retrieve tokens for resources 
- * added to protectedResourceMap. For more info, visit: 
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-angular/docs/v2-docs/initialization.md#get-tokens-for-web-api-calls
+ * MSAL Angular will automatically retrieve tokens for resources
+ * added to protectedResourceMap.
  */
 
 /**
  * Here we pass the configuration parameters to create an MSAL instance.
- * For more info, visit: https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-angular/docs/v2-docs/configuration.md
  */
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -47,12 +45,11 @@ export function MSALInstanceFactory(): IPublicClientApplication {
 }
 
 /**
- * MSAL Angular will automatically retrieve tokens for resources 
- * added to protectedResourceMap. For more info, visit: 
- * https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-angular/docs/v2-docs/initialization.md#get-tokens-for-web-api-calls
+ * MSAL Angular will automatically retrieve tokens for resources
+ * added to protectedResourceMap.
  */
- export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map([['https://graph.microsoft.com/v1.0/me', ['user.read']]])
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map([['https://graph.microsoft.com/v1.0/me', ['user.read']]]);
 
   return {
     interactionType: InteractionType.Redirect,
@@ -64,8 +61,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
  * Set your default interaction type for MSALGuard here. If you have any
  * additional scopes you want the user to consent upon login, add them here as well.
  */
- export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return { 
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
     interactionType: InteractionType.Redirect,
     authRequest: {
       scopes: [
