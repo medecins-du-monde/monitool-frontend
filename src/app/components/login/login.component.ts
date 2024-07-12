@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginAzure() {
-    if (this.azureLoginSubscription) {
+    if (!this.azureLoginSubscription) {
       this.azureLoginSubscription = this.msalBroadcastService.inProgress$
         .pipe(
           filter((status: InteractionStatus) => status === InteractionStatus.None),
