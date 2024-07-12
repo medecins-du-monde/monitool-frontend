@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RefreshModalComponent } from './refresh-modal.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ describe('RefreshModalComponent', () => {
   let component: RefreshModalComponent;
   let fixture: ComponentFixture<RefreshModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [ TranslateModule.forRoot() ],
       declarations: [ RefreshModalComponent ],

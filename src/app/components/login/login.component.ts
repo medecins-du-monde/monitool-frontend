@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { MsalService, BroadcastService } from '@azure/msal-angular';
+import { MsalService, MsalBroadcastService } from '@azure/msal-angular';
+import { InteractionStatus } from '@azure/msal-browser';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,8 +19,8 @@ export class LoginComponent implements OnInit {
     private configService: ConfigService,
     private router: Router,
     private fb: FormBuilder,
-    private broadcastService: BroadcastService,
     private azureService: MsalService,
+    private msalBroadcastService: MsalBroadcastService
   ) { }
 
   logo = '../../assets/images/MDM-LOGO.png';
@@ -27,6 +29,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   wrongCredentials = false;
+
+  azureLoginSubscription: Subscription;
 
   training = true;
   config = {
@@ -50,9 +54,16 @@ export class LoginComponent implements OnInit {
   }
 
   loginAzure() {
-      this.azureService.loginRedirect({
-        extraScopesToConsent: ['user.read', 'openid', 'profile']
-      });
+    if (this.azureLoginSubscription) {
+      this.azureLoginSubscription = this.msalBroadcastService.inProgress$
+        .pipe(
+          filter((status: InteractionStatus) => status === InteractionStatus.None),
+        )
+        .subscribe(() => {
+          this.azureService.loginRedirect({scopes: ['user.read', 'openid', 'profile']});
+          this.azureLoginSubscription.unsubscribe();
+        });
+    }
   }
 
   loginPartner(){

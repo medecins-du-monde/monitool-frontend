@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Revision } from 'src/app/models/classes/revision.model';
 
 import { RevisionSummaryComponent } from './revision-summary.component';
@@ -14,7 +14,7 @@ describe('RevisionSummary', () => {
   let component: RevisionSummaryComponent;
   let fixture: ComponentFixture<RevisionSummaryComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RevisionSummaryComponent],
       imports: [

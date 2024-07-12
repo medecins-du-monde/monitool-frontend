@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
@@ -9,7 +9,7 @@ describe('ExtraIndicatorComponent', () => {
   let component: ExtraIndicatorComponent;
   let fixture: ComponentFixture<ExtraIndicatorComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ExtraIndicatorComponent],
       imports: [TranslateModule.forRoot(), MatMenuModule]

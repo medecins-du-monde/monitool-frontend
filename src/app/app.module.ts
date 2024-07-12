@@ -8,7 +8,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginModule } from './components/login/login.module';
-import { MsalModule } from '@azure/msal-angular';
+import { MsalBroadcastService, MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent, MsalService } from '@azure/msal-angular';
 import { environment } from 'src/environments/environment';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -20,9 +20,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RefreshSnackbarModule } from './components/refresh-snackbar/refresh-snackbar.module';
 import { UserRightsTableModule } from './components/user-rights-table/user-rights-table.module';
 import { RefreshModalModule } from './components/refresh-modal/refresh-modal.module';
+import { InteractionType, PublicClientApplication, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+export function loggerCallback(logLevel, message) {
+  console.log(message);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,29 +55,39 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     RefreshSnackbarModule,
     RefreshModalModule,
     UserRightsTableModule,
-    MsalModule.forRoot({
+    MsalModule.forRoot( new PublicClientApplication({
       auth: {
         clientId: environment.clientId, // This is your client ID
         authority: environment.authority, // This is your tenant ID
         redirectUri: environment.redirectUrl, // This is your redirect URI
         postLogoutRedirectUri: environment.postLogoutRedirectUri,
+        navigateToLoginRequestUrl: true
       },
       cache: {
-        cacheLocation: 'localStorage',
+        cacheLocation: BrowserCacheLocation.LocalStorage,
         storeAuthStateInCookie: isIE, // Set to true for Internet Explorer 11
       },
+      system: {
+          loggerOptions: {
+            loggerCallback,
+            piiLoggingEnabled: true,
+            logLevel: LogLevel.Info
+          }
+      }
+    }), {
+        interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+        authRequest: {
+          scopes: [
+            'user.read',
+            'openid',
+            'profile',
+          ]
+        },
+        loginFailedRoute: '/login'
     }, {
-      popUp: !isIE,
-      consentScopes: [
-        'user.read',
-        'openid',
-        'profile',
-      ],
-      unprotectedResources: [],
-      protectedResourceMap: [
-        ['https://graph.microsoft.com/v1.0/me', ['user.read']]
-      ],
-      extraQueryParameters: {}
+      interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      protectedResourceMap: new Map([['https://graph.microsoft.com/v1.0/me', ['user.read']]])
+
     }),
     // Enabled in every environments
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true })
@@ -83,11 +98,19 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     },
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: CustomHttpInterceptor,
       multi: true
     },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }
 
