@@ -9,6 +9,7 @@ export class Input implements Deserializable {
     period: string;
     values: any;
     rev: string;
+    blocked: boolean;
 
 
     constructor(input?: any) {
@@ -33,7 +34,8 @@ export class Input implements Deserializable {
             entity: this.entity,
             form: this.form,
             period: this.period,
-            values: this.values
+            values: this.values,
+            blocked: this.blocked,
         };
         if (this.rev){
             Object.assign(serialized, {

@@ -11,8 +11,25 @@ export class InputService {
     private apiService: ApiService,
   ) { }
 
-  public async save(input: Input) {
-    const response: any = await this.apiService.put(`/resources/input/${input.id}`, input.serialize());
+  /**
+   * Save the input or update the blocked state.
+   * Pass a full Input object to update all the fields on it.
+   * Pass an object with the input id and the blocked state to only update that property.
+   *
+   * @param input Input object or a stripped version with just the id and the blocked value.
+   * @returns The updated input.
+   */
+  public async save(input: Input | {id: string, blocked: boolean}) {
+    input instanceof Input ? console.log('Input', input.serialize()) : console.log(input);
+    const response: any = await this.apiService.put(`/resources/input/${input.id}`, input instanceof Input ?
+      {
+        action: 'saveInput',
+        value: input.serialize()
+      } : {
+        action: 'toggleBlock',
+        value: {_id: input.id, blocked: input.blocked}
+      }
+    );
     const savedInput = new Input(response);
     return savedInput;
   }

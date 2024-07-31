@@ -1,3 +1,7 @@
+<div class="blocked-header" *ngIf="isBlocked">
+    <mat-icon>info</mat-icon>
+    <span>{{ (isOwner ? 'LockedInput.infoAdmin' : 'LockedInput.infoUser') | translate }}</span>
+</div>
 <div class="mdm-title">{{ 'GeneralInformations' | translate }}</div>
 <div class="mdm-section">
     <div class="info">
@@ -14,20 +18,25 @@
     </div>
 </div>
 <div class="title">
-    <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()" [disabled]="this.previousInput ? false : true">
-        <mat-icon>edit</mat-icon>
-        {{ 'FillWithPreviousData' | translate }}
-    </button>
-    <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithZero()">
-        <mat-icon>edit</mat-icon>
-        {{ 'FillWithZero' | translate }}
-    </button>
+    <ng-container *ngIf="!isBlocked || isOwner">
+        <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()" [disabled]="this.previousInput ? false : true">
+            <mat-icon>edit</mat-icon>
+            {{ 'FillWithPreviousData' | translate }}
+        </button>
+        <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithZero()">
+            <mat-icon>edit</mat-icon>
+            {{ 'FillWithZero' | translate }}
+        </button>
+    </ng-container>
     <div class="mdm-title">
         {{ 'Data' | translate }}
     </div>
 </div>
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
-    <div class="mdm-section" *ngFor="let table of tables; let k = index" >
+    <div
+        class="mdm-section"
+        *ngFor="let table of tables; let k = index"
+        [style.pointer-events]="isBlocked && !isOwner ? 'none' : 'auto'">
         <p class="table-title">{{ form.elements[k].name }}</p>
         <hot-table
           [settings]="tableSettings[table.id]"
@@ -36,7 +45,8 @@
         ></hot-table>
     </div>
 </div>
-<div class="save-actions">
+
+<div class="save-actions" *ngIf="!isBlocked || isOwner">
     <button mat-stroked-button class="mdm-button primary" [disabled]="!canBeSaved || !validInputCell" (click)="saveInput()">
         <mat-icon>save</mat-icon>
         {{ 'Save' | translate }}
@@ -51,20 +61,61 @@
         <mat-icon>clear</mat-icon>
         {{ 'Delete' | translate }}
     </button>
+
+    <button
+        mat-stroked-button
+        *ngIf="isOwner"
+        class="mdm-button block-button"
+        (click)="toggleBlock()"
+        [disabled]="isNew"
+    >
+        <mat-icon>{{isBlocked ? 'lock_open' : 'lock'}}</mat-icon>
+        {{ (isBlocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate }}
+    </button>
 </div>
 
-<ng-template #nullInputInfoDialog>
+<ng-template #saveDialog>
     <button class="dialog-close" mat-icon-button mat-dialog-close>
         <mat-icon>close</mat-icon>
     </button>
-    <div class="modal-text">
+    <h2 mat-dialog-title>{{'FormSaveModal.title' | translate}}</h2>
+    <mat-dialog-content class="dialog-body" style="max-width: 800px;">
+        <p>{{'FormSaveModal.p1' | translate}}</p>
+        <p>{{'FormSaveModal.p2' | translate}}</p>
+        <p>{{'FormSaveModal.p3' | translate}}</p>
+        <div class="null-warning" *ngIf="inputHasNull">
+            <mat-icon>info</mat-icon>
+            <div>
+                <p>{{'NullValueMessage.p1' | translate}}</p>
+                <span>{{'NullValueMessage.p2' | translate}}</span>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <!-- <div class="modal-text">
         <p><span class="bold-text">{{ 'NullValueMessage.Warning' | translate }}</span>{{ 'NullValueMessage.NullValueMeaning' | translate }}</p>
         <img [src]="imageLink">
         <p>{{ 'NullValueMessage.Save' | translate }}</p>
-    </div>
+    </div> -->
     <mat-dialog-actions align="end">
-        <button mat-stroked-button (click)="cancel()" class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
-            }}</button>
-        <button mat-stroked-button (click)="confirm()" class="mdm-button save-button" mat-dialog-close>{{ 'Confirm' | translate }}</button>
+        <button mat-stroked-button
+            class="mdm-button"
+            mat-dialog-close
+        >
+            {{ 'Cancel' | translate }}
+        </button>
+        <button mat-stroked-button
+            (click)="confirm()"
+            class="mdm-button save-button"
+            mat-dialog-close
+        >
+            {{ 'TempSave' | translate }}
+        </button>
+        <button mat-stroked-button
+            (click)="confirm(true)"
+            class="mdm-button save-button complete-button"
+            mat-dialog-close
+        >
+            {{ 'SaveComplete' | translate }}
+        </button>
     </mat-dialog-actions>
 </ng-template>

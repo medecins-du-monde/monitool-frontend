@@ -30,9 +30,14 @@
                             class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
                     </div>
                     <div *ngIf="element[column]?.value === -2" style="height: 24px"></div>
-                    <div *ngIf="element[column]?.value >= 0">
+                    <div *ngIf="element[column]?.value >= 0" [ngClass]="{'edition-cell': isOwner}">
                         <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
-                            class="mdm-button small-button">{{ 'Edit' | translate }} ({{ element[column]?.value.toFixed(0) }}%)</button>
+                            class="mdm-button small-button" [ngClass]="{'completed-button': element[column]?.blocked}">
+                            {{ element[column]?.blocked ? ('Completed' | translate) : ('Edit' | translate) + ' (' + element[column]?.value.toFixed(0) + '%)' }}
+                        </button>
+                        <div *ngIf="isOwner" class="expand" [ngClass]="{'completed-expand-button': element[column]?.blocked}" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element[column]}">
+                            <mat-icon>expand_more</mat-icon>
+                        </div>
                     </div>
                 </ng-template>
             </td>
@@ -95,4 +100,14 @@
 <ng-template #elseBlockError>
     {{ 'ErrorNoCollectionSiteAssociated' | translate }}
 </ng-template>
+<mat-menu #menu="matMenu" >
+    <ng-template matMenuContent let-element="element">
+        <button mat-menu-item 
+            (click)="toggleBlock(element)"
+        >
+            <mat-icon>{{element.blocked ? 'lock_open' : 'lock'}}</mat-icon>
+            {{ (element.blocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate }}
+        </button>
+    </ng-template>
+</mat-menu>
 
