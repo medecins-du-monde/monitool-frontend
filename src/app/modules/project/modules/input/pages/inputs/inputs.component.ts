@@ -77,6 +77,7 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   lastDates = {};
 
+  public isOwner = false;
   private isFocused = false;
 
 
@@ -113,11 +114,20 @@ export class InputsComponent implements OnInit, OnDestroy {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.updateData();
+        // Set isOwner property
+        if (!this.isOwner && this.user && project.users) {
+          const projectUser = project.users.find(user => user.id === this.user.id || user.username === this.user.id);
+          this.isOwner = projectUser && projectUser.role === 'owner';
+        }
       })
     );
     this.subscription.add(
-      this.authService.currentUser.subscribe((user: User) => {
+      this.authService.currentUser.subscribe((user: any) => {
         this.user = user;
+        this.user.id = user._id || user.username;
+        if (user.role === 'admin') {
+          this.isOwner = true;
+        }
       })
     );
     this.subscription.add(
@@ -262,7 +272,8 @@ export class InputsComponent implements OnInit, OnDestroy {
         if (!this.lastDates[site.id] && date.date <= site.end || this.form.periodicity === 'free') {
           if (`${inputId}:${site.id}:${date.value}` in this.inputProgress){
             current[site.name] = {
-              value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`],
+              blocked: this.inputProgress[`${inputId}:${site.id}:${date.value}`].blocked,
+              value: 100 * this.inputProgress[`${inputId}:${site.id}:${date.value}`].progress,
               column: site.id,
               date: date.value,
             };
@@ -336,6 +347,13 @@ export class InputsComponent implements OnInit, OnDestroy {
       return true;
     }
     return false;
+  }
+
+  toggleBlock(el: any) {
+    const inputId = `input:${this.project.id}:${this.formId}:${el.column}:${el.date}`;
+    this.inputService.save({id: inputId, blocked: !el.blocked}).then(res => {
+      el.blocked = res.blocked;
+    });
   }
 
   ngOnDestroy(): void {

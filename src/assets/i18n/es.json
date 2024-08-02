@@ -127,6 +127,7 @@
   "DuplicateDatasourceWithData": "La fuente de datos sera clonada con todos los datos entrados. Esto requiere guardar el proyecto, confirma para clonar y guardar.",
   "DuplicateDatasourceWithDataWarning": "Esta acción guardara el proyecto automaticamente",
   "Edit": "Modificar",
+  "Completed": "Completado",
   "Email": "Correo electrónico",
   "en": "Inglés",
   "EndDate": "Fecha de fin",
@@ -708,6 +709,8 @@
   "RevertToVersion": "Revertir a la versión anterior",
   "Role": "Tipo",
   "Save": "Guardar",
+  "TempSave": "Guardado temporal",
+  "SaveComplete": "Guardar y completar",
   "SaveIndicator": "Guardar indicador",
   "SaveConfirm": "Guarde para confirmar la reversión de esta versión",
   "SaveThematic": "Guardar la temática",
@@ -903,9 +906,20 @@
   "minimized-tooltip": "Todos los sitios combinados",
   "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección",
   "NullValueMessage": {
-      "Warning": "Advertencia : ",
-      "NullValueMeaning": "el formulario contiene datos vacíos. El cálculo de indicadores a partir de formularios de entrada incompletos será posible, pero dará un resultado inexacto. Si desea sustituir los valores no introducidos por valores numéricos \"0\", puede utilizar el botón \"Rellenar todas las celdas vacías con 0",
-      "Save": "¿Estás seguro de que quieres ahorrar?"
+    "p1": "El formulario contiene datos vacíos, el cálculo de indicadores a partir de formularios de entrada incompletos será posible pero dará un resultado inexacto.",
+    "p2": "Si desea reemplazar los valores no ingresados ​​con valores numéricos “0”, puede volver al formulario de entrada de datos y usar el botón “Rellenar todas las celdas vacías con 0” (consulte el FAQ)."
+  },
+  "FormSaveModal": {
+    "title": "¿Ha completado el formulario?",
+    "p1": "Esta intentando guardar el formulario.",
+    "p2": "Si ya completó el formulario, haga clic en “Guardar y completar”, lo que marcara el formulario como tal y evitará modificaciones adicionales.",
+    "p3": "Si el formulario solo esta parcialmente completo o aún sera modificado haga clic en “Guardado temporal”"
+  },
+  "LockedInput": {
+    "infoUser": "Esta entrada ya ha sido completada, si necesitas hacer modificaciones adicionales contacte el propietario del proyecto.",
+    "infoAdmin": "Esta entrada ya ha sido completada, puede debloquearla para que los usuarios de entrada de datos puedan modificarla de nuevo.",
+    "lock": "Bloquear la entrada",
+    "unlock": "Desbloquear la entrada"
   },
   "export-current-minimized": "Exportación de la vista actual",
   "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",

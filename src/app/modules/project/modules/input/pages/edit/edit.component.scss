@@ -46,12 +46,29 @@
     padding: 12px 16px;
     box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
 
+    display: flex;
+    gap: 8px;
+
     @media screen and (max-width: $breakpoint-sm) {
         width: 100%;
+        flex-wrap: wrap;
+    }
+
+    @media screen and (max-width: 630px) {
+        justify-content: center;
+    }
+
+    .block-button {
+        margin-left: auto;
+        margin-right: 25px;
+        
+        @media screen and (max-width: 630px) {
+            margin-left: unset;
+            margin-right: unset;
+        }
     }
     
     button {
-        margin-right: 8px;
         
         &.warn{
             background-color: $delete_background;
@@ -71,5 +88,35 @@
 
 .table-title {
     font-weight: bold;
+}
+
+.blocked-header {
+    padding: 8px 10px;
+    margin: 16px 0;
+
+    color: #5cb85c;
+    border: #5cb85c solid 2px;
+    border-radius: 8px;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.null-warning {
+    padding: 8px 10px;
+    margin: 16px 0;
+
+    color: $info;
+    border: $info solid 2px;
+    border-radius: 8px;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.complete-button {
+    background-color: #5cb85c;
 }
 

@@ -124,6 +124,7 @@
   "DuplicateDatasourceWithDataWarning": "Cette action sauvegardera automatiquement le projet",
   "Reset": "Restaurer",
   "Edit": "Modifier",
+  "Completed": "Complété",
   "Email": "Email",
   "en": "Anglais",
   "EndDate": "Date de fin",
@@ -703,6 +704,8 @@
   "RevertToVersion": "Revenir à la version précédente",
   "Role": "Rôle",
   "Save": "Sauvegarder",
+  "TempSave": "Sauvegarde temporaire",
+  "SaveComplete": "Sauvegarder et compléter",
   "SaveIndicator": "Sauvegarder l'indicateur",
   "SaveConfirm": "Enregistrer pour confirmer le rétablissement de cette version",
   "SaveThematic": "Sauvegarder la thématique",
@@ -902,9 +905,20 @@
   "minimized-tooltip": "Tous sites confondus",
   "complete-tooltip": "Rapport Total + 1 onglet par site de collecte",
   "NullValueMessage": {
-      "Warning": "Attention : ",
-      "NullValueMeaning": " le formulaire contient des données vides. Le calcul des indicateurs à partir de formulaires de saisies incomplets sera possible, mais donnera un résultat imprécis. Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques \"0\", vous pouvez utiliser le bouton \"Remplir toutes les cellules vides avec des zéros\". ",
-      "Save": "Etes-vous sûr de vouloir sauvegarder ?"
+    "p1": "Le formulaire contient des données vides, le calcul des indicateurs à partir de formulaires de saisie incomplets sera possible mais donnera un résultat inexact.",
+    "p2": "Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques “0”, vous pouvez retourner dans le formulaire de saisie et utiliser le bouton “Remplir les cellules avec des 0” (voir FAQ)."
+  },
+  "FormSaveModal": {
+    "title": "Le formulaire est-il rempli ?",
+    "p1": "Vous essayez de sauvegarder ce formulaire.",
+    "p2": "Si le formulaire a déjà été complété, veuillez cliquer sur “Enregistrer et compléter”, ce qui marquera le formulaire comme tel et bloquera toute modification ultérieure.",
+    "p3": "Si le formulaire n’est que partiellement rempli ou sera encore modifié, cliquez sur “Sauvegarde temporaire”"
+  },
+  "LockedInput": {
+    "infoUser": "Cette saisie a déjà été complétée, si vous avez besoin de faire des modifications supplémentaires, contactez le propriétaire du projet.",
+    "infoAdmin": "Cette saisie a déjà été complétée, vous pouvez la débloquer pour que les saisisseurs de données puissent la modifier à nouveau.",
+    "lock": "Bloquer la saisie",
+    "unlock": "Débloquer la saisie"
   },
   "export-current-minimized": "Rapport Excel de la vue actuelle",
   "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",

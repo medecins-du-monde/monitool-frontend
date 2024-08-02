@@ -16,6 +16,10 @@
   background-color: white;
   margin-bottom: 12px;
   width: 250px;
+  
+  @media screen and (max-width: $breakpoint-sm) {
+    width: calc(100% - 25px);
+  }
     
   .sidenav-title{
     font-size: $normal_text;

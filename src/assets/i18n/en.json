@@ -131,6 +131,7 @@
   "Reset": "Reset",
   "EMail-Hint": "Enter your e-mail address", 
   "Edit": "Edit",
+  "Completed": "Completed",
   "Email": "Email",
   "EndDate": "End date",
   "Enum": {
@@ -717,6 +718,8 @@
   "Role": "Role",
   "SameAsProject": "Same as project ({{date}})",
   "Save": "Save",
+  "TempSave": "Temporary save",
+  "SaveComplete": "Save & Complete",
   "SaveConfirm": "Save to confirm reverting this version",
   "SaveIndicator": "Save indicator",
   "SaveThematic": "Save the thematic",
@@ -886,9 +889,20 @@
   "minimized-tooltip": "All Sites merged",
   "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
   "NullValueMessage": {
-      "Warning": "Warning : ",
-      "NullValueMeaning": "the form contains empty data. The calculation of indicators from incomplete input forms will be possible, but will give an inaccurate result. If you want to replace the unentered values with numerical values \"0\", you can use the button \"Fill all empty cells with 0\".",
-      "Save": "Are you sure you want to save?"
+    "p1": "The form contains empty data, the calculation of indicators from incomplete input forms will be possible but will give an inaccurate result.",
+    "p2": "If you want to replace the unentered values with numerical values “0”, you can go back to the data entry forms and use the button “Fill the empty cells with 0” (ref to FAQ)."
+  },
+  "FormSaveModal": {
+    "title": "Is the form completed?",
+    "p1": "You are trying to save this form.",
+    "p2": "If the form has already been completed, please click on “Save & Complete”, which will mark the form as such and will block any further modification.",
+    "p3": "If the form is only partially filled or will still be modified, click on “Temporary save”"
+  },
+  "LockedInput": {
+    "infoUser": "This input has already been completed, if you need to do further modifications contact the project owner.",
+    "infoAdmin": "This input has already been completed, you can unlock it so data entry users can modify it again.",
+    "lock": "Lock input",
+    "unlock": "Unlock input"
   },
   "export-current-minimized": "Current View Excel Report",
   "current-minimized-tooltip": "Export the report respecting opened groups",
