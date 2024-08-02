@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { InputsComponent } from './inputs.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('InputsComponent', () => {
   let component: InputsComponent;
@@ -15,7 +16,8 @@ describe('InputsComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatMenuModule
       ]
     }).compileComponents();
   }));
