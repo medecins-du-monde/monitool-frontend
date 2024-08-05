@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 
 @Component({
@@ -15,6 +16,12 @@ export class ExtraIndicatorComponent implements OnInit {
   @Input() disabled = false;
   @Output() edit = new EventEmitter();
   @Output() delete = new EventEmitter();
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {}
 

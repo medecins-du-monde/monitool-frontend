@@ -4,9 +4,12 @@
     <mat-card-content>
         <div *ngIf="extraIndicator.crossCutting" class="card-info column">
             <div class=card-info-title>{{ 'Description' | translate }}: </div>
-            <div class="card-info-value">
-                {{ extraIndicator.description ? extraIndicator.description.en : null }}
-            </div>
+            <div class="card-info-value"
+                [innerHTML]="
+                    extraIndicator.description ?
+                    extraIndicator.description[currentLang] :
+                    ( 'IndicatorMissingDescription' | translate )"
+            ></div>
         </div>
         <div class="card-info">
             <div class="card-info-title">{{ 'Baseline' | translate }}: </div>

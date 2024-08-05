@@ -5,7 +5,12 @@
 <mat-dialog-content [formGroup]="data.indicator" class="mdm-dialog indicator-modal">
     <div *ngIf="data.indicator.value.crossCutting" class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Description' | translate }}</div>
-        <label>{{ data.indicator.value.description ? data.indicator.value.description.en : null }}</label>
+        <label
+            [innerHTML]="
+                data.indicator.value.description ?
+                data.indicator.value.description[currentLang] :
+                ( 'IndicatorMissingDescription' | translate )"
+        ></label>
     </div>
     <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Name' | translate }}</div>
