@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
@@ -43,7 +43,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private router: Router,
     private dialog: MatDialog,
     private projectService: ProjectService,
-    private inputService: InputService
+    private inputService: InputService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -57,8 +58,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   onOpen(): void {
     // Get the project id to redirect MDM Account properly if needed
-    this.projectService.updateProjectId(this.project.id);
-    this.router.navigate(['/projects', this.project.id]);
+    // this.projectService.updateProjectId(this.project.id);
+    // this.router.navigate(['/projects', this.project.id]);
+
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([this.project.id], { relativeTo: this.route })
+    );
+
+    alert(url);
+
+    window.open(url, '_blank');
   }
 
   onDelete(): void {
