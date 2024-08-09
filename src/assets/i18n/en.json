@@ -450,7 +450,7 @@
       "Edit_data_response2": "If you have several paper forms to enter per collection sites (for example, one per social worker), and wish to add them up, you can enter sums in the entry boxes: '1 + 2 + 3'.",
       "Edit_data_question3": "What is the 'Fill in with data from the previous period' button used for?",
       "Edit_data_response3": "To save time in certain special cases! If your project follows indicators that require indicators that vary little over time (number of structures supported, population of the targeted area, etc.), it is often easier to copy the data from the previous entry and correct them, than to carry out the entry from scratch.",
-      "Edit_data_question4": "What is the 'Replace missing values ​​with zero' button for?",
+      "Edit_data_question4": "What is the 'Fill all empty cells with 0' button for?",
       "Edit_data_response4": "<ul><li>If the form contains empty cells, there is a risk of miscalculation of the indicators computed with those data.</li><li>If you want to replace the unentered values with numerical values “0”, you can go back to the data entry forms and use the button “Fill all empty cells with 0”. Once data entry is completed and checked, you click on “Save & complete” to lock the entry and compute the indicators.</li></ul>",
       "Edit_data_question5": "What happens if I leave some cells blank?",
       "Edit_data_response5": "Warning! <br> A blank cell is not equivalent to a cell that contains a zero. Data not entered will appear as such in reports.",
