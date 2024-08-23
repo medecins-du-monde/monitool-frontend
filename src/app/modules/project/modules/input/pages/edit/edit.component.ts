@@ -114,6 +114,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       res2: 'InformationPanel.Edit_data_description'
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.input_lock_question',
+      res2: 'InformationPanel.input_lock_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.Edit_data_question1',
       res2: 'InformationPanel.Edit_data_response1'
     } as InformationItem,

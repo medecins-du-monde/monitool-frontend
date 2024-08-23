@@ -49,6 +49,11 @@ export class InputsComponent implements OnInit, OnDestroy {
       res2: 'InformationPanel.Calendar_entry_description'
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.input_lock_question',
+      res2: 'InformationPanel.input_lock_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.Calendar_entry_question1',
       res2: 'InformationPanel.Calendar_entry_response1'
     } as InformationItem
