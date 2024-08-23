@@ -57,15 +57,15 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   onOpen(): void {
-    // Get the project id to redirect MDM Account properly if needed
-    this.projectService.updateProjectId(this.project.id);
-    this.router.navigate(['/projects', this.project.id]);
+    // // Get the project id to redirect MDM Account properly if needed
+    // this.projectService.updateProjectId(this.project.id);
+    // this.router.navigate(['/projects', this.project.id]);
 
-    // const url = this.router.serializeUrl(
-    //   this.router.createUrlTree([this.project.id], { relativeTo: this.route })
-    // );
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([this.project.id], { relativeTo: this.route })
+    );
 
-    // window.open(url, '_blank');
+    window.open(url, '_blank');
   }
 
   onDelete(): void {
