@@ -13,12 +13,13 @@
     "generate-icons": "svg-to-ts",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
-    "compodoc:serve": "compodoc -s"
+    "compodoc:serve": "compodoc -s",
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
-        "pre-commit": "npm lint",
-        "pre-push": "npm lint"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
     }
   },
   "private": true,
@@ -47,7 +48,7 @@
     "expr-eval": "^2.0.2",
     "fast-json-patch": "^2.0.6",
     "handsontable": "^7.4.2",
-    "husky": "^9.1.5",
+    "husky": "^8.0.3",
     "install": "^0.13.0",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
