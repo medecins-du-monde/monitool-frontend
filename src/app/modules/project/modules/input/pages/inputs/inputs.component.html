@@ -33,7 +33,7 @@
                     <div *ngIf="element[column]?.value >= 0" [ngClass]="{'edition-cell': isOwner}">
                         <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
                             class="mdm-button small-button" [ngClass]="{'completed-button': element[column]?.blocked}">
-                            {{ element[column]?.blocked ? ('Completed' | translate) : ('Edit' | translate) + ' (' + element[column]?.value.toFixed(0) + '%)' }}
+                            {{ (element[column]?.blocked ? ('Completed' | translate) : ('Edit' | translate)) + ' (' + element[column]?.value.toFixed(0) + '%)' }}
                         </button>
                         <div *ngIf="isOwner" class="expand" [ngClass]="{'completed-expand-button': element[column]?.blocked}" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element[column]}">
                             <mat-icon>expand_more</mat-icon>
