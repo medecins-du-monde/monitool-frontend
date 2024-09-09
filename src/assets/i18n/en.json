@@ -950,7 +950,10 @@
     "description": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "description-plural": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "input": "Delete Input",
+    "inputMessage": "Are you sure you want to delete all the data entered in this input?",
+    "inputWarning": "This action cannot be reverted from the project history"
   },
   "display-comments": {
     "title": "Display comments",

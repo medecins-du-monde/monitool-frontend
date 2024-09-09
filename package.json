@@ -9,6 +9,7 @@
     "build:beta": "ng build --configuration=beta",
     "test": "ng test",
     "lint": "ng lint",
+    "lint-fix": "ng lint --fix",
     "e2e": "ng e2e",
     "generate-icons": "svg-to-ts",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
