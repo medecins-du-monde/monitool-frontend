@@ -176,6 +176,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   @ViewChild('saveDialog') saveDialog: TemplateRef<any>;
 
+  @ViewChild('deleteDialog') deleteDialog: TemplateRef<any>;
+
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
     return !this.canBeSaved;
@@ -822,6 +824,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     this.createTable(true);
     this.updateTotals(this.inputForm.value);
     this.dialog.open(this.saveDialog);
+  }
+
+  openDeleteModal(): Promise<void> {
+    this.dialog.open(this.deleteDialog);
+    return;
   }
 
   // Delete current input and redirect the user to input home page

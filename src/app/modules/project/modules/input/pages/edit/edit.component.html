@@ -57,7 +57,7 @@
         {{ 'ResetChanges' | translate }}
     </button>
 
-    <button mat-stroked-button class="mdm-button warn" *ngIf="input" (click)="deleteInput()">
+    <button mat-stroked-button class="mdm-button warn" *ngIf="input" (click)="openDeleteModal()">
         <mat-icon>clear</mat-icon>
         {{ 'Delete' | translate }}
     </button>
@@ -116,6 +116,37 @@
             mat-dialog-close
         >
             {{ 'SaveComplete' | translate }}
+        </button>
+    </mat-dialog-actions>
+</ng-template>
+
+<ng-template #deleteDialog>
+    <button class="dialog-close" mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+    <h2 mat-dialog-title>{{'delete-modal.input' | translate}}</h2>
+    <mat-dialog-content class="dialog-body" style="max-width: 800px;">
+        <p>{{'delete-modal.inputMessage' | translate}}</p>
+        <div class="null-warning">
+            <mat-icon>info</mat-icon>
+            <div>
+                <span>{{'delete-modal.inputWarning' | translate}}</span>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-stroked-button
+            class="mdm-button"
+            mat-dialog-close
+        >
+            {{ 'Cancel' | translate }}
+        </button>
+        <button mat-stroked-button
+            (click)="deleteInput()"
+            class="mdm-button save-button"
+            mat-dialog-close
+        >
+            {{ 'delete-modal.confirm' | translate }}
         </button>
     </mat-dialog-actions>
 </ng-template>
