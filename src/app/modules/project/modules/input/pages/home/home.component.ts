@@ -147,6 +147,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
+  formatTooltip(text: string) {
+    return `<div style="overflow-wrap: break-word">${text}</div>`;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
