@@ -8,6 +8,7 @@ import { ProgressBarTripleModule } from 'src/app/components/progress-bar-triple/
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [HomeComponent],
@@ -19,7 +20,8 @@ import { RouterModule } from '@angular/router';
         MatButtonModule,
         MatIconModule,
         ProgressBarTripleModule,
-        RouterModule
+        RouterModule,
+        MatTooltipModule
     ]
 })
 export class HomeModule { }
