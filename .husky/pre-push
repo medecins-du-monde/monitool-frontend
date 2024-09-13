@@ -1,2 +1,4 @@
 npm run lint
-npm run test
+npm run test-headless
+# Issues wih this command? Make sure you are on node 16 and check:
+# https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md
