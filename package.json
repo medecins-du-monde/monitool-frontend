@@ -8,13 +8,15 @@
     "build:uat": "ng build --configuration=uat",
     "build:beta": "ng build --configuration=beta",
     "test": "ng test",
+    "test-headless": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
     "lint": "ng lint",
     "lint-fix": "ng lint --fix",
     "e2e": "ng e2e",
     "generate-icons": "svg-to-ts",
     "compodoc:build": "compodoc -p tsconfig.doc.json",
     "compodoc:build-and-serve": "compodoc -p tsconfig.doc.json -s",
-    "compodoc:serve": "compodoc -s"
+    "compodoc:serve": "compodoc -s",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -72,6 +74,7 @@
     "codelyzer": "^6.0.0",
     "eslint": "^7.17.0",
     "fast-json-patch": "^2.0.6",
+    "husky": "^8.0.3",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.4.3",

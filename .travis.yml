@@ -18,7 +18,7 @@ jobs:
        - npm i
        - export NODE_OPTIONS="--max-old-space-size=8192"
       script:
-       - ng test --watch=false
+       - npm run test-headless
     - stage: deploy
       if: branch = dev
       before_install:

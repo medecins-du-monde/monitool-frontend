@@ -166,7 +166,6 @@ export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   hasUpdate = false;
-
   ngOnInit(): void {
     this.subscription.add(
       this.route.events.subscribe(event => {
