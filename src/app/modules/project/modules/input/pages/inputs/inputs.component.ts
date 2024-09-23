@@ -50,12 +50,19 @@ export class InputsComponent implements OnInit, OnDestroy {
     } as InformationItem,
     {
       new: true,
-      res1: 'InformationPanel.input_lock_question',
-      res2: 'InformationPanel.input_lock_response'
+      res1: 'InformationPanel.input_status_question',
+      res2: 'inputStatus'
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.input_variants_question',
+      res2: 'InformationPanel.input_variants_response',
+      graphic: 'inputVariants'
+    },
+    {
       res1: 'InformationPanel.Calendar_entry_question1',
-      res2: 'InformationPanel.Calendar_entry_response1'
+      res2: 'InformationPanel.Calendar_entry_response1',
+      graphic: 'emptyCells'
     } as InformationItem
   ];
   // TODO: Check if possible to clean and make simplify this component

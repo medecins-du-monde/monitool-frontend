@@ -115,8 +115,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem,
     {
       new: true,
-      res1: 'InformationPanel.input_lock_question',
-      res2: 'InformationPanel.input_lock_response'
+      res1: 'InformationPanel.input_status_question',
+      res2: 'inputStatus'
+    } as InformationItem,
+    {
+      new: true,
+      res1: 'InformationPanel.input_save_question',
+      res2: 'inputSave',
+      graphic: 'saveButtons'
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question1',
@@ -132,11 +138,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question4',
-      res2: 'InformationPanel.Edit_data_response4'
+      res2: 'InformationPanel.Edit_data_response4',
+      graphic: 'emptyCells'
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question5',
-      res2: 'InformationPanel.Edit_data_response5'
+      res2: 'InformationPanel.Edit_data_response5',
+      graphic: 'emptyCells'
     } as InformationItem
   ];
 
@@ -175,7 +183,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   private user: User;
 
   @ViewChild('saveDialog') saveDialog: TemplateRef<any>;
-
   @ViewChild('deleteDialog') deleteDialog: TemplateRef<any>;
 
   @HostListener('window:beforeunload')
@@ -791,7 +798,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   fillWithZero(): void {
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning' } });
+    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning', warning: true } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res?.confirm) {
@@ -885,24 +892,24 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   async confirm(block: boolean = false): Promise<void> {
-    // if (this.showModal) {
-    //   const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+    if (this.showModal) {
+      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning', warning: true } });
 
-    //   const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
-    //     if (res?.confirm) {
-    //       const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
-    //       this.inputService.save(inputToBeSaved).then(response => {
-    //         if (response) {
-    //           this.input = new Input(response);
-    //           this.inputForm.get('rev').setValue(this.input.rev);
-    //           this.isBlocked = response.blocked;
-    //           this.router.navigate(['./../../../'], { relativeTo: this.route });
-    //         }
-    //       });
-    //       dialogSubscription.unsubscribe();
-    //     }
-    //   });
-    // } else {
+      const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+        if (res?.confirm) {
+          const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
+          this.inputService.save(inputToBeSaved).then(response => {
+            if (response) {
+              this.input = new Input(response);
+              this.inputForm.get('rev').setValue(this.input.rev);
+              this.isBlocked = response.blocked;
+              this.router.navigate(['./../../../'], { relativeTo: this.route });
+            }
+          });
+          dialogSubscription.unsubscribe();
+        }
+      });
+    } else {
       const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
       this.inputService.save(inputToBeSaved).then(response => {
         if (response) {
@@ -912,6 +919,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           this.router.navigate(['./../../../'], { relativeTo: this.route });
         }
       });
-    // }
+    }
   }
 }

@@ -18,11 +18,7 @@ export class ConfirmModalComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    if (this.data.messageId === 'DelayWarning') {
-      this.warning = true;
-    } else {
-      this.warning = false;
-    }
+    this.warning = this.data.warning;
   }
 
   userAgreement(event): void {
