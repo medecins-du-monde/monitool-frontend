@@ -953,8 +953,8 @@
   "FormSaveModal": {
     "title": "Le formulaire de saisie est-il rempli ?",
     "p1": "Vous essayez de sauvegarder ce formulaire de saisie.",
-    "p2": "Si le formulaire de saisie a déjà été complété, veuillez cliquer sur “Enregistrer et compléter”, ce qui marquera le formulaire de saisie comme tel et bloquera toute modification ultérieure.",
-    "p3": "Si le formulaire de saisie n’est que partiellement rempli ou sera encore modifié, cliquez sur “Sauvegarder temporairement”"
+    "p2": "Si le formulaire de saisie a déjà été complété, veuillez cliquer sur <b style='color: #5cb85c'>\"Sauvegarder et verrouiller\"</b>, ce qui marquera le formulaire de saisie comme tel et bloquera toute modification ultérieure.",
+    "p3": "Si le formulaire de saisie n’est que partiellement rempli ou sera encore modifié, cliquez sur <b style='color: #005ec5'>\"Sauvegarder temporairement\"</b>"
   },
   "LockedInput": {
     "infoUser": "Cette saisie a déjà été complétée, si vous avez besoin de faire des modifications supplémentaires, contactez le propriétaire du projet.",
@@ -1035,5 +1035,14 @@
   "justUpdated": "Vient d'être mis à jour",
   "minutesAgo": "Il y a {{minutes}}min",
   "refreshCache": "Actualiser les valeurs",
-  "refreshCacheInfo": "Actualiser avec les dernières valeurs saisies"
+  "refreshCacheInfo": "Actualiser avec les dernières valeurs saisies",
+  "graphics": {
+    "emptyCells": {
+        "male": "Homme",
+        "female": "Femme",
+        "malaria": "Paludisme ",
+        "infection": "Infection Respiratoire Aigüe",
+        "diarrhea": "Diarrhée"
+    }
+  }
 }

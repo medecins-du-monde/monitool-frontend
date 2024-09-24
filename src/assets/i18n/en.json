@@ -65,7 +65,7 @@
   "Country": "Country",
   "CoveredPeriod": "Covered period",
   "Restore": "Restore",
-  "Create": "Create",
+  "Create": "Input",
   "CreateLogicalFramework": "create a blank Logical Framework",
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
@@ -453,7 +453,7 @@
         ]
       }],
       "input_variants_question": "What do the different statuses of the input forms mean?",
-      "input_variants_response": "<ul><li><b style='color: #005ec5'>Create</b>: Input form to be created (it is empty).</li><li><b style='color: gray'>Modify (%)</b>: Input form with fully or partially entered data (%).</li><li><b style='color: #5cb85c'>Completed</b>: Input form with fully or partially entered data (%), checked, validated and locked.</li></ul>",
+      "input_variants_response": "<ul><li><b style='color: #005ec5'>Input</b>: Input form to be created (it is empty).</li><li><b style='color: gray'>Modify (%)</b>: Input form with fully or partially entered data (%).</li><li><b style='color: #5cb85c'>Completed</b>: Input form with fully or partially entered data (%), checked, validated and locked.</li></ul>",
       "Collection_sites": "Collection sites",
       "Collection_sites_description": "When a project does the same thing in different locations, you should be able to follow this location individually, by groups and all together. <br><br> Type here: <br><ul><li> The list of locations that are parts of this project (for example, a list of hospital)</li><li> Grouping that will be used during this monitoring (for example : zip codes, types of structures)</li></ul>",
       "Crosscutting_indicators_list": "Crosscutting indicators list",
@@ -937,8 +937,8 @@
   "FormSaveModal": {
     "title": "Is the input form completed?",
     "p1": "You are trying to save this input form.",
-    "p2": "If the input form has already been completed, please click on “Save & Lock”, which will mark the input form as such and will block any further modification.",
-    "p3": "If the input form is only partially filled or will still be modified, click on “Temporary save”"
+    "p2": "If the input form has already been completed, please click on <b style='color: #5cb85c'>\"Save & Lock\"</b>, which will mark the input form as such and will block any further modification.",
+    "p3": "If the input form is only partially filled or will still be modified, click on <b style='color: #005ec5'>\"Temporary save\"</b>"
   },
   "LockedInput": {
     "infoUser": "This input has already been completed, if you need to do further modifications contact the project owner.",
@@ -1019,5 +1019,14 @@
   "justUpdated": "Just updated",
   "minutesAgo": "{{minutes}}min ago",
   "refreshCache": "Refresh data",
-  "refreshCacheInfo": "Refresh with the last data inputed"
+  "refreshCacheInfo": "Refresh with the last data inputed",
+  "graphics": {
+    "emptyCells": {
+        "male": "Male",
+        "female": "Female",
+        "malaria": "Malaria",
+        "infection": "Acute respiratory infection",
+        "diarrhea": "Diarrhea"
+    }
+  }
 }

@@ -61,7 +61,7 @@
   "Country": "País",
   "CoveredPeriod": "Periodo cubierto",
   "Restore": "Restaurar",
-  "Create": "Crear",
+  "Create": "Introducir",
   "CreateNewDataSource": "Crear una nueva fuente de datos",
   "CreateLogicalFramework":"Añadir un marco lógico en blanco",
   "CreateNewIndicator": "Crear un nuevo indicador",
@@ -466,7 +466,7 @@
         ]
       }],
       "input_variants_question": "¿Qué significan los diferentes estados de los formularios de entrada?",
-      "input_variants_response": "<ul><li><b style='color: #005ec5'>Crear</b>: Formulario de entrada a rellenar (está vacío).</li><li><b style='color: gray'>Modificar (%)</b>: Formulario de entrada con datos ingresados ​​total o parcialmente (%).</li><li><b style='color: #5cb85c'>Completado (%)</b>: Formulario de entrada con datos total o parcialmente ingresados ​​(%), verificado, validado y bloqueado.</li></ul>",
+      "input_variants_response": "<ul><li><b style='color: #005ec5'>Introducir</b>: Formulario de entrada a rellenar (está vacío).</li><li><b style='color: gray'>Modificar (%)</b>: Formulario de entrada con datos ingresados ​​total o parcialmente (%).</li><li><b style='color: #5cb85c'>Completado (%)</b>: Formulario de entrada con datos total o parcialmente ingresados ​​(%), verificado, validado y bloqueado.</li></ul>",
       "Collection_sites": "Sitios de recolección",
       "Collection_sites_description": "Cuando un proyecto realiza las mismas actividades en varios lugares, deben poder ser seguidas individualmente, por grupos y todos juntos. <br> <br> Ingrese aquí: <br> <ul> <li> La lista de lugares en los que está trabajando el proyecto (por ejemplo: una lista de centros de salud) </li> <li> Grupos que se utilizarán al rastrear (por ejemplo: regiones, tipos de estructuras) </li> </ul>",
       "Crosscutting_indicators_list": "Lista de indicadores transversales",
@@ -954,8 +954,8 @@
   "FormSaveModal": {
     "title": "¿Ha completado el formulario de entrada?",
     "p1": "Esta intentando guardar el formulario de entrada.",
-    "p2": "Si ya completó el formulario de entrada, haga clic en “Guardar y Bloquear, lo que marcara el formulario de entrada como tal y evitará modificaciones adicionales.",
-    "p3": "Si el formulario de entrada solo esta parcialmente completo o aún sera modificado haga clic en “Guardado temporal”"
+    "p2": "Si ya completó el formulario de entrada, haga clic en <b style='color: #5cb85c'>\"Guardar y Bloquear\"</b>, lo que marcara el formulario de entrada como tal y evitará modificaciones adicionales.",
+    "p3": "Si el formulario de entrada solo esta parcialmente completo o aún sera modificado haga clic en <b style='color: #005ec5'>\"Guardado temporal\"</b>"
   },
   "LockedInput": {
     "infoUser": "Esta entrada ya ha sido completada, si necesitas hacer modificaciones adicionales contacte el propietario del proyecto.",
@@ -1036,5 +1036,14 @@
   "justUpdated": "Se acaba de actualizar",
   "minutesAgo": "Hace {{minutes}}min",
   "refreshCache": "Refrescar valores",
-  "refreshCacheInfo": "Refrescar con los últimos valores guardados"
+  "refreshCacheInfo": "Refrescar con los últimos valores guardados",
+  "graphics": {
+    "emptyCells": {
+        "male": "Hombre",
+        "female": "Mujer",
+        "malaria": "Malaria",
+        "infection": "Infección respiratoria aguda",
+        "diarrhea": "Diarrea"
+    }
+  }
 }
