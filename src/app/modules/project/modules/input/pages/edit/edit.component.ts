@@ -23,6 +23,7 @@ import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/classes/user.model';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -105,7 +106,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     private router: Router,
     private dialog: MatDialog,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private domSanitizer: DomSanitizer
   ) { }
 
   informations = [
@@ -920,5 +922,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
       });
     }
+  }
+
+  // We need the domSanitizer so that angular will display html tags in innerHTML
+  transform(translatekey: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
   }
 }

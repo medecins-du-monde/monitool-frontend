@@ -80,9 +80,9 @@
     </button>
     <h2 mat-dialog-title>{{'FormSaveModal.title' | translate}}</h2>
     <mat-dialog-content class="dialog-body" style="max-width: 800px;">
-        <p>{{'FormSaveModal.p1' | translate}}</p>
-        <p>{{'FormSaveModal.p2' | translate}}</p>
-        <p>{{'FormSaveModal.p3' | translate}}</p>
+        <p [innerHTML]="transform('FormSaveModal.p1')"></p>
+        <p [innerHTML]="transform('FormSaveModal.p2')"></p>
+        <p [innerHTML]="transform('FormSaveModal.p3')"></p>
         <ng-container *ngIf="inputHasNull">
             <div class="null-warning">
                 <div>
@@ -97,21 +97,21 @@
                     <table class="modalTable">
                         <tr>
                           <th></th>
-                          <th>Male</th>
-                          <th>Female</th>
+                          <th>{{"graphics.emptyCells.male" | translate}}</th>
+                          <th>{{"graphics.emptyCells.female" | translate}}</th>
                         </tr>
                         <tr>
-                          <th>Malaria</th>
-                          <td class="correct">0</td>
-                          <td class="correct">0</td>
-                        </tr>
-                        <tr>
-                          <th>Acute respiratory infection</th>
+                          <th>{{"graphics.emptyCells.malaria" | translate}}</th>
                           <td class="correct">0</td>
                           <td class="correct">0</td>
                         </tr>
                         <tr>
-                          <th>Diarrhea</th>
+                          <th>{{"graphics.emptyCells.infection" | translate}}</th>
+                          <td class="correct">0</td>
+                          <td class="correct">0</td>
+                        </tr>
+                        <tr>
+                          <th>{{"graphics.emptyCells.diarrhea" | translate}}</th>
                           <td class="correct">0</td>
                           <td class="error"></td>
                         </tr>
