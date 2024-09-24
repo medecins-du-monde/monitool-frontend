@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputStatusComponent } from './input-status.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('InputStatusComponent', () => {
   let component: InputStatusComponent;
@@ -8,7 +9,10 @@ describe('InputStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InputStatusComponent ]
+      declarations: [ InputStatusComponent ],
+      imports: [
+        TranslateModule.forRoot()
+      ]
     })
     .compileComponents();
   });
