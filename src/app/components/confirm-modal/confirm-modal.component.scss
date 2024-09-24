@@ -1,10 +1,15 @@
-.modal-text {
-    margin-top: 10px;
-    margin-right: 30px;
+@import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
 
-    .mat-icon {
-        color: #d9534f;
-        margin-right: 5px;
-        vertical-align: bottom;
-    }
+.null-warning {
+    padding: 8px 10px;
+    margin: 16px 0;
+
+    color: $info;
+    border: $info solid 2px;
+    border-radius: 8px;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

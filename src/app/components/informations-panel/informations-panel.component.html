@@ -53,7 +53,110 @@
                         </div>
                         <p class="panel-title" [innerHTML]="transform(information.res1)"></p>
                     </mat-expansion-panel-header>
-                    <div class="panel-answer" [innerHTML]="transform(information.res2)"></div>
+                    <div class="panel-answer" [ngSwitch]="information.res2">
+
+                        <!-- Custom components -->
+                        <app-input-status *ngSwitchCase="'inputStatus'"></app-input-status>
+                        <app-input-save *ngSwitchCase="'inputSave'"></app-input-save>
+                        <!-- Default translation key -->
+                        <div *ngSwitchDefault [innerHTML]="transform(information.res2)"></div>
+
+                        <!-- Graphics --> <!-- TODO: Move to a component -->
+                        <div *ngIf="information.graphic" [ngSwitch]="information.graphic" style="margin-top: 16px;">
+                            <!-- Empty cells graphic  -->
+                            <table *ngSwitchCase="'emptyCells'" class="modalTable">
+                                <tr>
+                                  <th></th>
+                                  <th>Male</th>
+                                  <th>Female</th>
+                                </tr>
+                                <tr>
+                                  <th>Malaria</th>
+                                  <td class="correct">0</td>
+                                  <td class="correct">0</td>
+                                </tr>
+                                <tr>
+                                  <th>Acute respiratory infection</th>
+                                  <td class="correct">0</td>
+                                  <td class="correct">0</td>
+                                </tr>
+                                <tr>
+                                  <th>Diarrhea</th>
+                                  <td class="correct">0</td>
+                                  <td class="error"></td>
+                                </tr>
+                                <tr>
+                                  <td class="clear"></td>
+                                  <td class="clear correct">{{'FilledWithValues' | translate}}</td>
+                                  <td class="clear error">{{'MissingValues' | translate}}</td>
+                                </tr>
+                            </table>
+                            <!-- Data entry form save buttons -->
+                            <div class="buttons" *ngSwitchCase="'saveButtons'">
+                                <button mat-stroked-button
+                                    class="mdm-button"
+                                    mat-dialog-close
+                                >
+                                    {{ 'Cancel' | translate }}
+                                </button>
+                                <button mat-stroked-button
+                                    class="mdm-button save-button"
+                                >
+                                    {{ 'TempSave' | translate }}
+                                </button>
+                                <button mat-stroked-button
+                                    class="mdm-button save-button complete-button"
+                                >
+                                    {{ 'SaveComplete' | translate }}
+                                </button>
+                            </div>
+                            <!-- Input dashboard variants -->
+                            <table *ngSwitchCase="'inputVariants'" class="input-variants-table">
+                                <tr>
+                                  <th>{{"Date" | translate}}</th>
+                                  <th>Primary health center Bimbo 1</th>
+                                  <th>Primary health center Bimbo 2</th>
+                                  <th>Primary health center Bimbo 3</th>
+                                </tr>
+                                <tr>
+                                  <th>2022</th>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button"> {{'Edit' | translate}} (18%) </button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>2021</th>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button completed-button"> {{'Completed' | translate}} (80%) </button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button"> {{'Edit' | translate}} (80%) </button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th>2020</th>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button"> {{'Edit' | translate}} (100%) </button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button completed-button"> {{'Completed' | translate}} (42%) </button>
+                                  </td>
+                                  <td>
+                                    <button mat-stroked-button class="mdm-button small-button completed-button"> {{'Completed' | translate}} (100%) </button>
+                                  </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </mat-expansion-panel>
             </ng-container>
             <mat-expansion-panel hideToggle [expanded]="!insideProject()">

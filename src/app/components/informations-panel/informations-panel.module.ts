@@ -6,10 +6,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { UserRightsTableModule } from '../user-rights-table/user-rights-table.module';
+import { InputStatusComponent } from './components/input-status/input-status.component';
+import { InputSaveComponent } from './components/input-save/input-save.component';
 
 
 @NgModule({
-  declarations: [InformationsPanelComponent],
+  declarations: [InformationsPanelComponent, InputStatusComponent, InputSaveComponent],
   imports: [
     CommonModule,
     TranslateModule,

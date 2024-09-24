@@ -144,6 +144,7 @@ ol, ul {
     margin-right: 8px;
     color: #005ec5;
     position: relative;
+    min-width: max-content;
     overflow: hidden;
 
     p {
@@ -198,5 +199,116 @@ li {
     margin-bottom: 8px;
     p {
         margin: 0;
+    }
+}
+
+.modalTable {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+
+    tr {
+        color: black;
+        font-size: 14px;
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0 4px;
+        }
+
+        th {
+            background-color: #eeeeee;
+            text-align: left;
+        }
+
+        td {
+            &.error {
+                background-color: rgb(217, 83, 79);
+
+                &.clear {
+                    color: rgb(217, 83, 79);;
+                }
+            }
+            &.correct {
+                border: 2px solid #5386fb;
+
+                &.clear {
+                    color: #5386fb;
+                }
+            }
+            &.clear {
+                background-color: transparent;
+                border-color: transparent;
+                font-weight: bold;
+            }
+        }
+
+        &:not(:first-child) > th {
+            font-weight: normal;
+        }
+    }
+}
+
+.buttons {
+    pointer-events: none;
+    display: flex;
+    gap: 12px;
+
+    button {
+        border-radius: 4px;
+    }
+
+    .complete-button {
+        background-color: #5cb85c;
+    }
+}
+
+.input-variants-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    
+    tr {
+        font-size: 14px;
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0 4px;
+        }
+
+        td:first-child {
+            font-weight: bold;
+            width: 15%;
+          }
+
+        th {
+            text-align: center;
+            min-width: 154px; // taking into account the width of max length of word possible.
+        }
+        td{
+            text-align: center;
+            padding: 0;
+
+            div, button{
+                width: 100%;
+            }
+
+            button {
+                border-radius: 4px !important;
+                font-size: 14px;
+            }
+
+            .completed-button {
+                color: white;
+                background-color: #5cb85c;
+                border-color: #4cae4c !important;
+            }
+
+            .create-button{
+                color: white;
+                background-color: rgb(49, 112, 143);
+                border-color: rgb(49, 112, 143) !important;
+            }
+        }
     }
 }

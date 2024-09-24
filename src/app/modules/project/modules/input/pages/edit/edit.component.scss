@@ -110,13 +110,62 @@
     color: $info;
     border: $info solid 2px;
     border-radius: 8px;
-    
-    display: flex;
-    align-items: center;
-    gap: 10px;
+
+    & > div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 }
 
 .complete-button {
     background-color: #5cb85c;
+}
+
+.modalTable {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+
+    tr {
+        color: black;
+        font-size: 14px;
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0 4px;
+        }
+
+        th {
+            background-color: #eeeeee;
+            text-align: left;
+        }
+
+        td {
+            &.error {
+                background-color: rgb(217, 83, 79);
+
+                &.clear {
+                    color: rgb(217, 83, 79);;
+                }
+            }
+            &.correct {
+                border: 2px solid #5386fb;
+
+                &.clear {
+                    color: #5386fb;
+                }
+            }
+            &.clear {
+                background-color: transparent;
+                border-color: transparent;
+                font-weight: bold;
+            }
+        }
+
+        &:not(:first-child) > th {
+            font-weight: normal;
+        }
+    }
 }
 

@@ -83,19 +83,48 @@
         <p>{{'FormSaveModal.p1' | translate}}</p>
         <p>{{'FormSaveModal.p2' | translate}}</p>
         <p>{{'FormSaveModal.p3' | translate}}</p>
-        <div class="null-warning" *ngIf="inputHasNull">
-            <mat-icon>info</mat-icon>
-            <div>
-                <p>{{'NullValueMessage.p1' | translate}}</p>
-                <span>{{'NullValueMessage.p2' | translate}}</span>
+        <ng-container *ngIf="inputHasNull">
+            <div class="null-warning">
+                <div>
+                    <mat-icon>info</mat-icon>
+                    <div>
+                        <p>{{'NullValueMessage.p1' | translate}}</p>
+                        <span>{{'NullValueMessage.p2' | translate}}</span>
+                    </div>
+                </div>
+                <div style="margin-top: 16px;">
+                    <div style="width: 24px"></div>
+                    <table class="modalTable">
+                        <tr>
+                          <th></th>
+                          <th>Male</th>
+                          <th>Female</th>
+                        </tr>
+                        <tr>
+                          <th>Malaria</th>
+                          <td class="correct">0</td>
+                          <td class="correct">0</td>
+                        </tr>
+                        <tr>
+                          <th>Acute respiratory infection</th>
+                          <td class="correct">0</td>
+                          <td class="correct">0</td>
+                        </tr>
+                        <tr>
+                          <th>Diarrhea</th>
+                          <td class="correct">0</td>
+                          <td class="error"></td>
+                        </tr>
+                        <tr>
+                          <td class="clear"></td>
+                          <td class="clear correct">{{'FilledWithValues' | translate}}</td>
+                          <td class="clear error">{{'MissingValues' | translate}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-        </div>
+        </ng-container>
     </mat-dialog-content>
-    <!-- <div class="modal-text">
-        <p><span class="bold-text">{{ 'NullValueMessage.Warning' | translate }}</span>{{ 'NullValueMessage.NullValueMeaning' | translate }}</p>
-        <img [src]="imageLink">
-        <p>{{ 'NullValueMessage.Save' | translate }}</p>
-    </div> -->
     <mat-dialog-actions align="end">
         <button mat-stroked-button
             class="mdm-button"

@@ -1,0 +1,26 @@
+<span [innerHTML]="transform('InformationPanel.input_status_response.p1')"></span>
+<ul>
+    <li>
+        <b style='color: #005ec5'>{{'Input' | translate}}</b>:
+        {{'InformationPanel.input_status_response.ul1.0' | translate}}
+    </li>
+    <li>
+        <b style='color: gray'>{{"Edit" | translate}} (%)</b>:
+        {{'InformationPanel.input_status_response.ul1.1' | translate}}
+    </li>
+    <li>
+        <b style='color: #5cb85c'>{{"Completed" | translate}} (%)</b>:
+        {{'InformationPanel.input_status_response.ul1.2' | translate}}
+    </li>
+</ul>
+{{'InformationPanel.input_status_response.p2' | translate}}
+<ul>
+    <li>
+        <b style='color: #005ec5'>{{"TempSave" | translate}}</b>:
+        {{'InformationPanel.input_status_response.ul2.0' | translate}}
+    </li>
+    <li>
+        <b style='color: #5cb85c'>{{"SaveComplete" | translate}}</b>:
+        <span [innerHTML]="transform('InformationPanel.input_status_response.ul2.1')"></span>
+    </li>
+</ul>
