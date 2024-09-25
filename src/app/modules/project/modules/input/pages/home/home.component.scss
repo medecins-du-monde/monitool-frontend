@@ -1,3 +1,42 @@
 #status{
     width: 50%;
-}    
+}
+table {
+    width: 100%;
+    max-width: 100%;
+}
+.mat-column-task {
+    width: 50%;
+    max-width: calc((100vw - 252px - 30px - 25px) / 2);
+    overflow: hidden;
+
+    .flex-cell {
+        display: flex;
+        gap: 4px;
+        margin-right: 8px;
+
+        p {
+            margin-bottom: 0;
+            text-wrap: nowrap;
+            line-height: 24px;
+
+            &:last-of-type {
+                margin-right: 4px;
+            }
+        }
+
+        button {
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        @media (max-width: 750px) {
+            flex-wrap: wrap;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

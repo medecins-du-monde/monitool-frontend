@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,7 +8,7 @@ describe('RefreshSnackbarComponent', () => {
   let component: RefreshSnackbarComponent;
   let fixture: ComponentFixture<RefreshSnackbarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RefreshSnackbarComponent],
       imports: [TranslateModule.forRoot(), MatSnackBarModule],

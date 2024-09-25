@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { LogicalFramesComponent } from './logical-frames.component';
@@ -7,7 +7,7 @@ describe('LogicalFramesComponent', () => {
   let component: LogicalFramesComponent;
   let fixture: ComponentFixture<LogicalFramesComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [LogicalFramesComponent],
       imports: [TranslateModule.forRoot()]

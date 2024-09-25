@@ -61,7 +61,7 @@
   "Country": "País",
   "CoveredPeriod": "Periodo cubierto",
   "Restore": "Restaurar",
-  "Create": "Crear",
+  "Create": "Introducir",
   "CreateNewDataSource": "Crear una nueva fuente de datos",
   "CreateLogicalFramework":"Añadir un marco lógico en blanco",
   "CreateNewIndicator": "Crear un nuevo indicador",
@@ -127,6 +127,7 @@
   "DuplicateDatasourceWithData": "La fuente de datos sera clonada con todos los datos entrados. Esto requiere guardar el proyecto, confirma para clonar y guardar.",
   "DuplicateDatasourceWithDataWarning": "Esta acción guardara el proyecto automaticamente",
   "Edit": "Modificar",
+  "Completed": "Completado",
   "Email": "Correo electrónico",
   "en": "Inglés",
   "EndDate": "Fecha de fin",
@@ -178,7 +179,7 @@
       "Permiten seguir elementos especificos del proyecto (datos medicales, logisticos, ...)"
   ],
   "FillThe": "Rellenar los",
-  "FillWithZeroWarning" : "Atención: las celdas vacías (valor no introducido) se inicializarán ahora con el valor numérico \"0\". ¿Quieres continuar?",
+  "FillWithZeroWarning" : "Las celdas vacías (valor no introducido) se van a rellenar con el valor numérico \"0\". ¿Quiere continuar?",
   "Fiters": "Filtres",
   "Finished": "Terminado",
   "FinishedPlural": "Terminados",
@@ -424,8 +425,48 @@
       "Basics_response1": "Puede cambiarlo en cualquier momento, deje el valor predeterminado (en un año).",
       "Calendar_entry": "Horario de entrada",
       "Calendar_entry_description": "El calendario de entrada proporciona acceso a los formularios de entrada del proyecto.",
-      "Calendar_entry_question1": "¿A qué corresponden los porcentajes indicados en cada hoja?",
-      "Calendar_entry_response1": "Este es el porcentaje de datos que se han ingresado al menos parcialmente.",
+      "Calendar_entry_question1": "¿A qué corresponden los % indicados en cada formulario de entrada?",
+      "Calendar_entry_response1": "Este es el porcentaje de datos que han sido parcialmente o completamente ingresados in este formulario de entrada (%). Es decir, que aún hay casillas vacías (valores sin ingresar) en ese formulario de entrada. Si bien esto no impedirá que se apliquen las normas de agregación de datos, cuyo resultado será visible en el Informe General.",
+      "input_status_question": "Como ingresar, comprobar, validar y bloquear mis datos.",
+      "input_status_response": {
+        "p1": "La entrada de datos en un formulario de entrada puede ser realizada por un usario de entrada de datos o el propietario (ref. Tabla de derechos).<br>En el panel de entradas para una fuente de datos, existen 3 estados posibles para cada formulario de entrada:",
+        "ul1": [
+            "El formulario de entrada esta listo, pero no contiene ninguna información aún (esta vacío).",
+            "El formulario de entrada ha sido total o parcialmente ingresado (%) pero aún es editable.",
+            "El formulario de entrada ha sido total o parcialmente ingresado (%), esta bloqueado, y la información ha sido guardada definitivamente (rellenada, comprobada, validada)."
+        ],
+        "p2": "Los usuarios de entrada de datos y el propietario tienen dos opciones para rellenar y guardar el formulario. Hay dos opciones de validación:",
+        "ul2": [
+            "Guarda los datos que ingresaste y los hace aparecer en el informe general para todos. Así, las agregaciones de los datos y los cálculos de los indicadores relacionados con estos datos introducidos se calcularán automáticamente en el Informe General. Este formulario de ingreso puede ser modificado por el usuario de entrada de datos Y el propietario.",
+            "Guarda los datos que ingresaste y los hace aparecer en el informe general para todos. Así, las agregaciones de los datos y los cálculos de los indicadores relacionados con estos datos introducidos se calcularán automáticamente en el Informe General. PERO este formulario de entrada está bloqueado y ya no puede modificarse mediante la entrada de datos. SÓLO los propietarios pueden desbloquear este formulario de entrada en cualquier momento, alternando el formulario de entrada de vuelta a <b style='color: gray'>'Modificar (%)'</b>."
+        ]
+      },
+      "input_save_question": "¿Qué significan las diferentes opciones para validar los datos ingresados ​​en el formulario de entrada?",
+      "input_save_response": [{
+        "text": "Si hace clic en el botón blanco <b style='color: gray'>\"Cancelar\"</b>:",
+        "list": [
+            "La entrada de datos no se guarda.",
+            "Por lo tanto, los datos ingresados ​​no aparecen en el Informe General.",
+            "Regresas al formulario de entrada y puedes continuar ingresando datos."
+        ]
+      },{
+        "text": "Si hace clic en el botón ázul <b style='color: #005ec5'>\"Guardado temporal\"</b>:",
+        "list": [
+            "Los datos ingresados ​​se guardan pero la entrada no se bloquea.",
+            "Los datos introducidos aparecen en el Informe General.",
+            "Regresa al panel de la fuente de datos y el estado de este formulario de entrada cambia a: <b style='color: gray'>\"Modificar (%)\"</b> y es blanco."
+        ]
+      },{
+        "text": "Si hace clic en el botón verde <b style='color: #5cb85c'>\"Guardar y bloquear\"</b>:",
+        "list": [
+            "Los datos ingresados ​​se guardan y la entrada se bloquea.",
+            "Los datos introducidos aparecen en el Informe General.",
+            "Regresa al panel de la fuente de datos y el estado de este formulario de entrada cambia a: <b style='color: #5cb85c'>\"Completado (%)\"</b> y es verde.",
+            "SÓLO los <span style='text-decoration: underline'>propietarios pueden desbloquear</span> este formulario de entrada en cualquier momento."
+        ]
+      }],
+      "input_variants_question": "¿Qué significan los diferentes estados de los formularios de entrada?",
+      "input_variants_response": "<ul><li><b style='color: #005ec5'>Introducir</b>: Formulario de entrada a rellenar (está vacío).</li><li><b style='color: gray'>Modificar (%)</b>: Formulario de entrada con datos ingresados ​​total o parcialmente (%).</li><li><b style='color: #5cb85c'>Completado (%)</b>: Formulario de entrada con datos total o parcialmente ingresados ​​(%), verificado, validado y bloqueado.</li></ul>",
       "Collection_sites": "Sitios de recolección",
       "Collection_sites_description": "Cuando un proyecto realiza las mismas actividades en varios lugares, deben poder ser seguidas individualmente, por grupos y todos juntos. <br> <br> Ingrese aquí: <br> <ul> <li> La lista de lugares en los que está trabajando el proyecto (por ejemplo: una lista de centros de salud) </li> <li> Grupos que se utilizarán al rastrear (por ejemplo: regiones, tipos de estructuras) </li> </ul>",
       "Crosscutting_indicators_list": "Lista de indicadores transversales",
@@ -460,10 +501,10 @@
       "Edit_data_response2": "Si tiene varios formularios en papel para ingresar por ubicación (por ejemplo, uno por trabajador social) y desea sumarlos, puede ingresar sumas en los cuadros de entrada: '1 + 2 + 3'.",
       "Edit_data_question3": "¿Para qué se utiliza el botón 'Completar con datos del período anterior'?",
       "Edit_data_response3": "¡Para ahorrar tiempo en determinados casos especiales! Si su proyecto sigue indicadores que requieren indicadores que varían poco a lo largo del tiempo (número de estructuras apoyadas, población del área objetivo, etc.), a menudo es más fácil copiar los datos de la entrada anterior y corregirlas. sacar la entrada desde cero.",
-      "Edit_data_question4": "¿Para qué sirve el botón 'Reemplazar valores perdidos con cero'?",
-      "Edit_data_response4": "¡Para ahorrar tiempo en determinados casos especiales! <br> Para alguns datos, puede suceder que la mayoría de los valores que se deben ingresar sean ceros. Esto sucede con frecuencia si se utilizan varias desagregaciones en lo mismo dato.",
-      "Edit_data_question5": "¿Qué pasa si dejo algunas casillas en blanco?",
-      "Edit_data_response5": "¡Atención! <br> Un cuadro que se deja en blanco no es equivalente a un cuadro que contiene un cero. Los datos no ingresados ​​aparecerán como tales en los informes.",
+      "Edit_data_question4": "¿Para qué sirve el botón 'Rellenar todas las celdas vacías con 0'?",
+      "Edit_data_response4": "Si el formulario de entrada contiene celdas vacías, el cálculo de los indicadores con esa información aún sera posible pero con un riesgo de error (ejemplo: si el denominador no ha sido rellenado, el cálculo del indicador no sera posible)<br>Si desea reemplazar los valores no ingresados ​​con valores numéricos “0”, puede volver al formulario y usar el botón “0”. Una vez que se complete y verifique la entrada de datos, haga clic en “Guardar y Bloquear” para limitar futuras modificaciones.</li></ul>",
+      "Edit_data_question5": "¿Qué pasa si dejo algunas casillas vacía?",
+      "Edit_data_response5": "¡Atención!<br>Una casilla vacía en blanco no es equivalente a una casilla con el valor \"0\". Los valores no ingresados ​​aparecerán como tal en las fuentes de datos en el Informe General.",
       "Extra_indicators": "Indicadores anexos",
       "Extra_indicators_description": "Los indicadores adjuntos son indicadores adicionales que no aparecen en ningún marco lógico. <br> Permiten seguir elementos específicos del proyecto (datos médicos, logística, ...).",
       "FAQ": "Preguntas frecuentes",
@@ -491,7 +532,7 @@
       "General_reporting_question7": "¿Por qué algunos datos están precedidos por el símbolo ≈?",
       "General_reporting_response7": "¡Está viendo estos datos en un nivel de agregación que es más bajo que donde los recopiló! <br> Por ejemplo, realizó la recolección trimestralmente, pero consulte estos datos en una tabla que los muestra mensualmente. <br> En este caso, los datos se 'interpolan' para permitirle tener órdenes de magnitud y poder comparar indicadores que no recolecta con los mismos intervalos entre ellos. <br> Esto también sucede si ve una medida calculada, por ejemplo, un porcentaje, pero el numerador y el denominador no se recopilan con la misma periodicidad. <br> Para tomar un ejemplo, si ha recopilado una cantidad de nacimientos esperados en una sala de maternidad por trimestre, pero lo está viendo por mes, monitool distribuirá la cantidad de nacimientos trimestrales en cada mes, corrigiendo por la cantidad de días que ellos entienden. <br> Por lo tanto, el símbolo ≈ se muestra permanentemente para recordarle que los datos que está viendo son aproximaciones aproximadas de la realidad y que solo se pueden usar para tener órdenes de magnitud.",
       "General_reporting_question8": "¿Por qué algunos datos se muestran en <i> cursiva </i>?",
-      "General_reporting_response8": "Los datos que se muestran en <i> cursiva </i> solo se han introducido parcialmente. La mayoría de las veces, esto significa que solo se han ingresado algunas de las ubicaciones de recolección esperadas. El caso también puede ocurrir si consulta una versión agregada (por ejemplo, por trimestre) de los datos recopilados con una periodicidad más corta (por ejemplo, por mes) y no se han ingresado todos los meses del trimestre considerado. <br> Al desagregar la línea con el botón, puede encontrar fácilmente las entradas que faltan.",
+      "General_reporting_response8": "Los datos que se muestran en <i> cursiva </i> solo han sido introducido parcialmente. La mayoría de las veces, esto significa que solo se han ingresado algunas de las ubicaciones de recolección esperadas. El caso también puede ocurrir si consulta una versión agregada (por ejemplo, por trimestre) de los datos recopilados con una periodicidad más corta (por ejemplo, por mes) y no se han ingresado todos los meses que componen el trimestre considerado. <br> Desagregando la línea con el botón '+', podra identificar fácilmente las entradas que faltan.",
       "General_reporting_question9": "¿Cómo puedo añadir un comentario?",
       "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Los comentarios permiten al personal de entrada de datos proporcionar información adicional que puede ser relevante para el análisis de datos. Los analistas también pueden utilizar comentarios para hacer anotaciones.</li><li>Este texto es visible para todos, por lo que permite que las personas más cercanas a las actividades contribuyan al análisis, que sera centralizado por los coordinadores del proyecto.</li><li>Simplemente haga clic derecho en la celda deseada y añada el texto. No olvide guardar.</li><li>Debe tener el rol de propietario o de entrada de datos. Consulte la sección ROLES DE USUARIO para un PROYECTO en este FAQ.</li></ul>",
       "History": "Histórico",
@@ -708,6 +749,10 @@
   "RevertToVersion": "Revertir a la versión anterior",
   "Role": "Tipo",
   "Save": "Guardar",
+  "TempSave": "Guardado temporal",
+  "SaveComplete": "Guardar y Bloquear",
+  "FilledWithValues": "Rellenado con valores numéricos",
+  "MissingValues": "Faltan valores",
   "SaveIndicator": "Guardar indicador",
   "SaveConfirm": "Guarde para confirmar la reversión de esta versión",
   "SaveThematic": "Guardar la temática",
@@ -903,9 +948,20 @@
   "minimized-tooltip": "Todos los sitios combinados",
   "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección",
   "NullValueMessage": {
-      "Warning": "Advertencia : ",
-      "NullValueMeaning": "el formulario contiene datos vacíos. El cálculo de indicadores a partir de formularios de entrada incompletos será posible, pero dará un resultado inexacto. Si desea sustituir los valores no introducidos por valores numéricos \"0\", puede utilizar el botón \"Rellenar todas las celdas vacías con 0",
-      "Save": "¿Estás seguro de que quieres ahorrar?"
+    "p1": "El formulario contiene datos vacíos, el cálculo de indicadores a partir de formularios de entrada incompletos será posible pero dará un resultado inexacto.",
+    "p2": "Si desea reemplazar los valores no ingresados ​​con valores numéricos “0”, puede volver al formulario de entrada de datos y usar el botón “Rellenar todas las celdas vacías con 0” (consulte el FAQ)."
+  },
+  "FormSaveModal": {
+    "title": "¿Ha completado el formulario de entrada?",
+    "p1": "Esta intentando guardar el formulario de entrada.",
+    "p2": "Si ya completó el formulario de entrada, haga clic en <b style='color: #5cb85c'>\"Guardar y Bloquear\"</b>, lo que marcara el formulario de entrada como tal y evitará modificaciones adicionales.",
+    "p3": "Si el formulario de entrada solo esta parcialmente completo o aún sera modificado haga clic en <b style='color: #005ec5'>\"Guardado temporal\"</b>"
+  },
+  "LockedInput": {
+    "infoUser": "Esta entrada ya ha sido completada, si necesitas hacer modificaciones adicionales contacte el propietario del proyecto.",
+    "infoAdmin": "Esta entrada ya ha sido completada, puede debloquearla para que los usuarios de entrada de datos puedan modificarla de nuevo.",
+    "lock": "Bloquear la entrada",
+    "unlock": "Desbloquear la entrada"
   },
   "export-current-minimized": "Exportación de la vista actual",
   "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",
@@ -951,7 +1007,10 @@
     "description": "Si eliminas tu {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
     "description-plural": "Si eliminas tus {{type}} '{{item}}', toda la información previamente introducida en esta {{type}} sera eliminada. Tras confirmar vas a necesitar guardar tus cambios para que la eliminación se tome efecto. Seleccion 'Cancelar' para ignorar la eliminación.",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "input": "Suprimir Entrada",
+    "inputMessage": "¿Esta seguro de querer suprimir todad la información de esta entrada?",
+    "inputWarning": "Esta acción no podra ser revertida desde el historial"
   },
   "display-comments": {
     "title": "Mostrar comentarios",
@@ -977,5 +1036,14 @@
   "justUpdated": "Se acaba de actualizar",
   "minutesAgo": "Hace {{minutes}}min",
   "refreshCache": "Refrescar valores",
-  "refreshCacheInfo": "Refrescar con los últimos valores guardados"
+  "refreshCacheInfo": "Refrescar con los últimos valores guardados",
+  "graphics": {
+    "emptyCells": {
+        "male": "Hombre",
+        "female": "Mujer",
+        "malaria": "Malaria",
+        "infection": "Infección respiratoria aguda",
+        "diarrhea": "Diarrea"
+    }
+  }
 }

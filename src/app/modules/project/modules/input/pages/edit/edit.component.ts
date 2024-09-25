@@ -21,6 +21,9 @@ import Parser from 'expr-eval';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/classes/user.model';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -103,12 +106,25 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     private router: Router,
     private dialog: MatDialog,
     private userService: UserService,
+    private authService: AuthService,
+    private domSanitizer: DomSanitizer
   ) { }
 
   informations = [
     {
       res1: 'InformationPanel.Edit_data',
       res2: 'InformationPanel.Edit_data_description'
+    } as InformationItem,
+    {
+      new: true,
+      res1: 'InformationPanel.input_status_question',
+      res2: 'inputStatus'
+    } as InformationItem,
+    {
+      new: true,
+      res1: 'InformationPanel.input_save_question',
+      res2: 'inputSave',
+      graphic: 'saveButtons'
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question1',
@@ -124,11 +140,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question4',
-      res2: 'InformationPanel.Edit_data_response4'
+      res2: 'InformationPanel.Edit_data_response4',
+      graphic: 'emptyCells'
     } as InformationItem,
     {
       res1: 'InformationPanel.Edit_data_question5',
-      res2: 'InformationPanel.Edit_data_response5'
+      res2: 'InformationPanel.Edit_data_response5',
+      graphic: 'emptyCells'
     } as InformationItem
   ];
 
@@ -161,7 +179,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   filledWithZero = false;
   public imageLink: string;
 
-  @ViewChild('nullInputInfoDialog') nullInputInfoDialog: TemplateRef<any>;
+  public isOwner = false;
+  public isBlocked = false;
+  public isNew = true;
+  private user: User;
+
+  @ViewChild('saveDialog') saveDialog: TemplateRef<any>;
+  @ViewChild('deleteDialog') deleteDialog: TemplateRef<any>;
 
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
@@ -169,6 +193,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   ngOnInit(): void {
+    this.setInput();
+  }
+
+  setInput(): void {
     this.imageLink = 'assets/images/null-data-' + this.currentLang + '.png';
     this.subscription.add(
       this.userService.showingInputModal.subscribe(val => {
@@ -178,11 +206,27 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     // Set the page with the normal size
     this.projectService.inBigPage.next(false);
 
+    // Save user and set isOwner property
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: any) => {
+        this.user = user;
+        this.user.id = user._id || user.username;
+        if (user.role === 'admin') {
+          this.isOwner = true;
+        }
+      })
+    );
+
     // Subscribe to the current project
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.updateData();
+        // Set isOwner property
+        if (!this.isOwner && this.user && project.users) {
+          const projectUser = project.users.find(user => user.id === this.user.id || user.username === this.user.id);
+          this.isOwner = projectUser && projectUser.role === 'owner';
+        }
       })
     );
 
@@ -242,8 +286,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           savedInput = savedInput.find(x => x.period === this.timeSlotDate);
           // Why not just else
           if (savedInput !== undefined) {
-            // If there is not, we create a new one
+            // If there is we create a new one
             this.input = new Input(savedInput);
+            this.isNew = false;
           }
         }
 
@@ -315,11 +360,12 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       period: this.timeSlotDate,
       project: this.project.id,
       rev: (this.input && this.input.rev) ? this.input.rev : null,
-      values: this.fb.group(valuesGroup)
+      values: this.fb.group(valuesGroup),
     });
 
     // Fill the init value with the current value in order to be able to reset
     this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+    this.isBlocked = (this.input && this.input.blocked) ? true : false;
   }
 
   // This method convert all the string inputs in a number
@@ -467,7 +513,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         rows,
         numberCols: this.numberCols,
         numberRows: this.numberRows,
-        displayedColumns: currentCollumns
+        displayedColumns: currentCollumns,
       };
 
       tableObj = this.fillValues(element, tableObj);
@@ -754,7 +800,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   fillWithZero(): void {
 
-    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning' } });
+    const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'FillWithZeroWarning', warning: true } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res?.confirm) {
@@ -780,18 +826,26 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   // Save the current input and redirect the user to the input home page
   saveInput(): void {
+    // Front security, though the back will block it from saving.
+    if (this.isBlocked && !this.isOwner) {
+      return;
+    }
     this.createTable(true);
     this.updateTotals(this.inputForm.value);
-    if (this.inputHasNull){
-      this.dialog.open(this.nullInputInfoDialog);
-    }
-    else{
-      this.confirm();
-    }
+    this.dialog.open(this.saveDialog);
+  }
+
+  openDeleteModal(): Promise<void> {
+    this.dialog.open(this.deleteDialog);
+    return;
   }
 
   // Delete current input and redirect the user to input home page
   async deleteInput(): Promise<void> {
+    // Front security, though the back will block it from saving.
+    if (this.isBlocked && !this.isOwner) {
+      return;
+    }
     const inputToBeDeleted = new Input(this.inputForm.value);
     const response = await this.inputService.delete(inputToBeDeleted);
     if (response) {
@@ -830,17 +884,27 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     // does nothing ???
   }
 
-  async confirm(): Promise<void> {
+  toggleBlock(): void {
+    const inputToBeSaved = new Input({...this.initValue.value, rev: this.inputForm.value.rev, blocked: !this.isBlocked});
+    this.inputService.save(inputToBeSaved).then(response => {
+      this.input = new Input(response);
+      this.inputForm.get('rev').setValue(this.input.rev);
+      this.isBlocked = response.blocked;
+    });
+  }
+
+  async confirm(block: boolean = false): Promise<void> {
     if (this.showModal) {
-      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning' } });
+      const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning', warning: true } });
 
       const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
         if (res?.confirm) {
-          const inputToBeSaved = new Input(this.inputForm.value);
+          const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
           this.inputService.save(inputToBeSaved).then(response => {
             if (response) {
               this.input = new Input(response);
               this.inputForm.get('rev').setValue(this.input.rev);
+              this.isBlocked = response.blocked;
               this.router.navigate(['./../../../'], { relativeTo: this.route });
             }
           });
@@ -848,14 +912,20 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         }
       });
     } else {
-      const inputToBeSaved = new Input(this.inputForm.value);
+      const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
       this.inputService.save(inputToBeSaved).then(response => {
         if (response) {
           this.input = new Input(response);
           this.inputForm.get('rev').setValue(this.input.rev);
+          this.isBlocked = response.blocked;
           this.router.navigate(['./../../../'], { relativeTo: this.route });
         }
       });
     }
+  }
+
+  // We need the domSanitizer so that angular will display html tags in innerHTML
+  transform(translatekey: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
   }
 }

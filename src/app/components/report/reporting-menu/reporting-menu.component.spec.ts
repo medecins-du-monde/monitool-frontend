@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';
 
@@ -9,7 +9,7 @@ describe('ReportingMenuComponent', () => {
   let component: ReportingMenuComponent;
   let fixture: ComponentFixture<ReportingMenuComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ReportingMenuComponent],
       imports: [HttpClientTestingModule, TranslateModule.forRoot()]

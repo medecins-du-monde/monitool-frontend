@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
 import { BehaviorSubject, Subscription } from 'rxjs';
@@ -58,11 +59,15 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   get type() {
     return this.data.indicator.value.type;
   }
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   @ViewChild('allSelected') private allSelected: MatOption;
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
+    private translateService: TranslateService,
     @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[], isCC?: boolean }
   ) { }
 

@@ -65,7 +65,7 @@
   "Country": "Country",
   "CoveredPeriod": "Covered period",
   "Restore": "Restore",
-  "Create": "Create",
+  "Create": "Input",
   "CreateLogicalFramework": "create a blank Logical Framework",
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
@@ -130,7 +130,8 @@
   "DuplicateDatasourceWithDataWarning": "This action will save the project automatically",
   "Reset": "Reset",
   "EMail-Hint": "Enter your e-mail address", 
-  "Edit": "Edit",
+  "Edit": "Modify",
+  "Completed": "Completed",
   "Email": "Email",
   "EndDate": "End date",
   "Enum": {
@@ -179,7 +180,7 @@
       "Those allow to monitor specific elements of the project (medical data, logistics, ...)"
   ],
   "FillThe": "Fill the",
-  "FillWithZeroWarning" : "Attention: empty cells (not entered) will now be initialized to the numerical value \"0\". Do you want to continue?",
+  "FillWithZeroWarning" : "Empty cells (not entered) will now be filled with the numerical value \"0\". Do you want to continue?",
   "Finished": "Finished",
   "FinishedPlural": "Finished",
   "Fiters": "Filters",
@@ -411,8 +412,48 @@
       "Basics_response1": "You can change it at any time, leave the default value (in a year).",
       "Calendar_entry": "The entry calendar",
       "Calendar_entry_description": "The entry calendar provides access to the project entry forms.",
-      "Calendar_entry_question1": "What do the percentages indicated on each sheet correspond to?",
-      "Calendar_entry_response1": "This is the percentage of data that have been at least partially entered.",
+      "Calendar_entry_question1": "What do the % indicated on each entry form correspond to?",
+      "Calendar_entry_response1": "This is the percentage of data that was partially or fully entered in this input form (%). There are still empty cells (value not entered) in this input form, but this will not prevent the data aggregation rules from applying, the result of which will be visible in the General Report.",
+      "input_status_question": "How to input, check, validate and lock my data",
+      "input_status_response": {
+        "p1": "Data entry in the data entry forms can be carried out by the data entry user or the owner (ref. Rights table).<br>In the data source input dashboard, here are the 3 possible states for each of the data entry forms:",
+        "ul1": [
+            "The entry form is ready, but no data has been entered yet (it is empty).",
+            "The input form has been partially or fully entered (%) but is still editable.",
+            "The entry form has been partially or fully entered (%), it is locked, and the data is definitively recorded (entered, checked, validated)."
+        ],
+        "p2": "Data entry and owners have two options to enter the data and save that entry. There are two validation options:",
+        "ul2": [
+            "Saves the data you entered and makes it appear in the general report for everyone. Thus, the aggregations of the data and the calculations of the indicators related to this data entered will be calculated automatically in the General Report. This entry form can be modified by the data entry AND the owner.",
+            "Saves the data you entered and makes it appear in the general report for everyone. Thus, the aggregations of the data and the calculations of the indicators related to this data entered will be calculated automatically in the General Report. BUT this input form is locked and can no longer be modified by the data entry. ONLY owners can unlock this input form at any time, toggling the input form back to <b style='color: gray'>'Modify (%)'</b>."
+        ]
+      },
+      "input_save_question": "What does the different choices for validating the data entered in the input form mean?",
+      "input_save_response": [{
+        "text": "If you click on the white button <b style='color: gray'>\"Cancel\"</b>:",
+        "list": [
+            "Data entry is not saved.",
+            "So, the data entered does not appear on the General Report.",
+            "You return to the entry form and can continue entering data."
+        ]
+      },{
+        "text": "If you click on the blue button <b style='color: #005ec5'>\"Temporary save\"</b>:",
+        "list": [
+            "The data entered is saved but the entry is not locked.",
+            "The data entered appears in the General Report.",
+            "You return to the dashboard of this data source and the status of this input form changes to: <b style='color: gray'>\"Modify (%)\"</b> and is white."
+        ]
+      },{
+        "text": "If you click on the green button <b style='color: #5cb85c'>\"Save & Lock\"</b>:",
+        "list": [
+            "The data entered is saved and the entry is locked.",
+            "The data entered appears in the General Report.",
+            "You return to the dashboard of this data source and the status of this input form changes to: <b style='color: #5cb85c'>\"Completed (%)\"</b> and is green.",
+            "ONLY <span style='text-decoration: underline'>owners can unlock</span> this input form at any time."
+        ]
+      }],
+      "input_variants_question": "What do the different statuses of the input forms mean?",
+      "input_variants_response": "<ul><li><b style='color: #005ec5'>Input</b>: Input form to be created (it is empty).</li><li><b style='color: gray'>Modify (%)</b>: Input form with fully or partially entered data (%).</li><li><b style='color: #5cb85c'>Completed</b>: Input form with fully or partially entered data (%), checked, validated and locked.</li></ul>",
       "Collection_sites": "Collection sites",
       "Collection_sites_description": "When a project does the same thing in different locations, you should be able to follow this location individually, by groups and all together. <br><br> Type here: <br><ul><li> The list of locations that are parts of this project (for example, a list of hospital)</li><li> Grouping that will be used during this monitoring (for example : zip codes, types of structures)</li></ul>",
       "Crosscutting_indicators_list": "Crosscutting indicators list",
@@ -447,10 +488,10 @@
       "Edit_data_response2": "If you have several paper forms to enter per collection sites (for example, one per social worker), and wish to add them up, you can enter sums in the entry boxes: '1 + 2 + 3'.",
       "Edit_data_question3": "What is the 'Fill in with data from the previous period' button used for?",
       "Edit_data_response3": "To save time in certain special cases! If your project follows indicators that require indicators that vary little over time (number of structures supported, population of the targeted area, etc.), it is often easier to copy the data from the previous entry and correct them, than to carry out the entry from scratch.",
-      "Edit_data_question4": "What is the 'Replace missing values ​​with zero' button for?",
-      "Edit_data_response4": "To save time in certain special cases! <br> For some data it may happen that the majority of the values ​​that need to be entered are zeros. This frequently happens if several disaggregations are used on the same variable.",
-      "Edit_data_question5": "What happens if I leave some cells blank?",
-      "Edit_data_response5": "Warning! <br> A blank cell is not equivalent to a cell that contains a zero. Data not entered will appear as such in reports.",
+      "Edit_data_question4": "What is the 'Fill all empty cells with 0' button for?",
+      "Edit_data_response4": "If the input form contains empty cells, tthe calculation of the indicators from this data is possible but with a risk of error (example: if the denominator has not been entered, the calculation of the indicator cannot be done).<br> you wish to replace unentered values with the numeric value \"0\", you can return to the input form and click on the 'fill blank cells with 0' button. Once the data entry is completed and verified, you can click on “Save & Lock” to lock the entry.",
+      "Edit_data_question5": "What happens if I leave some empty cells?",
+      "Edit_data_response5": "Warning!<br>An empty cell is not equivalent to a cell that contains a zero. Values not entered will appear as such in the data sources of the General Report.",
       "Extra_indicators": "Extra indicators",
       "Extra_indicators_description": "Extra indicators are indicators that do not exist in the logical frames. <br>They allow you to follow specific datas like medical data or logistic...",
       "FAQ": "Frequently asked questions",
@@ -478,7 +519,7 @@
       "General_reporting_question7": "Why is some data preceded by the symbol ≈?",
       "General_reporting_response7": "You are viewing this data at an aggregation level that is lower than where you collected it! <br> For example, you carried out the collection quarterly, but consult this data on a table which displays them monthly. <br> In this case, the data are 'interpolated' in order to allow you to have orders of magnitude, and to be able to compare indicators that you do not collect with the same intervals between them. <br> This also happens if you see a calculated measure, for example a percentage, but the numerator and denominator are not collected with the same periodicity. <br> To take an example, if you have collected a number of expected births in a maternity ward by quarter, but you are viewing it by month, monitool will distribute the number of quarterly births in each month, correcting for the number of days that they understand. <br> The symbol ≈ is therefore permanently displayed to remind you that the data you are viewing are rough approximations of reality, and that they can only be used to have orders of magnitude.",
       "General_reporting_question8": "Why is some data displayed in <i> italics </i>?",
-      "General_reporting_response8": "Data shown in <i> italics </i> has only been partially entered. Most often, this means that only some of the expected collection locations have been entered. The case can also occur if you consult an aggregated version (eg: by quarter) of data collected at a shorter periodicity (eg: by month) and all the months of the quarter considered have not been entered. <br> By disaggregating the line with the button you can easily find the missing entries.",
+      "General_reporting_response8": "The data displayed in <i> italics </i> has only been partially entered. Most often, this means that only some of the expected collection locations have been entered. The case can also occur if you are viewing an aggregated version (eg: by quarter) of data collected at a shorter periodicity (eg: by month) and all the months of the quarter considered have not been entered. <br> By disaggregating the line with the '+' button, you will be able to easily find the missing entries.",
       "General_reporting_question9": "How do I add a comment to one of the cells?",
       "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Comments allow data entry personnel to provide additional information that may be relevant for data analysis. Analysts can also use comments to share their insights.</li><li>This text is visible to everyone, so it enables the people closest to the activities to contribute to the analysis, which will be centralized at project coordination level.</li><li>Simply right-click on the desired cell and add the text. Don't forget to save.</li><li>You must have the role of owner or project manager. See the section USER ROLES for a PROJECT in this FAQ.</li></ul>",
       "History": "History",
@@ -717,6 +758,10 @@
   "Role": "Role",
   "SameAsProject": "Same as project ({{date}})",
   "Save": "Save",
+  "TempSave": "Temporary save",
+  "SaveComplete": "Save & Lock",
+  "FilledWithValues": "Filled with numeric values",
+  "MissingValues": "Missing values",
   "SaveConfirm": "Save to confirm reverting this version",
   "SaveIndicator": "Save indicator",
   "SaveThematic": "Save the thematic",
@@ -886,9 +931,20 @@
   "minimized-tooltip": "All Sites merged",
   "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
   "NullValueMessage": {
-      "Warning": "Warning : ",
-      "NullValueMeaning": "the form contains empty data. The calculation of indicators from incomplete input forms will be possible, but will give an inaccurate result. If you want to replace the unentered values with numerical values \"0\", you can use the button \"Fill all empty cells with 0\".",
-      "Save": "Are you sure you want to save?"
+    "p1": "The form contains empty data, the calculation of indicators from incomplete input forms will be possible but will give an inaccurate result.",
+    "p2": "If you want to replace the unentered values with numerical values “0”, you can go back to the data entry form and use the button “Fill the empty cells with 0” (ref to FAQ)."
+  },
+  "FormSaveModal": {
+    "title": "Is the input form completed?",
+    "p1": "You are trying to save this input form.",
+    "p2": "If the input form has already been completed, please click on <b style='color: #5cb85c'>\"Save & Lock\"</b>, which will mark the input form as such and will block any further modification.",
+    "p3": "If the input form is only partially filled or will still be modified, click on <b style='color: #005ec5'>\"Temporary save\"</b>"
+  },
+  "LockedInput": {
+    "infoUser": "This input has already been completed, if you need to do further modifications contact the project owner.",
+    "infoAdmin": "This input has already been completed, you can unlock it so data entry users can modify it again.",
+    "lock": "Lock input",
+    "unlock": "Unlock input"
   },
   "export-current-minimized": "Current View Excel Report",
   "current-minimized-tooltip": "Export the report respecting opened groups",
@@ -934,7 +990,10 @@
     "description": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "description-plural": "If you delete your {{type}} <code>{{item}}</code>, all data already entered in this {{type}} will be deleted. After confirming you will need to save your changes for the deletion to take effect. Click 'Cancel' to dismiss the deletion.",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "input": "Delete Input",
+    "inputMessage": "Are you sure you want to delete all the data entered in this input?",
+    "inputWarning": "This action cannot be reverted from the project history"
   },
   "display-comments": {
     "title": "Display comments",
@@ -960,5 +1019,14 @@
   "justUpdated": "Just updated",
   "minutesAgo": "{{minutes}}min ago",
   "refreshCache": "Refresh data",
-  "refreshCacheInfo": "Refresh with the last data inputed"
+  "refreshCacheInfo": "Refresh with the last data inputed",
+  "graphics": {
+    "emptyCells": {
+        "male": "Male",
+        "female": "Female",
+        "malaria": "Malaria",
+        "infection": "Acute respiratory infection",
+        "diarrhea": "Diarrhea"
+    }
+  }
 }

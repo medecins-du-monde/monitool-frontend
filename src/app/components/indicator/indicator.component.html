@@ -11,7 +11,12 @@
         </div>
         <div class="card-info column">
             <div class="card-info-title">{{ 'Description' | translate }}</div>
-            <div class="card-info-value">{{indicator.description[currentLang] ? indicator.description[currentLang] : ('IndicatorMissingDescription' | translate )}}</div>
+            <div class="card-info-value"
+                [innerHTML]="
+                    indicator.description ?
+                    indicator.description[currentLang] :
+                    ( 'IndicatorMissingDescription' | translate )"
+            ></div>
         </div>
     </mat-card-content>
     <mat-card-actions align="end">
