@@ -10,6 +10,7 @@ import { FilterModule } from 'src/app/components/report/filter/filter.module';
 import { ReportingTableModule } from 'src/app/components/report/reporting-table/reporting-table.module';
 import { ObjectGroupingModule } from 'src/app/components/report/objectGrouping/object-grouping.module';
 import {InformationsPanelModule} from '../../components/informations-panel/informations-panel.module';
+import { IndicatorReportRoutingModule } from './components/indicator-report/indicator-report-routing.component';
 
 @NgModule({
     declarations: [IndicatorsComponent, IndicatorReportComponent],
@@ -22,7 +23,8 @@ import {InformationsPanelModule} from '../../components/informations-panel/infor
     ReportingTableModule,
     ChartModule,
     ObjectGroupingModule,
-    InformationsPanelModule
+    InformationsPanelModule,
+    IndicatorReportRoutingModule
   ]
 })
 export class IndicatorsModule { }

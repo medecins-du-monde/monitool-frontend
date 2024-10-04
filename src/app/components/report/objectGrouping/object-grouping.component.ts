@@ -10,6 +10,8 @@ import { ReportingService } from 'src/app/services/reporting.service';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { IndicatorService } from 'src/app/services/indicator.service';
+import { Indicator } from 'src/app/models/classes/indicator.model';
 
 @Component({
   selector: 'app-object-grouping',
@@ -21,7 +23,10 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
   @ViewChild('dlMinimized') dlMinimized: TemplateRef<any>;
 
   dimensionForm: FormGroup;
-  @Input() isCrossCuttingReport = false;
+  @Input() crossCuttingIndicator?: {
+    indicator: Indicator,
+    projects: Project[]
+  };
   @Input() project: Project;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
@@ -53,11 +58,11 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private fb: FormBuilder,
     private translateService: TranslateService,
-    private downloadService: DownloadService,
     private router: Router,
     private route: ActivatedRoute,
     private reportingService: ReportingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private indicatorService: IndicatorService
   ) {}
 
 
@@ -82,11 +87,13 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  private mainIndicator: Indicator;
+
   ngOnInit(): void {
     this.updateDimension(8, this.periodicitiesList);
     this.groupOptions = [];
     // If the page is not the cross
-    if (!this.isCrossCuttingReport) {
+    if (!this.crossCuttingIndicator) {
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
           this.project = project;
@@ -155,13 +162,23 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
       data: {
         title: this.translateService.instant('export-complete'),
         type: 'detailed',
-        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
+        estimated:
+          this.crossCuttingIndicator ?
+          this.getEstimatedExportTime(this.crossCuttingIndicator.projects.length, this.crossCuttingIndicator.projects.length * .5) :
+          this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
       }
     });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const url = 'api_export_' + this.currentProjectId + '_' + this.currentPeriodicity + '_' + this.currentLang + '_';
+        const url =
+          'api_export_' +
+          (this.crossCuttingIndicator ? this.crossCuttingIndicator.indicator.id : this.currentProjectId) +
+          '_' +
+          this.currentPeriodicity +
+          '_' +
+          this.currentLang +
+          '_';
 
         window.open(this.router.url + '/download/' + url, '_blank');
         dialogSubscription.unsubscribe();
@@ -174,7 +191,10 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
       data: {
         title: this.translateService.instant('export-minimized'),
         type: 'global',
-        estimated: this.getEstimatedExportTime(this.project.logicalFrames.length)
+        estimated:
+          this.crossCuttingIndicator ?
+          this.getEstimatedExportTime(this.crossCuttingIndicator.projects.length) :
+          this.getEstimatedExportTime(this.project.logicalFrames.length)
       }
     });
 
@@ -182,7 +202,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
       if (result) {
         const url =
           'api_export_' +
-          this.currentProjectId +
+          (this.crossCuttingIndicator ? this.crossCuttingIndicator.indicator.id : this.currentProjectId) +
           '_' +
           this.currentPeriodicity +
           '_' +
@@ -231,7 +251,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
     }
     time /= 60;
     if (time <= 10) {
-      return time;
+      return Math.ceil(time);
     } else {
       return Math.ceil(time / 5) * 5;
     }
