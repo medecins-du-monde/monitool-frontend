@@ -2,7 +2,10 @@
 <div style="height: calc(100% - 56px); overflow: auto;">
   <app-object-grouping
   (dimensionEvent)="receiveDimension($event)"
-  [isCrossCuttingReport]="true"
+  [crossCuttingIndicator]="{
+    indicator: mainIndicator,
+    projects: relatedProjects
+  }"
   ></app-object-grouping>
 
   <app-filter
