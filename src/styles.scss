@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
 @import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
-@include mat-core();
+@include mat.core();
 
 $mdm-primary-colors: (50 : #e0ecf8,
   100 : #b3cfee,
@@ -65,22 +65,22 @@ $mdm-accent-colors: (50 : #ffece0,
     A700 : #000000,
   ));
 
-$mdm-monitool-frontend-primary: mat-palette($mdm-primary-colors);
-$mdm-monitool-frontend-accent: mat-palette($mdm-accent-colors);
-$mdm-monitool-frontend-warn: mat-palette($mat-red);
+$mdm-monitool-frontend-primary: mat.define-palette($mdm-primary-colors);
+$mdm-monitool-frontend-accent: mat.define-palette($mdm-accent-colors);
+$mdm-monitool-frontend-warn: mat.define-palette(mat.$red-palette);
 
-$mdm-monitool-frontend-theme: mat-light-theme((color: (primary: $mdm-monitool-frontend-primary,
+$mdm-monitool-frontend-theme: mat.define-light-theme((color: (primary: $mdm-monitool-frontend-primary,
       accent: $mdm-monitool-frontend-accent,
       warn: $mdm-monitool-frontend-warn,
     )));
 
-@include angular-material-theme($mdm-monitool-frontend-theme);
+@include mat.all-component-themes($mdm-monitool-frontend-theme);
 
-$mdm-monitool-frontend-typography: mat-typography-config($font-family: $main-font,
-  $body-1: mat-typography-level(16px, 20px, 400),
-  $button: mat-typography-level(16px, 16px, 500));
+$mdm-monitool-frontend-typography: mat.define-typography-config($font-family: $main-font,
+  $body-1: mat.define-typography-level(16px, 20px, 400),
+  $button: mat.define-typography-level(16px, 16px, 500));
 
-@include angular-material-typography($mdm-monitool-frontend-typography);
+@include mat.all-component-typographies($mdm-monitool-frontend-typography);
 
 // Colors
 :root {
