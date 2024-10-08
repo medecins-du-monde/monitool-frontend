@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Theme } from 'src/app/models/classes/theme.model';
@@ -12,7 +12,7 @@ import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 })
 export class ThemeModalComponent implements OnInit, OnDestroy {
 
-  themeForm: FormGroup;
+  themeForm: UntypedFormGroup;
 
   displayedColumns = ['language', 'shortName', 'name'];
 
@@ -22,7 +22,7 @@ export class ThemeModalComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private forceTranslateService: ForceTranslateService,
     public dialogRef: MatDialogRef<ThemeModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Theme

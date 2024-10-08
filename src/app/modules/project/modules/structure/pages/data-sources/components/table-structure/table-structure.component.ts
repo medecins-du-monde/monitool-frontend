@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Project } from 'src/app/models/classes/project.model';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs';
 
@@ -12,13 +12,13 @@ import { Subscription } from 'rxjs';
 })
 export class TableStructureComponent implements OnInit, OnDestroy {
 
-  @Input() elementForm: FormGroup;
+  @Input() elementForm: UntypedFormGroup;
   @Input() tableStructure;
   @Input() visualize = true;
   @Output() chosenStructure = new EventEmitter<number>();
 
   project: Project;
-  floatLabelControl = new FormControl();
+  floatLabelControl = new UntypedFormControl();
 
   partitions: any[] = [];
 
@@ -77,13 +77,13 @@ export class TableStructureComponent implements OnInit, OnDestroy {
     const oldControl = this.elementForm.get('partitions').get(currentRowIndex.toString());
 
     // overwrite the currentRowIndex with the control in the nextIndex position
-    (this.elementForm.get('partitions') as FormArray).setControl(
+    (this.elementForm.get('partitions') as UntypedFormArray).setControl(
       currentRowIndex,
       this.elementForm.get('partitions').get(nextIndex.toString())
     );
 
     // overwrite the control in the nextIndex position with the saved control
-    (this.elementForm.get('partitions') as FormArray).setControl(
+    (this.elementForm.get('partitions') as UntypedFormArray).setControl(
       nextIndex,
       oldControl
     );

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/classes/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private showDeleted = false;
   private showByRoles = ['common', 'admin', 'project'];
-  public searchQuery = new FormControl('');
+  public searchQuery = new UntypedFormControl('');
   private searchTimeout: NodeJS.Timeout;
 
   private subscriptions: Subscription[] = [];

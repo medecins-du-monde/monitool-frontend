@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 
@@ -12,11 +12,11 @@ export class CollectionSitesSelectorComponent implements OnInit {
 
   public allOption: Entity = new Entity({id: 'all', name: 'All'});
 
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() entities = [];
   @Input() groups = [];
   @Input() hint = '';
-  updatedForm: FormGroup;
+  updatedForm: UntypedFormGroup;
 
   // This method check which data will be displayed, Example : all, groups, entity
   get selectedEntities(): Entity[] {

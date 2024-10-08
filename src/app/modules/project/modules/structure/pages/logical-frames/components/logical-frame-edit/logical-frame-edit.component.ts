@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,16 +42,16 @@ import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.comp
 })
 export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
-  logicalFrameForm: FormGroup = new FormGroup({
-    id: new FormControl(null),
-    name: new FormControl(null, [Validators.required]),
-    entities: new FormControl(null, [Validators.required]),
-    periodicity: new FormControl(null, [Validators.required]),
-    start: new FormControl(null, [Validators.required]),
-    end: new FormControl(null, [Validators.required]),
-    goal: new FormControl(null, [Validators.required]),
-    indicators: new FormArray([]),
-    purposes: new FormArray([])
+  logicalFrameForm: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    name: new UntypedFormControl(null, [Validators.required]),
+    entities: new UntypedFormControl(null, [Validators.required]),
+    periodicity: new UntypedFormControl(null, [Validators.required]),
+    start: new UntypedFormControl(null, [Validators.required]),
+    end: new UntypedFormControl(null, [Validators.required]),
+    goal: new UntypedFormControl(null, [Validators.required]),
+    indicators: new UntypedFormArray([]),
+    purposes: new UntypedFormArray([])
   });
 
   public project: Project;
@@ -59,12 +59,12 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   public groups: Group[];
   public logicalFrame: LogicalFrame;
 
-  get purposes(): FormArray {
-    return this.logicalFrameForm.controls.purposes as FormArray;
+  get purposes(): UntypedFormArray {
+    return this.logicalFrameForm.controls.purposes as UntypedFormArray;
   }
 
-  get indicators(): FormArray {
-    return this.logicalFrameForm.controls.indicators as FormArray;
+  get indicators(): UntypedFormArray {
+    return this.logicalFrameForm.controls.indicators as UntypedFormArray;
   }
 
   private formSubscription: Subscription;
@@ -72,7 +72,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private dialog: MatDialog,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
@@ -207,7 +207,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number): void {
+  onEditIndicator(indicator: UntypedFormGroup, index?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
@@ -215,7 +215,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
     this.indicators.removeAt(i);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
+  openDialog(indicator: UntypedFormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {

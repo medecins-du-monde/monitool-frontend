@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
@@ -14,20 +14,20 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class OutputEditComponent {
 
-  @Input() outputForm: FormGroup;
+  @Input() outputForm: UntypedFormGroup;
   @Input() forms: Form[];
 
-  get activities(): FormArray {
-    return this.outputForm.controls.activities as FormArray;
+  get activities(): UntypedFormArray {
+    return this.outputForm.controls.activities as UntypedFormArray;
   }
 
-  get indicators(): FormArray {
-    return this.outputForm.controls.indicators as FormArray;
+  get indicators(): UntypedFormArray {
+    return this.outputForm.controls.indicators as UntypedFormArray;
   }
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -40,11 +40,11 @@ export class OutputEditComponent {
   }
 
   onAddNewIndicator(): void {
-    const indicator: FormGroup = FormGroupBuilder.newIndicator();
+    const indicator: UntypedFormGroup = FormGroupBuilder.newIndicator();
     this.openDialog(indicator, true);
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number) {
+  onEditIndicator(indicator: UntypedFormGroup, index?: number) {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
@@ -52,7 +52,7 @@ export class OutputEditComponent {
     this.indicators.removeAt(i);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
+  openDialog(indicator: UntypedFormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {

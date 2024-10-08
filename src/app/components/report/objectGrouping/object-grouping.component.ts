@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Form } from 'src/app/models/classes/form.model';
@@ -22,7 +22,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   @ViewChild('dlMinimized') dlMinimized: TemplateRef<any>;
 
-  dimensionForm: FormGroup;
+  dimensionForm: UntypedFormGroup;
   @Input() crossCuttingIndicator?: {
     indicator: Indicator,
     projects: Project[]
@@ -56,7 +56,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
 
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translateService: TranslateService,
     private router: Router,
     private route: ActivatedRoute,

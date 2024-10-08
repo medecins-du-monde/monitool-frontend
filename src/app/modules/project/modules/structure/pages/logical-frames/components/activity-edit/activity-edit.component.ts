@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { FormGroup, Form, FormArray } from '@angular/forms';
+import { UntypedFormGroup, Form, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
@@ -12,11 +12,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class ActivityEditComponent {
 
-  @Input() activityForm: FormGroup;
+  @Input() activityForm: UntypedFormGroup;
   @Input() forms: Form[];
 
-  get indicators(): FormArray {
-    return this.activityForm.controls.indicators as FormArray;
+  get indicators(): UntypedFormArray {
+    return this.activityForm.controls.indicators as UntypedFormArray;
   }
 
   constructor(
@@ -25,11 +25,11 @@ export class ActivityEditComponent {
   ) { }
 
   onAddNewIndicator(): void {
-    const indicator: FormGroup = FormGroupBuilder.newIndicator();
+    const indicator: UntypedFormGroup = FormGroupBuilder.newIndicator();
     this.openDialog(indicator, true);
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number) {
+  onEditIndicator(indicator: UntypedFormGroup, index?: number) {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
@@ -37,7 +37,7 @@ export class ActivityEditComponent {
     this.indicators.removeAt(i);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number) {
+  openDialog(indicator: UntypedFormGroup, add?: boolean, index?: number) {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.forms } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {

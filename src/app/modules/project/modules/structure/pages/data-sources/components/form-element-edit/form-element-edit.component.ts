@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
@@ -15,7 +15,7 @@ import { PartitionModalComponent } from '../partition-modal/partition-modal.comp
 })
 export class FormElementEditComponent implements OnInit {
 
-  @Input() elementForm: FormGroup;
+  @Input() elementForm: UntypedFormGroup;
   @Input() dataSourceName = '';
 
   chosenStructure;
@@ -47,13 +47,13 @@ export class FormElementEditComponent implements OnInit {
     this.chosenStructure = event;
   }
 
-  get partitions(): FormArray {
-    return this.elementForm.controls.partitions as FormArray;
+  get partitions(): UntypedFormArray {
+    return this.elementForm.controls.partitions as UntypedFormArray;
   }
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -62,7 +62,7 @@ export class FormElementEditComponent implements OnInit {
   }
 
   onAddNewPartition() {
-    const partition: FormGroup = this.newEmptyPartition();
+    const partition: UntypedFormGroup = this.newEmptyPartition();
     this.openDialog(partition);
   }
 
@@ -75,7 +75,7 @@ export class FormElementEditComponent implements OnInit {
     this.elementForm.get('distribution').patchValue(0);
   }
 
-  private newEmptyPartition(): FormGroup {
+  private newEmptyPartition(): UntypedFormGroup {
     const partition = new Partition();
     return this.fb.group({
       id: [partition.id],
@@ -101,7 +101,7 @@ export class FormElementEditComponent implements OnInit {
     });
   }
 
-  private newPartition(partition: Partition): FormGroup {
+  private newPartition(partition: Partition): UntypedFormGroup {
     const partitionForm = this.fb.group({
       id: [partition.id],
       name: [partition.name, Validators.required],
@@ -109,20 +109,20 @@ export class FormElementEditComponent implements OnInit {
       elements: this.fb.array(partition.elements.map(x => this.newPartitionElement(x))),
       useGroups: [partition.useGroups]
     });
-    const elements = partitionForm.controls.elements as FormArray;
+    const elements = partitionForm.controls.elements as UntypedFormArray;
     partitionForm.addControl('groups', this.fb.array(
       partition.useGroups ? partition.groups.map(x => this.newPartitionGroup(x, elements)) : []));
     return partitionForm;
   }
 
-  private newPartitionElement(partitionElement: PartitionElement): FormGroup {
+  private newPartitionElement(partitionElement: PartitionElement): UntypedFormGroup {
     return this.fb.group({
       id: [partitionElement.id],
       name: [partitionElement.name, Validators.required]
     });
   }
 
-  private newPartitionGroup(partitionGroup: PartitionGroup, elements: FormArray): FormGroup {
+  private newPartitionGroup(partitionGroup: PartitionGroup, elements: UntypedFormArray): UntypedFormGroup {
     return this.fb.group({
       id: [partitionGroup.id],
       name: [partitionGroup.name, Validators.required],
@@ -132,7 +132,7 @@ export class FormElementEditComponent implements OnInit {
 
 
 
-  openDialog(partition: FormGroup) {
+  openDialog(partition: UntypedFormGroup) {
     const dialogRef = this.dialog.open(PartitionModalComponent, { data: partition });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {

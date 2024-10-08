@@ -195,9 +195,10 @@
       }
     }
   },
-  "defaultProject": "mdm-monitool-frontend",
   "cli": {
     "analytics": "5144c006-f663-4dd7-a662-9a42f9ba9658",
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

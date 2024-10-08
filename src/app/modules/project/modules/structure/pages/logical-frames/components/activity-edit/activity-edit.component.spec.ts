@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Form } from 'src/app/models/classes/form.model';
@@ -31,9 +31,9 @@ describe('ActivityEditComponent', () => {
         entities: []
       }) as any
     ];
-    component.activityForm = new FormGroup({
-      activities: new FormControl([]),
-      indicators: new FormControl([])
+    component.activityForm = new UntypedFormGroup({
+      activities: new UntypedFormControl([]),
+      indicators: new UntypedFormControl([])
     });
     fixture.detectChanges();
   });

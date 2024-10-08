@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { TableStructureComponent } from './table-structure.component';
@@ -19,14 +19,14 @@ describe('TableStructureComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableStructureComponent);
     component = fixture.componentInstance;
-    component.elementForm = new FormGroup({
-      id: new FormControl(''),
-      name: new FormControl(''),
-      entities: new FormControl([]),
-      periodicity: new FormControl(''),
-      start: new FormControl(new Date()),
-      end: new FormControl(new Date()),
-      elements: new FormArray([])
+    component.elementForm = new UntypedFormGroup({
+      id: new UntypedFormControl(''),
+      name: new UntypedFormControl(''),
+      entities: new UntypedFormControl([]),
+      periodicity: new UntypedFormControl(''),
+      start: new UntypedFormControl(new Date()),
+      end: new UntypedFormControl(new Date()),
+      elements: new UntypedFormArray([])
     });
     component.tableStructure = 0;
     fixture.detectChanges();

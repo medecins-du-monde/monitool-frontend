@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
@@ -44,20 +44,20 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
 
   multiThemesIndicators: CCProjectIndicator[] = [];
 
-  crossCuttingForm: FormGroup;
+  crossCuttingForm: UntypedFormGroup;
 
   private subscription: Subscription = new Subscription();
 
-  get groupsArray(): FormArray {
-    return this.crossCuttingForm.controls.groupsArray as FormArray;
+  get groupsArray(): UntypedFormArray {
+    return this.crossCuttingForm.controls.groupsArray as UntypedFormArray;
   }
 
-  get multiThemesArray(): FormArray {
-    return this.crossCuttingForm.controls.multiThemesArray as FormArray;
+  get multiThemesArray(): UntypedFormArray {
+    return this.crossCuttingForm.controls.multiThemesArray as UntypedFormArray;
   }
 
-  getIndicators(groupNumber: string): FormArray {
-    return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as FormArray;
+  getIndicators(groupNumber: string): UntypedFormArray {
+    return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as UntypedFormArray;
   }
 
   // TODO: Remove this method if not used
@@ -70,7 +70,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     private indicatorService: IndicatorService,
     private projectService: ProjectService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -165,27 +165,27 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     });
   }
 
-  onEditIndicator(indicator: FormGroup, index?: number, indexGroup?: number): void {
+  onEditIndicator(indicator: UntypedFormGroup, index?: number, indexGroup?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value, true), index, indexGroup);
   }
 
-  onDelete(indicator: FormGroup, index?: number, indexGroup?: number): void {
+  onDelete(indicator: UntypedFormGroup, index?: number, indexGroup?: number): void {
     delete this.project.crossCutting[indicator.value.id];
     this.projectService.project.next(this.project);
   }
 
-  openDialog(indicator: FormGroup, indexIndicator?: number, indexGroup?: number): void {
+  openDialog(indicator: UntypedFormGroup, indexIndicator?: number, indexGroup?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms, isCC: true } });
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
         // Filling the formGroup
         if (!indexGroup) {
-          const multiThemesArray = this.crossCuttingForm.controls.multiThemesArray as FormArray;
+          const multiThemesArray = this.crossCuttingForm.controls.multiThemesArray as UntypedFormArray;
           multiThemesArray.setControl(indexIndicator, res.indicator);
         }
         else {
-          const groupsArray = this.crossCuttingForm.controls.groupsArray as FormArray;
-          const groupIndicators = groupsArray.at(indexGroup).get('indicators') as FormArray;
+          const groupsArray = this.crossCuttingForm.controls.groupsArray as UntypedFormArray;
+          const groupIndicators = groupsArray.at(indexGroup).get('indicators') as UntypedFormArray;
           groupIndicators.setControl(indexIndicator, res.indicator);
         }
 

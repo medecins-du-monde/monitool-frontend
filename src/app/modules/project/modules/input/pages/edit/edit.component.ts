@@ -9,7 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/classes/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
@@ -101,7 +101,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private inputService: InputService,
     private router: Router,
     private dialog: MatDialog,
@@ -171,7 +171,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   table: any;
   tables = [];
   input: Input;
-  inputForm: FormGroup;
+  inputForm: UntypedFormGroup;
   previousInput: Input;
   private initValue: any;
   tableSettings: any;
@@ -364,7 +364,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     });
 
     // Fill the init value with the current value in order to be able to reset
-    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+    this.initValue = _.cloneDeep(this.inputForm) as UntypedFormGroup;
     this.isBlocked = (this.input && this.input.blocked) ? true : false;
   }
 
@@ -866,7 +866,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   resetInput() {
-    this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.inputForm = _.cloneDeep(this.initValue) as UntypedFormGroup;
     this.createTable();
     this.updateTotals(this.inputForm.value);
     this.subscription.add(

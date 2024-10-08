@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
@@ -65,10 +65,10 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('allSelected') private allSelected: MatOption;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     private translateService: TranslateService,
-    @Inject(MAT_DIALOG_DATA) public data: { indicator: FormGroup, forms: Form[], isCC?: boolean }
+    @Inject(MAT_DIALOG_DATA) public data: { indicator: UntypedFormGroup, forms: Form[], isCC?: boolean }
   ) { }
 
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     }
     this.loadData();
     // Creation of the init value for the reset
-    this.initValue = _.cloneDeep(this.data.indicator) as FormGroup;
+    this.initValue = _.cloneDeep(this.data.indicator) as UntypedFormGroup;
     this.initDataSource = this.dataSource.getValue();
     if (this.data.isCC && this.data.indicator.value.configured === false) {
       this.dataChanged = true;
@@ -116,7 +116,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       this.symbols.forEach(symbol => {
         const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
         listPartitionDataSource.forEach(partition => {
-          const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as FormGroup;
+          const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as UntypedFormGroup;
           // If there is no value, we put an empty json.
           let filterValueList = filterForm.get(`${partition.id}`) ? filterForm.get(`${partition.id}`).value : {};
           const newList = [];
@@ -142,7 +142,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
             newList.push(this.allOption);
           }
 
-          filterForm.setControl(`${partition.id}`, new FormControl(newList));
+          filterForm.setControl(`${partition.id}`, new UntypedFormControl(newList));
         });
       });
 
@@ -159,13 +159,13 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onReset(): void {
-    this.data.indicator = _.cloneDeep(this.initValue) as FormGroup;
+    this.data.indicator = _.cloneDeep(this.initValue) as UntypedFormGroup;
     this.dataSource.next(this.initDataSource);
     this.loadData();
   }
 
   onTypeChange(type: any): void {
-    const computation = this.data.indicator.controls.computation as FormGroup;
+    const computation = this.data.indicator.controls.computation as UntypedFormGroup;
     // Updating the formula in function of the type
     if (type.value === 'fixed' && isNaN(computation.value.formula)) {
       computation.controls.formula.setValue('0');
@@ -199,7 +199,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     }
     this.symbols = newSymbols;
     // Updating the variable part
-    const parametersFormGroup = new FormGroup({});
+    const parametersFormGroup = new UntypedFormGroup({});
 
     this.symbols.forEach(symbol => {
       parametersFormGroup.addControl(`${symbol}`, this.fb.group({
@@ -208,7 +208,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       }));
     });
 
-    (this.data.indicator.get('computation') as FormGroup).setControl('parameters', parametersFormGroup);
+    (this.data.indicator.get('computation') as UntypedFormGroup).setControl('parameters', parametersFormGroup);
 
     const newDataSource = [];
     this.symbols.forEach(symbol => {
@@ -233,14 +233,14 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
         data.filter.partitions.forEach(partition => {
           // add all the partitions and the 'allOption' as default
-          newFilter.addControl(`${partition.id}`, new FormControl([...partition.elements, this.allOption]));
+          newFilter.addControl(`${partition.id}`, new UntypedFormControl([...partition.elements, this.allOption]));
         });
       }
       // Adding this new filter
       (
         this.data.indicator.controls.computation
           .get('parameters')
-          .get(`${element.symbol}`) as FormGroup
+          .get(`${element.symbol}`) as UntypedFormGroup
       ).setControl('filter', newFilter);
     });
 

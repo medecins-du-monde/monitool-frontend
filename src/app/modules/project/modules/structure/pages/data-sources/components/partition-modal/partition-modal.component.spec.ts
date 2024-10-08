@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
-  FormArray,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -38,13 +38,13 @@ describe('PartitionModalComponent', () => {
         { provide: MatDialogRef, useValue: {} },
         {
           provide: MAT_DIALOG_DATA,
-          useValue: new FormGroup({
-            id: new FormControl(partition.id),
-            name: new FormControl(partition.name),
-            aggregation: new FormControl(partition.aggregation),
-            elements: new FormArray([]),
-            useGroups: new FormControl(partition.useGroups),
-            groups: new FormArray([])
+          useValue: new UntypedFormGroup({
+            id: new UntypedFormControl(partition.id),
+            name: new UntypedFormControl(partition.name),
+            aggregation: new UntypedFormControl(partition.aggregation),
+            elements: new UntypedFormArray([]),
+            useGroups: new UntypedFormControl(partition.useGroups),
+            groups: new UntypedFormArray([])
           })
         }
       ]

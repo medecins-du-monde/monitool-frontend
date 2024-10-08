@@ -2,7 +2,7 @@ import { Project } from '../../../../../../models/classes/project.model';
 import { IndicatorModalComponent } from './../logical-frames/components/indicator-modal/indicator-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { ProjectService } from 'src/app/services/project.service';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
@@ -38,7 +38,7 @@ export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
   ];
 
 
-  extraIndicatorsForm: FormGroup;
+  extraIndicatorsForm: UntypedFormGroup;
 
   extraIndicators: ProjectIndicator[] = [];
   project: Project;
@@ -46,7 +46,7 @@ export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(private projectService: ProjectService,
-              private fb: FormBuilder,
+              private fb: UntypedFormBuilder,
               public dialog: MatDialog,
               private changeDetector: ChangeDetectorRef) { }
 
@@ -84,8 +84,8 @@ export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  get indicators(): FormArray {
-    return this.extraIndicatorsForm.controls.indicators as FormArray;
+  get indicators(): UntypedFormArray {
+    return this.extraIndicatorsForm.controls.indicators as UntypedFormArray;
   }
 
   private setForm() {
@@ -96,7 +96,7 @@ export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
   onAddNewIndicator(): void {
     this.openDialog(FormGroupBuilder.newIndicator(), true);
   }
-  onEditIndicator(indicator: FormGroup, index?: number): void {
+  onEditIndicator(indicator: UntypedFormGroup, index?: number): void {
     this.openDialog(FormGroupBuilder.newIndicator(indicator.value), false, index);
   }
 
@@ -107,7 +107,7 @@ export class ExtraIndicatorsComponent implements OnInit, OnDestroy {
     this.projectService.project.next(this.project);
   }
 
-  openDialog(indicator: FormGroup, add?: boolean, index?: number): void {
+  openDialog(indicator: UntypedFormGroup, add?: boolean, index?: number): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms } });
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {

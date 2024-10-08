@@ -14,7 +14,7 @@ import { User } from 'src/app/models/classes/user.model';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { AuthService } from 'src/app/services/auth.service';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
@@ -81,7 +81,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   inputProgress: ArrayBuffer;
   allowedEntities: any[];
   footerColumns: string[] = [];
-  dateForm: FormControl;
+  dateForm: UntypedFormControl;
   slotStart: TimeSlot;
   slotEnd: TimeSlot;
   differentInputDates: { humanValue: string; value: string; }[] = [];
@@ -113,7 +113,7 @@ export class InputsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.dateForm = new FormControl(new Date());
+    this.dateForm = new UntypedFormControl(new Date());
     this.projectService.inBigPage.next(true);
 
     this.subscription.add(
