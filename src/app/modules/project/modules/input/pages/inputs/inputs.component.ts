@@ -1,4 +1,4 @@
-// tslint:disable: no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';

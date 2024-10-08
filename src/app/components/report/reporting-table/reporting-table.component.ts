@@ -1,5 +1,5 @@
-// tslint:disable: variable-name
-// tslint:disable:no-string-literal
+/* eslint-disable @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match */
+/* eslint-disable @typescript-eslint/dot-notation */
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -1445,8 +1445,7 @@ export class ReportingTableComponent
       case 'baseline':
         return this.getIndicator(row, col);
       case undefined:
-        const result: string = row.title || row.groupName;
-        return this.formatGroupName(result, true);
+        return this.formatGroupName(row.title || row.groupName, true);
       case 'name':
         return row.name;
       default:

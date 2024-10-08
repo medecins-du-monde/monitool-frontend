@@ -7,15 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './information.component.html',
   styleUrls: ['./information.component.scss']
 })
-export class InformationComponent implements OnInit {
+export class InformationComponent {
 
   constructor(
     private domSanitizer: DomSanitizer,
     private translateService: TranslateService,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   // We need the domSanitizer so that angular will display html tags in innerHTML

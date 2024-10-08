@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
@@ -12,7 +12,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: './output-edit.component.html',
   styleUrls: ['./output-edit.component.scss']
 })
-export class OutputEditComponent implements OnInit {
+export class OutputEditComponent {
 
   @Input() outputForm: FormGroup;
   @Input() forms: Form[];
@@ -30,8 +30,6 @@ export class OutputEditComponent implements OnInit {
     private fb: FormBuilder,
     private changeDetector: ChangeDetectorRef
   ) { }
-
-  ngOnInit(): void {}
 
   onAddNewActivity() {
     this.activities.push(FormGroupBuilder.newActivity());

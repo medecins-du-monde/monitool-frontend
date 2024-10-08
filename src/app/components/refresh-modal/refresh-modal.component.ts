@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -6,15 +6,12 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './refresh-modal.component.html',
   styleUrls: ['./refresh-modal.component.scss']
 })
-export class RefreshModalComponent implements OnInit {
+export class RefreshModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RefreshModalComponent>,
   ) { }
-
-  ngOnInit(): void {
-  }
-
+  
   reload(): void {
     this.dialogRef.close(true);
   }

@@ -1,4 +1,4 @@
-// tslint:disable:no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';

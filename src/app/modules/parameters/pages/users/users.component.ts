@@ -39,9 +39,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   public applyFilters(resetPage = true): void {
     // Apply role and deleted filters
     this.filteredUsers = this.users.filter(
-      u =>
-        (this.showDeleted ? (u.hasOwnProperty('active') && !u.active) : (!u.hasOwnProperty('active') || u.active)) &&
-        this.showByRoles.includes(u.role)
+      u => (
+        this.showDeleted ?
+          (Object.prototype.hasOwnProperty.call(u, 'active') && !u.active) :
+          (!Object.prototype.hasOwnProperty.call(u, 'active') || u.active)
+      ) && this.showByRoles.includes(u.role)
     );
 
     // Apply search query filter

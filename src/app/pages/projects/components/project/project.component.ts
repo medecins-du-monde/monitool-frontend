@@ -132,7 +132,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return;
   }
 
-  private stringifyJSONObj(obj: object) {
+  private stringifyJSONObj(obj: any) {
     let result = '{';
     const objEntries = Object.entries(obj);
     for (const [i, value] of objEntries.entries()) {

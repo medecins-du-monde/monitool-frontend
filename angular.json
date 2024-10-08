@@ -171,15 +171,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts"
             ]
           }
         },
@@ -200,6 +195,7 @@
   },
   "defaultProject": "mdm-monitool-frontend",
   "cli": {
-    "analytics": "5144c006-f663-4dd7-a662-9a42f9ba9658"
+    "analytics": "5144c006-f663-4dd7-a662-9a42f9ba9658",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }

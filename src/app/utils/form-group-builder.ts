@@ -65,11 +65,11 @@ export default class FormGroupBuilder {
       forEach(indicator.computation.parameters, (parameter, key) => {
         const filterGroup = new FormGroup({});
 
-        // tslint:disable-next-line: no-string-literal
+        // eslint-disable-next-line @typescript-eslint/dot-notation
         forEach(parameter['filter'], (filterValue: string[], keyFilter: string) => {
         filterGroup.addControl(`${keyFilter}`, new FormControl(filterValue)); });
         parametersFormGroup.addControl(`${key}`, new FormGroup({
-          // tslint:disable-next-line: no-string-literal
+          // eslint-disable-next-line @typescript-eslint/dot-notation
           elementId: new FormControl (parameter['elementId'], Validators.required),
           filter: filterGroup as FormGroup,
         }));

@@ -19,7 +19,7 @@ export class InputService {
    * @param input Input object or a stripped version with just the id and the blocked value.
    * @returns The updated input.
    */
-  public async save(input: Input | {id: string, blocked: boolean}) {
+  public async save(input: Input | {id: string, blocked: boolean}) {
     input instanceof Input ? console.log('Input', input.serialize()) : console.log(input);
     const response: any = await this.apiService.put(`/resources/input/${input.id}`, input instanceof Input ?
       {
@@ -34,7 +34,7 @@ export class InputService {
     return savedInput;
   }
 
-  public async delete(input: Input) {
+  public async delete(input: Input) {
     const response: any = await this.apiService.delete(`/resources/input/${input.id}`);
     // TODO: Convert it to an object to not have to manage arrayBuffer.
     return response;

@@ -1,4 +1,4 @@
-// tslint:disable: no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import * as XLSX from 'xlsx';
 import { ElementRef, Injectable } from '@angular/core';
 import { ApiService } from './api.service';
@@ -111,7 +111,7 @@ export class ReportingService {
   computeCompatiblePeriodicities(project, computation) {
     const variableIds = [];
     for (const key in computation.parameters) {
-      if (computation.parameters.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(computation.parameters, key)) {
         variableIds.push(computation.parameters[key].elementId);
       }
     }

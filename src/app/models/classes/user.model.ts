@@ -1,4 +1,4 @@
-// tslint:disable: no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Deserializable } from '../interfaces/deserializable.model';
 import { Entity } from './entity.model';
 import { Form } from './form.model';

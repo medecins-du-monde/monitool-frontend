@@ -1,5 +1,5 @@
-// tslint:disable: no-string-literal
-// tslint:disable: ban-types
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/ban-types */
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';

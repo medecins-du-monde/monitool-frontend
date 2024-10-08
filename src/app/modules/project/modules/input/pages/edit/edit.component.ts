@@ -1,5 +1,5 @@
-// tslint:disable:no-shadowed-variable
-// tslint:disable:one-variable-per-declaration
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable one-var */
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -893,7 +893,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     });
   }
 
-  async confirm(block: boolean = false): Promise<void> {
+  async confirm(block = false): Promise<void> {
     if (this.showModal) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning', warning: true } });
 
