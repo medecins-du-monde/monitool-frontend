@@ -161,7 +161,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           }
         }
 
-        for (const partition of element?.partitions) {
+        for (const partition of element.partitions) {
 
           // Search if the partition containes any of the opened groups, so we still show that partition
           let isInGroup = false;
