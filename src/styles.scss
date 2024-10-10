@@ -3,7 +3,16 @@
 @import "./assets/theme/font_vars.scss";
 @import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
-@include mat.core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 $mdm-primary-colors: (50 : #e0ecf8,
   100 : #b3cfee,
@@ -74,13 +83,13 @@ $mdm-monitool-frontend-theme: mat.define-light-theme((color: (primary: $mdm-moni
       warn: $mdm-monitool-frontend-warn,
     )));
 
-@include mat.all-component-themes($mdm-monitool-frontend-theme);
+@include mat.all-legacy-component-themes($mdm-monitool-frontend-theme);
 
-$mdm-monitool-frontend-typography: mat.define-typography-config($font-family: $main-font,
+$mdm-monitool-frontend-typography: mat.define-legacy-typography-config($font-family: $main-font,
   $body-1: mat.define-typography-level(16px, 20px, 400),
   $button: mat.define-typography-level(16px, 16px, 500));
 
-@include mat.all-component-typographies($mdm-monitool-frontend-typography);
+@include mat.all-legacy-component-typographies($mdm-monitool-frontend-typography);
 
 // Colors
 :root {

@@ -23,7 +23,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { v4 as uuid } from 'uuid';
 
 @Component({

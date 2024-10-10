@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Form, UntypedFormArray, UntypedFormGroup } from '@angular/forms';
 import * as _ from 'lodash';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
 import FormGroupBuilder from 'src/app/utils/form-group-builder';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';

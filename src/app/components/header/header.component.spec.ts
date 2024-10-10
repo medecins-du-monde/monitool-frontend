@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { HeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

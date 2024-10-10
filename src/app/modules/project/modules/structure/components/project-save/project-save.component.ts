@@ -7,7 +7,7 @@ import { SidenavService } from 'src/app/services/sidenav.service';
 import moment from 'moment/moment';
 import {ConfirmModalComponent} from '../../../../../../components/confirm-modal/confirm-modal.component';
 import {map} from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
+import {MatLegacyDialog as MatDialog} from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -8,7 +8,7 @@ import { DownloadService } from 'src/app/services/download.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportingService } from 'src/app/services/reporting.service';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/classes/indicator.model';

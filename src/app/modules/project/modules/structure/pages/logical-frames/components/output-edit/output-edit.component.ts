@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import * as _ from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import { IndicatorModalComponent } from '../indicator-modal/indicator-modal.component';
