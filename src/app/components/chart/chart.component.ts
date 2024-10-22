@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
 import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DownloadModalComponent } from './download-modal/download-modal.component';
 
 const BASELINE_LABEL = {

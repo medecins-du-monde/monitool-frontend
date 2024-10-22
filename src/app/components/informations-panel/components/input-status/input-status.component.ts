@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,12 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './input-status.component.html',
   styleUrls: ['./input-status.component.scss']
 })
-export class InputStatusComponent implements OnInit {
+export class InputStatusComponent {
 
   constructor(private translateService: TranslateService, private domSanitizer: DomSanitizer) { }
-
-  ngOnInit(): void {
-  }
 
   // We need the domSanitizer so that angular will display html tags in innerHTML
   transform(translatekey: string): SafeHtml {

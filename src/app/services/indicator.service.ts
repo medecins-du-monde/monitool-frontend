@@ -49,7 +49,7 @@ export class IndicatorService {
     return result;
   }
 
-  public async save(indicator: Indicator) {
+  public async save(indicator: Indicator) {
     const response = await this.apiService.put(`/resources/indicator/${indicator.id}`, indicator.serialize());
   }
 

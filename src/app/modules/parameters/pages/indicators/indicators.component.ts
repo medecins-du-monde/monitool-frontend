@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';

@@ -1,4 +1,4 @@
-export let typesList = [
+export const typesList = [
     {
         name: 'AccountMDM',
         value: 'internal'

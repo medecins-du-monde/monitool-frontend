@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from './services/loading.service';
 import { ProjectService } from './services/project.service';
 import { Subscription } from 'rxjs';
-import { TooltipComponent } from '@angular/material/tooltip';
+import { LegacyTooltipComponent as TooltipComponent } from '@angular/material/legacy-tooltip';
 import { AppVersionService } from './services/app-version.service';
 
 Object.defineProperty(TooltipComponent.prototype, 'message', {

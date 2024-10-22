@@ -1,4 +1,4 @@
-export let rolesList = [
+export const rolesList = [
     {
         name: 'Owner',
         value: 'owner'

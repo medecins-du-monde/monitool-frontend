@@ -1,7 +1,7 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { BehaviorSubject } from 'rxjs';
 import { PartitionElement } from 'src/app/models/classes/partition-element.model';
 import { PartitionGroup } from 'src/app/models/classes/partition-group.model';
@@ -37,24 +37,24 @@ export class PartitionModalComponent implements OnInit {
 
   elementsDisplayedColumns: string[] = ['position', 'name', 'delete'];
 
-  get elements(): FormArray {
-    return this.data.controls.elements as FormArray;
+  get elements(): UntypedFormArray {
+    return this.data.controls.elements as UntypedFormArray;
   }
 
   elementsDataSource = new BehaviorSubject<AbstractControl[]>([]);
 
   groupsDisplayedColumns: string[] = ['position', 'name', 'members', 'delete'];
 
-  get groups(): FormArray {
-    return this.data.controls.groups as FormArray;
+  get groups(): UntypedFormArray {
+    return this.data.controls.groups as UntypedFormArray;
   }
 
   groupsDataSource = new BehaviorSubject<AbstractControl[]>([]);
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<PartitionModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: FormGroup,
+    @Inject(MAT_DIALOG_DATA) public data: UntypedFormGroup,
     private dialog: MatDialog
   ) {
     this.elementsDataSource.next(this.elements.controls);
@@ -86,7 +86,7 @@ export class PartitionModalComponent implements OnInit {
     });
   }
 
-  private newElement(): FormGroup {
+  private newElement(): UntypedFormGroup {
     const element = new PartitionElement();
     return this.fb.group({
       id: [element.id],
@@ -113,7 +113,7 @@ export class PartitionModalComponent implements OnInit {
     this.groupsDataSource.next(this.groups.controls);
   }
 
-  private newGroup(): FormGroup {
+  private newGroup(): UntypedFormGroup {
     const group = new PartitionGroup();
     return this.fb.group({
       id: [group.id],

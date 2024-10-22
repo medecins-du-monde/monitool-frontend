@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { interval, Subscription } from 'rxjs';
 import { RefreshModalComponent } from '../components/refresh-modal/refresh-modal.component';
 import { SwUpdate } from '@angular/service-worker';

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatLegacySnackBarModule as MatSnackBarModule, MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RefreshSnackbarComponent } from './refresh-snackbar.component';

@@ -1,28 +1,28 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
-  FormArray,
-  FormControl,
-  FormGroup,
+  UntypedFormArray,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSelectModule } from '@angular/material/select';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FormElementEditComponent } from './form-element-edit.component';
-const TEST_FORM_GROUP = new FormGroup({
-  partitions: new FormArray([]),
-  distribution: new FormControl(0),
-  geoAgg: new FormControl('sum'),
-  timeAgg: new FormControl('sum'),
-  id: new FormControl('fec3da62-6a73-4e90-a77d-71ad4d2e2aea'),
-  name: new FormControl('Number of awareness sessions focusing on OSH topics')
+const TEST_FORM_GROUP = new UntypedFormGroup({
+  partitions: new UntypedFormArray([]),
+  distribution: new UntypedFormControl(0),
+  geoAgg: new UntypedFormControl('sum'),
+  timeAgg: new UntypedFormControl('sum'),
+  id: new UntypedFormControl('fec3da62-6a73-4e90-a77d-71ad4d2e2aea'),
+  name: new UntypedFormControl('Number of awareness sessions focusing on OSH topics')
 });
 
 describe('FormElementEditComponent', () => {

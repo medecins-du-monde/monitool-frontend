@@ -1,4 +1,4 @@
-// tslint:disable:no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -161,7 +161,7 @@ export class ReportingMenuComponent implements OnInit, OnDestroy {
           }
         }
 
-        for (const partition of element?.partitions) {
+        for (const partition of element.partitions) {
 
           // Search if the partition containes any of the opened groups, so we still show that partition
           let isInGroup = false;

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
@@ -35,7 +35,7 @@ import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 })
 export class BasicsComponent implements OnInit, OnDestroy {
 
-  basicsForm: FormGroup;
+  basicsForm: UntypedFormGroup;
 
   themes: Theme[] = [];
 
@@ -77,7 +77,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private projectService: ProjectService,
     private themeService: ThemeService,
     private translateService: TranslateService,

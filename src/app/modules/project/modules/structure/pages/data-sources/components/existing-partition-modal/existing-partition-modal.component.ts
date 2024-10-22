@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Partition } from 'src/app/models/classes/partition.model';
@@ -15,7 +15,7 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
   project: Project;
   allPartitions: Partition[];
   private subscription: Subscription = new Subscription();
-  partitionsForm: FormGroup;
+  partitionsForm: UntypedFormGroup;
   panelStates: Array<boolean> = [];
 
   get element(): FormElement{
@@ -31,14 +31,14 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  get formElementPartitions(): FormArray{
-    return this.data.get('partitions') as FormArray;
+  get formElementPartitions(): UntypedFormArray{
+    return this.data.get('partitions') as UntypedFormArray;
   }
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<ExistingPartitionModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: FormGroup
+    @Inject(MAT_DIALOG_DATA) public data: UntypedFormGroup
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +56,7 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
 
 
   createOptions(): void {
-    this.partitionsForm = new FormGroup({});
+    this.partitionsForm = new UntypedFormGroup({});
 
     this.allPartitions = [];
     this.panelStates = [];
@@ -83,7 +83,7 @@ export class ExistingPartitionModalComponent implements OnInit, OnDestroy {
                 this.allPartitions.push(partition);
               }
               this.panelStates.push(true);
-              this.partitionsForm.addControl(partition.id, new FormControl(false));
+              this.partitionsForm.addControl(partition.id, new UntypedFormControl(false));
             }
           }
         }

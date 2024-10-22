@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AppVersionService } from './app-version.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 describe('AppVersionService', () => {

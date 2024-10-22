@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { User } from 'src/app/models/classes/user.model';
 
 import { UserComponent } from './user.component';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 describe('UserComponent', () => {
   let component: UserComponent;

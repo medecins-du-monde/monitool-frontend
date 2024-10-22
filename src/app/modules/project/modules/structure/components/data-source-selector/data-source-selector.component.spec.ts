@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormArray, FormControl, UntypedFormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { Form } from 'src/app/models/classes/form.model';
 
@@ -30,8 +30,8 @@ describe('DataSourceSelectorComponent', () => {
         entities: []
       })
     ];
-    component.userForm = new FormGroup({
-      dataSources: new FormArray([])
+    component.userForm = new UntypedFormGroup({
+      dataSources: new UntypedFormArray([])
     });
     fixture.detectChanges();
   });

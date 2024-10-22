@@ -14,7 +14,7 @@ export class ThemeService {
     return response.map(x => new Theme(x));
   }
 
-  public async save(theme: Theme) {
+  public async save(theme: Theme) {
     await this.apiService.put(`/resources/theme/${theme.id}`, theme.serialize());
   }
 

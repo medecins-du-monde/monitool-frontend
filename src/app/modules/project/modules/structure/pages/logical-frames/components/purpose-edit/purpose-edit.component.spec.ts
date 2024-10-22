@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { Form } from 'src/app/models/classes/form.model';
 
@@ -31,11 +31,11 @@ describe('PurposeEditComponent', () => {
         entities: []
       }) as any
     ];
-    component.purposeForm = new FormGroup({
-      assumptions: new FormControl('assumptions'),
-      description: new FormControl('description'),
-      indicators: new FormArray([]),
-      outputs: new FormArray([])
+    component.purposeForm = new UntypedFormGroup({
+      assumptions: new UntypedFormControl('assumptions'),
+      description: new UntypedFormControl('description'),
+      indicators: new UntypedFormArray([]),
+      outputs: new UntypedFormArray([])
     });
     fixture.detectChanges();
   });

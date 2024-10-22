@@ -1,4 +1,4 @@
-// tslint:disable: no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Revision } from 'src/app/models/classes/revision.model';
 import * as jsonpatch from 'fast-json-patch';

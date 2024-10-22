@@ -4,7 +4,7 @@ import { MsalService, MsalBroadcastService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private configService: ConfigService,
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private azureService: MsalService,
     private msalBroadcastService: MsalBroadcastService
   ) { }
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   partner = false;
 
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   wrongCredentials = false;
 
   azureLoginSubscription: Subscription;

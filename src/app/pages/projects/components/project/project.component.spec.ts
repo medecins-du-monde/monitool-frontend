@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Project } from 'src/app/models/classes/project.model';

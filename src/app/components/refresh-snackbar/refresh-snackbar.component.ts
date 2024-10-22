@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { MultiLanguage } from 'src/app/models/classes/multi-language.model';
 

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CollectionSitesSelectorComponent } from './collection-sites-selector.component';
@@ -18,11 +18,11 @@ describe('CollectionSitesSelectorComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CollectionSitesSelectorComponent);
     component = fixture.componentInstance;
-    component.form = new FormGroup({
-      _start: new FormControl(new Date()),
-      _end: new FormControl(new Date()),
-      finished: new FormControl(false),
-      entities: new FormControl([])
+    component.form = new UntypedFormGroup({
+      _start: new UntypedFormControl(new Date()),
+      _end: new UntypedFormControl(new Date()),
+      finished: new UntypedFormControl(false),
+      entities: new UntypedFormControl([])
     });
     fixture.detectChanges();
   });
