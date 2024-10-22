@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Project } from '../models/classes/project.model';
@@ -11,7 +11,7 @@ import { ProjectService } from '../services/project.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionsGuard implements CanActivate {
+export class PermissionsGuard  {
   currentProjectId: string;
   giveAccess: boolean;
   // This give the rights of the user in the whole application : Common, Project Creation or Admin.
