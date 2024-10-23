@@ -1009,7 +1009,7 @@
     "cancel": "Annuler",
     "input": "Supprimer la saisie",
     "inputMessage": "Etes-vous sûrs de vouloir supprimer toutes les données saisies?",
-    "inputWarning": "Cette action ne peut pas être annulée à partir de l'historique du projet"
+    "inputWarning": "Ces données ne peuvent pas êtres restaurées avec l’historique du projet"
   },
   "display-comments": {
     "title": "Afficher les commentaires",
