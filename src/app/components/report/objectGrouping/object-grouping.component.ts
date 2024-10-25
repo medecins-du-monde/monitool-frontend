@@ -164,7 +164,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
         type: 'detailed',
         estimated:
           this.crossCuttingIndicator ?
-          this.getEstimatedExportTime(this.crossCuttingIndicator.projects.length, this.crossCuttingIndicator.projects.length * .5) :
+          undefined :
           this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
       }
     });
@@ -193,7 +193,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
         type: 'global',
         estimated:
           this.crossCuttingIndicator ?
-          this.getEstimatedExportTime(this.crossCuttingIndicator.projects.length) :
+          undefined :
           this.getEstimatedExportTime(this.project.logicalFrames.length)
       }
     });
@@ -229,7 +229,11 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
       if (result) {
         // save the current table html to the localStorage,
         // so it can be accessed from the new tab
-        const tableID = this.reportingService.saveCurrentTableView();
+        const tableID = this.reportingService.saveCurrentTableView(
+          this.crossCuttingIndicator ?
+          this.crossCuttingIndicator.indicator.name.en :
+          this.project.country
+        );
         window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
         dialogSubscription.unsubscribe();
       }

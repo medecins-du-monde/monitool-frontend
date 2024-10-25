@@ -274,7 +274,7 @@ export class ReportingService {
     a.href = url;
 
     // filename format is 'monitool-<project name>.xlsx'
-    a.download = `monitool-${project}.xlsx`;
+    a.download = `(${project})-current-view-excel-export.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
@@ -285,7 +285,7 @@ export class ReportingService {
    *
    * @returns id to retrieve the table in localStorage
    */
-  saveCurrentTableView(): string {
+  saveCurrentTableView(name: string): string {
     // generate random id
     const id = Math.random()
       .toString(36)
@@ -306,7 +306,7 @@ export class ReportingService {
       `currView:${id}`,
       JSON.stringify({
         html,
-        project: this.projectService.project.getValue().country
+        project: name
       })
     );
     return id;
