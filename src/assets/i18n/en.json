@@ -402,7 +402,7 @@
   "IndicatorMissingDescription": "The description of this indicator was not filled",
   "IndicatorFormulaWarningModal": {
     "title": "The formula has changed",
-    "content": "Since the formula was changed, all projects that have this crosscutting indicator configured will have it automatically removed. The cross cutting indicator will need to be configured again."
+    "content": "You have changed this indicador default computation, project which have this cross cutting indicator already defined won't be updated but they can be revised from their project settings."
   },
   "Indicators": "Indicators",
   "InformationPanel": {

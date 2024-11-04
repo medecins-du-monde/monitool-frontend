@@ -66,10 +66,10 @@
   "CreateLogicalFramework":"Añadir un marco lógico en blanco",
   "CreateNewIndicator": "Crear un nuevo indicador",
   "CreateNewProject": "Crear un nuevo proyecto",
-  "CreateNewThematic": "Crear una nueva temática",
+  "CreateNewThematic": "Crear un nuevo Combate Político",
   "CrossCuttingIndicators": "Indicadores transversales",
   "CrossCuttingInfo": [
-      "Los indicadores transversales se deciden según la lista de temáticas en \"Datos basicos\".",
+      "Los indicadores transversales se deciden según la lista de Combates Políticos en \"Datos basicos\".",
       "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
   ],
   "Data": "Datos",
@@ -217,9 +217,9 @@
         "crossCuttingIndicator": "en un indicador transversal"
       },
 
-      "themes_add": "Añade una temática al proyecto",
-      "themes_move": "Reordena las temáticas del proyecto",
-      "themes_remove": "Elimina una temática del proyecto",
+      "themes_add": "Añade un Combate Político al proyecto",
+      "themes_move": "Reordena los Combates Políticos del proyecto",
+      "themes_remove": "Elimina un Combate Político del proyecto",
 
       "entities_add": "Añade el lugar <code>{{item.name}}</code>",
       "entities_move": "Reordena los lugares del proyecto",
@@ -411,12 +411,12 @@
   "IndicatorEditionPlaceholder": {
       "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
       "Name": "Volumen de formación",
-      "Thematics": "Selectione una o varias temáticas"
+      "Thematics": "Selectione uno o varios Combates Políticos"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
   "IndicatorFormulaWarningModal": {
     "title": "El cálculo ha cambiado",
-    "content": "Debido al cambio del cálculo, todos los proyectos que tienen este indicador transversal configurado van a eliminarlo automaticamente. El indicador transversal tendra que ser configurado de nuevo."
+    "content": "Ha cambiado el cálculo predeterminado de este indicador, los proyectos que ya tienen este indicador transversal configurado no se actualizarán, pero pueden ser revisados desde la configuración del proyecto."
   },
   "InformationPanel": {
       "Basics": "Base de datos",
@@ -624,7 +624,7 @@
   "LogOut": "Desconectar",
   "Members": "Miembros",
   "Missing": "Por hacer",
-  "MultipleThematics": "Varias temáticas",
+  "MultipleThematics": "Varios Combates Políticos",
   "MyAccount": "Mi cuenta",
   "Name": "Nombre",
   "newVersionAvailable": "Una actualización de Monitool esta disponible",
@@ -645,7 +645,7 @@
       "Basic" : {
           "Country": "ej: República Centroafricana",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
-          "Thematics": "Selectione una o varias temáticas"
+          "Thematics": "Selectione uno o varios Combates Políticos"
       },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
@@ -755,10 +755,10 @@
   "MissingValues": "Faltan valores",
   "SaveIndicator": "Guardar indicador",
   "SaveConfirm": "Guarde para confirmar la reversión de esta versión",
-  "SaveThematic": "Guardar la temática",
+  "SaveThematic": "Guardar el Combate Político",
   "SaveUser": "Guardar usuario",
   "SearchProject": "Entre texto para buscar proyectos",
-  "SearchHelp": "Buscar proyecto por nombre de país, del proyecto o de la temática.",
+  "SearchHelp": "Buscar proyecto por nombre de país, del proyecto o del Combate Político.",
   "SeeReport": "Ver el informe",
   "SeeOlderDates": "Ver la fechas anteriores",
   "CreateNewDate": "Crear (nueva fecha)",
@@ -767,13 +767,13 @@
   "SettingsIndicatorEdit": "Esta página permite cambiar la definicion de un indicador transversal. Si tiene cambios, tenga cuidado en poner todos los idiomas a día.",
   "SettingsIndicatorsInfo": [
       "Esta página contiene la lista de todos los indicadores transversales de la ONG.",
-      "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos una temática en común con ese.",
+      "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos un Combate Político en común con ese.",
       "Para ayudar los proyectos a planificar su colecta de datos, evite cambiar esta lista a menudo."
   ],
-  "SettingsThematicsEdit": "Entre aqui el nombre de la temática en todos los idiomas usados por su organización.",
+  "SettingsThematicsEdit": "Entre aqui el nombre del Combate Político en todos los idiomas usados por su organización.",
   "SettingsThematicsInfo": [
-      "Esta página contiene la lista de las temáticas tratadas por la ONG.",
-      "Los proyectos y los indicadores transversales se pueden conectar a temáticas."
+      "Esta página contiene la lista de los Combates Políticos tratados por la ONG.",
+      "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos."
   ],
   "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
   "SettingsUserInfo": [
@@ -820,7 +820,7 @@
           "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
           "Name": "Nombre su indicador. Es preferible obtener el nombre a partir de un catalogo para ser consistente con otros proyectos.",
           "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",
-          "Thematics": "Las temáticas que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
+          "Thematics": "Los Combates Políticos que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
           "Visibility": "Fuera de casos particulares todos los proyectos deben dejarse visibles para todos los usuarios."
       },
       "UserEdition": {
@@ -847,7 +847,7 @@
       "CloneProjects": "Clonar un proyecto (estructura)",
       "CloneProjectsData": "Clonar un proyecto (estructura y datos introducidos)",
       "DeleteProject": "Eliminar/Restaurar un proyecto",
-      "CreateAndEditThematics": "Crear y editar temáticas",
+      "CreateAndEditThematics": "Crear y editar Combates Políticos",
       "CreateAndEditCrossCutting": "Crear y editar indicadores transversales",
       "EditOtherUsersRoles": "Editar las permisiones de los demás usuarios",
       "EditAllProjectsStructureAndData": "Editar los datos y estructura de todos los proyectos",
@@ -865,8 +865,8 @@
       "ViewComment": "Ver comentarios en el informe general"
   },
   "Type": "Tipo",
-  "ThematicEdition": "Editar temática",
-  "Thematics": "Temáticas",
+  "ThematicEdition": "Editar Combate Político",
+  "Thematics": "Combates Políticos",
   "UpdateUser": "Actualizar el usario",
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",

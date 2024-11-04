@@ -55,7 +55,7 @@
     <div class="mdm-form-group indicator-modal">
         <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
-            <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass" [disabled]="this.isCC">
+            <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                 </mat-option>
             </mat-select>
@@ -66,7 +66,7 @@
     </div>
     <div class="mdm-form-group indicator-modal" *ngIf="type === 'fixed'" formGroupName="computation">
         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
-            <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}" [readonly]="this.isCC">
+            <input matInput type="string" formControlName="formula" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Computation.Fixed' | translate }}">
         </mat-form-field>
     </div>
 
@@ -140,7 +140,7 @@
                 <td mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
                     <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field-table">
                         <input matInput formControlName="formula" (change)="onFormulaChange()"
-                            placeholder="{{ 'Formula' | translate }}" [readonly]="this.isCC || type !== 'formula'">
+                            placeholder="{{ 'Formula' | translate }}" [readonly]="type !== 'formula'">
                     </mat-form-field>
                 </td>
             </ng-container>
