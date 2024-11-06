@@ -64,10 +64,10 @@
   "CreateLogicalFramework":"Créer un cadre logique vierge",
   "CreateNewIndicator": "Créer un nouvel indicateur",
   "CreateNewProject": "Créer un nouveau projet",
-  "CreateNewThematic": "Créer une nouvelle thématique",
+  "CreateNewThematic": "Créer un nouveau Combat Politique",
   "CrossCuttingIndicators": "Indicateurs transversaux",
   "CrossCuttingInfo": [
-      "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de thématiques renseignée dans les données de bases.",
+      "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de Combats Politiques renseignée dans les données de bases.",
       "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
   ],
   "Data": "Données",
@@ -212,9 +212,9 @@
         "crossCuttingIndicator": "sur un indicateur transversal"
       },
 
-      "themes_add": "Ajoute une thématique au projet",
-      "themes_move": "Reordonne les thématiques du projet",
-      "themes_remove": "Retire une thématique du projet",
+      "themes_add": "Ajoute un Combat Politique au projet",
+      "themes_move": "Reordonne les Combats Politiques du projet",
+      "themes_remove": "Retire un Combat Politique du projet",
 
       "entities_add": "Ajoute le lieu <code>{{item.name}}</code>",
       "entities_move": "Reordonne les lieux du projet",
@@ -411,7 +411,7 @@
   "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
   "IndicatorFormulaWarningModal": {
     "title": "Le calcul a changé",
-    "content": "Depuis que le calcul a été modifiée, tous les projets pour lesquels cet indicateur transversal est configuré le supprimeront automatiquement. L'indicateur transversal devra être configuré à nouveau."
+    "content": "Vous avez modifié le calcul par défaut de cet indicateur, les projets pour lesquels cet indicateur transversal est déjà défini ne seront pas mis à jour mais ils pourront être révisés à partir de leurs paramètres de projet."
   },
   "InformationPanel": {
       "Basics": "Données de base",
@@ -618,7 +618,7 @@
   "LogOut": "Déconnecter",
   "Members": "Membres",
   "Missing": "Manquant",
-  "MultipleThematics": "Multi-thématique",
+  "MultipleThematics": "Multi-Combats Politiques",
   "MyAccount": "Mon compte",
   "Name": "Nom",
   "newVersionAvailable": "Une nouvelle mise à jour de Monitool est disponible",
@@ -750,10 +750,10 @@
   "MissingValues": "Valeurs non saisies",
   "SaveIndicator": "Sauvegarder l'indicateur",
   "SaveConfirm": "Enregistrer pour confirmer le rétablissement de cette version",
-  "SaveThematic": "Sauvegarder la thématique",
+  "SaveThematic": "Sauvegarder le Combat Politique",
   "SaveUser": "Sauvegarder l'utilisateur",
   "SearchProject": "Rentrez du texte pour filtrer les projets",
-  "SearchHelp": "Chercher un projet par nom de pays ou de projet ou de thématique.",
+  "SearchHelp": "Chercher un projet par nom de pays ou de projet ou de Combat Politique.",
   "SeeReport": "Voir le rapport",
   "SeeOlderDates": "Voir les dates précedentes",
   "CreateNewDate": "Saisir (nouvelle date)",
@@ -762,13 +762,13 @@
   "SettingsIndicatorEdit": "Cette page vous permet de modifier la définition d'un indicateur transversal. Si vous réalisez des changements, attention de bien mettre à jour les champs dans toutes les langues.",
   "SettingsIndicatorsInfo": [
       "Cette page contient la liste de tous les indicateurs transversaux de l'ONG.",
-      "La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins une thématique en commun celui-ci.",
+      "La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins un Combat Politique en commun celui-ci.",
       "Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette liste."
   ],
-  "SettingsThematicsEdit": "Rentrez ici le nom de la thématique dans toutes les langues utilisées par votre organisation.",
+  "SettingsThematicsEdit": "Rentrez ici le nom du Combat Politique dans toutes les langues utilisées par votre organisation.",
   "SettingsThematicsInfo": [
-      "Cette page contient la liste des thématiques traitées par l'ONG.",
-      "Il est possible d'attribuer une ou plusieurs thématiques à chaque projet et indicateur transversal."
+      "Cette page contient la liste des Combats Politiques traitées par l'ONG.",
+      "Il est possible d'attribuer une ou plusieurs Combats Politiques à chaque projet et indicateur transversal."
   ],
   "SettingsUserEdit": "Vous pouvez ici modifier les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
   "SettingsUserInfo": [
@@ -815,7 +815,7 @@
           "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
           "Name": " Nommez votre indicateur. Le nom doit provenir d'un catalogue d'indicateur, afin d'être cohérent avec les autres projets.",
           "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
-          "Thematics": "Le choix des thématiques conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
+          "Thematics": "Le choix des Combats Politiques conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
           "Visibility": "Sauf besoin particulier, tous les projets doivent être laissé visibles par tous les utilisateurs."
       },
       "UserEdition": {
@@ -842,7 +842,7 @@
       "CloneProjects": "Dupliquer un projet (structure)",
       "CloneProjectsData": "Dupliquer un projet (structure et données saisies)",
       "DeleteProject": "Supprimer/Restaurer un projet",
-      "CreateAndEditThematics": "Créer et modifier des thématiques",
+      "CreateAndEditThematics": "Créer et modifier des Combats Politiques",
       "CreateAndEditCrossCutting": "Créer et modifier des indicateurs transversaux",
       "EditOtherUsersRoles": "Modifier le rôle des autres utilisateurs",
       "EditAllProjectsStructureAndData": "Modifier la structure et les données de tous les projets",
@@ -860,8 +860,8 @@
       "ViewComment": "Voir le commentaire dans le rapport général"
   },
   "Type": "Type",
-  "ThematicEdition": "Édition thématique",
-  "Thematics": "Thématiques",
+  "ThematicEdition": "Édition Combat Politique",
+  "Thematics": "Combats Politiques",
   "UpdateUser": "Mettre à jour l'utilisateur",
   "UseExistingDisaggregation": "Utiliser une désagrégation existante",
   "UseGroups": "Utiliser des groupes",
