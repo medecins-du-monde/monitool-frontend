@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ProjectService } from './project.service';
+import { IndicatorService } from './indicator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,12 @@ export class DownloadService implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+      private httpClient: HttpClient,
+      private projectService: ProjectService,
+      private indicatorService: IndicatorService,
+      private translateService: TranslateService
+    ) {
     this.subscription.add(
       this.url.subscribe(url => {
         console.log(url);
@@ -71,10 +79,38 @@ export class DownloadService implements OnDestroy {
     }
   }
 
-  download(): void {
-    if (this.url.getValue() !== ''){
-      window.open(this.url.getValue().split('?')[0] + '/file', '_blank');
+  async download(): Promise<void> {
+    if (this.url.getValue() !== '') {
+      const fileUrl = this.url.getValue().split('?')[0];
+      this.httpClient.get(fileUrl + '/file', { responseType: 'blob', observe: 'response' }).subscribe(async resp => {
+        const url = window.URL.createObjectURL(resp.body);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = await this.getFileName(fileUrl);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+      });
     }
+  }
+
+  private async getFileName(url: string): Promise<string> {
+    let filename = 'error.xlsx';
+    const id = url.split('/')[3];
+    switch (id.split(':')[0]) {
+      case 'indicator':
+        console.log();
+        await this.indicatorService.get(id).then(res => {
+          filename = `(${res.name[this.translateService.currentLang]})-${this.translateService.instant}`;
+        });
+        break;
+      case 'project':
+
+        break;
+      default:
+        break;
+    }
+    return filename;
   }
 
   ngOnDestroy(): void {
