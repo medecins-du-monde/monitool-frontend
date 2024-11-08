@@ -95,22 +95,18 @@ export class DownloadService implements OnDestroy {
   }
 
   private async getFileName(url: string): Promise<string> {
-    let filename = 'error.xlsx';
-    const id = url.split('/')[3];
-    switch (id.split(':')[0]) {
-      case 'indicator':
-        console.log();
-        await this.indicatorService.get(id).then(res => {
-          filename = `(${res.name[this.translateService.currentLang]})-${this.translateService.instant}`;
-        });
-        break;
-      case 'project':
-
-        break;
-      default:
-        break;
+    let name = 'error';
+    const parameters = url.split('/');
+    const id = parameters[3];
+    const minimized = parameters[6] === 'true';
+    if (id.split(':')[0] === 'indicator') {
+      await this.indicatorService.get(id).then(res => {
+        name = res.name[this.translateService.currentLang];
+      });
+    } else if (id.split(':')[0] === 'project') {
+      await this.projectService.get(id).then(res => { name = res.country; });
     }
-    return filename;
+    return `(${name})-${this.translateService.instant(minimized ? 'export-minimized' : 'export-complete').toLowerCase().replaceAll(/\s+/g, '-')}.xlsx`;
   }
 
   ngOnDestroy(): void {
