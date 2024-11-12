@@ -5,6 +5,8 @@ import { ApiService } from './api.service';
 import TimeSlot from 'timeslot-dag';
 import { BehaviorSubject } from 'rxjs';
 import { ProjectService } from './project.service';
+import { TranslateService } from '@ngx-translate/core';
+import { IndicatorService } from './indicator.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,9 @@ export class ReportingService {
 
   constructor(
     private apiService: ApiService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private indicatorService: IndicatorService,
+    private translateService: TranslateService
   ) {}
 
 
@@ -141,7 +145,7 @@ export class ReportingService {
    /** Downloads current reporting table view */
    async downloadSavedTableView(id: string): Promise<void> {
     // retrieve html from localStorage
-    const {html, project} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
+    const {html, itemId} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
     // new div
@@ -265,6 +269,8 @@ export class ReportingService {
       }
     );
 
+    console.log('OK FILE');
+
     // save file to the user's computer
     const blob = new Blob([file], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -273,11 +279,30 @@ export class ReportingService {
     const a = document.createElement('a');
     a.href = url;
 
+    console.log('OK BLOB');
+    console.log(await this.getFileName(itemId));
+
     // filename format is 'monitool-<project name>.xlsx'
-    a.download = `(${project})-current-view-excel-export.xlsx`;
+    a.download = await this.getFileName(itemId);
     a.click();
     window.URL.revokeObjectURL(url);
     a.remove();
+  }
+
+  private async getFileName(id: string): Promise<string> {
+    console.log(id);
+    let name = 'error';
+    if (id.split(':')[0] === 'indicator') {
+      await this.indicatorService.get(id).then(res => {
+        console.log(res);
+        name = res.name[this.translateService.currentLang];
+      });
+    } else if (id.split(':')[0] === 'project') {
+      await this.projectService.get(id).then(res => {
+        console.log(res); name = res.country; });
+    }
+    console.log('file name is:', name);
+    return `(${name})-${this.translateService.instant('export-current-minimized').toLowerCase().replaceAll(/\s+/g, '-')}.xlsx`;
   }
 
   /**
@@ -285,7 +310,7 @@ export class ReportingService {
    *
    * @returns id to retrieve the table in localStorage
    */
-  saveCurrentTableView(name: string): string {
+  saveCurrentTableView(itemId: string): string {
     // generate random id
     const id = Math.random()
       .toString(36)
@@ -306,7 +331,7 @@ export class ReportingService {
       `currView:${id}`,
       JSON.stringify({
         html,
-        project: name
+        itemId,
       })
     );
     return id;

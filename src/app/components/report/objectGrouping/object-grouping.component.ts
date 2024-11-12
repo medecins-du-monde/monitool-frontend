@@ -231,8 +231,8 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
         // so it can be accessed from the new tab
         const tableID = this.reportingService.saveCurrentTableView(
           this.crossCuttingIndicator ?
-          this.crossCuttingIndicator.indicator.name.en :
-          this.project.country
+          this.crossCuttingIndicator.indicator.id :
+          this.project.id
         );
         window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
         dialogSubscription.unsubscribe();
