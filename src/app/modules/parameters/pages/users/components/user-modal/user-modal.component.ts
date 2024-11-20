@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { HintUserData } from 'src/app/mocked/hint-user-element.mocked';
 import { User } from 'src/app/models/classes/user.model';
 
@@ -11,7 +11,7 @@ import { User } from 'src/app/models/classes/user.model';
 })
 export class UserModalComponent implements OnInit {
 
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
 
   public roles = [
     {
@@ -33,7 +33,7 @@ export class UserModalComponent implements OnInit {
   dataSource = HintUserData;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User
   ) { }

@@ -1,20 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-refresh-modal',
   templateUrl: './refresh-modal.component.html',
   styleUrls: ['./refresh-modal.component.scss']
 })
-export class RefreshModalComponent implements OnInit {
+export class RefreshModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RefreshModalComponent>,
   ) { }
-
-  ngOnInit(): void {
-  }
-
+  
   reload(): void {
     this.dialogRef.close(true);
   }

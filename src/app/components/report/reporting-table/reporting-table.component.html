@@ -125,12 +125,10 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]=" (element?.values)[column] ?
-            ((isInRange(element, column) ?
+        [matTooltip]=" ((isInRange(element, column) ?
               (getTooltipMessage((element?.values)[column]) | translate) :
               null
             ) | getTooltip : showComments : element.comments[column] : (element?.values)[column])
-            : ''
         "
       >
         <div

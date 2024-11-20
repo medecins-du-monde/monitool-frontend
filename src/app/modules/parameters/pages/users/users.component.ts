@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/classes/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -15,7 +15,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private showDeleted = false;
   private showByRoles = ['common', 'admin', 'project'];
-  public searchQuery = new FormControl('');
+  public searchQuery = new UntypedFormControl('');
   private searchTimeout: NodeJS.Timeout;
 
   private subscriptions: Subscription[] = [];
@@ -39,9 +39,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   public applyFilters(resetPage = true): void {
     // Apply role and deleted filters
     this.filteredUsers = this.users.filter(
-      u =>
-        (this.showDeleted ? (u.hasOwnProperty('active') && !u.active) : (!u.hasOwnProperty('active') || u.active)) &&
-        this.showByRoles.includes(u.role)
+      u => (
+        this.showDeleted ?
+          (Object.prototype.hasOwnProperty.call(u, 'active') && !u.active) :
+          (!Object.prototype.hasOwnProperty.call(u, 'active') || u.active)
+      ) && this.showByRoles.includes(u.role)
     );
 
     // Apply search query filter

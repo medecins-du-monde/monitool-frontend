@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Indicator } from 'src/app/models/classes/indicator.model';
@@ -20,7 +20,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
   warningDialogRef: MatDialogRef<any>;
 
-  indicatorForm: FormGroup;
+  indicatorForm: UntypedFormGroup;
 
   languages = ['fr', 'en', 'es'];
 
@@ -70,7 +70,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translateService: TranslateService,
     private forceTranslateService: ForceTranslateService,
     private themeService: ThemeService,
@@ -138,7 +138,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const computation = this.indicatorForm.controls.computation as FormGroup;
+    const computation = this.indicatorForm.controls.computation as UntypedFormGroup;
     computation.controls.formula.enable();
     computation.controls.formula.patchValue(String(computation.value.formula));
     const indicator = new Indicator(this.indicatorForm.value);
@@ -165,7 +165,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onTypeChange(type: any, init = false): void {
-    const computation = this.indicatorForm.controls.computation as FormGroup;
+    const computation = this.indicatorForm.controls.computation as UntypedFormGroup;
 
     computation.controls.formula.clearValidators();
     computation.controls.formula.enable();

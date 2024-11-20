@@ -1,6 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -23,7 +23,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { v4 as uuid } from 'uuid';
 
 @Component({
@@ -97,14 +97,14 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     } as InformationItem
   ];
 
-  dataSourceForm: FormGroup = new FormGroup({
-    id: new FormControl(null),
-    name: new FormControl(null, [Validators.required]),
-    entities: new FormControl(null),
-    periodicity: new FormControl(null, [Validators.required]),
-    start: new FormControl(null, [Validators.required]),
-    end: new FormControl(null, [Validators.required]),
-    elements: new FormArray([], [this.minLengthArray(1)])
+  dataSourceForm: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl(null),
+    name: new UntypedFormControl(null, [Validators.required]),
+    entities: new UntypedFormControl(null),
+    periodicity: new UntypedFormControl(null, [Validators.required]),
+    start: new UntypedFormControl(null, [Validators.required]),
+    end: new UntypedFormControl(null, [Validators.required]),
+    elements: new UntypedFormArray([], [this.minLengthArray(1)])
   });
 
   startDate: Date;
@@ -119,14 +119,14 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
 
   private subscription: Subscription = new Subscription();
 
-  get elements(): FormArray {
-    return this.dataSourceForm.controls.elements as FormArray;
+  get elements(): UntypedFormArray {
+    return this.dataSourceForm.controls.elements as UntypedFormArray;
   }
 
   private formSubscription: Subscription;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
     private projectService: ProjectService,
@@ -271,7 +271,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     });
   }
 
-  private newElement(element?: FormElement): FormGroup {
+  private newElement(element?: FormElement): UntypedFormGroup {
     if (!element) {
       element = new FormElement();
     }
@@ -285,7 +285,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     });
   }
 
-  private newPartition(partition: Partition): FormGroup {
+  private newPartition(partition: Partition): UntypedFormGroup {
     const partitionForm = this.fb.group({
       id: [partition.id],
       name: [partition.name, Validators.required],
@@ -293,20 +293,20 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       elements: this.fb.array(partition.elements.map(x => this.newPartitionElement(x))),
       useGroups: [partition.useGroups]
     });
-    const elements = partitionForm.controls.elements as FormArray;
+    const elements = partitionForm.controls.elements as UntypedFormArray;
     partitionForm.addControl('groups', this.fb.array(
       partition.useGroups ? partition.groups.map(x => this.newPartitionGroup(x, elements)) : []));
     return partitionForm;
   }
 
-  private newPartitionElement(partitionElement: PartitionElement): FormGroup {
+  private newPartitionElement(partitionElement: PartitionElement): UntypedFormGroup {
     return this.fb.group({
       id: [partitionElement.id],
       name: [partitionElement.name, Validators.required]
     });
   }
 
-  private newPartitionGroup(partitionGroup: PartitionGroup, elements: FormArray): FormGroup {
+  private newPartitionGroup(partitionGroup: PartitionGroup, elements: UntypedFormArray): UntypedFormGroup {
     return this.fb.group({
       id: [partitionGroup.id],
       name: [partitionGroup.name, Validators.required],

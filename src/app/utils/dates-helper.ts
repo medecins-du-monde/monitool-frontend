@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn } from '@angular/forms';
+import { UntypedFormGroup, ValidatorFn } from '@angular/forms';
 import moment from 'moment';
 
 export default class DatesHelper {
@@ -26,7 +26,7 @@ export default class DatesHelper {
   }
 
   static orderedDates(before: string, after: string): ValidatorFn {
-    return (group: FormGroup) => {
+    return (group: UntypedFormGroup) => {
       const beforeValue: Date = group.get(before).value ? new Date(group.get(before).value) : null;
       const afterValue: Date = group.get(after).value ? new Date(group.get(after).value) : null;
 
