@@ -70,10 +70,10 @@
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
   "CreateNewProject": "Create a new project",
-  "CreateNewThematic": "Create a new thematic",
+  "CreateNewThematic": "Create a new Political Battle",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
-      "Cross-cutting indicators are determined from the list of thematics in \"Basics\".",
+      "Cross-cutting indicators are determined from the list of Political Battles in \"Basics\".",
       "This list contains all cross-cutting indicators that your project need to collect"
   ],
   "CustomDate": "Custom date",
@@ -300,9 +300,9 @@
       "logicalFrames_start_replace": "Change start date <code>{{before}}</code> to <code>{{after}}</code> in logical framework <code>{{logicalFrame.name}}</code>",
       "name_replace": "Rename the project from <code>{{before}}</code> to <code>{{after}}</code>",
       "start_replace": "Change the project start date of the project from <code>{{before}}</code> to <code>{{after}}</code>",
-      "themes_add": "Add a new thematic to the project",
-      "themes_move": "Reorder the project thematics",
-      "themes_remove": "Remove a thematic from the project",
+      "themes_add": "Add a new Political Battle to the project",
+      "themes_move": "Reorder the project Political Battles",
+      "themes_remove": "Remove a Political Battle from the project",
       "users_add": "Add the user <code>{{item.id}}</code> to the project",
       "users_dataSources_add": "Allow <code>{{user.name}}</code> to input data on data source <code>{{item.name}}</code>",
       "users_dataSources_move": "Reorders the data sources associated with the user <code>{{user.name}}</code>",
@@ -402,7 +402,7 @@
   "IndicatorMissingDescription": "The description of this indicator was not filled",
   "IndicatorFormulaWarningModal": {
     "title": "The formula has changed",
-    "content": "Since the formula was changed, all projects that have this crosscutting indicator configured will have it automatically removed. The cross cutting indicator will need to be configured again."
+    "content": "You have changed this indicador default computation, project which have this cross cutting indicator already defined won't be updated but they can be revised from their project settings."
   },
   "Indicators": "Indicators",
   "InformationPanel": {
@@ -622,7 +622,7 @@
   "Login": "Login",
   "Members": "Members",
   "Missing": "Missing",
-  "MultipleThematics": "Multiple thematics",
+  "MultipleThematics": "Multiple Political Battles",
   "MyAccount": "My account",
   "Name": "Name",
   "Name-Hint": "Indicate your Full Name",
@@ -644,7 +644,7 @@
   "Password": "Password",
   "Patch": {
       "Add": {
-          "Thematic": "Add a new thematic to the project"
+          "Thematic": "Add a new Political Battle to the project"
       }
   },
   "Placeholder": {
@@ -764,10 +764,10 @@
   "MissingValues": "Missing values",
   "SaveConfirm": "Save to confirm reverting this version",
   "SaveIndicator": "Save indicator",
-  "SaveThematic": "Save the thematic",
+  "SaveThematic": "Save the Political Battle",
   "SaveUser": "Save user",
   "SearchProject": "Enter text here to filter the projects",
-  "SearchHelp": "Search a project by name of country or project or thematic.",
+  "SearchHelp": "Search a project by name of country or project or Political Battle.",
   "SeeOlderDates": "See older dates",
   "CreateNewDate": "Create (new date)",
   "DateHasEntry": "This collection site has already an entry for the selected date.",
@@ -776,13 +776,13 @@
   "SettingsIndicatorEdit": "This page allows changing the definition of a cross-cutting indicator. If you make changes, take care to update all languages.",
   "SettingsIndicatorsInfo": [
       "This page contain the list of all the cross-cutting indicators of the NGO.",
-      "Collecting each indicator is mandatory for all projects that have at least one thematic in common with it.",
+      "Collecting each indicator is mandatory for all projects that have at least one Political Battle in common with it.",
       "To allow projects to plan for their data collection, avoid changing this list often."
   ],
-  "SettingsThematicsEdit": "Enter here the name of the thematic in all languages used by your organisation.",
+  "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
   "SettingsThematicsInfo": [
-      "This page contains the list of thematics handled by the NGO.",
-      "Projects and cross-cutting indicators can be linked to thematics."
+      "This page contains the list of Political Battles handled by the NGO.",
+      "Projects and cross-cutting indicators can be linked to Political Battles."
   ],
   "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
   "SettingsUserInfo": [
@@ -806,8 +806,8 @@
   "DisplayTarget": "Display target",
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
-  "ThematicEdition": "Thematic edition",
-  "Thematics": "Thematics",
+  "ThematicEdition": "Political Battle edition",
+  "Thematics": "Political Battles",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
@@ -833,7 +833,7 @@
           "EndDate": "The end date is the moment when your project closes its data collection. If unknown, enter a date far into the future.",
           "Name": "Name your indicator. The name should come from a catalog to be consistent with other projects.",
           "StartDate": "The begin date is the moment when your projects starts collecting data (usually, with the first activities).",
-          "Thematics": "The thematics that you choose will determine which cross-cutting indicators your project will need to collect.",
+          "Thematics": "The Political Battle that you choose will determine which cross-cutting indicators your project will need to collect.",
           "Visibility": "Outside of specific cases, all projects should be visible for all users."
       },
       "UserEdition": {
@@ -860,7 +860,7 @@
       "CloneProjects": "Clone a project (structure)",
       "CloneProjectsData": "Clone a project (structure and data entered)",
       "DeleteProject": "Delete/Restore a project",
-      "CreateAndEditThematics": "Create and edit thematics",
+      "CreateAndEditThematics": "Create and edit Political Battles",
       "CreateAndEditCrossCutting": "Create and edit cross-cutting indicators",
       "EditOtherUsersRoles": "Edit other users roles",
       "EditAllProjectsStructureAndData": "Edit all projects structure and data",
