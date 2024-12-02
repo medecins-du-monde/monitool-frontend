@@ -14,17 +14,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/general/general.module')
       .then(m => m.GeneralModule),
       canActivate : [BasicsInfosGuard]
-  },
-  {
-    path: 'commented-graphs',
-    loadChildren: () => import('./pages/commented-graphs/commented-graphs.module')
-      .then(m => m.CommentedGraphsModule),
-      canActivate : [BasicsInfosGuard]
-  },
-  {
-    path: 'personal-dashboard',
-    loadChildren: () => import('./pages/personal-dashboard/personal-dashboard.module')
-      .then(m => m.PersonalDashboardModule),
+  },{
+    path: 'dataflow',
+    loadChildren: () => import('./pages/dataflow/dataflow.module')
+      .then(m => m.DataflowModule),
       canActivate : [BasicsInfosGuard]
   },
   {

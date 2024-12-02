@@ -1,0 +1,107 @@
+<!-- <div>
+  <button (click)="downloadGraph()">SAVE</button>
+</div> -->
+<div class="container">
+  <ngx-graph
+    class="chart-container"
+    [links]="edges"
+    [nodes]="nodes"
+    [clusters]="clusters"
+    layout="dagreCluster"
+    [layoutSettings]="{
+      orientation: 'LR',
+      marginX: 5,
+      marginY: 5,
+      edgePadding: 50,
+      rankPadding: 100,
+      nodePadding: 50,
+      multigraph: true,
+      compound: true,
+      align: 'UL'
+    }"
+    [update$]="update$"
+    [zoomToFit$]="zoomToFit$"
+    [center$]="center$"
+    id="DataflowGraph"
+  >
+    <ng-template #defsTemplate>
+      <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+        <!-- <svg:marker id="startArrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+          <svg:path d="M0,-5L10,0L0,5" class="arrow-head" transform-origin="50% 50%" transform="rotate(180)"/>
+        </svg:marker> -->
+      </svg:marker>
+    </ng-template>
+  
+    <ng-template #clusterTemplate let-cluster>
+      <svg:g class="node cluster">
+        <!-- <svg:title>{{cluster.label | translate}}</svg:title> -->
+        <svg:rect
+          rx="5"
+          ry="5"
+          [style]="(cluster | dataFlowStyle).style"
+        />
+        <svg:text
+          alignment-baseline="central"
+          [attr.x]="cluster.dimension.width / 2"
+          [attr.y]="20"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          [style]="(cluster | dataFlowStyle).textStyle"
+        >
+          {{cluster.label | translate | dataFlowEllipsis}}
+        </svg:text>
+      </svg:g>
+    </ng-template>
+  
+    <ng-template #nodeTemplate let-node>
+      <svg:g class="node">
+        <svg:title>{{node.label}}</svg:title>
+        <svg:rect
+          rx="5"
+          ry="5"
+          [style]="(node | dataFlowStyle).style"
+        />
+        <svg:text
+          alignment-baseline="central"
+          [attr.x]="node.dimension.width / 2"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          [attr.y]="node.dimension.height / 2"
+          [style]="(node | dataFlowStyle).textStyle"
+        >
+          {{node.label | dataFlowEllipsis}}
+        </svg:text>
+      </svg:g>
+    </ng-template>
+  
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge">
+        <svg:path *ngIf="!(link.source.startsWith('group')); else group_path"
+          class="line"
+          stroke-width="2"
+          marker-end="url(#arrow)"
+          [style]="(link | dataFlowStyle).style"
+        ></svg:path>
+        <ng-template #group_path>
+          <svg:path
+            class="line"
+            stroke-width="2"
+            [style]="(link | dataFlowStyle).style"
+          ></svg:path>
+        </ng-template>
+        <svg:text class="edge-label" text-anchor="middle" *ngIf="link.data && link.data.periodicity">
+          <textPath
+            class="text-path"
+            [attr.href]="'#' + link.id"
+            [style]="(link | dataFlowStyle).textStyle"
+            [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%"
+          >
+            {{link.data.periodicity | translate}}
+          </textPath>
+        </svg:text>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
+</div>
