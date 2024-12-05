@@ -9,6 +9,24 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
+const TEXT_EDITOR_OPTIONS = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    [{ 'align': [] }],
+
+    ['clean'],                                         // remove formatting button
+
+    ['link']                         // link and image, video
+  ]
+};
 @Component({
   selector: 'app-indicator-modal',
   templateUrl: './indicator-modal.component.html',
@@ -31,6 +49,8 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   dataChanged = false;
 
   prevForm;
+
+  textEditorModules = TEXT_EDITOR_OPTIONS;
 
   private subscription: Subscription = new Subscription();
 

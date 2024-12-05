@@ -3,6 +3,7 @@
 @import "./assets/theme/font_vars.scss";
 @import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
+@import '~quill/dist/quill.snow.css';
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
 //    1. Default typography styles for all components
@@ -1262,4 +1263,17 @@ code.title{
 
 .searchbar .mat-form-field-infix {
   padding: 3px 0 6.5px 0 !important;
+}
+.ql-toolbar {
+  border-color: #e0e0e0 !important;
+  border-radius: 4px 4px 0 0;
+}
+.ql-container {
+    height: 300px !important;
+    border-color: #e0e0e0 !important;
+    border-radius: 0 0 4px 4px;
+
+    @media screen and (max-width: $breakpoint-xs) {
+      height: 200px !important;
+    }
 }
