@@ -25,23 +25,19 @@
     <mat-tab-group>
         <mat-tab [label]="language | translate" *ngFor="let language of languages">
             <div class="tab-container">
-                <ng-container formGroupName="name">
-                    <div class="mdm-form-group">
+                    <div class="mdm-form-group" formGroupName="name">
                         <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
                         <mat-form-field appearance="outline" class="mdm-form-field">
                             <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Name : null}}">
                         </mat-form-field>
                     </div>
-                </ng-container>
-                <ng-container formGroupName="description">
-                    <div class="mdm-form-group flex">
+                    <div class="mdm-form-group flex" formGroupName="description">
                         <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
                         <quill-editor [formControlName]="language" [modules]="textEditorModules"></quill-editor>
                         <!-- <mat-form-field appearance="outline" class="mdm-form-field">
                             <textarea style="resize: none;" matInput [formControlName]="language" rows=5 placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}"></textarea>
                         </mat-form-field> -->
                     </div>
-                </ng-container>
             </div>
         </mat-tab>
     </mat-tab-group>

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 
 import { IndicatorModalComponent } from './indicator-modal.component';
+import { forwardRef } from '@angular/core';
+import { QuillModule } from 'ngx-quill';
 
 describe('IndicatorModalComponent', () => {
   let component: IndicatorModalComponent;
@@ -27,7 +29,8 @@ describe('IndicatorModalComponent', () => {
         MatSelectModule,
         MatInputModule,
         BrowserAnimationsModule,
-        MatDialogModule
+        MatDialogModule,
+        QuillModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
@@ -46,7 +49,7 @@ describe('IndicatorModalComponent', () => {
           },
           rev: 'rev',
           themes: [],
-        }) }
+        }) },
       ]
     }).compileComponents();
   }));
