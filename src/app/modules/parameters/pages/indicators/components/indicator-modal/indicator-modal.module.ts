@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [IndicatorModalComponent],
@@ -25,6 +27,8 @@ import { MatLegacySelectModule as MatSelectModule } from '@angular/material/lega
     MatInputModule,
     MatChipsModule,
     MatSelectModule,
+    QuillModule,
+    MatTabsModule
   ],
   exports: [IndicatorModalComponent]
 })
