@@ -1,8 +1,34 @@
 <div [formGroup]="basicsForm" class="mdm-form">
     <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Continent' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="continent" placeholder="{{ 'Placeholder.Basic.Country' | translate }}" disableOptionCentering panelClass="myPanelClass">
+                <mat-option *ngFor="let continent of continentList" [value]="continent.key">{{ continent[currentLang] }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Country' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="country" placeholder="{{ 'Placeholder.Basic.Country' | translate }}">
+            <mat-select formControlName="country" placeholder="{{ legacyCountry || ('Placeholder.Basic.Country' | translate) }}" disableOptionCentering panelClass="myPanelClass">
+                <!-- <mat-option *ngIf="legacyCountry" [value]="legacyCountry">{{ legacyCountry }}
+                </mat-option> -->
+                <mat-option *ngFor="let country of countryList" [value]="country.key">{{ country[currentLang] }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Region' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="region" placeholder="{{ 'Placeholder.Basic.Country' | translate }}">
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
             </mat-hint>

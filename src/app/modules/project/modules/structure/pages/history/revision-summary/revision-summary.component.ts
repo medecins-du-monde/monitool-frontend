@@ -11,6 +11,7 @@ import { isEqual, uniqWith } from 'lodash';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import moment from 'moment';
+import { CountryListService } from 'src/app/services/country-list.service';
 
 
 @Component({
@@ -28,9 +29,13 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
   output = [];
   project: Project = null;
 
+  get currentLang() {
+    return this.translate.currentLang ? this.translate.currentLang : this.translate.defaultLang;
+  }
+
   private subscription: Subscription = new Subscription();
 
-  constructor(private projectService: ProjectService, private translate: TranslateService) { }
+  constructor(private projectService: ProjectService, private translate: TranslateService, private countryListService: CountryListService) { }
 
   ngOnInit(): void {
     this.subscription.add(
@@ -153,6 +158,17 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       }
     }
 
+    this.translateLocation(before);
+    this.translateLocation(after);
+    if (operation.value) {
+      if (editedField === 'continent' && this.countryListService.getContinent(operation.value)) {
+        operation.value = this.countryListService.getContinent(operation.value)[this.currentLang];
+      }
+      if (editedField === 'country' && this.countryListService.getCountry(operation.value)) {
+        operation.value = this.countryListService.getCountry(operation.value)[this.currentLang];
+      }
+    }
+
     if (operation.op === 'add') {
       translationData['item'] = operation.value;
 
@@ -161,7 +177,6 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       if (operation.value == null) { translationData['after'] = ['null']; }
       else { translationData['after'] = operation.value; }
       translationData['before'] = before;
-
 
       splitPath.forEach(path => translationData['before'] = translationData['before'][path]);
       if (translationData['before'] instanceof Date) {
@@ -415,6 +430,17 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
         element.column = element.column[0].toUpperCase() + element.column.slice(1); // Capitalize month
       }
     });
+  }
+
+  private translateLocation(revision: any) {
+    if (revision) {
+      if (this.countryListService.getContinent(revision.continent)) {
+        revision.continent = this.countryListService.getContinent(revision.continent)[this.currentLang];
+      }
+      if (this.countryListService.getCountry(revision.country)) {
+        revision.country = this.countryListService.getCountry(revision.country)[this.currentLang];
+      }
+    }
   }
 
   ngOnDestroy(): void {

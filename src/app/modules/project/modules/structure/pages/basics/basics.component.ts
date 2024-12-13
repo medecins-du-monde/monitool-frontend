@@ -14,6 +14,7 @@ import { DateService } from 'src/app/services/date.service';
 import DatesHelper from 'src/app/utils/dates-helper';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { CountryListService } from 'src/app/services/country-list.service';
 
 @Component({
   selector: 'app-basics',
@@ -76,6 +77,11 @@ export class BasicsComponent implements OnInit, OnDestroy {
     return this.basicsForm ? this.themes.filter(x => this.basicsForm.controls.themes.value.includes(x.id)) : [];
   }
 
+  public countryList: any[];
+  public continentList: any[];
+
+  public legacyCountry?: string;
+
   constructor(
     private fb: UntypedFormBuilder,
     private projectService: ProjectService,
@@ -83,15 +89,24 @@ export class BasicsComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private countryListService: CountryListService
   ) { }
 
   ngOnInit(): void {
+    this.continentList = this.countryListService.getContinents();
+    this.countryList = this.countryListService.getCountries();
     // TODO: Check if the subscription.add is usefull, if yes, we may have to set it everywhere
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
+        if (!this.countryListService.getCountry(project.country)) {
+          this.legacyCountry = project.country;
+          console.log(this.legacyCountry);
+        }
         this.basicsForm = this.fb.group({
+          continent: [project.continent, Validators.required],
           country: [project.country, Validators.required],
+          region: [project.region],
           name: [project.name, Validators.required],
           themes: [project.themes.map(x => x.id)],
           start: [project.start, Validators.required],
@@ -120,6 +135,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
                 logicalFrame.end = new Date(logicalFrame.end).getTime() === new Date(project.end).getTime() ?
                   value.end._d : logicalFrame.end;
               });
+            }
+
+            if (!value.region || value.region === '') {
+              value.region = undefined;
             }
             const selectedThemes = value.themes;
             value.themes = this.themes.filter(x => selectedThemes.includes(x.id));

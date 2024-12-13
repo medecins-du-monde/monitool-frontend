@@ -204,6 +204,11 @@
   "HistoryRevision": {
       "active_replace": "Change deletion status from <code>{{!before}}</code> to <code>{{!after}}</code>",
       "country_replace": "Change the project country from <code>{{before}}</code> to <code>{{after}}</code>",
+      "continent_replace": "Change the project continent from <code>{{before}}</code> to <code>{{after}}</code>",
+      "region_replace": "Change the project region from <code>{{before}}</code> to <code>{{after}}</code>",
+      "continent_add": "Add the project continent <code>{{item}}</code>",
+      "region_add": "Add the project region <code>{{item}}</code>",
+      "region_remove": "Remove the project region <code>{{item}}</code>",
       "end_replace": "Change the project end date from <code>{{before}}</code> to <code>{{after}}</code>",
       "entities_add": "Add the new site <code>{{item.name}}</code>",
       "entities_end_replace": "Change the site end date of <code>{{entity.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",

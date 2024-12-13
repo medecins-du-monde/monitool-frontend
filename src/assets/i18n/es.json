@@ -201,6 +201,11 @@
       "start_replace": "Cambia el inicio del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "end_replace": "Cambia el final del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
       "country_replace": "Cambia el país del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+      "continent_replace": "Cambia el continente del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+      "region_replace": "Cambia la región del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
+      "continent_add": "Se añade al proyecto el continente <code>{{item}}</code>",
+      "region_add": "Se añade al proyecto la región <code>{{item}}</code>",
+      "region_remove": "Se elimina del proyecto la región <code>{{item}}</code>",
       "visibility_replace": "Cambia la visibilidad del proyecto de <code>{{before}}</code> a <code>{{after}}</code>",
 
       "comments_updated": "Comentarios de la tabla de informes actualizados",
