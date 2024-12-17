@@ -210,18 +210,21 @@ export class DataflowComponent implements OnInit, OnDestroy {
       }
 
       for (const purpose of logFrame.purposes) {
+        if (purpose.indicators.length == 0) break;
         const purposeItem: GraphTreeItem = {
           name: purpose.description,
           children: parseIndicatorsAsChildren(purpose.indicators)
         }
 
         for (const output of purpose.outputs) {
+          if (output.indicators.length == 0) break;
           const outputItem: GraphTreeItem = {
             name: output.description,
             children: parseIndicatorsAsChildren(output.indicators)
           }
 
           for (const activity of output.activities) {
+            if (activity.indicators.length == 0) break;
             outputItem.children[`activity-${activity.id}`] = {
               name: activity.description,
               children: parseIndicatorsAsChildren(activity.indicators)
@@ -247,7 +250,6 @@ export class DataflowComponent implements OnInit, OnDestroy {
     
     // Iterates through all Cross Cutting Indicators and adds them to graphTree.
     if (Object.keys(project.crossCutting).length > 0) {
-      console.log(parseIndicatorsAsChildren(Object.keys(project.crossCutting).map(key => project.crossCutting[key])));
       graphTree.indicators.children[`crossCuttingIndicators`] = {
         name: 'CrossCuttingIndicators',
         children: parseIndicatorsAsChildren(Object.keys(project.crossCutting).map(key => project.crossCutting[key]))
