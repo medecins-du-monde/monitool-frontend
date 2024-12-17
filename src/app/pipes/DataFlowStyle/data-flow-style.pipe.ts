@@ -35,41 +35,53 @@ export class DataFlowStylePipe implements PipeTransform {
           height:${(value as ClusterNode).dimension.height};
         `;
         textStyle += "font: bold 16px sans-serif;"
-        if (CONTAINER_CLUSTERS.includes(value.id)) {
-          style += "fill:transparent; stroke-width:3;"
-          switch (value.id) {
-            case 'sources':
+        // if (CONTAINER_CLUSTERS.includes(value.id)) {
+          style += "fill: transparent; stroke-width:3;"
+          switch (true) {
+            case value.id === 'sources':
               style += "stroke: #ff00ff;"
               textStyle += "fill: #ff76ff;"
               break;
 
-            case 'datas':
+            case value.id === 'datas':
               style += "stroke: #ffbe00;"
               textStyle += "fill: #ffbe00;"
               break;
 
-            case 'indicators':
-              style += "stroke: #ff6700;"
-              textStyle += "fill: #ff934a;"
-              break;
-          
-            default:
+            case value.id === 'groups':
+            case value.id === 'sites':
               style += "stroke:rgba(0,0,0,.6);"
               textStyle += "fill: rgba(0,0,0,.4);"
               break;
+
+            case value.id.startsWith('dataGroup'):
+              style += "stroke-width:3; stroke: blue; stroke-dasharray:4;"
+              textStyle += "fill: #6495ed"
+              break;
+
+            case value.id === 'indicators':
+              style += "stroke: #ff6700;"
+              textStyle += "fill: #ff934a;"
+              break;
+            
+            case value.id.startsWith('extraIndicators'):
+            case value.id.startsWith('crossCuttingIndicators'):
+            case value.id.startsWith('logFrame'):
+              style += "fill: #ff934a;"
+              break;
+          
+            default:
+              style += "stroke: #ff6700;"
+              // textStyle += "fill: #ff934a;"
+              break;
           }
-        } else if (value.id.startsWith('dataGroup')) {
-          style += "fill:transparent; stroke-width:3; stroke: blue; stroke-dasharray:4"
-          textStyle += "fill: #6495ed"
-        } else {
-          style += `fill:${(value as ClusterNode).data.color}`;
-          textStyle += "fill: rgba(0,0,0,.4);"
-        }
         break;
       case 'target' in value: // Edge
-        if ((value as Edge).data && typeof (value as Edge).data.index !== 'undefined') {
-          style += `stroke: ${ARROW_COLORS[(value as Edge).data.index % ARROW_COLORS.length]}`;
-        }
+        // if ((value as Edge).data && typeof (value as Edge).data.index !== 'undefined') {
+        //   style += `stroke: ${ARROW_COLORS[(value as Edge).data.index % ARROW_COLORS.length]}`;
+        // } else {
+          style += `stroke:rgb(126, 126, 126)`;
+        // }
         textStyle += `font: bold 14px sans-serif; fill: #6495ed;`
         break;
     
@@ -83,6 +95,10 @@ export class DataFlowStylePipe implements PipeTransform {
           style += `fill: #ffbe00;`
         } else if (value.id.startsWith('source')) {
           style += `fill: #ff76ff;`
+        } else if (value.id.startsWith('indicator')) {
+          style += `fill: #ff934a;`
+        } else if (value.id.startsWith('group') || value.id.startsWith('site')) {
+          style += `fill:rgb(185, 185, 185);`
         } else {
           style += `fill: ${(value as ClusterNode).data.color}`;
         }

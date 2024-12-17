@@ -50,6 +50,7 @@ export class DataflowComponent implements OnInit, OnDestroy {
   public center$: Subject<boolean> = new Subject();
 
   private project: Project;
+  private graphProject: any;
 
   public nodes: Node[] = [];
   public edges: Edge[] = [];
@@ -87,11 +88,35 @@ export class DataflowComponent implements OnInit, OnDestroy {
           return;
         }
         this.project = project;
-        this.graphTree = this.parseProjectToTree(this.project);
-        this.updateGraph();
-        this.setGraph(this.graphTree);
+        this.resetGraph();
       })
     );
+  }
+
+  public hideGroups() {
+    this.graphProject.groups = undefined;
+    console.log(this.graphProject);
+    this.setGraph();
+  }
+
+  public resetGraph() {
+    this.graphProject = {...this.project};
+    this.setGraph();
+  }
+
+  private setGraph() {
+    const graphTree = this.parseProjectToTree(this.graphProject);
+    this.updateGraph();
+
+    this.nodes = [];
+    this.edges = [];
+    this.clusters = [];
+
+    const itemProp: GraphItemProperties = { x: 0, y: 0, width: 0, height: 0 };
+    for (const key of Object.keys(graphTree)) {
+      const columnProp = this.setItem(graphTree[key], key, itemProp);
+      itemProp.x = columnProp.width + COLUMN_GAP;
+    }
   }
 
   private parseProjectToTree(project: Project): GraphTreeItemArray {
@@ -114,13 +139,17 @@ export class DataflowComponent implements OnInit, OnDestroy {
       }
     }
 
-    for(const group of project.groups) {
-      graphTree.groups.children[`group-${group.id}`] = {
-        name: group.name
+    if (project.groups) {
+      for(const group of project.groups) {
+        graphTree.groups.children[`group-${group.id}`] = {
+          name: group.name
+        }
+        for(const site of group.members) {
+          graphTree.sites.children[`site-${site.id}`].linksFrom.push(`group-${group.id}`);
+        }
       }
-      for(const site of group.members) {
-        graphTree.sites.children[`site-${site.id}`].linksFrom.push(`group-${group.id}`);
-      }
+    } else {
+      delete graphTree.groups;
     }
 
     for(const source of project.forms) {
@@ -146,8 +175,6 @@ export class DataflowComponent implements OnInit, OnDestroy {
 
       graphTree.datas.children[`dataGroup-${source.id}`] = dataGroup;
     }
-
-    console.log(graphTree.sites.children);
     
     /**
      * Utility function of parseProjectToTree().
@@ -176,7 +203,7 @@ export class DataflowComponent implements OnInit, OnDestroy {
       }
 
       if (logFrame.indicators.length > 0) {
-        logFrameItem.children[`generalObjective-logFrame-${logFrame.id}`] = {
+        logFrameItem.children[`generalObjective-${logFrame.id}`] = {
           name: logFrame.goal,
           children: parseIndicatorsAsChildren(logFrame.indicators)
         }
@@ -228,18 +255,6 @@ export class DataflowComponent implements OnInit, OnDestroy {
     }
 
     return graphTree;
-  }
-
-  private setGraph(graphTree: GraphTreeItemArray) {
-    this.nodes = [];
-    this.edges = [];
-    this.clusters = [];
-
-    const itemProp: GraphItemProperties = { x: 0, y: 0, width: 0, height: 0 };
-    for (const key of Object.keys(graphTree)) {
-      const columnProp = this.setItem(graphTree[key], key, itemProp);
-      itemProp.x = columnProp.width + COLUMN_GAP;
-    }
   }
 
   private setItem(item: GraphTreeItem, itemId: string, properties: GraphItemProperties ): GraphItemProperties {

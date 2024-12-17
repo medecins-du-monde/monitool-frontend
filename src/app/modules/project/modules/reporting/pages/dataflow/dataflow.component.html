@@ -1,6 +1,7 @@
-<!-- <div>
-  <button (click)="downloadGraph()">SAVE</button>
-</div> -->
+<div>
+  <button mat-button (click)="this.resetGraph()">Reset</button>
+  <button mat-button (click)="this.hideGroups()">Hide Groups</button>
+</div>
 <div class="container">
   <ngx-graph
     class="chart-container"
