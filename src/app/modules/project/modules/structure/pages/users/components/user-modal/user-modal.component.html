@@ -14,8 +14,8 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'User' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass" [disabled]="users.length <= 0">
-                  <mat-option>
+                <!-- <mat-select formControlName="id" placeholder="{{ 'User' | translate }}" disableOptionCentering panelClass="myPanelClass" [disabled]="users.length <= 0">
+                    <mat-option>
                     <ngx-mat-select-search
                       [formControl]="userFilter"
                       [placeholderLabel]="'Tooltip.UserEdition.UserSearch.Placeholder' | translate"
@@ -24,7 +24,22 @@
                     </ngx-mat-select-search>
                   </mat-option>
                   <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}</mat-option>
-                </mat-select>
+                </mat-select> -->
+                <input #userSearchInput
+                    type="text"
+                    [placeholder]="'Tooltip.UserEdition.UserSearch.Placeholder' | translate"
+                    matInput
+                    formControlName="id"
+                    [matAutocomplete]="auto"
+                    (input)="onUserSearch()"
+                    (focus)="onUserSearch()"
+                    (focusout)="resetUser()"
+                    >
+                <mat-autocomplete requireSelection #auto="matAutocomplete" [displayWith]="displayUserName">
+                <mat-option *ngFor="let user of filteredUsers" [value]="user.id">
+                    {{user.name}}
+                </mat-option>
+                </mat-autocomplete>
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
             </mat-form-field>
         </div>
