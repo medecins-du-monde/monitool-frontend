@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DataFlowEllipsisPipe implements PipeTransform {
 
   transform(value: string): string {
-    if (value.length > 26) {
+    if (value && value.length > 26) {
       return value.substring(0, 24) + '...';
     } else {
       return value;

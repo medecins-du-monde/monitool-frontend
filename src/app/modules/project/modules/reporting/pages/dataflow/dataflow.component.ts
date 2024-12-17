@@ -1,12 +1,10 @@
-import { Component, OnDestroy, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Edge, Node, ClusterNode, GraphComponent } from '@swimlane/ngx-graph';
-import { Subject, Subscription, timeout } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
-import * as svg from 'save-svg-as-png';
-import { Entity } from 'src/app/models/classes/entity.model';
 
 
 const GRAPH_PADDING = {x: 5, y: 5};
@@ -128,8 +126,6 @@ export class DataflowComponent implements OnInit, OnDestroy {
       indicators: {name: 'Indicators', children: {}}
     };
 
-    const entities = {}
-
     for(const [index, site] of project.entities.entries()) {
       graphTree.sites.children[`site-${site.id}`] = {
         name: site.name,
@@ -210,34 +206,37 @@ export class DataflowComponent implements OnInit, OnDestroy {
       }
 
       for (const purpose of logFrame.purposes) {
-        if (purpose.indicators.length == 0) break;
         const purposeItem: GraphTreeItem = {
           name: purpose.description,
           children: parseIndicatorsAsChildren(purpose.indicators)
         }
 
         for (const output of purpose.outputs) {
-          if (output.indicators.length == 0) break;
           const outputItem: GraphTreeItem = {
             name: output.description,
             children: parseIndicatorsAsChildren(output.indicators)
           }
 
           for (const activity of output.activities) {
-            if (activity.indicators.length == 0) break;
             outputItem.children[`activity-${activity.id}`] = {
               name: activity.description,
               children: parseIndicatorsAsChildren(activity.indicators)
             }
           }
 
-          purposeItem.children[`output-${output.id}`] = outputItem;
+          if (Object.keys(outputItem.children).length > 0) {
+            purposeItem.children[`output-${output.id}`] = outputItem;
+          }
         }
 
-        logFrameItem.children[`purpose-${purpose.id}`] = purposeItem;
+        if (Object.keys(purposeItem.children).length > 0) {
+          logFrameItem.children[`purpose-${purpose.id}`] = purposeItem;
+        }
       }
-    
-      graphTree.indicators.children[`logFrame-${logFrame.id}`] = logFrameItem;
+      
+      if (Object.keys(logFrameItem.children).length > 0) {
+        graphTree.indicators.children[`logFrame-${logFrame.id}`] = logFrameItem;
+      }
     }
     
     // Iterates through all Extra Indicators and adds them to graphTree.
@@ -256,6 +255,7 @@ export class DataflowComponent implements OnInit, OnDestroy {
       }
     }
 
+    console.log(graphTree);
     return graphTree;
   }
 
