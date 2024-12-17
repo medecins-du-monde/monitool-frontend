@@ -21,6 +21,7 @@ import { RefreshSnackbarModule } from './components/refresh-snackbar/refresh-sna
 import { UserRightsTableModule } from './components/user-rights-table/user-rights-table.module';
 import { RefreshModalModule } from './components/refresh-modal/refresh-modal.module';
 import { InteractionType, PublicClientApplication, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { DataFlowStylePipe } from './pipes/DataFlowStyle/data-flow-style.pipe';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
