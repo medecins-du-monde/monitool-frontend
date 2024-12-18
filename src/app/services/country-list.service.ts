@@ -19,7 +19,7 @@ export class CountryListService {
       this.continentArray.push({...this.continents[key], key})
     });
     Object.keys(this.countries).forEach((key: string) => {
-      this.countriesByContinent[this.countries[key].continent] = this.countries[key];
+      this.countriesByContinent[this.countries[key].continent][key] = this.countries[key];
     });
   }
 
@@ -34,12 +34,18 @@ export class CountryListService {
     return this.continentArray;
   }
 
-  public getCountries(quantity?: number, continent?: string, searchKey = ""): any[] {
+  public getCountries(quantity?: number, continent?: string, searchKey = "", selectedCountry?: string): any[] {
+    searchKey = searchKey.toLowerCase();
     let availableCountries = this.countries;
     if (continent && this.countriesByContinent[continent]) {
       availableCountries = this.countriesByContinent[continent];
     }
     const filteredList = [];
+
+    if (selectedCountry) {
+      filteredList.push({...this.countries[selectedCountry], key: selectedCountry});
+    }
+
     for (const [index, value] of Object.keys(availableCountries).entries()) {
       if (quantity && index > quantity) {
         break;
@@ -50,12 +56,12 @@ export class CountryListService {
       }
       for (const lang of ['en', 'es', 'fr']) {
         const name = availableCountries[value][lang];
-        if (typeof name === 'string' ? name.includes(searchKey) : name.find(val => val.includes(searchKey))) {
+        if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
           toBeIncluded = true;
           break;
         }
       }
-      if (toBeIncluded) {
+      if (toBeIncluded && value !== selectedCountry) {
         filteredList.push({...availableCountries[value], key: value});
       }
     }

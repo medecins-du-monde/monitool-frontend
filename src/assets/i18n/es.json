@@ -648,9 +648,11 @@
   "Password": "Contraseña",
   "Placeholder": {
       "Basic" : {
-          "Country": "ej: República Centroafricana",
+          "Continent": "Seleccione un continente",
+          "Region": "Precise una región",
+          "Country": "Seleccione un país",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
-          "Thematics": "Selectione uno o varios Combates Políticos"
+          "Thematics": "Seleccione uno o varios Combates Políticos"
       },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
@@ -821,7 +823,9 @@
   },
   "Tooltip": {
       "BasicsEdition": {
-          "Country": "En que país tiene lugar su proyecto? Si es un proyecto regional, entre el nombre de la región.",
+          "Continent": "¿En que continente tiene lugar su proyecto?",
+          "Region": "¿En que región tiene lugar su proyecto? Si no es un proyecto regional déjelo en blanco.",
+          "Country": "¿En que país tiene lugar su proyecto?",
           "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
           "Name": "Nombre su indicador. Es preferible obtener el nombre a partir de un catalogo para ser consistente con otros proyectos.",
           "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",

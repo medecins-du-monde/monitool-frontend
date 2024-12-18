@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -77,8 +77,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
     return this.basicsForm ? this.themes.filter(x => this.basicsForm.controls.themes.value.includes(x.id)) : [];
   }
 
-  public countryList: any[];
-  public continentList: any[];
+  public filteredCountryList: any[];
+  public get continentList() {
+    return this.countryListService.getContinents();
+  }
 
   public legacyCountry?: string;
 
@@ -90,22 +92,21 @@ export class BasicsComponent implements OnInit, OnDestroy {
     private adapter: DateAdapter<any>,
     private dateService: DateService,
     private changeDetector: ChangeDetectorRef,
-    private countryListService: CountryListService
+    private countryListService: CountryListService,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
-    this.continentList = this.countryListService.getContinents();
-    this.countryList = this.countryListService.getCountries();
+    this.filteredCountryList = this.countryListService.getCountries();
     // TODO: Check if the subscription.add is usefull, if yes, we may have to set it everywhere
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.countryListService.getCountry(project.country)) {
           this.legacyCountry = project.country;
-          console.log(this.legacyCountry);
         }
         this.basicsForm = this.fb.group({
           continent: [project.continent, Validators.required],
-          country: [project.country, Validators.required],
+          country: [this.countryListService.getCountry(project.country) ? project.country : null, Validators.required],
           region: [project.region],
           name: [project.name, Validators.required],
           themes: [project.themes.map(x => x.id)],
@@ -113,6 +114,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
         }, { validators: [DatesHelper.orderedDates('start', 'end')] });
+        this.onSearch('');
         this.subscription.add(
           this.basicsForm.valueChanges.subscribe((value: any) => {
             if (value.start._d) {
@@ -140,6 +142,19 @@ export class BasicsComponent implements OnInit, OnDestroy {
             if (!value.region || value.region === '') {
               value.region = undefined;
             }
+
+            if (value.country) {
+              const country = this.countryListService.getCountry(value.country);
+              if (country && !value.continent) {
+                value.continent = country.continent;
+                this.basicsForm.get('continent').setValue(value.continent);
+              }
+              if (country && value.continent && country.continent !== value.continent) {
+                value.country = undefined;
+                this.basicsForm.get('country').setValue(value.country);
+              }
+            }
+
             const selectedThemes = value.themes;
             value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
             this.projectService.valid = this.basicsForm.valid;
@@ -185,6 +200,14 @@ export class BasicsComponent implements OnInit, OnDestroy {
       })
     );
     this.projectService.updateInformationPanel(this.informations);
+  }
+
+  onSearch(value: string) {
+    this.filteredCountryList = this.countryListService.getCountries(undefined, this.basicsForm.value.continent, value, this.basicsForm.value.country)
+  }
+
+  resetInput(element: HTMLElement) {
+    this.renderer.setProperty(element, 'value', '');
   }
 
   ngOnDestroy(): void {

@@ -642,7 +642,9 @@
   "Password": "Mot de passe",
   "Placeholder": {
       "Basic" : {
-          "Country": "ex: RCA",
+          "Continent": "Sélectionnez un continent",
+          "Region": "Precisse une région",
+          "Country": "Sélectionnez un pays",
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
           "Thematics": "ex: Soins de santé primaire"
       },
@@ -816,7 +818,9 @@
   },
   "Tooltip": {
       "BasicsEdition": {
-          "Country": "Dans quel pays le projet se déroule-t'il? S'il s'agit d'un projet régional, entrez le nom de la région.",
+          "Continent": "Dans quel continent le projet se déroule-t'il?",
+          "Region": "Dans quel région le projet se déroule-t'il? S'il s'agit pas d'un projet régional, laissez-le vide.",
+          "Country": "Dans quel pays le projet se déroule-t'il?",
           "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
           "Name": " Nommez votre indicateur. Le nom doit provenir d'un catalogue d'indicateur, afin d'être cohérent avec les autres projets.",
           "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
