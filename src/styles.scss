@@ -844,7 +844,7 @@ canvas#currentChart{
 // === Hints ===
 mat-hint {
   mat-icon {
-    width: 25px !important;
+    min-width: 25px !important;
     height: 100% !important;
     margin-right: 10px;
 
@@ -928,6 +928,10 @@ mat-hint {
         line-height: 35px;
         top: -2px;
       }
+    }
+
+    .mat-select-trigger {
+      height: max-content;
     }
 
     .mat-select-arrow-wrapper {
