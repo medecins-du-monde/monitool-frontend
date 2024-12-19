@@ -20,7 +20,9 @@ export class Project implements Deserializable {
     start: Date;
     end: Date;
     inputDate: Date;
+    continent: string;
     country: string;
+    region?: string;
     themes: Theme[] = [];
     crossCutting: any;
     extraIndicators: ProjectIndicator[] = [];
@@ -116,7 +118,9 @@ export class Project implements Deserializable {
     serialize() {
         const serialized = {
             active: this.active,
+            continent: this.continent,
             country: this.country,
+            region: this.region,
             crossCutting: this.formatCrossCutting(),
             end: this.end ? DatesHelper.dateToString(this.end) : null,
             entities: this.entities.map(x => x.serialize ? x.serialize() : x),

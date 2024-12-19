@@ -1,10 +1,50 @@
 <div [formGroup]="basicsForm" class="mdm-form">
     <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Continent' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select formControlName="continent" placeholder="{{ 'Placeholder.Basic.Continent' | translate }}" disableOptionCentering panelClass="myPanelClass">
+                <mat-option *ngFor="let continent of continentList" [value]="continent.key">{{ continent[currentLang] }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Continent' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Country' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <input matInput formControlName="country" placeholder="{{ 'Placeholder.Basic.Country' | translate }}">
+            <mat-select
+                formControlName="country"
+                placeholder="{{ legacyCountry || ('Placeholder.Basic.Country' | translate) }}"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                (focus)="resetInput(searchInput)"
+            >
+                <input
+                    type="text"
+                    matInput
+                    (keyup)="onSearch($event.target.value)"
+                    style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                    placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                    #searchInput
+                > {{searchInput.focus()}}
+                <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                    <mat-option *ngFor="let country of filteredCountryList" [value]="country.key">{{ country[currentLang] }}
+                    </mat-option>
+                </div>
+            </mat-select>
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Country' | translate }}
+            </mat-hint>
+        </mat-form-field>
+    </div>
+    <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Region' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <input matInput formControlName="region" placeholder="{{ 'Placeholder.Basic.Region' | translate }}">
+            <mat-hint>
+                <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Region' | translate }}
             </mat-hint>
         </mat-form-field>
     </div>
