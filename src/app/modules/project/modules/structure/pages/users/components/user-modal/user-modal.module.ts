@@ -15,6 +15,7 @@ import { DataSourceSelectorModule } from '../../../../components/data-source-sel
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UserRightsTableModule } from 'src/app/components/user-rights-table/user-rights-table.module';
+import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UserRightsTableModule } from 'src/app/components/user-rights-table/user
     MatDialogModule,
     MatExpansionModule,
     NgxMatSelectSearchModule,
-    UserRightsTableModule
+    UserRightsTableModule,
+    MatAutocompleteModule
   ],
   exports: [UserModalComponent]
 })
