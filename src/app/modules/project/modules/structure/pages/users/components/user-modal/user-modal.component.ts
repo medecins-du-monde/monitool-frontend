@@ -79,7 +79,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
       this.userService.userList.subscribe((users: User[]) => {
         users = users.filter((x: User) => x.active);
         this.users = users;
-        this.onUserSearch();
+        this.onSearch('');
       })
     );
 
@@ -192,22 +192,13 @@ export class UserModalComponent implements OnInit, OnDestroy {
     this.userForm.controls.entities.patchValue(this.userForm.value.entities.filter(entity => this.availableEntities.includes(entity)));
   }
 
-  displayUserName = (userId: string): string => {
-    console.log('ON CHANGE', userId);
-    const user = this.users.find(user => user.id === userId);
-    return user ? user.name : userId;
+  onSearch(value: string) {
+    console.log(this.userForm.value);
+    this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(value.toLowerCase()) || user.id === this.userForm.value.id );
   }
 
-  onUserSearch() {
-    const filterValue = this.userSearchInput.nativeElement.value.toLowerCase() || '';
-    this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(filterValue.toLowerCase()));
-  }
-
-  resetUser() {
-    const user = this.users.find(user => user.id === this.userForm.value.id);
-    if (user.name !== this.userSearchInput.nativeElement.value) {
-      this.userForm.get('id').setValue(null);
-    }
+  resetInput(element: HTMLElement) {
+    this.renderer.setProperty(element, 'value', '');
   }
 
   ngOnDestroy(): void {

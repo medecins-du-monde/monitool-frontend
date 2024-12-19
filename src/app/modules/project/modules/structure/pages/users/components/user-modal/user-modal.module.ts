@@ -13,9 +13,7 @@ import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 import { DataSourceSelectorModule } from '../../../../components/data-source-selector/data-source-selector.module';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { UserRightsTableModule } from 'src/app/components/user-rights-table/user-rights-table.module';
-import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/material/legacy-autocomplete';
 
 
 @NgModule({
@@ -35,9 +33,7 @@ import {MatLegacyAutocompleteModule as MatAutocompleteModule} from '@angular/mat
     MatButtonModule,
     MatDialogModule,
     MatExpansionModule,
-    NgxMatSelectSearchModule,
     UserRightsTableModule,
-    MatAutocompleteModule
   ],
   exports: [UserModalComponent]
 })
