@@ -1310,7 +1310,7 @@ export class ReportingTableComponent
       return '';
     }
 
-    if (value === 'Not a finite number') {
+    if (value === 'Not a finite number' || value === 'division-by-zero') {
       return 'DivisionByZero';
     }
 
