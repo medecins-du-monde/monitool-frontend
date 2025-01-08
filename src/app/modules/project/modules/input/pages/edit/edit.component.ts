@@ -589,7 +589,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               }
 
               let newValue;
-              if (/^\s*([-+]?)((\d+(\.\d*)?)|(\.\d+))(?:\s*([-+*/])\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
+              if (/^(\s*([-+]?)((\d+(\.\d*)?)|(\.\d+)))?(?:(\s*([-+*/]))?\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
                 newValue = eval(change[3]);
               } else {
                 newValue = change[3];
