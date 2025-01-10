@@ -483,7 +483,7 @@ export class ReportingTableComponent
       // Disaggregations by collection sites and collection sites groups
       this.rows.next(
         this.content.filter(el => {
-          if (el.customFilter && el.customFilter.entity) {
+          if (el.customFilter && el.customFilter.entity && !this.isCrossCuttingReport) {
             return el.customFilter.entity.some(entity =>
               this.currentFilter.entities.includes(entity)
             );
@@ -909,6 +909,15 @@ export class ReportingTableComponent
       : forms[indicator.sectionId - logicalFrames.length - 3];
   }
 
+  isCrossCuttingIndicator(indicator) {
+    if (!this.isCrossCuttingReport) {
+      if (!this.project.crossCutting[indicator.commentInfo.path]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // This method allows to receive the values of the disaggregated indicators inside of the indicator passed in parameter
   receiveIndicators(info: AddedIndicators): void {
     // Getting the indicator information inside the content
@@ -925,9 +934,9 @@ export class ReportingTableComponent
 
       // getting the logical frame of current indicator to get all its entities.
       // or current entity if the indicator is disaggregated by group
-      const group = this.getGroup(currentIndicator);
-      const groupEntities = currentIndicator.customFilter?.entity || (group?.entities || []).map(({id}) => id).filter(Boolean);
-
+      const availableEntities = this.isCrossCuttingIndicator(currentIndicator) ? currentProject.entities : this.getGroup(currentIndicator).entities;
+      const groupEntities = currentIndicator.customFilter?.entity || (availableEntities || []).map(({id}) => id).filter(Boolean);
+      
       // Filters the groups to only display groups that have to do with the indicator computation,
       // if no computation is present we show all the groups.
       const filteredGroupEntities = this.getRelevantGroups(groupEntities, currentIndicator, currentProject);
@@ -979,8 +988,9 @@ export class ReportingTableComponent
 
       // getting the logical frame of current indicator to get all its entities.
       // or current entity if the indicator is disaggregated by group
+      const availableEntities = this.isCrossCuttingIndicator(currentIndicator) ? currentProject.entities : this.getGroup(currentIndicator).entities;
       const groupEntities = currentIndicator.customFilter?.entity ||
-      (this.getGroup(currentIndicator)?.entities || []).map(({id}) => id).filter(Boolean);
+      (availableEntities || []).map(({id}) => id).filter(Boolean);
 
       // Filters the groups to only display groups that have to do with the indicator computation,
       // if no computation is present we show all the groups.
@@ -991,7 +1001,7 @@ export class ReportingTableComponent
           groups.push(projectGroup);
         }
       });
-      const parentEntities = (this.getGroup(currentIndicator).entities || []).map(({id}) => id).filter(Boolean);
+      const parentEntities = (availableEntities || []).map(({id}) => id).filter(Boolean);
 
       for (const group of groups) {
         const customFilter = {
