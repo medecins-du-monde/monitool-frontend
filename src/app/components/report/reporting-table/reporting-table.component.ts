@@ -1239,7 +1239,7 @@ export class ReportingTableComponent
     let startDate: Date;
     let endDate: Date;
 
-    if (group instanceof LogicalFrame) {
+    if (group && group.start && group.end) {
       startDate = group.start;
       endDate = group.end;
     }
