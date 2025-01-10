@@ -7,6 +7,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { CountryListService } from 'src/app/services/country-list.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-indicator-report',
@@ -18,7 +20,10 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
               private chartService: ChartService,
-              private route: ActivatedRoute ) { }
+              private route: ActivatedRoute,
+              private countryList: CountryListService,
+              private translate: TranslateService
+            ) { }
 
   filter = new BehaviorSubject<any>({});
 
@@ -46,6 +51,11 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
         });
       })
     );
+    this.subscription.add(
+      this.translate.onLangChange.subscribe(() => {
+        this.buildIndicators();
+      })
+    )
   }
 
   buildIndicators(): void{
@@ -54,7 +64,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     const indicators: ProjectIndicator[] = [];
     for (const project of projects){
         const newIndicator = new ProjectIndicator(project.crossCutting[this.mainIndicator.id]);
-        newIndicator.display = `${project.country} - ${project.name}`;
+        newIndicator.display = `${this.countryList.translateCountry(project.country)} - ${project.name}`;
         // this property is necessary for creating the menu options in the report table
         newIndicator.originProject = project;
         indicators.push(newIndicator);

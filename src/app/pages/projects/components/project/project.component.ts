@@ -10,6 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
 import { InputService } from 'src/app/services/input.service';
 import * as JSZip from 'jszip';
+import { CountryListService } from 'src/app/services/country-list.service';
 
 @Component({
   selector: 'app-project',
@@ -45,6 +46,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private inputService: InputService,
     private route: ActivatedRoute,
+    public countryList: CountryListService
   ) { }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
+import { CountryListService } from 'src/app/services/country-list.service';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, public countryListService: CountryListService) {}
 
   ngOnInit(): void {
     this.subscription.add(

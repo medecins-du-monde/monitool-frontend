@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { continentList, countryList } from '../utils/iso-countries';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -13,7 +14,13 @@ export class CountryListService {
   private countriesByContinent = {};
   private continentArray = [];
 
-  constructor() {
+  get currentLang() {
+    return this.translate.currentLang ? this.translate.currentLang : this.translate.defaultLang;
+  }
+
+  constructor(
+    private translate: TranslateService
+  ) {
     Object.keys(this.continents).forEach((key: string) => {
       this.countriesByContinent[key] = {};
       this.continentArray.push({...this.continents[key], key})
@@ -21,6 +28,9 @@ export class CountryListService {
     Object.keys(this.countries).forEach((key: string) => {
       this.countriesByContinent[this.countries[key].continent][key] = this.countries[key];
     });
+  }
+  public translateCountry(key: string) {
+    return this.countries[key] ? this.countries[key][this.currentLang] : key;
   }
 
   public getCountry(key: string): any {
