@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{data.type + '-details' | translate}}</h1>
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+  <div class="card-info">
+      <div class="card-info-title">{{ 'Name' | translate }}</div>
+      <div class="card-info-value">
+          {{ data.details.name }}
+      </div>
+  </div>
+  <div class="card-info">
+      <div class="card-info-title">{{ 'Date' | translate }}</div>
+      <div class="card-info-value">
+          {{ (data.details.start ? data.details.start : data.project.start ) | localizedDate }} -
+          {{ (data.details.end ? data.details.end : data.project.end )| localizedDate }}</div>
+  </div>
+  <div class="card-info" *ngIf="groups || entities">
+      <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>
+      <div class="card-info-value">
+          <div *ngFor="let group of groups">{{ group.name | translate }}</div>
+          <div *ngFor="let entity of entities">{{ entity.name }}</div>
+      </div>
+  </div>
+  <div class="card-info" *ngIf="thematics">
+      <div class="card-info-title">{{ 'Thematics'| translate }}</div>
+      <div class="card-info-value">
+          <div *ngFor="let theme of thematics">{{ theme }}</div>
+      </div>
+  </div>
+</mat-dialog-content>
