@@ -339,3 +339,9 @@ tr.mat-header-row {
     opacity: .5;
   }
 }
+
+.details-icon {    
+  min-width: max-content;
+  cursor: pointer;
+  opacity: .4 !important;
+}

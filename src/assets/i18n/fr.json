@@ -1053,5 +1053,8 @@
         "infection": "Infection Respiratoire Aigüe",
         "diarrhea": "Diarrhée"
     }
-  }
+  },
+  "crossCutting-details": "Détails de l'indecateur transversaux",
+  "logicalFrame-details": "Détails du cadre logique",
+  "form-details": "Détails de la source de données"
 }

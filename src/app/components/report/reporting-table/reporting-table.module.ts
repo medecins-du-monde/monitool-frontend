@@ -12,6 +12,8 @@ import { ProjectSaveModule } from 'src/app/modules/project/modules/structure/com
 import { ReportTableTooltipPipeModule } from 'src/app/pipes/ReportTableTooltip/reportTableTooltipPipe.module';
 import { ReportTablePaddingPipeModule } from 'src/app/pipes/ReportTablePadding/reportTablePaddingPipe.module';
 import { ReportTableColorPipeModule } from 'src/app/pipes/ReportTableColor/reportTableColorPipe.module';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { DetailsModalModule } from '../details-modal/details-modal.module';
 
 @NgModule({
   declarations: [ReportingTableComponent],
@@ -24,10 +26,12 @@ import { ReportTableColorPipeModule } from 'src/app/pipes/ReportTableColor/repor
     MatTooltipModule,
     MatMenuModule,
     CommentModalModule,
+    DetailsModalModule,
     ProjectSaveModule,
     ReportTableTooltipPipeModule,
     ReportTablePaddingPipeModule,
-    ReportTableColorPipeModule
+    ReportTableColorPipeModule,
+    MatDialogModule
   ],
   exports: [ReportingTableComponent]
 })

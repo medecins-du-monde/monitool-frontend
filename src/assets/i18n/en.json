@@ -1037,5 +1037,8 @@
         "infection": "Acute respiratory infection",
         "diarrhea": "Diarrhea"
     }
-  }
+  },
+  "crossCutting-details": "Cross cutting indicator details",
+  "logicalFrame-details": "Logical framework details",
+  "form-details": "Data source details"
 }

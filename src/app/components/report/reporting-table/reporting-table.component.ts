@@ -53,6 +53,7 @@ import {
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 import { User } from 'src/app/models/classes/user.model';
 import { Group } from 'src/app/models/classes/group.model';
+import { DetailsModalComponent } from '../details-modal/details-modal.component';
 
 type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
@@ -1475,6 +1476,66 @@ export class ReportingTableComponent
     }
     const currTime = new Date().getTime();
     return Math.floor((currTime - this.lastCachedTime) / 60000);
+  }
+
+  public shouldShowDetails(element: any, isSection = true) {
+    const sectionIdList = [
+      'logicalFrame',
+      'form'
+    ];
+    const noSectionIdList = [
+      'indicator'
+    ]
+    if (!this.isCrossCuttingReport && element.commentInfo) {
+      if (isSection) {
+        for (const title of sectionIdList) {
+          if (element.commentInfo.path.startsWith(title))
+            return true;
+        }
+      } else {
+        if (this.project.crossCutting[element.commentInfo.path]) {
+          return true
+        }
+        // return true
+        // for (const title of noSectionIdList) {
+        //   if (element.commentInfo.path.startsWith(title))
+        //     return true;
+        // }
+      }
+    }
+    return false;
+  }
+
+  public showDetails(event: Event, element: any) {
+    event.stopPropagation();
+    let data = undefined;
+
+    if (element.commentInfo) {
+      if (element.commentInfo.path.startsWith('logicalFrame')) {
+        data = {
+          type: 'logicalFrame',
+          details: this.project.logicalFrames[element.sectionId - 1]
+        };
+      } else if (element.commentInfo.path.startsWith('form')) {
+        data = {
+          type: 'form',
+          details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
+        };
+      } else if (element.commentInfo.path.startsWith('indicator')) {
+        if (this.project.crossCutting[element.commentInfo.path]) {
+          data = {
+            type: 'crossCutting',
+            details:{...this.project.crossCutting[element.commentInfo.path], name: element.name}
+          }
+        }
+      }
+    }
+
+    if (data) {
+      this.dialog.open(DetailsModalComponent, {
+        data: {...data, project: this.project}
+      });
+    }
   }
 
   ngOnDestroy(): void {

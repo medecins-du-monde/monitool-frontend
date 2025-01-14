@@ -1054,5 +1054,8 @@
         "infection": "Infección respiratoria aguda",
         "diarrhea": "Diarrea"
     }
-  }
+  },
+  "crossCutting-details": "Detalles del indicador transversal",
+  "logicalFrame-details": "Detalles del marco lógico",
+  "form-details": "Detalles de la fuente de datos"
 }
