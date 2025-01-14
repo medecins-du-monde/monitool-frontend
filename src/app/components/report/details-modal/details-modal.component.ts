@@ -77,9 +77,11 @@ export class DetailsModalComponent {
   }
 
   private getCrossCuttingThematics() {
-    this.indicatorService.get(this.data.details.id).then(res => {
-      this.data.details['name'] = res.name[this.currentLang];
-      this.thematics = res.themes.map(theme => theme.name[this.currentLang]);
-    });
+    if (this.data.details && this.data.details.id) {
+      this.indicatorService.get(this.data.details.id).then(res => {
+        this.data.details['name'] = res.name[this.currentLang];
+        this.thematics = res.themes.map(theme => theme.name[this.currentLang]);
+      });
+    }
   }
 }
