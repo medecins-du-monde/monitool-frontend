@@ -11,6 +11,7 @@ import { ReportingTableModule } from 'src/app/components/report/reporting-table/
 import { ObjectGroupingModule } from 'src/app/components/report/objectGrouping/object-grouping.module';
 import {InformationsPanelModule} from '../../components/informations-panel/informations-panel.module';
 import { IndicatorReportRoutingModule } from './components/indicator-report/indicator-report-routing.component';
+import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 
 @NgModule({
     declarations: [IndicatorsComponent, IndicatorReportComponent],
@@ -24,7 +25,8 @@ import { IndicatorReportRoutingModule } from './components/indicator-report/indi
     ChartModule,
     ObjectGroupingModule,
     InformationsPanelModule,
-    IndicatorReportRoutingModule
+    IndicatorReportRoutingModule,
+    BreadcrumbModule
   ]
 })
 export class IndicatorsModule { }

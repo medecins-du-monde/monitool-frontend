@@ -9,6 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { CountryListService } from 'src/app/services/country-list.service';
 import { TranslateService } from '@ngx-translate/core';
+import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 
 @Component({
   selector: 'app-indicator-report',
@@ -17,6 +18,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class IndicatorReportComponent implements OnInit, OnDestroy {
+
+  get currentLang(): string {
+    return this.translate.currentLang ? this.translate.currentLang : this.translate.defaultLang;
+  }
+
   constructor(private projectService: ProjectService,
               private indicatorService: IndicatorService,
               private chartService: ChartService,
@@ -30,7 +36,13 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   dimensionIds = new BehaviorSubject('');
 
   tableContent = new BehaviorSubject<any[]>([]);
-
+  
+  breadCrumbs: BreadcrumbItem[] = [
+    {
+      value: 'Projects',
+      link: './../../projects'
+    }
+  ]
 
   mainIndicator: Indicator;
   relatedProjects: Project[];
@@ -44,6 +56,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
       this.route.params.subscribe(val => {
         this.indicatorService.get(val.id).then((response: Indicator) => {
           this.mainIndicator = response;
+          this.setIndicatorBreadcrumb();
           this.projectService.listByIndicator(this.mainIndicator.id).then(list => {
             this.relatedProjects = list;
             this.buildIndicators();
@@ -53,7 +66,11 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.translate.onLangChange.subscribe(() => {
-        this.buildIndicators();
+        this.setIndicatorBreadcrumb();
+        this.projectService.listByIndicator(this.mainIndicator.id).then(list => {
+          this.relatedProjects = list;
+          this.buildIndicators();
+        });
       })
     )
   }
@@ -82,6 +99,14 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
 
   receiveDimension(value: string): void{
     this.dimensionIds.next(value);
+  }
+
+  setIndicatorBreadcrumb() {
+    const indicatorName = this.mainIndicator.name[this.currentLang];
+    if (this.breadCrumbs[1]) {
+      this.breadCrumbs.pop();
+    }
+    this.breadCrumbs.push({value: indicatorName})
   }
 
   ngOnDestroy(): void {
