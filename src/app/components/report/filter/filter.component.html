@@ -19,7 +19,7 @@
                 <div class="mdm-form-label">{{ 'Start' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'ChooseStartDate' | translate }}</mat-label>
-                    <input matInput [matDatepicker]="start" formControlName="_start" [max]="filterForm.value._end">
+                    <input matInput [matDatepicker]="start" formControlName="_start" [max]="filterForm.value._end" [min]=" project?.start || undefined">
                     <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -29,7 +29,7 @@
                 <div class="mdm-form-label">{{ 'End' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'ChooseEndDate' | translate }}</mat-label>
-                    <input matInput [matDatepicker]="end" formControlName="_end" [min]="filterForm.value._start">
+                    <input matInput [matDatepicker]="end" formControlName="_end" [min]="filterForm.value._start" [max]="project?.end || undefined">
                     <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
