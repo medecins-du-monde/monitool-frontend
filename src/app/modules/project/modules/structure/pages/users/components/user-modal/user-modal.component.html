@@ -19,19 +19,20 @@
                     placeholder="{{ 'User' | translate }}"
                     disableOptionCentering panelClass="myPanelClass"
                     [disabled]="users.length <= 0"
-                    (focus)="resetInput(searchInput)"
                 >
-                    <input
-                        type="text"
-                        matInput
-                        (keyup)="onSearch($event.target.value)"
-                        style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
-                        placeholder="{{ 'User' | translate }}"
-                        #searchInput
-                    > {{searchInput.focus()}}
-                    <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
-                        <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}
-                        </mat-option>
+                    <div (focusout)="resetInput(searchInput)">
+                        <input
+                            type="text"
+                            matInput
+                            (keyup)="onSearch($event.target.value)"
+                            style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                            placeholder="{{ 'User' | translate }}"
+                            #searchInput
+                        > {{searchInput.focus()}}
+                        <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                            <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}
+                            </mat-option>
+                        </div>
                     </div>
                 </mat-select>
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>

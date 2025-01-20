@@ -79,7 +79,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
       this.userService.userList.subscribe((users: User[]) => {
         users = users.filter((x: User) => x.active);
         this.users = users;
-        this.onSearch('');
+        this.filteredUsers = this.users;
       })
     );
 
@@ -193,12 +193,12 @@ export class UserModalComponent implements OnInit, OnDestroy {
   }
 
   onSearch(value: string) {
-    console.log(this.userForm.value);
     this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(value.toLowerCase()) || user.id === this.userForm.value.id );
   }
 
   resetInput(element: HTMLElement) {
     this.renderer.setProperty(element, 'value', '');
+    this.filteredUsers = this.users;
   }
 
   ngOnDestroy(): void {
