@@ -39,8 +39,8 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   
   breadCrumbs: BreadcrumbItem[] = [
     {
-      value: 'Projects',
-      link: './../../projects'
+      value: 'CrossCuttingIndicators',
+      link: './../../../indicators'
     }
   ]
 
