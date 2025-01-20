@@ -98,6 +98,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // TODO: Check if the subscription.add is usefull, if yes, we may have to set it everywhere
+    this.filteredCountryList = this.countryListService.getCountries();
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
         if (!this.countryListService.getCountry(project.country)) {
@@ -113,7 +114,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
           end: [project.end, Validators.required],
           visibility: [project.visibility, Validators.required]
         }, { validators: [DatesHelper.orderedDates('start', 'end')] });
-        this.filteredCountryList = this.countryListService.getCountries();
+        this.onSearch('');
         this.subscription.add(
           this.basicsForm.valueChanges.subscribe((value: any) => {
             if (value.start._d) {
@@ -207,7 +208,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   resetInput(element: HTMLElement) {
     this.renderer.setProperty(element, 'value', '');
-    this.filteredCountryList = this.countryListService.getCountries();
+    this.onSearch('');
   }
 
   ngOnDestroy(): void {
