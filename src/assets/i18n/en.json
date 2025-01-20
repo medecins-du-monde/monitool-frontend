@@ -526,7 +526,7 @@
       "General_reporting_question8": "Why is some data displayed in <i> italics </i>?",
       "General_reporting_response8": "The data displayed in <i> italics </i> has only been partially entered. Most often, this means that only some of the expected collection locations have been entered. The case can also occur if you are viewing an aggregated version (eg: by quarter) of data collected at a shorter periodicity (eg: by month) and all the months of the quarter considered have not been entered. <br> By disaggregating the line with the '+' button, you will be able to easily find the missing entries.",
       "General_reporting_question9": "How do I add a comment to one of the cells?",
-      "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Comments allow data entry personnel to provide additional information that may be relevant for data analysis. Analysts can also use comments to share their insights.</li><li>This text is visible to everyone, so it enables the people closest to the activities to contribute to the analysis, which will be centralized at project coordination level.</li><li>Simply right-click on the desired cell and add the text. Don't forget to save.</li><li>You must have the role of owner or project manager. See the section USER ROLES for a PROJECT in this FAQ.</li></ul>",
+      "General_reporting_response9": "<ul><li>Comments allow data entry personnel to provide additional information that may be relevant for data analysis. Analysts can also use comments to share their insights.</li><li>This text is visible to everyone, so it enables the people closest to the activities to contribute to the analysis, which will be centralized at project coordination level.</li><li>Simply right-click on the desired cell and add the text. Don't forget to save.</li><li>You must have the role of owner or project manager. See the section USER ROLES for a PROJECT in this FAQ.</li></ul>",
       "History": "History",
       "History_description": "The changes history allow you to consult the changes made to the structure of your project.",
       "History_question1": "Some changes to the project have been made by a user that shouldn't have access?",
@@ -567,7 +567,9 @@
         "Refresh": "What is cache and how can I refresh it at any time?",
         "RefreshButton": "Refresh cache",
         "Point3": "If this still doesn't work, contact the support team:"
-        }
+      },
+      "New_users_access": "How to grant access to a new user on Monitool?",
+      "New_users_access_response": "<ol><li><b>First user login:</b><ul><li>The new user must log in to Monitool at least once using their Microsoft ID (the same username and password as for Outlook).</li></ul></li><li><b>Owner's addition:</b></li><ul><li>After this first login, the user's name will appear in the MdM user list.</li><li>The owner can then go to: <b>Structure > User > Add a user</b></li><li>In the \"Select an MdM user\" field, search for the user's name and add them to the desired project.</li></ul></ol><br><i>Note: Without this first login to Monitool, the user will not appear in the list of available users to be selected.</i>"
     },
     "Informations": {
         "Cache": {
@@ -856,7 +858,7 @@
           "Password": "The password must be at least 6 characters long. Do not use the same value than the username",
           "UserSearch": {
             "Placeholder": "Select an user",
-            "NoMatches": "No matches found"
+            "NoMatches": "No matches found, make sure the user you're searching for has logged into Monitool at least once."
           }
       }
   },

@@ -574,7 +574,9 @@
         "Refresh": "Qu’est-ce que le cache et comment puis-je le rafraîchir à tout moment?",
         "RefreshButton": "Rafraîchir cache",
         "Point3": "Si cela ne fonctionne toujours pas contacter l'équipe support:"
-        }
+    },
+    "New_users_access": "Comment accorder l'accès à un nouvel utilisateur sur Monitool ?",
+    "New_users_access_response": "<ol><li><b>Première connexion de l'utilisateur :</b><ul><li>Le nouvel utilisateur doit se connecter au moins une fois à Monitool en utilisant son identifiant Microsoft (le même identifiant et mot de passe que pour l’accès à Outlook).</li></ul></li><li><b>Ajout par l'propriétaire :</b><ul><li>Après cette première connexion, le nom de l'utilisateur apparaîtra dans la liste des utilisateurs MdM.</li><li>L'propriétaire peut alors accéder à la section : <b>Structure > Utilisateur > Ajouter un utilisateur</b></li><li>Dans la zone \"Sélectionner un utilisateur MdM\", rechercher le nom de l'utilisateur et l'ajouter au projet souhaité.</li></ul></li></ol><br><i>Note: Sans cette première connexion à Monitool, l'utilisateur n'apparaîtra pas dans la liste des utilisateurs disponibles à sélectionner.</i>"
   },
   "Informations": {
       "Cache": {
@@ -838,7 +840,7 @@
           "Password": "Le mot de passe doit avoir 6 caractères au minimum. Ne pas utiliser la même valeur que l'identifiant",
           "UserSearch": {
             "Placeholder": "Sélectionner un utilisateur",
-            "NoMatches": "Aucun résultat trouvé"
+            "NoMatches": "Aucun résultat trouvé, assurez-vous que l'utilisateur que vous recherchez s'est connecté à Monitool au moins une fois."
           }
       }
   },
