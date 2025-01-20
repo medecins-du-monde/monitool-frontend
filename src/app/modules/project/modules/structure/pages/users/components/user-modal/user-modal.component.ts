@@ -195,10 +195,12 @@ export class UserModalComponent implements OnInit, OnDestroy {
   onSearch(value: string) {
     this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(value.toLowerCase()) || user.id === this.userForm.value.id );
   }
-
-  resetInput(element: HTMLElement) {
-    this.renderer.setProperty(element, 'value', '');
-    this.filteredUsers = this.users;
+  
+  resetInput(event: boolean, element: HTMLElement) {
+    if (!event) {
+      this.renderer.setProperty(element, 'value', '');
+      this.filteredUsers = this.users;
+    }
   }
 
   ngOnDestroy(): void {

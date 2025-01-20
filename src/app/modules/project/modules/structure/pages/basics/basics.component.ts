@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -206,9 +206,11 @@ export class BasicsComponent implements OnInit, OnDestroy {
     this.filteredCountryList = this.countryListService.getCountries(undefined, this.basicsForm.value.continent, value, this.basicsForm.value.country)
   }
 
-  resetInput(element: HTMLElement) {
-    this.renderer.setProperty(element, 'value', '');
-    this.onSearch('');
+  resetInput(event: boolean, element: HTMLElement) {
+    if (!event) {
+      this.renderer.setProperty(element, 'value', '');
+      this.onSearch('');
+    }
   }
 
   ngOnDestroy(): void {

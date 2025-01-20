@@ -19,20 +19,19 @@
                 placeholder="{{ legacyCountry || ('Placeholder.Basic.Country' | translate) }}"
                 disableOptionCentering
                 panelClass="myPanelClass"
+                (openedChange)="resetInput($event, searchInput)"
             >
-                <div (focusout)="resetInput(searchInput)">
-                    <input
-                        type="text"
-                        matInput
-                        (keyup)="onSearch($event.target.value)"
-                        style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
-                        placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
-                        #searchInput
-                    > {{searchInput.focus()}}
-                    <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
-                        <mat-option *ngFor="let country of filteredCountryList" [value]="country.key">{{ country[currentLang] }}
-                        </mat-option>
-                    </div>
+                <input
+                    type="text"
+                    matInput
+                    (keyup)="onSearch($event.target.value)"
+                    style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                    placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                    #searchInput
+                > {{searchInput.focus()}}
+                <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                    <mat-option *ngFor="let country of filteredCountryList" [value]="country.key">{{ country[currentLang] }}
+                    </mat-option>
                 </div>
             </mat-select>
             <mat-hint>
