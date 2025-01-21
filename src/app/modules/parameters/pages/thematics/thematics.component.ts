@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { ThemeModalComponent } from './components/theme-modal/theme-modal.component';

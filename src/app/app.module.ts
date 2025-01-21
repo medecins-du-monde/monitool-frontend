@@ -16,11 +16,13 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { CustomHttpInterceptor } from './interceptors/http-interceptor';
 import { LoadingBarModule } from './components/loading-bar/loading-bar.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { RefreshSnackbarModule } from './components/refresh-snackbar/refresh-snackbar.module';
 import { UserRightsTableModule } from './components/user-rights-table/user-rights-table.module';
 import { RefreshModalModule } from './components/refresh-modal/refresh-modal.module';
 import { InteractionType, PublicClientApplication, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { QuillModule } from 'ngx-quill';
+import { DataFlowStylePipe } from './pipes/DataFlowStyle/data-flow-style.pipe';
 
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
@@ -30,7 +32,7 @@ export function loggerCallback(logLevel, message) {
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     HttpClientModule,
@@ -55,6 +57,7 @@ export function loggerCallback(logLevel, message) {
     RefreshSnackbarModule,
     RefreshModalModule,
     UserRightsTableModule,
+    QuillModule.forRoot(),
     MsalModule.forRoot( new PublicClientApplication({
       auth: {
         clientId: environment.clientId, // This is your client ID

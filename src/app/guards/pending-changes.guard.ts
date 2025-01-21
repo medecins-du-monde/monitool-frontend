@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate } from '@angular/router';
+
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { MultiLanguage } from '../models/classes/multi-language.model';
@@ -12,7 +12,7 @@ export interface ComponentCanDeactivate {
 @Injectable({
   providedIn: 'root'
 })
-export class PendingChangesGuard implements CanDeactivate<ComponentCanDeactivate> {
+export class PendingChangesGuard  {
 
   constructor(private projectService: ProjectService, private translateService: TranslateService){}
 

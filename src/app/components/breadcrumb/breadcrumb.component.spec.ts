@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent;
@@ -10,7 +11,10 @@ describe('BreadcrumbComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [BreadcrumbComponent],
-      imports: [HttpClientTestingModule]
+      imports: [
+        TranslateModule.forRoot(),
+        HttpClientTestingModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,6 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { HintUserData } from 'src/app/mocked/hint-user-project-element.mocked';
@@ -21,9 +21,7 @@ import { typesList } from '../../constants/type';
 })
 export class UserModalComponent implements OnInit, OnDestroy {
 
-  userForm: FormGroup;
-
-  userFilter: FormControl = new FormControl('');
+  userForm: UntypedFormGroup;
 
   users: User[];
   filteredUsers: User[];
@@ -44,12 +42,15 @@ export class UserModalComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  @ViewChild('userSearchInput') userSearchInput: ElementRef<HTMLInputElement>;
+
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private userService: UserService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private renderer: Renderer2
   ) { }
 
   get selectedSites(): Entity[] {
@@ -78,8 +79,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
       this.userService.userList.subscribe((users: User[]) => {
         users = users.filter((x: User) => x.active);
         this.users = users;
-        this.filteredUsers = users;
-        this.userFilter.patchValue('');
+        this.filteredUsers = this.users;
       })
     );
 
@@ -92,6 +92,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.userForm.valueChanges.subscribe(val => {
+        console.log(val);
         // Sets validators depending on the type
         this.userForm.controls.password.setErrors(null);
         if (val.type && val.type === 'partner') {
@@ -104,6 +105,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
           this.userForm.controls.name.clearValidators();
           this.userForm.controls.username.clearValidators();
           this.userForm.controls.password.clearValidators();
+          this.userForm.controls.id.setValidators([Validators.required]);
         }
         // Sets validators depending on the input
         if (val.role && val.role === 'input') {
@@ -113,12 +115,6 @@ export class UserModalComponent implements OnInit, OnDestroy {
           this.userForm.controls.dataSources.clearValidators();
           this.userForm.controls.entities.clearValidators();
         }
-      })
-    );
-
-    this.subscriptions.push(
-      this.userFilter.valueChanges.subscribe((searchTerm) => {
-        this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
       })
     );
   }
@@ -194,6 +190,17 @@ export class UserModalComponent implements OnInit, OnDestroy {
       }
     }
     this.userForm.controls.entities.patchValue(this.userForm.value.entities.filter(entity => this.availableEntities.includes(entity)));
+  }
+
+  onSearch(value: string) {
+    this.filteredUsers = this.users.filter(user => user.name.toLowerCase().includes(value.toLowerCase()) || user.id === this.userForm.value.id );
+  }
+  
+  resetInput(event: boolean, element: HTMLElement) {
+    if (!event) {
+      this.renderer.setProperty(element, 'value', '');
+      this.filteredUsers = this.users;
+    }
   }
 
   ngOnDestroy(): void {

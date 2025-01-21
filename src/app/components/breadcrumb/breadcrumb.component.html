@@ -1,12 +1,19 @@
 <div>
-    <ul>
-        <li *ngFor="let item of items; let i = index">
+    <ul *ngIf="items">
+        <li *ngFor="let item of items; let i = index" [class.limit-size]="limitSize">
             <mat-icon *ngIf="i > 0">keyboard_arrow_right</mat-icon>
             <span *ngIf="item.link; else elseBlock" class="item">
                 <a [routerLink]="item.link" routerLinkActive="active-link">{{item.value | translate }}</a>
             </span>
             <ng-template #elseBlock>
-                <span class="item" matTooltip="{{item.value | translate }}" [matTooltipShowDelay]="500">{{ item.value | translate }}</span>
+                <span *ngIf="i === 1; else noCountry"
+                    class="item"
+                    matTooltip="{{countryListService.translateCountry(item.value) }}"
+                    [matTooltipShowDelay]="500"
+                >{{ countryListService.translateCountry(item.value) }}</span>
+                <ng-template #noCountry>
+                    <span class="item" matTooltip="{{item.value | translate }}" [matTooltipShowDelay]="500">{{ item.value | translate }}</span>
+                </ng-template>
             </ng-template>
         </li>
     </ul>

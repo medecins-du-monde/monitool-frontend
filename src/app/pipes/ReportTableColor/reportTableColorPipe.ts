@@ -23,9 +23,9 @@ export class ReportTableColorPipe implements PipeTransform {
     // after this we go down subtracting the value
     // of the red until we get to the green: rgb (128, 255, 128)
 
-    if (this.checkIfNaN(element.values[column])) {
-      return 'rgb(238, 238, 238)';
-    }
+    // if (this.checkIfNaN(element.values[column])) {
+    //   return 'rgb(238, 238, 238)';
+    // }
 
     if (
       element.values[column] === null ||

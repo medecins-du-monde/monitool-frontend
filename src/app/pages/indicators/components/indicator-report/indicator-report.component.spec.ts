@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { IndicatorReportComponent } from './indicator-report.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('IndicatorReportComponent', () => {
   let component: IndicatorReportComponent;
@@ -11,7 +12,11 @@ describe('IndicatorReportComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [IndicatorReportComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule]
+      imports: [
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

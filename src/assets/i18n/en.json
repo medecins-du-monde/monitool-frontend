@@ -204,6 +204,11 @@
   "HistoryRevision": {
       "active_replace": "Change deletion status from <code>{{!before}}</code> to <code>{{!after}}</code>",
       "country_replace": "Change the project country from <code>{{before}}</code> to <code>{{after}}</code>",
+      "continent_replace": "Change the project continent from <code>{{before}}</code> to <code>{{after}}</code>",
+      "region_replace": "Change the project region from <code>{{before}}</code> to <code>{{after}}</code>",
+      "continent_add": "Add the project continent <code>{{item}}</code>",
+      "region_add": "Add the project region <code>{{item}}</code>",
+      "region_remove": "Remove the project region <code>{{item}}</code>",
       "end_replace": "Change the project end date from <code>{{before}}</code> to <code>{{after}}</code>",
       "entities_add": "Add the new site <code>{{item.name}}</code>",
       "entities_end_replace": "Change the site end date of <code>{{entity.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
@@ -649,13 +654,15 @@
   },
   "Placeholder": {
       "Basic" : {
-          "Country": "For instance: CAR",
+          "Continent": "Select a continent",
+          "Region": "Precise a region",
+          "Country": "Select a country",
           "Name" : "e.g. Access to quality care for people affected by the crisis",
-          "Thematics": "i.e. Primary health care"
+          "Thematics": "e.g. Primary health care"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
-          "NameGroup" : "ex: Regional hospitals, North of the country, ..."
+          "NameGroup" : "e.g. Regional hospitals, North of the country, ..."
       },
       "LogicalFrame": {
           "Name": "e.g. ECHO",
@@ -829,7 +836,9 @@
   },
   "Tooltip": {
       "BasicsEdition": {
-          "Country": "In which country does your project takes place? If it's a regional project enter the name of the region.",
+          "Continent": "In which country does your project takes place?",
+          "Region": "In which region does your project takes place? If it isn't a regional project leave it empty",
+          "Country": "In which country does your project takes place?",
           "EndDate": "The end date is the moment when your project closes its data collection. If unknown, enter a date far into the future.",
           "Name": "Name your indicator. The name should come from a catalog to be consistent with other projects.",
           "StartDate": "The begin date is the moment when your projects starts collecting data (usually, with the first activities).",
@@ -1028,5 +1037,8 @@
         "infection": "Acute respiratory infection",
         "diarrhea": "Diarrhea"
     }
-  }
+  },
+  "crossCutting-details": "Cross cutting indicator details",
+  "logicalFrame-details": "Logical framework details",
+  "form-details": "Data source details"
 }

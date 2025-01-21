@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Indicator } from 'src/app/models/classes/indicator.model';
@@ -9,6 +9,24 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 import { ThemeService } from 'src/app/services/theme.service';
 
+const TEXT_EDITOR_OPTIONS = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block'],
+
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    // [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    [{ 'align': [] }],
+
+    ['clean'],                                         // remove formatting button
+
+    ['link']                         // link and image, video
+  ]
+};
 @Component({
   selector: 'app-indicator-modal',
   templateUrl: './indicator-modal.component.html',
@@ -20,7 +38,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
   warningDialogRef: MatDialogRef<any>;
 
-  indicatorForm: FormGroup;
+  indicatorForm: UntypedFormGroup;
 
   languages = ['fr', 'en', 'es'];
 
@@ -31,6 +49,8 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   dataChanged = false;
 
   prevForm;
+
+  textEditorModules = TEXT_EDITOR_OPTIONS;
 
   private subscription: Subscription = new Subscription();
 
@@ -70,7 +90,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private translateService: TranslateService,
     private forceTranslateService: ForceTranslateService,
     private themeService: ThemeService,
@@ -138,7 +158,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const computation = this.indicatorForm.controls.computation as FormGroup;
+    const computation = this.indicatorForm.controls.computation as UntypedFormGroup;
     computation.controls.formula.enable();
     computation.controls.formula.patchValue(String(computation.value.formula));
     const indicator = new Indicator(this.indicatorForm.value);
@@ -165,7 +185,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   }
 
   onTypeChange(type: any, init = false): void {
-    const computation = this.indicatorForm.controls.computation as FormGroup;
+    const computation = this.indicatorForm.controls.computation as UntypedFormGroup;
 
     computation.controls.formula.clearValidators();
     computation.controls.formula.enable();

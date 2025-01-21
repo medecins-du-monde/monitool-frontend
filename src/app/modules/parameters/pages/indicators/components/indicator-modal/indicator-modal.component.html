@@ -2,7 +2,7 @@
 <h2 mat-dialog-title>{{ 'IndicatorEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="indicatorForm" class="mdm-dialog">
     <div class="info-section blue">
-        <p>{{ 'SettingsIndicatorEdit' | translate }}</p>
+        <p style="max-width: 800px;">{{ 'SettingsIndicatorEdit' | translate }}</p>
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
@@ -22,22 +22,25 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <ng-container formGroupName="name">
-        <div class="mdm-form-group" *ngFor="let language of languages">
-            <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
-            <mat-form-field appearance="outline" class="mdm-form-field">
-                <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Name : null}}">
-            </mat-form-field>
-        </div>
-    </ng-container>
-    <ng-container formGroupName="description">
-        <div class="mdm-form-group" *ngFor="let language of languages">
-            <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
-            <mat-form-field appearance="outline" class="mdm-form-field">
-                <textarea style="resize: none;" matInput [formControlName]="language" rows=5 placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}"></textarea>
-            </mat-form-field>
-        </div>
-    </ng-container>
+    <mat-tab-group>
+        <mat-tab [label]="language | translate" *ngFor="let language of languages">
+            <div class="tab-container">
+                    <div class="mdm-form-group" formGroupName="name">
+                        <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
+                        <mat-form-field appearance="outline" class="mdm-form-field">
+                            <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Name : null}}">
+                        </mat-form-field>
+                    </div>
+                    <div class="mdm-form-group flex" formGroupName="description">
+                        <div class="mdm-form-label">{{ 'Description' | translate }} ({{ language | translate }})</div>
+                        <quill-editor [formControlName]="language" [modules]="textEditorModules"></quill-editor>
+                        <!-- <mat-form-field appearance="outline" class="mdm-form-field">
+                            <textarea style="resize: none;" matInput [formControlName]="language" rows=5 placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}"></textarea>
+                        </mat-form-field> -->
+                    </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
     <ng-container formGroupName="computation">
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Computation' | translate }}</div>

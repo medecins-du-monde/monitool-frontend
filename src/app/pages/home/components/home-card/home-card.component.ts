@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-home-card',
@@ -6,15 +6,10 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./home-card.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeCardComponent implements OnInit {
+export class HomeCardComponent {
 
   @Input() icon?: string;
 
   @Input() content: InnerHTML;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { ActionProjectModalComponent } from '../action-project-modal/action-project-modal.component';
 import { InputService } from 'src/app/services/input.service';
 import * as JSZip from 'jszip';
+import { CountryListService } from 'src/app/services/country-list.service';
 
 @Component({
   selector: 'app-project',
@@ -45,6 +46,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private inputService: InputService,
     private route: ActivatedRoute,
+    public countryList: CountryListService
   ) { }
 
   ngOnInit(): void {
@@ -132,7 +134,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return;
   }
 
-  private stringifyJSONObj(obj: object) {
+  private stringifyJSONObj(obj: any) {
     let result = '{';
     const objEntries = Object.entries(obj);
     for (const [i, value] of objEntries.entries()) {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -63,28 +63,28 @@ export class SitesComponent implements OnInit {
 
   today = new Date();
 
-  sitesForm: FormGroup = new FormGroup({
-    entities: new FormArray([]),
-    groups: new FormArray([])
+  sitesForm: UntypedFormGroup = new UntypedFormGroup({
+    entities: new UntypedFormArray([]),
+    groups: new UntypedFormArray([])
   });
 
   entitiesDisplayedColumns: string[] = ['position', 'name', 'start', 'end', 'delete'];
 
   entitiesDataSource = new MatTableDataSource<AbstractControl>();
 
-  get entities(): FormArray {
-    return this.sitesForm.get('entities') as FormArray;
+  get entities(): UntypedFormArray {
+    return this.sitesForm.get('entities') as UntypedFormArray;
   }
 
   groupsDisplayedColumns: string[] = ['position', 'name', 'sites', 'delete'];
 
   groupsDataSource = new MatTableDataSource<AbstractControl>();
 
-  get groups(): FormArray {
-    return this.sitesForm.get('groups') as FormArray;
+  get groups(): UntypedFormArray {
+    return this.sitesForm.get('groups') as UntypedFormArray;
   }
 
-  get selectedEntities(): FormArray {
+  get selectedEntities(): UntypedFormArray {
     return this.groups.value.map(x => {
       return this.entities.value.filter(e => x.members.includes(e.id));
     });
@@ -94,7 +94,7 @@ export class SitesComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
   ) { }
@@ -193,7 +193,7 @@ export class SitesComponent implements OnInit {
   }
 
   onEntityRemoved(index: number, id: number): void {
-    const group = this.groups.controls[index] as FormGroup;
+    const group = this.groups.controls[index] as UntypedFormGroup;
     const members = group.controls.members;
     members.setValue(members.value.filter(x => x !== id));
   }
@@ -213,7 +213,7 @@ export class SitesComponent implements OnInit {
     if (type !== 'entities' && type !== 'groups') {
       return;
     }
-    const selectedFormArray = this.sitesForm.get(type) as FormArray;
+    const selectedFormArray = this.sitesForm.get(type) as UntypedFormArray;
     const selectedControl = selectedFormArray.at(event.previousIndex);
     selectedFormArray.removeAt(event.previousIndex);
     selectedFormArray.insert(event.currentIndex, selectedControl);

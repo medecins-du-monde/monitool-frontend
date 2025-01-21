@@ -1,4 +1,4 @@
-// tslint:disable: no-string-literal
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { ActivatedRoute, Router } from '@angular/router';

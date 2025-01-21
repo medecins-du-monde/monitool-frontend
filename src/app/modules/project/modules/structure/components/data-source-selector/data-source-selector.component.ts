@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Form } from 'src/app/models/classes/form.model';
 
 @Component({
@@ -11,7 +11,7 @@ export class DataSourceSelectorComponent implements OnInit {
 
   public allOption: Form = new Form({id: 'all', name: 'All'});
 
-  @Input() userForm: FormGroup;
+  @Input() userForm: UntypedFormGroup;
   @Input() dataSources: Form[];
 
   // used to generate the list of chips

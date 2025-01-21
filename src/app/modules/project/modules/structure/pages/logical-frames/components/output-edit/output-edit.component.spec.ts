@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { OutputEditComponent } from './output-edit.component';
@@ -19,11 +19,11 @@ describe('OutputEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OutputEditComponent);
     component = fixture.componentInstance;
-    component.outputForm = new FormGroup({
-      indicators: new FormArray([]),
-      activities: new FormArray([]),
-      description: new FormControl(''),
-      assumptions: new FormControl(''),
+    component.outputForm = new UntypedFormGroup({
+      indicators: new UntypedFormArray([]),
+      activities: new UntypedFormArray([]),
+      description: new UntypedFormControl(''),
+      assumptions: new UntypedFormControl(''),
     });
     component.forms = [];
 

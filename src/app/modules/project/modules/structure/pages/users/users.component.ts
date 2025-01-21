@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { UserModalComponent } from './components/user-modal/user-modal.component';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';

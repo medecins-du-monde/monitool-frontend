@@ -1,5 +1,5 @@
-// tslint:disable:no-shadowed-variable
-// tslint:disable:one-variable-per-declaration
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable one-var */
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Entity } from 'src/app/models/classes/entity.model';
 import TimeSlot from 'timeslot-dag';
 import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { InputService } from 'src/app/services/input.service';
 import { Input } from 'src/app/models/classes/input.model';
 import { ComponentCanDeactivate } from 'src/app/guards/pending-changes.guard';
@@ -18,7 +18,7 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import DateTimeFormatOptions from 'src/app/models/interfaces/dateTimeFormatOptions.model';
 import Parser from 'expr-eval';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -101,7 +101,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private translateService: TranslateService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private inputService: InputService,
     private router: Router,
     private dialog: MatDialog,
@@ -171,7 +171,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   table: any;
   tables = [];
   input: Input;
-  inputForm: FormGroup;
+  inputForm: UntypedFormGroup;
   previousInput: Input;
   private initValue: any;
   tableSettings: any;
@@ -364,7 +364,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     });
 
     // Fill the init value with the current value in order to be able to reset
-    this.initValue = _.cloneDeep(this.inputForm) as FormGroup;
+    this.initValue = _.cloneDeep(this.inputForm) as UntypedFormGroup;
     this.isBlocked = (this.input && this.input.blocked) ? true : false;
   }
 
@@ -529,7 +529,12 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
-        type: 'numeric',
+        // type: 'numeric',
+        /**
+         * ↑ On the latest version of handsontable this property breaks the table,
+         * probably due to using strings for column and row headers.
+         * Disabling it doesn't seem to break anything.
+         **/
         allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
@@ -584,9 +589,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               }
 
               let newValue;
-              try {
-                newValue = this.expressionParser.evaluate(change[3]);
-              } catch (e) {
+              if (/^(\s*([-+]?)((\d+(\.\d*)?)|(\.\d+)))?(?:(\s*([-+*/]))?\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
+                newValue = eval(change[3]);
+              } else {
                 newValue = change[3];
               }
               if (oldValue !== newValue) {
@@ -866,7 +871,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   resetInput() {
-    this.inputForm = _.cloneDeep(this.initValue) as FormGroup;
+    this.inputForm = _.cloneDeep(this.initValue) as UntypedFormGroup;
     this.createTable();
     this.updateTotals(this.inputForm.value);
     this.subscription.add(
@@ -893,7 +898,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     });
   }
 
-  async confirm(block: boolean = false): Promise<void> {
+  async confirm(block = false): Promise<void> {
     if (this.showModal) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning', warning: true } });
 

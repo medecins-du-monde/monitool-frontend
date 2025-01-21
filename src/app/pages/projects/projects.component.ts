@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatOption } from '@angular/material/core';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 import { v4 as uuid } from 'uuid';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -77,7 +77,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     } as InformationItem
   ];
 
-  filtersForm: FormGroup;
+  filtersForm: UntypedFormGroup;
   projects: Project[];
   allProjects: Project[];
   currentUser: User;
@@ -99,7 +99,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,

@@ -44,6 +44,7 @@
           <div>
             {{ element.name }}
           </div>
+          <mat-icon class="details-icon" *ngIf="shouldShowDetails(element, false)" (click)="showDetails($event, element)">info</mat-icon>
           <app-reporting-menu
             [indicator]="element"
             [dimensionName]="dimensionIds.value"
@@ -125,12 +126,10 @@
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]=" (element?.values)[column] ?
-            ((isInRange(element, column) ?
+        [matTooltip]=" ((isInRange(element, column) ?
               (getTooltipMessage((element?.values)[column]) | translate) :
               null
             ) | getTooltip : showComments : element.comments[column] : (element?.values)[column])
-            : ''
         "
       >
         <div
@@ -180,9 +179,9 @@
             <mat-icon>remove_circle</mat-icon>
           </ng-template>
           <p>
-
             {{element["title"]}}
           </p>
+          <mat-icon class="details-icon" *ngIf="shouldShowDetails(element)" (click)="showDetails($event, element)">info</mat-icon>
         </div>
       </td>
     </ng-container>
