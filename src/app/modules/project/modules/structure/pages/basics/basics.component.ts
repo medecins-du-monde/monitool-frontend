@@ -83,6 +83,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
   }
 
   public legacyCountry?: string;
+  public startDateDisabled = true;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -164,6 +165,9 @@ export class BasicsComponent implements OnInit, OnDestroy {
         this.changeDetector.markForCheck();
       })
     );
+    this.projectService.hasInputs(this.projectService.projectId.value).then((res: boolean) => {
+      this.startDateDisabled = res;
+    });
 
     this.subscription.add(
       this.projectService.lastSavedVersion.subscribe(savedProject => {

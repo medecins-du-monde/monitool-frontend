@@ -1281,3 +1281,15 @@ code.title{
       height: 200px !important;
     }
 }
+
+.custom-disabled {
+    pointer-events: none;
+
+    mat-datepicker-toggle {
+        pointer-events: none;
+    }
+
+    .mat-form-field-flex {
+        opacity: .4;
+    }
+}

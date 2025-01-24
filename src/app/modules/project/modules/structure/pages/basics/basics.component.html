@@ -80,7 +80,7 @@
     </div>
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
+        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field" [class.custom-disabled]="startDateDisabled">
             <input matInput [matDatepicker]="startPicker" formControlName="start"
                 placeholder="{{ 'StartDate' | translate }}">
             <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
@@ -93,7 +93,7 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
-            <input matInput [matDatepicker]="endPicker" formControlName="end"
+            <input matInput [matDatepicker]="endPicker" formConrolName="end"
                 placeholder="{{ 'EndDate' | translate }}">
             <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>

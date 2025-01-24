@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -116,6 +116,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
   public project: Project;
   public periodicities = [];
   public allOption: Entity = new Entity({id: 'all', name: 'All'});
+  public startDateDisabled = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -132,7 +133,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private ref: ChangeDetectorRef
   ) { }
 
   @HostListener('window:beforeunload')
@@ -174,12 +176,17 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
           ];
           this.projectService.updateBreadCrumbs(breadCrumbs);
         }
+
         if (!this.form) {
           this.router.navigate(['..'], { relativeTo: this.route });
         } else if (JSON.stringify(oldForm) !== JSON.stringify(this.form)) {
           this.entities = res.project.entities;
           this.groups = res.project.groups;
           this.setForm();
+          this.projectService.hasInputs(this.project.id, this.form.id).then((res: boolean) => {
+            this.startDateDisabled = res;
+            this.ref.detectChanges()
+          });
         }
       })
     );
