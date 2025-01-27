@@ -35,7 +35,12 @@ export const continentList: ContinentList = {
     en: "South America",
     es: ["Ámerica del Sur", "Suramérica", "Sudamérica"],
     fr: "Amérique du Sud"
-  }
+  },
+  "FICTIVE": {
+    en: "Fictive",
+    es: "Ficticio",
+    fr: "Fictif"
+  },
 }
 
 export type CountryList = {[code: string]: {continent: string, en: string | string[], es: string | string[], fr: string | string[]}};
@@ -1611,5 +1616,11 @@ export const countryList: CountryList = {
         "en": "Zimbabwe",
         "fr": "Zimbabwe",
         "es": "Zimbabue"
+    },
+    "FICTIVE": {
+        continent: 'FICTIVE',
+        en: "Fictive",
+        es: "Ficticio",
+        fr: "Fictif"
     }
 }
