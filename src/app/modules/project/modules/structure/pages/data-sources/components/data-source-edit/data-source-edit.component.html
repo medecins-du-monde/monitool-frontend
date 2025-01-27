@@ -34,11 +34,11 @@
         <ng-container *ngIf="this.dataSourceForm.value.periodicity !== 'free'">
             <div class="mdm-form-group date-group">
                 <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'StartDate' | translate }}</div>
-                    <mat-radio-group class="dateGroup">
+                    <mat-radio-group class="dateGroup" [disabled]="startDateDisabled">
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : { date: project.start | localizedDate} }}</mat-radio-button>
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="isCustom('start')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
-                        <mat-form-field *ngIf="isCustom('start')" appearance="outline" class="mdm-form-field">
-                            <input matInput [matDatepicker]="startPicker" formControlName="start">
+                        <mat-form-field *ngIf="isCustom('start')" appearance="outline" class="mdm-form-field" [class.custom-disabled]="startDateDisabled">
+                            <input matInput [matDatepicker]="startPicker" formControlName="start" [min]="project?.start" [max]="dataSourceForm.value.end || project?.end">
                             <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
                             <mat-datepicker #startPicker></mat-datepicker>
                             <mat-hint>
@@ -53,7 +53,7 @@
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : { date: project.end | localizedDate} }}</mat-radio-button>
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="isCustom('end')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
                         <mat-form-field *ngIf="isCustom('end')" appearance="outline" class="mdm-form-field">
-                            <input matInput [matDatepicker]="endPicker" formControlName="end">
+                            <input matInput [matDatepicker]="endPicker" formControlName="end" [min]="dataSourceForm.value.start || project?.start" [max]="project?.end">
                             <mat-datepicker-toggle matPrefix [for]="endPicker"></mat-datepicker-toggle>
                             <mat-datepicker #endPicker></mat-datepicker>
                             <mat-hint>

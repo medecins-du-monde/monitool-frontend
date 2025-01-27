@@ -245,6 +245,15 @@ export class ProjectService implements OnDestroy {
     return response.map(x => new Project(x));
   }
 
+  public async hasInputs(id: string, dataSourceId?: string): Promise<boolean> {
+    let url = `/resources/project/${id}/hasInputs`;
+    if (dataSourceId) {
+      url += `/${dataSourceId}`
+    }
+    const response = await this.apiService.get(url) as unknown as boolean;
+    return response;
+  }
+
   // Used when the user is a partner with a data entry role to display the name
   // of datasource and entities from their ID
   public getNamefromId(id, arr): string {
