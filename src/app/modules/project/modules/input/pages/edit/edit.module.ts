@@ -11,7 +11,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { HotTableModule } from '@handsontable/angular';
+import { registerAllModules } from 'handsontable/registry';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+
+// register Handsontable's modules
+registerAllModules();
 
 @NgModule({
   declarations: [EditComponent],

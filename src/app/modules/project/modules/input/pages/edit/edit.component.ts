@@ -529,12 +529,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
         viewportRowRenderingOffset: 1000,
         observeChanges: true,
         hotId: 'element.id',
-        // type: 'numeric',
-        /**
-         * ↑ On the latest version of handsontable this property breaks the table,
-         * probably due to using strings for column and row headers.
-         * Disabling it doesn't seem to break anything.
-         **/
+        type: 'numeric',
         allowInvalid: true,
         validator: (value, callback) => {
           if (/^(\d+[-+*/^%])*\d+$/.test(value)) {
