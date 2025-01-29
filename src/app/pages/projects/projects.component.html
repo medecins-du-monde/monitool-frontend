@@ -2,6 +2,28 @@
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions-group" [formGroup]="filtersForm">
             <div class="action">
+                <mat-select
+                    formControlName="country"
+                    [placeholder]="'Placeholder.Basic.Country' | translate"
+                    disableOptionCentering
+                    panelClass="myPanelClass"
+                    (openedChange)="resetCountryInput($event, searchCountryInput)"
+                >
+                    <input
+                        type="text"
+                        matInput
+                        (keyup)="onSearchCountry($event.target.value)"
+                        style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                        placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                        #searchCountryInput
+                    > {{searchCountryInput.focus()}}
+                    <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                        <mat-option *ngFor="let country of filteredCountryList" [value]="country.key">{{ country[currentLang] }}
+                        </mat-option>
+                    </div>
+                </mat-select>
+            </div>
+            <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" style="min-width: 135px;">
                         {{ status.text | translate }}
