@@ -1,6 +1,66 @@
 <div class="full-page">
     <div class="mdm-title">{{ 'Projects' | translate }}</div>
     <div class="actions-group" [formGroup]="filtersForm">
+            <div class="action" style="display: flex; gap: 10px">
+                <div class="select">
+                    <mat-select
+                        formControlName="continents"
+                        [placeholder]="'Placeholder.Filter.Continent' | translate"
+                        disableOptionCentering
+                        panelClass="myPanelClass"
+                        (openedChange)="resetCountrySearch($event)"
+                        multiple
+                    >
+                        <div class="select-options">
+                            <button
+                                mat-stroked-button
+                                [disabled]="filtersForm.value.continents.length <= 0"
+                                (click)="filtersForm.get('continents').patchValue([])"
+                            >{{'Placeholder.Filter.Clear' | translate}}</button>
+                        </div>
+                        <mat-option
+                            *ngFor="let continent of continentList"
+                            [value]="continent.key"
+                        >
+                            {{ continent[currentLang] }}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="select">
+                    <mat-select
+                        formControlName="countries"
+                        [placeholder]="'Placeholder.Filter.Country' | translate"
+                        disableOptionCentering
+                        panelClass="myPanelClass"
+                        (openedChange)="resetCountryInput($event, searchCountryInput)"
+                        multiple
+                    >
+                        <input
+                            type="text"
+                            matInput
+                            (keyup)="onSearchCountry($event.target.value)"
+                            style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                            placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                            #searchCountryInput
+                        > {{searchCountryInput.focus()}}
+                        <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                            <div class="select-options">
+                                <button
+                                    mat-stroked-button
+                                    [disabled]="filtersForm.value.countries.length <= 0"
+                                    (click)="filtersForm.get('countries').patchValue([])"
+                                >{{'Placeholder.Filter.Clear' | translate}}</button>
+                            </div>
+                            <mat-option
+                                *ngFor="let country of filteredCountryList"
+                                [value]="country.key"
+                            >
+                                <span style="white-space: nowrap;" [matTooltip]="country[currentLang]" matTooltipShowDelay="500">{{ country[currentLang] }}</span>
+                            </mat-option>
+                        </div>
+                    </mat-select>
+                </div>
+            </div>
             <div class="action">
                 <mat-button-toggle-group formControlName="statuses" multiple>
                     <mat-button-toggle *ngFor="let status of statuses" [value]="status.value" style="min-width: 135px;">

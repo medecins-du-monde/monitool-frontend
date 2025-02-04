@@ -3,17 +3,19 @@
         <div mat-card-avatar class="project-icon">
             <mat-icon class="{{projectOwner ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
         </div>
-        <div class="project-title">
-            <mat-card-title>
-                {{countryList.translateCountry(project.country)}}
-            </mat-card-title>
-        </div>
+        <mat-card-title>
+            {{countryList.translateCountry(project.country)}}
+        </mat-card-title>
         <mat-chip-list class="project-status">
             <mat-chip [ngStyle]="{'background-color': (project.status == 'Ongoing') ? 'green' : (project.status == 'Finished') ? '#929223' : 'red'}" selected>{{ project.status | translate }}</mat-chip>
         </mat-chip-list>
     </mat-card-header>
     <mat-card-content>
         <div [style.opacity]="loading ? '60%' : '100%'">
+            <div class="card-info" *ngIf="project.region">
+                <div class="card-info-title">{{ 'Region' | translate }}</div>
+                <div class="card-info-value">{{ project.region }}</div>
+            </div>
             <div class="card-info">
                 <div class="card-info-title">{{ 'Name' | translate }}</div>
                 <div class="card-info-value">{{ project.name }}</div>

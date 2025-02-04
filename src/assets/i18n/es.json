@@ -656,6 +656,11 @@
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
           "Thematics": "Seleccione uno o varios Combates Políticos"
       },
+      "Filter" : {
+        "Continent": "Filtrar por continente",
+        "Country": "Filtrar por país",
+        "Clear": "Deseleccionar todo"
+      },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
           "NameGroup" : "ej: Hospitales regionales, parte Norte del país, ..."

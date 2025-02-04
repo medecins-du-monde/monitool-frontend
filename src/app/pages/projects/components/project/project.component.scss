@@ -2,7 +2,7 @@
 @import "src/assets/theme/color_vars.scss";
 
 .card-header {
-  padding: 16px;
+  padding: 16px !important;
   align-items: center;
 
   .project-country {
@@ -15,40 +15,40 @@
   }
 
   .project-title {
-    width: 58%;
-    @media screen and (max-width: 1360px) {
-      width: 54%;
-    }
-    @media screen and (max-width: 1230px) {
-      width: 62%;
-    }
-    @media screen and (max-width: 1130px) {
-      width: 58%;
-    }
-    @media screen and (max-width: 1050px) {
-      width: 45%;
-    }
-    @media screen and (max-width: $breakpoint-xs-sm) {
-      width: 60%;
-    }
-    @media screen and (max-width: 720px) {
-      width: 50%;
-    }
-    @media screen and (max-width: 655px) {
-      width: 48%;
-    }
-    @media screen and (max-width: $breakpoint-xs) {
-      width: 74%;
-    }
-    @media screen and (max-width: 500px) {
-      width: 69%;
-    }
-    @media screen and (max-width: 430px) {
-      width: 64%;
-    }
-    @media screen and (max-width: 370px) {
-      width: 50%;
-    }
+    // width: 58%;
+    // @media screen and (max-width: 1360px) {
+    //   width: 54%;
+    // }
+    // @media screen and (max-width: 1230px) {
+    //   width: 62%;
+    // }
+    // @media screen and (max-width: 1130px) {
+    //   width: 58%;
+    // }
+    // @media screen and (max-width: 1050px) {
+    //   width: 45%;
+    // }
+    // @media screen and (max-width: $breakpoint-xs-sm) {
+    //   width: 60%;
+    // }
+    // @media screen and (max-width: 720px) {
+    //   width: 50%;
+    // }
+    // @media screen and (max-width: 655px) {
+    //   width: 48%;
+    // }
+    // @media screen and (max-width: $breakpoint-xs) {
+    //   width: 74%;
+    // }
+    // @media screen and (max-width: 500px) {
+    //   width: 69%;
+    // }
+    // @media screen and (max-width: 430px) {
+    //   width: 64%;
+    // }
+    // @media screen and (max-width: 370px) {
+    //   width: 50%;
+    // }
   }
 }
 
@@ -86,6 +86,7 @@
   border-radius: 4px;
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   .card-header {
     align-items: center;
@@ -210,4 +211,9 @@
 }
 @keyframes l13{ 
   100%{transform: rotate(1turn)}
+}
+
+.project-status {
+  margin-right: 0;
+  margin-left: auto;
 }

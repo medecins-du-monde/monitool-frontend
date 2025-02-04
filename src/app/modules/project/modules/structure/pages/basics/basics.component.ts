@@ -207,7 +207,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
   }
 
   onSearch(value: string) {
-    this.filteredCountryList = this.countryListService.getCountries(undefined, this.basicsForm.value.continent, value, this.basicsForm.value.country)
+    this.filteredCountryList = this.countryListService.getCountries(undefined, [this.basicsForm.value.continent], value, [this.basicsForm.value.country])
   }
 
   resetInput(event: boolean, element: HTMLElement) {

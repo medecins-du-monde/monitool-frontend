@@ -33,5 +33,31 @@
         min-width: none;
       }
     }
+
+    .select {
+      width: 100%;
+    }
+  }
+}
+
+.select {
+  border: solid 1px #dfe2e6;
+  border-radius: 4px;
+  height: 41px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+
+.select-options {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+  gap: 12px;
+  width: 305px;
+
+  & > * {
+    line-height: 24px;
   }
 }

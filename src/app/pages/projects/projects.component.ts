@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, OnDestroy, Renderer2 } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 import { v4 as uuid } from 'uuid';
@@ -11,6 +11,7 @@ import { SidenavService } from 'src/app/services/sidenav.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import { CountryListService } from 'src/app/services/country-list.service';
 
 @Component({
   selector: 'app-projects',
@@ -94,8 +95,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  get selectedCountries(): [] {
-    return this.filtersForm.value.countries.filter(countrie => countrie !== '0') as [];
+  public filteredCountryList: any[];
+  public get continentList() {
+    return this.countryListService.getContinents();
   }
 
   constructor(
@@ -105,13 +107,17 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private authService: AuthService,
     private sidenavService: SidenavService,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private countryListService: CountryListService,
+        private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
+    this.filteredCountryList = this.countryListService.getCountries();
     this.filtersForm = this.fb.group({
       search: '',
-      countries: [['0']],
+      continents: [[]],
+      countries: [[]],
       themes: [[]],
       statuses: [['Ongoing']]
     });
@@ -270,23 +276,27 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const search = this.filtersForm.value.search.toLowerCase();
     return projects.filter(project =>
       project.name.toLowerCase().includes(search) ||
-      project.country && project.country.toLowerCase().includes(search) ||
+      project.region && project.region.toLowerCase().includes(search) ||
       project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
     );
   }
 
   private filterByCountries(projects: Project[]): Project[] {
-    const countries = this.filtersForm.value.countries;
-    if (countries.length > 0) {
-      if (countries.includes('0')) {
-        return projects;
-      }
-      else {
-        return projects.filter(project => countries.includes(project.country));
-      }
+    if (this.filtersForm.value.countries.length <= 0 && this.filtersForm.value.continents.length <= 0) {
+      return projects;
     }
-    else {
-      return [];
+    // return projects.filter(project => project.country === this.filtersForm.value.country);
+    const countries = this.filtersForm.value.countries;
+    const continents = this.filtersForm.value.continents;
+    if (continents.length <= 0) {
+      return projects.filter(project => countries.includes(project.country));
+    }
+    else if (countries.length <= 0) {
+      return projects.filter(project => continents.includes(project.continent));
+    } else {
+      return projects.filter(project =>
+        countries.includes(project.country) && continents.includes(project.continent)
+      );
     }
   }
 
@@ -312,5 +322,32 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   private setPagination() {
     this.totalItem = this.projects.length;
     this.shownProjects = this.projects.slice(this.pageNumber * 12, this.pageNumber * 12 + 12);
+  }
+
+  onSearchCountry(value = '') {
+    this.filteredCountryList = this.countryListService.getCountries(null, this.filtersForm.get('continents').value, value.toLowerCase(), this.filtersForm.get('countries').value);
+  }
+
+  resetCountryInput(event: boolean, element: HTMLElement) {
+    if (!event) {
+      this.renderer.setProperty(element, 'value', '');
+      this.onSearchCountry('');
+    }
+  }
+
+  resetCountrySearch(event: boolean) {
+    if (event) return;
+    const continents = this.filtersForm.get('continents').value;
+    const countries = this.filtersForm.get('countries').value;
+    if (continents.length > 0 && countries.length > 0) {
+      const newCountries: string[] = [];
+      countries.forEach(key => {
+        if (continents.includes(this.countryListService.getCountry(key).continent)) {
+          newCountries.push(key);
+        }
+      })
+      this.filtersForm.get('countries').patchValue(newCountries);
+    }
+    this.onSearchCountry();
   }
 }
