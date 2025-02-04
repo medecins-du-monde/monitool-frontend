@@ -16,22 +16,27 @@
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <mat-select
                     formControlName="id"
-                    placeholder="{{ 'User' | translate }}"
+                    placeholder="{{ 'Tooltip.UserEdition.UserSearch.Placeholder' | translate }}"
                     disableOptionCentering panelClass="myPanelClass"
                     [disabled]="users.length <= 0"
                     (openedChange)="resetInput($event, searchInput)"
                 >
-                    <input
-                        type="text"
-                        matInput
-                        (keyup)="onSearch($event.target.value)"
-                        style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
-                        placeholder="{{ 'User' | translate }}"
-                        #searchInput
-                    > {{searchInput.focus()}}
-                    <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
-                        <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}
-                        </mat-option>
+                    <div>
+                        <input
+                            type="text"
+                            matInput
+                            (keyup)="onSearch($event.target.value)"
+                            style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                            placeholder="{{ 'User' | translate }}"
+                            #searchInput
+                        > {{searchInput.focus()}}
+                        <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                            <mat-option *ngFor="let user of filteredUsers" [value]="user.id">{{ user.name }}
+                            </mat-option>
+                            <p *ngIf="filteredUsers.length === 0" style="margin: 11px 16px; opacity: .6;">
+                                {{ 'Tooltip.UserEdition.UserSearch.NoMatches' | translate }}
+                            </p>
+                        </div>
                     </div>
                 </mat-select>
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.User' | translate }}</mat-hint>
