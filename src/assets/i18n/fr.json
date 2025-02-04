@@ -648,6 +648,11 @@
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
           "Thematics": "ex: Soins de santé primaire"
       },
+      "Filter" : {
+        "Continent": "Filtrer par continent",
+        "Country": "Filtrer par pays",
+        "Clear": "Effacer la sélection"
+      },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
           "NameGroup" : "ex: Hôpitaux régionaux, parti Nord du pays, ..."

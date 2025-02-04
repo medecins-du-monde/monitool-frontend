@@ -660,6 +660,11 @@
           "Name" : "e.g. Access to quality care for people affected by the crisis",
           "Thematics": "e.g. Primary health care"
       },
+      "Filter" : {
+        "Continent": "Filter by continent",
+        "Country": "Filter by country",
+        "Clear": "Clear selection"
+      },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
           "NameGroup" : "e.g. Regional hospitals, North of the country, ..."
