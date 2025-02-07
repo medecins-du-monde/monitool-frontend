@@ -32,6 +32,8 @@ export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
   loadingComponent = false;
   httpLoading = false;
 
+  isLogin = true;
+
   private subscription: Subscription = new Subscription();
 
   constructor(
@@ -170,6 +172,7 @@ export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.subscription.add(
       this.route.events.subscribe(event => {
         if (event instanceof NavigationStart) {
+          this.isLogin = event.url !== "/login";
           setTimeout(() => {
             this.loadingComponent = true;
           });

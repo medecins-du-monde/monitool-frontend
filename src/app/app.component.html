@@ -1,4 +1,4 @@
-<app-header class="header"></app-header>
+<app-header class="header" *ngIf="isLogin"></app-header>
 <div class="page-container {{ needsInfosPanelSpace ? 'info-panel-space' : null }}">
   <router-outlet></router-outlet>
   <app-loading-bar [loadingComponent]="loadingComponent"></app-loading-bar>
