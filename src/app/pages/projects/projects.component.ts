@@ -109,7 +109,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private countryListService: CountryListService,
-        private renderer: Renderer2
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
