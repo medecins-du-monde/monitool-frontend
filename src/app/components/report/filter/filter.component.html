@@ -43,12 +43,77 @@
                     [groups]="groups">
                 </app-collection-sites-selector>
             </div>
+            
+            <div class="mdm-form-group" *ngIf="isCrossCuttingReport">
+                <div class="mdm-form-label">{{ 'Placeholder.Filter.Continent' | translate }}</div>
+                <mat-form-field appearance="outline" class="mdm-form-field" style="flex: unset; width: unset;">
+                    <mat-select
+                        formControlName="continents"
+                        [placeholder]="'Placeholder.Filter.Continent' | translate"
+                        disableOptionCentering
+                        panelClass="myPanelClass"
+                        (openedChange)="resetCountrySearch($event)"
+                        multiple
+                    >
+                        <div class="select-options">
+                            <button
+                                mat-stroked-button
+                                [disabled]="filterForm.value.continents.length <= 0"
+                                (click)="filterForm.get('continents').patchValue([])"
+                            >{{'Placeholder.Filter.Clear' | translate}}</button>
+                        </div>
+                        <mat-option
+                            *ngFor="let continent of continentList"
+                            [value]="continent.key"
+                        >
+                            {{ continent[currentLang] }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="mdm-form-group" *ngIf="isCrossCuttingReport">
+                <div class="mdm-form-label">{{ 'Placeholder.Filter.Country' | translate }}</div>
+                <mat-form-field appearance="outline" class="mdm-form-field" style="flex: unset; width: unset;">
+                    <mat-select
+                        formControlName="countries"
+                        [placeholder]="'Placeholder.Filter.Country' | translate"
+                        disableOptionCentering
+                        panelClass="myPanelClass"
+                        (openedChange)="resetCountryInput($event, searchCountryInput)"
+                        multiple
+                    >
+                        <input
+                            type="text"
+                            matInput
+                            (keyup)="onSearchCountry($event.target.value)"
+                            style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                            placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                            #searchCountryInput
+                        > {{searchCountryInput.focus()}}
+                        <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                            <div class="select-options">
+                                <button
+                                    mat-stroked-button
+                                    [disabled]="filterForm.value.countries.length <= 0"
+                                    (click)="filterForm.get('countries').patchValue([])"
+                                >{{'Placeholder.Filter.Clear' | translate}}</button>
+                            </div>
+                            <mat-option
+                                *ngFor="let country of filteredCountryList"
+                                [value]="country.key"
+                            >
+                                <span style="white-space: nowrap;" [matTooltip]="country[currentLang]" matTooltipShowDelay="500">{{ country[currentLang] }}</span>
+                            </mat-option>
+                        </div>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <div *ngIf="filterForm.get('finished')" class="mdm-form-group finished-projects">
                 <div class="mdm-form-label">{{ 'ShowFinishedProjects' | translate }}</div>
                 <mat-checkbox formControlName="finished"></mat-checkbox>
             </div>
-
         </td>
     </tr>
 </table>

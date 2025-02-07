@@ -325,14 +325,19 @@ export class ReportingTableComponent
           if (this.openedSections[row.sectionId]) {
             if (this.isInfoRow(0, row)) {
               if (row.originProject) {
-                if (this.filter.value.finished) {
-                  return (
-                    row.originProject.status === 'Ongoing' ||
-                    row.originProject.status === 'Finished'
-                  );
-                } else {
-                  return row.originProject.status === 'Ongoing';
+                let filterResult = true;
+                const filterValue = this.filter.value;
+
+                if (!filterValue.finished) {
+                  filterResult = row.originProject.status === 'Ongoing';
                 }
+                if (filterResult && filterValue.continents.length > 0) {
+                  filterResult = filterValue.continents.includes(row.originProject.continent);
+                }
+                if (filterResult && filterValue.countries.length > 0) {
+                  filterResult = filterValue.countries.includes(row.originProject.country);
+                }
+                return filterResult;
               }
             }
             return true;

@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { CollectionSitesSelectorModule } from 'src/app/modules/project/modules/structure/components/collection-sites-selector/collection-sites-selector.module';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -35,7 +36,8 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonModule
   ]
 })
 export class FilterModule {}

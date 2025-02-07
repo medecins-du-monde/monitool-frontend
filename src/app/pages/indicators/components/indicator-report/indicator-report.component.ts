@@ -55,6 +55,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.route.params.subscribe(val => {
         this.indicatorService.get(val.id).then((response: Indicator) => {
+          console.log(response);
           this.mainIndicator = response;
           this.setIndicatorBreadcrumb();
           this.projectService.listByIndicator(this.mainIndicator.id).then(list => {
@@ -76,6 +77,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   }
 
   buildIndicators(): void{
+    console.log(this.relatedProjects);
     const projects = this.relatedProjects.filter(project => project.status === 'Ongoing' || project.status === 'Finished');
 
     const indicators: ProjectIndicator[] = [];
