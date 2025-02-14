@@ -1489,7 +1489,9 @@ export class ReportingTableComponent
       'form'
     ];
     const noSectionIdList = [
-      'indicator'
+      'indicator',
+      'logicalFrame',
+      'form'
     ]
     if (!this.isCrossCuttingReport && element.commentInfo) {
       if (isSection) {
@@ -1498,39 +1500,69 @@ export class ReportingTableComponent
             return true;
         }
       } else {
-        if (this.project.crossCutting[element.commentInfo.path]) {
-          return true
+        for (const title of noSectionIdList) {
+          if (element.commentInfo.path.startsWith(title)) {
+            if (!(element.disaggregatedBy && Object.keys(element.disaggregatedBy).length > 0)) {
+              return true;
+            } else if (element.commentInfo.path.startsWith('form') && !(element.disaggregatedBy.group || element.disaggregatedBy.entity)) {
+              return true;
+            }
+          }
         }
-        // return true
-        // for (const title of noSectionIdList) {
-        //   if (element.commentInfo.path.startsWith(title))
-        //     return true;
-        // }
       }
     }
     return false;
   }
 
-  public showDetails(event: Event, element: any) {
+  private elementFromPath(path: string): any {
+    const parsedPath = path.split('|').map(section => section.split(':'));
+    let element = this.project;
+    parsedPath.forEach(section => {
+      element = element[section[0] + 's'].find(el => el.id === section[1]);
+    })
+    return element;
+  }
+
+  public showDetails(event: Event, element: any, indicator = false) {
     event.stopPropagation();
     let data = undefined;
 
     if (element.commentInfo) {
       if (element.commentInfo.path.startsWith('logicalFrame')) {
-        data = {
-          type: 'logicalFrame',
-          details: this.project.logicalFrames[element.sectionId - 1]
-        };
+        if (!indicator) {
+          data = {
+            type: 'logicalFrame',
+            details: this.project.logicalFrames[element.sectionId - 1]
+          };
+        } else {
+          data = {
+            type: 'logicalFrameIndicator',
+            details: {...this.elementFromPath(element.commentInfo.path), name: element.name, disaggregatedBy: element.disaggregatedBy},
+          }
+        }
       } else if (element.commentInfo.path.startsWith('form')) {
-        data = {
-          type: 'form',
-          details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
-        };
+        if (!indicator) {
+          data = {
+            type: 'form',
+            details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
+          };
+        } else {
+          console.log(element);
+          data = {
+            type: 'formData',
+            details: {...this.elementFromPath(element.commentInfo.path), name: element.name, disaggregatedBy: element.disaggregatedBy},
+          };
+        }
       } else if (element.commentInfo.path.startsWith('indicator')) {
         if (this.project.crossCutting[element.commentInfo.path]) {
           data = {
             type: 'crossCutting',
-            details:{...this.project.crossCutting[element.commentInfo.path], name: element.name}
+            details:{...this.project.crossCutting[element.commentInfo.path], name: element.name, disaggregatedBy: element.disaggregatedBy}
+          }
+        } else {
+          data = {
+            type: 'extraIndicator',
+            details: element
           }
         }
       }

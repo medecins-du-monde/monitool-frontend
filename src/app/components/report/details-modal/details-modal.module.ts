@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { DetailsModalComponent } from './details-modal.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [DetailsModalComponent],
@@ -21,7 +22,8 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
     MatButtonModule,
     FormsModule,
     MatIconModule,
-    LocalizedDatePipeModule
+    LocalizedDatePipeModule,
+    MatTooltipModule
   ],
   exports: [DetailsModalComponent]
 })

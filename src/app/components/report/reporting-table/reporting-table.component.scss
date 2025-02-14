@@ -342,6 +342,6 @@ tr.mat-header-row {
 
 .details-icon {    
   min-width: max-content;
-  cursor: pointer;
+  cursor: pointer !important;
   opacity: .4 !important;
 }

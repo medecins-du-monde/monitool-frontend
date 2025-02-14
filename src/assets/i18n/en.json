@@ -1045,7 +1045,20 @@
         "diarrhea": "Diarrhea"
     }
   },
-  "crossCutting-details": "Cross cutting indicator details",
-  "logicalFrame-details": "Logical framework details",
-  "form-details": "Data source details"
+  "report-details": {
+    "title": {
+        "crossCutting": "Cross cutting indicator details",
+        "logicalFrame": "Logical framework details",
+        "form": "Data source details",
+        "extraIndicator": "Extra indicator details",
+        "formData": "Data source data details",
+        "logicalFrameIndicator": "Logical framework indicator details",
+        "formDataDisag": "Data source data disaggregation details"
+    },
+    "formula": "Formula",
+    "disagFrom": "Disaggregated from",
+    "dataAg": "Data aggregation",
+    "timeAg": "Time aggregation",
+    "siteAg": "Sites aggregation"
+  }
 }

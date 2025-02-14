@@ -1061,7 +1061,20 @@
         "diarrhea": "Diarrhée"
     }
   },
-  "crossCutting-details": "Détails de l'indecateur transversaux",
-  "logicalFrame-details": "Détails du cadre logique",
-  "form-details": "Détails de la source de données"
+  "report-details": {
+    "title": {
+        "crossCutting": "Détails de l'indecateur transversaux",
+        "logicalFrame": "Détails du cadre logique",
+        "form": "Détails de la source de données",
+        "extraIndicator": "Détails de l'indicateurs annexé",
+        "formData": "Détails de la donnée",
+        "logicalFrameIndicator": "Détails de l'indecateur du cadre logique",
+        "formDataDisag": "Détails de la désagrégation"
+    },
+    "formula": "Formule",
+    "disagFrom": "Désagrégée de",
+    "dataAg": "Agrégation de données",
+    "timeAg": "Agrégation par temps",
+    "siteAg": "Agrégation par localisation"
+  }
 }
