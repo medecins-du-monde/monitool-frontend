@@ -34,7 +34,12 @@ export class CountryListService {
   }
 
   public getCountry(key: string): any {
-    return this.countries[key];
+    const country = {...this.countries[key]};
+    for (const lang of ['en', 'es', 'fr']) {
+      if (typeof country[lang] !== 'string')
+        country[lang] = country[lang][0];
+    }
+    return country;
   }
   public getContinent(key: string): any {
     return this.continents[key];
@@ -94,6 +99,9 @@ export class CountryListService {
       for (const lang of ['en', 'es', 'fr']) {
         const name = availableCountries[value][lang];
         if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
+          if (typeof name !== 'string') {
+            availableCountries[value][lang] = name[0];
+          }
           toBeIncluded = true;
           break;
         }
