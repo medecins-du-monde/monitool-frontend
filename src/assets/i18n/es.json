@@ -1062,7 +1062,20 @@
         "diarrhea": "Diarrea"
     }
   },
-  "crossCutting-details": "Detalles del indicador transversal",
-  "logicalFrame-details": "Detalles del marco lógico",
-  "form-details": "Detalles de la fuente de datos"
+  "report-details": {
+    "title": {
+        "crossCutting": "Detalles del indicador transversal",
+        "logicalFrame": "Detalles del marco lógico",
+        "form": "Detalles de la fuente de datos",
+        "extraIndicator": "Detalles del indicador adicional",
+        "formData": "Detalles del dato",
+        "logicalFrameIndicator": "Detalles del indicador del marco lógico",
+        "formDataDisag": "Detalles de la desagregación"
+    },
+    "formula": "Formula",
+    "disagFrom": "Desagregado de",
+    "dataAg": "Agregación de los datos",
+    "timeAg": "Agregación por tiempo",
+    "siteAg": "Agregación por lugar"
+  }
 }

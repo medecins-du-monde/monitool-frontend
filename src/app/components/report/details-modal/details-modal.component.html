@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{data.type + '-details' | translate}}</h1>
+<h1 mat-dialog-title>{{'report-details.title.' + data.type | translate}}</h1>
 <button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
   <mat-icon>close</mat-icon>
 </button>
@@ -10,12 +10,14 @@
           {{ data.details.name }}
       </div>
   </div>
-  <div class="card-info">
+
+  <div class="card-info" *ngIf="start && end">
       <div class="card-info-title">{{ 'Date' | translate }}</div>
       <div class="card-info-value">
           {{ (data.details.start ? data.details.start : data.project.start ) | localizedDate }} -
           {{ (data.details.end ? data.details.end : data.project.end )| localizedDate }}</div>
   </div>
+
   <div class="card-info" *ngIf="groups || entities">
       <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>
       <div class="card-info-value">
@@ -23,10 +25,65 @@
           <div *ngFor="let entity of entities">{{ entity.name }}</div>
       </div>
   </div>
+
   <div class="card-info" *ngIf="thematics">
-      <div class="card-info-title">{{ 'Thematics'| translate }}</div>
+      <div class="card-info-title">{{ 'Thematics' | translate }}</div>
       <div class="card-info-value">
           <div *ngFor="let theme of thematics">{{ theme }}</div>
+      </div>
+  </div>
+
+  <div class="card-info" *ngIf="data.details.computation">
+      <div class="card-info-title">{{ 'report-details.formula' | translate }}</div>
+      <div class="card-info-value">
+        <div>{{data.details.computation.formula}}</div>
+      </div>
+  </div>
+
+  <table *ngIf="paramaters">
+    <tr>
+        <th>{{'Parameter' | translate}}</th>
+        <th>{{'Data' | translate}}</th>
+        <th>{{'Disaggregations' | translate}}</th>
+    </tr>
+    <tr *ngFor="let param of paramaters">
+        <td>{{ param.var }}</td>
+        <td>{{ param.name }}</td>
+        <td>
+            <div *ngFor="let disag of param.disag">
+                <span>{{disag.name}}</span>
+                <ul *ngIf="disag.all"><li>{{'All' | translate}}</li></ul>
+                <ul *ngIf="!disag.all"><li *ngFor="let el of disag.elements">{{el}}</li></ul>
+            </div>
+        </td>
+    </tr>
+  </table>
+
+  <div class="card-info" *ngIf="aggregation">
+      <div class="card-info-title">{{ 'report-details.disagFrom' | translate }}</div>
+      <div class="card-info-value">
+        <div>{{aggregation.name}}</div>
+      </div>
+  </div>
+
+  <div class="card-info" *ngIf="aggregation">
+      <div class="card-info-title">{{ 'report-details.dataAg' | translate }}</div>
+      <div class="card-info-value">
+        <div>{{'Enum.Aggregation.' + aggregation.aggregation | translate}}</div>
+      </div>
+  </div>
+
+  <div class="card-info" *ngIf="data.details.geoAgg && !aggregation">
+      <div class="card-info-title">{{ 'report-details.siteAg' | translate }}</div>
+      <div class="card-info-value">
+        <div>{{'Enum.Aggregation.' + data.details.geoAgg | translate}}</div>
+      </div>
+  </div>
+
+  <div class="card-info" *ngIf="data.details.timeAgg && !aggregation">
+      <div class="card-info-title">{{ 'report-details.timeAg' | translate }}</div>
+      <div class="card-info-value">
+        <div>{{'Enum.Aggregation.' + data.details.timeAgg | translate}}</div>
       </div>
   </div>
 </mat-dialog-content>

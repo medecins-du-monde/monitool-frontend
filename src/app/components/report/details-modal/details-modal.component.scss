@@ -6,3 +6,51 @@
     padding: 0px 12px !important;
   }
   
+table {
+  width: calc(100% - 20px);
+  margin: 0 10px;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+table, th, td {
+    border: 1px solid rgba(black, .1);
+    border-collapse: collapse;
+    text-align: start;
+    table-layout:fixed;
+}
+
+th {
+  color: #65655A;
+}
+td {
+  color: #656565;
+}
+
+th, td {
+    padding: 4px 6px;
+    text-wrap: wrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    // overflow-wrap: break-word;
+    &:nth-child(2) {
+      width: 50%;
+    }
+
+    li {
+      margin-bottom: 4px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    & > div {
+      text-wrap: wrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      
+      &:last-of-type {
+        margin-bottom: -4px;
+      }
+    }
+    
+}

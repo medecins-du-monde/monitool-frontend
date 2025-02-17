@@ -30,7 +30,8 @@ describe('DetailsModalComponent', () => {
     component.data = {
       type: 'crossCutting',
       details: {name: 'TEST NAME'},
-      project: new Project()
+      project: new Project(),
+      indicator: false,
     }
     fixture.detectChanges();
   });
