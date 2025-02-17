@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
@@ -31,6 +31,16 @@ describe('BasicsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BasicsComponent);
     component = fixture.componentInstance;
+    component.basicsForm = new FormGroup({
+      continent: new FormControl(),
+      country: new FormControl(),
+      region: new FormControl(),
+      name: new FormControl(),
+      themes: new FormControl(),
+      start: new FormControl(),
+      end: new FormControl(),
+      visibility: new FormControl()
+    });
     fixture.detectChanges();
   });
 
