@@ -44,14 +44,14 @@ export class DetailsModalComponent {
     private indicatorService: IndicatorService,
     private translateService: TranslateService
   ) {
+    if (data.project) {
+      this.disaggregationElements = this.getProjectElements();
+      Object.keys(this.disaggregationElements).forEach(key => {
+        this.disaggregationElementPartitions = {...this.disaggregationElementPartitions, ...this.disaggregationElements[key].partitions}
+      })
+    }
 
-    this.disaggregationElements = this.getProjectElements();
-    Object.keys(this.disaggregationElements).forEach(key => {
-      this.disaggregationElementPartitions = {...this.disaggregationElementPartitions, ...this.disaggregationElements[key].partitions}
-    })
-
-    const isDisag = this.data.details.disaggregatedBy &&  Object.keys(this.data.details.disaggregatedBy).length > 0;
-    if (isDisag) console.log(this.data.details);
+    const isDisag = this.data.details && this.data.details.disaggregatedBy && Object.keys(this.data.details.disaggregatedBy).length > 0;
 
     switch (this.data.type) {
       case 'logicalFrame':
