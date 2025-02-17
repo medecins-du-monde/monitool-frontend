@@ -274,10 +274,13 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private filterByText(projects: Project[]): Project[] {
     const search = this.filtersForm.value.search.toLowerCase();
+    const filteredCountryList = this.countryListService.getCountries(undefined, this.filtersForm.get('continents').value, search);
+    console.log(filteredCountryList);
     return projects.filter(project =>
       project.name.toLowerCase().includes(search) ||
       project.region && project.region.toLowerCase().includes(search) ||
-      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search))
+      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search)) ||
+      filteredCountryList.find(country => country.key === project.country) || project.country.includes(search)
     );
   }
 

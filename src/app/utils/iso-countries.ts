@@ -318,9 +318,9 @@ export const countryList: CountryList = {
     "CI": {
         "continent": "AF",
         "en": [
+            "Ivory Coast",
             "Cote d'Ivoire",
             "Côte d'Ivoire",
-            "Ivory Coast"
         ],
         "fr": "Côte-d'Ivoire",
         "es": "Costa de Marfil"
@@ -346,8 +346,8 @@ export const countryList: CountryList = {
     "CN": {
         "continent": "AS",
         "en": [
+            "China",
             "People's Republic of China",
-            "China"
         ],
         "fr": "Chine",
         "es": "China"
@@ -578,9 +578,9 @@ export const countryList: CountryList = {
     "GM": {
         "continent": "AF",
         "en": [
+            "Gambia",
             "Republic of The Gambia",
             "The Gambia",
-            "Gambia"
         ],
         "fr": "Gambie",
         "es": "Gambia"
@@ -720,8 +720,8 @@ export const countryList: CountryList = {
     "IR": {
         "continent": "AS",
         "en": [
+            "Iran",
             "Islamic Republic of Iran",
-            "Iran"
         ],
         "fr": "Iran",
         "es": [
@@ -946,8 +946,8 @@ export const countryList: CountryList = {
     "MK": {
         "continent": "EU",
         "en": [
+            "North Macedonia",
             "The Republic of North Macedonia",
-            "North Macedonia"
         ],
         "fr": "Macédoine du Nord",
         "es": "Macedonia del Norte"
@@ -1190,8 +1190,8 @@ export const countryList: CountryList = {
     "PS": {
         "continent": "AS",
         "en": [
+            "Palestine",
             "State of Palestine",
-            "Palestine"
         ],
         "fr": "Palestine",
         "es": "Palestina"
@@ -1241,8 +1241,8 @@ export const countryList: CountryList = {
     "RU": {
         "continent": "AS",
         "en": [
+            "Russia",
             "Russian Federation",
-            "Russia"
         ],
         "fr": "Russie",
         "es": "Rusia"
@@ -1448,8 +1448,8 @@ export const countryList: CountryList = {
     "TR": {
         "continent": "AS",
         "en": [
+            "Turkey",
             "Türkiye",
-            "Turkey"
         ],
         "fr": "Turquie",
         "es": "Turquía"
@@ -1469,8 +1469,8 @@ export const countryList: CountryList = {
     "TW": {
         "continent": "AS",
         "en": [
+            "Taiwan",
             "Taiwan, Province of China",
-            "Taiwan"
         ],
         "fr": "Taïwan",
         "es": "Taiwán"
