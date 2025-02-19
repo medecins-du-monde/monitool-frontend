@@ -1060,5 +1060,9 @@
     "dataAg": "Data aggregation",
     "timeAg": "Time aggregation",
     "siteAg": "Sites aggregation"
+  },
+  "alert-date-report": {
+    "title": "Date range is too long",
+    "content": "The selected date range exceeds one year, to secure a good page performance it will be reduced to 1 year. You can revert this back from the filters, but be that the page could become unresponsive"
   }
 }

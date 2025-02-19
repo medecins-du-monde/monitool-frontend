@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
@@ -18,7 +18,7 @@ import { Indicator } from 'src/app/models/classes/indicator.model';
   templateUrl: './object-grouping.component.html',
   styleUrls: ['./object-grouping.component.scss']
 })
-export class ObjectGroupingComponent implements OnInit, OnDestroy {
+export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChild('dlMinimized') dlMinimized: TemplateRef<any>;
 
@@ -28,6 +28,7 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
     projects: Project[]
   };
   @Input() project: Project;
+  @Input() dimension: string;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
@@ -131,6 +132,12 @@ export class ObjectGroupingComponent implements OnInit, OnDestroy {
         ]
       );
       this.updateDimension(8, this.periodicitiesList);
+    }
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.dimension && changes.dimension.currentValue !== changes.dimension.previousValue && changes.dimension.currentValue) {
+      this.dimensionForm.patchValue({dimensionId: changes.dimension.currentValue})
     }
   }
 

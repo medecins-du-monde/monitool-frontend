@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, Renderer2} from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, Renderer2, OnChanges, SimpleChanges} from '@angular/core';
 import {  UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
@@ -42,7 +42,7 @@ export interface Filter{
     }
   ]
 })
-export class FilterComponent implements OnInit, OnDestroy{
+export class FilterComponent implements OnInit, OnChanges, OnDestroy{
 
   collapsed = true;
 
@@ -55,6 +55,7 @@ export class FilterComponent implements OnInit, OnDestroy{
   @Input() project: Project;
   @Input() showComments = false;
   @Input() userIsAdmin = false;
+  @Input() filterEnd?: Date; // used to auto adjust based on periodicity;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
   @Output() showCommentsChange = new EventEmitter<boolean>();
 
@@ -160,6 +161,12 @@ export class FilterComponent implements OnInit, OnDestroy{
       );
     }
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.filterEnd && changes.filterEnd.currentValue !== changes.filterEnd.previousValue) {
+      this.filterForm.patchValue({_end: changes.filterEnd.currentValue})
+    }
   }
 
   onSearchCountry(value = '') {
