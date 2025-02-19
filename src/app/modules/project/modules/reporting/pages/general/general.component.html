@@ -1,11 +1,17 @@
-    <app-object-grouping [project]="project" (dimensionEvent)="receiveDimension($event)"></app-object-grouping>
+    <app-object-grouping
+      [project]="project"
+      [dimension]="updatedDimension"
+      (dimensionEvent)="receiveDimension($event)"
+    ></app-object-grouping>
 
     <app-filter
       (filterEvent)="receiveFilter($event)"
       [project]="project"
       [showComments]="showComments"
       (showCommentsChange)="showComments = $event"
-      [userIsAdmin]="userIsAdmin">
+      [userIsAdmin]="userIsAdmin"
+      [filterEnd]="updatedFilterDate"
+    >
     </app-filter>
 
     <app-chart [data]="chartData" [name]="this.project.name"></app-chart>

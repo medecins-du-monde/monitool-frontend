@@ -9,6 +9,7 @@ import { FilterModule} from '../../../../../../components/report/filter/filter.m
 import { ReportingTableModule } from 'src/app/components/report/reporting-table/reporting-table.module';
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 import { DownloadExcelPageComponent } from './download-excel-page/download-excel-page.component';
+import { AlertAutoDateChangeModule } from './alert-auto-date-change/alert-auto-date-change';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { DownloadExcelPageComponent } from './download-excel-page/download-excel
         ObjectGroupingModule,
         FilterModule,
         BreadcrumbModule,
+        AlertAutoDateChangeModule
     ]
 })
 export class GeneralModule { }

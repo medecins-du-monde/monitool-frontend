@@ -1077,5 +1077,9 @@
     "dataAg": "Agregación de los datos",
     "timeAg": "Agregación por tiempo",
     "siteAg": "Agregación por lugar"
+  },
+  "alert-date-report": {
+    "title": "El rango de fechas es muy largo",
+    "content": "El rango de fechas seleccionado excede un año, para asegurar el buen rendimiento de la pagina el rango se va a reducir a un año. Puedes revertir esto desde los filtros, pero tenga en cuenta que la pagina podria presentar problemas de rendimiento."
   }
 }
