@@ -29,13 +29,12 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   };
   @Input() project: Project;
   @Input() dimension: string;
+  @Input() canDownload = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];
 
   private subscription: Subscription = new Subscription();
-
-  win;
 
   forms: Form[] = [];
   periodicitiesList = [
@@ -95,6 +94,7 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
     this.groupOptions = [];
     // If the page is not the cross
     if (!this.crossCuttingIndicator) {
+      this.canDownload = false;
       this.subscription.add(
         this.projectService.openedProject.subscribe((project: Project) => {
           this.project = project;
@@ -118,6 +118,7 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
           }
           this.groupOptions = newOptionsList;
           this.updateDimension(smallestIndex, this.periodicitiesList);
+          this.projectService.hasInputs(project.id).then(res => this.canDownload = res);
         })
       );
     }

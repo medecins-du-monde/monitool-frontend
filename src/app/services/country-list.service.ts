@@ -34,12 +34,15 @@ export class CountryListService {
   }
 
   public getCountry(key: string): any {
-    const country = {...this.countries[key]};
-    for (const lang of ['en', 'es', 'fr']) {
-      if (typeof country[lang] !== 'string')
-        country[lang] = country[lang][0];
+    if (this.countries[key]) {
+      const country = {...this.countries[key]};
+      for (const lang of ['en', 'es', 'fr']) {
+        if (typeof country[lang] !== 'string') {
+          country[lang] = country[lang][0];
+        }
+      }
+      return country;
     }
-    return country;
   }
   public getContinent(key: string): any {
     return this.continents[key];

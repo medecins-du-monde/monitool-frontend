@@ -8,6 +8,7 @@
     indicator: mainIndicator,
     projects: relatedProjects
   }"
+  [canDownload]="tableHasData"
   ></app-object-grouping>
 
   <app-filter
@@ -23,5 +24,6 @@
   [tableContent]="tableContent"
   [isCrossCuttingReport]="true"
   (dimensionEvent)="receiveDimension($event)"
+  (reportHasDataChange)="tableHasData = $event"
   ></app-reporting-table>
 </div>

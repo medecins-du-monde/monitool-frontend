@@ -112,6 +112,8 @@ export class ReportingTableComponent
   @Input() showComments;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
+  @Output() reportHasDataChange = new EventEmitter<boolean>();
+
   rows = new BehaviorSubject<Row[]>([]);
 
   logFrameEntities = [];
@@ -348,6 +350,17 @@ export class ReportingTableComponent
         this.dataSource = new MatTableDataSource(filteredRows);
         if (value.length > 0) {
           this.changeDetectorRef.detectChanges();
+          let reportHasData = false;
+          for (const row of filteredRows) {
+            if ((row as any).dataset && Object.keys((row as any).dataset).length > 0) {
+              console.log((row as any).dataset)
+              reportHasData = true;
+              break;
+            }
+          }
+          this.reportHasDataChange.emit(reportHasData);
+        } else {
+          this.reportHasDataChange.emit(false);
         }
       })
     );
@@ -1547,7 +1560,6 @@ export class ReportingTableComponent
             details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
           };
         } else {
-          console.log(element);
           data = {
             type: 'formData',
             details: {...this.elementFromPath(element.commentInfo.path), name: element.name, disaggregatedBy: element.disaggregatedBy},
