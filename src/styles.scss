@@ -1293,3 +1293,14 @@ code.title{
         opacity: .4;
     }
 }
+
+.white-bg-tooltip {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+
+  & > div {
+    max-width: 50vw;
+    width: 500px;
+  }
+}

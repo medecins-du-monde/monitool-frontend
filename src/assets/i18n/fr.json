@@ -149,7 +149,10 @@
           "quarter": "Tous les trimestres",
           "semester": "Tous les semestres",
           "year": "Tous les ans",
-          "free": "Libre"
+          "free": "Libre",
+          "Tooltip": {
+            "free": "Pas de fréquence de saisie régulière. Exemple : données issues d'une étude ponctuelle, d'une clinique mobile qui ne travaille pas à jour fixe (zone de conflit, etc.)"
+          }
       },
       "Computation":{
           "unavailable": "Il n'est pas possible de calculer cet indicateur",

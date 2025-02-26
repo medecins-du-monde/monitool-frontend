@@ -152,7 +152,10 @@
           "quarter": "Cada trimestre",
           "semester": "Cada semestre",
           "year": "Cada año",
-          "free": "Libre"
+          "free": "Libre",
+          "Tooltip": {
+            "free": "No hay una frecuencia regular de entrada de datos. Ejemplo : datos de un estudio puntual, de una clínica móvil que no funciona en un día fijo (zona de conflicto, etc.)"
+          }
       },
       "Computation":{
           "unavailable": "No es posible calcular este indicador",
