@@ -22,8 +22,19 @@
         <div class="mdm-form-group">
             <div class="mdm-form-label">{{ 'Periodicity' | translate }}</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
-                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}" disableOptionCentering panelClass="myPanelClass">
-                    <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">{{ periodicity.display | translate }}
+                <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}" disableOptionCentering panelClass="myPanelClass" #select>
+                    <mat-select-trigger>
+                      {{ select.value ? ('Enum.Periodicity.' + select.value | translate) : null }}
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let periodicity of periodicities" [value]="periodicity.value">
+                        {{ periodicity.display | translate }}
+                        <mat-icon
+                            [matTooltip]="'Enum.Periodicity.Tooltip.' + periodicity.value | translate"
+                            *ngIf="periodicity.value === 'free'"
+                            matTooltipPosition="right"
+                            matTooltipClass="white-bg-tooltip"
+                            style="scale: .7; margin-top: -1px; opacity: .6;"
+                        >info</mat-icon>
                     </mat-option>
                 </mat-select>
                 <mat-hint>

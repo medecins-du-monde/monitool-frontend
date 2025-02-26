@@ -168,7 +168,10 @@
           "week_mon": "Every week (monday to sunday)",
           "week_sat": "Every week (saturday to friday)",
           "week_sun": "Every week (sunday to saturday)",
-          "year": "Every year"
+          "year": "Every year",
+          "Tooltip": {
+            "free": "No regular data entry frequency. Example : data from a one-time study, from a mobile clinic that does not work on a fixed day (conflict zone, etc.)"
+          }
       }
   },
   "ErrorNoCollectionSiteAssociated": "This data source is not associated with any collection site.",
