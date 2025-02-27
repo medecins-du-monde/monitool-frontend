@@ -5,7 +5,7 @@
         </mat-expansion-panel-header>
         <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
             <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+                <div class="mdm-form-label">{{ 'Name' | translate }}*</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <input matInput formControlName="name"
                         placeholder="{{ 'Placeholder.LogicalFrame.Name' | translate }}">
@@ -21,7 +21,7 @@
                 </app-collection-sites-selector>
             </div>
             <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'SpecificStartDate' | translate }}</div>
+                <div class="mdm-form-label">{{ 'SpecificStartDate' | translate }}*</div>
                 <mat-radio-group class="dateGroup">
                     <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')"
                     value="false">{{ 'SameAsProject' | translate : {date: project.start | localizedDate} }}
@@ -40,7 +40,7 @@
                 </mat-radio-group>
             </div>
             <div class="mdm-form-group">
-                <div class="mdm-form-label">{{ 'SpecificEndDate' | translate }}</div>
+                <div class="mdm-form-label">{{ 'SpecificEndDate' | translate }}*</div>
                 <mat-radio-group class="dateGroup">
                     <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')"
                     value="false">{{ 'SameAsProject' | translate : {date: project.end | localizedDate} }}
@@ -69,7 +69,7 @@
             </mat-expansion-panel-header>
             <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
                 <div class="mdm-form-group">
-                    <div class="mdm-form-label">{{ 'GeneralObjective' | translate }}</div>
+                    <div class="mdm-form-label">{{ 'GeneralObjective' | translate }}*</div>
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput formControlName="goal"
                             placeholder="{{ 'Placeholder.LogicalFrame.GeneralObjective' | translate }}">

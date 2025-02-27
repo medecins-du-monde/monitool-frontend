@@ -5,7 +5,7 @@
         <p style="max-width: 800px;">{{ 'SettingsIndicatorEdit' | translate }}</p>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Thematics' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Thematics' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="themes" placeholder="{{ 'IndicatorEditionPlaceholder.Thematics' | translate }}" disableOptionCentering panelClass="chipListPanelClass" multiple>
                 <mat-select-trigger>
@@ -26,7 +26,7 @@
         <mat-tab [label]="language | translate" *ngFor="let language of languages">
             <div class="tab-container">
                     <div class="mdm-form-group" formGroupName="name">
-                        <div class="mdm-form-label">{{ 'Name' | translate }} ({{ language | translate }})</div>
+                        <div class="mdm-form-label">{{ 'Name' | translate }}* ({{ language | translate }})</div>
                         <mat-form-field appearance="outline" class="mdm-form-field">
                             <input matInput [formControlName]="language" placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Name : null}}">
                         </mat-form-field>
@@ -43,7 +43,7 @@
     </mat-tab-group>
     <ng-container formGroupName="computation">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
+            <div class="mdm-form-label">{{ 'Computation' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
                 <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
                     <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}

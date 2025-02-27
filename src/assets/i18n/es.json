@@ -76,6 +76,7 @@
   "DataEntryUser": "Entrada de datos",
   "DataSourceCalendarTitle": "Calendario",
   "DataSourceStructureTitle": "Estructura",
+  "DataSourceStructureRequired": "Se requiere como mínimo un dato por fuente de datos",
   "CustomDate" : "Fecha personalizada",
   "SameAsProject": "Igual al proyecto ({{date}})",
   "DataSourceEdit": {
