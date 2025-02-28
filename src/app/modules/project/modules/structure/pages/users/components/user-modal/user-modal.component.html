@@ -2,7 +2,7 @@
 <h2 mat-dialog-title>{{ 'UserEdition' | translate }}</h2>
 <mat-dialog-content *ngIf="userForm" [formGroup]="userForm" class="mdm-dialog">
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Type' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Type' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="type" placeholder="{{ 'Type' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let type of types" [value]="type.value">{{ type.name | translate }}</mat-option>
@@ -12,7 +12,7 @@
     </div>
     <div *ngIf="userForm.value.type === 'internal'">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'User' | translate }}</div>
+            <div class="mdm-form-label">{{ 'User' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <mat-select
                     formControlName="id"
@@ -45,21 +45,21 @@
     </div>
     <div *ngIf="userForm.value.type === 'partner'">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'Login' | translate }}</div>
+            <div class="mdm-form-label">{{ 'Login' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="username" placeholder="{{ 'Login' | translate }}">
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Username' | translate }}</mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'FullName' | translate }}</div>
+            <div class="mdm-form-label">{{ 'FullName' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="name" placeholder="{{ 'FullName' | translate }}">
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Fullname' | translate }}</mat-hint>
             </mat-form-field>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'Password' | translate }}</div>
+            <div class="mdm-form-label">{{ 'Password' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input type="password" matInput formControlName="password" placeholder="{{ 'Password' | translate }}">
                 <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.Password' | translate }}</mat-hint>
@@ -67,7 +67,7 @@
         </div>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Role' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Role' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
               formControlName="role"
@@ -99,14 +99,14 @@
 
     <div *ngIf="userForm.value.role === roles[1].value">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'DataSources' | translate }}</div>
+            <div class="mdm-form-label">{{ 'DataSources' | translate }}*</div>
             <app-data-source-selector
                 [userForm]="userForm"
                 [dataSources]="dataSources"
             ></app-data-source-selector>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}</div>
+            <div class="mdm-form-label">{{ 'CollectionSites' | translate }}*</div>
             <app-collection-sites-selector
                 [form]="userForm"
                 [entities]="availableEntities"

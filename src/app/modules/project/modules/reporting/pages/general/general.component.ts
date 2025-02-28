@@ -80,6 +80,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
     } as InformationItem
   ];
 
+  // TODO: Remove this method if not used
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
   constructor(
     private projectService: ProjectService,
     private indicatorService: IndicatorService,
@@ -319,7 +324,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
               this.project.crossCutting[indicator.id]
             );
             // TODO: choose right language here
-            projectIndicator.display = indicator.name.en;
+            projectIndicator.display = indicator.name[this.currentLang];
             rows.push(projectIndicator);
           } else {
             rows.push(new ProjectIndicator(indicator));
@@ -334,7 +339,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
           rows.push({
             icon: false,
             // TODO: choose right language here
-            groupName: group.theme.name.en,
+            groupName: group.theme.name[this.currentLang],
             sectionId: id,
             level
           });
@@ -346,7 +351,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
                 this.project.crossCutting[indicator.id]
               );
               // TODO: choose right language here
-              projectIndicator.display = indicator.name.en;
+              projectIndicator.display = indicator.name[this.currentLang];
               rows.push(projectIndicator);
             } else {
               rows.push(new ProjectIndicator(indicator));
