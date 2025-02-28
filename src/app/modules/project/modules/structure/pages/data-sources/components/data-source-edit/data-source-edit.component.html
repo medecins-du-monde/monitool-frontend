@@ -2,7 +2,7 @@
     <div class="mdm-title">{{ 'DataSourceCalendarTitle' | translate }}</div>
     <div [formGroup]="dataSourceForm" class="mdm-form">
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+            <div class="mdm-form-label">{{ 'Name' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <input matInput formControlName="name" placeholder="{{ 'DataSourceEdit.AddNamePlaceholder' | translate }}">
                 <mat-hint>
@@ -20,7 +20,7 @@
             </app-collection-sites-selector>
         </div>
         <div class="mdm-form-group">
-            <div class="mdm-form-label">{{ 'Periodicity' | translate }}</div>
+            <div class="mdm-form-label">{{ 'Periodicity' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field">
                 <mat-select formControlName="periodicity" placeholder="{{ 'Periodicity' | translate }}" disableOptionCentering panelClass="myPanelClass" #select>
                     <mat-select-trigger>
@@ -44,7 +44,7 @@
         </div>
         <ng-container *ngIf="this.dataSourceForm.value.periodicity !== 'free'">
             <div class="mdm-form-group date-group">
-                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'StartDate' | translate }}</div>
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'StartDate' | translate }}*</div>
                     <mat-radio-group class="dateGroup" [disabled]="startDateDisabled">
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')" value="false" >{{ 'SameAsProject' | translate : { date: project.start | localizedDate} }}</mat-radio-button>
                         <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="isCustom('start')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
@@ -59,7 +59,7 @@
                     </mat-radio-group>
             </div>
             <div class="mdm-form-group date-group">
-                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'EndDate' | translate }}</div>
+                <div class="mdm-form-label" [style.marginBottom]="isCustom('start') ? '40px' : '20px'">{{ 'EndDate' | translate }}*</div>
                     <mat-radio-group class="dateGroup">
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')" value="false" >{{ 'SameAsProject' | translate : { date: project.end | localizedDate} }}</mat-radio-button>
                         <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="isCustom('end')" value="true" >{{ 'CustomDate' | translate }}</mat-radio-button>
@@ -77,7 +77,10 @@
     </div>
 </div>
 <div class="mdm-section">
-    <div class="mdm-title">{{ 'DataSourceStructureTitle' | translate }}</div>
+    <div class="mdm-title">{{ 'DataSourceStructureTitle' | translate }}*</div>
+    <div class="required-option" *ngIf="elements.controls.length === 0">
+        {{ 'DataSourceStructureRequired' | translate }}
+    </div>
     <div [formGroup]="dataSourceForm">
         <mat-accordion formArrayName="elements" cdkDropList (cdkDropListDropped)="drop($event)" [hideToggle]="true">
             <mat-expansion-panel *ngFor="let element of elements.controls; let i=index" [formGroupName]="i" cdkDrag>

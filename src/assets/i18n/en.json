@@ -92,6 +92,7 @@
       "StartDatePlaceholder": "Same as project's start"
   },
   "DataSourceStructureTitle": "Structure",
+  "DataSourceStructureRequired": "At least one data is required per data source",
   "DataSources": "Data sources",
   "DataSource": "Data source",
   "Date": "Date",

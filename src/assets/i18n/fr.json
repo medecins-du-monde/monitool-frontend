@@ -74,6 +74,7 @@
   "DataEntryUser": "Saisisseur",
   "DataSourceCalendarTitle": "Calendrier",
   "DataSourceStructureTitle": "Structure",
+  "DataSourceStructureRequired": "Au moins une donnée est requise par source de données",
   "CustomDate" : "Date personnalisée",
   "SameAsProject": "Égale au projet ({{date}})",
   "DataSourceEdit": {

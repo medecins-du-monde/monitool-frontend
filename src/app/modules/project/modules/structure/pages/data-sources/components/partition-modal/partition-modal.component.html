@@ -4,7 +4,7 @@
 <h2 mat-dialog-title>{{ 'PartitionEdition' | translate }}</h2>
 <mat-dialog-content [formGroup]="data" class="mdm-dialog partition-dialog">
     <div class="mdm-form-group">
-        <div class="mdm-form-label-edition">{{ 'Name' | translate }}</div>
+        <div class="mdm-form-label-edition">{{ 'Name' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field partition-content">
             <input matInput formControlName="name" placeholder="{{ 'Disaggregation.AddNamePlaceholder' | translate }}">
             <mat-hint>
@@ -22,7 +22,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th class="w-80" mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
+                <th class="w-80" mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}*</th>
                 <td class="w-80" mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput formControlName="name" placeholder="{{ 'Disaggregation.Placeholder.Name' | translate }}">
@@ -54,7 +54,7 @@
         </mat-hint>
     </div>
     <div class="mdm-form-group partition-group">
-        <div class="mdm-form-label-edition">{{ 'Aggregation' | translate }}</div>
+        <div class="mdm-form-label-edition">{{ 'Aggregation' | translate }}*</div>
         <div class="mdm-form-field partition-content">
             <mat-form-field appearance="outline">
                 <mat-select formControlName="aggregation" placeholder="{{ 'MissingComputation' | translate }}"
@@ -88,7 +88,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="name">
-                <th class="w-40" mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}</th>
+                <th class="w-40" mat-header-cell *matHeaderCellDef>{{ 'Name' | translate }}*</th>
                 <td class="w-40" mat-cell *matCellDef="let element; let i=index" id="name" [formGroupName]="i">
                     <mat-form-field appearance="outline" class="mdm-form-field">
                         <input matInput formControlName="name" placeholder="{{ 'Name' | translate }}">
