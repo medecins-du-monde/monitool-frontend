@@ -21,7 +21,8 @@ export class ExtraIndicatorComponent {
     return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
   }
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) {
+  }
 
   onEdit() {
     this.edit.emit();
