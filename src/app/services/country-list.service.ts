@@ -48,8 +48,23 @@ export class CountryListService {
     return this.continents[key];
   }
 
-  public getContinents(): any[] {
-    return this.continentArray;
+  public getContinents(searchKey = ""): any[] {
+    if (searchKey !== "") {
+      searchKey = searchKey.toLowerCase();
+      const filteredContinents = [];
+      for (const continent of this.continentArray) {
+        for (const lang of ['en', 'es', 'fr']) {
+          const name = continent[lang];
+          if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
+            filteredContinents.push(continent);
+            break;
+          }
+        }
+      }
+      return filteredContinents;
+    } else {
+      return this.continentArray;
+    }
   }
 
   public getCountriesByContinent(searchKey = "", selectedCountries: string[] = []): any {
