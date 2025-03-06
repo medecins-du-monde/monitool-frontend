@@ -33,5 +33,40 @@
         min-width: none;
       }
     }
+
+    .select {
+      width: 100%;
+    }
+  }
+}
+
+.select {
+  border: solid 1px rgba(0, 0, 0, 0.12);
+  background-color: #e9e9e9;
+  border-radius: 4px;
+  height: 41px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  width: 200px;
+
+  .mat-select-placeholder {
+    color: unset !important;
+  }
+
+  &::placeholder {
+    color: #656565;
+  }
+}
+
+.select-options {
+  display: flex;
+  // justify-content: flex-end;
+  padding: 8px 16px;
+  gap: 12px;
+  width: 305px;
+
+  & > * {
+    line-height: 24px;
   }
 }

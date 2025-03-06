@@ -5,11 +5,11 @@
 <div [formGroup]="crossCuttingForm">
   <div formArrayName="groupsArray">
     <div *ngFor="let group of groupsArray.controls; let groupNumber=index" class="mdm-section">
-        <div class="mdm-title">{{ group.value.theme.name.en }}</div>
+        <div class="mdm-title">{{ group.value.theme.name[currentLang] }}</div>
         <div [formGroupName]="groupNumber">
           <div class="indicators-list" formArrayName="indicators">
             <div class="mdm-cards">
-              <ng-container class="mdm-card"  *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
+              <ng-container class="mdm-card" *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
                 <app-extra-indicator
                   class="mdm-card"
                   [extraIndicator]="indicator.value"

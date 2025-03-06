@@ -5,6 +5,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 const GRAPH_PADDING = {x: 5, y: 5};
@@ -56,7 +57,12 @@ export class DataflowComponent implements OnInit, OnDestroy {
 
   private graphTree: GraphTreeItemArray = {};
 
-  constructor(private projectService: ProjectService) { }
+  // TODO: Remove this method if not used
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  constructor(private projectService: ProjectService, private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.subscription.add(
@@ -183,7 +189,7 @@ export class DataflowComponent implements OnInit, OnDestroy {
       const result: GraphTreeItemArray = {};
       for (const indicator of indicators) {
         result[`indicator-${indicator.id}`] = {
-          name: indicator.display || indicator.id,
+          name: indicator.display[this.currentLang] || indicator.display || indicator.id,
           linksFrom: Object.keys(indicator.computation.parameters)
             .map(key => `data-${indicator.computation.parameters[key].elementId}`)
         }

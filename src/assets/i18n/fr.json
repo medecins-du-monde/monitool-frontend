@@ -74,6 +74,7 @@
   "DataEntryUser": "Saisisseur",
   "DataSourceCalendarTitle": "Calendrier",
   "DataSourceStructureTitle": "Structure",
+  "DataSourceStructureRequired": "Au moins une donnée est requise par source de données",
   "CustomDate" : "Date personnalisée",
   "SameAsProject": "Égale au projet ({{date}})",
   "DataSourceEdit": {
@@ -149,7 +150,10 @@
           "quarter": "Tous les trimestres",
           "semester": "Tous les semestres",
           "year": "Tous les ans",
-          "free": "Libre"
+          "free": "Libre",
+          "Tooltip": {
+            "free": "Pas de fréquence de saisie régulière. Exemple : données issues d'une étude ponctuelle, d'une clinique mobile qui ne travaille pas à jour fixe (zone de conflit, etc.)"
+          }
       },
       "Computation":{
           "unavailable": "Il n'est pas possible de calculer cet indicateur",
@@ -574,7 +578,9 @@
         "Refresh": "Qu’est-ce que le cache et comment puis-je le rafraîchir à tout moment?",
         "RefreshButton": "Rafraîchir cache",
         "Point3": "Si cela ne fonctionne toujours pas contacter l'équipe support:"
-        }
+    },
+    "New_users_access": "Comment accorder l'accès à un nouvel utilisateur sur Monitool ?",
+    "New_users_access_response": "<ol><li><b>Première connexion de l'utilisateur :</b><ul><li>Le nouvel utilisateur doit se connecter au moins une fois à Monitool en utilisant son identifiant Microsoft (le même identifiant et mot de passe que pour l’accès à Outlook).</li></ul></li><li><b>Ajout par l'propriétaire :</b><ul><li>Après cette première connexion, le nom de l'utilisateur apparaîtra dans la liste des utilisateurs MdM.</li><li>L'propriétaire peut alors accéder à la section : <b>Structure > Utilisateur > Ajouter un utilisateur</b></li><li>Dans la zone \"Sélectionner un utilisateur MdM\", rechercher le nom de l'utilisateur et l'ajouter au projet souhaité.</li></ul></li></ol><br><i>Note: Sans cette première connexion à Monitool, l'utilisateur n'apparaîtra pas dans la liste des utilisateurs disponibles à sélectionner.</i>"
   },
   "Informations": {
       "Cache": {
@@ -647,6 +653,11 @@
           "Country": "Sélectionnez un pays",
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
           "Thematics": "ex: Soins de santé primaire"
+      },
+      "Filter" : {
+        "Continent": "Filtrer par continent",
+        "Country": "Filtrer par pays",
+        "Clear": "Effacer la sélection"
       },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
@@ -838,7 +849,7 @@
           "Password": "Le mot de passe doit avoir 6 caractères au minimum. Ne pas utiliser la même valeur que l'identifiant",
           "UserSearch": {
             "Placeholder": "Sélectionner un utilisateur",
-            "NoMatches": "Aucun résultat trouvé"
+            "NoMatches": "Aucun résultat trouvé, assurez-vous que l'utilisateur que vous recherchez s'est connecté à Monitool au moins une fois."
           }
       }
   },
@@ -1054,7 +1065,25 @@
         "diarrhea": "Diarrhée"
     }
   },
-  "crossCutting-details": "Détails de l'indecateur transversaux",
-  "logicalFrame-details": "Détails du cadre logique",
-  "form-details": "Détails de la source de données"
+  "report-details": {
+    "title": {
+        "crossCutting": "Détails de l'indecateur transversaux",
+        "logicalFrame": "Détails du cadre logique",
+        "form": "Détails de la source de données",
+        "extraIndicator": "Détails de l'indicateurs annexé",
+        "formData": "Détails de la donnée",
+        "logicalFrameIndicator": "Détails de l'indecateur du cadre logique",
+        "formDataDisag": "Détails de la désagrégation"
+    },
+    "formula": "Formule",
+    "disagFrom": "Désagrégée de",
+    "dataAg": "Agrégation de données",
+    "timeAg": "Agrégation par temps",
+    "siteAg": "Agrégation par localisation"
+  },
+  "alert-date-report": {
+    "title": "L'intervalle de dates est trop long",
+    "content": "L'intervalle de dates sélectionné dépasse un an. Pour garantir une bonne performance de la page, il sera réduit à un an. Vous pouvez revenir en arrière à partir des filtres, mais sachez que la page risque de ne plus répondre."
+  },
+  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données"
 }

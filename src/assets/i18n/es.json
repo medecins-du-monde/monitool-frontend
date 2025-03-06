@@ -76,6 +76,7 @@
   "DataEntryUser": "Entrada de datos",
   "DataSourceCalendarTitle": "Calendario",
   "DataSourceStructureTitle": "Estructura",
+  "DataSourceStructureRequired": "Se requiere como mínimo un dato por fuente de datos",
   "CustomDate" : "Fecha personalizada",
   "SameAsProject": "Igual al proyecto ({{date}})",
   "DataSourceEdit": {
@@ -152,7 +153,10 @@
           "quarter": "Cada trimestre",
           "semester": "Cada semestre",
           "year": "Cada año",
-          "free": "Libre"
+          "free": "Libre",
+          "Tooltip": {
+            "free": "No hay una frecuencia regular de entrada de datos. Ejemplo : datos de un estudio puntual, de una clínica móvil que no funciona en un día fijo (zona de conflicto, etc.)"
+          }
       },
       "Computation":{
           "unavailable": "No es posible calcular este indicador",
@@ -539,7 +543,7 @@
       "General_reporting_question8": "¿Por qué algunos datos se muestran en <i> cursiva </i>?",
       "General_reporting_response8": "Los datos que se muestran en <i> cursiva </i> solo han sido introducido parcialmente. La mayoría de las veces, esto significa que solo se han ingresado algunas de las ubicaciones de recolección esperadas. El caso también puede ocurrir si consulta una versión agregada (por ejemplo, por trimestre) de los datos recopilados con una periodicidad más corta (por ejemplo, por mes) y no se han ingresado todos los meses que componen el trimestre considerado. <br> Desagregando la línea con el botón '+', podra identificar fácilmente las entradas que faltan.",
       "General_reporting_question9": "¿Cómo puedo añadir un comentario?",
-      "General_reporting_response9": "<ul style='margin: 0; padding-left: 20px'><li>Los comentarios permiten al personal de entrada de datos proporcionar información adicional que puede ser relevante para el análisis de datos. Los analistas también pueden utilizar comentarios para hacer anotaciones.</li><li>Este texto es visible para todos, por lo que permite que las personas más cercanas a las actividades contribuyan al análisis, que sera centralizado por los coordinadores del proyecto.</li><li>Simplemente haga clic derecho en la celda deseada y añada el texto. No olvide guardar.</li><li>Debe tener el rol de propietario o de entrada de datos. Consulte la sección ROLES DE USUARIO para un PROYECTO en este FAQ.</li></ul>",
+      "General_reporting_response9": "<ul><li>Los comentarios permiten al personal de entrada de datos proporcionar información adicional que puede ser relevante para el análisis de datos. Los analistas también pueden utilizar comentarios para hacer anotaciones.</li><li>Este texto es visible para todos, por lo que permite que las personas más cercanas a las actividades contribuyan al análisis, que sera centralizado por los coordinadores del proyecto.</li><li>Simplemente haga clic derecho en la celda deseada y añada el texto. No olvide guardar.</li><li>Debe tener el rol de propietario o de entrada de datos. Consulte la sección ROLES DE USUARIO para un PROYECTO en este FAQ.</li></ul>",
       "History": "Histórico",
       "History_description": "El historial de modificaciones le permite consultar la lista de modificaciones realizadas a la estructura de su proyecto.",
       "History_question1": "Algunas modificaciones a la estructura del proyecto las realiza un usuario que no debería tener acceso a ellas.",
@@ -580,7 +584,9 @@
         "Refresh": "¿Qué es el cache y cómo puedo refrescarlo en cualquier momento?",
         "RefreshButton": "Refrescar cache",
         "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica:"
-        }
+      },
+      "New_users_access": "¿Cómo dar acceso a un nuevo usuario en Monitool?",
+      "New_users_access_response": "<ol><li><b>Primera conexión del usuario:</b><ul><li>El nuevo usuario debe iniciar sesión al menos una vez en Monitool usando su identificador de Microsoft (el mismo nombre de usuario y contraseña que para acceder a Outlook).</li></ul></li><li><b>Adición por parte del propietario:</b><ul><li>Después de esta primera conexión, el nombre del usuario aparecerá en la lista de usuarios de MdM.</li><li>El propietario puede entonces acceder a la sección: <b>Estructura > Usuario > Añadir un usuario</b></li><li>En el campo \"Seleccionar un usuario de MdM\", buscar el nombre del usuario y añadirlo al proyecto deseado.</li></ul></li></ol><br><i>Nota: Sin este primer inicio de sesión en Monitool, el usuario no aparecerá en la lista de usuarios disponibles para ser seleccionado.</i>"
     },
     "Informations": {
         "Cache": {
@@ -653,6 +659,11 @@
           "Country": "Seleccione un país",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
           "Thematics": "Seleccione uno o varios Combates Políticos"
+      },
+      "Filter" : {
+        "Continent": "Filtrar por continente",
+        "Country": "Filtrar por país",
+        "Clear": "Deseleccionar todo"
       },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
@@ -843,7 +854,7 @@
           "Password": "La contraseña debe ser al menos 6 letras. No use el mismo valor que el nombre de usuario",
           "UserSearch": {
             "Placeholder": "Selecciona un usuario",
-            "NoMatches": "No se han encontrado resultados"
+            "NoMatches": "No se han encontrado resultados, asegúrese de que el usuario que está buscando haya iniciado sesión en Monitool al menos una vez."
           }
       }
   },
@@ -1055,7 +1066,25 @@
         "diarrhea": "Diarrea"
     }
   },
-  "crossCutting-details": "Detalles del indicador transversal",
-  "logicalFrame-details": "Detalles del marco lógico",
-  "form-details": "Detalles de la fuente de datos"
+  "report-details": {
+    "title": {
+        "crossCutting": "Detalles del indicador transversal",
+        "logicalFrame": "Detalles del marco lógico",
+        "form": "Detalles de la fuente de datos",
+        "extraIndicator": "Detalles del indicador adicional",
+        "formData": "Detalles del dato",
+        "logicalFrameIndicator": "Detalles del indicador del marco lógico",
+        "formDataDisag": "Detalles de la desagregación"
+    },
+    "formula": "Formula",
+    "disagFrom": "Desagregado de",
+    "dataAg": "Agregación de los datos",
+    "timeAg": "Agregación por tiempo",
+    "siteAg": "Agregación por lugar"
+  },
+  "alert-date-report": {
+    "title": "El rango de fechas es muy largo",
+    "content": "El rango de fechas seleccionado excede un año, para asegurar el buen rendimiento de la pagina el rango se va a reducir a un año. Puedes revertir esto desde los filtros, pero tenga en cuenta que la pagina podria presentar problemas de rendimiento."
+  },
+  "no-report-data": "No se puede descargar el informe si no hay ningún dato"
 }

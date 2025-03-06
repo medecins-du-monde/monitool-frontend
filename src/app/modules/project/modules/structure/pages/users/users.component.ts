@@ -22,6 +22,11 @@ export class UsersComponent implements OnInit {
       res2: 'InformationPanel.User_list_description'
     } as InformationItem,
     {
+      res1: 'InformationPanel.New_users_access',
+      res2: 'InformationPanel.New_users_access_response',
+      new: true
+    } as InformationItem,
+    {
       res1: 'InformationPanel.General_Naming_convention_question',
       res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,

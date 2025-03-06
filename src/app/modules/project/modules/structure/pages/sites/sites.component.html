@@ -19,7 +19,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell class="column-title" *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}</th>
+            <th mat-header-cell class="column-title" *matHeaderCellDef>{{ 'CollectionSiteName' | translate }}*</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <input
@@ -36,7 +36,7 @@
         <ng-container matColumnDef="start">
             <th mat-header-cell *matHeaderCellDef class="dateHeader">
                 <div class="headerTitle">
-                    {{ 'SpecificStartDate' | translate }}
+                    {{ 'SpecificStartDate' | translate }}*
                 </div>
                 <div>
                     <mat-hint>
@@ -50,7 +50,7 @@
                       matInput
                       [matDatepicker]="startPicker"
                       formControlName="start"
-                      placeholder="{{ 'StartDate' | translate }}"
+                      placeholder="{{ 'StartDate' | translate }}*"
                       [ngStyle]="{
                         'font-weight': (sameDay(project.start, element.value.start)) ? '' : 'bold',
                         'color': (element.value.end < today) ? 'red' : ''
@@ -131,7 +131,7 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'GroupName' | translate }}*</th>
             <td mat-cell *matCellDef="let element; let index = index" id="name" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <input matInput formControlName="name" placeholder="{{ 'Placeholder.Sites.NameGroup' | translate }}">
@@ -140,7 +140,7 @@
         </ng-container>
 
         <ng-container matColumnDef="sites">
-            <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef>{{ 'Members' | translate }}*</th>
             <td mat-cell *matCellDef="let element; let index = index" id="sites" [formGroupName]="index">
                 <mat-form-field appearance="outline" class="mdm-form-field chip-list">
                     <mat-select formControlName="members" placeholder="{{ 'CollectionSites' | translate }}" multiple disableOptionCentering panelClass="basicsChipListPanelClass">

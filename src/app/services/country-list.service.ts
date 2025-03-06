@@ -34,26 +34,76 @@ export class CountryListService {
   }
 
   public getCountry(key: string): any {
-    return this.countries[key];
+    if (this.countries[key]) {
+      const country = {...this.countries[key]};
+      for (const lang of ['en', 'es', 'fr']) {
+        if (typeof country[lang] !== 'string') {
+          country[lang] = country[lang][0];
+        }
+      }
+      return country;
+    }
   }
   public getContinent(key: string): any {
     return this.continents[key];
   }
 
-  public getContinents(): any[] {
-    return this.continentArray;
+  public getContinents(searchKey = ""): any[] {
+    if (searchKey !== "") {
+      searchKey = searchKey.toLowerCase();
+      const filteredContinents = [];
+      for (const continent of this.continentArray) {
+        for (const lang of ['en', 'es', 'fr']) {
+          const name = continent[lang];
+          if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
+            filteredContinents.push(continent);
+            break;
+          }
+        }
+      }
+      return filteredContinents;
+    } else {
+      return this.continentArray;
+    }
   }
 
-  public getCountries(quantity?: number, continent?: string, searchKey = "", selectedCountry?: string): any[] {
+  public getCountriesByContinent(searchKey = "", selectedCountries: string[] = []): any {
+    // let availableCountries = [];
+    const result = [];
+
+    for (const continent of Object.keys(this.countriesByContinent)) {
+      const matchingCountries = [];
+      for (const country of Object.keys(this.countriesByContinent[continent])) {
+        if (country.includes(searchKey) || selectedCountries.includes(country)) {
+          matchingCountries.push({...this.countriesByContinent[continent][country], key: country});
+          continue;
+        }
+        for (const lang of ['en', 'es', 'fr']) {
+          const name = this.countriesByContinent[continent][country][lang];
+          if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
+            matchingCountries.push({...this.countriesByContinent[continent][country], key: country});
+            break;
+          }
+        }
+      }
+      if (matchingCountries.length > 0) {
+        result.push({...this.continents[continent], key: continent, countries: matchingCountries})
+      }
+    }
+    return result;
+  }
+
+  public getCountries(quantity?: number, continents: string[] = [], searchKey = "", selectedCountries: string[] = []): any[] {
     searchKey = searchKey.toLowerCase();
     let availableCountries = this.countries;
-    if (continent && this.countriesByContinent[continent]) {
-      availableCountries = this.countriesByContinent[continent];
+    if (continents.length > 0) {
+      availableCountries = {};
+      continents.forEach(key => {availableCountries = {...availableCountries, ...this.countriesByContinent[key]}});
     }
     const filteredList = [];
 
-    if (selectedCountry) {
-      filteredList.push({...this.countries[selectedCountry], key: selectedCountry});
+    if (selectedCountries.length > 0) {
+      selectedCountries.forEach(key => {filteredList.push({...this.countries[key], key: key})})
     }
 
     for (const [index, value] of Object.keys(availableCountries).entries()) {
@@ -67,11 +117,14 @@ export class CountryListService {
       for (const lang of ['en', 'es', 'fr']) {
         const name = availableCountries[value][lang];
         if (typeof name === 'string' ? name.toLowerCase().includes(searchKey) : name.find(val => val.toLowerCase().includes(searchKey))) {
+          if (typeof name !== 'string') {
+            availableCountries[value][lang] = name[0];
+          }
           toBeIncluded = true;
           break;
         }
       }
-      if (toBeIncluded && value !== selectedCountry) {
+      if (toBeIncluded && !selectedCountries.includes(value)) {
         filteredList.push({...availableCountries[value], key: value});
       }
     }

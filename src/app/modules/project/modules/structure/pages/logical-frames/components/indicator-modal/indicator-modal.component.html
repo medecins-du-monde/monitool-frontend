@@ -13,7 +13,7 @@
         ></label>
     </div>
     <div *ngIf="!data.indicator.value.crossCutting" class="mdm-form-group indicator-modal">
-        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Name' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <input matInput formControlName="display" placeholder="{{ 'Placeholder.LogicalFrameIndicator.Name' | translate }}">
             <mat-hint>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="mdm-form-group indicator-modal">
-        <div class="mdm-form-label">{{ 'Computation' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Computation' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
             <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}

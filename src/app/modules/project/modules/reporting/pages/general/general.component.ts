@@ -15,6 +15,7 @@ import { Theme } from 'src/app/models/classes/theme.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { Entity } from 'src/app/models/classes/entity.model';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {
   CommentService,
   Comment,
@@ -22,6 +23,7 @@ import {
   findContentIndexByFilter
 } from 'src/app/services/comment.service';
 import { skip } from 'rxjs/operators';
+import { AlertAutoDateChangeComponent } from './alert-auto-date-change/alert-auto-date-change.component';
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -78,13 +80,19 @@ export class GeneralComponent implements OnInit, OnDestroy {
     } as InformationItem
   ];
 
+  // TODO: Remove this method if not used
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
   constructor(
     private projectService: ProjectService,
     private indicatorService: IndicatorService,
     private themeService: ThemeService,
     private chartService: ChartService,
     private translateService: TranslateService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private dialog: MatDialog,
   ) {}
 
   project: Project;
@@ -113,6 +121,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
   showComments = true;
   userIsAdmin = false;
+
+  updatedFilterDate?: Date;
+  updatedDimension?: string;
 
   private subscription: Subscription = new Subscription();
 
@@ -313,7 +324,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
               this.project.crossCutting[indicator.id]
             );
             // TODO: choose right language here
-            projectIndicator.display = indicator.name.en;
+            projectIndicator.display = indicator.name[this.currentLang];
             rows.push(projectIndicator);
           } else {
             rows.push(new ProjectIndicator(indicator));
@@ -328,7 +339,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
           rows.push({
             icon: false,
             // TODO: choose right language here
-            groupName: group.theme.name.en,
+            groupName: group.theme.name[this.currentLang],
             sectionId: id,
             level
           });
@@ -340,7 +351,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
                 this.project.crossCutting[indicator.id]
               );
               // TODO: choose right language here
-              projectIndicator.display = indicator.name.en;
+              projectIndicator.display = indicator.name[this.currentLang];
               rows.push(projectIndicator);
             } else {
               rows.push(new ProjectIndicator(indicator));
@@ -498,7 +509,30 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   receiveDimension(value): void {
-    this.dimensionIds.next(value);
+    if (value === 'day') {
+      const start = new Date(this.filter.value._start);
+      let end = new Date(this.filter.value._end);
+      if (end.getFullYear() - start.getFullYear() > 1) {
+        const dialogRef = this.dialog.open(AlertAutoDateChangeComponent);
+        const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            end = new Date(start);
+            end.setFullYear(start.getFullYear() + 1);
+            this.updatedFilterDate = end;
+            this.dimensionIds.next(value);
+          } else {
+            console.log(this.dimensionIds.value);
+            this.updatedDimension = this.dimensionIds.value;
+            return;
+          }
+          dialogSubscription.unsubscribe();
+        });
+      } else {
+        this.dimensionIds.next(value);
+      }
+    } else {
+      this.dimensionIds.next(value);
+    }
   }
 
   updateBreadcrumbs(project: Project): void {

@@ -17,6 +17,7 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
 import { InformationsPanelModule } from 'src/app/components/informations-panel/informations-panel.module';
 import { MatLegacyPaginatorIntl as MatPaginatorIntl, MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { PaginatorI18n } from 'src/app/utils/paginator-I18n';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [ProjectsComponent],
@@ -37,7 +38,8 @@ import { PaginatorI18n } from 'src/app/utils/paginator-I18n';
         SearchbarModule,
         ProjectModule,
         InformationsPanelModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatCheckboxModule
     ],
     providers: [
       {

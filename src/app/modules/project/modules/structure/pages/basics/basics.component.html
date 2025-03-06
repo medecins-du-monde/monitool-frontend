@@ -1,6 +1,6 @@
 <div [formGroup]="basicsForm" class="mdm-form">
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Continent' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Continent' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="continent" placeholder="{{ 'Placeholder.Basic.Continent' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option *ngFor="let continent of continentList" [value]="continent.key">{{ continent[currentLang] }}
@@ -12,7 +12,7 @@
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Country' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Country' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
                 formControlName="country"
@@ -49,7 +49,7 @@
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Name' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Name' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <input matInput formControlName="name" placeholder="{{ 'Placeholder.Basic.Name' | translate }}">
             <mat-hint>
@@ -79,8 +79,8 @@
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'StartDate' | translate }}</div>
-        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
+        <div class="mdm-form-label">{{ 'StartDate' | translate }}*</div>
+        <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field" [class.custom-disabled]="startDateDisabled">
             <input matInput [matDatepicker]="startPicker" formControlName="start"
                 placeholder="{{ 'StartDate' | translate }}">
             <mat-datepicker-toggle matPrefix [for]="startPicker"></mat-datepicker-toggle>
@@ -91,7 +91,7 @@
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'EndDate' | translate }}</div>
+        <div class="mdm-form-label">{{ 'EndDate' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field calendar-form-field">
             <input matInput [matDatepicker]="endPicker" formControlName="end"
                 placeholder="{{ 'EndDate' | translate }}">
@@ -103,7 +103,7 @@
         </mat-form-field>
     </div>
     <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Visibility' | translate }}</div>
+        <div class="mdm-form-label">{{ 'Visibility' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select formControlName="visibility" placeholder="{{ 'Visibility' | translate }}" disableOptionCentering panelClass="myPanelClass">
                 <mat-option value="private">{{ 'VisibilityPrivate' | translate }}

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Input, Output, OnDestroy} from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, OnDestroy, Renderer2, OnChanges, SimpleChanges} from '@angular/core';
 import {  UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
@@ -11,6 +11,8 @@ import { DateService} from 'src/app/services/date.service';
 import { Group } from 'src/app/models/classes/group.model';
 import _ from 'lodash';
 import DatesHelper from 'src/app/utils/dates-helper';
+import { CountryListService } from 'src/app/services/country-list.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 export interface Filter{
@@ -18,6 +20,8 @@ export interface Filter{
   _end: Date;
   entities?: string[];
   finished?: boolean;
+  countries?: string[];
+  continents?: string[];
 }
 
 @Component({
@@ -38,7 +42,7 @@ export interface Filter{
     }
   ]
 })
-export class FilterComponent implements OnInit, OnDestroy{
+export class FilterComponent implements OnInit, OnChanges, OnDestroy{
 
   collapsed = true;
 
@@ -51,6 +55,7 @@ export class FilterComponent implements OnInit, OnDestroy{
   @Input() project: Project;
   @Input() showComments = false;
   @Input() userIsAdmin = false;
+  @Input() filterEnd?: Date; // used to auto adjust based on periodicity;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
   @Output() showCommentsChange = new EventEmitter<boolean>();
 
@@ -58,11 +63,23 @@ export class FilterComponent implements OnInit, OnDestroy{
   entities: Entity[];
   groups: Group[];
 
+  get currentLang(): string{
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
+
+  public filteredCountryList: any[];
+  public get continentList() {
+    return this.countryListService.getContinents();
+  }
+
   constructor(
     private fb: UntypedFormBuilder,
     private projectService: ProjectService,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
+    private countryListService: CountryListService,
+    private translateService: TranslateService,
+    private renderer: Renderer2
   ) { }
 
   onEntityRemoved(entity: Entity): void {
@@ -88,10 +105,13 @@ export class FilterComponent implements OnInit, OnDestroy{
     let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
 
     if (this.isCrossCuttingReport){
+      this.filteredCountryList = this.countryListService.getCountries();
       this.filterForm = this.fb.group({
         _start: [startDate, Validators.required],
         _end: [endDate, Validators.required],
-        finished: [false, Validators.required],
+        finished: [true, Validators.required],
+        countries: [[]],
+        continents: [[]],
       });
       this.filterEvent.emit(this.filterForm.value);
 
@@ -141,6 +161,39 @@ export class FilterComponent implements OnInit, OnDestroy{
       );
     }
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.filterEnd && changes.filterEnd.currentValue !== changes.filterEnd.previousValue) {
+      this.filterForm.patchValue({_end: changes.filterEnd.currentValue})
+    }
+  }
+
+  onSearchCountry(value = '') {
+    this.filteredCountryList = this.countryListService.getCountries(null, this.filterForm.get('continents').value, value.toLowerCase(), this.filterForm.get('countries').value);
+  }
+
+  resetCountryInput(event: boolean, element: HTMLElement) {
+    if (!event) {
+      this.renderer.setProperty(element, 'value', '');
+      this.onSearchCountry('');
+    }
+  }
+
+  resetCountrySearch(event: boolean) {
+    if (event) return;
+    const continents = this.filterForm.get('continents').value;
+    const countries = this.filterForm.get('countries').value;
+    if (continents.length > 0 && countries.length > 0) {
+      const newCountries: string[] = [];
+      countries.forEach(key => {
+        if (continents.includes(this.countryListService.getCountry(key).continent)) {
+          newCountries.push(key);
+        }
+      })
+      this.filterForm.get('countries').patchValue(newCountries);
+    }
+    this.onSearchCountry();
   }
 
   ngOnDestroy(): void{

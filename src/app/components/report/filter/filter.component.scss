@@ -48,13 +48,27 @@ app-collection-sites-selector {
   flex: 1;
   display: flex;
 }
+
 .finished-projects {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
-  width: 300px;
-  .mdm-form-label {
-    flex: 0.7;
+  margin-bottom: 16px;
+}
+
+.mdm-form-label {
+  min-width: 200px;
+  flex: none;
+}
+
+.select-options {
+  display: flex;
+  // justify-content: flex-end; 
+  padding: 8px 16px;
+  gap: 12px;
+  width: 305px;
+
+  & > * {
+    height: 24px;
   }
 }

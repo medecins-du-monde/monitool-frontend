@@ -124,12 +124,12 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
           this.multiThemesIndicators = [];
           // Adding the indicators not initialized yet
           indicators.map(indicator => {
-            const indicatorFound  = listOldCrossCutting.find(x => x.id === indicator.id);
+            const indicatorFound = listOldCrossCutting.find(x => x.id === indicator.id);
             if (indicatorFound) {
             // Filling all data coming from the indicator configuration
               indicatorFound.themes = indicator.themes;
               // TODO: Filling it with the name in the right language
-              indicatorFound.display = indicator.name.en;
+              indicatorFound.display = indicator.name;
               indicatorFound.description = indicator.description;
               indicatorFound.configured = true;
               this.indicators.push(new CCProjectIndicator(indicatorFound));

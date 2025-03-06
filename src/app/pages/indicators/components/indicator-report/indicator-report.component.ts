@@ -36,6 +36,8 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   dimensionIds = new BehaviorSubject('');
 
   tableContent = new BehaviorSubject<any[]>([]);
+
+  tableHasData = false;
   
   breadCrumbs: BreadcrumbItem[] = [
     {

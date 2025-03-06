@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/classes/user.model';
+import InformationItem from 'src/app/models/interfaces/information-item';
+import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,6 +12,17 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, OnDestroy {
+  informations: InformationItem[] = [
+    {
+      res1: 'InformationPanel.User_list',
+      res2: ''
+    },
+    {
+      res1: 'InformationPanel.New_users_access',
+      res2: 'InformationPanel.New_users_access_response',
+      new: true
+    }
+  ]
   users: User[];
   filteredUsers: User[];
 
@@ -24,9 +37,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   totalItem = 0;
   shownUsers: User[];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private projectService: ProjectService) {}
 
   ngOnInit(): void {
+    this.projectService.updateInformationPanel(this.informations);
     this.userService.list();
     this.subscriptions.push(
       this.userService.userList.subscribe((users: User[]) => {

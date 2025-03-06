@@ -21,7 +21,7 @@ export class ProjectIndicator implements Deserializable {
   crossCutting = false;
   id: string;
   description: MultiLanguage;
-  display: string;
+  display: string | MultiLanguage;
   baseline: number;
   target: number;
   colorize: boolean;
@@ -54,7 +54,7 @@ export class ProjectIndicator implements Deserializable {
 
   deserialize(input: any): this {
     Object.assign(this, input);
-    this.display = input ? input.display || (input.name ? input.name.en : null) : null;
+    this.display = input ? input.display || input.name : null;
     this.id = (input && input.id) ? input.id : uuid();
 
     /*If at least one of the baseline and target is null,

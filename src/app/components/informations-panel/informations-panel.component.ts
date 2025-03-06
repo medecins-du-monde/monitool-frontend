@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'app-informations-panel',
   templateUrl: './informations-panel.component.html',
   styleUrls: ['./informations-panel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class InformationsPanelComponent implements OnInit, OnDestroy {
 

@@ -1281,3 +1281,26 @@ code.title{
       height: 200px !important;
     }
 }
+
+.custom-disabled {
+    pointer-events: none;
+
+    mat-datepicker-toggle {
+        pointer-events: none;
+    }
+
+    .mat-form-field-flex {
+        opacity: .4;
+    }
+}
+
+.white-bg-tooltip {
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+
+  & > div {
+    max-width: 50vw;
+    width: 500px;
+  }
+}

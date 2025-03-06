@@ -44,7 +44,7 @@
           <div>
             {{ element.name }}
           </div>
-          <mat-icon class="details-icon" *ngIf="shouldShowDetails(element, false)" (click)="showDetails($event, element)">info</mat-icon>
+          <mat-icon class="details-icon" *ngIf="shouldShowDetails(element, false)" (click)="showDetails($event, element, true)">info</mat-icon>
           <app-reporting-menu
             [indicator]="element"
             [dimensionName]="dimensionIds.value"

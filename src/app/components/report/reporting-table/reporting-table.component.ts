@@ -112,6 +112,8 @@ export class ReportingTableComponent
   @Input() showComments;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
+  @Output() reportHasDataChange = new EventEmitter<boolean>();
+
   rows = new BehaviorSubject<Row[]>([]);
 
   logFrameEntities = [];
@@ -325,14 +327,19 @@ export class ReportingTableComponent
           if (this.openedSections[row.sectionId]) {
             if (this.isInfoRow(0, row)) {
               if (row.originProject) {
-                if (this.filter.value.finished) {
-                  return (
-                    row.originProject.status === 'Ongoing' ||
-                    row.originProject.status === 'Finished'
-                  );
-                } else {
-                  return row.originProject.status === 'Ongoing';
+                let filterResult = true;
+                const filterValue = this.filter.value;
+
+                if (!filterValue.finished) {
+                  filterResult = row.originProject.status === 'Ongoing';
                 }
+                if (filterResult && filterValue.continents.length > 0) {
+                  filterResult = filterValue.continents.includes(row.originProject.continent);
+                }
+                if (filterResult && filterValue.countries.length > 0) {
+                  filterResult = filterValue.countries.includes(row.originProject.country);
+                }
+                return filterResult;
               }
             }
             return true;
@@ -343,6 +350,17 @@ export class ReportingTableComponent
         this.dataSource = new MatTableDataSource(filteredRows);
         if (value.length > 0) {
           this.changeDetectorRef.detectChanges();
+          let reportHasData = false;
+          for (const row of filteredRows) {
+            if ((row as any).dataset && Object.keys((row as any).dataset).length > 0) {
+              console.log((row as any).dataset)
+              reportHasData = true;
+              break;
+            }
+          }
+          this.reportHasDataChange.emit(reportHasData);
+        } else {
+          this.reportHasDataChange.emit(false);
         }
       })
     );
@@ -1484,7 +1502,9 @@ export class ReportingTableComponent
       'form'
     ];
     const noSectionIdList = [
-      'indicator'
+      'indicator',
+      'logicalFrame',
+      'form'
     ]
     if (!this.isCrossCuttingReport && element.commentInfo) {
       if (isSection) {
@@ -1493,39 +1513,68 @@ export class ReportingTableComponent
             return true;
         }
       } else {
-        if (this.project.crossCutting[element.commentInfo.path]) {
-          return true
+        for (const title of noSectionIdList) {
+          if (element.commentInfo.path.startsWith(title)) {
+            if (!(element.disaggregatedBy && Object.keys(element.disaggregatedBy).length > 0)) {
+              return true;
+            } else if (element.commentInfo.path.startsWith('form') && !(element.disaggregatedBy.group || element.disaggregatedBy.entity)) {
+              return true;
+            }
+          }
         }
-        // return true
-        // for (const title of noSectionIdList) {
-        //   if (element.commentInfo.path.startsWith(title))
-        //     return true;
-        // }
       }
     }
     return false;
   }
 
-  public showDetails(event: Event, element: any) {
+  private elementFromPath(path: string): any {
+    const parsedPath = path.split('|').map(section => section.split(':'));
+    let element = this.project;
+    parsedPath.forEach(section => {
+      element = element[section[0] + 's'].find(el => el.id === section[1]);
+    })
+    return element;
+  }
+
+  public showDetails(event: Event, element: any, indicator = false) {
     event.stopPropagation();
     let data = undefined;
 
     if (element.commentInfo) {
       if (element.commentInfo.path.startsWith('logicalFrame')) {
-        data = {
-          type: 'logicalFrame',
-          details: this.project.logicalFrames[element.sectionId - 1]
-        };
+        if (!indicator) {
+          data = {
+            type: 'logicalFrame',
+            details: this.project.logicalFrames[element.sectionId - 1]
+          };
+        } else {
+          data = {
+            type: 'logicalFrameIndicator',
+            details: {...this.elementFromPath(element.commentInfo.path), name: element.name, disaggregatedBy: element.disaggregatedBy},
+          }
+        }
       } else if (element.commentInfo.path.startsWith('form')) {
-        data = {
-          type: 'form',
-          details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
-        };
+        if (!indicator) {
+          data = {
+            type: 'form',
+            details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
+          };
+        } else {
+          data = {
+            type: 'formData',
+            details: {...this.elementFromPath(element.commentInfo.path), name: element.name, disaggregatedBy: element.disaggregatedBy},
+          };
+        }
       } else if (element.commentInfo.path.startsWith('indicator')) {
         if (this.project.crossCutting[element.commentInfo.path]) {
           data = {
             type: 'crossCutting',
-            details:{...this.project.crossCutting[element.commentInfo.path], name: element.name}
+            details:{...this.project.crossCutting[element.commentInfo.path], name: element.name, disaggregatedBy: element.disaggregatedBy}
+          }
+        } else {
+          data = {
+            type: 'extraIndicator',
+            details: element
           }
         }
       }

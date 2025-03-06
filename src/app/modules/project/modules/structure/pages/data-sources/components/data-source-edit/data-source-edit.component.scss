@@ -40,3 +40,10 @@ app-collection-sites-selector{
 .date-group {
   align-items: center !important;
 }
+
+.required-option {
+  padding: 16px 24px;
+  background-color: rgba(#ffc6be, .6);
+  color: darkred;
+  border-radius: 4px;
+}
