@@ -29,6 +29,7 @@ export class DownloadService implements OnDestroy {
   }
 
   generate(): void {
+    console.log('generate?')
     if (this.url.getValue() !== ''){
       // observe: 'response' makes the get return
       // an observable with the entire response instead of just the body

@@ -165,6 +165,16 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
+  downloadNewCC(): void {
+    const url =
+      'api_export-newCC_' +
+      this.crossCuttingIndicator.indicator.id +
+      '_' +
+      this.currentLang;
+
+    window.open(this.router.url + '/download/' + url, '_blank');
+  }
+
   downloadExcelSheet(): void {
     const dialogRef = this.dialog.open(ConfirmExportComponent, {
       data: {

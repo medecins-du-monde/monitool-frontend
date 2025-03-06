@@ -68,6 +68,19 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
       } catch (error) {
         this.pageText = 'export-error';
       }
+    } else if (this.router.url.indexOf('api_export-newCC') >= 0) {
+      const downloadRoute = this.router.url.slice(this.router.url.indexOf('api_export-newCC'), this.router.url.length);
+      console.log('/' + downloadRoute.replace(/[_]/g, '/'));
+      this.downloadService.url.next('/' + downloadRoute.replace(/[_]/g, '/'));
+
+      this.subscription.add(
+        this.downloadService.url.subscribe(() => {
+          if (this.downloadService.url.getValue() !== ''){
+            this.pageText = 'export-generating-file';
+          }
+          this.downloadService.generate();
+        })
+      );
     }
   }
 
