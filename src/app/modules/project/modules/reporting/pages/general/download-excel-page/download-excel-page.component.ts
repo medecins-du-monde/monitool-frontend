@@ -69,9 +69,10 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
         this.pageText = 'export-error';
       }
     } else if (this.router.url.indexOf('api_export-newCC') >= 0) {
-      const downloadRoute = this.router.url.slice(this.router.url.indexOf('api_export-newCC'), this.router.url.length);
-      console.log('/' + downloadRoute.replace(/[_]/g, '/'));
-      this.downloadService.url.next('/' + downloadRoute.replace(/[_]/g, '/'));
+      const downloadRouteParams = this.router.url.slice(this.router.url.indexOf('api_export-newCC'), this.router.url.length).split('_');
+      let downloadRoute = '';
+      for (const param of downloadRouteParams) {downloadRoute += `/${param == "" ? '_' : param}`}
+      this.downloadService.url.next(downloadRoute);
 
       this.subscription.add(
         this.downloadService.url.subscribe(() => {

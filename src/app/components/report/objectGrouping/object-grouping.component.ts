@@ -28,7 +28,11 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
     projects: Project[]
   };
   @Input() project: Project;
-  @Input() dimension: string;
+  @Input() filter: {
+    dimension: string,
+    continents: string[],
+    countries: string[]
+  };
   @Input() canDownload = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
@@ -137,8 +141,8 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   }
   
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.dimension && changes.dimension.currentValue !== changes.dimension.previousValue && changes.dimension.currentValue) {
-      this.dimensionForm.patchValue({dimensionId: changes.dimension.currentValue})
+    if (changes.filter && changes.filter.currentValue.dimension && changes.filter.currentValue.dimension !== changes.filter.previousValue.dimension) {
+      this.dimensionForm.patchValue({dimensionId: changes.filter.currentValue.dimension})
     }
   }
 
@@ -169,8 +173,9 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
     const url =
       'api_export-newCC_' +
       this.crossCuttingIndicator.indicator.id +
-      '_' +
-      this.currentLang;
+      '_' + this.currentLang +
+      '_' + this.filter.countries.join('+') +
+      '_' + this.filter.continents.join('+');
 
     window.open(this.router.url + '/download/' + url, '_blank');
   }
