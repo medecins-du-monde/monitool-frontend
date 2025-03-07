@@ -40,6 +40,10 @@ export class FormElementEditComponent implements OnInit {
     {
       value: 'none',
       display: 'Enum.Aggregation.none'
+    },
+    {
+      value: 'last',
+      display: 'Enum.Aggregation.last'
     }
   ];
 
