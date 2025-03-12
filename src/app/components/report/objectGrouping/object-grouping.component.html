@@ -18,6 +18,7 @@
     <mat-grid-tile class="excel-download" colspan="6" [matTooltip]="!canDownload ? ('no-report-data' | translate) : null" [class.disabled]="!canDownload">
         <mat-form-field appearance="none" class="mdm-form-field" class="dl-select">
             <mat-select disableOptionCentering panelClass="filterClass" placeholder="{{ 'export-download' | translate }}">
+                <mat-option (click)="downloadNewCC()" *ngIf="crossCuttingIndicator">{{ 'cross-cutting-export' | translate }}</mat-option>
                 <mat-option (click)="dlMini()">{{ 'export-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'minimized-tooltip' | translate }}">info</mat-icon></mat-option>
                 <mat-option (click)="downloadExcelSheet()">{{ 'export-complete' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'complete-tooltip' | translate }}">info</mat-icon></mat-option>
                 <mat-option (click)="dlCurrView()">{{ 'export-current-minimized' | translate }}<mat-icon matTooltipPosition="left" matTooltip="{{ 'current-minimized-tooltip' | translate }}">info</mat-icon></mat-option>
