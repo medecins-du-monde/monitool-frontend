@@ -353,7 +353,6 @@ export class ReportingTableComponent
           let reportHasData = false;
           for (const row of filteredRows) {
             if ((row as any).dataset && Object.keys((row as any).dataset).length > 0) {
-              console.log((row as any).dataset)
               reportHasData = true;
               break;
             }
@@ -1531,7 +1530,8 @@ export class ReportingTableComponent
     const parsedPath = path.split('|').map(section => section.split(':'));
     let element = this.project;
     parsedPath.forEach(section => {
-      element = element[section[0] + 's'].find(el => el.id === section[1]);
+      console.log(element, section[0]);
+      element = element[section[0] === 'activity' ? 'activities' : section[0] + 's'].find(el => el.id === section[1]);
     })
     return element;
   }
