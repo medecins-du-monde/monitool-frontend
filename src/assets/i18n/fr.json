@@ -991,7 +991,8 @@
     },
     "global": "Le temps nécessaire dépend de la quantité de données et du nombre de cadres logiques exportés. Voulez-vous continuer?",
     "detailed": "Le temps nécessaire dépend de la quantité de données, du nombre de cadres logiques et des sites de collecte exportés. Voulez-vous continuer?",
-    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?"
+    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?",
+    "cross-cutting": "Le rapport utilisera certains des filtres sélectionnés pour l'exportation, en particulier: date de début, date de fin, continents et pays."
   },
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
   "export-error": "Quelque chose s’est mal passé",
@@ -1085,5 +1086,6 @@
     "title": "L'intervalle de dates est trop long",
     "content": "L'intervalle de dates sélectionné dépasse un an. Pour garantir une bonne performance de la page, il sera réduit à un an. Vous pouvez revenir en arrière à partir des filtres, mais sachez que la page risque de ne plus répondre."
   },
-  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données"
+  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données",
+  "cross-cutting-export": "Rapport des indicateurs transversaux"
 }
