@@ -92,7 +92,7 @@ export class TableStructureComponent implements OnInit, OnDestroy {
   selected(event) {
     this.chosenStructure.emit(event.value);
     const y: number = +event.value;
-    this.elementForm.value.distribution = y;
+    this.elementForm.controls.distribution.patchValue(y);
   }
 
   toNumber(i) {
