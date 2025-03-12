@@ -185,7 +185,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
           this.setForm();
           this.projectService.hasInputs(this.project.id, this.form.id).then((res: boolean) => {
             this.startDateDisabled = res;
-            this.ref.detectChanges()
+            this.ref.detectChanges();
           });
         }
       })
@@ -227,6 +227,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
+      console.log(value);
     });
   }
 

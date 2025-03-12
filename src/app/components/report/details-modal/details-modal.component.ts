@@ -161,15 +161,17 @@ export class DetailsModalComponent {
             parent: element.parent,
             disag: Object.keys(simpleParam.filter).map(id => {
               const disagElements = [];
-              Object.keys(element.partitions[id].elements).forEach(elPartition => {
-                if (simpleParam.filter[id].find(elFilter => elFilter === elPartition)) {
-                  disagElements.push(element.partitions[id].elements[elPartition])
-                }
-              })
+              if (element.partitions[id].elements) {
+                Object.keys(element.partitions[id].elements).forEach(elPartition => {
+                  if (simpleParam.filter[id].find(elFilter => elFilter === elPartition)) {
+                    disagElements.push(element.partitions[id].elements[elPartition])
+                  }
+                })
+              }
               return {
                 name: element.partitions[id].name,
                 elements: disagElements,
-                all: disagElements.length === Object.keys(element.partitions[id].elements).length
+                all: element.partitions[id].elements && disagElements.length === Object.keys(element.partitions[id].elements).length
               }
             })
           }
