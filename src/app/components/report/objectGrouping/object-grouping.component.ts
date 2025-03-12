@@ -12,6 +12,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/classes/indicator.model';
+import { ConfirmExportCrossCuttingComponent } from './confirm-export-cross-cutting/confirm-export-cross-cuttingcomponent';
 
 @Component({
   selector: 'app-object-grouping',
@@ -29,9 +30,11 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   };
   @Input() project: Project;
   @Input() filter: {
-    dimension: string,
-    continents: string[],
-    countries: string[]
+    dimension?: string,
+    continents?: string[],
+    countries?: string[],
+    _start?: Date,
+    _end?: Date
   };
   @Input() canDownload = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -170,14 +173,32 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   downloadNewCC(): void {
-    const url =
-      'api_export-newCC_' +
-      this.crossCuttingIndicator.indicator.id +
-      '_' + this.currentLang +
-      '_' + this.filter.countries.join('+') +
-      '_' + this.filter.continents.join('+');
+    const dialogRef = this.dialog.open(ConfirmExportCrossCuttingComponent, {
+      data: {
+        title: this.translateService.instant('export-complete'),
+        type: 'detailed',
+        estimated:
+          this.crossCuttingIndicator ?
+          undefined :
+          this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
+      }
+    });
 
-    window.open(this.router.url + '/download/' + url, '_blank');
+    const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const url =
+          'api_export-newCC_' +
+          this.crossCuttingIndicator.indicator.id +
+          '_' + this.currentLang +
+          '_' + this.filter.countries.join('+') +
+          '_' + this.filter.continents.join('+') +
+          '_' + this.filter._start.toISOString() +
+          '_' + this.filter._end.toISOString();
+    
+        window.open(this.router.url + '/download/' + url, '_blank');
+        dialogSubscription.unsubscribe();
+      }
+    });
   }
 
   downloadExcelSheet(): void {

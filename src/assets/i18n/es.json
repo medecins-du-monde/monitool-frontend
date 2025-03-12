@@ -992,7 +992,8 @@
     },
     "global": "El tiempo que tome depende de la cantidad de información y número de marcos lógicos exportados. ¿Desea continuar?",
     "detailed": "El tiempo que tome depende de la cantidad de información, número de marcos lógicos y lugares de colecta exportados. ¿Desea continuar?",
-    "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?"
+    "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?",
+    "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países."
   },
   "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento.",
   "export-error": "Algo ha ido mal.",

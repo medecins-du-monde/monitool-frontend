@@ -38,9 +38,6 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   tableContent = new BehaviorSubject<any[]>([]);
 
   tableHasData = false;
-
-  countries: string[] = [];
-  continents: string[] = [];
   
   breadCrumbs: BreadcrumbItem[] = [
     {
@@ -100,8 +97,6 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
 
   receiveFilter(value: unknown): void{
     this.filter.next(value);
-    this.countries = value['countries'] || [];
-    this.continents = value['continents'] || [];
   }
 
   receiveDimension(value: string): void{

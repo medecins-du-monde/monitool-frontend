@@ -8,10 +8,7 @@
     indicator: mainIndicator,
     projects: relatedProjects
   }"
-  [filter]="{
-    countries,
-    continents,
-  }"
+  [filter]="filter.value"
   [canDownload]="tableHasData"
   ></app-object-grouping>
 
