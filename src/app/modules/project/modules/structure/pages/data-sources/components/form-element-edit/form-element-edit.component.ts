@@ -45,7 +45,6 @@ export class FormElementEditComponent implements OnInit {
 
   receiveStructure(event) {
     this.chosenStructure = event;
-    this.elementForm.controls.distribution.patchValue(this.chosenStructure);
   }
 
   get partitions(): UntypedFormArray {
