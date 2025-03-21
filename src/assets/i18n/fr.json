@@ -652,12 +652,16 @@
           "Region": "Precisse une région",
           "Country": "Sélectionnez un pays",
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
-          "Thematics": "ex: Soins de santé primaire"
+          "Thematics": "ex: Soins de santé primaire",
+          "Indicator": "Sélectionnez un indicateur",
+          "Thematic": "Sélectionnez un Combat Politique"
       },
       "Filter" : {
         "Continent": "Filtrer par continent",
         "Country": "Filtrer par pays",
-        "Clear": "Effacer la sélection"
+        "Clear": "Effacer la sélection",
+        "Indicator": "Filtrer par indicateur",
+        "Thematic": "Filtrer par Combat Politique"
       },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
@@ -992,7 +996,8 @@
     "global": "Le temps nécessaire dépend de la quantité de données et du nombre de cadres logiques exportés. Voulez-vous continuer?",
     "detailed": "Le temps nécessaire dépend de la quantité de données, du nombre de cadres logiques et des sites de collecte exportés. Voulez-vous continuer?",
     "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?",
-    "cross-cutting": "Le rapport utilisera certains des filtres sélectionnés pour l'exportation, en particulier: date de début, date de fin, continents et pays."
+    "cross-cutting": "Le rapport utilisera certains des filtres sélectionnés pour l'exportation, en particulier: date de début, date de fin, continents et pays.",
+    "cross-cutting-multiple": "Configurez votre export avec les champs suivants, laissez-les vides pour qu'ils ne soient pas pris en compte. Par défaut, l'exportation génère le rapport avec toutes les données existantes (toutes les dates, tous les projets et tous les indicateurs)"
   },
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
   "export-error": "Quelque chose s’est mal passé",

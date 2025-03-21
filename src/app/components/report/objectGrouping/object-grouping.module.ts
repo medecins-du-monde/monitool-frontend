@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { ConfirmExportComponent } from './confirm-export/confirm-export.component';
-import { ConfirmExportCrossCuttingComponent } from './confirm-export-cross-cutting/confirm-export-cross-cuttingcomponent';
+import { ConfirmExportCrossCuttingComponent } from './confirm-export-cross-cutting/confirm-export-cross-cutting.component';
 
 @NgModule({
     declarations: [ObjectGroupingComponent, ConfirmExportComponent, ConfirmExportCrossCuttingComponent],

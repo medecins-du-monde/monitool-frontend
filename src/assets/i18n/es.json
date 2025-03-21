@@ -420,7 +420,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
       "Name": "Volumen de formación",
-      "Thematics": "Selectione uno o varios Combates Políticos"
+      "Thematics": "Selecciona uno o varios Combates Políticos"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
   "IndicatorFormulaWarningModal": {
@@ -658,12 +658,16 @@
           "Region": "Precise una región",
           "Country": "Seleccione un país",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
-          "Thematics": "Seleccione uno o varios Combates Políticos"
+          "Thematics": "Seleccione uno o varios Combates Políticos",
+          "Indicator": "Seleccione un indicador",
+          "Thematic": "Seleccione un Combate Político"
       },
       "Filter" : {
         "Continent": "Filtrar por continente",
         "Country": "Filtrar por país",
-        "Clear": "Deseleccionar todo"
+        "Clear": "Deseleccionar todo",
+        "Indicator": "Filtrar por indicador",
+        "Thematic": "Filtrar po Combate Político"
       },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
@@ -993,7 +997,8 @@
     "global": "El tiempo que tome depende de la cantidad de información y número de marcos lógicos exportados. ¿Desea continuar?",
     "detailed": "El tiempo que tome depende de la cantidad de información, número de marcos lógicos y lugares de colecta exportados. ¿Desea continuar?",
     "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?",
-    "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países."
+    "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países.",
+    "cross-cutting-multiple": "Configure su exportación con los siguientes campos, déjelos vacíos para que no se tengan en cuenta. Por defecto la exportación generará el informe con todos los datos existentes (todas las fechas, todos los proyectos y todos los indicadores)"
   },
   "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento.",
   "export-error": "Algo ha ido mal.",

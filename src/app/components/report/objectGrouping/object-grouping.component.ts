@@ -12,7 +12,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { Indicator } from 'src/app/models/classes/indicator.model';
-import { ConfirmExportCrossCuttingComponent } from './confirm-export-cross-cutting/confirm-export-cross-cuttingcomponent';
+import { ConfirmExportCrossCuttingComponent } from './confirm-export-cross-cutting/confirm-export-cross-cutting.component';
 
 @Component({
   selector: 'app-object-grouping',
@@ -173,16 +173,7 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   downloadNewCC(): void {
-    const dialogRef = this.dialog.open(ConfirmExportCrossCuttingComponent, {
-      data: {
-        title: this.translateService.instant('export-complete'),
-        type: 'detailed',
-        estimated:
-          this.crossCuttingIndicator ?
-          undefined :
-          this.getEstimatedExportTime(this.project.logicalFrames.length, this.project.entities.length)
-      }
-    });
+    const dialogRef = this.dialog.open(ConfirmExportCrossCuttingComponent);
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {

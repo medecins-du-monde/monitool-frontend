@@ -664,12 +664,16 @@
           "Region": "Precise a region",
           "Country": "Select a country",
           "Name" : "e.g. Access to quality care for people affected by the crisis",
-          "Thematics": "e.g. Primary health care"
+          "Thematics": "e.g. Primary health care",
+          "Indicator": "Select an indicator",
+          "Thematic": "Select a Political Battle"
       },
       "Filter" : {
         "Continent": "Filter by continent",
         "Country": "Filter by country",
-        "Clear": "Clear selection"
+        "Clear": "Clear selection",
+        "Indicator": "Filter by indicator",
+        "Thematic": "Filter by Political Battle"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
@@ -976,7 +980,8 @@
     "global": "The time it takes depends on the amount of data and number of logical frames exported. Do you want to continue?",
     "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
     "current-view": "The download of this report can take a few minutes. Do you want to continue?",
-    "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries."
+    "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries.",
+    "cross-cutting-multiple": "Configure your export with the following fields, leave them empty so they aren't taken into account. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
   },
   "dataInputNotAvilable": "There isn't any data input available at this time.",
   "export-error": "Something went wrong",

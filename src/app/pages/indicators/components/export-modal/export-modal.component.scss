@@ -1,0 +1,37 @@
+.dialog-container {
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal-text {
+  margin-top: 10px;
+  margin-right: 30px;
+
+  .mat-icon {
+      color: #d9534f;
+      margin-right: 5px;
+      vertical-align: bottom;
+  }
+}
+
+.mdm-form-label {
+  width: 150px;
+  flex: none;
+}
+
+.select-options {
+  display: flex;
+  // justify-content: flex-end; 
+  padding: 8px 16px;
+  gap: 12px;
+  width: 305px;
+
+  & > * {
+    height: 24px;
+    line-height: normal;
+  }
+}
+
+mat-select {
+  width: 100%;
+}
