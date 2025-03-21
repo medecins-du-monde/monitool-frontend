@@ -227,7 +227,6 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
       this.form.deserialize(value);
       this.projectService.project.next(this.project);
-      console.log(value);
     });
   }
 
