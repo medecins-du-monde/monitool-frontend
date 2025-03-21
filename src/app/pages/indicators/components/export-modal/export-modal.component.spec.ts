@@ -25,6 +25,7 @@ describe('ConfirmExportCrossCuttingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ExportModalComponent);
     component = fixture.componentInstance;
+    component.data = {indicators: []};
     fixture.detectChanges();
   });
 

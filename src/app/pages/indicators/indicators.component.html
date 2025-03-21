@@ -1,6 +1,6 @@
 <div class="full-page">
     <div class="download">
-        <button mat-stroked-button (click)="downloadNewCC()" class="mdm-button">{{ 'Multi cross cutting export' }}</button>
+        <button mat-stroked-button (click)="downloadNewCC()" class="mdm-button">{{ 'cross-cutting-export' | translate }}</button>
     </div>
     <div *ngFor="let group of groups" class="mdm-section">
         <div class="mdm-title">{{group.theme.name[currentLang]}}</div>

@@ -31,7 +31,7 @@
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
                 formControlName="continents"
-                [placeholder]="'Placeholder.Filter.Continent' | translate"
+                [placeholder]="'Placeholder.Basic.Continent' | translate"
                 disableOptionCentering
                 panelClass="myPanelClass"
                 (openedChange)="resetCountrySearch($event)"
@@ -59,7 +59,7 @@
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
                 formControlName="countries"
-                [placeholder]="'Placeholder.Filter.Country' | translate"
+                [placeholder]="'Placeholder.Basic.Country' | translate"
                 disableOptionCentering
                 panelClass="myPanelClass"
                 (openedChange)="resetCountryInput($event, searchCountryInput)"
@@ -93,11 +93,11 @@
       </div>
     
       <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Filter by Political battle' }}</div>
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Thematic' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
                 formControlName="thematics"
-                [placeholder]="'Filter by Political battle'"
+                [placeholder]="'Placeholder.Basic.Thematic' | translate"
                 disableOptionCentering
                 panelClass="myPanelClass"
                 (openedChange)="resetIndicators($event)"
@@ -121,11 +121,11 @@
       </div>
     
       <div class="mdm-form-group">
-        <div class="mdm-form-label">{{ 'Filter by indicator' }}</div>
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Indicator' | translate }}</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
                 formControlName="indicators"
-                [placeholder]="'Filter by indicator'"
+                [placeholder]="'Placeholder.Basic.Indicator' | translate"
                 disableOptionCentering
                 panelClass="myPanelClass"
                 multiple
