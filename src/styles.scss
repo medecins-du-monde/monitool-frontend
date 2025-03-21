@@ -1204,6 +1204,11 @@ code.title{
   overflow-x: hidden !important;
   min-width: calc(100% + 20px) !important;
   margin-bottom: -35px !important;
+
+  .mat-option-text {
+    line-height: normal;
+    padding: 8px 0;
+  }
 }
 
 .chipListPanelClass{
