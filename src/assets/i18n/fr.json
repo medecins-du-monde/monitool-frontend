@@ -1085,5 +1085,8 @@
     "title": "L'intervalle de dates est trop long",
     "content": "L'intervalle de dates sélectionné dépasse un an. Pour garantir une bonne performance de la page, il sera réduit à un an. Vous pouvez revenir en arrière à partir des filtres, mais sachez que la page risque de ne plus répondre."
   },
-  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données"
+  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données",
+  "cross-cutting-export": "Rapport des indicateurs transversaux",
+  "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
+  "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\"."
 }

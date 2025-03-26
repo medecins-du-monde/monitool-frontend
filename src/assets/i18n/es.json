@@ -1086,5 +1086,8 @@
     "title": "El rango de fechas es muy largo",
     "content": "El rango de fechas seleccionado excede un año, para asegurar el buen rendimiento de la pagina el rango se va a reducir a un año. Puedes revertir esto desde los filtros, pero tenga en cuenta que la pagina podria presentar problemas de rendimiento."
   },
-  "no-report-data": "No se puede descargar el informe si no hay ningún dato"
+  "no-report-data": "No se puede descargar el informe si no hay ningún dato",
+  "cross-cutting-export": "Reporte de indicadores transversales",
+  "country-2.0-warning": "Se acaban de añadir las selecciones para continentes y países. Para usarlas, complete la información en la sección \"Estructura\" → \"Datos de base\" o contacte el propietario del proyecto.",
+  "country-2.0-warning-project": "Su proyecto está utilizando el sistema de país antiguo. Para actualizarlo, seleccione un continente y un país en la sección \"Estructura\" → \"Datos de base\"."
 }

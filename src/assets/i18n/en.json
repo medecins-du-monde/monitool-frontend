@@ -1069,5 +1069,8 @@
     "title": "Date range is too long",
     "content": "The selected date range exceeds one year, to secure a good page performance it will be reduced to 1 year. You can revert this back from the filters, but be that the page could become unresponsive"
   },
-  "no-report-data": "You cannot download the report if there is no data"
+  "no-report-data": "You cannot download the report if there is no data",
+  "cross-cutting-export": "Cross-cutting indicators report",
+  "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
+  "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section."
 }

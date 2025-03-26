@@ -79,6 +79,10 @@
                 </button>
             </div>
     </div>
+    <div class="warning-box" *ngIf="showWarning && (filtersForm.value.continents.length > 0 || filtersForm.value.countries.length > 0)">
+        <button class="dialog-close" mat-icon-button (click)="showWarning = false"><mat-icon>close</mat-icon></button>
+        {{'country-2.0-warning' | translate}}
+    </div>
     <div class="mdm-cards">
         <app-project *ngFor="let project of shownProjects" class="mdm-card" (getProjects)="getProjects()"
             [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"
