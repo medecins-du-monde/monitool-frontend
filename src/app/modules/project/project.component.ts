@@ -8,6 +8,8 @@ import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { Subscription } from 'rxjs';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-project',
@@ -22,6 +24,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
   projectUser = [];
 
   bigPage: boolean;
+  showWarning = true;
 
   private subscription: Subscription = new Subscription();
 
@@ -32,6 +35,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
     private projectService: ProjectService,
     private sidenavService: SidenavService,
     private changeDetectorRef: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) { }
 
 
@@ -43,7 +47,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
         const projectId = params.id;
         this.subscription.add(
           this.authService.currentUser.subscribe((user: User) => {
-            this.user = user;
+            this.user = new User(user);
           })
         );
         this.subscription.add(
@@ -55,6 +59,18 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
           );
           this.project = project;
           this.sidenavService.generateSidenav(this.user, this.project);
+          if (this.user && this.showWarning) {
+            this.showWarning = false;
+            const projectOwner = this.project.users.find(user => 
+              (this.user.type === 'internal' ?
+                (user.id && this.user.id === user.id) :
+                (user.username && this.user.username === user.username)
+              ) && user.role === 'owner'
+            );
+            if (!this.project.continent) {
+              this.dialog.open(ConfirmModalComponent, {data: {messageId: 'country-2.0-warning-project', noActions: true}});
+            }
+          }
         });
       })
     );
