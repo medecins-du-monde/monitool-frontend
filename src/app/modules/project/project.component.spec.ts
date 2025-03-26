@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProjectComponent } from './project.component';
-import { MatLegacyDialog as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 
 describe('ProjectComponent', () => {
   let component: ProjectComponent;
