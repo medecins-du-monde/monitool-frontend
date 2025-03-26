@@ -12,7 +12,7 @@
     <p *ngIf="!warning">{{this.data.messageId | translate}}</p>
     <mat-checkbox *ngIf="this.data.messageId === 'DelayWarning'" color="primary" (change)="userAgreement($event)" >{{ 'Understood' | translate }}</mat-checkbox>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" *ngIf="!noActions">
     <button mat-stroked-button (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate }}</button>
     <button mat-stroked-button (click)="confirm()" class="mdm-button save-button">{{ 'Confirm' | translate }}</button>
 </mat-dialog-actions>

@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ConfirmModalComponent implements OnInit {
 
   public warning: boolean;
+  public noActions: boolean;
 
   constructor(
     private userService: UserService,
@@ -19,6 +20,7 @@ export class ConfirmModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.warning = this.data.warning;
+    this.noActions = this.data.noActions;
   }
 
   userAgreement(event): void {

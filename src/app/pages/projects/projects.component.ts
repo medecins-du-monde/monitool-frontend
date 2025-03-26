@@ -86,6 +86,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   pageNumber = 0;
   totalItem = 0;
   shownProjects: Project[];
+  showWarning = true;
 
   private subscription: Subscription = new Subscription();
 
