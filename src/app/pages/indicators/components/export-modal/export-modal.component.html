@@ -3,9 +3,7 @@
     <mat-icon>close</mat-icon>
   </button>
   <mat-dialog-content>
-    <p style="padding: 16px 0;">
-      {{'export-warning.cross-cutting-multiple' | translate}}
-    </p>
+    <p style="padding: 16px 0;" [innerHTML]="'export-warning.cross-cutting-multiple' | translate"></p>
     <div [formGroup]="filterForm">
       <div class="mdm-form-group">
           <div class="mdm-form-label">{{ 'Start' | translate }}</div>

@@ -981,7 +981,7 @@
     "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
     "current-view": "The download of this report can take a few minutes. Do you want to continue?",
     "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries.",
-    "cross-cutting-multiple": "Configure your export with the following fields, leave them empty so they aren't taken into account. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
+    "cross-cutting-multiple": "Configure your export with the following fields, <b>leave them empty so they aren't taken into account</b>. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
   },
   "dataInputNotAvilable": "There isn't any data input available at this time.",
   "export-error": "Something went wrong",

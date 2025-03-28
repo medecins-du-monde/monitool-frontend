@@ -998,7 +998,7 @@
     "detailed": "El tiempo que tome depende de la cantidad de información, número de marcos lógicos y lugares de colecta exportados. ¿Desea continuar?",
     "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?",
     "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países.",
-    "cross-cutting-multiple": "Configure su exportación con los siguientes campos, déjelos vacíos para que no se tengan en cuenta. Por defecto la exportación generará el informe con todos los datos existentes (todas las fechas, todos los proyectos y todos los indicadores)"
+    "cross-cutting-multiple": "Configure su exportación con los siguientes campos, <b>déjelos vacíos para que no se tengan en cuenta</b>. Por defecto la exportación generará el informe con todos los datos existentes (todas las fechas, todos los proyectos y todos los indicadores)"
   },
   "dataInputNotAvilable": "No hay ninguna entrada de datos disponible en este momento.",
   "export-error": "Algo ha ido mal.",
