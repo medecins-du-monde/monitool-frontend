@@ -49,6 +49,8 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
   mainIndicator: Indicator;
   relatedProjects: Project[];
 
+  earliestStart?: Date;
+
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
@@ -87,6 +89,9 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
         // this property is necessary for creating the menu options in the report table
         newIndicator.originProject = project;
         indicators.push(newIndicator);
+        if (!this.earliestStart || this.earliestStart > project.start) {
+          this.earliestStart = project.start;
+        }
     }
     this.tableContent.next(indicators);
   }

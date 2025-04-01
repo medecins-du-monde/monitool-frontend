@@ -56,6 +56,7 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
   @Input() showComments = false;
   @Input() userIsAdmin = false;
   @Input() filterEnd?: Date; // used to auto adjust based on periodicity;
+  @Input() filterStart?: Date; // used to auto adjust based on periodicity;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
   @Output() showCommentsChange = new EventEmitter<boolean>();
 
@@ -103,6 +104,8 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
     // and the start date is the first day of the previous year
     let endDate = new Date((new Date()).getFullYear(), 11, 31);
     let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
+
+    console.log(startDate);
 
     if (this.isCrossCuttingReport){
       this.filteredCountryList = this.countryListService.getCountries();
@@ -166,6 +169,9 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.filterEnd && changes.filterEnd.currentValue !== changes.filterEnd.previousValue) {
       this.filterForm.patchValue({_end: changes.filterEnd.currentValue})
+    }
+    if (changes.filterStart && changes.filterStart.currentValue !== changes.filterStart.previousValue) {
+      this.filterForm.patchValue({_start: changes.filterStart.currentValue})
     }
   }
 
