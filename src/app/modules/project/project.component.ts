@@ -67,7 +67,7 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
                 (user.username && this.user.username === user.username)
               ) && user.role === 'owner'
             );
-            if (!this.project.continent) {
+            if (projectOwner && !this.project.continent) {
               this.dialog.open(ConfirmModalComponent, {data: {messageId: 'country-2.0-warning-project', noActions: true}});
             }
           }
