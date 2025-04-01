@@ -118,7 +118,13 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
 
       this.filterForm.valueChanges.subscribe(value => {
         this.selectedSites = this.sites.filter( site => value.entities.includes(site.id) );
-        this.filterEvent.emit(value as Filter);
+        if (new Date(value._start) > new Date(value._end)) {
+          this.filterForm.patchValue({_end: value._start});
+        }
+        if (new Date(value._end) < new Date(value._start)) {
+          this.filterForm.patchValue({_start: value._end});
+        }
+        this.filterEvent.emit(this.filterForm.value);
       });
     } else {
       this.subscription.add(
