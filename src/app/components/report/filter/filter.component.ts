@@ -105,8 +105,6 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
     let endDate = new Date((new Date()).getFullYear(), 11, 31);
     let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
 
-    console.log(startDate);
-
     if (this.isCrossCuttingReport){
       this.filteredCountryList = this.countryListService.getCountries();
       this.filterForm = this.fb.group({
