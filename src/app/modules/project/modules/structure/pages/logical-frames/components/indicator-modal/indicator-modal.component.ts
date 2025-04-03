@@ -233,7 +233,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
         data.filter.partitions.forEach(partition => {
           // add all the partitions and the 'allOption' as default
-          newFilter.addControl(`${partition.id}`, new UntypedFormControl([...partition.elements, this.allOption]));
+          newFilter.addControl(`${partition.id}`, new UntypedFormControl([...partition.elements, this.allOption], Validators.required));
         });
       }
       // Adding this new filter
@@ -342,6 +342,10 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       }
     }
     this.dialogRef.close({ indicator: this.data.indicator });
+  }
+
+  debug(obj: any) {
+    console.log(obj);
   }
 
   ngOnDestroy(): void {
