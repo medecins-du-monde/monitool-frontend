@@ -125,6 +125,7 @@
                           </mat-select>
                         </mat-form-field>
                     </div>
+                    <span class="error" *ngIf="getPartitions(control.symbol, partition.id).length === 0">*{{"no-disag-error" | translate}}</span>
                     <!-- <br /> -->
                   </ng-container>
                 </div>

@@ -51,8 +51,13 @@ mat-hint mat-icon{
 
 .disaggregation-field{
     display: flex;
+    gap: 6px;
     align-items: baseline;
     flex-wrap: wrap;
+}
+
+.error {
+    color: rgb(217, 83, 79);
 }
 
 ::ng-deep.mat-select-panel mat-option.mat-option {

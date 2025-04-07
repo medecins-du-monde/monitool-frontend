@@ -1078,5 +1078,6 @@
   "no-report-data": "You cannot download the report if there is no data",
   "cross-cutting-export": "Cross-cutting indicators report",
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
-  "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section."
+  "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
+  "no-disag-error": "At least one disaggregation must be selected"
 }
