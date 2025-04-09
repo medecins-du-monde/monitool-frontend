@@ -1106,5 +1106,6 @@
   "cross-cutting-export": "Rapport des indicateurs transversaux",
   "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
   "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\".",
-  "no-disag-error": "Au moins une désagrégation doit être choisie"
+  "no-disag-error": "Au moins une désagrégation doit être choisie",
+  "documentation": "Documentation"
 }
