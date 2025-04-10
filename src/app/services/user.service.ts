@@ -9,15 +9,9 @@ import { ApiService } from './api.service';
 })
 export class UserService {
 
-  public showInputWarningModal: BehaviorSubject<boolean> = new BehaviorSubject(true);
-
   public displayInfoPanel: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   public userList: BehaviorSubject<User[]> = new BehaviorSubject([]);
-
-  get showingInputModal(): Observable<boolean> {
-    return this.showInputWarningModal.asObservable();
-  }
 
   get isInfoPanelOpened(): Observable<boolean> {
     return this.displayInfoPanel.asObservable();
@@ -37,10 +31,6 @@ export class UserService {
 
   public async save(user: User): Promise<void> {
     await this.apiService.put(`/resources/user/${user.id}`, user.serialize());
-  }
-
-  public updateInputModalChoice(showing: boolean): void {
-    this.showInputWarningModal.next(showing);
   }
 
   public closeInfoPanel(showing: boolean): void {

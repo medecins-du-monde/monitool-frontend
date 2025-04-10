@@ -11,6 +11,7 @@ export class ConfirmModalComponent implements OnInit {
 
   public warning: boolean;
   public noActions: boolean;
+  public checkbox = false;
 
   constructor(
     private userService: UserService,
@@ -23,11 +24,10 @@ export class ConfirmModalComponent implements OnInit {
     this.noActions = this.data.noActions;
   }
 
-  userAgreement(event): void {
-    this.userService.updateInputModalChoice(!event.checked);
-  }
-
   confirm(){
+    if (this.checkbox) {
+      document.cookie = "monitool:hideDelayWarning=true";
+    }
     this.dialogRef.close({ confirm: true });
   }
   cancel(){

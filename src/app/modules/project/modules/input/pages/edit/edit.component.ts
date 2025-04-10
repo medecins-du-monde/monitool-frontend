@@ -150,7 +150,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem
   ];
 
-  private showModal: boolean;
   public validInputCell = true;
 
   // TODO: Check if we can make this component cleaner and simplier
@@ -198,11 +197,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   setInput(): void {
     this.imageLink = 'assets/images/null-data-' + this.currentLang + '.png';
-    this.subscription.add(
-      this.userService.showingInputModal.subscribe(val => {
-        this.showModal = val;
-      })
-    );
     // Set the page with the normal size
     this.projectService.inBigPage.next(false);
 
@@ -894,7 +888,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   }
 
   async confirm(block = false): Promise<void> {
-    if (this.showModal) {
+    if (decodeURIComponent(document.cookie).indexOf('monitool:hideDelayWarning') === -1) {
       const dialogRef = this.dialog.open(ConfirmModalComponent, { data: { messageId: 'DelayWarning', warning: true } });
 
       const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
