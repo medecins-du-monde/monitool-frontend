@@ -664,12 +664,16 @@
           "Region": "Precise a region",
           "Country": "Select a country",
           "Name" : "e.g. Access to quality care for people affected by the crisis",
-          "Thematics": "e.g. Primary health care"
+          "Thematics": "e.g. Primary health care",
+          "Indicator": "Select an indicator",
+          "Thematic": "Select a Political Battle"
       },
       "Filter" : {
         "Continent": "Filter by continent",
         "Country": "Filter by country",
-        "Clear": "Clear selection"
+        "Clear": "Clear selection",
+        "Indicator": "Filter by indicator",
+        "Thematic": "Filter by Political Battle"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
@@ -872,30 +876,41 @@
       }
   },
   "TooltipRoleHint": {
-      "PanelShow": "Show help for this field",
-      "PanelHide": "Hide help for this field",
-      "EditProjectsStructure": "Edit projects' structure and data where explicitely allowed",
-      "SeeAllProjectsReporting": "See all project's reporting",
-      "CreateProjects": "Create projects",
-      "CloneProjects": "Clone a project (structure)",
-      "CloneProjectsData": "Clone a project (structure and data entered)",
-      "DeleteProject": "Delete/Restore a project",
-      "CreateAndEditThematics": "Create and edit Political Battles",
-      "CreateAndEditCrossCutting": "Create and edit cross-cutting indicators",
-      "EditOtherUsersRoles": "Edit other users roles",
-      "EditAllProjectsStructureAndData": "Edit all projects structure and data",
-      "EditProjectsStructureOnly": "Edit project's structure",
-      "PrintProjectsStructure": "Print data sources and logical frameworks (.pdf)",
-      "ViewProjectsHistory": "View/Modify history",
-      "EditUsers": "Create/Modify/Delete user roles (MdM or partner account)",
-      "CloneDs": "Clone a data source (structure)",
-      "CloneDsData": "Clone a data source (structure and entered data)",
-      "CloneLogFrame": "Clone a logical framework (structure and calculation of indicators)",
-      "EditComment": "Create/Modify/Delete a comment in the General Report",
-      "DataInput": "Do data entry (possibility of selecting data entry by collection site and data source)",
-      "ViewGeneralReport": "View general report",
-      "ExportGeneralReport": "Export general report data to Excel",
-      "ViewComment": "View the comment in the general report"
+    "PanelShow": "Show help for this field",
+    "PanelHide": "Hide help for this field",
+    "General": [
+        "View the General Report of all projects",
+        "Generate and export charts in the General Report",
+        "Create/Modify/Delete the Structure and Data of certain projects (depending on the role assigned in these Projects)",
+        "Create/Delete/Restore projects",
+        "Clone/Duplicate a project (Structure)",
+        "Clone/Duplicate a project (Structure and entered Data)",
+        "Modify/Delete the role of other users",
+        "Create/Modify/Delete Political Battles",
+        "Create/Modify/Delete Cross-cutting Indicators",
+        "Create/Modify/Delete the Structure and Data of all projects"
+    ],
+    "Project": [
+        "Create/Modify/Delete basic data",
+        "Create/Modify/Delete Collection Sites",
+        "Create/Modify/Delete Data Sources",
+        "Create/Modify/Delete Logical Frameworks",
+        "Print Data Sources and Logical Frameworks (.pdf)",
+        "Create/Modify/Delete additional Indicators",
+        "Create/Modify/Delete Cross-cutting Indicators",
+        "Create/Modify/Delete user roles (MdM or partner account)",
+        "View/Modify history",
+        "Clone/Duplicate a data source (Structure)",
+        "Clone/Duplicate a data source (Structure and entered data)",
+        "Clone/Duplicate a logical framework (Structure and indicator calculations)",
+        "Delete/Restore a project",
+        "Create/Modify/Delete a comment in the General Report",
+        "Enter data (possibility to select entry by collection sites and data sources)",
+        "View the general report",
+        "Generate and export charts in the General Report",
+        "Export general report data to Excel",
+        "View the comments in the general report"
+    ]
   },
   "Type": "Type",
   "UpdateUser": "Update the user",
@@ -975,7 +990,9 @@
     },
     "global": "The time it takes depends on the amount of data and number of logical frames exported. Do you want to continue?",
     "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
-    "current-view": "The download of this report can take a few minutes. Do you want to continue?"
+    "current-view": "The download of this report can take a few minutes. Do you want to continue?",
+    "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries.",
+    "cross-cutting-multiple": "Configure your export with the following fields, <b>leave them empty so they aren't taken into account</b>. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
   },
   "dataInputNotAvilable": "There isn't any data input available at this time.",
   "export-error": "Something went wrong",
@@ -1072,5 +1089,7 @@
   "no-report-data": "You cannot download the report if there is no data",
   "cross-cutting-export": "Cross-cutting indicators report",
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
-  "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section."
+  "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
+  "no-disag-error": "At least one disaggregation must be selected",
+  "documentation": "Documentation"
 }

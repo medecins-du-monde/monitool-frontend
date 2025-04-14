@@ -521,7 +521,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
             this.updatedFilterDate = end;
             this.dimensionIds.next(value);
           } else {
-            console.log(this.dimensionIds.value);
             this.updatedDimension = this.dimensionIds.value;
             return;
           }

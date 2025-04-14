@@ -7,14 +7,14 @@ export const HintUsers = [
 ];
 
 export const HintUserData: HintUserElement[] = [
-    {untitled: 'TooltipRoleHint.EditProjectsStructure', admin: true, project: true, common: true},
-    {untitled: 'TooltipRoleHint.SeeAllProjectsReporting', admin: true, project: true, common: true},
-    {untitled: 'TooltipRoleHint.CreateProjects', admin: true, project: true, common: false},
-    {untitled: 'TooltipRoleHint.CloneProjects', admin: true, project: true, common: false},
-    {untitled: 'TooltipRoleHint.CloneProjectsData', admin: true, project: true, common: false},
-    {untitled: 'TooltipRoleHint.DeleteProject', admin: true, project: true, common: false},
-    {untitled: 'TooltipRoleHint.CreateAndEditThematics', admin: true, project: false, common: false},
-    {untitled: 'TooltipRoleHint.CreateAndEditCrossCutting', admin: true, project: false, common: false},
-    {untitled: 'TooltipRoleHint.EditOtherUsersRoles', admin: true, project: false, common: false},
-    {untitled: 'TooltipRoleHint.EditAllProjectsStructureAndData', admin: true, project: false, common: false},
+    {untitled: 'TooltipRoleHint.General.0', admin: true, project: true, common: true},
+    {untitled: 'TooltipRoleHint.General.1', admin: true, project: true, common: true},
+    {untitled: 'TooltipRoleHint.General.2', admin: true, project: true, common: true},
+    {untitled: 'TooltipRoleHint.General.3', admin: true, project: true, common: false},
+    {untitled: 'TooltipRoleHint.General.4', admin: true, project: true, common: false},
+    {untitled: 'TooltipRoleHint.General.5', admin: true, project: true, common: false},
+    {untitled: 'TooltipRoleHint.General.6', admin: true, project: false, common: false},
+    {untitled: 'TooltipRoleHint.General.7', admin: true, project: false, common: false},
+    {untitled: 'TooltipRoleHint.General.8', admin: true, project: false, common: false},
+    {untitled: 'TooltipRoleHint.General.9', admin: true, project: false, common: false},
   ];

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
+import { ExportModalComponent } from './components/export-modal/export-modal.component';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Component({
   selector: 'app-indicators',
@@ -23,7 +26,9 @@ export class IndicatorsComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private indicatorService: IndicatorService
+    private indicatorService: IndicatorService,
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -45,5 +50,30 @@ export class IndicatorsComponent implements OnInit {
       });
     });
   }
+  
+    downloadNewCC(): void {
+      const dialogRef = this.dialog.open(ExportModalComponent, {
+        data: {
+          indicators: this.indicators
+        }
+      });
+  
+      const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log(result);
+          const url =
+            'api_export-newCC_' +
+            result.indicators.join('+') +
+            '_' + this.currentLang +
+            '_' + result.countries.join('+') +
+            '_' + result.continents.join('+') +
+            '_' + (result._start ? result._start.toISOString() : '') +
+            '_' +  (result._end ? result._end.toISOString() : '');
+          console.log(url);
+          window.open(this.router.url + '/download/' + url, '_blank');
+          dialogSubscription.unsubscribe();
+        }
+      });
+    }
 
 }

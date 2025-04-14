@@ -8,12 +8,14 @@
     indicator: mainIndicator,
     projects: relatedProjects
   }"
+  [filter]="filter.value"
   [canDownload]="tableHasData"
   ></app-object-grouping>
 
   <app-filter
   (filterEvent)="receiveFilter($event)"
   [isCrossCuttingReport]="true"
+  [filterStart]="earliestStart"
   ></app-filter>
 
   <app-chart [data]="chartData"></app-chart>

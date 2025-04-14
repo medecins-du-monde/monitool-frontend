@@ -1,0 +1,157 @@
+<div class='dialog-container'>
+  <button class="dialog-close" mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+  <mat-dialog-content>
+    <p style="padding: 16px 0;" [innerHTML]="'export-warning.cross-cutting-multiple' | translate"></p>
+    <div [formGroup]="filterForm">
+      <div class="mdm-form-group">
+          <div class="mdm-form-label">{{ 'Start' | translate }}</div>
+          <mat-form-field appearance="outline" class="mdm-form-field">
+              <mat-label>{{ 'ChooseStartDate' | translate }}</mat-label>
+              <input matInput [matDatepicker]="start" formControlName="_start" [max]="filterForm.value._end">
+              <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
+              <mat-datepicker #start></mat-datepicker>
+          </mat-form-field>
+      </div>
+
+      <div class="mdm-form-group">
+          <div class="mdm-form-label">{{ 'End' | translate }}</div>
+          <mat-form-field appearance="outline" class="mdm-form-field">
+              <mat-label>{{ 'ChooseEndDate' | translate }}</mat-label>
+              <input matInput [matDatepicker]="end" formControlName="_end" [min]="filterForm.value._start">
+              <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
+              <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Continent' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select
+                formControlName="continents"
+                [placeholder]="'Placeholder.Basic.Continent' | translate"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                (openedChange)="resetCountrySearch($event)"
+                multiple
+            >
+                <div class="select-options">
+                    <button
+                        mat-stroked-button
+                        [disabled]="filterForm.value.continents.length <= 0"
+                        (click)="filterForm.get('continents').patchValue([])"
+                    >{{'Placeholder.Filter.Clear' | translate}}</button>
+                </div>
+                <mat-option
+                    *ngFor="let continent of continentList"
+                    [value]="continent.key"
+                >
+                    {{ continent[currentLang] }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Country' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select
+                formControlName="countries"
+                [placeholder]="'Placeholder.Basic.Country' | translate"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                (openedChange)="resetCountryInput($event, searchCountryInput)"
+                multiple
+            >
+                <input
+                    type="text"
+                    matInput
+                    (keyup)="onSearchCountry($event.target.value)"
+                    style="padding: 0 16px; height: 42px; border-bottom: 1px solid lightgray;"
+                    placeholder="{{ 'Placeholder.Basic.Country' | translate }}"
+                    #searchCountryInput
+                > {{searchCountryInput.focus()}}
+                <div style="overflow: auto; max-height: 257px; scrollbar-width: 3px;">
+                    <div class="select-options">
+                        <button
+                            mat-stroked-button
+                            [disabled]="filterForm.value.countries.length <= 0"
+                            (click)="filterForm.get('countries').patchValue([])"
+                        >{{'Placeholder.Filter.Clear' | translate}}</button>
+                    </div>
+                    <mat-option
+                        *ngFor="let country of filteredCountryList"
+                        [value]="country.key"
+                    >
+                        <span style="white-space: nowrap;" [matTooltip]="country[currentLang]" matTooltipShowDelay="500">{{ country[currentLang] }}</span>
+                    </mat-option>
+                </div>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    
+      <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Thematic' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select
+                formControlName="thematics"
+                [placeholder]="'Placeholder.Basic.Thematic' | translate"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                (openedChange)="resetIndicators($event)"
+                multiple
+            >
+                <div class="select-options">
+                    <button
+                        mat-stroked-button
+                        [disabled]="filterForm.value.thematics.length <= 0"
+                        (click)="filterForm.get('thematics').patchValue([])"
+                    >{{'Placeholder.Filter.Clear' | translate}}</button>
+                </div>
+                <mat-option
+                    *ngFor="let theme of themes"
+                    [value]="theme.id"
+                >
+                    {{ theme.name[currentLang] }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    
+      <div class="mdm-form-group">
+        <div class="mdm-form-label">{{ 'Placeholder.Filter.Indicator' | translate }}</div>
+        <mat-form-field appearance="outline" class="mdm-form-field">
+            <mat-select
+                formControlName="indicators"
+                [placeholder]="'Placeholder.Basic.Indicator' | translate"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                multiple
+            >
+                <div class="select-options">
+                    <button
+                        mat-stroked-button
+                        [disabled]="filterForm.value.indicators.length <= 0"
+                        (click)="filterForm.get('indicators').patchValue([])"
+                    >{{'Placeholder.Filter.Clear' | translate}}</button>
+                </div>
+                <mat-option
+                    *ngFor="let indicator of filteredIndicators"
+                    [value]="indicator.id"
+                >
+                    {{ indicator.name[currentLang] }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <p style="padding-top: 16px">
+      {{'export-warning.current-view' | translate}}
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-stroked-button class="mdm-button" mat-dialog-close>{{ 'Cancel' | translate
+        }}</button>
+    <button mat-stroked-button class="mdm-button save-button" (click)="submit()">{{ 'Confirm' | translate }}</button>
+  </mat-dialog-actions>
+</div>

@@ -652,12 +652,16 @@
           "Region": "Precisse une région",
           "Country": "Sélectionnez un pays",
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
-          "Thematics": "ex: Soins de santé primaire"
+          "Thematics": "ex: Soins de santé primaire",
+          "Indicator": "Sélectionnez un indicateur",
+          "Thematic": "Sélectionnez un Combat Politique"
       },
       "Filter" : {
         "Continent": "Filtrer par continent",
         "Country": "Filtrer par pays",
-        "Clear": "Effacer la sélection"
+        "Clear": "Effacer la sélection",
+        "Indicator": "Filtrer par indicateur",
+        "Thematic": "Filtrer par Combat Politique"
       },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
@@ -856,28 +860,39 @@
   "TooltipRoleHint": {
       "PanelShow": "Afficher l'aide sur ce champ",
       "PanelHide": "Cacher l'aide sur ce champ",
-      "EditProjectsStructure": "Modifier la structure et les données de certains projets",
-      "SeeAllProjectsReporting": "Voir les rapports de tous les projets",
-      "CreateProjects": "Créer des projets",
-      "CloneProjects": "Dupliquer un projet (structure)",
-      "CloneProjectsData": "Dupliquer un projet (structure et données saisies)",
-      "DeleteProject": "Supprimer/Restaurer un projet",
-      "CreateAndEditThematics": "Créer et modifier des Combats Politiques",
-      "CreateAndEditCrossCutting": "Créer et modifier des indicateurs transversaux",
-      "EditOtherUsersRoles": "Modifier le rôle des autres utilisateurs",
-      "EditAllProjectsStructureAndData": "Modifier la structure et les données de tous les projets",
-      "EditProjectsStructureOnly": "Modifier la structure du projet",
-      "PrintProjectsStructure": "Imprimer les sources des données et les cadres logiques (.pdf)",
-      "ViewProjectsHistory": "Voir/Modifier l'historique",
-      "EditUsers": "Créer/Modifier/Supprimer les rôles utilisateurs (compte MdM ou partenaire)",
-      "CloneDs": "Dupliquer une source de donnée (structure)",
-      "CloneDsData": "Dupliquer une source de donnée (structure et données saisies)",
-      "CloneLogFrame": "Dupliquer un cadre logique (structure et calcul des indicateurs)",
-      "EditComment": "Créer/Modifier/Supprimer un commentaire dans le Rapport Général",
-      "DataInput": "Saisir les données (possibilité de selectioner la saisie par lieux de collecte et source de données)",
-      "ViewGeneralReport": "Voir le rapport général",
-      "ExportGeneralReport": "Exporter les données du rapport général sur Excel",
-      "ViewComment": "Voir le commentaire dans le rapport général"
+      "General": [
+        "Voir le Rapport Général de tous les projets",
+        "Générer et exporter des graphiques dans le Rapport  Général",
+        "Créer/Modifier/Supprimer la Structure et les Données de certains projets (selon le rôle attribué dans ces Projets)",
+        "Créer/Supprimer/Restaurer des projets",
+        "Cloner/Dupliquer un projet (Structure)",
+        "Cloner/Dupliquer un projet (Structure et Données saisies)",
+        "Modifier/Supprimer le rôle des autres utilisateurs",
+        "Créer/Modifier/Supprimer des Combats Politiques",
+        "Créer/Modifier/Supprimer des Indicateurs Transversaux",
+        "Créer/Modifier/Supprimer la Structure et les Données de tous les projets"
+      ],
+      "Project": [
+        "Créer/Modifier/Supprimer les données de base",
+        "Créer/Modifier/Supprimer les Lieux de collecte",
+        "Créer/Modifier/Supprimer les Sources de données",
+        "Créer/Modifier/Supprimer les Cadres Logiques",
+        "Imprimer les Sources des Données et les Cadres Logiques (.pdf)",
+        "Créer/Modifier/Supprimer les Indicateurs annexes",
+        "Créer/Modifier/Supprimer les Indicateurs Transversaux",
+        "Créer/Modifier/Supprimer les rôles utilisateurs (compte MdM ou partenaire)",
+        "Voir/Modifier l'historique",
+        "Cloner/Dupliquer une source de donnée (Structure)",
+        "Cloner/Dupliquer une source de donnée (Structure et données saisies)",
+        "Cloner/Dupliquer un cadre logique (Structure et calcul des indicateurs)",
+        "Supprimer/Restaurer un projet",
+        "Créer/Modifier/Supprimer un commentaire dans le Rapport Général",
+        "Saisir les données (possibilité de selectioner la saisie par lieux de collecte et source de données)",
+        "Voir le rapport général",
+        "Générer et exporter des graphiques dans le Rapport  Général",
+        "Exporter les données du rapport général sur Excel",
+        "Voir le commentaire dans le rapport général"
+      ]
   },
   "Type": "Type",
   "ThematicEdition": "Édition Combat Politique",
@@ -991,7 +1006,9 @@
     },
     "global": "Le temps nécessaire dépend de la quantité de données et du nombre de cadres logiques exportés. Voulez-vous continuer?",
     "detailed": "Le temps nécessaire dépend de la quantité de données, du nombre de cadres logiques et des sites de collecte exportés. Voulez-vous continuer?",
-    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?"
+    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?",
+    "cross-cutting": "Le rapport utilisera certains des filtres sélectionnés pour l'exportation, en particulier: date de début, date de fin, continents et pays.",
+    "cross-cutting-multiple": "Configurez votre export avec les champs suivants, <b>laissez-les vides pour qu'ils ne soient pas pris en compte</b>. Par défaut, l'exportation génère le rapport avec toutes les données existantes (toutes les dates, tous les projets et tous les indicateurs)"
   },
   "dataInputNotAvilable": "Aucune entrée de données n’est disponible pour le moment.",
   "export-error": "Quelque chose s’est mal passé",
@@ -1088,5 +1105,7 @@
   "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données",
   "cross-cutting-export": "Rapport des indicateurs transversaux",
   "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
-  "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\"."
+  "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\".",
+  "no-disag-error": "Au moins une désagrégation doit être choisie",
+  "documentation": "Documentation"
 }

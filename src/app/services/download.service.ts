@@ -29,6 +29,7 @@ export class DownloadService implements OnDestroy {
   }
 
   generate(): void {
+    console.log('generate?')
     if (this.url.getValue() !== ''){
       // observe: 'response' makes the get return
       // an observable with the entire response instead of just the body
@@ -97,6 +98,10 @@ export class DownloadService implements OnDestroy {
   private async getFileName(url: string): Promise<string> {
     let name = 'error';
     const parameters = url.split('/');
+    if (parameters[2] === 'export-newCC') {
+      return `${this.translateService.instant('cross-cutting-export')} (${new Date().toLocaleDateString('en-GB', {year: 'numeric', month: 'numeric', day: 'numeric'})}).xlsx`
+    }
+    
     const id = parameters[3];
     const minimized = parameters[6] === 'true';
     if (id.split(':')[0] === 'indicator') {
