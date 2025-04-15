@@ -69,7 +69,7 @@
   "CreateNewThematic": "Crear un nuevo Combate Político",
   "CrossCuttingIndicators": "Indicadores transversales",
   "CrossCuttingInfo": [
-      "Los indicadores transversales se deciden según la lista de Combates Políticos en \"Datos basicos\".",
+      "Los indicadores transversales se deciden según la lista de Combate Políticos en \"Datos basicos\".",
       "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
   ],
   "Data": "Datos",
@@ -227,7 +227,7 @@
       },
 
       "themes_add": "Añade un Combate Político al proyecto",
-      "themes_move": "Reordena los Combates Políticos del proyecto",
+      "themes_move": "Reordena los Combate Políticos del proyecto",
       "themes_remove": "Elimina un Combate Político del proyecto",
 
       "entities_add": "Añade el lugar <code>{{item.name}}</code>",
@@ -420,7 +420,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
       "Name": "Volumen de formación",
-      "Thematics": "Selecciona uno o varios Combates Políticos"
+      "Thematics": "Selecciona uno o varios Combate Políticos"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
   "IndicatorFormulaWarningModal": {
@@ -635,7 +635,7 @@
   "LogOut": "Desconectar",
   "Members": "Miembros",
   "Missing": "Por hacer",
-  "MultipleThematics": "Varios Combates Políticos",
+  "MultipleThematics": "Varios Combate Políticos",
   "MyAccount": "Mi cuenta",
   "Name": "Nombre",
   "newVersionAvailable": "Una actualización de Monitool esta disponible",
@@ -658,7 +658,7 @@
           "Region": "Precise una región",
           "Country": "Seleccione un país",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
-          "Thematics": "Seleccione uno o varios Combates Políticos",
+          "Thematics": "Seleccione uno o varios Combate Políticos",
           "Indicator": "Seleccione un indicador",
           "Thematic": "Seleccione un Combate Político"
       },
@@ -794,8 +794,8 @@
   ],
   "SettingsThematicsEdit": "Entre aqui el nombre del Combate Político en todos los idiomas usados por su organización.",
   "SettingsThematicsInfo": [
-      "Esta página contiene la lista de los Combates Políticos tratados por la ONG.",
-      "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos."
+      "Esta página contiene la lista de los Combate Políticos tratados por la ONG.",
+      "Los proyectos y los indicadores transversales se pueden conectar a los Combate Políticos."
   ],
   "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
   "SettingsUserInfo": [
@@ -844,7 +844,7 @@
           "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
           "Name": "Nombre su indicador. Es preferible obtener el nombre a partir de un catalogo para ser consistente con otros proyectos.",
           "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",
-          "Thematics": "Los Combates Políticos que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
+          "Thematics": "Los Combate Políticos que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
           "Visibility": "Fuera de casos particulares todos los proyectos deben dejarse visibles para todos los usuarios."
       },
       "UserEdition": {
@@ -901,7 +901,7 @@
   },
   "Type": "Tipo",
   "ThematicEdition": "Editar Combate Político",
-  "Thematics": "Combates Políticos",
+  "Thematics": "Combate Políticos",
   "UpdateUser": "Actualizar el usario",
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",

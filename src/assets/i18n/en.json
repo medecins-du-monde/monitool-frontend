@@ -73,7 +73,7 @@
   "CreateNewThematic": "Create a new Political Battle",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
-      "Cross-cutting indicators are determined from the list of Political Battles in \"Basics\".",
+      "Cross-cutting indicators are determined from the list of Political Battle in \"Basics\".",
       "This list contains all cross-cutting indicators that your project need to collect"
   ],
   "CustomDate": "Custom date",
@@ -310,7 +310,7 @@
       "name_replace": "Rename the project from <code>{{before}}</code> to <code>{{after}}</code>",
       "start_replace": "Change the project start date of the project from <code>{{before}}</code> to <code>{{after}}</code>",
       "themes_add": "Add a new Political Battle to the project",
-      "themes_move": "Reorder the project Political Battles",
+      "themes_move": "Reorder the project Political Battle",
       "themes_remove": "Remove a Political Battle from the project",
       "users_add": "Add the user <code>{{item.id}}</code> to the project",
       "users_dataSources_add": "Allow <code>{{user.name}}</code> to input data on data source <code>{{item.name}}</code>",
@@ -633,7 +633,7 @@
   "Login": "Login",
   "Members": "Members",
   "Missing": "Missing",
-  "MultipleThematics": "Multiple Political Battles",
+  "MultipleThematics": "Multiple Political Battle",
   "MyAccount": "My account",
   "Name": "Name",
   "Name-Hint": "Indicate your Full Name",
@@ -803,8 +803,8 @@
   ],
   "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
   "SettingsThematicsInfo": [
-      "This page contains the list of Political Battles handled by the NGO.",
-      "Projects and cross-cutting indicators can be linked to Political Battles."
+      "This page contains the list of Political Battle handled by the NGO.",
+      "Projects and cross-cutting indicators can be linked to Political Battle."
   ],
   "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
   "SettingsUserInfo": [
@@ -829,7 +829,7 @@
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
   "ThematicEdition": "Political Battle edition",
-  "Thematics": "Political Battles",
+  "Thematics": "Political Battle",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
