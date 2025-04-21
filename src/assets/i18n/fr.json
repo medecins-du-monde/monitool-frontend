@@ -67,7 +67,7 @@
   "CreateNewThematic": "Créer un nouveau Combat Politique",
   "CrossCuttingIndicators": "Indicateurs transversaux",
   "CrossCuttingInfo": [
-      "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de Combat Politiques renseignée dans les données de bases.",
+      "Les indicateurs transversaux a collecter sont déterminés à partir du Combat Politique renseignée dans les données de bases.",
       "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
   ],
   "Data": "Données",
@@ -222,7 +222,7 @@
       },
 
       "themes_add": "Ajoute un Combat Politique au projet",
-      "themes_move": "Reordonne les Combat Politiques du projet",
+      "themes_move": "Reordonne les Combats Politiques du projet",
       "themes_remove": "Retire un Combat Politique du projet",
 
       "entities_add": "Ajoute le lieu <code>{{item.name}}</code>",
@@ -789,8 +789,8 @@
   ],
   "SettingsThematicsEdit": "Rentrez ici le nom du Combat Politique dans toutes les langues utilisées par votre organisation.",
   "SettingsThematicsInfo": [
-      "Cette page contient la liste des Combat Politiques traitées par l'ONG.",
-      "Il est possible d'attribuer une ou plusieurs Combat Politiques à chaque projet et indicateur transversal."
+      "Cette page contient la liste des Combats Politiques traitées par l'ONG.",
+      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal."
   ],
   "SettingsUserEdit": "Vous pouvez ici modifier les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
   "SettingsUserInfo": [
@@ -839,7 +839,7 @@
           "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
           "Name": " Nommez votre indicateur. Le nom doit provenir d'un catalogue d'indicateur, afin d'être cohérent avec les autres projets.",
           "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
-          "Thematics": "Le choix des Combat Politiques conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
+          "Thematics": "Le choix du Combat Politique conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
           "Visibility": "Sauf besoin particulier, tous les projets doivent être laissé visibles par tous les utilisateurs."
       },
       "UserEdition": {
@@ -868,7 +868,7 @@
         "Cloner/Dupliquer un projet (Structure)",
         "Cloner/Dupliquer un projet (Structure et Données saisies)",
         "Modifier/Supprimer le rôle des autres utilisateurs",
-        "Créer/Modifier/Supprimer des Combat Politiques",
+        "Créer/Modifier/Supprimer des Combats Politiques",
         "Créer/Modifier/Supprimer des Indicateurs Transversaux",
         "Créer/Modifier/Supprimer la Structure et les Données de tous les projets"
       ],
@@ -896,7 +896,7 @@
   },
   "Type": "Type",
   "ThematicEdition": "Édition Combat Politique",
-  "Thematics": "Combat Politiques",
+  "Thematics": "Combat Politique",
   "UpdateUser": "Mettre à jour l'utilisateur",
   "UseExistingDisaggregation": "Utiliser une désagrégation existante",
   "UseGroups": "Utiliser des groupes",

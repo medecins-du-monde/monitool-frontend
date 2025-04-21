@@ -73,7 +73,7 @@
   "CreateNewThematic": "Create a new Political Battle",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
-      "Cross-cutting indicators are determined from the list of Political Battle in \"Basics\".",
+      "Cross-cutting indicators are determined from the Political Battle selected in \"Basics\".",
       "This list contains all cross-cutting indicators that your project need to collect"
   ],
   "CustomDate": "Custom date",
@@ -633,7 +633,7 @@
   "Login": "Login",
   "Members": "Members",
   "Missing": "Missing",
-  "MultipleThematics": "Multiple Political Battle",
+  "MultipleThematics": "Multiple Political Battles",
   "MyAccount": "My account",
   "Name": "Name",
   "Name-Hint": "Indicate your Full Name",
@@ -803,8 +803,8 @@
   ],
   "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
   "SettingsThematicsInfo": [
-      "This page contains the list of Political Battle handled by the NGO.",
-      "Projects and cross-cutting indicators can be linked to Political Battle."
+      "This page contains the list of Political Battles handled by the NGO.",
+      "Projects and cross-cutting indicators can be linked to Political Battles."
   ],
   "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
   "SettingsUserInfo": [
