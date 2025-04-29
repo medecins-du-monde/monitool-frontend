@@ -67,6 +67,13 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
             value: 'LogicalFrameworks',
           } as BreadcrumbItem,
         ];
+        if (savedProject.region) {
+          breadCrumbs.splice(2, 0, 
+            {
+              value: savedProject.region,
+            } as BreadcrumbItem,
+          );
+        }
         this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );

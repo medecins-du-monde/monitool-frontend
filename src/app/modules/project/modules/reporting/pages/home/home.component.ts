@@ -41,6 +41,13 @@ export class HomeComponent implements OnInit, OnDestroy {
             value: 'Reporting',
           } as BreadcrumbItem,
         ];
+        if (savedProject.region) {
+          breadCrumbs.splice(2, 0, 
+            {
+              value: savedProject.region,
+            } as BreadcrumbItem,
+          );
+        }
         this.projectService.updateBreadCrumbs(breadCrumbs);
       })
     );

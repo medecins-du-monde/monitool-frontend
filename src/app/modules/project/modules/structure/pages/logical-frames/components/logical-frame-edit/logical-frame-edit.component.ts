@@ -119,6 +119,13 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
               value: this.logicalFrame.name,
             } as BreadcrumbItem,
           ];
+          if (this.project.region) {
+            breadCrumbs.splice(2, 0, 
+              {
+                value: this.project.region,
+              } as BreadcrumbItem,
+            );
+          }
           this.projectService.updateBreadCrumbs(breadCrumbs);
         }
         if (!this.logicalFrame) {

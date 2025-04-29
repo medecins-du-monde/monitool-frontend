@@ -174,6 +174,13 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
               value: this.form.name,
             } as BreadcrumbItem,
           ];
+          if (this.project.region) {
+            breadCrumbs.splice(2, 0, 
+              {
+                value: this.project.region,
+              } as BreadcrumbItem,
+            );
+          }
           this.projectService.updateBreadCrumbs(breadCrumbs);
         }
 
