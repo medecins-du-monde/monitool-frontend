@@ -586,7 +586,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
               let newValue;
               if (/^(\s*([-+]?)((\d+(\.\d*)?)|(\.\d+)))?(?:(\s*([-+*/]))?\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
-                newValue = eval(change[3]);
+                newValue = this.evil(change[3]);//eval(change[3]);
+                console.log(newValue);
               } else {
                 newValue = change[3];
               }
@@ -928,5 +929,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   // We need the domSanitizer so that angular will display html tags in innerHTML
   transform(translatekey: string): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
+  }
+
+  /** Alternative to eval(), works with Octal literals */
+  private evil(fn: string) {
+    return new Function('return ' + fn)();
   }
 }
