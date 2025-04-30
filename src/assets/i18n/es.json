@@ -844,7 +844,7 @@
           "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
           "Name": "Nombre su indicador. Es preferible obtener el nombre a partir de un catalogo para ser consistente con otros proyectos.",
           "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",
-          "Thematics": "El Combate Político que elija va a determinar la lista de indicadores transversales que se deberan collectar.",
+          "Thematics": "El Combate Político que elija va a determinar la lista de indicadores transversales que se deberan collectar. MdM recomienda seleccionar un solo Combate Político por proyecto.",
           "Visibility": "Fuera de casos particulares todos los proyectos deben dejarse visibles para todos los usuarios."
       },
       "UserEdition": {

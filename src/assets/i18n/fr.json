@@ -839,7 +839,7 @@
           "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
           "Name": " Nommez votre indicateur. Le nom doit provenir d'un catalogue d'indicateur, afin d'être cohérent avec les autres projets.",
           "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
-          "Thematics": "Le choix du Combat Politique conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
+          "Thematics": "Le choix du Combat Politique conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet. MdM recommande de sélectionner un seul Combat Politique par projet.",
           "Visibility": "Sauf besoin particulier, tous les projets doivent être laissé visibles par tous les utilisateurs."
       },
       "UserEdition": {

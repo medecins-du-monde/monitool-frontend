@@ -857,7 +857,7 @@
           "EndDate": "The end date is the moment when your project closes its data collection. If unknown, enter a date far into the future.",
           "Name": "Name your indicator. The name should come from a catalog to be consistent with other projects.",
           "StartDate": "The begin date is the moment when your projects starts collecting data (usually, with the first activities).",
-          "Thematics": "The Political Battle that you choose will determine which cross-cutting indicators your project will need to collect.",
+          "Thematics": "The Political Battle that you choose will determine which cross-cutting indicators your project will need to collect. MdM recommends selecting only one Political Battle per project.",
           "Visibility": "Outside of specific cases, all projects should be visible for all users."
       },
       "UserEdition": {
