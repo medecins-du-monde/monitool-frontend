@@ -150,7 +150,8 @@
           "formula": "Custom formula (from data sources)",
           "percentage": "Percentage (from data sources)",
           "permille": "Per thousands (from data sources)",
-          "unavailable": "It is not possible to compute this indicator"
+          "unavailable": "It is not possible to compute this indicator",
+		  "none": "None"
       },
       "Formula": {
           "copied": "Copied Value",
@@ -1091,5 +1092,11 @@
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
   "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
   "no-disag-error": "At least one disaggregation must be selected",
-  "documentation": "Documentation"
+  "documentation": "Documentation",
+  "indicator": "Indicator",
+  "actions": "Actions",
+  "viewReport": "View report",
+  "downloadReport": "Download report",
+  "proposedCalc": "Proposed calculation",
+  "no-indicator-match": "No indicators match the filters"
 }

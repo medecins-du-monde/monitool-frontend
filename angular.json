@@ -31,6 +31,9 @@
               "src/styles.scss",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css"
             ],
+            "allowedCommonJsDependencies": [
+               "handsontable"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
