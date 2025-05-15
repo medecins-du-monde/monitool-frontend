@@ -161,7 +161,8 @@
           "copy": "Copier une valeur (depuis une sources de données)",
           "percentage": "Pourcentage (depuis les sources de données)",
           "permille": "Pour mille (depuis les sources de données)",
-          "formula": "Formule personalisée (depuis les sources de données)"
+          "formula": "Formule personalisée (depuis les sources de données)",
+		  "none": "Aucune"
       },
       "Formula":{
           "numerator": "Numérateur",
@@ -1107,5 +1108,11 @@
   "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
   "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\".",
   "no-disag-error": "Au moins une désagrégation doit être choisie",
-  "documentation": "Documentation"
+  "documentation": "Documentation",
+  "indicator": "Indicateur",
+  "actions": "Actions",
+  "viewReport": "Voir rapport",
+  "downloadReport": "Télécharger rapport",
+  "proposedCalc": "Calcul proposé",
+  "no-indicator-match": "Aucun indicateur ne correspond aux filtres"
 }

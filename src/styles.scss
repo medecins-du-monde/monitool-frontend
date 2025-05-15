@@ -1083,6 +1083,10 @@ code.title{
   display: flex;
   margin: 8px 0 !important;
   color: $grey !important;
+  
+  .mat-content {
+    overflow: visible;
+  }
 }
 
 .mat-expansion-panel-header-title {

@@ -23,6 +23,11 @@ import { MatLegacySelectModule as MatSelectModule } from '@angular/material/lega
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SearchbarModule } from 'src/app/components/searchbar/searchbar.module';
+import { MatLegacyTableModule as MatTableModule } from '@angular/material/legacy-table';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 
 @NgModule({
     declarations: [IndicatorsComponent, IndicatorReportComponent, ExportModalComponent],
@@ -49,6 +54,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    SearchbarModule,
+    MatTableModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatCheckboxModule
   ]
 })
 export class IndicatorsModule { }

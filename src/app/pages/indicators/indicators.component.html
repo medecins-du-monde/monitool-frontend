@@ -1,18 +1,104 @@
 <div class="full-page">
-    <div class="download">
+    <!-- <div class="download">
         <button mat-stroked-button (click)="downloadNewCC()" class="mdm-button">{{ 'cross-cutting-export' | translate }}</button>
-    </div>
-    <div *ngFor="let group of groups" class="mdm-section">
-        <div class="mdm-title">{{group.theme.name[currentLang]}}</div>
-        <div class="mdm-cards">
-            <app-indicator *ngFor="let indicator of group.indicators" [indicator]="indicator" class="mdm-card"></app-indicator>
+    </div> -->
+    <div class="actions-group" [formGroup]="filtersForm">
+        <div class="select">
+            <mat-select
+                formControlName="battles"
+                [placeholder]="'Placeholder.Filter.Thematic' | translate | translate"
+                disableOptionCentering
+                panelClass="myPanelClass"
+                multiple
+            >
+                <div class="select-options">
+                    <button
+                        mat-stroked-button
+                        [disabled]="filtersForm.value.battles.length <= 0"
+                        (click)="filtersForm.get('battles').patchValue([])"
+                    >{{'Placeholder.Filter.Clear' | translate}}</button>
+                </div>
+                <mat-option
+                    *ngFor="let theme of themes"
+                    [value]="theme.id"
+                >
+                    {{ theme.shortName[currentLang] }}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div class="action-bar" style="flex-grow: 1">
+            <app-searchbar (search)="onSearch($event)" [project]="false"></app-searchbar>
+        </div>
+        <div class="action new-project-btn">
+            <button mat-raised-button color="primary" (click)="downloadNewCC()" style="min-width: 230px;">
+                <mat-icon fontIcon="download"></mat-icon>
+                {{ 'cross-cutting-export' | translate }}
+            </button>
         </div>
     </div>
-    <div class="mdm-section">
-        <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
-        <div class="mdm-cards">
-            <app-indicator *ngFor="let indicator of multiThemesIndicators" [indicator]="indicator" class="mdm-card"></app-indicator>
-        </div>
+
+    <div class="panel-flex" style="padding: 0 24px 6px 24px;">
+        <mat-checkbox
+            color="primary"
+            (click)="$event.stopPropagation()"
+            [indeterminate]="selectedIndicatorIdsArray.length > 0 && selectedIndicatorIdsArray.length < filteredIndicators.length"
+            [checked]="allFilteredIndicatorsSelected"
+            (change)="selectIndicator($event.checked)"
+        ></mat-checkbox>
+        <p>{{"Thematics" | translate}}</p>
+        <p>{{"indicator" | translate}}</p>
+        <p style="width: 80px;">{{"actions" | translate}}</p>
     </div>
-</div>
+
+    <mat-accordion>
+        <mat-expansion-panel hideToggle *ngFor="let indicator of filteredIndicators">
+        <mat-expansion-panel-header style="min-height: fit-content;">
+            <div class="panel-flex">
+                <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox>
+                <mat-chip-list style="padding: 12px 0;">
+                    <div *ngFor="let theme of indicator.themes" [matTooltip]="theme.name[currentLang]" [matTooltipShowDelay]="200">
+                        <mat-chip style="pointer-events: none;">
+                            {{ theme.shortName[currentLang] }}
+                        </mat-chip>
+                    </div>
+                </mat-chip-list>
+                <p>{{ indicator.name[currentLang] }}</p>
+                <div>
+                    <button mat-icon-button
+                        (click)="$event.stopPropagation(); downloadNewCC([indicator.id])"
+                        [matTooltip]="'downloadReport' | translate" [matTooltipShowDelay]="200"
+                    >
+                        <mat-icon>download</mat-icon>
+                    </button>
+                    <button mat-icon-button
+                        (click)="$event.stopPropagation(); onOpen(indicator.id)"
+                        [matTooltip]="'viewReport' | translate" [matTooltipShowDelay]="200"
+                    >
+                        <mat-icon svgIcon="clipboard"></mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-expansion-panel-header>
+        <div class="panel-description">
+            <div class="separator"></div>
+            <div class="panel-flex-description">
+                <p><b>{{'Description' | translate}}:</b></p>
+                <div [innerHTML]="indicator.description[currentLang]"></div>
+            </div>
+            <div class="panel-flex-description">
+                <p><b>{{"proposedCalc" | translate}}:</b></p>
+                <p>{{
+                    indicator.computation ?
+                        (indicator.computation.formula === 'null' ?
+                            ('Enum.Computation.unavailable' | translate) :
+                            indicator.computation.formula) :
+                        ('Enum.Computation.none' | translate)
+                }}</p>
+            </div>
+        </div>
+        </mat-expansion-panel>
+        <div *ngIf="indicators.length > 0 && filteredIndicators.length === 0" class="no-result">
+            {{"no-indicator-match" | translate}}
+        </div>
+    </mat-accordion>
 <app-informations-panel></app-informations-panel>
