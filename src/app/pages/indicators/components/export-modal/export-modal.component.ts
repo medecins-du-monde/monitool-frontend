@@ -28,7 +28,7 @@ export class ExportModalComponent implements OnInit {
   }
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {indicators: Indicator[]},
+    @Inject(MAT_DIALOG_DATA) public data: {indicators: Indicator[], selectedIndicatorIds: string[]},
     private dialogRef: MatLegacyDialogRef<ExportModalComponent>,
     public fb: FormBuilder,
     public countryListService: CountryListService,
@@ -43,7 +43,7 @@ export class ExportModalComponent implements OnInit {
       countries: [[]],
       continents: [[]],
       thematics: [[]],
-      indicators: [[]],
+      indicators: [this.data.selectedIndicatorIds || []],
     });
     for(const indicator of this.data.indicators) {
       for(const theme of indicator.themes) {
@@ -52,6 +52,7 @@ export class ExportModalComponent implements OnInit {
     }
     this.filterIndicators();
     this.filteredCountryList = this.countryListService.getCountries();
+    console.log(this.data);
   }
 
   onSearchCountry(value = '') {

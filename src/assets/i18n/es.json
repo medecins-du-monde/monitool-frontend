@@ -164,7 +164,8 @@
           "copy": "Copiar un valor (desde una fuente de datos)",
           "percentage": "Porcentaje (desde fuentes de datos)",
           "permille": "Por mil (desde fuentes de datos)",
-          "formula": "Formula personalizada (desde fuentes de datos)"
+          "formula": "Formula personalizada (desde fuentes de datos)",
+		  "none": "Ninguna"
       },
       "Formula":{
           "numerator": "Numerador",
@@ -1108,5 +1109,11 @@
   "country-2.0-warning": "Se acaban de añadir las selecciones para continentes y países. Para usarlas, complete la información en la sección \"Estructura\" → \"Datos de base\" o contacte el propietario del proyecto.",
   "country-2.0-warning-project": "Su proyecto está utilizando el sistema de país antiguo. Para actualizarlo, seleccione un continente y un país en la sección \"Estructura\" → \"Datos de base\".",
   "no-disag-error": "Al menos una desagregación debe estar seleccionada",
-  "documentation": "Documentación"
+  "documentation": "Documentación",
+  "indicator": "Indicador",
+  "actions": "Acciones",
+  "viewReport": "Ver reporte",
+  "downloadReport": "Descargar reporte",
+  "proposedCalc": "Cálculo propuesto",
+  "no-indicator-match": "Ningún indicador corresponde a los filtros"
 }
