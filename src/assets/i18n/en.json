@@ -73,7 +73,7 @@
   "CreateNewThematic": "Create a new Political Battle",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
-      "Cross-cutting indicators are determined from the list of Political Battles in \"Basics\".",
+      "Cross-cutting indicators are determined from the Political Battle selected in \"Basics\".",
       "This list contains all cross-cutting indicators that your project need to collect"
   ],
   "CustomDate": "Custom date",
@@ -150,7 +150,8 @@
           "formula": "Custom formula (from data sources)",
           "percentage": "Percentage (from data sources)",
           "permille": "Per thousands (from data sources)",
-          "unavailable": "It is not possible to compute this indicator"
+          "unavailable": "It is not possible to compute this indicator",
+		  "none": "None"
       },
       "Formula": {
           "copied": "Copied Value",
@@ -310,7 +311,7 @@
       "name_replace": "Rename the project from <code>{{before}}</code> to <code>{{after}}</code>",
       "start_replace": "Change the project start date of the project from <code>{{before}}</code> to <code>{{after}}</code>",
       "themes_add": "Add a new Political Battle to the project",
-      "themes_move": "Reorder the project Political Battles",
+      "themes_move": "Reorder the project Political Battle",
       "themes_remove": "Remove a Political Battle from the project",
       "users_add": "Add the user <code>{{item.id}}</code> to the project",
       "users_dataSources_add": "Allow <code>{{user.name}}</code> to input data on data source <code>{{item.name}}</code>",
@@ -829,7 +830,7 @@
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
   "ThematicEdition": "Political Battle edition",
-  "Thematics": "Political Battles",
+  "Thematics": "Political Battle",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
@@ -857,7 +858,7 @@
           "EndDate": "The end date is the moment when your project closes its data collection. If unknown, enter a date far into the future.",
           "Name": "Name your indicator. The name should come from a catalog to be consistent with other projects.",
           "StartDate": "The begin date is the moment when your projects starts collecting data (usually, with the first activities).",
-          "Thematics": "The Political Battle that you choose will determine which cross-cutting indicators your project will need to collect.",
+          "Thematics": "The Political Battle that you choose will determine which cross-cutting indicators your project will need to collect. MdM recommends selecting only one Political Battle per project.",
           "Visibility": "Outside of specific cases, all projects should be visible for all users."
       },
       "UserEdition": {
@@ -1091,5 +1092,11 @@
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
   "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
   "no-disag-error": "At least one disaggregation must be selected",
-  "documentation": "Documentation"
+  "documentation": "Documentation",
+  "indicator": "Indicator",
+  "actions": "Actions",
+  "viewReport": "View report",
+  "downloadReport": "Download report",
+  "proposedCalc": "Proposed calculation",
+  "no-indicator-match": "No indicators match the filters"
 }

@@ -25,6 +25,10 @@
     hot-table {
         font-family: Calibri;
         color: black;
+        display: block;
+        position: relative;
+        overflow-x: hidden;
+        max-width: 100%;
     }
 }
 

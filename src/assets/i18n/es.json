@@ -69,7 +69,7 @@
   "CreateNewThematic": "Crear un nuevo Combate Político",
   "CrossCuttingIndicators": "Indicadores transversales",
   "CrossCuttingInfo": [
-      "Los indicadores transversales se deciden según la lista de Combates Políticos en \"Datos basicos\".",
+      "Los indicadores transversales se deciden según el Combate Político seleccionado en \"Datos basicos\".",
       "Esta lista contiene todos los indicadores transversales que su proyecto debe colectar"
   ],
   "Data": "Datos",
@@ -164,7 +164,8 @@
           "copy": "Copiar un valor (desde una fuente de datos)",
           "percentage": "Porcentaje (desde fuentes de datos)",
           "permille": "Por mil (desde fuentes de datos)",
-          "formula": "Formula personalizada (desde fuentes de datos)"
+          "formula": "Formula personalizada (desde fuentes de datos)",
+		  "none": "Ninguna"
       },
       "Formula":{
           "numerator": "Numerador",
@@ -420,7 +421,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
       "Name": "Volumen de formación",
-      "Thematics": "Selecciona uno o varios Combates Políticos"
+      "Thematics": "Selecciona un Combate Político"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
   "IndicatorFormulaWarningModal": {
@@ -658,7 +659,7 @@
           "Region": "Precise una región",
           "Country": "Seleccione un país",
           "Name" : "ej: Acceso a atención de calidad para las personas afectadas por la crisis",
-          "Thematics": "Seleccione uno o varios Combates Políticos",
+          "Thematics": "Seleccione un Combate Político",
           "Indicator": "Seleccione un indicador",
           "Thematic": "Seleccione un Combate Político"
       },
@@ -844,7 +845,7 @@
           "EndDate": "La fecha de fin es el momento en el que termina la colecta de datos. Si no es conocida, entre una fecha en el futuro.",
           "Name": "Nombre su indicador. Es preferible obtener el nombre a partir de un catalogo para ser consistente con otros proyectos.",
           "StartDate": "La fecha de inicio es el momento en el que su proyecto empieza a colectar datos (usualemente, con la primeras actividades).",
-          "Thematics": "Los Combates Políticos que elija van a determinar la lista de indicadores transversales que se deberan collectar.",
+          "Thematics": "El Combate Político que elija va a determinar la lista de indicadores transversales que se deberan collectar. MdM recomienda seleccionar un solo Combate Político por proyecto.",
           "Visibility": "Fuera de casos particulares todos los proyectos deben dejarse visibles para todos los usuarios."
       },
       "UserEdition": {
@@ -901,7 +902,7 @@
   },
   "Type": "Tipo",
   "ThematicEdition": "Editar Combate Político",
-  "Thematics": "Combates Políticos",
+  "Thematics": "Combate Político",
   "UpdateUser": "Actualizar el usario",
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",
@@ -1108,5 +1109,11 @@
   "country-2.0-warning": "Se acaban de añadir las selecciones para continentes y países. Para usarlas, complete la información en la sección \"Estructura\" → \"Datos de base\" o contacte el propietario del proyecto.",
   "country-2.0-warning-project": "Su proyecto está utilizando el sistema de país antiguo. Para actualizarlo, seleccione un continente y un país en la sección \"Estructura\" → \"Datos de base\".",
   "no-disag-error": "Al menos una desagregación debe estar seleccionada",
-  "documentation": "Documentación"
+  "documentation": "Documentación",
+  "indicator": "Indicador",
+  "actions": "Acciones",
+  "viewReport": "Ver reporte",
+  "downloadReport": "Descargar reporte",
+  "proposedCalc": "Cálculo propuesto",
+  "no-indicator-match": "Ningún indicador corresponde a los filtros"
 }

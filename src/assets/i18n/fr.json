@@ -67,7 +67,7 @@
   "CreateNewThematic": "Créer un nouveau Combat Politique",
   "CrossCuttingIndicators": "Indicateurs transversaux",
   "CrossCuttingInfo": [
-      "Les indicateurs transversaux a collecter sont déterminés à partir de la liste de Combats Politiques renseignée dans les données de bases.",
+      "Les indicateurs transversaux a collecter sont déterminés à partir du Combat Politique renseignée dans les données de bases.",
       "Cette liste contient tous les indicateurs qui doivent être collectés pour réaliser le suivi transversal"
   ],
   "Data": "Données",
@@ -161,7 +161,8 @@
           "copy": "Copier une valeur (depuis une sources de données)",
           "percentage": "Pourcentage (depuis les sources de données)",
           "permille": "Pour mille (depuis les sources de données)",
-          "formula": "Formule personalisée (depuis les sources de données)"
+          "formula": "Formule personalisée (depuis les sources de données)",
+		  "none": "Aucune"
       },
       "Formula":{
           "numerator": "Numérateur",
@@ -629,7 +630,7 @@
   "LogOut": "Déconnecter",
   "Members": "Membres",
   "Missing": "Manquant",
-  "MultipleThematics": "Multi-Combats Politiques",
+  "MultipleThematics": "Multi-Combat Politiques",
   "MyAccount": "Mon compte",
   "Name": "Nom",
   "newVersionAvailable": "Une nouvelle mise à jour de Monitool est disponible",
@@ -790,7 +791,7 @@
   "SettingsThematicsEdit": "Rentrez ici le nom du Combat Politique dans toutes les langues utilisées par votre organisation.",
   "SettingsThematicsInfo": [
       "Cette page contient la liste des Combats Politiques traitées par l'ONG.",
-      "Il est possible d'attribuer une ou plusieurs Combats Politiques à chaque projet et indicateur transversal."
+      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal."
   ],
   "SettingsUserEdit": "Vous pouvez ici modifier les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
   "SettingsUserInfo": [
@@ -839,7 +840,7 @@
           "EndDate": " La date de fin représente le moment où le projet finale sa collecte de données. Si cette date n'est pas connu à l'avance, rentrer une date lointaine dans le futur.",
           "Name": " Nommez votre indicateur. Le nom doit provenir d'un catalogue d'indicateur, afin d'être cohérent avec les autres projets.",
           "StartDate": "La date de début représente le moment où le projet commence à collecter des données (généralement, le début des activités).",
-          "Thematics": "Le choix des Combats Politiques conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet.",
+          "Thematics": "Le choix du Combat Politique conditionne les indicateurs transversaux que vous devrez collecter au sein de votre projet. MdM recommande de sélectionner un seul Combat Politique par projet.",
           "Visibility": "Sauf besoin particulier, tous les projets doivent être laissé visibles par tous les utilisateurs."
       },
       "UserEdition": {
@@ -896,7 +897,7 @@
   },
   "Type": "Type",
   "ThematicEdition": "Édition Combat Politique",
-  "Thematics": "Combats Politiques",
+  "Thematics": "Combat Politique",
   "UpdateUser": "Mettre à jour l'utilisateur",
   "UseExistingDisaggregation": "Utiliser une désagrégation existante",
   "UseGroups": "Utiliser des groupes",
@@ -1107,5 +1108,11 @@
   "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
   "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\".",
   "no-disag-error": "Au moins une désagrégation doit être choisie",
-  "documentation": "Documentation"
+  "documentation": "Documentation",
+  "indicator": "Indicateur",
+  "actions": "Actions",
+  "viewReport": "Voir rapport",
+  "downloadReport": "Télécharger rapport",
+  "proposedCalc": "Calcul proposé",
+  "no-indicator-match": "Aucun indicateur ne correspond aux filtres"
 }

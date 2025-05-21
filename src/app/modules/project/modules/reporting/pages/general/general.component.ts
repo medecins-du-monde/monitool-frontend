@@ -553,6 +553,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
         value: 'General'
       } as BreadcrumbItem
     ];
+    if (project.region) {
+      breadCrumbs.splice(2, 0, 
+        {
+          value: project.region,
+        } as BreadcrumbItem,
+      );
+    }
     this.projectService.updateBreadCrumbs(breadCrumbs);
   }
 
