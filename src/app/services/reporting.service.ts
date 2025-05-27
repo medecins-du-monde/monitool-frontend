@@ -237,6 +237,8 @@ export class ReportingService {
     }
     paddingValues.shift();
 
+    console.log(table.innerHTML)
+
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
@@ -244,6 +246,8 @@ export class ReportingService {
     // parse table to json, in order to send it to the server
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
+
+    console.log(json)
 
     json.forEach(row => {
       // Section titles ex: Logframes
