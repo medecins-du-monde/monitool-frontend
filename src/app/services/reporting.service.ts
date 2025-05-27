@@ -168,24 +168,31 @@ export class ReportingService {
     );
 
     // remove inly add_circle and remove_circle icons
-    const addRmBtnRegex = /<mat-icon.*?>(add_circle|remove_circle)<\/mat-icon>/g;
+    const addRmBtnRegex = /<mat-icon[^>]*?>(add_circle|remove_circle)<\/mat-icon>/g;
     table.innerHTML = table.innerHTML.replace(
       addRmBtnRegex,
       ''
     );
 
     // replace 'do_disturb' icon with '🚫'
-    const doDisturbRegex = /<mat-icon.*?>do_disturb<\/mat-icon>/g;
+    const doDisturbRegex = /<mat-icon[^>]*?>do_disturb<\/mat-icon>/g;
     table.innerHTML = table.innerHTML.replace(
       doDisturbRegex,
       '🚫'
     );
 
     // remove all arrow_forward icons
-    const arrowForwardRegex = /<mat-icon.*?>arrow_forward<\/mat-icon>/g;
+    const arrowForwardRegex = /<mat-icon[^>]*?>arrow_forward<\/mat-icon>/g;
     table.innerHTML = table.innerHTML.replace(
       arrowForwardRegex,
       '►'
+    );
+
+    // remove all info icons
+    const infoRegex = /<mat-icon[^>]*?>info<\/mat-icon>/g;
+    table.innerHTML = table.innerHTML.replace(
+      infoRegex,
+      ''
     );
 
     // replace ‰ with decimal value
@@ -230,6 +237,8 @@ export class ReportingService {
     }
     paddingValues.shift();
 
+    console.log(table.innerHTML)
+
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
@@ -237,6 +246,8 @@ export class ReportingService {
     // parse table to json, in order to send it to the server
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
+
+    console.log(json)
 
     json.forEach(row => {
       // Section titles ex: Logframes
@@ -256,6 +267,8 @@ export class ReportingService {
       }
 
     });
+
+
 
     const file = await this.apiService.post(
       '/export/currentView',
