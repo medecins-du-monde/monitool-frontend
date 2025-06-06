@@ -1,4 +1,14 @@
-<h1 mat-dialog-title>{{'report-details.title.' + data.type | translate}}</h1>
+<div mat-dialog-title style="display: flex; gap: 8px;">
+  <h1 style="margin-bottom: 2px;">{{'report-details.title.' + data.type | translate}}</h1>
+  <div
+    style="opacity: .5; cursor: pointer; padding: 4px; height: 32px; margin-top: 2px;"
+    *ngIf="data.type === 'logicalFrame' || data.type === 'form'"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>download</mat-icon>
+  </div>
+</div>
+
 <button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
   <mat-icon>close</mat-icon>
 </button>
@@ -87,3 +97,16 @@
       </div>
   </div>
 </mat-dialog-content>
+
+<a id="downloadAnchorElem" style="display:none" target="_blank"></a>
+
+<mat-menu #menu="matMenu" style="background-color: white;">
+    <a mat-menu-item (click)="downloadExport('portrait')" target="_blank">
+        <mat-icon>insert_drive_file</mat-icon>
+        <span>{{ 'DownloadPdfPortrait' | translate }}</span>
+    </a>
+    <a mat-menu-item (click)="downloadExport('landscape')" target="_blank">
+        <mat-icon>note</mat-icon>
+        <span>{{ 'DownloadPdfLandscape' | translate }}</span>
+    </a>
+</mat-menu>

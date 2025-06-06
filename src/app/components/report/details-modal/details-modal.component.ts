@@ -8,6 +8,7 @@ import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-details-modal',
@@ -88,7 +89,26 @@ export class DetailsModalComponent {
     return _.has(object, prop)
   }
 
-  private getGroupsSelected(){
+  public downloadExport(orientation: 'landscape' | 'portrait') {
+    if (this.data.type !== 'form' && this.data.type !== 'logicalFrame') return;
+
+    const dlAnchorElem = document.getElementById('downloadAnchorElem');
+    const url = 
+      `${environment.API_URL}/resources/project/` +
+      `${this.data.project.id}/` +
+      `${this.data.type == 'form' ? 'data-source' : 'logical-frame'}/` +
+      `${this.data.details.id}.pdf?` +
+      `orientation=${orientation}&` +
+      `language=${this.currentLang}`;
+    
+    console.log(url);
+    dlAnchorElem.setAttribute('href', url);
+    // dlAnchorElem.setAttribute('download', `test.pdf`);
+    dlAnchorElem.click();
+    
+  }
+
+  private getGroupsSelected() {
     if (this.data.details === null || this.data.details.entities === null){
       return [];
     }

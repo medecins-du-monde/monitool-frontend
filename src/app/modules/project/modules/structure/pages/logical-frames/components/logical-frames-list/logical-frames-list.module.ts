@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogicalFrameModule } from '../logical-frame/logical-frame.module';
 import { LogicalFramesListComponent } from './logical-frames-list.component';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 @NgModule({
   declarations: [LogicalFramesListComponent],
@@ -17,7 +18,8 @@ import { LogicalFramesListComponent } from './logical-frames-list.component';
     MatButtonModule,
     MatIconModule,
     DragDropModule,
-    CdkTableModule
+    CdkTableModule,
+    MatMenuModule
   ],
   exports: [LogicalFramesListComponent]
 })

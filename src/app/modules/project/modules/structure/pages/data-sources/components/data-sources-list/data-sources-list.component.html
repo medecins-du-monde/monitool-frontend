@@ -1,4 +1,12 @@
 <div class="mdm-section">
+  <div class="actions">
+    <button mat-stroked-button class="mdm-button" (click)="onCreate()">
+      <mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}
+    </button>
+    <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="menu" [disabled]="downloadingAll">
+      <mat-icon>download</mat-icon>{{ 'DownloadAllPDF' | translate }}
+    </button>
+  </div>
   <div class="mdm-cards" cdkDropListGroup>
     <div class="mdm-card" *ngFor="let form of forms; let i=index" cdkDropList cdkDropListOrientation="horizontal"
       [cdkDropListData]="{form:form,index:i}" (cdkDropListDropped)="drop($event)">
@@ -10,7 +18,16 @@
       </app-data-source>
     </div>
   </div>
-  <button mat-stroked-button class="mdm-button" (click)="onCreate()">
-    <mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}
-  </button>
 </div>
+<a id="downloadAnchorElem" style="display:none"></a>
+
+<mat-menu #menu="matMenu" style="background-color: white;">
+    <a mat-menu-item (click)="onDownloadAll('portrait')" target="_blank">
+        <mat-icon>insert_drive_file</mat-icon>
+        <span>{{ 'Portrait' | translate }}</span>
+    </a>
+    <a mat-menu-item (click)="onDownloadAll('landscape')" target="_blank">
+        <mat-icon>note</mat-icon>
+        <span>{{ 'Landscape' | translate }}</span>
+    </a>
+</mat-menu>

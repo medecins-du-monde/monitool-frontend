@@ -6,6 +6,7 @@ import { DetailsModalComponent } from './details-modal.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Project } from 'src/app/models/classes/project.model';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 describe('DetailsModalComponent', () => {
   let component: DetailsModalComponent;
@@ -18,6 +19,7 @@ describe('DetailsModalComponent', () => {
         MatDialogModule,
         LocalizedDatePipeModule,
         TranslateModule.forRoot(),
+        MatMenuModule
       ],
       declarations: [DetailsModalComponent],
       providers: [

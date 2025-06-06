@@ -11,6 +11,11 @@ import { ProjectService } from 'src/app/services/project.service';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 import { Subscription } from 'rxjs';
+import JSZip from 'jszip';
+import { HttpHeaders } from '@angular/common/http';
+import { ApiService } from 'src/app/services/api.service';
+import { CountryListService } from 'src/app/services/country-list.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-data-sources-list',
@@ -50,13 +55,22 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
   forms: Form[] = [];
   deletedFormVariables = [];
 
+  downloadingAll = false;
+
   private subscription: Subscription = new Subscription();
+
+  get currentLang() {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   constructor(
     private projectService: ProjectService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private apiService: ApiService,
+    private countryList: CountryListService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -172,6 +186,43 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
     moveItemInArray(this.forms, event.previousContainer.data.index, event.container.data.index);
     event.currentIndex = 0;
     this.projectService.project.next(this.project);
+  }
+
+  async onDownloadAll(orientation: 'landscape' | 'portrait') {
+    this.downloadingAll = true;
+
+    const jszip = new JSZip();
+    const dlAnchorElem = document.getElementById('downloadAnchorElem');
+
+    // '/api/resources/project/project:35862ac4-c649-47cc-848a-c6b6b42ea52e/data-source/6678cd42-0acd-4743-8468-45647c53f0f0.pdf?orientation=landscape&language=en'
+
+    for (const form of this.forms) {
+      await this.apiService.get(
+        `/resources/project/${this.project.id}/data-source/${form.id}.pdf`,
+        {
+          headers: new HttpHeaders({'Accept':'application/pdf'}),
+          responseType: 'blob' as 'json',
+          params: {
+            orientation,
+            language: this.currentLang
+          }
+        }
+      ).then((val: any) => {
+        if (val) {
+          jszip.file(`${form.name.replace(/\//g, '-')}.pdf`, new Blob([val], {type: 'application/pdf'}), {createFolders: false});
+        }
+      });
+    }
+    
+    jszip.generateAsync({ type: 'blob' }).then((content) => {
+      // see FileSaver.js
+      const url = window.URL.createObjectURL(content);
+      dlAnchorElem.setAttribute('href', url);
+      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources.zip`);
+      dlAnchorElem.click();
+      this.downloadingAll = false;
+      this.changeDetector.markForCheck();
+    });
   }
 
   // This method check if deleting a datasource has broken a computation
