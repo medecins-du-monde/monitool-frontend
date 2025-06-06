@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DataSourcesListComponent } from './data-sources-list.component';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 describe('DataSourcesListComponent', () => {
   let component: DataSourcesListComponent;
@@ -17,7 +18,8 @@ describe('DataSourcesListComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
-        MatDialogModule
+        MatDialogModule,
+        MatMenuModule
       ]
     }).compileComponents();
   }));
