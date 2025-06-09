@@ -237,8 +237,6 @@ export class ReportingService {
     }
     paddingValues.shift();
 
-    console.log(table.innerHTML)
-
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table, {
       raw: true
     });
@@ -246,8 +244,6 @@ export class ReportingService {
     // parse table to json, in order to send it to the server
     // (we can't do style stuff with the front-end library)
     const json = XLSX.utils.sheet_to_json(ws);
-
-    console.log(json)
 
     json.forEach(row => {
       // Section titles ex: Logframes
@@ -282,8 +278,6 @@ export class ReportingService {
       }
     );
 
-    console.log('OK FILE');
-
     // save file to the user's computer
     const blob = new Blob([file], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -291,9 +285,6 @@ export class ReportingService {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-
-    console.log('OK BLOB');
-    console.log(await this.getFileName(itemId));
 
     // filename format is 'monitool-<project name>.xlsx'
     a.download = await this.getFileName(itemId);
@@ -303,18 +294,14 @@ export class ReportingService {
   }
 
   private async getFileName(id: string): Promise<string> {
-    console.log(id);
     let name = 'error';
     if (id.split(':')[0] === 'indicator') {
       await this.indicatorService.get(id).then(res => {
-        console.log(res);
         name = res.name[this.translateService.currentLang];
       });
     } else if (id.split(':')[0] === 'project') {
-      await this.projectService.get(id).then(res => {
-        console.log(res); name = res.country; });
+      await this.projectService.get(id).then(res => name = res.country);
     }
-    console.log('file name is:', name);
     return `(${name})-${this.translateService.instant('export-current-minimized').toLowerCase().replaceAll(/\s+/g, '-')}.xlsx`;
   }
 
