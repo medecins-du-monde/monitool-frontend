@@ -1085,12 +1085,12 @@
   },
   "report-details": {
     "title": {
-        "crossCutting": "Détails de l'indecateur transversaux",
+        "crossCutting": "Détails de l'indicateur transversaux",
         "logicalFrame": "Détails du cadre logique",
         "form": "Détails de la source de données",
         "extraIndicator": "Détails de l'indicateurs annexé",
         "formData": "Détails de la donnée",
-        "logicalFrameIndicator": "Détails de l'indecateur du cadre logique",
+        "logicalFrameIndicator": "Détails de l'indicateur du cadre logique",
         "formDataDisag": "Détails de la désagrégation"
     },
     "formula": "Formule",

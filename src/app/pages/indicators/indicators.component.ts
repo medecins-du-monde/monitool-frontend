@@ -132,7 +132,8 @@ export class IndicatorsComponent implements OnInit {
   }
   
   onOpen(id: string): void{
-    this.router.navigate(['/indicators/indicator', id]);
+    // this.router.navigate(['/indicators/indicator', id]);
+    window.open(`/indicators/indicator/${id}`, "_blank", "noreferrer");
   }
 
   log(item) {

@@ -1530,7 +1530,6 @@ export class ReportingTableComponent
     const parsedPath = path.split('|').map(section => section.split(':'));
     let element = this.project;
     parsedPath.forEach(section => {
-      console.log(element, section[0]);
       element = element[section[0] === 'activity' ? 'activities' : section[0] + 's'].find(el => el.id === section[1]);
     })
     return element;
