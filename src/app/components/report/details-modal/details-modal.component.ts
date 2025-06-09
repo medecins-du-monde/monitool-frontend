@@ -1,13 +1,11 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { TranslateService } from '@ngx-translate/core';
 import _ from 'lodash';
 import { Entity } from 'src/app/models/classes/entity.model';
-import { FormElement } from 'src/app/models/classes/form-element.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
-import { ProjectService } from 'src/app/services/project.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -78,6 +76,7 @@ export class DetailsModalComponent {
           this.aggregation = this.disaggregationElementPartitions[_.last(Object.keys(data.details.disaggregatedBy))];
           this.data.type += 'Disag'
         }
+        this.data.details.periodicity = data.project.forms.find(form => form.elements.find(element => element.id === data.details.id))?.periodicity;
         break;
 
       default:
@@ -101,7 +100,6 @@ export class DetailsModalComponent {
       `orientation=${orientation}&` +
       `language=${this.currentLang}`;
     
-    console.log(url);
     dlAnchorElem.setAttribute('href', url);
     // dlAnchorElem.setAttribute('download', `test.pdf`);
     dlAnchorElem.click();

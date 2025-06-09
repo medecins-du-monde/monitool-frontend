@@ -28,6 +28,13 @@
           {{ (data.details.end ? data.details.end : data.project.end )| localizedDate }}</div>
   </div>
 
+  <div class="card-info" *ngIf="data.details.periodicity">
+      <div class="card-info-title">{{ 'Periodicity' | translate }}</div>
+      <div class="card-info-value">
+        {{ 'Enum.Periodicity.' + data.details.periodicity | translate }}
+      </div>
+  </div>
+
   <div class="card-info" *ngIf="groups || entities">
       <div class="card-info-title">{{ 'CollectionSites'| translate }}</div>
       <div class="card-info-value">
