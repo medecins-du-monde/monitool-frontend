@@ -2,9 +2,10 @@ import { Deserializable } from '../interfaces/deserializable.model';
 import { MultiLanguage } from './multi-language.model';
 import { v4 as uuid } from 'uuid';
 
+export type ThemeType = 'theme' | 'requiredTheme';
 export class Theme implements Deserializable {
     id: string;
-    type = 'theme';
+    type: ThemeType = 'theme';
     name: MultiLanguage;
     shortName: MultiLanguage;
     rev: string;
@@ -19,6 +20,7 @@ export class Theme implements Deserializable {
         this.name = ( input && input.name ) ? new MultiLanguage(input.name) : new MultiLanguage();
         this.shortName = ( input && input.shortName ) ? new MultiLanguage(input.shortName) : new MultiLanguage();
         this.rev = ( input && input._rev ) ? input._rev : null;
+        this.type = ( input && input.type ) ? input.type : null;
         return this;
     }
 

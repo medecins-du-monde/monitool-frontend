@@ -20,6 +20,12 @@ const routes: Routes = [
           canActivate : [PermissionsGuard]
       },
       {
+        path: 'requiredThemes',
+        loadChildren: () => import('./pages/thematics/thematics.module')
+          .then(m => m.ThematicsModule),
+          canActivate : [PermissionsGuard]
+      },
+      {
         path: 'indicators',
         loadChildren: () => import('./pages/indicators/indicators.module')
           .then(m => m.IndicatorsModule),

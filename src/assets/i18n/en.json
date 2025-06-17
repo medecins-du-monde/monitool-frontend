@@ -833,7 +833,8 @@
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
   "ThematicEdition": "Political Battle edition",
-  "Thematics": "Political Battle",
+  "Thematics": "Political Battles",
+  "RequiredThematics": "Health Models",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
@@ -1100,6 +1101,6 @@
   "actions": "Actions",
   "viewReport": "View report",
   "downloadReport": "Download report",
-  "proposedCalc": "Proposed calculation",
+  "proposedCalc": "Proposed computation",
   "no-indicator-match": "No indicators match the filters"
 }

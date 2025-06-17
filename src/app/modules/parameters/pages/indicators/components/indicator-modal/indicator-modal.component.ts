@@ -100,6 +100,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
     this.indicatorForm = this.fb.group({
       _id: this.data ? this.data.id : null,
       themes: [[], [Validators.required, Validators.minLength(1)]],
@@ -119,7 +120,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       }),
       _rev: this.data ? this.data.rev : null
     });
-    this.themeService.list().then((res: Theme[]) => {
+    this.themeService.list('all').then((res: Theme[]) => {
       this.themes = res;
       if (this.data) {
         const themes = this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id));

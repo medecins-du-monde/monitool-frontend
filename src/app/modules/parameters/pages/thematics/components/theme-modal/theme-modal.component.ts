@@ -1,8 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Theme } from 'src/app/models/classes/theme.model';
+import { Theme, ThemeType } from 'src/app/models/classes/theme.model';
 import { ForceTranslateService } from 'src/app/services/forcetranslate.service';
 
 @Component({
@@ -19,14 +20,21 @@ export class ThemeModalComponent implements OnInit, OnDestroy {
   languages = ['fr', 'en', 'es'];
   dictionary = {};
 
+  type: ThemeType = 'theme'
+
   private subscription: Subscription = new Subscription();
 
   constructor(
     private fb: UntypedFormBuilder,
     private forceTranslateService: ForceTranslateService,
     public dialogRef: MatDialogRef<ThemeModalComponent>,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: Theme
-  ) { }
+  ) {
+    if (this.router.url.includes('required')) {
+      this.type = 'requiredTheme';
+    }
+  }
 
   ngOnInit(): void {
     this.themeForm = this.fb.group({
@@ -41,6 +49,7 @@ export class ThemeModalComponent implements OnInit, OnDestroy {
         es: [this.data ? this.data.shortName.es : '', Validators.required],
         fr: [this.data ? this.data.shortName.fr : '', Validators.required]
       }),
+      type: this.data ? this.data.type : this.type,
       _rev: this.data ? this.data.rev : null
     });
 

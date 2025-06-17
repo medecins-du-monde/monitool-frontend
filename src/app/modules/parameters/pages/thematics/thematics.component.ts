@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { Theme } from 'src/app/models/classes/theme.model';
+import { Theme, ThemeType } from 'src/app/models/classes/theme.model';
 import { ThemeService } from 'src/app/services/theme.service';
 import { ThemeModalComponent } from './components/theme-modal/theme-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-thematics',
@@ -11,19 +12,25 @@ import { ThemeModalComponent } from './components/theme-modal/theme-modal.compon
 })
 export class ThematicsComponent implements OnInit {
 
+  type: ThemeType = 'theme'
   themes: Theme[];
 
   constructor(
     private themeService: ThemeService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private router: Router
+  ) {
+    if (this.router.url.includes('required')) {
+      this.type = 'requiredTheme';
+    }
+  }
 
   ngOnInit(): void {
     this.getThemes();
   }
 
   private getThemes() {
-    this.themeService.list().then((res: Theme[]) => {
+    this.themeService.list(this.type).then((res: Theme[]) => {
       this.themes = res;
     });
   }

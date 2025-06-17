@@ -26,11 +26,12 @@ export class IndicatorService {
   }
 
   public async list() {
-    const themes = await this.themeService.list();
+    const themes = await this.themeService.list('all');
     const response: any = await this.apiService.get('/resources/indicator');
     return response.map(x => {
       const indicator = new Indicator(x);
       indicator.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
+      indicator.required = !!indicator.themes.find(t => t.type === 'requiredTheme');
       return indicator;
     });
   }
@@ -40,7 +41,7 @@ export class IndicatorService {
     const result = indicatorsList.filter(indicator => {
       let response = false;
       indicator.themes.forEach( theme => {
-       if (themesList.includes(theme.id)) {
+       if (indicator.required || themesList.includes(theme.id)) {
          response = true;
         }
       });
