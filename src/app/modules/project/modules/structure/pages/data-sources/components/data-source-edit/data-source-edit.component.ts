@@ -25,6 +25,7 @@ import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import { DeleteModalComponent } from '../../../../components/delete-modal/delete-modal.component';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { v4 as uuid } from 'uuid';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-data-source-edit',
@@ -134,7 +135,8 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private authService: AuthService
   ) { }
 
   @HostListener('window:beforeunload')
@@ -191,7 +193,7 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
           this.groups = res.project.groups;
           this.setForm();
           this.projectService.hasInputs(this.project.id, this.form.id).then((res: boolean) => {
-            this.startDateDisabled = res;
+            this.startDateDisabled = res && this.authService.user.getValue()?.role !== 'admin';
             this.ref.detectChanges();
           });
         }
