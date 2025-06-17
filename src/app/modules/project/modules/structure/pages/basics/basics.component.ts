@@ -168,8 +168,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
       })
     );
     this.projectService.hasInputs(this.projectService.projectId.value).then((res: boolean) => {
-      console.log(this.authService.user.getValue()?.role);
-      this.startDateDisabled = res && this.authService.user.getValue()?.role !== 'admin'
+      this.startDateDisabled = res && this.authService.user.getValue()?.role !== 'admin';
     });
 
     this.subscription.add(
