@@ -17,4 +17,5 @@ export const HintUserData: HintUserElement[] = [
     {untitled: 'TooltipRoleHint.General.7', admin: true, project: false, common: false},
     {untitled: 'TooltipRoleHint.General.8', admin: true, project: false, common: false},
     {untitled: 'TooltipRoleHint.General.9', admin: true, project: false, common: false},
+    {untitled: 'TooltipRoleHint.General.10', admin: true, project: false, common: false},
   ];

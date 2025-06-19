@@ -889,7 +889,8 @@
         "Modify/Delete the role of other users",
         "Create/Modify/Delete Political Battles",
         "Create/Modify/Delete Cross-cutting Indicators",
-        "Create/Modify/Delete the Structure and Data of all projects"
+        "Create/Modify/Delete the Structure and Data of all projects",
+        "Modify the start date of all projects"
     ],
     "Project": [
         "Create/Modify/Delete basic data",
