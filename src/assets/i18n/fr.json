@@ -665,7 +665,7 @@
         "Country": "Filtrer par pays",
         "Clear": "Effacer la sélection",
         "Indicator": "Filtrer par indicateur",
-        "Thematic": "Filtrer par Combat Politique"
+        "Thematic": "Filtrer par thématique"
       },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
@@ -900,7 +900,11 @@
   },
   "Type": "Type",
   "ThematicEdition": "Édition Combat Politique",
-  "Thematics": "Combat Politique",
+  "Thematics": "Combats Politiques",
+  "Thematic": "Combat Politique",
+  "AllThematic": "Thématique",
+  "RequiredThematics": "Modèles  de santé",
+  "RequiredThematic": "Modèle de santé",
   "UpdateUser": "Mettre à jour l'utilisateur",
   "UseExistingDisaggregation": "Utiliser une désagrégation existante",
   "UseGroups": "Utiliser des groupes",

@@ -677,7 +677,7 @@
         "Country": "Filter by country",
         "Clear": "Clear selection",
         "Indicator": "Filter by indicator",
-        "Thematic": "Filter by Political Battle"
+        "Thematic": "Filter by Thematic"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
@@ -834,7 +834,10 @@
   "Task": "Task",
   "ThematicEdition": "Political Battle edition",
   "Thematics": "Political Battles",
+  "Thematic": "Political Battle",
+  "AllThematic": "Thematic",
   "RequiredThematics": "Health Models",
+  "RequiredThematic": "Health Model",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",

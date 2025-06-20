@@ -671,7 +671,7 @@
         "Country": "Filtrar por país",
         "Clear": "Deseleccionar todo",
         "Indicator": "Filtrar por indicador",
-        "Thematic": "Filtrar po Combate Político"
+        "Thematic": "Filtrar por Temática"
       },
       "Sites": {
           "NameEntity" : "ej: Centro de salud X, Hospital X, ...",
@@ -905,7 +905,11 @@
   },
   "Type": "Tipo",
   "ThematicEdition": "Editar Combate Político",
-  "Thematics": "Combate Político",
+  "Thematics": "Combates Políticos",
+  "Thematic": "Combate Político",
+  "AllThematic": "Temática",
+  "RequiredThematics": "Modelos de salud",
+  "RequiredThematic": "Modelo de salud",
   "UpdateUser": "Actualizar el usario",
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",
