@@ -48,7 +48,7 @@
   </div>
 </div> -->
 <ng-container *ngFor="let x of ['required', 'nonRequired']">
-  <h2>{{x}}</h2>
+  <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematics" : "Thematics") | translate}}</h2>
   <mat-accordion>
       <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
       <mat-expansion-panel-header style="min-height: fit-content;">
@@ -97,11 +97,11 @@
           <div class="panel-flex-description">
               <p><b>{{(indicator.configured ? "Computation" : "proposedCalc") | translate}}:</b></p>
               <p>{{
-                  indicator.computation ?
-                      (indicator.computation.formula === 'null' ?
-                          ('Enum.Computation.unavailable' | translate) :
-                          indicator.computation.formula) :
-                      ('Enum.Computation.none' | translate)
+                indicator.type === 'unavailable' ?
+                  ((indicator.configured ? 'Enum.Computation.unavailable' : 'Enum.Computation.none') | translate) :
+                  ( indicator.type !== 'formula' ?
+                    ('Enum.Computation.' + indicator.type | translate) :
+                    indicator.computation.formula)
               }}</p>
           </div>
       </div>

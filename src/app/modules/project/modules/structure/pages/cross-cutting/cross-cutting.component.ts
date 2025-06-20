@@ -129,6 +129,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
               this.indicators.push(new CCProjectIndicator(indicatorFound));
             }
             else {
+              console.log(indicator.computation)
               if (indicator.computation?.type === "unavailable") {
                 indicator.computation = null;
               }
