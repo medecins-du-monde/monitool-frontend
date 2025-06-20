@@ -871,7 +871,8 @@
         "Modifier/Supprimer le rôle des autres utilisateurs",
         "Créer/Modifier/Supprimer des Combats Politiques",
         "Créer/Modifier/Supprimer des Indicateurs Transversaux",
-        "Créer/Modifier/Supprimer la Structure et les Données de tous les projets"
+        "Créer/Modifier/Supprimer la Structure et les Données de tous les projets",
+        "Modifier la date de début de tous les projets"
       ],
       "Project": [
         "Créer/Modifier/Supprimer les données de base",

@@ -15,6 +15,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { CountryListService } from 'src/app/services/country-list.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-basics',
@@ -94,7 +95,8 @@ export class BasicsComponent implements OnInit, OnDestroy {
     private dateService: DateService,
     private changeDetector: ChangeDetectorRef,
     private countryListService: CountryListService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -166,7 +168,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
       })
     );
     this.projectService.hasInputs(this.projectService.projectId.value).then((res: boolean) => {
-      this.startDateDisabled = res;
+      this.startDateDisabled = res && this.authService.user.getValue()?.role !== 'admin';
     });
 
     this.subscription.add(
