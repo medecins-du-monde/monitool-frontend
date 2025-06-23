@@ -66,7 +66,7 @@
   "CreateLogicalFramework":"Añadir un marco lógico en blanco",
   "CreateNewIndicator": "Crear un nuevo indicador",
   "CreateNewProject": "Crear un nuevo proyecto",
-  "CreateNewThematic": "Crear un nuevo Combate Político",
+  "CreateNewThematic": "Crear un nuevo {{type}}",
   "CrossCuttingIndicators": "Indicadores transversales",
   "CrossCuttingInfo": [
       "Los indicadores transversales se deciden según el Combate Político seleccionado en \"Datos basicos\".",
@@ -796,7 +796,7 @@
       "Colectar estos indicadores es obligatorio para todos los proyectos que tengan por los menos un Combate Político en común con ese.",
       "Para ayudar los proyectos a planificar su colecta de datos, evite cambiar esta lista a menudo."
   ],
-  "SettingsThematicsEdit": "Entre aqui el nombre del Combate Político en todos los idiomas usados por su organización.",
+  "SettingsThematicsEdit": "Entre aqui el nombre del {{type}} en todos los idiomas usados por su organización.",
   "SettingsThematicsInfo": [
       "Esta página contiene la lista de los Combates Políticos tratados por la ONG.",
       "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos."
@@ -904,7 +904,7 @@
       ]
   },
   "Type": "Tipo",
-  "ThematicEdition": "Editar Combate Político",
+  "ThematicEdition": "Editar {{type}}",
   "Thematics": "Combates Políticos",
   "Thematic": "Combate Político",
   "AllThematic": "Temática",

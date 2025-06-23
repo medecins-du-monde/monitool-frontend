@@ -70,7 +70,7 @@
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
   "CreateNewProject": "Create a new project",
-  "CreateNewThematic": "Create a new Political Battle",
+  "CreateNewThematic": "Create a new {{type}}",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
       "Cross-cutting indicators are determined from the Political Battle selected in \"Basics\".",
@@ -805,7 +805,7 @@
       "Collecting each indicator is mandatory for all projects that have at least one Political Battle in common with it.",
       "To allow projects to plan for their data collection, avoid changing this list often."
   ],
-  "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
+  "SettingsThematicsEdit": "Enter here the name of the {{type}} in all languages used by your organisation.",
   "SettingsThematicsInfo": [
       "This page contains the list of Political Battles handled by the NGO.",
       "Projects and cross-cutting indicators can be linked to Political Battles."
@@ -832,7 +832,7 @@
   "DisplayTarget": "Display target",
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
-  "ThematicEdition": "Political Battle edition",
+  "ThematicEdition": "{{type}} edition",
   "Thematics": "Political Battles",
   "Thematic": "Political Battle",
   "AllThematic": "Thematic",

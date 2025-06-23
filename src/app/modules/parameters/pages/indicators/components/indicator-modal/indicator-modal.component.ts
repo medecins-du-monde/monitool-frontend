@@ -100,7 +100,6 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.indicatorForm = this.fb.group({
       _id: this.data ? this.data.id : null,
       themes: [[], [Validators.required, Validators.minLength(1)]],

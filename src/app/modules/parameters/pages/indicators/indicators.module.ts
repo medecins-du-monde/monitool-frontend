@@ -7,6 +7,9 @@ import { IndicatorModalModule } from './components/indicator-modal/indicator-mod
 import { IndicatorModule } from './components/indicator/indicator.module';
 import { IndicatorsRoutingModule } from './indicators-routing.module';
 import { IndicatorsComponent } from './indicators.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 
 @NgModule({
     declarations: [IndicatorsComponent],
@@ -17,7 +20,10 @@ import { IndicatorsComponent } from './indicators.component';
         MatButtonModule,
         MatIconModule,
         IndicatorModule,
-        IndicatorModalModule
+        IndicatorModalModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        MatChipsModule
     ]
 })
 export class IndicatorsModule { }

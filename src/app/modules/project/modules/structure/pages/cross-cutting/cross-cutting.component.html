@@ -2,51 +2,6 @@
     <p>{{ "CrossCuttingInfo.0" | translate }}</p>
     <p>{{ "CrossCuttingInfo.1" | translate }}</p>
 </div>
-<!-- <div [formGroup]="crossCuttingForm">
-  <div formArrayName="groupsArray">
-    <div *ngFor="let group of groupsArray.controls; let groupNumber=index" class="mdm-section">
-        <div class="mdm-title">{{ group.value.theme.name[currentLang] }}</div>
-        <div [formGroupName]="groupNumber">
-          <div class="indicators-list" formArrayName="indicators">
-            <div class="mdm-cards">
-              <ng-container class="mdm-card" *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
-                <app-extra-indicator
-                  class="mdm-card"
-                  [extraIndicator]="indicator.value"
-                  (edit)="onEditIndicator(indicator, i, groupNumber)"
-                  (delete)="onDelete(indicator)"
-                  [reset]="true"
-                  [deletable]="indicator.value.configured"
-                  [notConfigured]="!indicator.value.configured"
-                ></app-extra-indicator>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-  <div *ngIf="multiThemesArray.length > 0"formArrayName="multiThemesArray">
-    <div class="mdm-section">
-        <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
-        <div class="indicators-list">
-          <div class="mdm-cards">
-            <ng-container class="mdm-card" *ngFor="let indicator of multiThemesArray.controls; let i=index">
-              <app-extra-indicator
-                class="mdm-card"
-                [extraIndicator]="indicator.value"
-                (edit)="onEditIndicator(indicator, i)"
-                (delete)="onDelete(indicator)"
-                [reset]="true"
-                [deletable]="indicator.value.configured"
-                [notConfigured]="!indicator.value.configured"
-              >
-              </app-extra-indicator>
-            </ng-container>
-          </div>
-        </div>
-    </div>
-  </div>
-</div> -->
 <ng-container *ngFor="let x of ['required', 'nonRequired']">
   <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematics" : "Thematics") | translate}}</h2>
   <mat-accordion>

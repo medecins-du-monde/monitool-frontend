@@ -1,8 +1,8 @@
 <button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
-<h2 mat-dialog-title>{{ 'ThematicEdition' | translate }}</h2>
+<h2 mat-dialog-title>{{ 'ThematicEdition' | translate: { type: ((type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate) } }}</h2>
 <mat-dialog-content [formGroup]="themeForm" class="mdm-dialog">
     <div class="info-section blue">
-        <p>{{ 'SettingsThematicsEdit' | translate }}</p>
+        <p>{{ 'SettingsThematicsEdit' | translate: { type: ((type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate) } }}</p>
     </div>
     <table mat-table [dataSource]="languages" class="mdm-table">
 
