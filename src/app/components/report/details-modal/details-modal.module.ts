@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DetailsModalComponent } from './details-modal.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 
 @NgModule({
   declarations: [DetailsModalComponent],
@@ -23,7 +24,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     MatIconModule,
     LocalizedDatePipeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ],
   exports: [DetailsModalComponent]
 })
