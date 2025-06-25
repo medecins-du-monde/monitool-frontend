@@ -16,10 +16,12 @@ import { Subscription } from 'rxjs';
 
 class CCProjectIndicator extends ProjectIndicator {
   configured = false;
+  required = false;
 
   constructor(input?: any) {
     super(input);
     this.configured = input.configured ? true : false;
+    this.required = input.required ? true : false;
   }
 }
 
@@ -39,26 +41,12 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
 
   project: Project;
   indicators: CCProjectIndicator[] = [];
-
-  groups: { theme: Theme, indicators: CCProjectIndicator[]}[] = [];
-
-  multiThemesIndicators: CCProjectIndicator[] = [];
+  required: CCProjectIndicator[] = [];
+  nonRequired: CCProjectIndicator[] = [];
 
   crossCuttingForm: UntypedFormGroup;
 
   private subscription: Subscription = new Subscription();
-
-  get groupsArray(): UntypedFormArray {
-    return this.crossCuttingForm.controls.groupsArray as UntypedFormArray;
-  }
-
-  get multiThemesArray(): UntypedFormArray {
-    return this.crossCuttingForm.controls.multiThemesArray as UntypedFormArray;
-  }
-
-  getIndicators(groupNumber: string): UntypedFormArray {
-    return this.crossCuttingForm.controls.groupsArray.get(`${groupNumber}`).get('indicators') as UntypedFormArray;
-  }
 
   // TODO: Remove this method if not used
   get currentLang(): string {
@@ -75,7 +63,7 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.setForm();
+    // this.setForm();
 
     this.subscription.add(
       this.projectService.lastSavedVersion.subscribe((savedProject: Project) => {
@@ -127,8 +115,6 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
           .map(x => project.themes[x].id))
           .then((indicators: Indicator[]) => {
           this.indicators = [];
-          this.groups = [];
-          this.multiThemesIndicators = [];
           // Adding the indicators not initialized yet
           indicators.map(indicator => {
             const indicatorFound = listOldCrossCutting.find(x => x.id === indicator.id);
@@ -139,25 +125,26 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
               indicatorFound.display = indicator.name;
               indicatorFound.description = indicator.description;
               indicatorFound.configured = true;
+              indicatorFound.required = indicator.required;
               this.indicators.push(new CCProjectIndicator(indicatorFound));
             }
             else {
+              console.log(indicator.computation)
+              if (indicator.computation?.type === "unavailable") {
+                indicator.computation = null;
+              }
               this.indicators.push(new CCProjectIndicator(indicator));
             }
           });
-          this.indicators.forEach(x => {
-            if (x.themes.length > 1) {
-              this.multiThemesIndicators.push(x);
-            } else if (x.themes.length > 0){
-              const group = this.groups.find(g => g.theme.id === x.themes[0].id );
-              if ( group ) {
-                group.indicators.push(x);
-              } else if (x.themes.length > 0){
-                this.groups.push({ theme: x.themes[0], indicators: [x] });
-              }
+          this.required = [];
+          this.nonRequired = [];
+          for (const indicator of this.indicators) {
+            if (indicator.required) {
+              this.required.push(indicator)
+            } else {
+              this.nonRequired.push(indicator)
             }
-          });
-          this.setForm();
+          }
           this.changeDetector.markForCheck();
         });
       })
@@ -165,45 +152,20 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
-  private setForm(): void {
-    this.crossCuttingForm = this.fb.group({
-      groupsArray: this.fb.array(this.groups.map(indicatorGroup => FormGroupBuilder.newIndicatorGroup(indicatorGroup))),
-      multiThemesArray: this.fb.array(this.multiThemesIndicators.map(indicator => FormGroupBuilder.newIndicator(indicator, true))),
-    });
+  onEditIndicator(indicator: Indicator): void {
+    this.openDialog(FormGroupBuilder.newIndicator(indicator, true));
   }
 
-  onEditIndicator(indicator: UntypedFormGroup, index?: number, indexGroup?: number): void {
-    this.openDialog(FormGroupBuilder.newIndicator(indicator.value, true), index, indexGroup);
-  }
-
-  onDelete(indicator: UntypedFormGroup, index?: number, indexGroup?: number): void {
-    delete this.project.crossCutting[indicator.value.id];
+  onDelete(indicator: Indicator): void {
+    delete this.project.crossCutting[indicator.id];
     this.projectService.project.next(this.project);
   }
 
-  openDialog(indicator: UntypedFormGroup, indexIndicator?: number, indexGroup?: number): void {
+  openDialog(indicator: UntypedFormGroup): void {
     const dialogRef = this.dialog.open(IndicatorModalComponent, { data: { indicator, forms: this.project.forms, isCC: true } });
     const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        // Filling the formGroup
-        if (!indexGroup) {
-          const multiThemesArray = this.crossCuttingForm.controls.multiThemesArray as UntypedFormArray;
-          multiThemesArray.setControl(indexIndicator, res.indicator);
-        }
-        else {
-          const groupsArray = this.crossCuttingForm.controls.groupsArray as UntypedFormArray;
-          const groupIndicators = groupsArray.at(indexGroup).get('indicators') as UntypedFormArray;
-          groupIndicators.setControl(indexIndicator, res.indicator);
-        }
-
-        // Updating the openedProject
-        const indexToEdit = this.project.crossCutting[res.indicator.value.id];
-        if (indexToEdit !== -1) {
-          this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
-        }
-        else {
-          this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
-        }
+        this.project.crossCutting[res.indicator.value.id] = new ProjectIndicator(res.indicator.value);
         // TODO: Add a control of validity here. Not really necessary for the moment because we will change the structure of this page soon.
         this.projectService.project.next(this.project);
         dialogSubscription.unsubscribe();

@@ -14,6 +14,7 @@ export class Indicator implements Deserializable {
         formula: string;
     };
     rev: string;
+    required = false;
 
 
     get multiThemes() {

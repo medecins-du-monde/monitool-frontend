@@ -66,11 +66,11 @@
   "CoveredPeriod": "Covered period",
   "Restore": "Restore",
   "Create": "Input",
-  "CreateLogicalFramework": "create a blank Logical Framework",
+  "CreateLogicalFramework": "Create a blank Logical Framework",
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
   "CreateNewProject": "Create a new project",
-  "CreateNewThematic": "Create a new Political Battle",
+  "CreateNewThematic": "Create a new {{type}}",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
       "Cross-cutting indicators are determined from the Political Battle selected in \"Basics\".",
@@ -677,7 +677,7 @@
         "Country": "Filter by country",
         "Clear": "Clear selection",
         "Indicator": "Filter by indicator",
-        "Thematic": "Filter by Political Battle"
+        "Thematic": "Filter by Thematic"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
@@ -805,7 +805,7 @@
       "Collecting each indicator is mandatory for all projects that have at least one Political Battle in common with it.",
       "To allow projects to plan for their data collection, avoid changing this list often."
   ],
-  "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
+  "SettingsThematicsEdit": "Enter here the name of the {{type}} in all languages used by your organisation.",
   "SettingsThematicsInfo": [
       "This page contains the list of Political Battles handled by the NGO.",
       "Projects and cross-cutting indicators can be linked to Political Battles."
@@ -832,8 +832,12 @@
   "DisplayTarget": "Display target",
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
-  "ThematicEdition": "Political Battle edition",
-  "Thematics": "Political Battle",
+  "ThematicEdition": "{{type}} edition",
+  "Thematics": "Political Battles",
+  "Thematic": "Political Battle",
+  "AllThematic": "Thematic",
+  "RequiredThematics": "Health Models",
+  "RequiredThematic": "Health Model",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
@@ -1101,6 +1105,6 @@
   "actions": "Actions",
   "viewReport": "View report",
   "downloadReport": "Download report",
-  "proposedCalc": "Proposed calculation",
+  "proposedCalc": "Proposed computation",
   "no-indicator-match": "No indicators match the filters"
 }

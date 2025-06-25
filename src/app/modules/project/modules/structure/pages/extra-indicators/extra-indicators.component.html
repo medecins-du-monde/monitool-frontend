@@ -2,22 +2,44 @@
     <p>{{ "ExtraIndicatorsInfo.0" | translate }}</p>
     <p>{{ "ExtraIndicatorsInfo.1" | translate }}</p>
 </div>
-<div [formGroup]="extraIndicatorsForm" class="mdm-section">
-    <div class="indicators-list" formArrayName="indicators">
-        <div *ngIf="project.extraIndicators.length !== 0; else elseBlock" class="mdm-cards" cdkDropListGroup>
-            <div class="mdm-card" *ngFor="let indicator of indicators.controls; let i=index" [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)">
-                <app-extra-indicator cdkDrag cdkDragBoundary=".mdm-cards" [extraIndicator]="indicator.value" (edit)="onEditIndicator(indicator, i)" (delete)="onDeleteIndicator(i)">
-                    <div *cdkDragPlaceholder></div>
-                    <div class="cards-draghandle" cdkDragHandle>
-                        <mat-icon>drag_indicator</mat-icon>
-                    </div>
-                </app-extra-indicator>
+<div class="actions">
+    <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+</div>
+<mat-accordion>
+    <mat-expansion-panel hideToggle *ngFor="let indicator of this.extraIndicators; let i=index">
+    <mat-expansion-panel-header style="min-height: fit-content;">
+        <div class="panel-flex">
+            <p>{{ indicator.display }}</p>
+            <div>
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onEditIndicator(indicator, i)"
+                    [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onDeleteIndicator(indicator)"
+                    [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
             </div>
         </div>
-        <ng-template #elseBlock>
-          <p>{{ 'NoExtraIndicator' | translate }} </p>
-        </ng-template>
-        <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()"><mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}</button>
+    </mat-expansion-panel-header>
+    <div class="panel-description">
+        <div class="separator"></div>
+        <div class="panel-flex-description">
+            <p><b>{{"Computation" | translate}}:</b></p>
+            <p>{{
+                indicator.type !== 'formula' ?
+                    ('Enum.Computation.' + indicator.type | translate) :
+                    indicator.computation.formula
+            }}</p>
+        </div>
     </div>
-</div>
+    </mat-expansion-panel>
+    <div *ngIf="this.extraIndicators.length === 0" class="no-result">
+        {{"NoExtraIndicator" | translate}}
+    </div>
+</mat-accordion>
 

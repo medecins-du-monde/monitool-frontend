@@ -25,6 +25,11 @@ export class ParametersComponent {
             icon: 'clipboard',
           },
           {
+            name: 'RequiredThematics',
+            routerLink: '../parameters/requiredThemes',
+            icon: 'clipboard',
+          },
+          {
             name: 'CrossCuttingIndicators',
             routerLink: '../parameters/indicators',
             icon: 'gauge',

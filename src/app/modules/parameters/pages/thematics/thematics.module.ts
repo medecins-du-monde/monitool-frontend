@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ThemeModule } from './components/theme/theme.module';
 import { ThematicsRoutingModule } from './thematics-routing.module';
 import { ThematicsComponent } from './thematics.component';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 @NgModule({
     declarations: [ThematicsComponent],
@@ -15,7 +16,8 @@ import { ThematicsComponent } from './thematics.component';
         ThematicsRoutingModule,
         ThemeModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatTooltipModule
     ]
 })
 export class ThematicsModule { }

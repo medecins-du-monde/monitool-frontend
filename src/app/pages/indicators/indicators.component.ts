@@ -19,6 +19,7 @@ export class IndicatorsComponent implements OnInit {
 
   indicators: Indicator[] = [];
   filteredIndicators: Indicator[] = [];
+  filteredRequiredIndicators: Indicator[] = [];
   selectedIndicatorIds: {[id: string]: boolean} = {};
   themes: Theme[] = [];
 
@@ -66,13 +67,14 @@ export class IndicatorsComponent implements OnInit {
       this.indicators = indicators;
       this.filterIndicators();
     });
-    this.themeService.list().then((themes: Theme[]) => {
-      this.themes = themes;
+    this.themeService.list('all').then((themes: Theme[]) => {
+      this.themes = themes.sort((a, b) => a.type > b.type ? 1 : -1);
     })
   }
 
   filterIndicators(): void {
     this.filteredIndicators = [];
+    this.filteredRequiredIndicators = [];
     this.indicators.forEach(x => {
       if (this.filtersForm.value.battles.length > 0) {
         if (!x.themes.find(theme => this.filtersForm.value.battles.includes(theme.id))) {
@@ -87,7 +89,11 @@ export class IndicatorsComponent implements OnInit {
           return;
         }
       }
-      this.filteredIndicators.push(x);
+      if (x.required) {
+        this.filteredRequiredIndicators.push(x)
+      } else {
+        this.filteredIndicators.push(x);
+      }
     });
   }
 
@@ -98,6 +104,9 @@ export class IndicatorsComponent implements OnInit {
   selectIndicator(value: boolean, id?: string) {
     if (!id) {
       for (const ind of this.filteredIndicators) {
+        value ? this.selectedIndicatorIds[ind.id] = true : delete this.selectedIndicatorIds[ind.id];
+      }
+      for (const ind of this.filteredRequiredIndicators) {
         value ? this.selectedIndicatorIds[ind.id] = true : delete this.selectedIndicatorIds[ind.id];
       }
     } else {

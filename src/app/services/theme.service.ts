@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Theme } from '../models/classes/theme.model';
+import { Theme, ThemeType } from '../models/classes/theme.model';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -9,9 +9,9 @@ export class ThemeService {
 
   constructor(private apiService: ApiService) { }
 
-  public async list() {
+  public async list(type: ThemeType | 'all' = 'theme') {
     const response: any = await this.apiService.get('/resources/theme');
-    return response.map(x => new Theme(x));
+    return response.filter(x => type === 'all' || x.type === type).map(x => new Theme(x));
   }
 
   public async save(theme: Theme) {

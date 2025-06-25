@@ -72,6 +72,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
     if (this.data.isCC) {
       this.isCC = true;
     }
@@ -167,7 +168,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
   onTypeChange(type: any): void {
     const computation = this.data.indicator.controls.computation as UntypedFormGroup;
     // Updating the formula in function of the type
-    if (type.value === 'fixed' && isNaN(computation.value.formula)) {
+    if (type.value === 'fixed' && (isNaN(computation.value.formula) || !computation.value.formula)) {
       computation.controls.formula.setValue('0');
     }
     else if (type.value === 'copy') {

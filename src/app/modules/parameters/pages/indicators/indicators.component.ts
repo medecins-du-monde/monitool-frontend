@@ -3,6 +3,8 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
 import { IndicatorModalComponent } from './components/indicator-modal/indicator-modal.component';
+import { TranslateService } from '@ngx-translate/core';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
 
 @Component({
@@ -12,11 +14,17 @@ import { IndicatorModalComponent } from './components/indicator-modal/indicator-
 })
 export class IndicatorsComponent implements OnInit {
 
-  indicators: Indicator[];
+  required: Indicator[] = [];
+  nonRequired: Indicator[] = [];
+
+  get currentLang(): string {
+    return this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
+  }
 
   constructor(
     private indicatorService: IndicatorService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -25,16 +33,37 @@ export class IndicatorsComponent implements OnInit {
 
   private getIndicators() {
     this.indicatorService.list().then((res: Indicator[]) => {
-      this.indicators = res;
+      this.required = [];
+      this.nonRequired = [];
+      res.map((indicator: Indicator) => {
+        if (indicator.required) {
+          this.required.push(indicator);
+        } else {
+          this.nonRequired.push(indicator);
+        }
+      });
     });
   }
 
   onDelete(id: string) {
-    this.indicatorService.delete(id).then(() => this.getIndicators());
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'DeleteConfirmation'}});
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+      if (res.confirm){
+        this.indicatorService.delete(id).then(() => this.getIndicators());
+        dialogSubscription.unsubscribe();
+      }
+    });
   }
 
   onEdit(indicator: Indicator) {
-    this.indicatorService.save(indicator).then(() => this.getIndicators());
+    const dialogRef = this.dialog.open(IndicatorModalComponent, { data: indicator });
+
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+      if (res && res.data) {
+        this.indicatorService.save(res.data).then(() => this.getIndicators());
+        dialogSubscription.unsubscribe();
+      }
+    });
   }
 
   openDialog() {
