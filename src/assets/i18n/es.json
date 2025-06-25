@@ -879,7 +879,8 @@
         "Modificar/Eliminar el rol de otros usuarios",
         "Crear/Modificar/Eliminar Luchas Políticas",
         "Crear/Modificar/Eliminar Indicadores Transversales",
-        "Crear/Modificar/Eliminar la Estructura y los Datos de todos los proyectos"
+        "Crear/Modificar/Eliminar la Estructura y los Datos de todos los proyectos",
+        "Modificar la fecha de inicio de todos los proyectos"
       ],
       "Project": [
         "Crear/Modificar/Eliminar datos básicos",
