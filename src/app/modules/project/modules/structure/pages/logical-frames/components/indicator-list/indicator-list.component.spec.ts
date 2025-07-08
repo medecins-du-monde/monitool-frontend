@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndicatorListComponent } from './indicator-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('IndicatorListComponent', () => {
   let component: IndicatorListComponent;
@@ -8,7 +9,8 @@ describe('IndicatorListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [IndicatorListComponent]
+      declarations: [IndicatorListComponent],
+      imports: [TranslateModule.forRoot()]
     });
     fixture = TestBed.createComponent(IndicatorListComponent);
     component = fixture.componentInstance;
