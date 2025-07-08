@@ -12,6 +12,7 @@ import { ActivityEditModule } from '../activity-edit/activity-edit.module';
 import { ExtraIndicatorModule } from '../../../../components/extra-indicator/extra-indicator.module';
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { IndicatorListModule } from '../indicator-list/indicator-list.module';
 
 @NgModule({
   declarations: [OutputEditComponent],
@@ -28,7 +29,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ActivityEditModule,
     IndicatorModalModule,
     ExtraIndicatorModule,
-    DragDropModule
+    DragDropModule,
+    IndicatorListModule
   ],
   exports: [OutputEditComponent]
 })

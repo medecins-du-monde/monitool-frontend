@@ -1,0 +1,46 @@
+<mat-accordion cdkDropList
+    (cdkDropListDropped)="itemDropped($event)"
+>
+    <mat-expansion-panel hideToggle *ngFor="let indicator of indicators; let i=index;"
+        cdkDrag
+    >
+    <mat-expansion-panel-header style="min-height: fit-content;">
+        <div class="panel-flex">
+            <mat-icon cdkDragHandle (click)="$event.stopPropagation();">drag_indicator</mat-icon>
+            <p>{{ indicator.value.display }}</p>
+            <div>
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onEdit.emit({indicator, i})"
+                    [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onDelete.emit({i})"
+                    [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel-header>
+    <div class="panel-description">
+        <div class="separator"></div>
+        <div class="panel-flex-description">
+            <p><b>{{'Baseline' | translate}}:</b></p>
+            <div>{{indicator.value.baseline || '?'}}</div>
+        </div>
+        <div class="panel-flex-description">
+            <p><b>{{'Target' | translate}}:</b></p>
+            <div>{{indicator.value.target || '?'}}</div>
+        </div>
+        <div class="panel-flex-description">
+            <p><b>{{"Computation" | translate}}:</b></p>
+            <p>{{
+                indicator.value.type !== 'formula' ?
+                ('Enum.Computation.' + indicator.value.type | translate) :
+                indicator.value.computation.formula
+            }}</p>
+        </div>
+    </div>
+</mat-expansion-panel>
