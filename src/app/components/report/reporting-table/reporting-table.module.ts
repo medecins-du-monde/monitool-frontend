@@ -14,6 +14,7 @@ import { ReportTablePaddingPipeModule } from 'src/app/pipes/ReportTablePadding/r
 import { ReportTableColorPipeModule } from 'src/app/pipes/ReportTableColor/reportTableColorPipe.module';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { DetailsModalModule } from '../details-modal/details-modal.module';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 
 @NgModule({
   declarations: [ReportingTableComponent],
@@ -31,7 +32,8 @@ import { DetailsModalModule } from '../details-modal/details-modal.module';
     ReportTableTooltipPipeModule,
     ReportTablePaddingPipeModule,
     ReportTableColorPipeModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule
   ],
   exports: [ReportingTableComponent]
 })

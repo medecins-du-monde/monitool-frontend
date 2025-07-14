@@ -1126,5 +1126,6 @@
   "no-indicator-match": "Ningún indicador corresponde a los filtros",
   "hide": "Ocultar",
   "no-hide": "Hacer visible",
-  "hidden": "Oculto"
+  "hidden": "Oculto",
+  "showHidden": "Mostrar elementos ocultos"
 }

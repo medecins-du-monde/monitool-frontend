@@ -1109,5 +1109,6 @@
   "no-indicator-match": "No indicators match the filters",
   "hide": "Hide",
   "no-hide": "Make visible",
-  "hidden": "Hidden"
+  "hidden": "Hidden",
+  "showHidden": "Show hidden elements"
 }
