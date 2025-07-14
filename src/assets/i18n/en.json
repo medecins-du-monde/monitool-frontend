@@ -1106,5 +1106,8 @@
   "viewReport": "View report",
   "downloadReport": "Download report",
   "proposedCalc": "Proposed computation",
-  "no-indicator-match": "No indicators match the filters"
+  "no-indicator-match": "No indicators match the filters",
+  "hide": "Hide",
+  "no-hide": "Make visible",
+  "hidden": "Hidden"
 }

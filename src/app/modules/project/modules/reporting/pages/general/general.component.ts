@@ -196,6 +196,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
       for (const logicalFrame of this.project.logicalFrames) {
         path = `logicalFrame:${logicalFrame.id}`;
 
+        // We don't add it if disabled
+        if (logicalFrame.disabled) continue;
+
         rows.push({
           title: `${this.translateService.instant('LogicalFramework')}: ${
             logicalFrame.name
@@ -381,6 +384,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
     if (this.project.forms) {
       for (const form of this.project.forms) {
+        if (form.disabled) continue;
         path = `form:${form.id}`;
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,

@@ -1122,5 +1122,8 @@
   "viewReport": "Voir rapport",
   "downloadReport": "Télécharger rapport",
   "proposedCalc": "Calcul proposé",
-  "no-indicator-match": "Aucun indicateur ne correspond aux filtres"
+  "no-indicator-match": "Aucun indicateur ne correspond aux filtres",
+  "hide": "Cacher",
+  "no-hide": "Rendre visible",
+  "hidden": "Caché"
 }

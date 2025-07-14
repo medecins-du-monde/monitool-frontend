@@ -9,6 +9,7 @@ import _ from 'lodash';
 export class LogicalFrame implements Deserializable {
     id: string;
     name: string;
+    disabled = false;
     goal = '';
     start: Date;
     end: Date;
@@ -34,6 +35,7 @@ export class LogicalFrame implements Deserializable {
       return {
             id: this.id,
             name: this.name,
+            disabled: this.disabled,
             goal: this.goal,
             start: this.start ? DatesHelper.dateToString(this.start) : null,
             end: this.end ? DatesHelper.dateToString(this.end) : null,

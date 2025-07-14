@@ -325,8 +325,38 @@ mat-hint {
 
 .card-header {
   align-items: center;
+  // justify-content: space-between;
   background-color: $card_header_background;
   padding: 16px 5px;
+
+  &.hidden {
+    background: repeating-linear-gradient(
+    45deg,
+      rgba($card_header_background, .6),
+      rgba($card_header_background, .6) 10px,
+      rgba($card_header_background, .4) 10px,
+      rgba($card_header_background, .4) 20px
+    );
+    // background-color: rgba($card_header_background, .4);
+
+    mat-chip {
+      margin: -10px 0;
+      margin-right: 0;
+      margin-left: auto;
+      border-radius: 20px;
+      // border: 1px solid white;
+      background-color: white;//#f2eadd;
+      color: darkorange;
+      padding: 2px 8px !important;
+
+      mat-icon {
+        height: 18px;
+        width: 18px;
+        margin-right: 4px;
+      }
+    }
+
+  }
 
   .project-icon {
     height: 24px;
@@ -1156,6 +1186,10 @@ code.title{
 
 .delete {
   color: $delete_background !important;
+}
+
+.warning {
+  color: $info !important;
 }
 
 

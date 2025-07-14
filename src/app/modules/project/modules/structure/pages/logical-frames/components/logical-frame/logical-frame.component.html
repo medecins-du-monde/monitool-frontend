@@ -1,6 +1,12 @@
 <mat-card class="with-header">
     <ng-content></ng-content>
-    <mat-card-header class="card-header">{{ logicalFrame.name }}</mat-card-header>
+    <mat-card-header class="card-header" [class.hidden]="logicalFrame.disabled">
+        {{ logicalFrame.name }}
+        <mat-chip *ngIf="logicalFrame.disabled">
+            <mat-icon>visibility_off</mat-icon>
+            {{'hidden' | translate}}
+        </mat-chip>
+    </mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Date' | translate }}</div>
@@ -38,6 +44,10 @@
         <mat-icon>note</mat-icon>
         <span>{{ 'DownloadPdfLandscape' | translate }}</span>
     </a>
+    <button mat-menu-item class="warning" (click)="onDisable()">
+        <mat-icon class="warning">{{logicalFrame.disabled ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <span>{{ (logicalFrame.disabled ? 'no-hide' : 'hide') | translate }}</span>
+    </button>
     <button mat-menu-item class="delete" (click)="onDelete()">
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>

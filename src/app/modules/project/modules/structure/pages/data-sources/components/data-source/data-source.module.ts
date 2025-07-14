@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import { DataSourceComponent } from './data-source.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 
 @NgModule({
   declarations: [DataSourceComponent],
@@ -21,7 +22,8 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
     MatDialogModule,
     RouterModule,
     MatIconModule,
-    LocalizedDatePipeModule
+    LocalizedDatePipeModule,
+    MatChipsModule
   ],
   exports: [DataSourceComponent]
 })
