@@ -6,6 +6,7 @@
     >
     <mat-expansion-panel-header style="min-height: fit-content;">
         <div class="panel-flex">
+            <div [class.invalid]="indicator.value.type === 'unavailable'"></div>
             <mat-icon cdkDragHandle (click)="$event.stopPropagation();">drag_indicator</mat-icon>
             <p>{{ indicator.value.display }}</p>
             <div>
@@ -36,7 +37,7 @@
         </div>
         <div class="panel-flex-description">
             <p><b>{{"Computation" | translate}}:</b></p>
-            <p>{{
+            <p [style]="indicator.value.type === 'unavailable' ? 'color: #d9534f' : ''">{{
                 indicator.value.type !== 'formula' ?
                 ('Enum.Computation.' + indicator.value.type | translate) :
                 indicator.value.computation.formula

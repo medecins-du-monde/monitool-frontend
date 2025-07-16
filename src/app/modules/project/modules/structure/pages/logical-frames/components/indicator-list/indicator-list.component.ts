@@ -20,6 +20,10 @@ export class IndicatorListComponent {
   constructor(private translateService: TranslateService) {
   }
 
+  ngOnChanges() {
+    console.log(this.indicators);
+  }
+
   itemDropped(event: any) {
     event.container = {...event.container, data: {indicator: this.indicators[event.previousIndex], index: event.currentIndex}};
     event.previousContainer = {...event.previousContainer, data: {indicator: this.indicators[event.previousIndex], index: event.previousIndex}};
