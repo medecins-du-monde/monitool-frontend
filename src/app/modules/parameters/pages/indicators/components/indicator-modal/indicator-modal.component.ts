@@ -120,7 +120,7 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
       _rev: this.data ? this.data.rev : null
     });
     this.themeService.list('all').then((res: Theme[]) => {
-      this.themes = res;
+      this.themes = res.sort((a, b) => a.type > b.type ? 1 : -1);
       if (this.data) {
         const themes = this.themes.filter(x => this.data.themes.map(t => t.id).includes(x.id));
         // Set the original of prevForm;

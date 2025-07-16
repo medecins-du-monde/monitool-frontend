@@ -3,7 +3,7 @@
     <p>{{ "CrossCuttingInfo.1" | translate }}</p>
 </div>
 <ng-container *ngFor="let x of ['required', 'nonRequired']">
-  <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematics" : "Thematics") | translate}}</h2>
+  <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematic" : "Thematic") | translate}}</h2>
   <mat-accordion>
       <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
       <mat-expansion-panel-header style="min-height: fit-content;">

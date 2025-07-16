@@ -424,7 +424,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "No se trata de educación para la salud, sino de formación para el personal sanitario. Se cuenta el número de participaciones y no el número de personas distintas que hayan participado.",
       "Name": "Volumen de formación",
-      "Thematics": "Selecciona un Combate Político"
+      "Thematics": "Selecciona una Temática"
   },
   "IndicatorMissingDescription": "El descriptivo de este indicador no fue rellenado",
   "IndicatorFormulaWarningModal": {
@@ -799,7 +799,9 @@
   "SettingsThematicsEdit": "Entre aqui el nombre del {{type}} en todos los idiomas usados por su organización.",
   "SettingsThematicsInfo": [
       "Esta página contiene la lista de los Combates Políticos tratados por la ONG.",
-      "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos."
+      "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos.",
+      "Esta página presenta todos los elementos del Modelo de Salud respaldado por Médicos del Mundo (MdM).",
+      "La asignación de estos componentes a cada proyecto se realiza automáticamente."
   ],
   "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
   "SettingsUserInfo": [

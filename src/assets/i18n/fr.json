@@ -419,7 +419,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
       "Name": "Volume de formation",
-      "Thematics": "ex: Soins de santé primaire"
+      "Thematics": "Sélectionner une thématique"
   },
   "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
   "IndicatorFormulaWarningModal": {
@@ -794,7 +794,9 @@
   "SettingsThematicsEdit": "Rentrez ici le nom du {{type}} dans toutes les langues utilisées par votre organisation.",
   "SettingsThematicsInfo": [
       "Cette page contient la liste des Combats Politiques traitées par l'ONG.",
-      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal."
+      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal.",
+      "Cette page présente l’ensemble des éléments du Modèle de Santé pris en charge par Médecins du Monde (MdM).",
+      "L’attribution de ces éléments à chaque projet s’effectue automatiquement."
   ],
   "SettingsUserEdit": "Vous pouvez ici modifier les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
   "SettingsUserInfo": [

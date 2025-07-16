@@ -20,12 +20,12 @@ export class ParametersComponent {
             icon: 'people',
           },
           {
-            name: 'Thematics',
+            name: 'Thematic',
             routerLink: '../parameters/themes',
             icon: 'clipboard',
           },
           {
-            name: 'RequiredThematics',
+            name: 'RequiredThematic',
             routerLink: '../parameters/requiredThemes',
             icon: 'clipboard',
           },

@@ -410,7 +410,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
       "Name": "Training volume",
-      "Thematics": "i.e. Primary health care"
+      "Thematics": "Select a Theme"
   },
   "IndicatorMissingDescription": "The description of this indicator was not filled",
   "IndicatorFormulaWarningModal": {
@@ -808,7 +808,9 @@
   "SettingsThematicsEdit": "Enter here the name of the {{type}} in all languages used by your organisation.",
   "SettingsThematicsInfo": [
       "This page contains the list of Political Battles handled by the NGO.",
-      "Projects and cross-cutting indicators can be linked to Political Battles."
+      "Projects and cross-cutting indicators can be linked to Political Battles.",
+      "This page presents all the components of the Health Model supported by Médecins du Monde (MdM).",
+      "The assignment of these components to each project is carried out automatically."
   ],
   "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
   "SettingsUserInfo": [
