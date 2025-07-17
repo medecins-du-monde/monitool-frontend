@@ -97,6 +97,11 @@ export class DataSourceComponent implements OnInit {
     this.delete.emit(this.form);
   }
 
+  onDisable() {
+    this.form.disabled = !this.form.disabled;
+    this.projectService.project.next(this.project);
+  }
+
   onClone(form, cloneDS = false) {
     this.formToClone = form;
     this.cloneDS = cloneDS;

@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogicalFrameComponent } from './logical-frame.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
+import { MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 
 @NgModule({
   declarations: [LogicalFrameComponent],
@@ -19,7 +20,8 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
     MatMenuModule,
     RouterModule,
     MatIconModule,
-    LocalizedDatePipeModule
+    LocalizedDatePipeModule,
+    MatChipsModule
   ],
   exports: [LogicalFrameComponent]
 })

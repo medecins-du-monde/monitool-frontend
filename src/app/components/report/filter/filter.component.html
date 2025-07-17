@@ -7,10 +7,17 @@
              </mat-icon>
              {{ 'Filters' | translate }}
            </h2>
-           <h2 *ngIf="!isCrossCuttingReport"  [matTooltip]="userIsAdmin ? ('display-comments.tooltip' | translate) : null">
-             {{ 'display-comments.title' | translate}}
-             <mat-checkbox [(ngModel)]="showComments" ngDefaultControl (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
-           </h2>
+           <div style="display: flex; align-items: center;">
+            <h2 *ngIf="!isCrossCuttingReport">
+                {{ 'showHidden' | translate}}
+                <mat-checkbox [(ngModel)]="showHidden" ngDefaultControl (change)="showHiddenChange.emit(showHidden)"></mat-checkbox>
+            </h2>
+            <div style="height: 4px; width: 4px; background-color: rgba(0, 0, 0, .2); border-radius: 100%;"></div>
+            <h2 *ngIf="!isCrossCuttingReport"  [matTooltip]="userIsAdmin ? ('display-comments.tooltip' | translate) : null">
+                {{ 'display-comments.title' | translate}}
+                <mat-checkbox [(ngModel)]="showComments" ngDefaultControl (change)="showCommentsChange.emit(showComments)"></mat-checkbox>
+            </h2>
+           </div>
          </td>
     </tr>
     <tr>

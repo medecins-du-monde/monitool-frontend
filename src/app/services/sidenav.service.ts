@@ -134,31 +134,37 @@ export class SidenavService implements OnDestroy {
     // If the user has a data entry roles, only display the datasource they can modify
     if (user.role === 'input') {
       user.dataSources.forEach(dataSource => {
-        input.items.push({
-          name: this.projectService.getNamefromId(dataSource, project.forms),
-          routerLink: `../${project.id}/input/inputs/${dataSource}`,
-          icon: 'edit'
-        });
+        if (!dataSource.disabled) {
+          input.items.push({
+            name: this.projectService.getNamefromId(dataSource, project.forms),
+            routerLink: `../${project.id}/input/inputs/${dataSource}`,
+            icon: 'edit'
+          });
+        }
       });
     } else if (projectUser && projectUser.role === 'input') {
        projectUser.dataSources.forEach(dataSource => {
-        input.items.push({
-          name: dataSource.name,
-          routerLink: `../${project.id}/input/inputs/${dataSource.id}`,
-          icon: 'edit'
-        });
+        if (!dataSource.disabled) {
+          input.items.push({
+            name: dataSource.name,
+            routerLink: `../${project.id}/input/inputs/${dataSource.id}`,
+            icon: 'edit'
+          });
+        }
       });
     }
     // Otherwise, we take all the datasources of the project
     else {
       project.forms.forEach(form => {
-        input.items.push(
-          {
-            name: form.name,
-            routerLink: `../${project.id}/input/inputs/${form.id}`,
-            icon: 'edit'
-          }
-        );
+        if (!form.disabled) {
+          input.items.push(
+            {
+              name: form.name,
+              routerLink: `../${project.id}/input/inputs/${form.id}`,
+              icon: 'edit'
+            }
+          );
+        }
       });
     }
 

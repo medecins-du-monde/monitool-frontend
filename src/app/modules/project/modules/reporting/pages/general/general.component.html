@@ -9,6 +9,8 @@
       [project]="project"
       [showComments]="showComments"
       (showCommentsChange)="showComments = $event"
+      [showHidden]="showHidden"
+      (showHiddenChange)="showHidden = $event; buildIndicators();"
       [userIsAdmin]="userIsAdmin"
       [filterEnd]="updatedFilterDate"
     >

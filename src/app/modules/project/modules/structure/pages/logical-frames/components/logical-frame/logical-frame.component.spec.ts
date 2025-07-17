@@ -8,6 +8,7 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
 import { LocalizedDatePipe } from 'src/app/pipes/LocalizedDate/LocalizedDatePipe';
 
 import { LogicalFrameComponent } from './logical-frame.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LogicalFrameComponent', () => {
   let component: LogicalFrameComponent;
@@ -19,6 +20,7 @@ describe('LogicalFrameComponent', () => {
       imports: [
         TranslateModule.forRoot(),
         LocalizedDatePipeModule,
+        HttpClientTestingModule,
         MatMenuModule,
         CommonModule
       ],

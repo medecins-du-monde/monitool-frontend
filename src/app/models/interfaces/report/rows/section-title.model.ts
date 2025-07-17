@@ -1,5 +1,6 @@
 export interface SectionTitle{
     title: string;
+    disabled?: boolean;
     sectionId: number;
     open: boolean;
     click: (id: number) => void;
