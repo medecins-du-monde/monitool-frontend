@@ -2,6 +2,14 @@
     <mat-icon>info</mat-icon>
     <span>{{ (isOwner ? 'LockedInput.infoAdmin' : 'LockedInput.infoUser') | translate }}</span>
 </div>
+<div class="info-section blue">
+    <div class="info-buttons" style="align-self: end;">
+        <a mat-stroked-button type="button" class="mdm-button"
+            (click)="openDownload()">
+            <mat-icon>download</mat-icon>{{'DownloadData' | translate}}
+        </a>
+    </div>
+</div>
 <div class="mdm-title">{{ 'GeneralInformations' | translate }}</div>
 <div class="mdm-section">
     <div class="info">

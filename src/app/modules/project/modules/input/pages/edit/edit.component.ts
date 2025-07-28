@@ -935,4 +935,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   private evil(fn: string) {
     return new Function('return ' + fn)();
   }
+
+  openDownload() {
+    const url = `/api/resources/project/${this.project?.id}/data-source/${this.formId}.xlsx/${this.siteId}/${this.timeSlotDate}`;
+    window.open(url, '_blank');
+  }
 }

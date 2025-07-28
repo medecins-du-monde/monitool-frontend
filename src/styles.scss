@@ -266,10 +266,9 @@ mat-hint {
   .info-buttons {
     display: flex;
     flex-direction: column;
-    align-self: flex-end;
-    margin-bottom: 4px;
+    align-self: center;
 
-    a {
+    a:not(:last-child) {
       margin-bottom: 4px;
     }
   }
