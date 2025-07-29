@@ -80,7 +80,12 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
       }
 
       if (key) {
-        data.translationKey = key;
+        if (key.startsWith('HistoryRevision.forms_disabled') || key.startsWith('HistoryRevision.logicalFrames_disabled')) {
+          data.translationKey = `HistoryRevision.${key.includes('forms') ? 'forms' : 'logicalFrames'}_${data.after ? 'disabled' : 'enabled'}`;
+          data.item = {name: 'form.name'}
+        } else {
+          data.translationKey = key;
+        }
         // Simplify the comments to only show 'updated comment'
         // Check if there is already a key starting with 'HistoryRevision.comments'
         if (key.startsWith('HistoryRevision.comments')) {

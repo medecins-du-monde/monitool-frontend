@@ -263,6 +263,8 @@
       "users_dataSources_remove": "Elimina la autorización de entrar datos en <code>{{item.name}}</code> al usuario <code>{{user.name}}</code>",
 
       "forms_add": "Añade la fuente de datos <code>{{item.name}}</code>",
+      "forms_disabled": "La fuente de datos <code>{{form.name}}</code> se ha ocultado.",
+      "forms_enabled": "La fuente de datos <code>{{form.name}}</code> se ha hecho visible.",
       "forms_move": "Reordena las fuentes de datos del proyecto",
       "forms_remove": "Elimina la fuente de datos <code>{{item.name}}</code>",
       "forms_name_replace": "Cambia el nombre de la fuente de datos <code>{{before}}</code> en <code>{{after}}</code>",
@@ -303,6 +305,8 @@
       "forms_elements_partitions_groups_members_remove": "Elimina <code>{{item.name}}</code> del grupo <code>{{group.name}}</code> en la desagregación <code>{{partition.name}}</code> de los datos <code>{{variable.name}}</code>",
 
       "logicalFrames_add": "Añade el marco lógico <code>{{item.name}}</code>",
+      "logicalFrames_disabled": "El marco lógico <code>{{logicalFrame.name}}</code> se ha ocultado.",
+      "logicalFrames_enabled": "El marco lógico <code>{{logicalFrame.name}}</code> se ha hecho visible.",
       "logicalFrames_move": "Reordena los marcos lógicos",
       "logicalFrames_remove": "Elimina el marco lógico <code>{{item.name}}</code>",
 
@@ -782,6 +786,7 @@
   "SaveIndicator": "Guardar indicador",
   "SaveConfirm": "Guarde para confirmar la reversión de esta versión",
   "SaveThematic": "Guardar el Combate Político",
+  "SaveRequiredThematic": "Guardar el Modelo de Salud",
   "SaveUser": "Guardar usuario",
   "SearchProject": "Entre texto para buscar proyectos",
   "SearchHelp": "Buscar un proyecto por el nombre de continente, país, región, proyecto o Combate Político.",
@@ -800,7 +805,7 @@
   "SettingsThematicsInfo": [
       "Esta página contiene la lista de los Combates Políticos tratados por la ONG.",
       "Los proyectos y los indicadores transversales se pueden conectar a los Combates Políticos.",
-      "Esta página presenta todos los elementos del Modelo de Salud respaldado por Médicos del Mundo (MdM).",
+      "Esta página presenta todos los Modelos de Salud respaldados por Médicos del Mundo (MdM).",
       "La asignación de estos componentes a cada proyecto se realiza automáticamente."
   ],
   "SettingsUserEdit": "Puede editar aqui la permisiones de los demas usuarios. Haga click en \"Mostrar ayuda para este campo\" para mas detalles sobre los diferentes tipos de permision que son disponibles.",
@@ -911,8 +916,8 @@
   "Thematics": "Combates Políticos",
   "Thematic": "Combate Político",
   "AllThematic": "Temática",
-  "RequiredThematics": "Modelos de salud",
-  "RequiredThematic": "Modelo de salud",
+  "RequiredThematics": "Modelos de Salud",
+  "RequiredThematic": "Modelo de Salud",
   "UpdateUser": "Actualizar el usario",
   "UseExistingDisaggregation": "Usar una desagregación existente",
   "UseGroups": "Usar grupos",
