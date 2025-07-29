@@ -5,10 +5,21 @@
   align-items: center;
 
   & > :nth-child(1) {
-    flex: 1;
+    height: calc(100% + 8px);
+    width: 6px;
+    background-color: #5CB85C;
+    margin: -4px 8px -4px -24px;
+
+    &.invalid {
+        background-color: #d9534f;
+    }
   }
 
   & > :nth-child(2) {
+    flex: 1;
+  }
+
+  & > :nth-child(3) {
     margin-left: 20px;
     justify-self: end;
   }

@@ -8,7 +8,7 @@
       <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
       <mat-expansion-panel-header style="min-height: fit-content;">
           <div class="panel-flex">
-              <div [class.configured]="indicator.configured"></div>
+              <div [class.configured]="indicator.configured" [class.invalid]="indicator.type === 'unavailable'"></div>
               <!-- <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox> -->
               <mat-chip-list style="padding: 12px 0;">
                   <div *ngFor="let theme of indicator.themes" [matTooltip]="theme.name[currentLang]" [matTooltipShowDelay]="200">
