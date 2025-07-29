@@ -26,6 +26,16 @@ export const continentList: ContinentList = {
     es: ["Norteamérica", "Ámerica del Norte"],
     fr: "Amérique du Nord"
   },
+  "CA": {
+    en: "Central America",
+    es: ["Centroámerica", "Ámerica Central"],
+    fr: "Amérique Centrale"
+  },
+  "ME": {
+    en: "Middle East",
+    es: ["Oriente Medio", "Medio Oriente"],
+    fr: "Moyen Orient"
+  },
   "OC": {
     en: "Oceania",
     es: "Oceanía",
@@ -36,10 +46,21 @@ export const continentList: ContinentList = {
     es: ["Ámerica del Sur", "Suramérica", "Sudamérica"],
     fr: "Amérique du Sud"
   },
+  // Custom continents
   "FICTIVE": {
     en: "Fictive",
     es: "Ficticio",
     fr: "Fictif"
+  },
+  "SIEG": {
+    en: "MdM France headquarters",
+    es: "Sede de MdM Francia",
+    fr: "Siège MdM France"
+  },
+  "MDMI": {
+    en: "MdM International",
+    es: "MdM International",
+    fr: "MdM Internacional"
   },
 }
 
@@ -85,7 +106,7 @@ export const countryList: CountryList = {
         "es": "Albania"
     },
     "AM": {
-        "continent": "AS",
+        "continent": "EU",
         "en": "Armenia",
         "fr": "Arménie",
         "es": "Armenia"
@@ -540,7 +561,7 @@ export const countryList: CountryList = {
         "es": "Granada"
     },
     "GE": {
-        "continent": "AS",
+        "continent": "EU",
         "en": "Georgia",
         "fr": "Géorgie",
         "es": "Georgia"
@@ -842,7 +863,7 @@ export const countryList: CountryList = {
         "es": "República Democrática Popular de Lao"
     },
     "LB": {
-        "continent": "AS",
+        "continent": "ME",
         "en": "Lebanon",
         "fr": "Liban",
         "es": "Líbano"
@@ -1025,7 +1046,7 @@ export const countryList: CountryList = {
         "es": "Malaui"
     },
     "MX": {
-        "continent": "NA",
+        "continent": "CA",
         "en": "Mexico",
         "fr": "Mexique",
         "es": "México"
@@ -1188,7 +1209,7 @@ export const countryList: CountryList = {
         "es": "Puerto Rico"
     },
     "PS": {
-        "continent": "AS",
+        "continent": "ME",
         "en": [
             "Palestine",
             "State of Palestine",
@@ -1239,7 +1260,7 @@ export const countryList: CountryList = {
         "es": "Serbia"
     },
     "RU": {
-        "continent": "AS",
+        "continent": "EU",
         "en": [
             "Russia",
             "Russian Federation",
@@ -1368,7 +1389,7 @@ export const countryList: CountryList = {
         "es": "Sint Maarten (neerlandesa)"
     },
     "SY": {
-        "continent": "AS",
+        "continent": "ME",
         "en": "Syrian Arab Republic",
         "fr": "Syrie",
         "es": "República Árabe Siria"
@@ -1588,7 +1609,7 @@ export const countryList: CountryList = {
         "es": "Kosovo"
     },
     "YE": {
-        "continent": "AS",
+        "continent": "AF",
         "en": "Yemen",
         "fr": "Yémen",
         "es": "Yemen"
@@ -1617,10 +1638,102 @@ export const countryList: CountryList = {
         "fr": "Zimbabwe",
         "es": "Zimbabue"
     },
+    // France Regions
+    "D-ALS": {
+        "continent": "EU",
+        "en": "Alsace delegation",
+        "fr": "Délégation Alsace",
+        "es": "Delegación de Alsacia"
+    },
+    "D-AQ": {
+        "continent": "EU",
+        "en": "Aquitaine delegation",
+        "fr": "Délégation Aquitaine ",
+        "es": "Delegación de Aquitania"
+    },
+    "D-ARA": {
+        "continent": "EU",
+        "en": "Auvergne Rhone Alpes delegation",
+        "fr": "Délégation Auvergne Rhone Alpes",
+        "es": "Delegación de Auvernia Ródano Alpes"
+    },
+    "D-COR": {
+        "continent": "EU",
+        "en": "Corse delegation",
+        "fr": "Délégation Corse",
+        "es": "Delegación Córcega"
+    },
+    "D-HDF": {
+        "continent": "EU",
+        "en": "Hauts-de-france delegation",
+        "fr": "Délégation Hauts-De-France",
+        "es": "Delegación Alta Francia"
+    },
+    "D-IDF": {
+        "continent": "EU",
+        "en": "Ile-De-France delegation",
+        "fr": "Délégation Ile-De-France",
+        "es": "Delegación de Isla de Francia"
+    },
+    "D-LR": {
+        "continent": "EU",
+        "en": "Languedoc Roussillon delegation",
+        "fr": "Délégation Languedoc Roussillon ",
+        "es": "Delegación del Languedoc-Rosellón"
+    },
+    "D-MP": {
+        "continent": "EU",
+        "en": "Midi-pyrénées delegation",
+        "fr": "Délégation Midi-Pyrénées",
+        "es": "Delegación Mediodía-Pirineos"
+    },
+    "D-NOR": {
+        "continent": "EU",
+        "en": "Normandy delegation",
+        "fr": "Délégation Normandie",
+        "es": "Delegación Normandía"
+    },
+    "D-OI": {
+        "continent": "EU",
+        "en": "Indian Ocean delegation",
+        "fr": "Délégation Océan Indien",
+        "es": "Delegación del Océano Índico"
+    },
+    "D-PACA": {
+        "continent": "EU",
+        "en": "PACA delegation",
+        "fr": "Délégation PACA",
+        "es": "Delegación PACA"
+    },
+    "D-PDL": {
+        "continent": "EU",
+        "en": "Pays De La Loire delegation",
+        "fr": "Délégation Pays De La Loire",
+        "es": "Delegación Pays De La Loire"
+    },
+    "D-PC": {
+        "continent": "EU",
+        "en": "Poitou Charentes delegation",
+        "fr": "Délégation Poitou Charentes",
+        "es": "Delegación Poitou-Charentes"
+    },
+    // Custom continents
     "FICTIVE": {
         continent: 'FICTIVE',
         en: "Fictive",
-        es: "Ficticio",
-        fr: "Fictif"
-    }
+        fr: "Fictif",
+        es: "Ficticio"
+    },
+    "SIEG": {
+        continent: "SIEG",
+        en: "MdM France headquarters",
+        fr: "Siège MdM France",
+        es: "Sede de MdM Francia"
+    },
+    "MDMI": {
+        continent: "MDMI",
+        en: "MdM International",
+        fr: "MdM International",
+        es: "MdM Internacional"
+    },
 }
