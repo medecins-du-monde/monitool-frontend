@@ -1,20 +1,24 @@
 <div class="info-section blue">
-    <span>
+    <span style="width: 100%;">
         <p>{{ 'InputsInfo.0' | translate }} <span *ngIf="this.form">"{{this.form.name}}"</span></p>
         <p>{{ 'InputsInfo.1' | translate }}</p>
         <p>{{ 'InputsInfo.2' | translate }}</p>
     </span>
     <div class="info-buttons">
         <a mat-stroked-button type="button" class="mdm-button"
-            href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=portrait" target="_blank"
-            rel="noopener noreferrer">
-            <mat-icon>insert_drive_file</mat-icon>{{'DownloadPdfPortrait' | translate}}
+            [matMenuTriggerFor]="downloadMenu">
+            <mat-icon>download</mat-icon>{{'DownloadPdf' | translate}}
         </a>
         <a mat-stroked-button type="button" class="mdm-button"
+            (click)="openDownload('xlsx')"
+        >
+            <mat-icon>download</mat-icon>{{'DownloadTemplate' | translate}}
+        </a>
+        <!-- <a mat-stroked-button type="button" class="mdm-button"
         href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"
         rel="noopener noreferrer">
         <mat-icon>note</mat-icon>{{'DownloadPdfLandscape' | translate}}
-    </a>
+    </a> -->
     </div>
 </div>
 <div *ngIf="this.sites?.length > 0; else elseBlockError" class="table-box">
@@ -103,10 +107,32 @@
 <mat-menu #menu="matMenu" >
     <ng-template matMenuContent let-element="element">
         <button mat-menu-item 
+            (click)="openDownload('xlsx', undefined, {site: element.column, date: element.date})"
+        >
+            <mat-icon>download</mat-icon>
+            {{ 'DownloadData' | translate }}
+        </button>
+        <button mat-menu-item 
             (click)="toggleBlock(element)"
         >
             <mat-icon>{{element.blocked ? 'lock_open' : 'lock'}}</mat-icon>
             {{ (element.blocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate }}
+        </button>
+    </ng-template>
+</mat-menu>
+<mat-menu #downloadMenu="matMenu" >
+    <ng-template matMenuContent>
+        <button mat-menu-item 
+            (click)="openDownload('pdf', 'portrait')"
+        >
+            <mat-icon>insert_drive_file</mat-icon>
+            {{ 'DownloadPdfPortrait' | translate }}
+        </button>
+        <button mat-menu-item 
+            (click)="openDownload('pdf', 'landscape')"
+        >
+            <mat-icon>note</mat-icon>
+            {{ 'DownloadPdfLandscape' | translate }}
         </button>
     </ng-template>
 </mat-menu>

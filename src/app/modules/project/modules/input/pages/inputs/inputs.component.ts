@@ -379,4 +379,15 @@ export class InputsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  openDownload(type: 'pdf' | 'xlsx', orientation?: 'portrait' | 'landscape', details?: {site: string, date: string}) {
+    let url = `/api/resources/project/${this.project?.id}/data-source/${this.formId}.${type}`;
+    if (type === 'pdf' && orientation) {
+      url += `?orientation=${orientation}`;
+    }
+    if (type === 'xlsx' && details) {
+      url += `/${details.site}/${details.date}`;
+    }
+    window.open(url, '_blank');
+  }
+
 }
