@@ -2,7 +2,7 @@
     <mat-icon>info</mat-icon>
     <span>{{ (isOwner ? 'LockedInput.infoAdmin' : 'LockedInput.infoUser') | translate }}</span>
 </div>
-<div class="info-section blue">
+<div class="info-section blue" *ngIf="!isNew">
     <div class="info-buttons" style="align-self: end;">
         <a mat-stroked-button type="button" class="mdm-button"
             (click)="openDownload()">
