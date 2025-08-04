@@ -7,6 +7,7 @@
     "build": "ng build",
     "build:uat": "ng build --configuration=uat",
     "build:beta": "ng build --configuration=beta",
+    "build:prod": "ng build --configuration=production",
     "test": "ng test",
     "test-headless": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
     "lint": "ng lint",
