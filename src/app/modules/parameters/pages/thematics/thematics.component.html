@@ -1,12 +1,37 @@
 <div class="info-section blue">
-    <p>{{ 'SettingsThematicsInfo.0' | translate }}</p>
-    <p>{{ 'SettingsThematicsInfo.1' | translate }}</p>
+    <p>{{ (type === 'theme' ? 'SettingsThematicsInfo.0' : 'SettingsThematicsInfo.2') | translate }}</p>
+    <p>{{ (type === 'theme' ? 'SettingsThematicsInfo.1' : 'SettingsThematicsInfo.3') | translate }}</p>
 </div>
-<div class="mdm-cards">
+<!-- <div class="mdm-cards">
     <app-theme *ngFor="let theme of themes" [theme]="theme" (delete)="onDelete($event)" (edit)="onEdit($event)"
         class="mdm-card"></app-theme>
+</div> -->
+<div class="actions">
+    <button mat-stroked-button (click)="openDialog()" class="mdm-button">
+        <mat-icon>add</mat-icon>
+        {{ ('CreateNewThematic' | translate: { type: (type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate }) }}
+    </button>
 </div>
-<button mat-stroked-button (click)="openDialog()" class="mdm-button">
-    <mat-icon>add</mat-icon>
-    {{ 'CreateNewThematic' | translate }}
-</button>
+<div class="fake-accordion">
+    <div *ngFor="let theme of themes">
+          <div class="panel-flex">
+              <!-- <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox> -->
+              <p>{{ theme.shortName[currentLang] }}</p>
+              <p>{{ theme.name[currentLang] }}</p>
+              <div>
+                  <button mat-icon-button
+                      (click)="onEdit(theme)"
+                      [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button
+                      (click)="onDelete(theme.id)"
+                      [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>delete</mat-icon>
+                  </button>
+              </div>
+          </div>
+    </div>
+</div>

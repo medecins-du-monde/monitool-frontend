@@ -11,6 +11,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ExtraIndicatorModule } from '../../components/extra-indicator/extra-indicator.module';
 import { ExtraIndicatorsRoutingModule } from './extra-indicators-routing.module';
 import { ExtraIndicatorsComponent } from './extra-indicators.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 
 @NgModule({
     declarations: [ExtraIndicatorsComponent],
@@ -25,7 +29,11 @@ import { ExtraIndicatorsComponent } from './extra-indicators.component';
         MatCardModule,
         ReactiveFormsModule,
         DragDropModule,
-        CdkTableModule
+        CdkTableModule,
+        MatExpansionModule,
+        MatCheckboxModule,
+        MatTooltipModule,
+        MatChipsModule
     ]
 })
 export class ExtraIndicatorsModule { }

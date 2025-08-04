@@ -1,6 +1,12 @@
 <mat-card class="with-header">
     <ng-content></ng-content>
-    <mat-card-header class="card-header">{{ form.name }}</mat-card-header>
+    <mat-card-header class="card-header" [class.hidden]="form.disabled">
+        {{ form.name }}
+        <mat-chip *ngIf="form.disabled">
+            <mat-icon>visibility_off</mat-icon>
+            {{'hidden' | translate}}
+        </mat-chip>
+    </mat-card-header>
     <mat-card-content>
         <div class="card-info">
             <div class="card-info-title">{{ 'Date' | translate }}</div>
@@ -37,10 +43,6 @@
         <mat-icon>note</mat-icon>
         <span>{{ 'DownloadPdfLandscape' | translate }}</span>
     </a>
-    <button mat-menu-item class="delete" (click)="onDelete()">
-        <mat-icon class="delete">delete</mat-icon>
-        <span>{{ 'Delete' | translate }}</span>
-    </button>
     <button mat-menu-item (click)="onClone(form)">
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'CloneStructure' | translate }}</span>
@@ -48,6 +50,14 @@
     <button mat-menu-item (click)="onClone(form, true)">
         <mat-icon>content_copy</mat-icon>
         <span>{{ 'CloneStructureAndData' | translate }}</span>
+    </button>
+    <button mat-menu-item class="warning" (click)="onDisable()">
+        <mat-icon class="warning">{{form.disabled ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <span>{{ (form.disabled ? 'no-hide' : 'hide') | translate }}</span>
+    </button>
+    <button mat-menu-item class="delete" (click)="onDelete()">
+        <mat-icon class="delete">delete</mat-icon>
+        <span>{{ 'Delete' | translate }}</span>
     </button>
 </mat-menu>
 
@@ -57,7 +67,7 @@
             <mat-icon>close</mat-icon>
         </button>
         <h2 mat-dialog-title>{{ (cloneDS ? 'DuplicateDatasourceTitleWithData' : 'DuplicateDatasourceTitle') | translate }}</h2>
-        <div class="warning" *ngIf="cloneDS">
+        <div class="warningModal" *ngIf="cloneDS">
             <mat-icon>warning</mat-icon>
             <p>{{'DuplicateDatasourceWithDataWarning' | translate}}</p>
         </div>

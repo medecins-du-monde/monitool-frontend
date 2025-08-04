@@ -7,6 +7,7 @@ import DatesHelper from 'src/app/utils/dates-helper';
 export class Form implements Deserializable {
     id: string;
     name: string;
+    disabled = false;
     start: Date;
     end: Date;
     periodicity: string;
@@ -51,6 +52,7 @@ export class Form implements Deserializable {
             entities: this.entities.map(x => x.id),
             id: this.id,
             name: this.name,
+            disabled: this.disabled,
             periodicity: this.periodicity,
             start: this.start ? DatesHelper.dateToString(this.start) : null
         };

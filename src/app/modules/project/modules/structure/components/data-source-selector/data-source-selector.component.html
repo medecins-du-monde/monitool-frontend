@@ -17,7 +17,15 @@
             </mat-chip-list>
         </mat-select-trigger>
         <mat-option (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
-        <mat-option *ngFor="let dataSource of dataSources" (click)="toggleNormalOption(dataSource)" [value]="dataSource">{{ dataSource.name }}</mat-option>
+        <mat-option *ngFor="let dataSource of dataSources" (click)="toggleNormalOption(dataSource)" [value]="dataSource">
+            <div style="display: flex; justify-content: space-between; gap: 20px; align-items: center;">
+                {{ dataSource.name }}
+                <mat-chip *ngIf="dataSource.disabled" [removable]="true" style="margin: -10px 0">
+                    <mat-icon class="option" style="transform: none !important; margin-top: 2px;">visibility_off</mat-icon>
+                    {{'hidden' | translate}}
+                </mat-chip>
+            </div>
+        </mat-option>
     </mat-select>
     <mat-hint>
         <mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.DataSources' | translate }}

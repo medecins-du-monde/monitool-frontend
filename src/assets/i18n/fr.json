@@ -64,7 +64,7 @@
   "CreateLogicalFramework":"Créer un cadre logique vierge",
   "CreateNewIndicator": "Créer un nouvel indicateur",
   "CreateNewProject": "Créer un nouveau projet",
-  "CreateNewThematic": "Créer un nouveau Combat Politique",
+  "CreateNewThematic": "Créer un nouveau {{type}}",
   "CrossCuttingIndicators": "Indicateurs transversaux",
   "CrossCuttingInfo": [
       "Les indicateurs transversaux a collecter sont déterminés à partir du Combat Politique renseignée dans les données de bases.",
@@ -117,6 +117,9 @@
   "Done": "Réalisé",
   "DownloadPdfLandscape": "Télécharger PDF (paysage)",
   "DownloadPdfPortrait": "Télécharger PDF (portrait)",
+  "DownloadPdf": "Télécharger PDF",
+  "DownloadTemplate": "Télécharger le modèle",
+  "DownloadData": "Télécharger les données",
   "Landscape": "Orientation paysage",
   "Portrait": "Orientation portrait",
   "DownloadAllPDF": "Télécharger tout en PDF",
@@ -258,6 +261,8 @@
       "users_dataSources_remove": "Retire l'autorisation de saisir sur <code>{{item.name}}</code> à l'utilisateur <code>{{user.name}}</code>",
 
       "forms_add": "Ajoute la source de données <code>{{item.name}}</code>",
+      "forms_disabled": "La source de données <code>{{form.name}}</code> a été caché.",
+      "forms_enabled": "La source de données <code>{{form.name}}</code> a été rendu visible.",
       "forms_move": "Reordonne les sources de données du projet",
       "forms_remove": "Supprime la source de données <code>{{item.name}}</code>",
       "forms_name_replace": "Renomme la source de données <code>{{before}}</code> en <code>{{after}}</code>",
@@ -298,6 +303,8 @@
       "forms_elements_partitions_groups_members_remove": "Retire <code>{{item.name}}</code> du groupe <code>{{group.name}}</code> dans la désagrégation <code>{{partition.name}}</code> de le donnée <code>{{variable.name}}</code>",
 
       "logicalFrames_add": "Ajoute le cadre logique <code>{{item.name}}</code>",
+      "logicalFrames_disabled": "Le cadre logique <code>{{logicalFrame.name}}</code> a été caché.",
+      "logicalFrames_enabled": "Le cadre logique <code>{{logicalFrame.name}}</code> a été rendu visible.",
       "logicalFrames_move": "Reordonne les cadres logiques",
       "logicalFrames_remove": "Supprime le cadre logique <code>{{item.name}}</code>",
 
@@ -419,7 +426,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "On ne parle pas d'éducation pour la santé, mais de formation à du personnel soignant. On compte le nombre de participations et non pas le nombre de personnes différentes ayant participé à ces formations.",
       "Name": "Volume de formation",
-      "Thematics": "ex: Soins de santé primaire"
+      "Thematics": "Sélectionner une thématique"
   },
   "IndicatorMissingDescription": "La description de cet indicateur n'a pas été renseignée",
   "IndicatorFormulaWarningModal": {
@@ -665,7 +672,7 @@
         "Country": "Filtrer par pays",
         "Clear": "Effacer la sélection",
         "Indicator": "Filtrer par indicateur",
-        "Thematic": "Filtrer par Combat Politique"
+        "Thematic": "Filtrer par thématique"
       },
       "Sites": {
           "NameEntity" : "ex: Centre de santé X, Hôpital X, ...",
@@ -777,6 +784,7 @@
   "SaveIndicator": "Sauvegarder l'indicateur",
   "SaveConfirm": "Enregistrer pour confirmer le rétablissement de cette version",
   "SaveThematic": "Sauvegarder le Combat Politique",
+  "SaveRequiredThematic": "Sauvegarder le Modèle de Santé",
   "SaveUser": "Sauvegarder l'utilisateur",
   "SearchProject": "Rentrez du texte pour filtrer les projets",
   "SearchHelp": "Chercher un projet par nom de continent ou de pays ou de région ou de projet ou de Combat Politique.",
@@ -791,10 +799,12 @@
       "La collecte de chaque indicateur est obligatoire pour les projets qui ont au moins un Combat Politique en commun celui-ci.",
       "Afin de permettre aux projets de planifier leur collecte, merci de ne pas changer régulièrement cette liste."
   ],
-  "SettingsThematicsEdit": "Rentrez ici le nom du Combat Politique dans toutes les langues utilisées par votre organisation.",
+  "SettingsThematicsEdit": "Rentrez ici le nom du {{type}} dans toutes les langues utilisées par votre organisation.",
   "SettingsThematicsInfo": [
       "Cette page contient la liste des Combats Politiques traitées par l'ONG.",
-      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal."
+      "Il est possible d'attribuer un Combat Politique à chaque projet et indicateur transversal.",
+      "Cette page présente l’ensemble des Modèles de Santé pris en charge par Médecins du Monde (MdM).",
+      "L’attribution de ces éléments à chaque projet s’effectue automatiquement."
   ],
   "SettingsUserEdit": "Vous pouvez ici modifier les permissions d'autres utilisateurs que vous sur le lieu. Cliquez sur \"Afficher l'aide sur ce champ\" pour avoir plus de détails sur les différents niveaux d'autorisation disponibles",
   "SettingsUserInfo": [
@@ -900,8 +910,12 @@
       ]
   },
   "Type": "Type",
-  "ThematicEdition": "Édition Combat Politique",
-  "Thematics": "Combat Politique",
+  "ThematicEdition": "Édition {{type}}",
+  "Thematics": "Combats Politiques",
+  "Thematic": "Combat Politique",
+  "AllThematic": "Thématique",
+  "RequiredThematics": "Modèles  de Santé",
+  "RequiredThematic": "Modèle de Santé",
   "UpdateUser": "Mettre à jour l'utilisateur",
   "UseExistingDisaggregation": "Utiliser une désagrégation existante",
   "UseGroups": "Utiliser des groupes",
@@ -1118,5 +1132,9 @@
   "viewReport": "Voir rapport",
   "downloadReport": "Télécharger rapport",
   "proposedCalc": "Calcul proposé",
-  "no-indicator-match": "Aucun indicateur ne correspond aux filtres"
+  "no-indicator-match": "Aucun indicateur ne correspond aux filtres",
+  "hide": "Cacher",
+  "no-hide": "Rendre visible",
+  "hidden": "Caché",
+  "showHidden": "Afficher les éléments cachés"
 }

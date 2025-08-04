@@ -249,6 +249,7 @@ export class LogicalFrameEditComponent implements OnInit, OnDestroy {
 
   // drag and drop function on a form array that can span accross multiple rows
   dropIndicators(event: CdkDragDrop<any>) {
+    console.log(event);
     moveItemInArray(this.indicators.controls, event.previousContainer.data.index, event.container.data.index);
     // Dummy code so the save button is available
     const control = this.indicators.at(0);

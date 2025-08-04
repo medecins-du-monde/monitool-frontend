@@ -170,7 +170,7 @@
         class="title"
         (contextmenu)="onRightClick($event, matTrigger, spanTrigger, element)"
       >
-        <div class="title-row"
+        <div class="title-row" [class.hidden]="element.disabled"
           [class.comment-cell]="this.showComments && element.comment"
           [matTooltip]="element.title | getTooltip : showComments : element.comment :  formatGroupName(element.title, true)"
         >
@@ -182,6 +182,10 @@
             {{element["title"]}}
           </p>
           <mat-icon class="details-icon" *ngIf="shouldShowDetails(element)" (click)="showDetails($event, element)">info</mat-icon>
+          <mat-chip *ngIf="element.disabled">
+              <mat-icon class="option" style="transform: none !important; margin-top: 2px;">visibility_off</mat-icon>
+              {{'hidden' | translate}}
+          </mat-chip>
         </div>
       </td>
     </ng-container>

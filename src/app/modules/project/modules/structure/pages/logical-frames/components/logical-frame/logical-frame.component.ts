@@ -4,6 +4,7 @@ import { Entity } from 'src/app/models/classes/entity.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
+import { ProjectService } from 'src/app/services/project.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -68,7 +69,7 @@ export class LogicalFrameComponent implements OnInit {
     return entities;
   }
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService, private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.allOption.members = this.logicalFrame.entities;
@@ -83,6 +84,11 @@ export class LogicalFrameComponent implements OnInit {
 
   onEdit() {
     this.edit.emit(this.logicalFrame);
+  }
+
+  onDisable() {
+    this.logicalFrame.disabled = !this.logicalFrame.disabled;
+    this.projectService.project.next(this.project);
   }
 
   onDelete() {

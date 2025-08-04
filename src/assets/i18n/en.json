@@ -66,11 +66,11 @@
   "CoveredPeriod": "Covered period",
   "Restore": "Restore",
   "Create": "Input",
-  "CreateLogicalFramework": "create a blank Logical Framework",
+  "CreateLogicalFramework": "Create a blank Logical Framework",
   "CreateNewDataSource": "Create a new data source",
   "CreateNewIndicator": "Create a new indicator",
   "CreateNewProject": "Create a new project",
-  "CreateNewThematic": "Create a new Political Battle",
+  "CreateNewThematic": "Create a new {{type}}",
   "CrossCuttingIndicators": "Cross-cutting indicators",
   "CrossCuttingInfo": [
       "Cross-cutting indicators are determined from the Political Battle selected in \"Basics\".",
@@ -123,6 +123,9 @@
   "Done": "Done",
   "DownloadPdfLandscape": "Download PDF (landscape)",
   "DownloadPdfPortrait": "Download PDF (portrait)",
+  "DownloadPdf": "Download PDF",
+  "DownloadTemplate": "Download template",
+  "DownloadData": "Download data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
   "DownloadAllPDF": "Download all as PDF",
@@ -225,6 +228,8 @@
       "entities_remove": "Remove the site <code>{{item.name}}</code>",
       "entities_start_replace": "Change the site begin date of <code>{{entity.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
       "forms_add": "Create the data source <code>{{item.name}}</code>",
+      "forms_disabled": "The data source <code>{{form.name}}</code> has been hidden.",
+      "forms_enabled": "The data source <code>{{form.name}}</code> has been made visible.",
       "forms_elements_add": "Add the data <code>{{item.name}}</code> to <code>{{form.name}}</code>",
       "forms_elements_distribution_replace": "Change the format of the input table of <code>{{variable.name}}</code>",
       "forms_elements_geoAgg_replace": "Change the aggregation rule (location) of <code>{{variable.name}}</code> from <code>{{before}}</code> to <code>{{after}}</code>",
@@ -266,6 +271,8 @@
       "groups_name_replace": "Rename the group <code>{{before}}</code> to <code>{{after}}</code>",
       "groups_remove": "Remove the group <code>{{item.name}}</code>",
       "logicalFrames_add": "Create logical framework <code>{{item.name}}</code>",
+      "logicalFrames_disabled": "The logical framework <code>{{logicalFrame.name}}</code> has been hidden.",
+      "logicalFrames_enabled": "The logical framework <code>{{logicalFrame.name}}</code> has been made visible.",
       "logicalFrames_end_replace": "Change end date <code>{{before}}</code> to <code>{{after}}</code> in logical framework <code>{{logicalFrame.name}}</code>",
       "logicalFrames_entities_add": "Add the site <code>{{item.name}}</code> to the logical framework <code>{{logicalFrame.name}}</code>",
       "logicalFrames_entities_move": "Reorder the sites of the logical framework <code>{{logicalFrame.name}}</code>",
@@ -410,7 +417,7 @@
   "IndicatorEditionPlaceholder": {
       "Description": "We are not talking about health education, but training of medical staff. Count the number of entries and not the number of different people who attended these trainings.",
       "Name": "Training volume",
-      "Thematics": "i.e. Primary health care"
+      "Thematics": "Select a Theme"
   },
   "IndicatorMissingDescription": "The description of this indicator was not filled",
   "IndicatorFormulaWarningModal": {
@@ -677,7 +684,7 @@
         "Country": "Filter by country",
         "Clear": "Clear selection",
         "Indicator": "Filter by indicator",
-        "Thematic": "Filter by Political Battle"
+        "Thematic": "Filter by Thematic"
       },
       "Sites": {
           "NameEntity" : "For instance: Health center X, Hospital X, ...",
@@ -791,6 +798,7 @@
   "SaveConfirm": "Save to confirm reverting this version",
   "SaveIndicator": "Save indicator",
   "SaveThematic": "Save the Political Battle",
+  "SaveRequiredThematic": "Save the Health Model",
   "SaveUser": "Save user",
   "SearchProject": "Enter text here to filter the projects",
   "SearchHelp": "Search for a project by the name of a continent, country, region, project, or Political Battle.",
@@ -805,10 +813,12 @@
       "Collecting each indicator is mandatory for all projects that have at least one Political Battle in common with it.",
       "To allow projects to plan for their data collection, avoid changing this list often."
   ],
-  "SettingsThematicsEdit": "Enter here the name of the Political Battle in all languages used by your organisation.",
+  "SettingsThematicsEdit": "Enter here the name of the {{type}} in all languages used by your organisation.",
   "SettingsThematicsInfo": [
       "This page contains the list of Political Battles handled by the NGO.",
-      "Projects and cross-cutting indicators can be linked to Political Battles."
+      "Projects and cross-cutting indicators can be linked to Political Battles.",
+      "This page presents all the Health Models supported by Médecins du Monde (MdM).",
+      "The assignment of these components to each project is carried out automatically."
   ],
   "SettingsUserEdit": "You can edit the permissions of other users here. Click on \"Show help for this field\" to have more details on the different kinds of permissions that are available.",
   "SettingsUserInfo": [
@@ -832,8 +842,12 @@
   "DisplayTarget": "Display target",
   "Target-Hint": "What is the target for this indicator? Tick the checkbox to specify.",
   "Task": "Task",
-  "ThematicEdition": "Political Battle edition",
-  "Thematics": "Political Battle",
+  "ThematicEdition": "{{type}} edition",
+  "Thematics": "Political Battles",
+  "Thematic": "Political Battle",
+  "AllThematic": "Thematic",
+  "RequiredThematics": "Health Models",
+  "RequiredThematic": "Health Model",
   "TimeAggregation": "How to group entries from different periods?",
   "TimeAggregationHint": "In a project collecting monthly data, if <code>{{name}}</code>  is 10 in january, 20 in february and 30 in march, what is the value for the first quarter?",
   "Filters": "Filters",
@@ -1101,6 +1115,10 @@
   "actions": "Actions",
   "viewReport": "View report",
   "downloadReport": "Download report",
-  "proposedCalc": "Proposed calculation",
-  "no-indicator-match": "No indicators match the filters"
+  "proposedCalc": "Proposed computation",
+  "no-indicator-match": "No indicators match the filters",
+  "hide": "Hide",
+  "no-hide": "Make visible",
+  "hidden": "Hidden",
+  "showHidden": "Show hidden elements"
 }

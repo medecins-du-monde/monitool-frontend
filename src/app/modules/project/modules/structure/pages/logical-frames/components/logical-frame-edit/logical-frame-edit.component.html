@@ -82,7 +82,7 @@
                     <div class="mdm-form-group">
                         <div class="mdm-form-label">{{ 'Indicators' | translate }}</div>
                         <div class="indicators-list" formArrayName="indicators">
-                            <div class="mdm-cards objective-cards" cdkDropListGroup>
+                            <!-- <div class="mdm-cards objective-cards" cdkDropListGroup>
                                 <div class="mdm-card objective" *ngFor="let indicator of indicators.controls; let i=index"
                                     [cdkDropListData]="{indicator:indicator,index:i}" cdkDropList
                                     cdkDropListOrientation="horizontal" (cdkDropListDropped)="dropIndicators($event)">
@@ -95,7 +95,13 @@
                                         </div>
                                     </app-extra-indicator>
                                 </div>
-                            </div>
+                            </div> -->
+                            <app-indicator-list
+                                [indicators]="indicators.controls"
+                                (onEdit)="onEditIndicator($event.indicator, $event.i)"
+                                (onDelete)="onDeleteIndicator($event.i)"
+                                (onDropIndicators)="dropIndicators($event)"
+                            ></app-indicator-list>
                             <button mat-stroked-button class="mdm-button" (click)="onAddNewIndicator()">
                                 <mat-icon>add</mat-icon>{{ 'AddIndicator' | translate }}
                             </button>

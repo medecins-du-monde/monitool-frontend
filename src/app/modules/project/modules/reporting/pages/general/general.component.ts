@@ -120,6 +120,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   groups: { theme: Theme; indicators: Indicator[] }[] = [];
 
   showComments = true;
+  showHidden = false;
   userIsAdmin = false;
 
   updatedFilterDate?: Date;
@@ -196,10 +197,14 @@ export class GeneralComponent implements OnInit, OnDestroy {
       for (const logicalFrame of this.project.logicalFrames) {
         path = `logicalFrame:${logicalFrame.id}`;
 
+        // We don't add it if disabled
+        if (logicalFrame.disabled && !this.showHidden) continue;
+
         rows.push({
           title: `${this.translateService.instant('LogicalFramework')}: ${
             logicalFrame.name
           }`,
+          disabled: logicalFrame.disabled,
           sectionId: id,
           open: false,
           level
@@ -381,9 +386,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
     if (this.project.forms) {
       for (const form of this.project.forms) {
+        if (form.disabled && !this.showHidden) continue;
         path = `form:${form.id}`;
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,
+          disabled: form.disabled,
           sectionId: id,
           open: false,
           level

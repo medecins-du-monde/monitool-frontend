@@ -54,11 +54,13 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
   @Input() isCrossCuttingReport = false;
   @Input() project: Project;
   @Input() showComments = false;
+  @Input() showHidden = false;
   @Input() userIsAdmin = false;
   @Input() filterEnd?: Date; // used to auto adjust based on periodicity;
   @Input() filterStart?: Date; // used to auto adjust based on periodicity;
   @Output() filterEvent: EventEmitter<Filter> = new EventEmitter<Filter>();
   @Output() showCommentsChange = new EventEmitter<boolean>();
+  @Output() showHiddenChange = new EventEmitter<boolean>();
 
   private subscription: Subscription = new Subscription();
   entities: Entity[];

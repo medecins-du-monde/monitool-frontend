@@ -22,6 +22,7 @@ export class ExtraIndicatorComponent {
   }
 
   constructor(private translateService: TranslateService) {
+    console.log(this.extraIndicator);
   }
 
   onEdit() {

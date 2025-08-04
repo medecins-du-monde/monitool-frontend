@@ -19,6 +19,7 @@ import { ExtraIndicatorModule } from '../../../../components/extra-indicator/ext
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
+import { IndicatorListModule } from '../indicator-list/indicator-list.module';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -42,7 +43,8 @@ import { CollectionSitesSelectorModule } from '../../../../components/collection
     IndicatorModalModule,
     ExtraIndicatorModule,
     DragDropModule,
-    LocalizedDatePipeModule
+    LocalizedDatePipeModule,
+    IndicatorListModule
   ],
   exports: [LogicalFrameEditComponent]
 })

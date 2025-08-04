@@ -2,48 +2,67 @@
     <p>{{ "CrossCuttingInfo.0" | translate }}</p>
     <p>{{ "CrossCuttingInfo.1" | translate }}</p>
 </div>
-<div [formGroup]="crossCuttingForm">
-  <div formArrayName="groupsArray">
-    <div *ngFor="let group of groupsArray.controls; let groupNumber=index" class="mdm-section">
-        <div class="mdm-title">{{ group.value.theme.name[currentLang] }}</div>
-        <div [formGroupName]="groupNumber">
-          <div class="indicators-list" formArrayName="indicators">
-            <div class="mdm-cards">
-              <ng-container class="mdm-card" *ngFor="let indicator of getIndicators(groupNumber).controls; let i=index">
-                <app-extra-indicator
-                  class="mdm-card"
-                  [extraIndicator]="indicator.value"
-                  (edit)="onEditIndicator(indicator, i, groupNumber)"
-                  (delete)="onDelete(indicator)"
-                  [reset]="true"
-                  [deletable]="indicator.value.configured"
-                  [notConfigured]="!indicator.value.configured"
-                ></app-extra-indicator>
-              </ng-container>
-            </div>
+<ng-container *ngFor="let x of ['required', 'nonRequired']">
+  <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematic" : "Thematic") | translate}}</h2>
+  <mat-accordion>
+      <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
+      <mat-expansion-panel-header style="min-height: fit-content;">
+          <div class="panel-flex">
+              <div [class.configured]="indicator.configured" [class.invalid]="indicator.type === 'unavailable'"></div>
+              <!-- <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox> -->
+              <mat-chip-list style="padding: 12px 0;">
+                  <div *ngFor="let theme of indicator.themes" [matTooltip]="theme.name[currentLang]" [matTooltipShowDelay]="200">
+                      <mat-chip style="pointer-events: none;">
+                          {{ theme.shortName[currentLang] }}
+                      </mat-chip>
+                  </div>
+              </mat-chip-list>
+              <p>{{ indicator.display[currentLang] }}</p>
+              <div>
+                  <button mat-icon-button
+                      *ngIf="indicator.configured"
+                      (click)="$event.stopPropagation(); onEditIndicator(indicator)"
+                      [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button
+                      *ngIf="!indicator.configured"
+                      (click)="$event.stopPropagation(); onEditIndicator(indicator)"
+                      [matTooltip]="'Add' | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-icon-button
+                      *ngIf="indicator.configured"
+                      (click)="$event.stopPropagation(); onDelete(indicator)"
+                      [matTooltip]="'Reset' | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>restart_alt</mat-icon>
+                  </button>
+              </div>
           </div>
-        </div>
-    </div>
-  </div>
-  <div *ngIf="multiThemesArray.length > 0"formArrayName="multiThemesArray">
-    <div class="mdm-section">
-        <div class="mdm-title">{{ 'MultipleThematics' | translate }}</div>
-        <div class="indicators-list">
-          <div class="mdm-cards">
-            <ng-container class="mdm-card" *ngFor="let indicator of multiThemesArray.controls; let i=index">
-              <app-extra-indicator
-                class="mdm-card"
-                [extraIndicator]="indicator.value"
-                (edit)="onEditIndicator(indicator, i)"
-                (delete)="onDelete(indicator)"
-                [reset]="true"
-                [deletable]="indicator.value.configured"
-                [notConfigured]="!indicator.value.configured"
-              >
-              </app-extra-indicator>
-            </ng-container>
+      </mat-expansion-panel-header>
+      <div class="panel-description">
+          <div class="separator"></div>
+          <div class="panel-flex-description">
+              <p><b>{{'Description' | translate}}:</b></p>
+              <div [innerHTML]="indicator.description[currentLang]"></div>
           </div>
-        </div>
-    </div>
-  </div>
-</div>
+          <div class="panel-flex-description">
+              <p><b>{{(indicator.configured ? "Computation" : "proposedCalc") | translate}}:</b></p>
+              <p>{{
+                indicator.type === 'unavailable' ?
+                  ((indicator.configured ? 'Enum.Computation.unavailable' : 'Enum.Computation.none') | translate) :
+                  ( indicator.type !== 'formula' ?
+                    ('Enum.Computation.' + indicator.type | translate) :
+                    indicator.computation.formula)
+              }}</p>
+          </div>
+      </div>
+      </mat-expansion-panel>
+      <!-- <div *ngIf="indicators.length > 0 && filteredIndicators.length === 0" class="no-result">
+          {{"no-indicator-match" | translate}}
+      </div> -->
+  </mat-accordion>
+</ng-container>
