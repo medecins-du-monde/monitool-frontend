@@ -25,10 +25,15 @@ export class CollectionSitesSelectorComponent implements OnInit {
     }
 
     let entities = [...this.form.controls.entities.value];
-
+    
     // if the 'allOption' is selected it should be the only one displayed
-    if (entities && entities.includes(this.allOption)){
-      return [this.allOption];
+    if (entities){
+      const allPos = entities.findIndex(ent => ent.id === "all");
+      if (allPos > 0) {
+        entities[allPos] = this.allOption;
+        this.form.controls.entities.patchValue(entities); // Patches the value with the specific object
+        return [this.allOption];
+      }
     }
 
     // if a group is selected, we don't show it's members
@@ -62,6 +67,9 @@ export class CollectionSitesSelectorComponent implements OnInit {
 
     // get the groups that have all members selected
     const groups = this.groups.filter(g => {
+      if (this.form.controls.entities.value.includes(g)) {
+        return false;
+      }
       for (const member of g.members){
         if (!this.form.controls.entities.value.includes(member) ){
           return false;

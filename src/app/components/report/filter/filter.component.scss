@@ -72,3 +72,11 @@ app-collection-sites-selector {
     height: 24px;
   }
 }
+
+.mdm-button {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(lightgray, .2);
+  }
+}

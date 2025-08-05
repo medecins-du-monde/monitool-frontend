@@ -22,11 +22,17 @@
     </tr>
     <tr>
         <td *ngIf="!collapsed" [formGroup]="filterForm">
+            <div style="display: flex; justify-content: end; padding: 12px 28px 12px 0;">
+                <button mat-stroked-button class="mdm-button small-button fill-button" (click)="resetFilters()" style="cursor: pointer;" [disabled]="filterForm.pristine">
+                    <mat-icon>restart_alt</mat-icon>
+                    {{ 'Reset filters' }}
+                </button>
+            </div>
             <div class="mdm-form-group">
                 <div class="mdm-form-label">{{ 'Start' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'ChooseStartDate' | translate }}</mat-label>
-                    <input matInput [matDatepicker]="start" formControlName="_start" [min]=" project?.start || undefined">
+                    <input matInput [matDatepicker]="start" formControlName="_start" [min]=" project?.start || undefined" [max]="project?.end || undefined">
                     <mat-datepicker-toggle matPrefix [for]="start"></mat-datepicker-toggle>
                     <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -36,7 +42,7 @@
                 <div class="mdm-form-label">{{ 'End' | translate }}</div>
                 <mat-form-field appearance="outline" class="mdm-form-field">
                     <mat-label>{{ 'ChooseEndDate' | translate }}</mat-label>
-                    <input matInput [matDatepicker]="end" formControlName="_end" [max]="project?.end || undefined">
+                    <input matInput [matDatepicker]="end" formControlName="_end" [min]=" project?.start || undefined" [max]="project?.end || undefined">
                     <mat-datepicker-toggle matPrefix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                 </mat-form-field>
