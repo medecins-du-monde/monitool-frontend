@@ -13,6 +13,7 @@ import _ from 'lodash';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { CountryListService } from 'src/app/services/country-list.service';
 import { TranslateService } from '@ngx-translate/core';
+import { finished } from 'stream';
 
 
 export interface Filter{
@@ -206,6 +207,35 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
       this.filterForm.get('countries').patchValue(newCountries);
     }
     this.onSearchCountry();
+  }
+
+  resetFilters() {
+    // by default the end date is the last day of the current year
+    // and the start date is the first day of the previous year
+    let endDate = new Date((new Date()).getFullYear(), 11, 31);
+    let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
+
+    if (this.isCrossCuttingReport){
+      this.filterForm.patchValue({
+        _start: this.filterStart || startDate,
+        _end: endDate,
+        finished: true,
+        countries: [],
+        continents: []
+      });
+      this.filterEvent.emit(this.filterForm.value);
+    } else {
+      if (this.project){
+        endDate = this.project.end;
+        startDate = this.project.start;
+      }
+      this.filterForm.patchValue({
+        _start: this.filterStart || startDate,
+        _end: endDate,
+        entities: [...this.project.entities, ...this.groups, {id: 'all'}]
+      });
+      this.filterEvent.emit(this.filterForm.value);
+    }
   }
 
   ngOnDestroy(): void{
