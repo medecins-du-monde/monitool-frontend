@@ -33,7 +33,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['parameters']" *ngIf="settingsVisible">{{ 'Settings' | translate }}</button>
+    <a href="/parameters" target="_blank" mat-menu-item *ngIf="settingsVisible">{{ 'Settings' | translate }}</a>
     <button mat-menu-item [matMenuTriggerFor]="langMenu">{{ 'Language' | translate }}</button>
     <button mat-menu-item (click)="disconnect()">{{ 'LogOut' | translate }}</button>
 </mat-menu>
