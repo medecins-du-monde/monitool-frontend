@@ -230,7 +230,10 @@ export class DataSourceEditComponent implements ComponentCanDeactivate, OnInit, 
       end: [this.form.end ? this.form.end : this.project.end, Validators.required],
       elements: this.fb.array(this.form.elements.map(x => this.newElement(x)), [this.minLengthArray(1)])
     }, { validators: [DatesHelper.orderedDates('start', 'end')] });
+    let oldDsForm: any = undefined;
     this.formSubscription = this.dataSourceForm.valueChanges.subscribe((value: any) => {
+      if (JSON.stringify(oldDsForm) === JSON.stringify(value)) return;
+      oldDsForm = {...value};
       // preventing 'allOption' and groups from being saved inside the project
       value.entities = value.entities.filter(e => this.entities.includes(e));
       this.projectService.valid = this.dataSourceForm.valid && this.datesAreInRange();
