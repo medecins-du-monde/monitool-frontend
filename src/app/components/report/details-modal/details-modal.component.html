@@ -68,11 +68,13 @@
   <table *ngIf="paramaters">
     <tr>
         <th>{{'Parameter' | translate}}</th>
+        <th>{{'DataSource' | translate}}</th>
         <th>{{'Data' | translate}}</th>
         <th>{{'Disaggregations' | translate}}</th>
     </tr>
     <tr *ngFor="let param of paramaters">
         <td>{{ param.var }}</td>
+        <td>{{ param.parent }}</td>
         <td>{{ param.name }}</td>
         <td>
             <div *ngFor="let disag of param.disag">

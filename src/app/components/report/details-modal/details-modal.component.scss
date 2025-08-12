@@ -33,8 +33,8 @@ th, td {
     text-overflow: ellipsis;
     overflow: hidden;
     // overflow-wrap: break-word;
-    &:nth-child(2) {
-      width: 50%;
+    &:nth-child(2), &:nth-child(3) {
+      width: 35%;
     }
 
     li {
