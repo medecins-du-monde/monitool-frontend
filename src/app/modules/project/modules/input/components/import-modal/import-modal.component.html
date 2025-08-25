@@ -1,0 +1,14 @@
+<div mat-dialog-title style="display: flex; gap: 8px;">
+  <h1>Import data</h1>
+</div>
+
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+    <div>
+        <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+    </div>
+
+</mat-dialog-content>

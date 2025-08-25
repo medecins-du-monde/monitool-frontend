@@ -3,7 +3,11 @@
     <span>{{ (isOwner ? 'LockedInput.infoAdmin' : 'LockedInput.infoUser') | translate }}</span>
 </div>
 <div class="info-section blue" *ngIf="!isNew">
-    <div class="info-buttons" style="align-self: end;">
+    <div class="info-buttons" style="align-self: end; flex-direction: row; gap: 8px;">
+        <a mat-stroked-button type="button" class="mdm-button" style="margin: 0 !important;"
+            (click)="openImport()">
+            <mat-icon>upload</mat-icon>{{'UploadData' | translate}}
+        </a>
         <a mat-stroked-button type="button" class="mdm-button"
             (click)="openDownload()">
             <mat-icon>download</mat-icon>{{'DownloadData' | translate}}

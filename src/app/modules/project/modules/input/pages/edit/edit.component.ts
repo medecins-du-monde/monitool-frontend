@@ -24,6 +24,8 @@ import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/classes/user.model';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ImportModalModule } from '../../components/import-modal/import-modal.module';
+import { ImportModalComponent } from '../../components/import-modal/import-modal.component';
 
 
 @Component({
@@ -917,6 +919,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       const inputToBeSaved = new Input({...this.inputForm.value, blocked: block});
       this.inputService.save(inputToBeSaved).then(response => {
         if (response) {
+          console.log(response);
           this.input = new Input(response);
           this.inputForm.get('rev').setValue(this.input.rev);
           this.isBlocked = response.blocked;
@@ -939,5 +942,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   openDownload() {
     const url = `/api/resources/project/${this.project?.id}/data-source/${this.formId}.xlsx/${this.siteId}/${this.timeSlotDate}`;
     window.open(url, '_blank');
+  }
+
+  openImport() {
+    const url = `/resources/project/${this.project?.id}/data-source/${this.formId}/${this.siteId}/${this.timeSlotDate}`;
+    const dialogRef = this.dialog.open(ImportModalComponent, { data: { path: url } });
   }
 }

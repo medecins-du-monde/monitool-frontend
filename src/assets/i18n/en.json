@@ -126,6 +126,7 @@
   "DownloadPdf": "Download PDF",
   "DownloadTemplate": "Download excel form",
   "DownloadData": "Download excel data",
+  "UploadData": "Upload excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
   "DownloadAllPDF": "Download all as PDF",

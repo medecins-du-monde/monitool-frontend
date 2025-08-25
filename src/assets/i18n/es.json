@@ -120,6 +120,7 @@
   "DownloadPdf": "Descargar PDF",
   "DownloadTemplate": "Descargar formulario excel",
   "DownloadData": "Descargar datos en excel",
+  "UploadData": "Importar datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
   "DownloadAllPDF": "Descargar todos como PDF",
