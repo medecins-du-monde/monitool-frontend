@@ -120,6 +120,7 @@
   "DownloadPdf": "Descargar PDF",
   "DownloadTemplate": "Descargar formulario excel",
   "DownloadData": "Descargar datos en excel",
+  "UploadData": "Importar datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
   "DownloadAllPDF": "Descargar todos como PDF",
@@ -1137,5 +1138,17 @@
   "hide": "Ocultar",
   "no-hide": "Hacer visible",
   "hidden": "Oculto",
-  "showHidden": "Mostrar elementos ocultos"
+  "showHidden": "Mostrar elementos ocultos",
+  "import": {
+    "error": {
+      "bad-number-of-sheets": "Número incorrecto de hojas, debe haber una hoja por Fuente de Datos.",
+      "bad-number-of-rows": "Número incorrecto de filas en la hoja \"{{sheet}}\".",
+      "bad-number-of-cols": "Número incorrecto de columnas en la hoja \"{{sheet}}\".",
+      "bad-value": "Valor incorrecto en la hoja \"{{sheet}}\", fila {{row}}, columna {{col}}. El valor de la celda debe ser un número (o estar vacía)."
+    },
+    "choose-file": "Elige un archivo de Excel",
+    "import-data": "Importar datos",
+    "import-info": "Puedes importar un archivo de Excel para completar esta página. El archivo debe haber sido exportado desde esta página o desde la lista de entrada, y no debe haber sido modificado (excepto en las celdas de datos).",
+    "import-warning": "Importar datos sobrescribirá cualquier dato existente en esta página. ¿Quieres continuar? Después de confirmar, deberás guardar los cambios para que la importación tenga efecto."
+  }
 }

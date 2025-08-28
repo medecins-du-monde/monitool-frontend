@@ -32,6 +32,15 @@
     }
 }
 
+.message {
+    &.info {
+        padding: 8px 16px;
+        .mdm-button {
+            color: $info_blue_color;
+        }
+    }
+}
+
 .title{
     width: 100%;
     .fill-button{
@@ -108,17 +117,13 @@
 }
 
 .null-warning {
-    padding: 8px 10px;
-    margin: 16px 0;
-
-    color: $info;
-    border: $info solid 2px;
-    border-radius: 8px;
+    flex-direction: column;
+    align-items: flex-start;
 
     & > div {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
 }
 
@@ -155,15 +160,18 @@
             }
             &.correct {
                 border: 2px solid #5386fb;
+                background-color: white;
 
                 &.clear {
                     color: #5386fb;
+                    background-color: transparent;
                 }
             }
             &.clear {
                 background-color: transparent;
                 border-color: transparent;
                 font-weight: bold;
+                padding-top: 2px;
             }
         }
 
