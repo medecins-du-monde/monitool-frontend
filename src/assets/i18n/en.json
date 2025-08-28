@@ -1121,5 +1121,17 @@
   "hide": "Hide",
   "no-hide": "Make visible",
   "hidden": "Hidden",
-  "showHidden": "Show hidden elements"
+  "showHidden": "Show hidden elements",
+  "import": {
+    "error": {
+        "bad-number-of-sheets": "Bad number of sheets, there must be one sheet per Data Source.",
+        "bad-number-of-rows": "Bad number of rows on sheet \"{{sheet}}\".",
+        "bad-number-of-cols": "Bad number of columns on sheet \"{{sheet}}\".",
+        "bad-value": "Bad value on sheet \"{{sheet}}\", row {{row}}, column {{col}}. Cell value must be a number (or be empty)."
+    },
+    "choose-file": "Choose an Excel file",
+    "import-data": "Import data",
+    "import-info": "You can import an excel file to fill this page. The file must have been exported from this page or from the input list, and not modified (except for the data cells).",
+    "import-warning": "Importing data will overwrite any existing data on this page. Do you want to continue? After confirming you will need to save your changes for the import to take effect."
+  }
 }

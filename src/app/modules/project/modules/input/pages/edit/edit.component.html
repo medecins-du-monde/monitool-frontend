@@ -1,18 +1,16 @@
-<div class="blocked-header" *ngIf="isBlocked">
-    <mat-icon>info</mat-icon>
+<div class="message confirm" *ngIf="isBlocked" style="margin-bottom: 8px;">
+    <mat-icon>check_circle_outline</mat-icon>
     <span>{{ (isOwner ? 'LockedInput.infoAdmin' : 'LockedInput.infoUser') | translate }}</span>
 </div>
-<div class="info-section blue" *ngIf="!isNew">
-    <div class="info-buttons" style="align-self: end; flex-direction: row; gap: 8px;">
-        <a mat-stroked-button type="button" class="mdm-button" style="margin: 0 !important;"
-            (click)="openImport()">
-            <mat-icon>upload</mat-icon>{{'UploadData' | translate}}
-        </a>
-        <a mat-stroked-button type="button" class="mdm-button"
-            (click)="openDownload()">
-            <mat-icon>download</mat-icon>{{'DownloadData' | translate}}
-        </a>
-    </div>
+<div class="message info" style="justify-content: end; margin-bottom: 8px;">
+    <a mat-stroked-button type="button" class="mdm-button"
+        (click)="openImport()">
+        <mat-icon>upload</mat-icon>{{'UploadData' | translate}}
+    </a>
+    <a mat-stroked-button type="button" class="mdm-button"
+        (click)="openDownload()" *ngIf="!isNew">
+        <mat-icon>download</mat-icon>{{'DownloadData' | translate}}
+    </a>
 </div>
 <div class="mdm-title">{{ 'GeneralInformations' | translate }}</div>
 <div class="mdm-section">
@@ -96,9 +94,9 @@
         <p [innerHTML]="transform('FormSaveModal.p2')"></p>
         <p [innerHTML]="transform('FormSaveModal.p3')"></p>
         <ng-container *ngIf="inputHasNull">
-            <div class="null-warning">
+            <div class="message warning null-warning">
                 <div>
-                    <mat-icon>info</mat-icon>
+                    <mat-icon>warning</mat-icon>
                     <div>
                         <p>{{'NullValueMessage.p1' | translate}}</p>
                         <span>{{'NullValueMessage.p2' | translate}}</span>
@@ -168,8 +166,8 @@
     <h2 mat-dialog-title>{{'delete-modal.input' | translate}}</h2>
     <mat-dialog-content class="dialog-body" style="max-width: 800px;">
         <p>{{'delete-modal.inputMessage' | translate}}</p>
-        <div class="null-warning">
-            <mat-icon>info</mat-icon>
+        <div class="message warning">
+            <mat-icon>warning</mat-icon>
             <div>
                 <span>{{'delete-modal.inputWarning' | translate}}</span>
             </div>

@@ -947,5 +947,13 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
   openImport() {
     const url = `/resources/project/${this.project?.id}/data-source/${this.formId}/${this.siteId}/${this.timeSlotDate}`;
     const dialogRef = this.dialog.open(ImportModalComponent, { data: { path: url } });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.data) {
+        this.inputForm.patchValue({values: res.data});
+        this.createTable();
+        this.updateTotals(this.inputForm.value);
+        console.log(this.inputForm.value.values);
+      }
+    })
   }
 }

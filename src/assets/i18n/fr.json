@@ -1137,5 +1137,17 @@
   "hide": "Cacher",
   "no-hide": "Rendre visible",
   "hidden": "Caché",
-  "showHidden": "Afficher les éléments cachés"
+  "showHidden": "Afficher les éléments cachés",
+  "import": {
+    "error": {
+        "bad-number-of-sheets": "Nombre incorrect de feuilles, il doit y avoir une feuille par source de données.",
+        "bad-number-of-rows": "Nombre incorrect de lignes dans la feuille \"{{sheet}}\".",
+        "bad-number-of-cols": "Nombre incorrect de colonnes dans la feuille \"{{sheet}}\".",
+        "bad-value": "Valeur incorrecte dans la feuille \"{{sheet}}\", ligne {{row}}, colonne {{col}}. La valeur de la cellule doit être un nombre (ou vide)."
+    },
+    "choose-file": "Choisissez un fichier Excel",
+    "import-data": "Importer des données",
+    "import-info": "Vous pouvez importer un fichier Excel pour remplir cette page. Le fichier doit avoir été exporté depuis cette page ou depuis la liste de saisie, et ne doit pas avoir été modifié (à l’exception des cellules de données).",
+    "import-warning": "L'importation des données écrasera les données existantes sur cette page. Voulez-vous continuer ? Après confirmation, vous devrez enregistrer vos modifications pour que l'importation prenne effet."
+  }
 }
