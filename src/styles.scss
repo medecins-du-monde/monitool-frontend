@@ -1346,3 +1346,37 @@ code.title{
     width: 500px;
   }
 }
+
+.message {
+  background-color: lightgray;
+  color: dimgray;
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  mat-icon {
+    min-width: max-content;
+  }
+
+  &.error {
+    background-color: rgba(#ffc6be, .6);
+    color: darkred;
+  }
+
+  &.info {
+    background-color: #d9edf7;
+    color: #31708f;
+  }
+
+  &.confirm {
+    background-color: #d3f0d3;
+    color: green;
+  }
+
+  &.warning {
+    background-color: rgb(253, 244, 200);
+    color: darkorange !important;
+  }
+}

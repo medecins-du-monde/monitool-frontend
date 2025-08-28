@@ -1,0 +1,16 @@
+@import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: calc(fit-content + 8px);
+}
+
+.file-input {
+  margin-bottom: 8px;
+  .mdm-button {
+      color: $info_blue_color;
+  }
+}
