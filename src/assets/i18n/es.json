@@ -556,6 +556,8 @@
       "General_reporting_response8": "Los datos que se muestran en <i> cursiva </i> solo han sido introducido parcialmente. La mayoría de las veces, esto significa que solo se han ingresado algunas de las ubicaciones de recolección esperadas. El caso también puede ocurrir si consulta una versión agregada (por ejemplo, por trimestre) de los datos recopilados con una periodicidad más corta (por ejemplo, por mes) y no se han ingresado todos los meses que componen el trimestre considerado. <br> Desagregando la línea con el botón '+', podra identificar fácilmente las entradas que faltan.",
       "General_reporting_question9": "¿Cómo puedo añadir un comentario?",
       "General_reporting_response9": "<ul><li>Los comentarios permiten al personal de entrada de datos proporcionar información adicional que puede ser relevante para el análisis de datos. Los analistas también pueden utilizar comentarios para hacer anotaciones.</li><li>Este texto es visible para todos, por lo que permite que las personas más cercanas a las actividades contribuyan al análisis, que sera centralizado por los coordinadores del proyecto.</li><li>Simplemente haga clic derecho en la celda deseada y añada el texto. No olvide guardar.</li><li>Debe tener el rol de propietario o de entrada de datos. Consulte la sección ROLES DE USUARIO para un PROYECTO en este FAQ.</li></ul>",
+      "General_reporting_question10": "¿Cómo restablecer todos los filtros aplicados al Informe General (periodo y lugares de colecta)?",
+      "General_reporting_response10": "Al hacer clic en el botón \"Restablacer filtros\", el Informe General vuelve a la vista por defecto (fechas de inicio y fin del proyecto, con todos los lugares de colecta).",
       "History": "Histórico",
       "History_description": "El historial de modificaciones le permite consultar la lista de modificaciones realizadas a la estructura de su proyecto.",
       "History_question1": "Algunas modificaciones a la estructura del proyecto las realiza un usuario que no debería tener acceso a ellas.",
@@ -1150,5 +1152,7 @@
     "import-data": "Importar datos",
     "import-info": "Puedes importar un archivo de Excel para completar esta página. El archivo debe haber sido exportado desde esta página o desde la lista de entrada, y no debe haber sido modificado (excepto en las celdas de datos).",
     "import-warning": "Importar datos sobrescribirá cualquier dato existente en esta página. ¿Quieres continuar? Después de confirmar, deberás guardar los cambios para que la importación tenga efecto."
-  }
+  },
+  "ResetFilters": "Restablecer filtros",
+  "ResetFiltersDetails": "Restablecer todos los filtros aplicados y volver a la vista predeterminada"
 }

@@ -23,9 +23,17 @@
     <tr>
         <td *ngIf="!collapsed" [formGroup]="filterForm">
             <div style="display: flex; justify-content: end; padding: 12px 28px 12px 0;">
-                <button mat-stroked-button class="mdm-button small-button fill-button" (click)="resetFilters()" style="cursor: pointer;" [disabled]="filterForm.pristine">
+                <button
+                    mat-stroked-button
+                    class="mdm-button small-button fill-button"
+                    (click)="resetFilters()"
+                    style="cursor: pointer;"
+                    [disabled]="filterForm.pristine"
+                    [matTooltip]="'ResetFiltersDetails' | translate"
+                    matTooltipShowDelay="200"
+                >
                     <mat-icon>restart_alt</mat-icon>
-                    {{ 'Reset filters' }}
+                    {{ 'ResetFilters' | translate }}
                 </button>
             </div>
             <div class="mdm-form-group">

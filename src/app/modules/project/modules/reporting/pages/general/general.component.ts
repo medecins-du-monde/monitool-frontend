@@ -42,9 +42,13 @@ export class GeneralComponent implements OnInit, OnDestroy {
       res2: 'InformationPanel.General_reporting_description'
     } as InformationItem,
     {
+      res1: 'InformationPanel.General_reporting_question10',
+      res2: 'InformationPanel.General_reporting_response10',
+      new: true
+    } as InformationItem,
+    {
       res1: 'InformationPanel.General_reporting_question9',
       res2: 'InformationPanel.General_reporting_response9',
-      new: true
     } as InformationItem,
     {
       res1: 'InformationPanel.General_reporting_question1',
