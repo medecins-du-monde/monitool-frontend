@@ -1126,10 +1126,13 @@
   "showHidden": "Show hidden elements",
   "import": {
     "error": {
-        "bad-number-of-sheets": "Bad number of sheets, there must be one sheet per Data Source.",
-        "bad-number-of-rows": "Bad number of rows on sheet \"{{sheet}}\".",
-        "bad-number-of-cols": "Bad number of columns on sheet \"{{sheet}}\".",
-        "bad-value": "Bad value on sheet \"{{sheet}}\", row {{row}}, column {{col}}. Cell value must be a number (or be empty)."
+        "generic": "There was an issue importing this file, make sure the file has been obtained from Monitool and corresponds to this input",
+        "bad-table": "Bad format on table \"{{element}}\"",
+        "no-table": "There is no table for input \"{{element}}\"",
+        "bad-number-of-sheets": "Bad number of sheets, there must be only one sheet.",
+        "bad-number-of-rows": "Bad number of rows on table \"{{element}}\".",
+        "bad-number-of-cols": "Bad number of columns on table \"{{element}}\".",
+        "bad-value": "Bad value on table \"{{element}}\", row {{row}}, column {{col}}. Cell value must be a number (or be empty)."
     },
     "choose-file": "Choose an Excel file",
     "import-data": "Import data",

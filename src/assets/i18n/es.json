@@ -1143,10 +1143,13 @@
   "showHidden": "Mostrar elementos ocultos",
   "import": {
     "error": {
-      "bad-number-of-sheets": "Número incorrecto de hojas, debe haber una hoja por Fuente de Datos.",
-      "bad-number-of-rows": "Número incorrecto de filas en la hoja \"{{sheet}}\".",
-      "bad-number-of-cols": "Número incorrecto de columnas en la hoja \"{{sheet}}\".",
-      "bad-value": "Valor incorrecto en la hoja \"{{sheet}}\", fila {{row}}, columna {{col}}. El valor de la celda debe ser un número (o estar vacía)."
+      "generic": "Hubo un problema al importar este archivo, asegúrese de que el archivo se haya obtenido de Monitool y corresponda a esta entrada",
+      "bad-table": "Mal formato en la tabla \"{{element}}\"",
+      "no-table": "No hay ninguna tabla para la entrada \"{{element}}\"",
+      "bad-number-of-sheets": "Número incorrecto de hojas, debe haber una sola hoja.",
+      "bad-number-of-rows": "Número incorrecto de filas en la tabla \"{{element}}\".",
+      "bad-number-of-cols": "Número incorrecto de columnas en la tabla \"{{element}}\".",
+      "bad-value": "Valor incorrecto en la tabla \"{{element}}\", fila {{row}}, columna {{col}}. El valor de la celda debe ser un número (o estar vacía)."
     },
     "choose-file": "Elige un archivo de Excel",
     "import-data": "Importar datos",
