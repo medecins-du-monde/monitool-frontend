@@ -30,7 +30,7 @@ export class ImportModalComponent {
         this.errors = [];
         this.formatedData = response;
       }).catch(res => {
-        if (res.errors && res.errors.length > 0) {
+        if (res.error && res.error.length > 0) {
           this.errors = res.error.map(error => this.translateService.instant(error.key, error.extra));
         } else {
           this.errors = [this.translateService.instant('import.error.generic')]
