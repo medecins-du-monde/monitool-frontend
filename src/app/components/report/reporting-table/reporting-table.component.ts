@@ -876,7 +876,7 @@ export class ReportingTableComponent
     }
     // We get the available colors with their number of occurences
     const availableColors = this.COLORS.map(color => {return {color, occurences: 0}});
-    for (let data of datasets) {
+    for (const data of datasets) {
       const colorIndex = this.COLORS.findIndex(color => color === data.backgroundColor); // Use COLORS as it should have the same values as availableColors
       if (colorIndex >= 0) {
         availableColors[colorIndex].occurences++;
@@ -884,7 +884,7 @@ export class ReportingTableComponent
     }
     console.log(availableColors);
     // We assign colors to dataSets missing it
-    for (let data of datasets) {
+    for (const data of datasets) {
         if (!data.backgroundColor) {
           const availableColor = availableColors.find(item => item.occurences === Math.min(...availableColors.map(item => item.occurences)));
           data.borderColor = availableColor.color;
