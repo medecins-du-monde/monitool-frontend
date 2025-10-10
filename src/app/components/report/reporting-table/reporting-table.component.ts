@@ -882,7 +882,6 @@ export class ReportingTableComponent
         availableColors[colorIndex].occurences++;
       }
     }
-    console.log(availableColors);
     // We assign colors to dataSets missing it
     for (const data of datasets) {
         if (!data.backgroundColor) {
