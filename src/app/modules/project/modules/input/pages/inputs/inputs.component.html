@@ -88,10 +88,7 @@
       (!endDateReached && this.allDates.length > 0) ||
       this.allDates.length === 0
     )"
-    class="footer-overlay"
-    [style]="'top: ' + (56 + 15 + 25 * (this.allDates.length || 0) + (
-      form.periodicity === 'free' ? 48 : 0
-    )) + 'px'">
+    class="footer-overlay">
     <ng-template [ngIf]="!endDateReached && this.allDates.length > 0">
         <button mat-stroked-button (click)="seeOlderDates()" class="mdm-button small-button">{{ 'SeeOlderDates'
             | translate }}</button>

@@ -43,8 +43,19 @@
 
 .title{
     width: 100%;
-    .fill-button{
-        float: right;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .mdm-title {
+        flex: 1;
+    }
+
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: end;
     }
 }
 

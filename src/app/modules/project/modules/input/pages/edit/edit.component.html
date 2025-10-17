@@ -28,7 +28,10 @@
     </div>
 </div>
 <div class="title">
-    <ng-container *ngIf="!isBlocked || isOwner">
+    <div class="mdm-title">
+        {{ 'Data' | translate }}
+    </div>
+    <div class="actions" *ngIf="!isBlocked || isOwner">
         <button mat-stroked-button class="mdm-button small-button fill-button" (click)="fillWithPreviousData()" [disabled]="this.previousInput ? false : true">
             <mat-icon>edit</mat-icon>
             {{ 'FillWithPreviousData' | translate }}
@@ -37,9 +40,6 @@
             <mat-icon>edit</mat-icon>
             {{ 'FillWithZero' | translate }}
         </button>
-    </ng-container>
-    <div class="mdm-title">
-        {{ 'Data' | translate }}
     </div>
 </div>
 <div *ngIf="inputForm && tables" [formGroup]="inputForm.get('values')">
