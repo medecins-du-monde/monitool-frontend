@@ -7,6 +7,7 @@
         td:first-child {
             font-weight: bold;
             width: 15%;
+            line-height: 24px;
           }
 
         th {
@@ -95,7 +96,7 @@
             margin: 0px 0px 10px 0px;
         }
         .info-buttons {
-            width: 80%;
+            width: 100%;
             align-self: center;
         }
     }
@@ -134,14 +135,47 @@ tr {
     display: flex;
     width: 100%;
     background: $table_background_white;
+
     &.mat-row{
         height: auto;
+    }
+
+    &.mat-footer-row {
+        &:first-child {
+            height: 36px;
+            border-top: 12px solid #f7f7f7 !important;
+        }
+        background-color: #f7f7f7;
+        border: none !important;
     }
 }
 
 .first-row {
     width: 200px !important;
-    align-items: center;
+
+    ::ng-deep .ng-star-inserted  { 
+        height: 24px !important;
+    }
+
+    ::ng-deep .mat-form-field  {
+        height: 24px;
+
+        .mat-form-field-flex {
+            padding: 0 !important;
+            margin: 0 !important;
+            margin-top: -4px !important;
+            height: 28px !important;
+
+            .mat-form-field-prefix {
+                top: -5px !important;
+                transform: scale(.8);
+            }
+
+            .mat-form-field-infix {
+                margin-top: -4px !important;
+            }
+        }
+    }
 }
 
 td.mat-cell, td.mat-footer-cell{
@@ -172,16 +206,16 @@ td.mat-cell, td.mat-footer-cell{
   max-width: 100%;
 
   .table-container {
-    overflow: auto;
+    overflow-x: auto;
   }
 
   .footer-overlay {
     position: absolute;
-    height: 48px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: fit-content;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    margin: auto;
   }
 }
 

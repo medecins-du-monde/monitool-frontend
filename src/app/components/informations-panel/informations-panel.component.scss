@@ -146,6 +146,7 @@ ol, ul {
     position: relative;
     min-width: max-content;
     overflow: hidden;
+    align-items: center;
 
     p {
         font-weight: bold;
@@ -155,7 +156,8 @@ ol, ul {
         font-size: 16px;
         height: 16px;
         width: 16px;
-        margin-top: 2px;
+        margin-top: -2px;
+        margin-bottom: 8px;
     }
 }
 

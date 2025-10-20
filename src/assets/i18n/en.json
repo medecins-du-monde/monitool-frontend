@@ -124,8 +124,9 @@
   "DownloadPdfLandscape": "Download PDF (landscape)",
   "DownloadPdfPortrait": "Download PDF (portrait)",
   "DownloadPdf": "Download PDF",
-  "DownloadTemplate": "Download template",
-  "DownloadData": "Download data",
+  "DownloadTemplate": "Download excel form",
+  "DownloadData": "Download excel data",
+  "UploadData": "Upload excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
   "DownloadAllPDF": "Download all as PDF",
@@ -542,6 +543,8 @@
       "General_reporting_response8": "The data displayed in <i> italics </i> has only been partially entered. Most often, this means that only some of the expected collection locations have been entered. The case can also occur if you are viewing an aggregated version (eg: by quarter) of data collected at a shorter periodicity (eg: by month) and all the months of the quarter considered have not been entered. <br> By disaggregating the line with the '+' button, you will be able to easily find the missing entries.",
       "General_reporting_question9": "How do I add a comment to one of the cells?",
       "General_reporting_response9": "<ul><li>Comments allow data entry personnel to provide additional information that may be relevant for data analysis. Analysts can also use comments to share their insights.</li><li>This text is visible to everyone, so it enables the people closest to the activities to contribute to the analysis, which will be centralized at project coordination level.</li><li>Simply right-click on the desired cell and add the text. Don't forget to save.</li><li>You must have the role of owner or project manager. See the section USER ROLES for a PROJECT in this FAQ.</li></ul>",
+      "General_reporting_question10": "How do I delete all the filters applied to the General Report (period and collection points)?",
+      "General_reporting_response10": "By clicking on the \"Rest filters\" button, the General Report reverts to the default view (project start and end dates, for all collection points).",
       "History": "History",
       "History_description": "The changes history allow you to consult the changes made to the structure of your project.",
       "History_question1": "Some changes to the project have been made by a user that shouldn't have access?",
@@ -1120,5 +1123,22 @@
   "hide": "Hide",
   "no-hide": "Make visible",
   "hidden": "Hidden",
-  "showHidden": "Show hidden elements"
+  "showHidden": "Show hidden elements",
+  "import": {
+    "error": {
+        "generic": "There was an issue importing this file, make sure the file has been obtained from Monitool and corresponds to this input",
+        "bad-table": "Bad format on table \"{{element}}\"",
+        "no-table": "There is no table for input \"{{element}}\"",
+        "bad-number-of-sheets": "Bad number of sheets, there must be only one sheet.",
+        "bad-number-of-rows": "Bad number of rows on table \"{{element}}\".",
+        "bad-number-of-cols": "Bad number of columns on table \"{{element}}\".",
+        "bad-value": "Bad value on table \"{{element}}\", row {{row}}, column {{col}}. Cell value must be a number (or be empty)."
+    },
+    "choose-file": "Choose an Excel file",
+    "import-data": "Import data",
+    "import-info": "You can import an excel file to fill this page. The file must have been exported from this page or from the input list, and not modified (except for the data cells).",
+    "import-warning": "Importing data will overwrite any existing data on this page. Do you want to continue? After confirming you will need to save your changes for the import to take effect."
+  },
+  "ResetFilters": "Reset Filters",
+  "ResetFiltersDetails": "Reset all applied filters and return to the default view"
 }

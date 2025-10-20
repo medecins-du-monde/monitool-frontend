@@ -199,19 +199,14 @@ export class ReportingTableComponent
   dataSource = new MatTableDataSource([]);
 
   COLORS = [
-    '#1f77b4',
-    '#ff7f0e',
-    '#2ca02c',
-    '#d62728',
-    '#9467bd',
-    '#8c564b',
-    '#e377c2',
-    '#7f7f7f',
-    '#bcbd22',
-    '#17becf'
+    '#005da8',
+    '#e84f1c',
+    '#00b09b',
+    '#bcdfeb',
+    '#1d1a54',
+    '#ffdd00',
   ];
-
-  currentColorIndex = 0;
+  
   innerWidth: number;
   colsThatFitInTheScreen: number;
 
@@ -871,14 +866,6 @@ export class ReportingTableComponent
     // We take all the rows with the onChart attribute
     for (const row of this.dataSource.data) {
       if (row.onChart) {
-        if (!row.dataset.backgroundColor) {
-          row.dataset.borderColor = this.COLORS[this.currentColorIndex];
-          row.dataset.backgroundColor = this.COLORS[this.currentColorIndex];
-
-          this.currentColorIndex =
-            (this.currentColorIndex + 1) % this.COLORS.length;
-        }
-
         const copyOfDataset = Object.assign({}, row.dataset);
         copyOfDataset.unit = row.unit;
         copyOfDataset.baseline = row.baseline;
@@ -886,6 +873,23 @@ export class ReportingTableComponent
 
         datasets.push(copyOfDataset);
       }
+    }
+    // We get the available colors with their number of occurences
+    const availableColors = this.COLORS.map(color => {return {color, occurences: 0}});
+    for (const data of datasets) {
+      const colorIndex = this.COLORS.findIndex(color => color === data.backgroundColor); // Use COLORS as it should have the same values as availableColors
+      if (colorIndex >= 0) {
+        availableColors[colorIndex].occurences++;
+      }
+    }
+    // We assign colors to dataSets missing it
+    for (const data of datasets) {
+        if (!data.backgroundColor) {
+          const availableColor = availableColors.find(item => item.occurences === Math.min(...availableColors.map(item => item.occurences)));
+          data.borderColor = availableColor.color;
+          data.backgroundColor = availableColor.color;
+          availableColor.occurences++;
+        }
     }
     const data = {
       labels: this.dimensions

@@ -1,0 +1,31 @@
+<div mat-dialog-title style="display: flex; gap: 8px;">
+  <h1>{{'import.import-data' | translate}}</h1>
+</div>
+
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+    <div class="message info">
+      <mat-icon>info</mat-icon>
+      {{'import.import-info' | translate}}
+    </div>
+    <div class="file-input">
+        <!-- <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" class="mdm-button"> -->
+        <button type="button" mat-stroked-button (click)="fileInput.click()" class="mdm-button">
+          {{ 'import.choose-file' | translate }}
+        </button>
+        <input hidden (change)="onFileChange($event)" #fileInput type="file" accept=".xlsx, .xls">
+        <span style="margin-left: 16px;">{{fileName}}</span>
+    </div>
+    <div *ngFor="let error of errors" class="message error">
+      <mat-icon>error_outline</mat-icon>
+      {{ error }}
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate }}</button>
+    <button mat-stroked-button (click)="confirm()" class="mdm-button save-button" [disabled]="!formatedData">{{ 'Confirm' | translate }}</button>
+</mat-dialog-actions>

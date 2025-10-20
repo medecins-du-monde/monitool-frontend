@@ -13,6 +13,7 @@ import _ from 'lodash';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { CountryListService } from 'src/app/services/country-list.service';
 import { TranslateService } from '@ngx-translate/core';
+import { finished } from 'stream';
 
 
 export interface Filter{
@@ -118,16 +119,18 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
       });
       this.filterEvent.emit(this.filterForm.value);
 
-      this.filterForm.valueChanges.subscribe(value => {
-        this.selectedSites = this.sites.filter( site => value.entities.includes(site.id) );
-        if (new Date(value._start) > new Date(value._end)) {
-          this.filterForm.patchValue({_end: value._start});
-        }
-        if (new Date(value._end) < new Date(value._start)) {
-          this.filterForm.patchValue({_start: value._end});
-        }
-        this.filterEvent.emit(this.filterForm.value);
-      });
+      this.subscription.add(
+        this.filterForm.valueChanges.subscribe(value => {
+          this.selectedSites = this.sites.filter( site => value.entities.includes(site.id) );
+          if (new Date(value._start) > new Date(value._end)) {
+            this.filterForm.patchValue({_end: value._start});
+          }
+          if (new Date(value._end) < new Date(value._start)) {
+            this.filterForm.patchValue({_start: value._end});
+          }
+          this.filterEvent.emit(this.filterForm.value);
+        })
+      )
     } else {
       this.subscription.add(
         this.projectService.openedProject.subscribe( (project: Project): void => {
@@ -162,6 +165,12 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
                       .map(entity => entity.id))) {
                   this.selectedSites = this.sites.filter( site => newFilterValue.entities.includes(site) );
                   oldFilterFormValue = newFilterValue;
+                  if (new Date(newFilterValue._start) > new Date(newFilterValue._end)) {
+                    this.filterForm.patchValue({_end: newFilterValue._start});
+                  }
+                  if (new Date(newFilterValue._end) < new Date(newFilterValue._start)) {
+                    this.filterForm.patchValue({_start: newFilterValue._end});
+                  }
                   this.filterEvent.emit(newFilterValue as Filter);
               }
             })
@@ -206,6 +215,35 @@ export class FilterComponent implements OnInit, OnChanges, OnDestroy{
       this.filterForm.get('countries').patchValue(newCountries);
     }
     this.onSearchCountry();
+  }
+
+  resetFilters() {
+    // by default the end date is the last day of the current year
+    // and the start date is the first day of the previous year
+    let endDate = new Date((new Date()).getFullYear(), 11, 31);
+    let startDate = new Date((new Date()).getFullYear() - 1, 0, 1);
+
+    if (this.isCrossCuttingReport){
+      this.filterForm.patchValue({
+        _start: this.filterStart || startDate,
+        _end: endDate,
+        finished: true,
+        countries: [],
+        continents: []
+      });
+      this.filterEvent.emit(this.filterForm.value);
+    } else {
+      if (this.project){
+        endDate = this.project.end;
+        startDate = this.project.start;
+      }
+      this.filterForm.patchValue({
+        _start: this.filterStart || startDate,
+        _end: endDate,
+        entities: [...this.project.entities, ...this.groups, {id: 'all'}]
+      });
+      this.filterEvent.emit(this.filterForm.value);
+    }
   }
 
   ngOnDestroy(): void{

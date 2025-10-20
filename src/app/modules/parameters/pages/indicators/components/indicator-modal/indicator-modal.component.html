@@ -48,10 +48,10 @@
         </mat-tab>
     </mat-tab-group>
     <ng-container formGroupName="computation">
-        <div class="mdm-form-group">
+        <div class="mdm-form-group formula-select">
             <div class="mdm-form-label">{{ 'Computation' | translate }}*</div>
             <mat-form-field appearance="outline" class="mdm-form-field indicator-modal-form-field">
-                <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering panelClass="myPanelClass">
+                <mat-select formControlName="type" (selectionChange)="onTypeChange($event)" disableOptionCentering>
                     <mat-option *ngFor="let type of computationTypes" [value]="type.value">{{ type.display | translate }}
                     </mat-option>
                 </mat-select>
