@@ -1140,5 +1140,8 @@
     "import-warning": "Importing data will overwrite any existing data on this page. Do you want to continue? After confirming you will need to save your changes for the import to take effect."
   },
   "ResetFilters": "Reset Filters",
-  "ResetFiltersDetails": "Reset all applied filters and return to the default view"
+  "ResetFiltersDetails": "Reset all applied filters and return to the default view",
+  "Disable": "Disable",
+  "Enable": "Enable",
+  "ShowDisabled": "Show disabled elements"
 }

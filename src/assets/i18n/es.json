@@ -1157,5 +1157,8 @@
     "import-warning": "Importar datos sobrescribirá cualquier dato existente en esta página. ¿Quieres continuar? Después de confirmar, deberás guardar los cambios para que la importación tenga efecto."
   },
   "ResetFilters": "Restablecer filtros",
-  "ResetFiltersDetails": "Restablecer todos los filtros aplicados y volver a la vista predeterminada"
+  "ResetFiltersDetails": "Restablecer todos los filtros aplicados y volver a la vista predeterminada",
+  "Disable": "Desactivar",
+  "Enable": "Activar",
+  "ShowDisabled": "Mostrar elementos desactivados"
 }
