@@ -66,6 +66,12 @@ export class IndicatorsComponent implements OnInit {
     });
   }
 
+  onDisable(indicator: Indicator) {
+    console.log(indicator);
+    indicator.disabled = !indicator.disabled;
+    this.indicatorService.save(indicator).then(() => this.getIndicators());
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(IndicatorModalComponent);
 

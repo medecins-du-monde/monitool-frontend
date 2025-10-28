@@ -63,6 +63,11 @@ export class ThematicsComponent implements OnInit {
     });
   }
 
+  onDisable(theme: Theme) {
+    theme.disabled = !theme.disabled;
+    this.themeService.save(theme).then(() => this.getThemes());
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(ThemeModalComponent);
 

@@ -13,12 +13,18 @@
     </button>
 </div>
 <div class="fake-accordion">
-    <div *ngFor="let theme of themes">
+    <div *ngFor="let theme of themes" [class.disabled]="theme.disabled">
           <div class="panel-flex">
               <!-- <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox> -->
               <p>{{ theme.shortName[currentLang] }}</p>
               <p>{{ theme.name[currentLang] }}</p>
               <div>
+                  <button mat-icon-button
+                      (click)="onDisable(theme)"
+                      [matTooltip]="(theme.disabled ? 'Enable' : 'Disable') | translate" [matTooltipShowDelay]="200"
+                  >
+                      <mat-icon>{{theme.disabled ? 'adjust' : 'hide_source'}}</mat-icon>
+                  </button>
                   <button mat-icon-button
                       (click)="onEdit(theme)"
                       [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"

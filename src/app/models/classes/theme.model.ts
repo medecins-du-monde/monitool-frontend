@@ -8,6 +8,7 @@ export class Theme implements Deserializable {
     type: ThemeType = 'theme';
     name: MultiLanguage;
     shortName: MultiLanguage;
+    disabled: boolean;
     rev: string;
 
     constructor(input?: any) {
@@ -21,6 +22,7 @@ export class Theme implements Deserializable {
         this.shortName = ( input && input.shortName ) ? new MultiLanguage(input.shortName) : new MultiLanguage();
         this.rev = ( input && input._rev ) ? input._rev : null;
         this.type = ( input && input.type ) ? input.type : null;
+        this.disabled = (input && input.disabled) ? input.disabled : false;
         return this;
     }
 
@@ -29,7 +31,8 @@ export class Theme implements Deserializable {
             _id: this.id,
             type: this.type,
             name: this.name,
-            shortName: this.shortName
+            shortName: this.shortName,
+            disabled: this.disabled
         };
 
         if (this.rev){

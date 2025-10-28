@@ -16,7 +16,7 @@
 <ng-container *ngFor="let x of ['required', 'nonRequired']">
   <h2 *ngIf="this[x].length > 0">{{(x === 'required' ? "RequiredThematics" : "Thematics") | translate}}</h2>
   <mat-accordion>
-      <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
+      <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]" [class.disabled]="indicator.disabled || indicator.parentDisabled">
       <mat-expansion-panel-header style="min-height: fit-content;">
           <div class="panel-flex">
               <!-- <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox> -->
@@ -29,6 +29,13 @@
               </mat-chip-list>
               <p>{{ indicator.name[currentLang] }}</p>
               <div>
+                  <button mat-icon-button
+                      (click)="$event.stopPropagation(); onDisable(indicator)"
+                      [matTooltip]="(indicator.disabled ? 'Enable' : 'Disable') | translate" [matTooltipShowDelay]="200"
+                      [disabled]="indicator.parentDisabled"
+                  >
+                      <mat-icon>{{indicator.disabled ? 'adjust' : 'hide_source'}}</mat-icon>
+                  </button>
                   <button mat-icon-button
                       (click)="$event.stopPropagation(); onEdit(indicator)"
                       [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"

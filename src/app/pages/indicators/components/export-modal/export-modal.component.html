@@ -111,6 +111,7 @@
                 <mat-option
                     *ngFor="let theme of themes"
                     [value]="theme.id"
+                    [class.disabled]="theme.disabled"
                 >
                     {{ theme.name[currentLang] }}
                 </mat-option>
@@ -138,6 +139,7 @@
                 <mat-option
                     *ngFor="let indicator of filteredIndicators"
                     [value]="indicator.id"
+                    [class.disabled]="indicator.disabled"
                 >
                     {{ indicator.name[currentLang] }}
                 </mat-option>

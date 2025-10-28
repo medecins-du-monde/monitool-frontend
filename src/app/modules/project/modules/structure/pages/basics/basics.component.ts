@@ -230,6 +230,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
     }
   }
 
+  themeIsSelected(id: string) {
+    return this.selectedThemes.find((t: Theme) => t.id === id);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
