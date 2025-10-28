@@ -42,7 +42,7 @@ export class IndicatorsComponent implements OnInit {
 
   displayedColumns: string[] = ['battle', 'name', 'report'];
 
-  userIsAdmin: boolean = false;
+  userIsAdmin = false;
 
   private subscription = new Subscription();
 

@@ -45,6 +45,9 @@
       </mat-expansion-panel-header>
       <div class="panel-description">
           <div class="separator"></div>
+          <div class="message info">
+            {{ 'ProjectDisabledIndicatorInfo' | translate }}
+          </div>
           <div class="panel-flex-description">
               <p><b>{{'Description' | translate}}:</b></p>
               <div [innerHTML]="indicator.description[currentLang]"></div>

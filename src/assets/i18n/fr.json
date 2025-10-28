@@ -1159,5 +1159,7 @@
   "ResetFiltersDetails": "Réinitialiser tous les filtres appliqués et revenir à la vue par défaut",
   "Disable": "Désactiver",
   "Enable": "Activer",
-  "ShowDisabled": "Afficher les éléments désactivés"
+  "ShowDisabled": "Afficher les éléments désactivés",
+  "ProjectDisabledThemeInfo": "Ce Combat Politique a été désactivé par un administrateur, vous pourrez toujours voir les indicateurs transversaux associés sur la structure du projet mais pas sur le rapport général.",
+  "ProjectDisabledIndicatorInfo": "Cet indicateur a été désactivé par un administrateur, il ne sera pas affiché dans le rapport général."
 }

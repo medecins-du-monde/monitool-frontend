@@ -1143,5 +1143,7 @@
   "ResetFiltersDetails": "Reset all applied filters and return to the default view",
   "Disable": "Disable",
   "Enable": "Enable",
-  "ShowDisabled": "Show disabled elements"
+  "ShowDisabled": "Show disabled elements",
+  "ProjectDisabledThemeInfo": "This Political Battle has been disabled by an admin, you will still be able to see the related cross-cutting indicators on the Project structure but not on the general report.",
+  "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report."
 }
