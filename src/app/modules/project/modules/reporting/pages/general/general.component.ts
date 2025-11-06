@@ -488,7 +488,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   buildCrossCuttingIndicators(): void {
     this.multiThemesIndicators = [];
     for (const c of this.crosscutting) {
-      if (this.project.crossCutting[c.id]) {
+      if (this.project.crossCutting[c.id] && !c.disabled) {
         if (c.multiThemes) {
           this.multiThemesIndicators.push(c);
         } else {

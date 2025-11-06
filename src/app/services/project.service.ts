@@ -163,7 +163,7 @@ export class ProjectService implements OnDestroy {
     const response: any = await this.apiService.get('/resources/project/?mode=short');
     return response.map(x => {
       const project = new Project(x);
-      project.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
+      project.themes = themes.filter(t => (x.themes.indexOf(t.id) >= 0) && !t.disabled);
       return project;
     });
   }

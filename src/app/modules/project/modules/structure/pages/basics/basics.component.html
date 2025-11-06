@@ -63,15 +63,23 @@
             <mat-select formControlName="themes" placeholder="{{ 'Placeholder.Basic.Thematics' | translate }}" disableOptionCentering panelClass="basicsChipListPanelClass" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
-                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"
+                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true" [class.disabled]="theme.disabled"
                             (removed)="onThemeRemoved(theme)">
                             {{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                     </mat-chip-list>
                 </mat-select-trigger>
-                <mat-option *ngFor="let theme of themes" [value]="theme.id">{{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
-                </mat-option>
+                <ng-container *ngFor="let theme of themes">
+                    <mat-option *ngIf="!theme.disabled || themeIsSelected(theme.id)" [value]="theme.id" [class.disabled]="theme.disabled" style="padding: 10px 16px; line-height: normal;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+                            {{ theme.shortName[currentLang] }} - {{ theme.name[currentLang] }}
+                            <mat-chip *ngIf="theme.disabled" style="margin: 0; align-items: baseline;" [matTooltip]="'ProjectDisabledThemeInfo' | translate" matTooltipClass="white-bg-tooltip">
+                                {{'Disabled' | translate}}
+                            </mat-chip>
+                        </div>
+                    </mat-option>
+                </ng-container>
             </mat-select>
             <mat-hint>
                 <mat-icon>info</mat-icon>{{ 'Tooltip.BasicsEdition.Thematics' | translate }}

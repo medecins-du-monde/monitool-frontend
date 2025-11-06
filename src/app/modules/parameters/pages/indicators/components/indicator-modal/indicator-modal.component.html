@@ -10,21 +10,23 @@
             <mat-select formControlName="themes" placeholder="{{ 'IndicatorEditionPlaceholder.Thematics' | translate }}" disableOptionCentering panelClass="chipListPanelClass" multiple>
                 <mat-select-trigger>
                     <mat-chip-list>
-                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true"
+                        <mat-chip *ngFor="let theme of selectedThemes" [removable]="true" [class.disabled]="theme.disabled"
                             (removed)="onThemeRemoved(theme)">
                             {{ theme.name[currentLang] + '-' + theme.shortName[currentLang] }}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                     </mat-chip-list>
                 </mat-select-trigger>
-                <mat-option *ngFor="let theme of themes" [value]="theme">
-                    <div style="display: flex; justify-content: space-between; align-items: center; line-height: normal; padding: 12px 0; gap: 12px">
-                        {{ theme.name[currentLang] + ' - ' + theme.shortName[currentLang] }}
-                        <mat-chip style="pointer-events: none; margin: 0; min-width: max-content;">
-                            {{ (theme.type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate }}
-                        </mat-chip>
-                    </div>
-                </mat-option>
+                <ng-container *ngFor="let theme of themes">
+                    <mat-option *ngIf="!theme.disabled || themeIsSelected(theme.id)" [value]="theme" [class.disabled]="theme.disabled">
+                        <div style="display: flex; justify-content: space-between; align-items: center; line-height: normal; padding: 12px 0; gap: 12px">
+                            {{ theme.name[currentLang] + ' - ' + theme.shortName[currentLang] }}
+                            <mat-chip style="pointer-events: none; margin: 0; min-width: max-content;">
+                                {{ (theme.type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate }}
+                            </mat-chip>
+                        </div>
+                    </mat-option>
+                </ng-container>
             </mat-select>
         </mat-form-field>
     </div>

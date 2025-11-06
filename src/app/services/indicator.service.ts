@@ -32,6 +32,8 @@ export class IndicatorService {
       const indicator = new Indicator(x);
       indicator.themes = themes.filter(t => x.themes.indexOf(t.id) >= 0);
       indicator.required = !!indicator.themes.find(t => t.type === 'requiredTheme');
+      indicator.parentDisabled = !!indicator.themes.every(t => t.disabled);
+      if (indicator.parentDisabled) indicator.disabled = true;
       return indicator;
     });
   }

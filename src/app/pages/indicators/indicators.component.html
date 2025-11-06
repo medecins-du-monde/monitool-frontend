@@ -18,20 +18,23 @@
                         (click)="filtersForm.get('battles').patchValue([])"
                     >{{'Placeholder.Filter.Clear' | translate}}</button>
                 </div>
-                <mat-option
-                    *ngFor="let theme of themes"
-                    [value]="theme.id"
-                    [matTooltip]="theme.name[currentLang]"
-                    [matTooltipShowDelay]="200"
-                    matTooltipPosition="right"
-                >
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        {{ theme.shortName[currentLang] }}
-                        <mat-chip style="pointer-events: none; margin: 0;">
-                            {{ (theme.type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate }}
-                        </mat-chip>
-                    </div>
-                </mat-option>
+                <ng-container *ngFor="let theme of themes">
+                    <mat-option
+                        *ngIf="filtersForm.value.showDisabled || !theme.disabled"
+                        [value]="theme.id"
+                        [matTooltip]="theme.name[currentLang]"
+                        [matTooltipShowDelay]="200"
+                        matTooltipPosition="right"
+                        [class.disabled]="theme.disabled"
+                    >
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            {{ theme.shortName[currentLang] }}
+                            <mat-chip style="pointer-events: none; margin: 0;">
+                                {{ (theme.type === 'theme' ? 'Thematic' : 'RequiredThematic') | translate }}
+                            </mat-chip>
+                        </div>
+                    </mat-option>
+                </ng-container>
             </mat-select>
         </div>
         <div class="action-bar" style="flex-grow: 1">
@@ -43,6 +46,13 @@
                 {{ 'cross-cutting-export' | translate }}
             </button>
         </div>
+    </div>
+
+    <div *ngIf="userIsAdmin" [formGroup]="filtersForm" style="display: flex; justify-content: flex-end; margin: -16px 16px 16px 16px;">
+        <mat-checkbox
+            color="primary"
+            formControlName="showDisabled"
+        >{{'ShowDisabled' | translate}}</mat-checkbox>
     </div>
 
     <div class="panel-flex" style="padding: 0 24px 6px 24px;">
@@ -65,7 +75,7 @@
             <div></div>
         </div>
         <mat-accordion *ngIf="this[x].length > 0">
-            <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]">
+            <mat-expansion-panel hideToggle *ngFor="let indicator of this[x]" [class.disabled]="indicator.disabled">
             <mat-expansion-panel-header style="min-height: fit-content;">
                 <div class="panel-flex">
                     <mat-checkbox color="primary" (click)="$event.stopPropagation();" (change)="selectIndicator($event.checked, indicator.id)" [checked]="selectedIndicatorIds[indicator.id]"></mat-checkbox>

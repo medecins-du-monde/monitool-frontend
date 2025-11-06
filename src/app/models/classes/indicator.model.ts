@@ -13,8 +13,12 @@ export class Indicator implements Deserializable {
         type: string;
         formula: string;
     };
+    disabled: boolean;
     rev: string;
+
+    // Depends on parent thematic
     required = false;
+    parentDisabled = false;
 
 
     get multiThemes() {
@@ -35,6 +39,7 @@ export class Indicator implements Deserializable {
             type: input.computation.type,
             formula: input.computation.formula
         } : null;
+        this.disabled = (input && input.disabled) ? input.disabled : false;
         return this;
     }
 
@@ -45,7 +50,8 @@ export class Indicator implements Deserializable {
             name: this.name,
             description: this.description,
             themes: this.themes.map(x => x.id),
-            computation: this.computation
+            computation: this.computation,
+            disabled: this.disabled,
         };
 
         if (this.rev){

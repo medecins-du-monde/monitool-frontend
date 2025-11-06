@@ -9,6 +9,8 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/services/theme.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/classes/user.model';
 
 @Component({
   selector: 'app-indicators',
@@ -40,6 +42,8 @@ export class IndicatorsComponent implements OnInit {
 
   displayedColumns: string[] = ['battle', 'name', 'report'];
 
+  userIsAdmin = false;
+
   private subscription = new Subscription();
 
   constructor(
@@ -48,17 +52,26 @@ export class IndicatorsComponent implements OnInit {
     private themeService: ThemeService,
     private dialog: MatDialog,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService,
   ) {
     this.filtersForm = this.fb.group({
       search: '',
       battles: [[]],
+      showDisabled: false,
     });
 
     this.subscription.add(
       this.filtersForm.valueChanges.subscribe(() => {
         this.filterIndicators();
       })
+    );
+    this.subscription.add(
+      this.authService.currentUser.subscribe(
+        (user: User) => {
+          this.userIsAdmin = user.role === 'admin' ? true : false
+        }
+      )
     );
   }
 
@@ -76,6 +89,9 @@ export class IndicatorsComponent implements OnInit {
     this.filteredIndicators = [];
     this.filteredRequiredIndicators = [];
     this.indicators.forEach(x => {
+      if (!this.filtersForm.value.showDisabled && x.disabled) {
+        return;
+      }
       if (this.filtersForm.value.battles.length > 0) {
         if (!x.themes.find(theme => this.filtersForm.value.battles.includes(theme.id))) {
           return;
@@ -117,7 +133,7 @@ export class IndicatorsComponent implements OnInit {
   downloadNewCC(indicatorIds?: string[]): void {
     const dialogRef = this.dialog.open(ExportModalComponent, {
       data: {
-        indicators: this.indicators,
+        indicators: this.indicators.filter(i => !i.disabled || this.selectedIndicatorIds[i.id]),
         selectedIndicatorIds: indicatorIds || this.selectedIndicatorIdsArray,
       }
     });

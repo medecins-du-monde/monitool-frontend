@@ -71,3 +71,7 @@ h2:not(:first-of-type) {
     justify-content: end;
     gap: 8px;
 }
+
+.disabled {
+  opacity: .6;
+}
