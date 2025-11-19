@@ -557,7 +557,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             td.innerHTML = value;
           }
           if (typeof value === 'number') {
-            const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            const tempArray = value.toString().split('.');
+            tempArray[0] = tempArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            const newValue = tempArray.join(',');
             td.innerHTML = newValue;
           } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly && value !== null) {
             td.style.background = '#d9534f';
