@@ -121,11 +121,9 @@
   "Disaggregations": "Disaggregations",
   "DivisionByZero": "Division by zero",
   "Done": "Done",
-  "DownloadPdfLandscape": "Download PDF (landscape)",
-  "DownloadPdfPortrait": "Download PDF (portrait)",
-  "DownloadPdf": "Download PDF",
-  "DownloadTemplate": "Download excel form",
-  "DownloadData": "Download excel data",
+  "DownloadPdfLandscape": "Export PDF (landscape)",
+  "DownloadPdfPortrait": "Export PDF (portrait)",
+  "DownloadPdf": "Export PDF",
   "UploadData": "Upload excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
@@ -1145,5 +1143,11 @@
   "Enable": "Enable",
   "ShowDisabled": "Show disabled elements",
   "ProjectDisabledThemeInfo": "This Political Battle has been disabled by an admin, you will still be able to see the related cross-cutting indicators on the Project structure but not on the general report.",
-  "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report."
+  "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report.",
+  "ExportExcel": "Export Excel",
+  "ExportSingleTemplate": "Export single site template",
+  "ExportMultipleTemplate": "Export multiple site template",
+  "ExportMultiple": "Export excel data for all sites",
+  "ExportSingle": "Export excel data",
+  "ExportTemplate": "Exporter un modèle Excel"
 }

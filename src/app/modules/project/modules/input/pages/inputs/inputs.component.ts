@@ -285,7 +285,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     const inputId = `input:${this.project.id}:${this.formId}`;
     const newDataSource = [];
     for (const date of nextDates){
-      const current = { Date: date.humanValue };
+      const current = { Date: {display: date.humanValue, value: date.value} };
 
       for (const site of this.sites){
         if (!this.lastDates[site.id] && date.date <= site.end || this.form.periodicity === 'free') {
@@ -377,6 +377,17 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  excelDownload(type: 'single' | 'allSites', details?: {site?: string, date: string}) {
+    let url = `/api/resources/project/${this.project?.id}/data-source${type === 'allSites' ? '-all-sites' : ''}/${this.formId}.xlsx`;
+    if (details?.site) {
+      url += `/${details.site}`;
+    }
+    if (details?.date) {
+      url += `/${details.date}`;
+    }
+    window.open(url, '_blank');
   }
 
   openDownload(type: 'pdf' | 'xlsx', orientation?: 'portrait' | 'landscape', details?: {site: string, date: string}) {
