@@ -209,6 +209,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
             logicalFrame.name
           }`,
           disabled: logicalFrame.disabled,
+          id: logicalFrame.id,
           sectionId: id,
           open: false,
           level
@@ -395,6 +396,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,
           disabled: form.disabled,
+          id: form.id,
           sectionId: id,
           open: false,
           level

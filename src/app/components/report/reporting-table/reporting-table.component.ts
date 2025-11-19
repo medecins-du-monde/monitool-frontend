@@ -1548,7 +1548,7 @@ export class ReportingTableComponent
         if (!indicator) {
           data = {
             type: 'logicalFrame',
-            details: this.project.logicalFrames[element.sectionId - 1]
+            details: this.project.logicalFrames.find(logFrame => logFrame.id === element.id)
           };
         } else {
           data = {
@@ -1560,7 +1560,7 @@ export class ReportingTableComponent
         if (!indicator) {
           data = {
             type: 'form',
-            details: this.project.forms[element.sectionId - 3 - this.project.logicalFrames.length]
+            details: this.project.forms.find(form => form.id === element.id)
           };
         } else {
           data = {
