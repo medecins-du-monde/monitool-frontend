@@ -6,19 +6,13 @@
     </span>
     <div class="info-buttons">
         <a mat-stroked-button type="button" class="mdm-button"
-            [matMenuTriggerFor]="downloadMenu">
+            [matMenuTriggerFor]="downloadPdfMenu">
             <mat-icon>download</mat-icon>{{'DownloadPdf' | translate}}
         </a>
         <a mat-stroked-button type="button" class="mdm-button"
-            (click)="openDownload('xlsx')"
-        >
-            <mat-icon>download</mat-icon>{{'DownloadTemplate' | translate}}
+            [matMenuTriggerFor]="exportExcelMenu">
+            <mat-icon>download</mat-icon>{{'ExportExcel' | translate}}
         </a>
-        <!-- <a mat-stroked-button type="button" class="mdm-button"
-        href="/api/resources/project/{{project?.id}}/data-source/{{formId}}.pdf?orientation=landscape" target="_blank"
-        rel="noopener noreferrer">
-        <mat-icon>note</mat-icon>{{'DownloadPdfLandscape' | translate}}
-    </a> -->
     </div>
 </div>
 <div *ngIf="this.sites?.length > 0; else elseBlockError" class="table-box">
@@ -27,7 +21,12 @@
         <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}" [sticky]="column === 'Date'">
             <th mat-header-cell *matHeaderCellDef>{{ column | translate }}</th>
             <td mat-cell *matCellDef="let element" id="{{column}}" [ngClass]="column === 'Date'? 'first-row':''">
-                <div *ngIf="column === 'Date'; else elseBlock">{{ element[column] }}</div>
+                <div *ngIf="column === 'Date'; else elseBlock" [ngClass]="{'edition-cell': isOwner}">
+                    <span style="flex: 1">{{ element[column].display }}</span>
+                    <div *ngIf="isOwner" class="expand" style="border: none; border-left: 1px solid lightgray;" [matMenuTriggerFor]="menuDate" [matMenuTriggerData]="{element: element[column]}">
+                        <mat-icon>expand_more</mat-icon>
+                    </div>
+                </div>
                 <ng-template #elseBlock>
                     <div *ngIf="element[column]?.value === -1">
                         <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
@@ -104,10 +103,10 @@
 <mat-menu #menu="matMenu" >
     <ng-template matMenuContent let-element="element">
         <button mat-menu-item 
-            (click)="openDownload('xlsx', undefined, {site: element.column, date: element.date})"
+            (click)="excelDownload('single', {site: element.column, date: element.date})"
         >
             <mat-icon>download</mat-icon>
-            {{ 'DownloadData' | translate }}
+            {{ 'ExportSingle' | translate }}
         </button>
         <button mat-menu-item 
             (click)="toggleBlock(element)"
@@ -117,7 +116,17 @@
         </button>
     </ng-template>
 </mat-menu>
-<mat-menu #downloadMenu="matMenu" >
+<mat-menu #menuDate="matMenu" >
+    <ng-template matMenuContent let-element="element">
+        <button mat-menu-item 
+            (click)="excelDownload('allSites', {date: element.value})"
+        >
+            <mat-icon>download</mat-icon>
+            {{ 'ExportMultiple' | translate }}
+        </button>
+    </ng-template>
+</mat-menu>
+<mat-menu #downloadPdfMenu="matMenu" >
     <ng-template matMenuContent>
         <button mat-menu-item 
             (click)="openDownload('pdf', 'portrait')"
@@ -130,6 +139,22 @@
         >
             <mat-icon>note</mat-icon>
             {{ 'DownloadPdfLandscape' | translate }}
+        </button>
+    </ng-template>
+</mat-menu>
+<mat-menu #exportExcelMenu="matMenu" >
+    <ng-template matMenuContent>
+        <button mat-menu-item 
+            (click)="excelDownload('single')"
+        >
+            <mat-icon>table_chart</mat-icon>
+            {{ 'ExportSingleTemplate' | translate }}
+        </button>
+        <button mat-menu-item 
+            (click)="excelDownload('allSites')"
+        >
+            <mat-icon>backup_table</mat-icon>
+            {{ 'ExportMultipleTemplate' | translate }}
         </button>
     </ng-template>
 </mat-menu>

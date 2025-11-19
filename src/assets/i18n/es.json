@@ -115,11 +115,9 @@
       }
   },
   "Description": "Descripción",
-  "DownloadPdfLandscape": "Descargar PDF (horizontal)",
-  "DownloadPdfPortrait": "Descargar PDF (vertical)",
-  "DownloadPdf": "Descargar PDF",
-  "DownloadTemplate": "Descargar formulario excel",
-  "DownloadData": "Descargar datos en excel",
+  "DownloadPdfLandscape": "Exportar PDF (horizontal)",
+  "DownloadPdfPortrait": "Exportar PDF (vertical)",
+  "DownloadPdf": "Exportar PDF",
   "UploadData": "Importar datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
@@ -1162,5 +1160,11 @@
   "Enable": "Activar",
   "ShowDisabled": "Mostrar elementos desactivados",
   "ProjectDisabledThemeInfo": "Esta batalla política ha sido desactivada por un administrador, aún podrá ver los indicadores transversales relacionados en la estructura del proyecto, pero no en el informe general.",
-  "ProjectDisabledIndicatorInfo": "Este indicador ha sido desactivado por un administrador, no se mostrará en el informe general."
+  "ProjectDisabledIndicatorInfo": "Este indicador ha sido desactivado por un administrador, no se mostrará en el informe general.",
+  "ExportExcel": "Exportar Excel",
+  "ExportSingleTemplate": "Exportar plantilla para un lugar de colecta",
+  "ExportMultipleTemplate": "Exportar plantilla para todos los lugares de colecta",
+  "ExportMultiple": "Exportar datos en excel para todos los lugares de colecta",
+  "ExportSingle": "Exportar datos en excel",
+  "ExportTemplate": "Exportar plantilla excel"
 }

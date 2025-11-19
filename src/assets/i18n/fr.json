@@ -115,11 +115,9 @@
   "Description": "Description",
   "DivisionByZero": "Division par zéro",
   "Done": "Réalisé",
-  "DownloadPdfLandscape": "Télécharger PDF (paysage)",
-  "DownloadPdfPortrait": "Télécharger PDF (portrait)",
-  "DownloadPdf": "Télécharger PDF",
-  "DownloadTemplate": "Télécharger le formulaire excel",
-  "DownloadData": "Télécharger les données excel",
+  "DownloadPdfLandscape": "Exporter PDF (paysage)",
+  "DownloadPdfPortrait": "Exporter PDF (portrait)",
+  "DownloadPdf": "Exporter PDF",
   "UploadData": "Importer les données excel",
   "Landscape": "Orientation paysage",
   "Portrait": "Orientation portrait",
@@ -1161,5 +1159,11 @@
   "Enable": "Activer",
   "ShowDisabled": "Afficher les éléments désactivés",
   "ProjectDisabledThemeInfo": "Ce Combat Politique a été désactivé par un administrateur, vous pourrez toujours voir les indicateurs transversaux associés sur la structure du projet mais pas sur le rapport général.",
-  "ProjectDisabledIndicatorInfo": "Cet indicateur a été désactivé par un administrateur, il ne sera pas affiché dans le rapport général."
+  "ProjectDisabledIndicatorInfo": "Cet indicateur a été désactivé par un administrateur, il ne sera pas affiché dans le rapport général.",
+  "ExportExcel": "Exporter Excel",
+  "ExportSingleTemplate": "Exporter un modèle de site unique",
+  "ExportMultipleTemplate": "Exporter un modèle de site multiple",
+  "ExportMultiple": "Exporter les données excel pour tous les sites",
+  "ExportSingle": "Exporter les données excel",
+  "ExportTemplate": "Exporter le modèle excel"
 }

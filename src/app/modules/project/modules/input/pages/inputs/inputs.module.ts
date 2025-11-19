@@ -13,6 +13,8 @@ import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import {MatListModule} from '@angular/material/list';
+
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-m
     MatInputModule,
     ReactiveFormsModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    MatListModule
   ]
 })
 export class InputsModule { }
