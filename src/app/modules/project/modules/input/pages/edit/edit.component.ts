@@ -399,7 +399,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos] !== null) {
+              if (val.values[table.id][inputPos] !== null && Number.isInteger(val.values[table.id][inputPos])) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -431,7 +431,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos] !== null) {
+              if (val.values[table.id][inputPos] !== null && Number.isInteger(val.values[table.id][inputPos])) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -559,7 +559,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             td.style.background = '#d9534f';
             td.innerHTML = value;
           }
-          if (typeof value === 'number') {
+          if (typeof value === 'number' && Number.isInteger(value)) {
             const tempArray = value.toString().split('.');
             tempArray[0] = tempArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             const newValue = tempArray.join(',');
@@ -594,7 +594,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               let newValue;
               if (/^(\s*([-+]?)((\d+(\.\d*)?)|(\.\d+)))?(?:(\s*([-+*/]))?\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
                 newValue = this.evil(change[3]);//eval(change[3]);
-                console.log(newValue);
               } else {
                 newValue = change[3];
               }
