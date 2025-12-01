@@ -104,12 +104,18 @@
     <ng-template matMenuContent let-element="element">
         <button mat-menu-item 
             (click)="excelDownload('single', {site: element.column, date: element.date})"
+            [matTooltip]="'ExportSingle' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>download</mat-icon>
             {{ 'ExportSingle' | translate }}
         </button>
         <button mat-menu-item 
             (click)="toggleBlock(element)"
+            [matTooltip]="(element.blocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>{{element.blocked ? 'lock_open' : 'lock'}}</mat-icon>
             {{ (element.blocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate }}
@@ -120,6 +126,9 @@
     <ng-template matMenuContent let-element="element">
         <button mat-menu-item 
             (click)="excelDownload('allSites', {date: element.value})"
+            [matTooltip]="'ExportMultiple' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>download</mat-icon>
             {{ 'ExportMultiple' | translate }}
@@ -130,12 +139,18 @@
     <ng-template matMenuContent>
         <button mat-menu-item 
             (click)="openDownload('pdf', 'portrait')"
+            [matTooltip]="'DownloadPdfPortrait' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>insert_drive_file</mat-icon>
             {{ 'DownloadPdfPortrait' | translate }}
         </button>
         <button mat-menu-item 
             (click)="openDownload('pdf', 'landscape')"
+            [matTooltip]="'DownloadPdfLandscape' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>note</mat-icon>
             {{ 'DownloadPdfLandscape' | translate }}
@@ -146,12 +161,18 @@
     <ng-template matMenuContent>
         <button mat-menu-item 
             (click)="excelDownload('single')"
+            [matTooltip]="'ExportSingleTemplate' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>table_chart</mat-icon>
             {{ 'ExportSingleTemplate' | translate }}
         </button>
         <button mat-menu-item 
             (click)="excelDownload('allSites')"
+            [matTooltip]="'ExportMultipleTemplate' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
         >
             <mat-icon>backup_table</mat-icon>
             {{ 'ExportMultipleTemplate' | translate }}
