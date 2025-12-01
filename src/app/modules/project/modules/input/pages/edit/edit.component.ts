@@ -119,11 +119,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem,
     {
       new: true,
+      res1: 'InformationPanel.Import',
+      res2: 'InformationPanel.Import_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.input_status_question',
       res2: 'inputStatus'
     } as InformationItem,
     {
-      new: true,
       res1: 'InformationPanel.input_save_question',
       res2: 'inputSave',
       graphic: 'saveButtons'

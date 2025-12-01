@@ -30,6 +30,11 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       res2: 'InformationPanel.Datasources_description'
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.Import_alt',
+      res2: 'InformationPanel.Import_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.General_Naming_convention_question',
       res2: 'InformationPanel.General_Naming_convention_response'
     } as InformationItem,
