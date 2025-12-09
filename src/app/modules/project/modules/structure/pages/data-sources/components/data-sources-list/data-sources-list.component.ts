@@ -193,13 +193,11 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
     this.projectService.project.next(this.project);
   }
 
-  async onDownloadAll(orientation: 'landscape' | 'portrait') {
+  async onExportAllPdf(orientation: 'landscape' | 'portrait') {
     this.downloadingAll = true;
 
     const jszip = new JSZip();
     const dlAnchorElem = document.getElementById('downloadAnchorElem');
-
-    // '/api/resources/project/project:35862ac4-c649-47cc-848a-c6b6b42ea52e/data-source/6678cd42-0acd-4743-8468-45647c53f0f0.pdf?orientation=landscape&language=en'
 
     for (const form of this.forms) {
       await this.apiService.get(
@@ -223,7 +221,38 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources PDF.zip`);
+      dlAnchorElem.click();
+      this.downloadingAll = false;
+      this.changeDetector.markForCheck();
+    });
+  }
+
+  async onExportAllExcel(type: 'single' | 'allSites') {
+    this.downloadingAll = true;
+
+    const jszip = new JSZip();
+    const dlAnchorElem = document.getElementById('downloadAnchorElem');
+
+    for (const form of this.forms) {
+      await this.apiService.get(
+        `/resources/project/${this.project.id}/data-source${type === 'allSites' ? '-all-sites' : ''}/${form.id}.xlsx`,
+        {
+          headers: new HttpHeaders({'Accept':'application/pdf'}),
+          responseType: 'blob' as 'json',
+        }
+      ).then((val: any) => {
+        if (val) {
+          jszip.file(`${form.name.replace(/\//g, '-')}.xlsx`, new Blob([val], {type: 'application/xlsx'}), {createFolders: false});
+        }
+      });
+    }
+    
+    jszip.generateAsync({ type: 'blob' }).then((content) => {
+      // see FileSaver.js
+      const url = window.URL.createObjectURL(content);
+      dlAnchorElem.setAttribute('href', url);
+      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources Excel.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();

@@ -3,8 +3,11 @@
     <button mat-stroked-button class="mdm-button" (click)="onCreate()">
       <mat-icon>add</mat-icon>{{ 'CreateNewDataSource' | translate }}
     </button>
-    <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="menu" [disabled]="downloadingAll">
+    <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="pdfMenu" [disabled]="downloadingAll">
       <mat-icon>download</mat-icon>{{ 'DownloadAllPDF' | translate }}
+    </button>
+    <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="excelMenu" [disabled]="downloadingAll">
+      <mat-icon>download</mat-icon>{{ 'ExportAllExcel' | translate }}
     </button>
   </div>
   <div class="mdm-cards" cdkDropListGroup>
@@ -21,12 +24,33 @@
 </div>
 <a id="downloadAnchorElem" style="display:none"></a>
 
-<mat-menu #menu="matMenu" style="background-color: white;">
-    <a mat-menu-item (click)="onDownloadAll('portrait')" target="_blank">
+<mat-menu #excelMenu="matMenu" style="background-color: white;">
+    <button mat-menu-item 
+        (click)="onExportAllExcel('single')"
+        [matTooltip]="'ExportSingleTemplate' | translate"
+        matTooltipPosition="right"
+        matTooltipShowDelay="500"
+    >
+        <mat-icon>table_chart</mat-icon>
+        {{ 'ExportSingleTemplate' | translate }}
+    </button>
+    <button mat-menu-item 
+        (click)="onExportAllExcel('allSites')"
+        [matTooltip]="'ExportMultipleTemplate' | translate"
+        matTooltipPosition="right"
+        matTooltipShowDelay="500"
+    >
+        <mat-icon>backup_table</mat-icon>
+        {{ 'ExportMultipleTemplate' | translate }}
+    </button>
+</mat-menu>
+
+<mat-menu #pdfMenu="matMenu" style="background-color: white;">
+    <a mat-menu-item (click)="onExportAllPdf('portrait')" target="_blank">
         <mat-icon>insert_drive_file</mat-icon>
         <span>{{ 'Portrait' | translate }}</span>
     </a>
-    <a mat-menu-item (click)="onDownloadAll('landscape')" target="_blank">
+    <a mat-menu-item (click)="onExportAllPdf('landscape')" target="_blank">
         <mat-icon>note</mat-icon>
         <span>{{ 'Landscape' | translate }}</span>
     </a>

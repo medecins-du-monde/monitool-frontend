@@ -39,7 +39,7 @@
   "Clone": "Clone",
   "CloneStructure": "Clone structure",
   "CloneStructureAndData": "Clone structure and data",
-  "DownloadProject": "Download project",
+  "DownloadProject": "Export project",
   "DownloadProjectInfo": "Get a JSON file with the structure and data of the project",
   "CloneProject": "Clone Project",
   "CloneProjectInfo": "This action will clone only the structure of this project, without the entries. Confirm to clone.",
@@ -127,8 +127,8 @@
   "UploadData": "Upload excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
-  "DownloadAllPDF": "Download all as PDF",
-  "DownloadPlot": "Download",
+  "DownloadAllPDF": "Export all as PDF",
+  "DownloadPlot": "Export",
   "DuplicateDatasourceTitle": "Clone structure",
   "DuplicateDatasource": "This action will clone this data source without the data already entered. Confirm to clone.",
   "DuplicateDatasourceTitleWithData": "Clone structure and data",
@@ -569,7 +569,7 @@
       "Project_list_question6": "My project disappeared! Where is it?",
       "Project_list_response6": "Don't panic!<br> There are multiple explanation:<br><ul><li>Your project doesn't match the filter you've chosen. Empty the search bar at the top of the page</li><li>Your project is over. Click on <button>Show finished projects</button>. You can edit its end date to prolong it.</li><li>You've archived your project. Click on <button>Show archived projects</button> then on <button>Archive</button></li></ul><br> If your project's still missing, you might not be connected with the account you used to create said project.<br> Click on <button>Logout</button> then log back on with the account you used to create the project. If you want to, you can transfer your project in another account.",
       "Project_list_question7": "How long will my project be stored on Monitool?",
-      "Project_list_response7": "As long as the platform still exists: storing projects doesn't cost much compared to development and hosting. <br>We don't really need to delete project to free some space. <br>If you NGO has rules about online storage of finished project, you can download all of your project's data from the General Reporting page.",
+      "Project_list_response7": "As long as the platform still exists: storing projects doesn't cost much compared to development and hosting. <br>We don't really need to delete project to free some space. <br>If you NGO has rules about online storage of finished project, you can export all of your project's data from the General Reporting page.",
       "Structure_home": "Structure home",
       "Structure_home_description": "Check how far along you are in the project's structure",
       "User_list": "Users list",
@@ -962,8 +962,8 @@
       "DataNotAvailable": "Data available by",
       "MissingCalculation": "Calculation is missing"
   },
-  "DownloadTable": "Download Table",
-  "DownloadTableMini": "Download Mini",
+  "DownloadTable": "Export Table",
+  "DownloadTableMini": "Export Mini",
   "FillWithPreviousData": "Fill with data from the previous entry",
   "FillWithZero": "Fill the empty cells with 0",
   "ShowFinishedProjects": "Show finished projects",
@@ -983,7 +983,7 @@
   "NewVersion": "Congratulations! Your monitool is now up to date.",
   "CommentedGraphs": "Commented graphs",
   "PersonalDashboard": "Personal dashboard",
-  "export-download": "Download Excel Report",
+  "export-download": "Export Excel Report",
   "export-complete": "Detailed Excel Export",
   "export-minimized": "Global Excel Export",
   "minimized-tooltip": "All Sites merged",
@@ -1008,12 +1008,12 @@
   "current-minimized-tooltip": "Export the report respecting opened groups",
   "export-warning": {
     "time": {
-      ">1": "The download of this report should take about {{time}} minutes.",
-      "1": "The download of this report should take about 1 minute."
+      ">1": "The export of this report should take about {{time}} minutes.",
+      "1": "The export of this report should take about 1 minute."
     },
     "global": "The time it takes depends on the amount of data and number of logical frames exported. Do you want to continue?",
     "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
-    "current-view": "The download of this report can take a few minutes. Do you want to continue?",
+    "current-view": "The export of this report can take a few minutes. Do you want to continue?",
     "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries.",
     "cross-cutting-multiple": "Configure your export with the following fields, <b>leave them empty so they aren't taken into account</b>. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
   },
@@ -1109,7 +1109,7 @@
     "title": "Date range is too long",
     "content": "The selected date range exceeds one year, to secure a good page performance it will be reduced to 1 year. You can revert this back from the filters, but be that the page could become unresponsive"
   },
-  "no-report-data": "You cannot download the report if there is no data",
+  "no-report-data": "You cannot export the report if there is no data",
   "cross-cutting-export": "Cross-cutting indicators report",
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
   "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
@@ -1118,7 +1118,7 @@
   "indicator": "Indicator",
   "actions": "Actions",
   "viewReport": "View report",
-  "downloadReport": "Download report",
+  "downloadReport": "Export report",
   "proposedCalc": "Proposed computation",
   "no-indicator-match": "No indicators match the filters",
   "hide": "Hide",
@@ -1152,5 +1152,6 @@
   "ExportMultipleTemplate": "Export multiple site template",
   "ExportMultiple": "Export excel data for all sites",
   "ExportSingle": "Export excel data",
-  "ExportTemplate": "Exporter un modèle Excel"
+  "ExportTemplate": "Exporter un modèle Excel",
+  "ExportAllExcel": "Export all as Excel"
 }

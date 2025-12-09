@@ -143,4 +143,9 @@ export class DataSourceComponent implements OnInit {
     }
   }
 
+  excelDownload(type: 'single' | 'allSites') {
+    const url = `/api/resources/project/${this.project?.id}/data-source${type === 'allSites' ? '-all-sites' : ''}/${this.form.id}.xlsx`;
+    window.open(url, '_blank');
+  }
+
 }

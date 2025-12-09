@@ -39,8 +39,8 @@
   "Clone": "Clonar",
   "CloneStructure": "Clonar estructura",
   "CloneStructureAndData": "Clonar estructura y datos",
-  "DownloadProject": "Descargar proyecto",
-  "DownloadProjectInfo": "Descarga un archivo JSON con la estructura y datos del proyecto",
+  "DownloadProject": "Exportar proyecto",
+  "DownloadProjectInfo": "Exportar un archivo JSON con la estructura y datos del proyecto",
   "CloneProject": "Clonar Proyecto",
   "CloneProjectInfo": "Esta acción clonará solo la estructura de este proyecto, sin las entradas. Confirme para clonar.",
   "CloneProjectInfoData": "Va a clonar este proyecto, y todas sus entradas de datos. Confirme para clonar.",
@@ -121,12 +121,12 @@
   "UploadData": "Importar datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
-  "DownloadAllPDF": "Descargar todos como PDF",
-  "DownloadPlot": "Descargar",
+  "DownloadAllPDF": "Exportar todos como PDF",
+  "DownloadPlot": "Exportar",
   "Reset": "Restablecer",
   "DivisionByZero": "División por cero",
   "Done": "Realizado",
-  "Download":"Descargar",
+  "Download":"Exportar",
   "DuplicateDatasourceTitle": "Clonar estructura",
   "DuplicateDatasource": "Va a clonar el estructura de esta fuente de datos sin entradas. Confirme para clonar.",
   "DuplicateDatasourceTitleWithData": "Clonar estructura y datos",
@@ -981,8 +981,8 @@
       "DataNotAvailable": "Estos datos estan disponibles por mes",
       "MissingCalculation": "Falta el cálculo"
   },
-  "DownloadTable": "Descargar la tabla",
-  "DownloadTableMini": "Descargar mini",
+  "DownloadTable": "Exportar la tabla",
+  "DownloadTableMini": "Exportar mini",
   "FillWithPreviousData": "Rellenar con los datos de la última entrada",
   "FillWithZero": "Rellenar todas las celdas vacías con 0",
   "ShowFinishedProjects": "Mostrar proyectos terminados",
@@ -1000,7 +1000,7 @@
   "Nov": "Noviembre",
   "Dec": "Diciembre",
   "NewVersion": "¡Enhorabuena! Tu monitool está actualizado.",
-  "export-download": "Descargar informe Excel",
+  "export-download": "Exportar informe Excel",
   "export-complete": "Exportación detallada de Excel",
   "export-minimized": "Exportación global de Excel",
   "minimized-tooltip": "Todos los sitios combinados",
@@ -1025,12 +1025,12 @@
   "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",
   "export-warning": {
     "time": {
-      ">1": "La descarga de este informe deberia tardar aproximadamente {{time}} minutos.",
-      "1": "La descarga de este informe deberia tardar aproximadamente 1 minuto."
+      ">1": "La exportación de este informe deberia tardar aproximadamente {{time}} minutos.",
+      "1": "La exportación de este informe deberia tardar aproximadamente 1 minuto."
     },
     "global": "El tiempo que tome depende de la cantidad de información y número de marcos lógicos exportados. ¿Desea continuar?",
     "detailed": "El tiempo que tome depende de la cantidad de información, número de marcos lógicos y lugares de colecta exportados. ¿Desea continuar?",
-    "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?",
+    "current-view": "La exportación de este informe puede tardar un par de minutos. ¿Desea continuar?",
     "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países.",
     "cross-cutting-multiple": "Configure su exportación con los siguientes campos, <b>déjelos vacíos para que no se tengan en cuenta</b>. Por defecto la exportación generará el informe con todos los datos existentes (todas las fechas, todos los proyectos y todos los indicadores)"
   },
@@ -1126,7 +1126,7 @@
     "title": "El rango de fechas es muy largo",
     "content": "El rango de fechas seleccionado excede un año, para asegurar el buen rendimiento de la pagina el rango se va a reducir a un año. Puedes revertir esto desde los filtros, pero tenga en cuenta que la pagina podria presentar problemas de rendimiento."
   },
-  "no-report-data": "No se puede descargar el informe si no hay ningún dato",
+  "no-report-data": "No se puede exportar el informe si no hay ningún dato",
   "cross-cutting-export": "Reporte de indicadores transversales",
   "country-2.0-warning": "Se acaban de añadir las selecciones para continentes y países. Para usarlas, complete la información en la sección \"Estructura\" → \"Datos de base\" o contacte el propietario del proyecto.",
   "country-2.0-warning-project": "Su proyecto está utilizando el sistema de país antiguo. Para actualizarlo, seleccione un continente y un país en la sección \"Estructura\" → \"Datos de base\".",
@@ -1135,7 +1135,7 @@
   "indicator": "Indicador",
   "actions": "Acciones",
   "viewReport": "Ver reporte",
-  "downloadReport": "Descargar reporte",
+  "downloadReport": "Exportar reporte",
   "proposedCalc": "Cálculo propuesto",
   "no-indicator-match": "Ningún indicador corresponde a los filtros",
   "hide": "Ocultar",
@@ -1169,5 +1169,6 @@
   "ExportMultipleTemplate": "Exportar plantilla para todos los lugares de colecta",
   "ExportMultiple": "Exportar datos en excel para todos los lugares de colecta",
   "ExportSingle": "Exportar datos en excel",
-  "ExportTemplate": "Exportar plantilla excel"
+  "ExportTemplate": "Exportar plantilla excel",
+  "ExportAllExcel": "Exportar todos como excel"
 }

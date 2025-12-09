@@ -37,8 +37,8 @@
   "Clone": "Dupliquer",
   "CloneStructure": "Dupliquer structure",
   "CloneStructureAndData": "Dupliquer structure et données",
-  "DownloadProject": "Télécharger le projet",
-  "DownloadProjectInfo": "Télécharger un fichier JSON avec la structure et les données du projet",
+  "DownloadProject": "Exporter le projet",
+  "DownloadProjectInfo": "Exporter un fichier JSON avec la structure et les données du projet",
   "CloneProject": "Dupliquer le projet",
   "CloneProjectInfo": "Cette action dupliquera uniquement la structure de ce projet, sans les entrées. Confimez pour dupliquer.",
   "CloneProjectInfoData": "Cette action va dupliquer ce projet et toutes ses saisies. Confimez pour cloner.",
@@ -121,8 +121,8 @@
   "UploadData": "Importer les données excel",
   "Landscape": "Orientation paysage",
   "Portrait": "Orientation portrait",
-  "DownloadAllPDF": "Télécharger tout en PDF",
-  "DownloadPlot": "Télécharger",
+  "DownloadAllPDF": "Exporter tout en PDF",
+  "DownloadPlot": "Exporter",
   "DuplicateDatasourceTitle": "Dupliquer structure",
   "DuplicateDatasource": "Cette action dupliquera la structure de cette source de données sans les données. Confirmez pour dupliquer.",
   "DuplicateDatasourceTitleWithData": "Dupliquer structure et données",
@@ -577,7 +577,7 @@
       "Project_list_question6": "Mon projet a disparu! Où est-il?",
       "Project_list_response6": "Pas de panique! <br> Plusieurs explications sont possibles: <br><ul><li>Votre projet ne correspond pas au filtre que vous avez rentré. Videz la barre de saisie de texte en haut de la page</li><li>Votre projet vient de terminer. Cliquez sur <button>Afficher les projets terminés</button> . Vous pouvez éditeur sa date de fin pour le prolonger.</li><li>Vous avez archivé votre projet. Cliquez sur <button>Afficher les projets archivés</button> puis sur <button>Archiver</button></li></ul><br> Si votre projet est toujours manquant, il est possible que vous ne soyez pas connecté avec le même compte que celui que vous avez utilisé pour créer votre projet.<br> Cliquez sur <button>Deconnecter</button> puis connectez-vous avec le compte que vous avez utilisé pour créer votre projet. Si vous le désirez, vous pourrez transférer le projet sur votre nouveau compte.",
       "Project_list_question7": "Combien de temps mon projet va-t'il rester stocké sur Monitool?",
-      "Project_list_response7": "Pendant toute la durée de vie de l'outil: les coûts de stockage des projets sont faibles par rapport aux coûts de développement et d'hébergement de la plateforme. <br>Il ne nous est donc pas nécessaire de supprimer les anciens projets pour « faire de la place ». <br>Si votre ONG dispose de règles au sujet de l'archivage électronique pour les projet terminés, vous pouvez télécharger toutes les données saisies par projet depuis la page 'Rapport Général'.",
+      "Project_list_response7": "Pendant toute la durée de vie de l'outil: les coûts de stockage des projets sont faibles par rapport aux coûts de développement et d'hébergement de la plateforme. <br>Il ne nous est donc pas nécessaire de supprimer les anciens projets pour « faire de la place ». <br>Si votre ONG dispose de règles au sujet de l'archivage électronique pour les projet terminés, vous pouvez exporter toutes les données saisies par projet depuis la page 'Rapport Général'.",
       "Structure_home": "Accueil configuration",
       "Structure_home_description": "Visualisez votre avancement dans la configuration de votre projet.",
       "User_list": "Liste des utilisateurs",
@@ -976,8 +976,8 @@
       "DataNotAvailable": "Ces données sont disponibles par",
       "MissingCalculation": "Calcul absent"
   },
-  "DownloadTable": "Télécharger le tableau",
-  "DownloadTableMini": "Télécharger mini",
+  "DownloadTable": "Exporter le tableau",
+  "DownloadTableMini": "Exporter mini",
   "FillWithPreviousData": "Remplir avec les données de la période précédente",
   "FillWithZero": "Remplir les cellules vides avec des 0",
   "ShowFinishedProjects": "Afficher les projets terminés",
@@ -999,7 +999,7 @@
   "NewVersion": "Félicitations ! Votre Monitool est à jour.",
   "CommentedGraphs": "Graphiques commentés",
   "PersonalDashboard": "Tableaux de bord personnels",
-  "export-download": "Télécharger le rapport Excel",
+  "export-download": "Exporter le rapport Excel",
   "export-complete": "Export Excel détaillé",
   "export-minimized": "Export Excel Global",
   "minimized-tooltip": "Tous sites confondus",
@@ -1024,12 +1024,12 @@
   "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",
   "export-warning": {
     "time": {
-      ">1": "Le téléchargement de ce rapport devrait prendre environ {{time}} minutes.",
-      "1": "Le téléchargement de ce rapport devrait prendre environ 1 minute."
+      ">1": "L'exportation de ce rapport devrait prendre environ {{time}} minutes.",
+      "1": "L'exportation de ce rapport devrait prendre environ 1 minute."
     },
     "global": "Le temps nécessaire dépend de la quantité de données et du nombre de cadres logiques exportés. Voulez-vous continuer?",
     "detailed": "Le temps nécessaire dépend de la quantité de données, du nombre de cadres logiques et des sites de collecte exportés. Voulez-vous continuer?",
-    "current-view": "Le téléchargement de ce rapport peut prendre quelques minutes. Voulez-vous continuer?",
+    "current-view": "L'exportation de ce rapport peut prendre quelques minutes. Voulez-vous continuer?",
     "cross-cutting": "Le rapport utilisera certains des filtres sélectionnés pour l'exportation, en particulier: date de début, date de fin, continents et pays.",
     "cross-cutting-multiple": "Configurez votre export avec les champs suivants, <b>laissez-les vides pour qu'ils ne soient pas pris en compte</b>. Par défaut, l'exportation génère le rapport avec toutes les données existantes (toutes les dates, tous les projets et tous les indicateurs)"
   },
@@ -1125,7 +1125,7 @@
     "title": "L'intervalle de dates est trop long",
     "content": "L'intervalle de dates sélectionné dépasse un an. Pour garantir une bonne performance de la page, il sera réduit à un an. Vous pouvez revenir en arrière à partir des filtres, mais sachez que la page risque de ne plus répondre."
   },
-  "no-report-data": "Vous ne pouvez pas télécharger le rapport s'il n'y a pas de données",
+  "no-report-data": "Vous ne pouvez pas Exporter le rapport s'il n'y a pas de données",
   "cross-cutting-export": "Rapport des indicateurs transversaux",
   "country-2.0-warning": "Des listes déroulantes pour les continents et les pays viennent d’être ajoutées. Pour pouvoir les utiliser, veuillez les renseigner dans la partie \"Structure\" → \"Données de base\" ou contacter le propriétaire du projet.",
   "country-2.0-warning-project": "Votre projet utilise l'ancien système de pays. Pour le mettre à jour, veuillez sélectionner un continent et un pays dans la partie \"Structure\" → \"Données de base\".",
@@ -1134,7 +1134,7 @@
   "indicator": "Indicateur",
   "actions": "Actions",
   "viewReport": "Voir rapport",
-  "downloadReport": "Télécharger rapport",
+  "downloadReport": "Exporter rapport",
   "proposedCalc": "Calcul proposé",
   "no-indicator-match": "Aucun indicateur ne correspond aux filtres",
   "hide": "Cacher",
@@ -1168,5 +1168,6 @@
   "ExportMultipleTemplate": "Exporter un modèle de site multiple",
   "ExportMultiple": "Exporter les données excel pour tous les sites",
   "ExportSingle": "Exporter les données excel",
-  "ExportTemplate": "Exporter le modèle excel"
+  "ExportTemplate": "Exporter le modèle excel",
+  "ExportAllExcel": "Exporter tout en excel"
 }
