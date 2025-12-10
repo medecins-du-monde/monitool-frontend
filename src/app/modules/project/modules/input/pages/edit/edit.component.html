@@ -9,7 +9,11 @@
     </a>
     <a mat-stroked-button type="button" class="mdm-button"
         (click)="openDownload()" *ngIf="!isNew">
-        <mat-icon>download</mat-icon>{{'DownloadData' | translate}}
+        <mat-icon>download</mat-icon>{{'ExportSingle' | translate}}
+    </a>
+    <a mat-stroked-button type="button" class="mdm-button"
+        (click)="openDownload(true)" *ngIf="isNew">
+        <mat-icon>download</mat-icon>{{'ExportTemplate' | translate}}
     </a>
 </div>
 <div class="mdm-title">{{ 'GeneralInformations' | translate }}</div>

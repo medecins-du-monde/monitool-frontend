@@ -42,6 +42,11 @@ export class GeneralComponent implements OnInit, OnDestroy {
       res2: 'InformationPanel.General_reporting_description'
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.Import_alt',
+      res2: 'InformationPanel.Import_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.General_reporting_question10',
       res2: 'InformationPanel.General_reporting_response10',
       new: true
@@ -209,6 +214,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
             logicalFrame.name
           }`,
           disabled: logicalFrame.disabled,
+          id: logicalFrame.id,
           sectionId: id,
           open: false,
           level
@@ -395,6 +401,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,
           disabled: form.disabled,
+          id: form.id,
           sectionId: id,
           open: false,
           level

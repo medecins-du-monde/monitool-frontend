@@ -35,21 +35,17 @@
 </mat-card>
 
 <mat-menu #menu="matMenu">
-    <a mat-menu-item [href]="portraitPdfUrl" target="_blank">
-        <mat-icon>insert_drive_file</mat-icon>
-        <span>{{ 'DownloadPdfPortrait' | translate }}</span>
-    </a>
-    <a mat-menu-item [href]="landscapePdfUrl" target="_blank">
-        <mat-icon>note</mat-icon>
-        <span>{{ 'DownloadPdfLandscape' | translate }}</span>
-    </a>
-    <button mat-menu-item (click)="onClone(form)">
-        <mat-icon>content_copy</mat-icon>
-        <span>{{ 'CloneStructure' | translate }}</span>
+    <button mat-menu-item [matMenuTriggerFor]="downloadPdfMenu">
+        <mat-icon>download</mat-icon>
+        <span>{{ 'DownloadPdf' | translate }}</span>
     </button>
-    <button mat-menu-item (click)="onClone(form, true)">
+    <button mat-menu-item [matMenuTriggerFor]="exportExcelMenu">
+        <mat-icon>download</mat-icon>
+        <span>{{ 'ExportExcel' | translate }}</span>
+    </button>
+    <button mat-menu-item [matMenuTriggerFor]="cloneMenu">
         <mat-icon>content_copy</mat-icon>
-        <span>{{ 'CloneStructureAndData' | translate }}</span>
+        <span>{{ 'Clone' | translate }}</span>
     </button>
     <button mat-menu-item class="warning" (click)="onDisable()">
         <mat-icon class="warning">{{form.disabled ? 'visibility' : 'visibility_off'}}</mat-icon>
@@ -58,6 +54,51 @@
     <button mat-menu-item class="delete" (click)="onDelete()">
         <mat-icon class="delete">delete</mat-icon>
         <span>{{ 'Delete' | translate }}</span>
+    </button>
+</mat-menu>
+
+<mat-menu #downloadPdfMenu="matMenu">
+    <a mat-menu-item [href]="portraitPdfUrl" target="_blank">
+        <mat-icon>insert_drive_file</mat-icon>
+        <span>{{ 'Portrait' | translate }}</span>
+    </a>
+    <a mat-menu-item [href]="landscapePdfUrl" target="_blank">
+        <mat-icon>note</mat-icon>
+        <span>{{ 'Landscape' | translate }}</span>
+    </a>
+</mat-menu>
+
+<mat-menu #exportExcelMenu="matMenu" >
+    <ng-template matMenuContent>
+        <button mat-menu-item 
+            (click)="excelDownload('single')"
+            [matTooltip]="'ExportSingleTemplate' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
+        >
+            <mat-icon>table_chart</mat-icon>
+            {{ 'ExportSingleTemplate' | translate }}
+        </button>
+        <button mat-menu-item 
+            (click)="excelDownload('allSites')"
+            [matTooltip]="'ExportMultipleTemplate' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
+        >
+            <mat-icon>backup_table</mat-icon>
+            {{ 'ExportMultipleTemplate' | translate }}
+        </button>
+    </ng-template>
+</mat-menu>
+
+<mat-menu #cloneMenu="matMenu">
+    <button mat-menu-item (click)="onClone(form)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'CloneStructure' | translate }}</span>
+    </button>
+    <button mat-menu-item (click)="onClone(form, true)">
+        <mat-icon>content_copy</mat-icon>
+        <span>{{ 'CloneStructureAndData' | translate }}</span>
     </button>
 </mat-menu>
 

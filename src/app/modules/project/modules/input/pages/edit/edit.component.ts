@@ -119,11 +119,14 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     } as InformationItem,
     {
       new: true,
+      res1: 'InformationPanel.Import',
+      res2: 'InformationPanel.Import_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.input_status_question',
       res2: 'inputStatus'
     } as InformationItem,
     {
-      new: true,
       res1: 'InformationPanel.input_save_question',
       res2: 'inputSave',
       graphic: 'saveButtons'
@@ -396,7 +399,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos] !== null) {
+              if (val.values[table.id][inputPos] !== null && Number.isInteger(val.values[table.id][inputPos])) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -428,7 +431,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           const inputPos = this.isInputCell(i, x, y);
           if (inputPos !== null) {
             if (!isNaN(val.values[table.id][inputPos])) {
-              if (val.values[table.id][inputPos] !== null) {
+              if (val.values[table.id][inputPos] !== null && Number.isInteger(val.values[table.id][inputPos])) {
                 if (sum === null) {
                   sum = 0;
                 }
@@ -556,8 +559,10 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             td.style.background = '#d9534f';
             td.innerHTML = value;
           }
-          if (typeof value === 'number') {
-            const newValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          if (typeof value === 'number' && Number.isInteger(value)) {
+            const tempArray = value.toString().split('.');
+            tempArray[0] = tempArray[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            const newValue = tempArray.join(',');
             td.innerHTML = newValue;
           } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly && value !== null) {
             td.style.background = '#d9534f';
@@ -589,7 +594,6 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
               let newValue;
               if (/^(\s*([-+]?)((\d+(\.\d*)?)|(\.\d+)))?(?:(\s*([-+*/]))?\s*((?:\s[-+])?((\d+(\.\d*)?)|(\.\d+)))\s*)+$/.test(change[3])) {
                 newValue = this.evil(change[3]);//eval(change[3]);
-                console.log(newValue);
               } else {
                 newValue = change[3];
               }
@@ -939,8 +943,9 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     return new Function('return ' + fn)();
   }
 
-  openDownload() {
-    const url = `/api/resources/project/${this.project?.id}/data-source/${this.formId}.xlsx/${this.siteId}/${this.timeSlotDate}`;
+  openDownload(isTemplate = false) {
+    let url = `/api/resources/project/${this.project?.id}/data-source/${this.formId}.xlsx`
+    if (!isTemplate) url += `/${this.siteId}/${this.timeSlotDate}`;
     window.open(url, '_blank');
   }
 

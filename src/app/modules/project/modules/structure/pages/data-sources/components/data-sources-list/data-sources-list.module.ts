@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DataSourceModule } from '../data-source/data-source.module';
 import { DeleteModalModule } from '../../../../components/delete-modal/delete-modal.module';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 
 
@@ -23,7 +24,8 @@ import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-m
     DragDropModule,
     CdkTableModule,
     DeleteModalModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule
   ],
   exports: [DataSourcesListComponent]
 })

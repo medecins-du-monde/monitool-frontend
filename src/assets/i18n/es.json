@@ -39,8 +39,8 @@
   "Clone": "Clonar",
   "CloneStructure": "Clonar estructura",
   "CloneStructureAndData": "Clonar estructura y datos",
-  "DownloadProject": "Descargar proyecto",
-  "DownloadProjectInfo": "Descarga un archivo JSON con la estructura y datos del proyecto",
+  "DownloadProject": "Exportar proyecto",
+  "DownloadProjectInfo": "Exportar un archivo JSON con la estructura y datos del proyecto",
   "CloneProject": "Clonar Proyecto",
   "CloneProjectInfo": "Esta acción clonará solo la estructura de este proyecto, sin las entradas. Confirme para clonar.",
   "CloneProjectInfoData": "Va a clonar este proyecto, y todas sus entradas de datos. Confirme para clonar.",
@@ -115,20 +115,18 @@
       }
   },
   "Description": "Descripción",
-  "DownloadPdfLandscape": "Descargar PDF (horizontal)",
-  "DownloadPdfPortrait": "Descargar PDF (vertical)",
-  "DownloadPdf": "Descargar PDF",
-  "DownloadTemplate": "Descargar formulario excel",
-  "DownloadData": "Descargar datos en excel",
+  "DownloadPdfLandscape": "Exportar PDF (horizontal)",
+  "DownloadPdfPortrait": "Exportar PDF (vertical)",
+  "DownloadPdf": "Exportar PDF",
   "UploadData": "Importar datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
-  "DownloadAllPDF": "Descargar todos como PDF",
-  "DownloadPlot": "Descargar",
+  "DownloadAllPDF": "Exportar todos como PDF",
+  "DownloadPlot": "Exportar",
   "Reset": "Restablecer",
   "DivisionByZero": "División por cero",
   "Done": "Realizado",
-  "Download":"Descargar",
+  "Download":"Exportar",
   "DuplicateDatasourceTitle": "Clonar estructura",
   "DuplicateDatasource": "Va a clonar el estructura de esta fuente de datos sin entradas. Confirme para clonar.",
   "DuplicateDatasourceTitleWithData": "Clonar estructura y datos",
@@ -600,7 +598,10 @@
         "Point3": "Si sigue sin funcionar, póngase en contacto con el equipo de asistencia técnica:"
       },
       "New_users_access": "¿Cómo dar acceso a un nuevo usuario en Monitool?",
-      "New_users_access_response": "<ol><li><b>Primera conexión del usuario:</b><ul><li>El nuevo usuario debe iniciar sesión al menos una vez en Monitool usando su identificador de Microsoft (el mismo nombre de usuario y contraseña que para acceder a Outlook).</li></ul></li><li><b>Adición por parte del propietario:</b><ul><li>Después de esta primera conexión, el nombre del usuario aparecerá en la lista de usuarios de MdM.</li><li>El propietario puede entonces acceder a la sección: <b>Estructura > Usuario > Añadir un usuario</b></li><li>En el campo \"Seleccionar un usuario de MdM\", buscar el nombre del usuario y añadirlo al proyecto deseado.</li></ul></li></ol><br><i>Nota: Sin este primer inicio de sesión en Monitool, el usuario no aparecerá en la lista de usuarios disponibles para ser seleccionado.</i>"
+      "New_users_access_response": "<ol><li><b>Primera conexión del usuario:</b><ul><li>El nuevo usuario debe iniciar sesión al menos una vez en Monitool usando su identificador de Microsoft (el mismo nombre de usuario y contraseña que para acceder a Outlook).</li></ul></li><li><b>Adición por parte del propietario:</b><ul><li>Después de esta primera conexión, el nombre del usuario aparecerá en la lista de usuarios de MdM.</li><li>El propietario puede entonces acceder a la sección: <b>Estructura > Usuario > Añadir un usuario</b></li><li>En el campo \"Seleccionar un usuario de MdM\", buscar el nombre del usuario y añadirlo al proyecto deseado.</li></ul></li></ol><br><i>Nota: Sin este primer inicio de sesión en Monitool, el usuario no aparecerá en la lista de usuarios disponibles para ser seleccionado.</i>",
+      "Import": "¿Para qué sirve el botón \"Importar archivo Excel\"?",
+      "Import_alt": "¿Para qué sirve el botón \"Importar archivo Excel\", disponible únicamente en la página \"Introducción de datos\"?",
+      "Import_response": "¡Para ahorrar tiempo en la introducción de datos! Puede importar un archivo Excel para rellenar automáticamente las fuentes de datos. El archivo debe haber sido exportado desde la lista de fuentes de datos, en la sección “Entrada” o la sección “Estructura”, y no debe haberse modificado, salvo en las celdas de datos. Esto permite evitar la doble introducción de datos y minimizar los errores manuales.<br><br>Atención: Al importar un archivo Excel, todos los datos ya introducidos en línea para el mismo período y el mismo sitio serán reemplazados por la información contenida en el archivo importado. Esto significa que si algunas celdas están vacías en su archivo Excel, estos valores también se eliminarán en Monitool. Para evitar cualquier pérdida de datos, asegúrese siempre de comenzar desde un archivo Excel exportado desde Monitool, que ya contenga los datos existentes. Luego podrá añadir o actualizar únicamente la nueva información en ese archivo antes de volver a importarlo."
     },
     "Informations": {
         "Cache": {
@@ -980,8 +981,8 @@
       "DataNotAvailable": "Estos datos estan disponibles por mes",
       "MissingCalculation": "Falta el cálculo"
   },
-  "DownloadTable": "Descargar la tabla",
-  "DownloadTableMini": "Descargar mini",
+  "DownloadTable": "Exportar la tabla",
+  "DownloadTableMini": "Exportar mini",
   "FillWithPreviousData": "Rellenar con los datos de la última entrada",
   "FillWithZero": "Rellenar todas las celdas vacías con 0",
   "ShowFinishedProjects": "Mostrar proyectos terminados",
@@ -999,7 +1000,7 @@
   "Nov": "Noviembre",
   "Dec": "Diciembre",
   "NewVersion": "¡Enhorabuena! Tu monitool está actualizado.",
-  "export-download": "Descargar informe Excel",
+  "export-download": "Exportar informe Excel",
   "export-complete": "Exportación detallada de Excel",
   "export-minimized": "Exportación global de Excel",
   "minimized-tooltip": "Todos los sitios combinados",
@@ -1024,12 +1025,12 @@
   "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",
   "export-warning": {
     "time": {
-      ">1": "La descarga de este informe deberia tardar aproximadamente {{time}} minutos.",
-      "1": "La descarga de este informe deberia tardar aproximadamente 1 minuto."
+      ">1": "La exportación de este informe deberia tardar aproximadamente {{time}} minutos.",
+      "1": "La exportación de este informe deberia tardar aproximadamente 1 minuto."
     },
     "global": "El tiempo que tome depende de la cantidad de información y número de marcos lógicos exportados. ¿Desea continuar?",
     "detailed": "El tiempo que tome depende de la cantidad de información, número de marcos lógicos y lugares de colecta exportados. ¿Desea continuar?",
-    "current-view": "La descarga de este informe puede tardar un par de minutos. ¿Desea continuar?",
+    "current-view": "La exportación de este informe puede tardar un par de minutos. ¿Desea continuar?",
     "cross-cutting": "El informe utilizará algunos de los filtros seleccionados para la exportación, en específico: fecha de inicio, fecha de finalización, continentes y países.",
     "cross-cutting-multiple": "Configure su exportación con los siguientes campos, <b>déjelos vacíos para que no se tengan en cuenta</b>. Por defecto la exportación generará el informe con todos los datos existentes (todas las fechas, todos los proyectos y todos los indicadores)"
   },
@@ -1125,7 +1126,7 @@
     "title": "El rango de fechas es muy largo",
     "content": "El rango de fechas seleccionado excede un año, para asegurar el buen rendimiento de la pagina el rango se va a reducir a un año. Puedes revertir esto desde los filtros, pero tenga en cuenta que la pagina podria presentar problemas de rendimiento."
   },
-  "no-report-data": "No se puede descargar el informe si no hay ningún dato",
+  "no-report-data": "No se puede exportar el informe si no hay ningún dato",
   "cross-cutting-export": "Reporte de indicadores transversales",
   "country-2.0-warning": "Se acaban de añadir las selecciones para continentes y países. Para usarlas, complete la información en la sección \"Estructura\" → \"Datos de base\" o contacte el propietario del proyecto.",
   "country-2.0-warning-project": "Su proyecto está utilizando el sistema de país antiguo. Para actualizarlo, seleccione un continente y un país en la sección \"Estructura\" → \"Datos de base\".",
@@ -1134,7 +1135,7 @@
   "indicator": "Indicador",
   "actions": "Acciones",
   "viewReport": "Ver reporte",
-  "downloadReport": "Descargar reporte",
+  "downloadReport": "Exportar reporte",
   "proposedCalc": "Cálculo propuesto",
   "no-indicator-match": "Ningún indicador corresponde a los filtros",
   "hide": "Ocultar",
@@ -1162,5 +1163,12 @@
   "Enable": "Activar",
   "ShowDisabled": "Mostrar elementos desactivados",
   "ProjectDisabledThemeInfo": "Esta batalla política ha sido desactivada por un administrador, aún podrá ver los indicadores transversales relacionados en la estructura del proyecto, pero no en el informe general.",
-  "ProjectDisabledIndicatorInfo": "Este indicador ha sido desactivado por un administrador, no se mostrará en el informe general."
+  "ProjectDisabledIndicatorInfo": "Este indicador ha sido desactivado por un administrador, no se mostrará en el informe general.",
+  "ExportExcel": "Exportar Excel",
+  "ExportSingleTemplate": "Exportar plantilla para un lugar de colecta",
+  "ExportMultipleTemplate": "Exportar plantilla para todos los lugares de colecta",
+  "ExportMultiple": "Exportar datos en excel para todos los lugares de colecta",
+  "ExportSingle": "Exportar datos en excel",
+  "ExportTemplate": "Exportar plantilla excel",
+  "ExportAllExcel": "Exportar todos como excel"
 }

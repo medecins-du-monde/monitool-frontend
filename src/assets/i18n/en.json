@@ -39,7 +39,7 @@
   "Clone": "Clone",
   "CloneStructure": "Clone structure",
   "CloneStructureAndData": "Clone structure and data",
-  "DownloadProject": "Download project",
+  "DownloadProject": "Export project",
   "DownloadProjectInfo": "Get a JSON file with the structure and data of the project",
   "CloneProject": "Clone Project",
   "CloneProjectInfo": "This action will clone only the structure of this project, without the entries. Confirm to clone.",
@@ -121,16 +121,14 @@
   "Disaggregations": "Disaggregations",
   "DivisionByZero": "Division by zero",
   "Done": "Done",
-  "DownloadPdfLandscape": "Download PDF (landscape)",
-  "DownloadPdfPortrait": "Download PDF (portrait)",
-  "DownloadPdf": "Download PDF",
-  "DownloadTemplate": "Download excel form",
-  "DownloadData": "Download excel data",
+  "DownloadPdfLandscape": "Export PDF (landscape)",
+  "DownloadPdfPortrait": "Export PDF (portrait)",
+  "DownloadPdf": "Export PDF",
   "UploadData": "Upload excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
-  "DownloadAllPDF": "Download all as PDF",
-  "DownloadPlot": "Download",
+  "DownloadAllPDF": "Export all as PDF",
+  "DownloadPlot": "Export",
   "DuplicateDatasourceTitle": "Clone structure",
   "DuplicateDatasource": "This action will clone this data source without the data already entered. Confirm to clone.",
   "DuplicateDatasourceTitleWithData": "Clone structure and data",
@@ -571,7 +569,7 @@
       "Project_list_question6": "My project disappeared! Where is it?",
       "Project_list_response6": "Don't panic!<br> There are multiple explanation:<br><ul><li>Your project doesn't match the filter you've chosen. Empty the search bar at the top of the page</li><li>Your project is over. Click on <button>Show finished projects</button>. You can edit its end date to prolong it.</li><li>You've archived your project. Click on <button>Show archived projects</button> then on <button>Archive</button></li></ul><br> If your project's still missing, you might not be connected with the account you used to create said project.<br> Click on <button>Logout</button> then log back on with the account you used to create the project. If you want to, you can transfer your project in another account.",
       "Project_list_question7": "How long will my project be stored on Monitool?",
-      "Project_list_response7": "As long as the platform still exists: storing projects doesn't cost much compared to development and hosting. <br>We don't really need to delete project to free some space. <br>If you NGO has rules about online storage of finished project, you can download all of your project's data from the General Reporting page.",
+      "Project_list_response7": "As long as the platform still exists: storing projects doesn't cost much compared to development and hosting. <br>We don't really need to delete project to free some space. <br>If you NGO has rules about online storage of finished project, you can export all of your project's data from the General Reporting page.",
       "Structure_home": "Structure home",
       "Structure_home_description": "Check how far along you are in the project's structure",
       "User_list": "Users list",
@@ -587,7 +585,10 @@
         "Point3": "If this still doesn't work, contact the support team:"
       },
       "New_users_access": "How to grant access to a new user on Monitool?",
-      "New_users_access_response": "<ol><li><b>First user login:</b><ul><li>The new user must log in to Monitool at least once using their Microsoft ID (the same username and password as for Outlook).</li></ul></li><li><b>Owner's addition:</b></li><ul><li>After this first login, the user's name will appear in the MdM user list.</li><li>The owner can then go to: <b>Structure > User > Add a user</b></li><li>In the \"Select an MdM user\" field, search for the user's name and add them to the desired project.</li></ul></ol><br><i>Note: Without this first login to Monitool, the user will not appear in the list of available users to be selected.</i>"
+      "New_users_access_response": "<ol><li><b>First user login:</b><ul><li>The new user must log in to Monitool at least once using their Microsoft ID (the same username and password as for Outlook).</li></ul></li><li><b>Owner's addition:</b></li><ul><li>After this first login, the user's name will appear in the MdM user list.</li><li>The owner can then go to: <b>Structure > User > Add a user</b></li><li>In the \"Select an MdM user\" field, search for the user's name and add them to the desired project.</li></ul></ol><br><i>Note: Without this first login to Monitool, the user will not appear in the list of available users to be selected.</i>",
+      "Import": "What is the purpose of the “Import Excel file” button?",
+      "Import_alt": "What is the purpose of the “Import Excel file” button, which is only available on the “Data entry” page?",
+      "Import_response": "To save time when entering data! You can import an Excel file to automatically fill in the data sources. The file must have been exported from the data sources list, either in the “Input” or “Structure” section, and must not have been modified, except for the data cells. This helps avoid double data entry and minimize manual errors.<br><br>Attention: When you import an Excel file, all data already entered online for the same period and the same site will be replaced by the information contained in the imported file. This means that if some cells are empty in your Excel file, those values will also be deleted in Monitool. To avoid any loss of data, always make sure to start from an Excel file exported from Monitool, which already contains the existing data. You can then add or update only the new information in that file before reimporting it."
     },
     "Informations": {
         "Cache": {
@@ -961,8 +962,8 @@
       "DataNotAvailable": "Data available by",
       "MissingCalculation": "Calculation is missing"
   },
-  "DownloadTable": "Download Table",
-  "DownloadTableMini": "Download Mini",
+  "DownloadTable": "Export Table",
+  "DownloadTableMini": "Export Mini",
   "FillWithPreviousData": "Fill with data from the previous entry",
   "FillWithZero": "Fill the empty cells with 0",
   "ShowFinishedProjects": "Show finished projects",
@@ -982,7 +983,7 @@
   "NewVersion": "Congratulations! Your monitool is now up to date.",
   "CommentedGraphs": "Commented graphs",
   "PersonalDashboard": "Personal dashboard",
-  "export-download": "Download Excel Report",
+  "export-download": "Export Excel Report",
   "export-complete": "Detailed Excel Export",
   "export-minimized": "Global Excel Export",
   "minimized-tooltip": "All Sites merged",
@@ -1007,12 +1008,12 @@
   "current-minimized-tooltip": "Export the report respecting opened groups",
   "export-warning": {
     "time": {
-      ">1": "The download of this report should take about {{time}} minutes.",
-      "1": "The download of this report should take about 1 minute."
+      ">1": "The export of this report should take about {{time}} minutes.",
+      "1": "The export of this report should take about 1 minute."
     },
     "global": "The time it takes depends on the amount of data and number of logical frames exported. Do you want to continue?",
     "detailed": "The time it takes depends on the amount of data, number of logical frames and collection sites exported. Do you want to continue?",
-    "current-view": "The download of this report can take a few minutes. Do you want to continue?",
+    "current-view": "The export of this report can take a few minutes. Do you want to continue?",
     "cross-cutting": "The report will use some of the selected filters for the export, in specific: start date, end date, continents and countries.",
     "cross-cutting-multiple": "Configure your export with the following fields, <b>leave them empty so they aren't taken into account</b>. By default the export will generate the report with all existing data (all dates, all projects and all indicators)"
   },
@@ -1108,7 +1109,7 @@
     "title": "Date range is too long",
     "content": "The selected date range exceeds one year, to secure a good page performance it will be reduced to 1 year. You can revert this back from the filters, but be that the page could become unresponsive"
   },
-  "no-report-data": "You cannot download the report if there is no data",
+  "no-report-data": "You cannot export the report if there is no data",
   "cross-cutting-export": "Cross-cutting indicators report",
   "country-2.0-warning": "Dropdown lists for continents and countries have just been added. To use them, please fill in the information in the \"Structure\" → \"Basics\" section or contact the project owner.",
   "country-2.0-warning-project": "Your project is using the old country system. To update it, please select a continent and a country in the \"Structure\" → \"Basics\" section.",
@@ -1117,7 +1118,7 @@
   "indicator": "Indicator",
   "actions": "Actions",
   "viewReport": "View report",
-  "downloadReport": "Download report",
+  "downloadReport": "Export report",
   "proposedCalc": "Proposed computation",
   "no-indicator-match": "No indicators match the filters",
   "hide": "Hide",
@@ -1145,5 +1146,12 @@
   "Enable": "Enable",
   "ShowDisabled": "Show disabled elements",
   "ProjectDisabledThemeInfo": "This Political Battle has been disabled by an admin, you will still be able to see the related cross-cutting indicators on the Project structure but not on the general report.",
-  "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report."
+  "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report.",
+  "ExportExcel": "Export Excel",
+  "ExportSingleTemplate": "Export single site template",
+  "ExportMultipleTemplate": "Export multiple site template",
+  "ExportMultiple": "Export excel data for all sites",
+  "ExportSingle": "Export excel data",
+  "ExportTemplate": "Exporter un modèle Excel",
+  "ExportAllExcel": "Export all as Excel"
 }

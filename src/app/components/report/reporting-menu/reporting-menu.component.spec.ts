@@ -58,6 +58,7 @@ describe('ReportingMenuComponent', () => {
         title: 'test',
         sectionId: 1,
         open: true,
+        id: '1',
         level: 1,
         click: () => {
           return;
