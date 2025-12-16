@@ -37,5 +37,6 @@ export interface InfoRow {
     value: string,
     cellValue?: string
   }};
+  chartMetaFilter?: any;
   refreshCache?: boolean;
 }

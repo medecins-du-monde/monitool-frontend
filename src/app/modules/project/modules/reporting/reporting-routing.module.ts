@@ -19,8 +19,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/dataflow/dataflow.module')
       .then(m => m.DataflowModule),
       canActivate : [BasicsInfosGuard]
-  },
-  {
+  },{
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.module')
+      .then(m => m.DashboardModule),
+      canActivate : [BasicsInfosGuard]
+  },{
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',

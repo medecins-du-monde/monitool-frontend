@@ -7,6 +7,7 @@ import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DownloadModalComponent } from './download-modal/download-modal.component';
+import { DashboardService } from 'src/app/services/dashboard.service';
 
 const BASELINE_LABEL = {
   borderColor: 'rgba(0, 0, 0, .3)',
@@ -115,7 +116,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService, private translate: TranslateService, private dialog: MatDialog) {
+  constructor(private chartService: ChartService, private translate: TranslateService, private dialog: MatDialog, private dashboardService: DashboardService) {
     this.options.tooltips = {
       mode: 'index',
       intersect: false,
@@ -242,7 +243,6 @@ export class ChartComponent implements OnInit, OnDestroy {
       })
     );
   }
-
 
   addData(data): void {
     if (this.chart){
@@ -461,14 +461,34 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  public downloadChart(): void{
+  public downloadChart(): void {
     this.dialog.open(DownloadModalComponent, {
       panelClass: 'no-overflow-dialog',
       data: {chart: this.chart, name: this.name, higherPercentages: this.higherPercentages}
     });
   }
 
-  ngOnDestroy(): void{
+  public addToDashboard(): void {
+    this.dashboardService.addGraph(
+      {
+        datasets: this.data.datasets.map(dataset => {
+          return {
+            backgroundColor: dataset.backgroundColor,
+            borderColor: dataset.borderColor,
+            label: dataset.label,
+            unit: dataset.unit,
+            baseline: dataset.baseline,
+            target: dataset.target,
+            meta: dataset.meta
+          }
+        }),
+        dimension: this.data.meta?.dimension,
+        type: this.chartService.type.value
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }

@@ -649,6 +649,8 @@ export class ReportingTableComponent
       Object.assign(customFilter, row.customFilter);
     }
 
+    row.chartMetaFilter = customFilter;
+
     if (this.checkPeriodicityIsValid(row)) {
       row.error = ['Loading'];
       this.reportingService
@@ -870,6 +872,10 @@ export class ReportingTableComponent
         copyOfDataset.unit = row.unit;
         copyOfDataset.baseline = row.baseline;
         copyOfDataset.target = row.target;
+        copyOfDataset.meta = {
+          filter: row.chartMetaFilter,
+          computation: row.computation,
+        }
 
         datasets.push(copyOfDataset);
       }
@@ -895,7 +901,10 @@ export class ReportingTableComponent
       labels: this.dimensions
         .filter(x => x !== '_total')
         .map(x => this.getSiteOrGroupName(x)),
-      datasets
+      datasets,
+      meta: {
+        dimension: this.dimensionIds.value
+      }
     };
     this.chartService.addData(data);
   }
