@@ -91,7 +91,6 @@ export class DetailsModalComponent {
   public downloadExport(orientation: 'landscape' | 'portrait') {
     if (this.data.type !== 'form' && this.data.type !== 'logicalFrame') return;
 
-    const dlAnchorElem = document.getElementById('downloadAnchorElem');
     const url = 
       `${environment.API_URL}/resources/project/` +
       `${this.data.project.id}/` +
@@ -100,10 +99,14 @@ export class DetailsModalComponent {
       `orientation=${orientation}&` +
       `language=${this.currentLang}`;
     
-    dlAnchorElem.setAttribute('href', url);
-    // dlAnchorElem.setAttribute('download', `test.pdf`);
-    dlAnchorElem.click();
-    
+      window.open(url, '_blank');
+  }
+
+  excelDownload(type: 'single' | 'allSites') {
+    if (this.data.type !== 'form') return;
+
+    const url = `/api/resources/project/${this.data.project?.id}/data-source${type === 'allSites' ? '-all-sites' : ''}/${this.data.details.id}.xlsx`;
+    window.open(url, '_blank');
   }
 
   private getGroupsSelected() {

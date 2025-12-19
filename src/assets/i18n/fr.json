@@ -999,11 +999,10 @@
   "NewVersion": "Félicitations ! Votre Monitool est à jour.",
   "CommentedGraphs": "Graphiques commentés",
   "PersonalDashboard": "Tableaux de bord personnels",
-  "export-download": "Exporter le rapport Excel",
   "export-complete": "Export Excel détaillé",
   "export-minimized": "Export Excel Global",
-  "minimized-tooltip": "Tous sites confondus",
-  "complete-tooltip": "Rapport Total + 1 onglet par site de collecte",
+  "minimized-tooltip": "Exporter un rapport global avec les données de tous les sites de collecte fusionnées.",
+  "complete-tooltip": "Exporter un rapport détaillé avec un onglet pour la vue d’ensemble globale et un onglet par site de collecte.",
   "NullValueMessage": {
     "p1": "Le formulaire contient des données vides, le calcul des indicateurs à partir de formulaires de saisie incomplets sera possible mais donnera un résultat inexact.",
     "p2": "Si vous souhaitez remplacer les valeurs non saisies par des valeurs numériques “0”, vous pouvez retourner dans le formulaire de saisie et utiliser le bouton “Remplir les cellules avec des 0” (voir FAQ)."
@@ -1021,7 +1020,7 @@
     "unlock": "Déverrouiller la saisie"
   },
   "export-current-minimized": "Rapport Excel de la vue actuelle",
-  "current-minimized-tooltip": "Exporter le rapport concernant les groupes ouverts",
+  "current-minimized-tooltip": "Exporter le rapport selon la désagrégation actuellement ouvert.",
   "export-warning": {
     "time": {
       ">1": "L'exportation de ce rapport devrait prendre environ {{time}} minutes.",
@@ -1163,11 +1162,11 @@
   "ShowDisabled": "Afficher les éléments désactivés",
   "ProjectDisabledThemeInfo": "Ce Combat Politique a été désactivé par un administrateur, vous pourrez toujours voir les indicateurs transversaux associés sur la structure du projet mais pas sur le rapport général.",
   "ProjectDisabledIndicatorInfo": "Cet indicateur a été désactivé par un administrateur, il ne sera pas affiché dans le rapport général.",
-  "ExportExcel": "Exporter Excel",
-  "ExportSingleTemplate": "Exporter un modèle de site unique",
-  "ExportMultipleTemplate": "Exporter un modèle de site multiple",
-  "ExportMultiple": "Exporter les données excel pour tous les sites",
-  "ExportSingle": "Exporter les données excel",
-  "ExportTemplate": "Exporter le modèle excel",
+  "ExportExcel": "Exporter les données en excel",
+  "ExportSingleTemplate": "Exporter le formulaire d’un site de collecte unique",
+  "ExportMultipleTemplate": "Exporter le formulaire de plusieurs sites de collecte",
+  "ExportMultiple": "Exporter les données excel de plusieurs sites de collecte",
+  "ExportSingle": "Exporter les données excel d’un site de collecte unique",
+  "ExportTemplate": "Exporter le formulaire",
   "ExportAllExcel": "Exporter tout en excel"
 }
