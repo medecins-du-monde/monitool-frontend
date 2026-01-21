@@ -1159,5 +1159,7 @@
   "AddGraphToDashboardConfirmation": "This will add the graph to the project dashboard, make sure to save the project to keep the changes.",
   "RemoveGraphToDashboardConfirmation": "Are you sure you want to remove this graph from the project dashboard? Make sure to save the project once removed to keep the changes.",
   "AddToDashboard": "Transfer this graphic",
-  "Dashboard": "Dashboard"
+  "Dashboard": "Dashboard",
+  "NoCharts": "This dashboard is empty. If you want to add a graphic, simply create your graphic on the \"General Report\" page and then transfer it.",
+  "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic."
 }

@@ -1175,5 +1175,7 @@
   "AddGraphToDashboardConfirmation": "Cela ajoutera le graphique au tableau de bord du projet, assurez-vous de sauvegarder le projet pour conserver les modifications.",
   "RemoveGraphToDashboardConfirmation": "Êtes-vous sûr de vouloir supprimer ce graphique du tableau de bord du projet ? Assurez-vous de sauvegarder le projet une fois supprimé pour conserver les modifications.",
   "AddToDashboard": "Transférer ce graphique»",
-  "Dashboard": "Tableau de bord"
+  "Dashboard": "Tableau de bord",
+  "NoCharts": "Ce tableau de bord est vide. Si vous souhaitez ajouter un graphique, il suffit de créer votre graphique dans la page \"Rapport général\" puis de le transférer.",
+  "NoChartsNoAdmin": "Ce tableau de bord est vide. Contactez le propriétaire du projet pour ajouter un graphique."
 }

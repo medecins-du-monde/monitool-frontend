@@ -16,6 +16,14 @@
             </app-chart>
         </div>
     </ng-container>
+
+    <div *ngIf="!loading && charts.length === 0" class="no-result">
+        {{userIsAdmin ? ("NoCharts" | translate) : ("NoChartsNoAdmin" | translate)}}
+    </div>
+
+    <div *ngIf="loading" class="no-result">
+        {{"Loading" | translate}}
+    </div>
 </div>
 
 <app-project-save style="z-index: 10;"

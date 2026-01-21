@@ -1176,5 +1176,7 @@
   "AddGraphToDashboardConfirmation": "Esto añadirá el gráfico al tablero del proyecto, asegúrese de guardar el proyecto para conservar los cambios.",
   "RemoveGraphToDashboardConfirmation": "¿Está seguro de que quiere eliminar este gráfico del tablero del proyecto? Asegúrese de guardar el proyecto una vez eliminado para conservar los cambios.",
   "AddToDashboard": "Transferir este gráfico",
-  "Dashboard": "Tablero"
+  "Dashboard": "Tablero",
+  "NoCharts": "Este tablero está vacío. Si deseas agregar un gráfico, simplemente crea tu gráfico en la página \"Informe General\" y luego transfiérelo.",
+  "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico."
 }
