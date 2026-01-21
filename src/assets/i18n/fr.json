@@ -226,6 +226,8 @@
         "extraIndicator": "à l'indicateur annexé",
         "crossCuttingIndicator": "sur un indicateur transversal"
       },
+      "dashboard_add": "Un graphique a été ajouté au tableau de bord",
+      "dashboard_remove": "Un graphique a été supprimé du tableau de bord",
 
       "themes_add": "Ajoute un Combat Politique au projet",
       "themes_move": "Reordonne les Combats Politiques du projet",
@@ -1169,5 +1171,9 @@
   "ExportMultiple": "Exporter les données excel pour tous les sites",
   "ExportSingle": "Exporter les données excel",
   "ExportTemplate": "Exporter le modèle excel",
-  "ExportAllExcel": "Exporter tout en excel"
+  "ExportAllExcel": "Exporter tout en excel",
+  "AddGraphToDashboardConfirmation": "Cela ajoutera le graphique au tableau de bord du projet, assurez-vous de sauvegarder le projet pour conserver les modifications.",
+  "RemoveGraphToDashboardConfirmation": "Êtes-vous sûr de vouloir supprimer ce graphique du tableau de bord du projet ? Assurez-vous de sauvegarder le projet une fois supprimé pour conserver les modifications.",
+  "AddToDashboard": "Transférer ce graphique»",
+  "Dashboard": "Tableau de bord"
 }

@@ -231,6 +231,8 @@
         "extraIndicator": "en el indicador adicional",
         "crossCuttingIndicator": "en un indicador transversal"
       },
+      "dashboard_add": "Se ha añadido un gráfico al tablero",
+      "dashboard_remove": "Se ha eliminado un gráfico del tablero",
 
       "themes_add": "Añade un Combate Político al proyecto",
       "themes_move": "Reordena los Combates Políticos del proyecto",
@@ -1170,5 +1172,9 @@
   "ExportMultiple": "Exportar datos en excel para todos los lugares de colecta",
   "ExportSingle": "Exportar datos en excel",
   "ExportTemplate": "Exportar plantilla excel",
-  "ExportAllExcel": "Exportar todos como excel"
+  "ExportAllExcel": "Exportar todos como excel",
+  "AddGraphToDashboardConfirmation": "Esto añadirá el gráfico al tablero del proyecto, asegúrese de guardar el proyecto para conservar los cambios.",
+  "RemoveGraphToDashboardConfirmation": "¿Está seguro de que quiere eliminar este gráfico del tablero del proyecto? Asegúrese de guardar el proyecto una vez eliminado para conservar los cambios.",
+  "AddToDashboard": "Transferir este gráfico",
+  "Dashboard": "Tablero"
 }

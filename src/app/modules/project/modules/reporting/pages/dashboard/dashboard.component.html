@@ -1,2 +1,23 @@
-<p>dashboard works!</p>
-<h1>aAAAAAA</h1>
+<div class="grid">
+    <ng-container *ngIf="!loading">
+        <div class="chart-wrapper" *ngFor="let chart of charts">
+            <div *ngIf="userIsAdmin">
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onDeleteChart(chart.id);"
+                    [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <app-chart
+                [data]="chart"
+                [type]="chart.type"
+            >
+            </app-chart>
+        </div>
+    </ng-container>
+</div>
+
+<app-project-save style="z-index: 10;"
+  *ngIf="userIsAdmin"
+></app-project-save>

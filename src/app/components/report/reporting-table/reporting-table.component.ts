@@ -903,7 +903,8 @@ export class ReportingTableComponent
         .map(x => this.getSiteOrGroupName(x)),
       datasets,
       meta: {
-        dimension: this.dimensionIds.value
+        dimension: this.dimensionIds.value,
+        filter: this.filter.value 
       }
     };
     this.chartService.addData(data);

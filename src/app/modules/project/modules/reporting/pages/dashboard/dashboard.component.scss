@@ -1,0 +1,18 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-wrapper {
+    &:not(:last-child) {
+        margin-bottom: 16px;
+    }
+
+    & > div {
+        border: solid 1px #e7e7e7;
+        border-bottom: none;
+        display: flex;
+        gap: 8px;
+        justify-content: end;
+    }
+}

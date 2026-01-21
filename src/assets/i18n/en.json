@@ -347,7 +347,9 @@
         "dataSource": "at the data source",
         "extraIndicator": "at the extra indicator",
         "crossCuttingIndicator": "at a cross cutting indicator"
-      }
+      },
+      "dashboard_add": "A chart was added to the dashboard",
+      "dashboard_remove": "A chart was removed from the dashboard"
     },
   "Home": "Home",
   "HomeSections": {
@@ -1153,5 +1155,9 @@
   "ExportMultiple": "Export excel data for all sites",
   "ExportSingle": "Export excel data",
   "ExportTemplate": "Exporter un modèle Excel",
-  "ExportAllExcel": "Export all as Excel"
+  "ExportAllExcel": "Export all as Excel",
+  "AddGraphToDashboardConfirmation": "This will add the graph to the project dashboard, make sure to save the project to keep the changes.",
+  "RemoveGraphToDashboardConfirmation": "Are you sure you want to remove this graph from the project dashboard? Make sure to save the project once removed to keep the changes.",
+  "AddToDashboard": "Transfer this graphic",
+  "Dashboard": "Dashboard"
 }
