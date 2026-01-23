@@ -1170,7 +1170,7 @@
   "AddToDashboard": "Transferir este gráfico",
   "Dashboard": "Tablero",
   "NoCharts": "Este tablero está vacío. Si deseas agregar un gráfico, simplemente crea tu gráfico en la página \"Informe General\" y luego transfiérelo.",
-  "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico."
+  "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico.",
   "ExportExcel": "Exportar datos en excel",
   "ExportSingleTemplate": "Exportar formulario para un único lugar de colecta",
   "ExportMultipleTemplate": "Exportar formulario para varios lugares de colecta",
