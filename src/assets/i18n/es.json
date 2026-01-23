@@ -118,7 +118,7 @@
   "DownloadPdfLandscape": "Exportar PDF (horizontal)",
   "DownloadPdfPortrait": "Exportar PDF (vertical)",
   "DownloadPdf": "Exportar PDF",
-  "UploadData": "Importar datos en excel",
+  "UploadData": "Importar los datos en excel",
   "Landscape": "Orientación horizontal",
   "Portrait": "Orientación vertical",
   "DownloadAllPDF": "Exportar todos como PDF",
@@ -1002,11 +1002,10 @@
   "Nov": "Noviembre",
   "Dec": "Diciembre",
   "NewVersion": "¡Enhorabuena! Tu monitool está actualizado.",
-  "export-download": "Exportar informe Excel",
   "export-complete": "Exportación detallada de Excel",
   "export-minimized": "Exportación global de Excel",
-  "minimized-tooltip": "Todos los sitios combinados",
-  "complete-tooltip": "Exportación global + 1 pestaña por sitio de colección",
+  "minimized-tooltip": "Exportar un informe global con los datos de todos los sitios de recolección fusionados.",
+  "complete-tooltip": "Exportar un informe detallado con una pestaña para la vista global y una pestaña por cada sitio de recolección.",
   "NullValueMessage": {
     "p1": "El formulario contiene datos vacíos, el cálculo de indicadores a partir de formularios de entrada incompletos será posible pero dará un resultado inexacto.",
     "p2": "Si desea reemplazar los valores no ingresados ​​con valores numéricos “0”, puede volver al formulario de entrada de datos y usar el botón “Rellenar todas las celdas vacías con 0” (consulte el FAQ)."
@@ -1024,7 +1023,7 @@
     "unlock": "Desbloquear la entrada"
   },
   "export-current-minimized": "Exportación de la vista actual",
-  "current-minimized-tooltip": "Exporta el reporte respetando los grupos abiertos",
+  "current-minimized-tooltip": "Exportar el informe según la desagregación actualmente abierta.",
   "export-warning": {
     "time": {
       ">1": "La exportación de este informe deberia tardar aproximadamente {{time}} minutos.",
@@ -1166,17 +1165,17 @@
   "ShowDisabled": "Mostrar elementos desactivados",
   "ProjectDisabledThemeInfo": "Esta batalla política ha sido desactivada por un administrador, aún podrá ver los indicadores transversales relacionados en la estructura del proyecto, pero no en el informe general.",
   "ProjectDisabledIndicatorInfo": "Este indicador ha sido desactivado por un administrador, no se mostrará en el informe general.",
-  "ExportExcel": "Exportar Excel",
-  "ExportSingleTemplate": "Exportar plantilla para un lugar de colecta",
-  "ExportMultipleTemplate": "Exportar plantilla para todos los lugares de colecta",
-  "ExportMultiple": "Exportar datos en excel para todos los lugares de colecta",
-  "ExportSingle": "Exportar datos en excel",
-  "ExportTemplate": "Exportar plantilla excel",
-  "ExportAllExcel": "Exportar todos como excel",
   "AddGraphToDashboardConfirmation": "Esto añadirá el gráfico al tablero del proyecto, asegúrese de guardar el proyecto para conservar los cambios.",
   "RemoveGraphToDashboardConfirmation": "¿Está seguro de que quiere eliminar este gráfico del tablero del proyecto? Asegúrese de guardar el proyecto una vez eliminado para conservar los cambios.",
   "AddToDashboard": "Transferir este gráfico",
   "Dashboard": "Tablero",
   "NoCharts": "Este tablero está vacío. Si deseas agregar un gráfico, simplemente crea tu gráfico en la página \"Informe General\" y luego transfiérelo.",
   "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico."
+  "ExportExcel": "Exportar datos en excel",
+  "ExportSingleTemplate": "Exportar formulario para un único lugar de colecta",
+  "ExportMultipleTemplate": "Exportar formulario para varios lugares de colecta",
+  "ExportMultiple": "Exportar datos en excel para varios lugares de colecta",
+  "ExportSingle": "Exportar los datos excel para un único lugar de colecta",
+  "ExportTemplate": "Exportar formulario",
+  "ExportAllExcel": "Exportar todos como excel"
 }
