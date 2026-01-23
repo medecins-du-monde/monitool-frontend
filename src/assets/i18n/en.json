@@ -1153,7 +1153,7 @@
   "AddToDashboard": "Transfer this graphic",
   "Dashboard": "Dashboard",
   "NoCharts": "This dashboard is empty. If you want to add a graphic, simply create your graphic on the \"General Report\" page and then transfer it.",
-  "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic."
+  "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic.",
   "ExportExcel": "Export excel data",
   "ExportSingleTemplate": "Export single collection site template",
   "ExportMultipleTemplate": "Export multiple collection site template",
