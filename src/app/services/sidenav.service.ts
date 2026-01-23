@@ -43,6 +43,11 @@ export class SidenavService implements OnDestroy {
           routerLink: `../${project.id}/reporting/general`,
           icon: 'clipboard'
         },
+        {
+          name: 'Dashboard',
+          routerLink: `../${project.id}/reporting/dashboard`,
+          icon: 'dashboard'
+        },
         // {
         //   name: 'DataFlow',
         //   routerLink: `../${project.id}/reporting/dataflow`,

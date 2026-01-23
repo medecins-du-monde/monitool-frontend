@@ -1,0 +1,31 @@
+<div class="grid">
+    <ng-container *ngIf="!loading">
+        <div class="chart-wrapper" *ngFor="let chart of charts">
+            <div *ngIf="userIsAdmin">
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); onDeleteChart(chart.id);"
+                    [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <app-chart
+                [data]="chart"
+                [type]="chart.type"
+            >
+            </app-chart>
+        </div>
+    </ng-container>
+
+    <div *ngIf="!loading && charts.length === 0" class="no-result">
+        {{userIsAdmin ? ("NoCharts" | translate) : ("NoChartsNoAdmin" | translate)}}
+    </div>
+
+    <div *ngIf="loading" class="no-result">
+        {{"Loading" | translate}}
+    </div>
+</div>
+
+<app-project-save style="z-index: 10;"
+  *ngIf="userIsAdmin"
+></app-project-save>

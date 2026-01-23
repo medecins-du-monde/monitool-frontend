@@ -226,6 +226,8 @@
         "extraIndicator": "à l'indicateur annexé",
         "crossCuttingIndicator": "sur un indicateur transversal"
       },
+      "dashboard_add": "Un graphique a été ajouté au tableau de bord",
+      "dashboard_remove": "Un graphique a été supprimé du tableau de bord",
 
       "themes_add": "Ajoute un Combat Politique au projet",
       "themes_move": "Reordonne les Combats Politiques du projet",
@@ -1162,6 +1164,12 @@
   "ShowDisabled": "Afficher les éléments désactivés",
   "ProjectDisabledThemeInfo": "Ce Combat Politique a été désactivé par un administrateur, vous pourrez toujours voir les indicateurs transversaux associés sur la structure du projet mais pas sur le rapport général.",
   "ProjectDisabledIndicatorInfo": "Cet indicateur a été désactivé par un administrateur, il ne sera pas affiché dans le rapport général.",
+  "AddGraphToDashboardConfirmation": "Cela ajoutera le graphique au tableau de bord du projet, assurez-vous de sauvegarder le projet pour conserver les modifications.",
+  "RemoveGraphToDashboardConfirmation": "Êtes-vous sûr de vouloir supprimer ce graphique du tableau de bord du projet ? Assurez-vous de sauvegarder le projet une fois supprimé pour conserver les modifications.",
+  "AddToDashboard": "Transférer ce graphique»",
+  "Dashboard": "Tableau de bord",
+  "NoCharts": "Ce tableau de bord est vide. Si vous souhaitez ajouter un graphique, il suffit de créer votre graphique dans la page \"Rapport général\" puis de le transférer.",
+  "NoChartsNoAdmin": "Ce tableau de bord est vide. Contactez le propriétaire du projet pour ajouter un graphique."
   "ExportExcel": "Exporter les données en excel",
   "ExportSingleTemplate": "Exporter le formulaire d’un site de collecte unique",
   "ExportMultipleTemplate": "Exporter le formulaire de plusieurs sites de collecte",
