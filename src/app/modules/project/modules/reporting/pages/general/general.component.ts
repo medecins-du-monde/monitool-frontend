@@ -415,6 +415,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     if (this.project.forms) {
       for (const form of this.project.forms) {
         if (form.disabled && !this.showHidden) continue;
+        
         path = `form:${form.id}`;
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,

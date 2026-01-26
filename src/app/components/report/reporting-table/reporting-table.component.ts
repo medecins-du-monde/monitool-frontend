@@ -54,6 +54,7 @@ import { CommentModalComponent } from '../comment-modal/comment-modal.component'
 import { User } from 'src/app/models/classes/user.model';
 import { Group } from 'src/app/models/classes/group.model';
 import { DetailsModalComponent } from '../details-modal/details-modal.component';
+import { log } from 'console';
 
 type Row = (SectionTitle | GroupTitle | InfoRow) & RowCommentInfo;
 
@@ -110,6 +111,7 @@ export class ReportingTableComponent
   @Input() filter: BehaviorSubject<Filter>;
   @Input() isCrossCuttingReport = false;
   @Input() showComments;
+  @Input() showHidden = false;
   @Input() userIsAdmin = false;
   @Output() userIsAdminChange = new EventEmitter<boolean>();
   @Output() reportHasDataChange = new EventEmitter<boolean>();
@@ -289,10 +291,12 @@ export class ReportingTableComponent
     };
     let i = 1;
     this.project.logicalFrames.forEach(logicalFrame => {
-      if (this.openedSections[i]) {
-        filters.logicalFrames.push(logicalFrame.id);
+      if (!logicalFrame.disabled || this.showHidden) {
+        if (this.openedSections[i]) {
+          filters.logicalFrames.push(logicalFrame.id);
+        }
+        i++;
       }
-      i++;
     });
     if (this.openedSections[i]) {
       filters.crossCutting = true;
@@ -303,10 +307,12 @@ export class ReportingTableComponent
     }
     i++;
     this.project.forms.forEach(dataSource => {
-      if (this.openedSections[i]) {
-        filters.dataSources.push(dataSource.id);
+      if (!dataSource.disabled || this.showHidden) {
+        if (this.openedSections[i]) {
+          filters.dataSources.push(dataSource.id);
+        }
+        i++;
       }
-      i++;
     });
     return filters;
   }
@@ -612,10 +618,12 @@ export class ReportingTableComponent
   // Fetch the data of one especific row in function of project, content, filter and dimension
   // If this row has been loaded in the chart, the chart is updated as well
   updateRowValues(row: InfoRow): InfoRow {
+    console.log(row);
     this.logFrameEntities = [];
     const currentFilter = this.filter.value;
     let modifiedFilter;
     const selectedLogFrames = this.getGroup(row);
+    console.log('selected logFrames', selectedLogFrames);
 
     if (typeof selectedLogFrames !== 'undefined' && selectedLogFrames) {
 
@@ -653,6 +661,9 @@ export class ReportingTableComponent
 
     if (this.checkPeriodicityIsValid(row)) {
       row.error = ['Loading'];
+      console.log('Get dataset',
+        customFilter,
+      )
       this.reportingService
         .fetchData(
           currentProject,
@@ -936,9 +947,24 @@ export class ReportingTableComponent
     const { logicalFrames } = project;
     const { forms } = project;
     // We get the correct logical frame assuming that they will always be at the top
-    return logicalFrames[indicator.sectionId - 1]
-      ? logicalFrames[indicator.sectionId - 1]
-      : forms[indicator.sectionId - logicalFrames.length - 3];
+    let index = indicator.sectionId - 1;
+    for (let logFrame of logicalFrames) {
+      if (!logFrame.disabled || this.showHidden) {
+        if (index === 0) {
+          return logFrame;
+        }
+        index--;
+      }
+    }
+    index -= 2;
+    for (let form of forms) {
+      if (!form.disabled || this.showHidden) {
+        if (index === 0) {
+          return form;
+        }
+        index--;
+      }
+    }
   }
 
   isCrossCuttingIndicator(indicator) {
