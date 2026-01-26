@@ -948,7 +948,7 @@ export class ReportingTableComponent
     const { forms } = project;
     // We get the correct logical frame assuming that they will always be at the top
     let index = indicator.sectionId - 1;
-    for (let logFrame of logicalFrames) {
+    for (const logFrame of logicalFrames) {
       if (!logFrame.disabled || this.showHidden) {
         if (index === 0) {
           return logFrame;
@@ -957,7 +957,7 @@ export class ReportingTableComponent
       }
     }
     index -= 2;
-    for (let form of forms) {
+    for (const form of forms) {
       if (!form.disabled || this.showHidden) {
         if (index === 0) {
           return form;
