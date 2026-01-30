@@ -1171,11 +1171,11 @@
   "Dashboard": "Tablero",
   "NoCharts": "Este tablero está vacío. Si deseas agregar un gráfico, simplemente crea tu gráfico en la página \"Informe General\" y luego transfiérelo.",
   "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico.",
-  "ExportExcel": "Exportar datos en excel",
+  "ExportExcel": "Exportar excel",
   "ExportSingleTemplate": "Exportar formulario para un único lugar de colecta",
   "ExportMultipleTemplate": "Exportar formulario para varios lugares de colecta",
-  "ExportMultiple": "Exportar datos en excel para varios lugares de colecta",
-  "ExportSingle": "Exportar los datos excel para un único lugar de colecta",
+  "ExportMultiple": "Exportar excel para varios lugares de colecta",
+  "ExportSingle": "Exportar excel para un único lugar de colecta",
   "ExportTemplate": "Exportar formulario",
   "ExportAllExcel": "Exportar todos como excel"
 }

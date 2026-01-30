@@ -1154,11 +1154,11 @@
   "Dashboard": "Dashboard",
   "NoCharts": "This dashboard is empty. If you want to add a graphic, simply create your graphic on the \"General Report\" page and then transfer it.",
   "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic.",
-  "ExportExcel": "Export excel data",
+  "ExportExcel": "Export excel",
   "ExportSingleTemplate": "Export single collection site template",
   "ExportMultipleTemplate": "Export multiple collection site template",
-  "ExportMultiple": "Export multiple collection site excel data",
-  "ExportSingle": "Export single collection site excel data",
+  "ExportMultiple": "Export multiple collection site excel",
+  "ExportSingle": "Export single collection site excel",
   "ExportTemplate": "Export template",
   "ExportAllExcel": "Export all as Excel"
 }

@@ -1170,11 +1170,11 @@
   "Dashboard": "Tableau de bord",
   "NoCharts": "Ce tableau de bord est vide. Si vous souhaitez ajouter un graphique, il suffit de créer votre graphique dans la page \"Rapport général\" puis de le transférer.",
   "NoChartsNoAdmin": "Ce tableau de bord est vide. Contactez le propriétaire du projet pour ajouter un graphique.",
-  "ExportExcel": "Exporter les données en excel",
+  "ExportExcel": "Exporter excel",
   "ExportSingleTemplate": "Exporter le formulaire d’un site de collecte unique",
   "ExportMultipleTemplate": "Exporter le formulaire de plusieurs sites de collecte",
-  "ExportMultiple": "Exporter les données excel de plusieurs sites de collecte",
-  "ExportSingle": "Exporter les données excel d’un site de collecte unique",
+  "ExportMultiple": "Exporter excel de plusieurs sites de collecte",
+  "ExportSingle": "Exporter excel d’un site de collecte unique",
   "ExportTemplate": "Exporter le formulaire",
   "ExportAllExcel": "Exporter tout en excel"
 }
