@@ -25,7 +25,7 @@
                 <div class="card-info-value">{{project.start  | localizedDate}} - {{project.end  | localizedDate}}</div>
             </div>
             <div class="card-info">
-                <div class="card-info-title">{{ 'Thematics' | translate }}</div>
+                <div class="card-info-title">{{ 'Thematic' | translate }}</div>
                 <div class="card-info-value">
                     <div *ngFor="let theme of project.themes">{{theme.shortName[currentLang]}}</div>
                 </div>

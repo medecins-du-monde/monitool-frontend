@@ -51,6 +51,9 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
 
   earliestStart?: Date;
 
+  public chartData;
+  public chartType = 'line';
+
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
@@ -77,6 +80,19 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
         });
       })
     )
+
+    // Subscriptions for chart data and type
+    this.subscription.add(
+      this.chartService.currentData.subscribe(data => {
+        this.chartData = data;
+      })
+    );
+    this.subscription.add(
+      this.chartService.currentType.subscribe(type => {
+        console.log('Chart type changed to:', type);
+        this.chartType = type;
+      })
+    );
   }
 
   buildIndicators(): void{
@@ -96,16 +112,16 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     this.tableContent.next(indicators);
   }
 
-  get chartData(): unknown{
-    return this.chartService.data.value;
-  }
-
   receiveFilter(value: unknown): void{
     this.filter.next(value);
   }
 
   receiveDimension(value: string): void{
     this.dimensionIds.next(value);
+  }
+
+  resetChart(): void {
+    this.chartService.reset.next(true);
   }
 
   setIndicatorBreadcrumb() {

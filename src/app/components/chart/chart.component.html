@@ -1,7 +1,7 @@
 <!-- these conditions hide the chart when there is no data -->
-<div class="chart-field" [class.hide-chart]="!(data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
+<div class="chart-field" [class.hide-chart]="!(data && data.datasets && data.datasets.length > 0 && data.labels.length > 0)">
     <div class="chart-section">
-        <canvas id="currentChart"></canvas>
+        <canvas [id]="chartId" class="chart-canvas"></canvas>
         <div class="chart-extras">
           <!-- <div class="legend-box">
             <div class="legend" *ngIf="selectedBaselines.length > 0">
@@ -46,10 +46,16 @@
                       {{ 'DownloadPlot' | translate }}
                   </span>
               </button>
-              <button (click)="resetCharts()" class="mat-button mdm-button small-button">
+              <button (click)="resetCharts()" class="mat-button mdm-button small-button" *ngIf="canReset">
                   <mat-icon >history</mat-icon>
                   <span>
                       {{ 'Reset' | translate }}
+                  </span>
+              </button>
+              <button (click)="addToDashboard()" class="mat-button mdm-button small-button" *ngIf="canAddToDashboard">
+                  <!-- <mat-icon >history</mat-icon> -->
+                  <span>
+                      {{ 'AddToDashboard' | translate }}
                   </span>
               </button>
           </div>

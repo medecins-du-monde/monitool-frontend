@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
 import InformationItem from '../models/interfaces/information-item';
 import { Comment } from './comment.service';
+import { DashboardChart } from '../models/classes/dashboard-chart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -273,6 +274,10 @@ export class ProjectService implements OnDestroy {
 
   public setComments(comments: Comment[]): void {
     this.currentProject.comments = comments;
+  }
+
+  public setDashboard(charts: DashboardChart[]): void {
+    this.currentProject.dashboard = charts;
   }
 
   public triggerSave() {

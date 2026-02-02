@@ -7,7 +7,7 @@
   @media screen and (max-width: $breakpoint-xs) {
     flex-direction: column;
   }
-  #currentChart {
+  canvas {
     display: block;
     width: 85% !important;
     min-height: 400px;
@@ -76,6 +76,7 @@
     .action-buttons{
       display: flex;
       flex-direction: column;
+      gap: 4px;
 
       a, button{
         display: flex;

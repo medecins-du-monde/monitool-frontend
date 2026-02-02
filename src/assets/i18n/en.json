@@ -124,7 +124,7 @@
   "DownloadPdfLandscape": "Export PDF (landscape)",
   "DownloadPdfPortrait": "Export PDF (portrait)",
   "DownloadPdf": "Export PDF",
-  "UploadData": "Upload excel data",
+  "UploadData": "Import excel data",
   "Landscape": "Landscape orientation",
   "Portrait": "Portrait orientation",
   "DownloadAllPDF": "Export all as PDF",
@@ -347,7 +347,9 @@
         "dataSource": "at the data source",
         "extraIndicator": "at the extra indicator",
         "crossCuttingIndicator": "at a cross cutting indicator"
-      }
+      },
+      "dashboard_add": "A chart was added to the dashboard",
+      "dashboard_remove": "A chart was removed from the dashboard"
     },
   "Home": "Home",
   "HomeSections": {
@@ -983,11 +985,10 @@
   "NewVersion": "Congratulations! Your monitool is now up to date.",
   "CommentedGraphs": "Commented graphs",
   "PersonalDashboard": "Personal dashboard",
-  "export-download": "Export Excel Report",
   "export-complete": "Detailed Excel Export",
   "export-minimized": "Global Excel Export",
-  "minimized-tooltip": "All Sites merged",
-  "complete-tooltip": "Global Export + 1 Tab per Collecion Site",
+  "minimized-tooltip": "Export a global report with data from all collection sites merged.",
+  "complete-tooltip": "Export a detailed report with one tab for the global overview and one tab per collection site.",
   "NullValueMessage": {
     "p1": "The form contains empty data, the calculation of indicators from incomplete input forms will be possible but will give an inaccurate result.",
     "p2": "If you want to replace the unentered values with numerical values “0”, you can go back to the data entry form and use the button “Fill the empty cells with 0” (ref to FAQ)."
@@ -1005,7 +1006,7 @@
     "unlock": "Unlock input"
   },
   "export-current-minimized": "Current View Excel Report",
-  "current-minimized-tooltip": "Export the report respecting opened groups",
+  "current-minimized-tooltip": "Export the report according to the currently opened disaggregation's.",
   "export-warning": {
     "time": {
       ">1": "The export of this report should take about {{time}} minutes.",
@@ -1147,11 +1148,17 @@
   "ShowDisabled": "Show disabled elements",
   "ProjectDisabledThemeInfo": "This Political Battle has been disabled by an admin, you will still be able to see the related cross-cutting indicators on the Project structure but not on the general report.",
   "ProjectDisabledIndicatorInfo": "This indicator has been disabled by an admin, it won't be displayed in the general report.",
-  "ExportExcel": "Export Excel",
-  "ExportSingleTemplate": "Export single site template",
-  "ExportMultipleTemplate": "Export multiple site template",
-  "ExportMultiple": "Export excel data for all sites",
-  "ExportSingle": "Export excel data",
-  "ExportTemplate": "Exporter un modèle Excel",
+  "AddGraphToDashboardConfirmation": "This will add the graph to the project dashboard, make sure to save the project to keep the changes.",
+  "RemoveGraphToDashboardConfirmation": "Are you sure you want to remove this graph from the project dashboard? Make sure to save the project once removed to keep the changes.",
+  "AddToDashboard": "Transfer this graphic",
+  "Dashboard": "Dashboard",
+  "NoCharts": "This dashboard is empty. If you want to add a graphic, simply create your graphic on the \"General Report\" page and then transfer it.",
+  "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic.",
+  "ExportExcel": "Export excel",
+  "ExportSingleTemplate": "Export single collection site template",
+  "ExportMultipleTemplate": "Export multiple collection site template",
+  "ExportMultiple": "Export multiple collection site excel",
+  "ExportSingle": "Export single collection site excel",
+  "ExportTemplate": "Export template",
   "ExportAllExcel": "Export all as Excel"
 }

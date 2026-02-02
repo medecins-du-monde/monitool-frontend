@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ChartService } from 'src/app/services/chart.service';
+import { Component, OnInit, Input, OnDestroy, Output, SimpleChanges, EventEmitter, AfterViewInit } from '@angular/core';
 import { isEmpty } from 'lodash';
 import { Subscription } from 'rxjs';
 import Chart, { ChartOptions } from 'chart.js';
@@ -7,6 +6,9 @@ import * as ChartAnnotation from 'chartjs-plugin-annotation';
 import { TranslateService } from '@ngx-translate/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DownloadModalComponent } from './download-modal/download-modal.component';
+import { v4 as uuid } from 'uuid';
+import { DashboardChart } from 'src/app/models/classes/dashboard-chart.model';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 const BASELINE_LABEL = {
   borderColor: 'rgba(0, 0, 0, .3)',
@@ -29,9 +31,9 @@ const TARGET_LABEL = {
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit, OnDestroy {
+export class ChartComponent implements OnDestroy, AfterViewInit {
 
-
+  public chartId: string;
 
   /* CHART COMPONENT
     required Input:
@@ -61,7 +63,29 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   @Input() data: any;
   @Input() name: string;
-  unit: string;
+  @Input() type = 'line';
+  @Input() unit: string;
+
+  /**
+   * Indicates whether the add to dashboard button should be shown
+   */
+  @Input() canAddToDashboard = false;
+
+  /**
+   * Indicates whether the reset button should be shown
+   */
+  @Input() canReset = false;
+
+  /**
+   * Event emitted when the chart is reset
+   */
+  @Output() resetChart = new EventEmitter<void>();
+
+  /**
+   * Event emitted when the chart is added to the dashboard
+   */
+  @Output() addedToDashboard = new EventEmitter<DashboardChart>();
+
   options: ChartOptions = {
 
     // makes the chart look better with fixed height and width
@@ -115,7 +139,13 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  constructor(private chartService: ChartService, private translate: TranslateService, private dialog: MatDialog) {
+  private viewHasLoaded = false;
+
+  constructor(private translate: TranslateService, private dialog: MatDialog) {
+    console.log(this.data);
+
+    this.chartId = 'chart-' + uuid();
+
     this.options.tooltips = {
       mode: 'index',
       intersect: false,
@@ -217,32 +247,38 @@ export class ChartComponent implements OnInit, OnDestroy {
     };
    }
 
-  ngOnInit(): void {
-    this.chart = new Chart('currentChart', {
-      type: this.chartService.type.value,
+  ngAfterViewInit() {
+    this.chart = new Chart(this.chartId, {
+      type: this.type,
       data: this.data,
       options: this.options,
-      plugins: [ChartAnnotation]
+      plugins: [ChartAnnotation,
+        {
+        afterRender: (c: Chart) => {
+          const ctx = c.ctx;
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.restore();
+        }
+      }]
     });
-
-    this.subscription.add(
-      this.chartService.currentData.subscribe(data => {
-
-        if (!isEmpty(data)) {
-          this.addData(data);
-        }
-      })
-    );
-
-    this.subscription.add(
-      this.chartService.currentType.subscribe(type => {
-        if (!isEmpty(type)) {
-          this.changeChartType(type);
-        }
-      })
-    );
+    this.viewHasLoaded = true;
+    this.addData(this.data);
   }
-
+  
+  // Detects changes in Input properties and updates the chart accordingly
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.viewHasLoaded) {
+      if (changes.data && !isEmpty(changes.data.currentValue)) {
+        this.addData(changes.data.currentValue);
+      }
+      if (changes.type && !isEmpty(changes.type.currentValue)) {
+        this.changeChartType(changes.type.currentValue);
+      }
+    }
+  }
 
   addData(data): void {
     if (this.chart){
@@ -282,14 +318,15 @@ export class ChartComponent implements OnInit, OnDestroy {
   resetCharts(): void {
     this.chart.data.datasets = [];
     this.chart.update();
-    this.chartService.reset.next(true);
+    this.resetChart.emit();
   }
 
   changeChartType(type: string): void {
-    if (this.chart){
+    console.log(type);
+    if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart('currentChart', {
+    this.chart = new Chart(this.chartId, {
       type,
       data: this.data,
       options: this.options,
@@ -461,14 +498,43 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
-  public downloadChart(): void{
+  public downloadChart(): void {
     this.dialog.open(DownloadModalComponent, {
       panelClass: 'no-overflow-dialog',
       data: {chart: this.chart, name: this.name, higherPercentages: this.higherPercentages}
     });
   }
 
-  ngOnDestroy(): void{
+  public addToDashboard(): void {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {data: {messageId: 'AddGraphToDashboardConfirmation'}});
+    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
+      dialogSubscription.unsubscribe();
+      if (res.confirm) {
+        this.addedToDashboard.emit(
+          new DashboardChart(
+          {
+            datasets: this.data.datasets.map(dataset => {
+              return {
+                backgroundColor: 'transparent',
+                borderColor: dataset.borderColor,
+                label: dataset.label,
+                unit: dataset.unit,
+                baseline: dataset.baseline,
+                target: dataset.target,
+                meta: dataset.meta
+              }
+            }),
+            meta: this.data.meta,
+            type: this.type
+          }
+          )
+        );
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.chart.destroy();
   }
 }

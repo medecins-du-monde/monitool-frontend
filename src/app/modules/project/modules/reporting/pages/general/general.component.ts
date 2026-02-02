@@ -24,6 +24,8 @@ import {
 } from 'src/app/services/comment.service';
 import { skip } from 'rxjs/operators';
 import { AlertAutoDateChangeComponent } from './alert-auto-date-change/alert-auto-date-change.component';
+import { DashboardChart } from 'src/app/models/classes/dashboard-chart.model';
+import { Router } from '@angular/router';
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -102,6 +104,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private commentService: CommentService,
     private dialog: MatDialog,
+    private router: Router
   ) {}
 
   project: Project;
@@ -135,6 +138,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   updatedFilterDate?: Date;
   updatedDimension?: string;
 
+  public chartData;
+  public chartType = 'line';
+
   private subscription: Subscription = new Subscription();
 
   @HostListener('window:beforeunload')
@@ -166,6 +172,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
             this.crosscutting = crosscutting;
             this.buildIndicators();
           });
+      })
+    );
+
+    // Subscriptions for chart data and type
+    this.subscription.add(
+      this.chartService.currentData.subscribe(data => {
+        this.chartData = data;
+      })
+    );
+    this.subscription.add(
+      this.chartService.currentType.subscribe(type => {
+        this.chartType = type;
       })
     );
 
@@ -397,6 +415,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     if (this.project.forms) {
       for (const form of this.project.forms) {
         if (form.disabled && !this.showHidden) continue;
+        
         path = `form:${form.id}`;
         rows.push({
           title: `${this.translateService.instant('DataSource')}: ${form.name}`,
@@ -515,10 +534,6 @@ export class GeneralComponent implements OnInit, OnDestroy {
     }
   }
 
-  get chartData() {
-    return this.chartService.data.value;
-  }
-
   receiveFilter(value): void {
     value.entities = value.entities
       .filter(e => this.entities.includes(e))
@@ -550,6 +565,18 @@ export class GeneralComponent implements OnInit, OnDestroy {
     } else {
       this.dimensionIds.next(value);
     }
+  }
+
+  resetChart(): void {
+    this.chartService.reset.next(true);
+  }
+
+  addChart(chart: DashboardChart): void {
+    this.router.navigate([`/projects/${this.projectService.projectId.getValue()}/reporting/dashboard`]).then(() => {
+      const charts = this.project.dashboard;
+      charts.push(chart);
+      this.projectService.setDashboard(charts);
+    });
   }
 
   updateBreadcrumbs(project: Project): void {

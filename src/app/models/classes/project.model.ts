@@ -10,6 +10,7 @@ import { Group } from './group.model';
 import { User } from './user.model';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { Comment } from 'src/app/services/comment.service';
+import { DashboardChart } from './dashboard-chart.model';
 
 export class Project implements Deserializable {
     id: string;
@@ -34,6 +35,7 @@ export class Project implements Deserializable {
     visibility: string;
     parsed?: boolean;
     comments: Comment[] = [];
+    dashboard: DashboardChart[] = [];
 
     get status(): string{
         if ( this.active ) {
@@ -104,6 +106,7 @@ export class Project implements Deserializable {
             return user;
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
+        this.dashboard = (input && input.dashboard) ? input.dashboard.map(d => new DashboardChart(d)) :  [];
         return this;
     }
 
@@ -136,6 +139,7 @@ export class Project implements Deserializable {
             visibility: this.visibility,
             _id: this.id,
             comments: this.comments,
+            dashboard: this.dashboard.map(x => x.serialize()),
         };
         Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
         return serialized;
