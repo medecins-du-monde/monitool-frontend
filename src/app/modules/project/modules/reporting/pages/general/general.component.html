@@ -20,11 +20,20 @@
       [name]="this.project.name"
       [data]="chartData"
       [type]="chartType"
-      [canAddToDashboard]="userIsAdmin"
       [canReset]="true"
       (resetChart)="resetChart()"
       (addedToDashboard)="addChart($event)"
     ></app-chart>
+    <!-- Use this one to enable dashboards
+    <app-chart
+      [name]="this.project.name"
+      [data]="chartData"
+      [type]="chartType"
+      [canAddToDashboard]="userIsAdmin"
+      [canReset]="true"
+      (resetChart)="resetChart()"
+      (addedToDashboard)="addChart($event)"
+    ></app-chart> -->
 
     <app-reporting-table
       [dimensionIds]="dimensionIds"
