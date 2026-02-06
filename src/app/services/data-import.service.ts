@@ -31,9 +31,19 @@ export class DataImportService {
     });
   }
 
-  public async importFile(file: any, path: string) {
+  public async getFileSheets(file: any, path: string) {
     await this.readExcelFile(file, path);
     const data = this.uploadedData[path];
+    delete this.uploadedData[path];
+    return data.map(sheet => sheet.name);
+  }
+
+  public async importFile(file: any, path: string, sheetIndex?: number) {
+    await this.readExcelFile(file, path);
+    let data = this.uploadedData[path];
+    if (typeof sheetIndex === 'number' && this.uploadedData[path][sheetIndex]) {
+      data = [this.uploadedData[path][sheetIndex]];
+    }
     delete this.uploadedData[path];
     return await this.apiService.put(`${path}/check`, data);
   }

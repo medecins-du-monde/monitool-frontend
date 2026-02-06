@@ -1137,6 +1137,7 @@
         "bad-value": "Bad value on table \"{{element}}\", row {{row}}, column {{col}}. Cell value must be a number (or be empty)."
     },
     "choose-file": "Choose an Excel file",
+    "select-sheet": "Select the sheet to import",
     "import-data": "Import data",
     "import-info": "You can import an excel file to fill this page. The file must have been exported from this page or from the input list, and not modified (except for the data cells).",
     "import-warning": "Importing data will overwrite any existing data on this page. Do you want to continue? After confirming you will need to save your changes for the import to take effect."

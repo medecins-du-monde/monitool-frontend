@@ -8,6 +8,7 @@ import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/lega
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ImportModalComponent } from './import-modal.component';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ImportModalComponent } from './import-modal.component';
         MatInputModule,
         MatButtonModule,
         FormsModule,
-        MatIconModule
+        MatIconModule,
+        MatSelectModule
     ]
 })
 export class ImportModalModule { }
