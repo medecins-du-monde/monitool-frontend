@@ -109,7 +109,7 @@ export class DownloadService implements OnDestroy {
         name = res.name[this.translateService.currentLang];
       });
     } else if (id.split(':')[0] === 'project') {
-      await this.projectService.get(id).then(res => { name = res.country; });
+      await this.projectService.get(id).then(res => { name = res.countries.join(', '); });
     }
     return `(${name})-${this.translateService.instant(minimized ? 'export-minimized' : 'export-complete').toLowerCase().replaceAll(/\s+/g, '-')}.xlsx`;
   }

@@ -335,10 +335,10 @@ export class ReportingTableComponent
                   filterResult = row.originProject.status === 'Ongoing';
                 }
                 if (filterResult && filterValue.continents.length > 0) {
-                  filterResult = filterValue.continents.includes(row.originProject.continent);
+                  filterResult = row.originProject.continents.some(continent => filterValue.continents.includes(continent));
                 }
                 if (filterResult && filterValue.countries.length > 0) {
-                  filterResult = filterValue.countries.includes(row.originProject.country);
+                  filterResult = row.originProject.countries.some(country => filterValue.countries.includes(country));
                 }
                 return filterResult;
               }

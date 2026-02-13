@@ -87,7 +87,8 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: savedProject.country,
+            value: savedProject.countries,
+            isCountry: true,
           } as BreadcrumbItem,
           {
             value: savedProject.name,
@@ -221,7 +222,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources PDF.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ')} - ${this.project.name}) All Data Sources PDF.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();
@@ -252,7 +253,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All Data Sources Excel.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ')} - ${this.project.name}) All Data Sources Excel.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();

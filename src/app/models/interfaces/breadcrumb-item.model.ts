@@ -1,4 +1,5 @@
 export default interface BreadcrumbItem{
-    value: string;
+    value: string | string[];
+    isCountry?: boolean;
     link?: string;
   }

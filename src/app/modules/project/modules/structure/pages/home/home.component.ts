@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.projectService.lastSavedVersion.pipe(take(2)).subscribe(savedProject => {
 
-        if (savedProject.country) {
+        if (savedProject.countries && savedProject.countries.length > 0) {
 
           const breadCrumbs = [
             {
@@ -100,7 +100,8 @@ export class HomeComponent implements OnInit, OnDestroy {
               link: './../../projects'
             } as BreadcrumbItem,
             {
-              value: savedProject.country,
+              value: savedProject.countries,
+              isCountry: true,
             } as BreadcrumbItem,
             {
               value: savedProject.name,
@@ -130,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             const listCrossCutting = Object.keys(savedProject.crossCutting).map(x => savedProject.crossCutting[x]);
             const newPercentages = {
               // Check if we have
-              basics: ( savedProject.name && savedProject.country && savedProject.themes.length > 0 ) ? 100 : 0,
+              basics: ( savedProject.name && savedProject.countries && savedProject.countries.length > 0 && savedProject.themes.length > 0 ) ? 100 : 0,
               sites: ( savedProject.entities.length > 0 ) ? 100 : 0,
               // Check if we have at least one logical frame
               logicalFrames: ( savedProject.logicalFrames.length > 0 ) ? 100 : 0,
