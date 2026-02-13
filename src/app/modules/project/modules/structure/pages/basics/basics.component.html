@@ -2,8 +2,17 @@
     <div class="mdm-form-group">
         <div class="mdm-form-label">{{ 'Continent' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
-            <mat-select formControlName="continent" placeholder="{{ 'Placeholder.Basic.Continent' | translate }}" disableOptionCentering panelClass="myPanelClass">
-                <mat-option *ngFor="let continent of continentList" [value]="continent.key">{{ continent[currentLang] }}
+            <mat-select
+                multiple
+                formControlName="continents"
+                placeholder="{{ 'Placeholder.Basic.Continent' | translate }}"
+                disableOptionCentering
+                panelClass="myPanelClass"
+            >
+                <mat-option
+                    *ngFor="let continent of continentList"
+                    [value]="continent.key"
+                >{{ continent[currentLang] }}
                 </mat-option>
             </mat-select>
             <mat-hint>
@@ -15,7 +24,8 @@
         <div class="mdm-form-label">{{ 'Country' | translate }}*</div>
         <mat-form-field appearance="outline" class="mdm-form-field">
             <mat-select
-                formControlName="country"
+                multiple
+                formControlName="countries"
                 placeholder="{{ legacyCountry || ('Placeholder.Basic.Country' | translate) }}"
                 disableOptionCentering
                 panelClass="myPanelClass"

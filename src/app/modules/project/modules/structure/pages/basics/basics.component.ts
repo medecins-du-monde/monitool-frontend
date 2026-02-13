@@ -104,12 +104,12 @@ export class BasicsComponent implements OnInit, OnDestroy {
     this.filteredCountryList = this.countryListService.getCountries();
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        if (!this.countryListService.getCountry(project.country)) {
-          this.legacyCountry = project.country;
+        if (project.countries.length === 1 && !this.countryListService.getCountry(project.countries[0])) {
+          this.legacyCountry = project.countries[0];
         }
         this.basicsForm = this.fb.group({
-          continent: [project.continent, Validators.required],
-          country: [this.countryListService.getCountry(project.country) ? project.country : null, Validators.required],
+          continents: [project.continents, Validators.required],
+          countries: [project.countries.map(x => this.countryListService.getCountry(x) ? x : null), Validators.required],
           region: [project.region],
           name: [project.name, Validators.required],
           themes: [project.themes.map(x => x.id)],
@@ -146,15 +146,23 @@ export class BasicsComponent implements OnInit, OnDestroy {
               value.region = undefined;
             }
 
-            if (value.country) {
-              const country = this.countryListService.getCountry(value.country);
-              if (country && !value.continent) {
-                value.continent = country.continent;
-                this.basicsForm.get('continent').setValue(value.continent);
+            if (value.countries) {
+              const countries = value.countries.map(x => this.countryListService.getCountry(x));
+              const countriesContinents = countries.map(x => x.continent).filter((x, index, self) => self.indexOf(x) === index);
+
+              if (JSON.stringify(value.countries) !== JSON.stringify(project.countries)) {
+                // If there are countries selected but no continent, we select the continents of the selected countries
+                if (countries.length > 0 && countries.some(x => x) && value.continents.length === 0) {
+                  value.continents = countriesContinents;
+                  this.basicsForm.get('continents').setValue(value.continents);
+                }
               }
-              if (country && value.continent && country.continent !== value.continent) {
-                value.country = undefined;
-                this.basicsForm.get('country').setValue(value.country);
+              if (JSON.stringify(value.continents) !== JSON.stringify(project.continents)) {
+                // If there are countries and continents selected but some of the selected countries do not belong to the selected continents, we deselect the countries that do not belong to the selected continents
+                if (countries.length > 0 && value.continents.length > 0 && !countries.every(x => value.continents.includes(x.continent))) {
+                  value.countries = value.countries.filter((country, i) => value.continents.includes(countries[i].continent));
+                  this.basicsForm.get('countries').setValue(value.countries);
+                }
               }
             }
 
@@ -179,7 +187,8 @@ export class BasicsComponent implements OnInit, OnDestroy {
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: savedProject.country,
+            value: savedProject.countries,
+            isCountry: true,
           } as BreadcrumbItem,
           {
             value: savedProject.name,
@@ -218,9 +227,9 @@ export class BasicsComponent implements OnInit, OnDestroy {
   onSearch(value: string) {
     this.filteredCountryList = this.countryListService.getCountries(
       undefined,
-      this.basicsForm.value.continent ? [this.basicsForm.value.continent] : [],
+      this.basicsForm.value.continents ? this.basicsForm.value.continents : [],
       value,
-      this.basicsForm.value.country ? [this.basicsForm.value.country] : [])
+      this.basicsForm.value.countries ? this.basicsForm.value.countries : [])
   }
 
   resetInput(event: boolean, element: HTMLElement) {

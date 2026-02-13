@@ -159,7 +159,8 @@ export class InputsComponent implements OnInit, OnDestroy {
               link: './../../projects'
             } as BreadcrumbItem,
             {
-              value: this.project.country,
+              value: this.project.countries,
+              isCountry: true
             } as BreadcrumbItem,
             {
               value: this.project.name,

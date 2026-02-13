@@ -101,7 +101,7 @@ export class IndicatorReportComponent implements OnInit, OnDestroy {
     const indicators: ProjectIndicator[] = [];
     for (const project of projects){
         const newIndicator = new ProjectIndicator(project.crossCutting[this.mainIndicator.id]);
-        newIndicator.display = `${this.countryList.translateCountry(project.country)} - ${project.name}`;
+        newIndicator.display = `${project.countries.map(country => this.countryList.translateCountry(country)).join(', ')} - ${project.name}`;
         // this property is necessary for creating the menu options in the report table
         newIndicator.originProject = project;
         indicators.push(newIndicator);

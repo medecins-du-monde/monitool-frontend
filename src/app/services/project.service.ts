@@ -187,7 +187,7 @@ export class ProjectService implements OnDestroy {
     const project = new Project(response);
 
     // Check whether or not the project has its basics infos and display sidenav links accordingly
-    if (!project.country || !project.name) {
+    if (project.countries.length < 1 || !project.name) {
       this.basicInfos.next(false);
     } else {
       this.basicInfos.next(true);

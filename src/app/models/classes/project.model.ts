@@ -21,8 +21,8 @@ export class Project implements Deserializable {
     start: Date;
     end: Date;
     inputDate: Date;
-    continent: string;
-    country: string;
+    continents: string[] = [];
+    countries: string[] = [];
     region?: string;
     themes: Theme[] = [];
     crossCutting: any;
@@ -42,14 +42,6 @@ export class Project implements Deserializable {
             return this.end > new Date() ? 'Ongoing' : 'Finished';
         }
         return 'Deleted';
-    }
-
-    get countryImage(): string{
-        if ( this.country === 'Burkina Faso' ) {
-            return 'assets/images/burkina-flag.png';
-        } else {
-            return 'assets/images/italy-flag.png';
-        }
     }
 
     constructor(input?: any){
@@ -121,8 +113,8 @@ export class Project implements Deserializable {
     serialize() {
         const serialized = {
             active: this.active,
-            continent: this.continent,
-            country: this.country,
+            continents: this.continents,
+            countries: this.countries,
             region: this.region,
             crossCutting: this.formatCrossCutting(),
             end: this.end ? DatesHelper.dateToString(this.end) : null,
