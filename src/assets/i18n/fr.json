@@ -1021,7 +1021,7 @@
     "lock": "Verrouiller la saisie",
     "unlock": "Déverrouiller la saisie"
   },
-  "export-current-minimized": "Rapport Excel de la vue actuelle",
+  "export-current-minimized": "Export Excel de la vue courante",
   "current-minimized-tooltip": "Exporter le rapport selon la désagrégation actuellement ouvert.",
   "export-warning": {
     "time": {

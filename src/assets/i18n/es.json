@@ -1022,7 +1022,7 @@
     "lock": "Bloquear la entrada",
     "unlock": "Desbloquear la entrada"
   },
-  "export-current-minimized": "Exportación de la vista actual",
+  "export-current-minimized": "Exportar Excel de la vista actual",
   "current-minimized-tooltip": "Exportar el informe según la desagregación actualmente abierta.",
   "export-warning": {
     "time": {

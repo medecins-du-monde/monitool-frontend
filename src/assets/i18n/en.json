@@ -1005,7 +1005,7 @@
     "lock": "Lock input",
     "unlock": "Unlock input"
   },
-  "export-current-minimized": "Current View Excel Report",
+  "export-current-minimized": "Current View Excel Export",
   "current-minimized-tooltip": "Export the report according to the currently opened disaggregation's.",
   "export-warning": {
     "time": {
