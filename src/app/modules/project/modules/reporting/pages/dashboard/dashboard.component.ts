@@ -97,9 +97,7 @@ export class DashboardComponent {
           .then(response => {
             if (response) {
               dataset['data'] = this.formatResponseToDataset(response.items, chart.meta.dimension);
-              // chart['labels'] = Object.keys(response.items)
-              //   .filter(x => x !== '_total')
-              //   .map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
+              dataset['fill'] = false;
             }
           });
         }
