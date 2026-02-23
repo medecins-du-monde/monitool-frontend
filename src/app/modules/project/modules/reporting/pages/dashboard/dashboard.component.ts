@@ -40,9 +40,11 @@ export class DashboardComponent {
     private authService: AuthService,
     private dialog: MatDialog
   ) {
+  }
+
+  public ngOnInit() {
     this.subscription.add(
-      this.projectService.openedProject.subscribe((project: Project) => {
-        console.log(project);
+      this.projectService.project.subscribe((project: Project) => {
         this.project = project;
         this.loadCharts(this.project.dashboard);
         const userSubscription = this.authService.currentUser.subscribe(
@@ -79,7 +81,8 @@ export class DashboardComponent {
   private async loadCharts(projectCharts: DashboardChart[]) {
     const loadedCharts = [];
     for (const projectChart of projectCharts) {
-      const chart = structuredClone(projectChart)
+      const chart = structuredClone(projectChart);
+      console.log(chart);
       loadedCharts.push(chart);
       // Get labels
       chart['labels'] = this.getLabels(chart.meta.dimension, chart.meta.filter).map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
