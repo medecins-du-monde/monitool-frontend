@@ -666,7 +666,7 @@
   "Placeholder": {
       "Basic" : {
           "Continent": "Sélectionnez un continent",
-          "Region": "Préciser a region",
+          "Region": "Préciser la région",
           "Country": "Sélectionnez un pays",
           "Name" : "ex: Accès a des soins de santé de qualité pour les populations touchées par la crise",
           "Thematics": "ex: Soins de santé primaire",
