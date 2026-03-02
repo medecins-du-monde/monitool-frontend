@@ -69,7 +69,8 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: savedProject.country,
+            value: savedProject.countries,
+            isCountry: true,
           } as BreadcrumbItem,
           {
             value: savedProject.name,
@@ -173,7 +174,7 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.countryList.translateCountry(this.project.country)} - ${this.project.name}) All logical frames.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.project.countries.map(country => this.countryList.translateCountry(country)).join(', ')} - ${this.project.name}) All logical frames.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();

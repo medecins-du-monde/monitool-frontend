@@ -22,26 +22,48 @@ export class ImportModalComponent {
   public formatedData?: any;
   public errors: string[] = [];
   public fileName?: string;
+  public sheets: any[] = [];
+
+  private file?: any;
 
   onFileChange(event: any) {
     if (event.target.files[0]) {
-      this.fileName = event.target.files[0].name;
-      this.dataImportService.importFile(event.target.files[0], this.data.path).then((response) => {
-        this.errors = [];
-        this.formatedData = response;
-      }).catch(res => {
-        if (res.error && res.error.length > 0) {
-          this.errors = res.error.map(error => this.translateService.instant(error.key, error.extra));
+      this.file = event.target.files[0]; // Save file for later use
+      this.fileName = this.file.name;
+      this.dataImportService.getFileSheets(event.target.files[0], this.data.path).then(sheets => {
+        if (sheets.length > 1) {
+          this.sheets = sheets; // Show sheet selection if multiple sheets
         } else {
-          this.errors = [this.translateService.instant('import.error.generic')]
+          this.sheets = [];
+          this.importFile();
         }
-        this.formatedData = undefined;
       });
     } else {
       this.fileName = undefined;
+      this.sheets = [];
       this.errors = [];
       this.formatedData = undefined;
     }
+  }
+
+  onSheetSelect(sheetIndex: number) {
+    if (this.file) {
+      this.importFile(sheetIndex);
+    }
+  }
+
+  private importFile(sheetIndex?: number) {
+    this.dataImportService.importFile(this.file, this.data.path, sheetIndex).then((response) => {
+      this.errors = [];
+      this.formatedData = response;
+    }).catch(res => {
+      if (res.error && res.error.length > 0) {
+        this.errors = res.error.map(error => this.translateService.instant(error.key, error.extra));
+      } else {
+        this.errors = [this.translateService.instant('import.error.generic')]
+      }
+      this.formatedData = undefined;
+    });
   }
 
   confirm() {

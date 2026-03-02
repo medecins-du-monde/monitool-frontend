@@ -586,7 +586,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
         link: './../../projects'
       } as BreadcrumbItem,
       {
-        value: project.country
+        value: project.countries,
+        isCountry: true
       } as BreadcrumbItem,
       {
         value: project.name

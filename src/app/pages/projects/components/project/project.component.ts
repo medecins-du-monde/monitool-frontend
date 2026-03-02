@@ -31,6 +31,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   projectOwner: boolean;
   lastEntry: string;
   loading = false;
+  cardTitle: string;
 
   private subscription: Subscription = new Subscription();
 
@@ -56,6 +57,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this.projectOwner = (this.project.users.filter(projectUser => projectUser.id === this.currentUser.id).length > 0);
       })
     );
+    this.cardTitle = this.project.countries.map(country => this.countryList.translateCountry(country)).join(', ');
   }
 
   onOpen(): void {
@@ -113,7 +115,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.projectService.get(this.project.id).then(async (project: Project) => {
       if (project) {
         const jszip = new JSZip();
-        jszip.file(`${project.country}.json`, this.stringifyJSONObj(project));
+        jszip.file(`${project.countries.join('_')}.json`, this.stringifyJSONObj(project));
         for (const form of project.forms) {
           await this.inputService.getForDownload(project.id, form.id).then(val => {
             if (val) {
@@ -126,7 +128,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
           // see FileSaver.js
           const url = window.URL.createObjectURL(content);
           dlAnchorElem.setAttribute('href', url);
-          dlAnchorElem.setAttribute('download', `${project.country}.zip`);
+          dlAnchorElem.setAttribute('download', `${project.countries.join('_')}.zip`);
           dlAnchorElem.click();
         });
       }

@@ -157,7 +157,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.projectService.list().then((res: Project[]) => {
     this.allProjects = res;
     this.loadFilteredProjects();
-    this.countries = [... new Set(res.map(x => x.country)
+    this.countries = [... new Set(res.map(x => x.countries).flat()
       .sort((x: string, y: string) => x.toLocaleLowerCase().replace(/[\])}[{(]/g, '').localeCompare(y.toLocaleLowerCase().replace(/[\])}[{(]/g, ''))))];
 
     if (this.projects) {
@@ -171,7 +171,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
             && b.users.find(user => this.isOwner(user))
             ) {
               // alphabetical order
-              return a.country.localeCompare(b.country);
+              return a.countries[0].localeCompare(b.countries[0]);
             } else if (a.users.find(user => this.isOwner(user))) {
               return -1;
             } else {
@@ -179,7 +179,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
             }
           } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
             if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
-              return a.country.localeCompare(b.country);
+              return a.countries[0].localeCompare(b.countries[0]);
             } else {
               return -1;
             }
@@ -234,26 +234,6 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
-  onToggleCountry() {
-    if (this.allSelected.selected) {
-      this.allSelected.deselect();
-      return;
-    }
-    if (this.filtersForm.value.countries.length === this.countries.length) {
-      this.allSelected.select();
-    }
-  }
-
-  onToggleAllCountries() {
-    if (this.allSelected.selected) {
-      // TODO: Change this thing of the 0.
-      this.filtersForm.controls.countries
-        .setValue(['0']);
-    } else {
-      this.filtersForm.controls.countries.setValue([]);
-    }
-  }
-
   onSearch(e: any): void {
     this.filtersForm.controls.search.setValue(e);
   }
@@ -299,8 +279,8 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       project.name.toLowerCase().includes(search) ||
       (project.region && project.region.toLowerCase().includes(search)) ||
       project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search)) ||
-      (project.continent && filteredContinentList.find(continent => continent.key === project.continent)) ||
-      filteredCountryList.find(country => country.key === project.country) || project.country.includes(search)
+      (project.continents.length > 0 && filteredContinentList.find(continent => project.continents.includes(continent.key))) ||
+      filteredCountryList.find(country => project.countries.includes(country.key)) || project.countries.some(country => country.toLowerCase().includes(search))
     );
   }
 
@@ -312,13 +292,13 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     const countries = this.filtersForm.value.countries;
     const continents = this.filtersForm.value.continents;
     if (continents.length <= 0) {
-      return projects.filter(project => countries.includes(project.country));
+      return projects.filter(project => project.countries.some(country => countries.includes(country)));
     }
     else if (countries.length <= 0) {
-      return projects.filter(project => continents.includes(project.continent));
+      return projects.filter(project => project.continents.some(continent => continents.includes(continent)));
     } else {
       return projects.filter(project =>
-        countries.includes(project.country) && continents.includes(project.continent)
+        project.countries.some(country => countries.includes(country)) && project.continents.some(continent => continents.includes(continent))
       );
     }
   }

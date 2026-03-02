@@ -61,7 +61,8 @@ export class UsersComponent implements OnInit {
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: savedProject.country,
+            value: savedProject.countries,
+            isCountry: true,
           } as BreadcrumbItem,
           {
             value: savedProject.name,

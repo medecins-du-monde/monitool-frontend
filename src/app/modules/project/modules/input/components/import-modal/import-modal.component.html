@@ -19,6 +19,12 @@
         <input hidden (change)="onFileChange($event)" #fileInput type="file" accept=".xlsx, .xls">
         <span style="margin-left: 16px;">{{fileName}}</span>
     </div>
+    <mat-form-field *ngIf="sheets.length > 0" appearance="outline" class="mdm-form-field">
+      <mat-label>{{'import.select-sheet' | translate}}</mat-label>
+      <mat-select (selectionChange)="onSheetSelect($event.value)">
+        <mat-option *ngFor="let sheet of sheets; index as i" [value]="i">{{ sheet }}</mat-option>
+      </mat-select>
+    </mat-form-field>
     <div *ngFor="let error of errors" class="message error">
       <mat-icon>error_outline</mat-icon>
       {{ error }}

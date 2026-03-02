@@ -6,11 +6,16 @@
                 <a [routerLink]="item.link" routerLinkActive="active-link">{{item.value | translate }}</a>
             </span>
             <ng-template #elseBlock>
-                <span *ngIf="i === 1; else noCountry"
-                    class="item"
-                    matTooltip="{{countryListService.translateCountry(item.value) }}"
-                    [matTooltipShowDelay]="500"
-                >{{ countryListService.translateCountry(item.value) }}</span>
+                <ng-container *ngIf="item.isCountry; else noCountry">
+                    <span
+                        *ngFor="let country of item.value; let i = index"
+                        class="item"
+                        matTooltip="{{countryListService.translateCountry(country)}}"
+                        [matTooltipShowDelay]="500"
+                    >
+                        {{ countryListService.translateCountry(country) + (i < item.value.length - 1 ? ',' : '') }}
+                    </span>
+                </ng-container>
                 <ng-template #noCountry>
                     <span class="item" matTooltip="{{item.value | translate }}" [matTooltipShowDelay]="500">{{ item.value | translate }}</span>
                 </ng-template>

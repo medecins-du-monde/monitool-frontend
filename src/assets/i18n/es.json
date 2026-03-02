@@ -1022,7 +1022,7 @@
     "lock": "Bloquear la entrada",
     "unlock": "Desbloquear la entrada"
   },
-  "export-current-minimized": "Exportación de la vista actual",
+  "export-current-minimized": "Exportar Excel de la vista actual",
   "current-minimized-tooltip": "Exportar el informe según la desagregación actualmente abierta.",
   "export-warning": {
     "time": {
@@ -1154,6 +1154,7 @@
       "bad-value": "Valor incorrecto en la tabla \"{{element}}\", fila {{row}}, columna {{col}}. El valor de la celda debe ser un número (o estar vacía)."
     },
     "choose-file": "Elige un archivo de Excel",
+    "select-sheet": "Elige la hoja que quieres importar",
     "import-data": "Importar datos",
     "import-info": "Puedes importar un archivo de Excel para completar esta página. El archivo debe haber sido exportado desde esta página o desde la lista de entrada, y no debe haber sido modificado (excepto en las celdas de datos).",
     "import-warning": "Importar datos sobrescribirá cualquier dato existente en esta página. ¿Quieres continuar? Después de confirmar, deberás guardar los cambios para que la importación tenga efecto."

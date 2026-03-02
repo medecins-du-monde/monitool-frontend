@@ -35,22 +35,6 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
 
   public chartId: string;
 
-  /* CHART COMPONENT
-    required Input:
-      - chartType (see below)
-      - data: {
-          labels: string[], (y-axis ticks)
-          datasets: [{
-            label: string, (shown in legend)
-            data: number of datapoints,
-            borderColor: 'rgba(x,y,z,w)',
-            backgroundColor: 'rgba(x,y,z,w)', (optional),
-            fill: boolean
-          }]
-      - options: https://www.chartjs.org/docs/latest/getting-started/usage.html
-      }
-  */
-
   public selectedBaselines: any[] = [];
   public selectedTargets: any[] = [];
 
@@ -142,7 +126,6 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
   private viewHasLoaded = false;
 
   constructor(private translate: TranslateService, private dialog: MatDialog) {
-    console.log(this.data);
 
     this.chartId = 'chart-' + uuid();
 
@@ -248,22 +231,7 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
    }
 
   ngAfterViewInit() {
-    this.chart = new Chart(this.chartId, {
-      type: this.type,
-      data: this.data,
-      options: this.options,
-      plugins: [ChartAnnotation,
-        {
-        afterRender: (c: Chart) => {
-          const ctx = c.ctx;
-          ctx.save();
-          ctx.globalCompositeOperation = 'destination-over';
-          ctx.fillStyle = 'white';
-          ctx.fillRect(0, 0, c.width, c.height);
-          ctx.restore();
-        }
-      }]
-    });
+    this.setChart(this.type);
     this.viewHasLoaded = true;
     this.addData(this.data);
   }
@@ -322,27 +290,10 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
   }
 
   changeChartType(type: string): void {
-    console.log(type);
     if (this.chart) {
       this.chart.destroy();
     }
-    this.chart = new Chart(this.chartId, {
-      type,
-      data: this.data,
-      options: this.options,
-      plugins: [
-        ChartAnnotation,
-        {
-        afterRender: (c: Chart) => {
-          const ctx = c.ctx;
-          ctx.save();
-          ctx.globalCompositeOperation = 'destination-over';
-          ctx.fillStyle = 'white';
-          ctx.fillRect(0, 0, c.width, c.height);
-          ctx.restore();
-        }
-      }]
-    });
+    this.setChart(type);
   }
 
   private getYAxes(data: any, options?: any): any {
@@ -515,7 +466,7 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
           {
             datasets: this.data.datasets.map(dataset => {
               return {
-                backgroundColor: 'transparent',
+                backgroundColor: dataset.backgroundColor,
                 borderColor: dataset.borderColor,
                 label: dataset.label,
                 unit: dataset.unit,
@@ -530,6 +481,26 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
           )
         );
       }
+    });
+  }
+
+  private setChart(type: string) {
+    this.chart = new Chart(this.chartId, {
+      type,
+      data: this.data,
+      options: this.options,
+      plugins: [
+        ChartAnnotation,
+        {
+        afterRender: (c: Chart) => {
+          const ctx = c.ctx;
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-over';
+          ctx.fillStyle = 'white';
+          ctx.fillRect(0, 0, c.width, c.height);
+          ctx.restore();
+        }
+      }]
     });
   }
 

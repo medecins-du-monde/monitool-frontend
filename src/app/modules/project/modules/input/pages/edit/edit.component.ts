@@ -315,7 +315,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             link: './../../projects'
           } as BreadcrumbItem,
           {
-            value: this.project.country,
+            value: this.project.countries,
+            isCountry: true
           } as BreadcrumbItem,
           {
             value: this.project.name,
