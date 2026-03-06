@@ -1,9 +1,7 @@
 <div class="save-actions">
   <ng-container *ngIf="isAdmin">
-    <div class="button-group">
-        <button mat-stroked-button class="mdm-button save-button" (click)="onSave()" [disabled]="!hasChanges || !valid"><mat-icon>save</mat-icon>{{ 'Save' | translate }}</button>
-        <button mat-stroked-button class="mdm-button" (click)="onRevert()" [disabled]=!hasChanges><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
-    </div>
+    <button mat-stroked-button class="mdm-button save-button" (click)="onSave()" [disabled]="!hasChanges || !valid"><mat-icon>save</mat-icon>{{ 'Save' | translate }}</button>
+    <button mat-stroked-button class="mdm-button" (click)="onRevert()" [disabled]=!hasChanges><mat-icon>undo</mat-icon>{{ 'ResetChanges' | translate }}</button>
     <div *ngIf="projectSaved" class="information-form saved"><mat-icon>info</mat-icon> {{ 'SavedForm' | translate }}</div>
     <div *ngIf="hasChanges && valid && !errorWhileSaving" class="information-form pending"><mat-icon>info</mat-icon> {{
       warningMessage ?
@@ -19,19 +17,17 @@
   </ng-container>
   <ng-container *ngIf="cache">
     <div class="separator" *ngIf="isAdmin"></div>
-    <div class="button-group">
-      <button
-        mat-stroked-button
-        class="mdm-button save-button"
-        style="min-width: max-content;"
-        (click)="refreshCache.emit()"
-        [disabled]="lastCache === null"
-        [matTooltip]="'refreshCacheInfo' | translate"
-      ><mat-icon>refresh</mat-icon>{{'refreshCache' | translate}}</button>
-      <p *ngIf="lastCache !== null">
-        <span>{{'lastUpdate' | translate}}:</span>
-        {{ getLastCache() > 0 ? ('minutesAgo' | translate : { minutes: getLastCache() }) : ('justUpdated' | translate) }}
-      </p>
-    </div>
+    <button
+      mat-stroked-button
+      class="mdm-button save-button"
+      style="min-width: max-content;"
+      (click)="refreshCache.emit()"
+      [disabled]="lastCache === null"
+      [matTooltip]="'refreshCacheInfo' | translate"
+    ><mat-icon>refresh</mat-icon>{{'refreshCache' | translate}}</button>
+    <p *ngIf="lastCache !== null">
+      <span>{{'lastUpdate' | translate}}:</span>
+      {{ getLastCache() > 0 ? ('minutesAgo' | translate : { minutes: getLastCache() }) : ('justUpdated' | translate) }}
+    </p>
   </ng-container>
 </div>

@@ -1,6 +1,11 @@
 @import "src/assets/theme/size_vars.scss";
 @import "src/assets/theme/color_vars.scss";
 
+:host {
+  display: block;
+  margin: 0 -2px;
+}
+
 .hover {
   cursor: pointer;
   padding: 5px;
