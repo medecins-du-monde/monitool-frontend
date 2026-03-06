@@ -20,10 +20,17 @@
         align-items: center;
         flex-wrap: wrap;
 
-        @media screen and (max-width: 950px) {
-          flex-direction: column;
-          margin-right: 20px;
+        @media screen and (max-width: 420px) {
+          // flex-direction: column;
           gap: 10px;
+
+          button {
+            font-size: 0;
+            flex: 1;
+          }
+          button-group {
+            flex: 1;
+          }
 
           .separator {
             display: none;
