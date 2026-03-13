@@ -1,8 +1,9 @@
 @import "src/assets/theme/color_vars.scss";
 
+
 .mat-expansion-panel-header-description {
-  button {
-      color: $activity_panel_button_color;
+  mat-icon {
+    font-size: 20px !important;
   }
 }
 
@@ -50,6 +51,10 @@
   flex: 1;
   width: 100%;
   display: inline-block;
+
+  mat-hint {
+    padding: 8px 10.5px 0 10.5px;
+  }
 }
 
 .objective-indicators {

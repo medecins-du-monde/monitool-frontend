@@ -1,6 +1,6 @@
 <mat-accordion class="blue-accordion">
     <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="white-arrow">
             <mat-panel-title><div class="header-title"><p>{{ 'GeneralInformations' | translate }} : {{ logFrameName }}</p></div></mat-panel-title>
         </mat-expansion-panel-header>
         <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
@@ -20,7 +20,7 @@
                     [hint]="'CollectionSites-Hint'">
                 </app-collection-sites-selector>
             </div>
-            <div class="mdm-form-group">
+            <div class="mdm-form-group date-group">
                 <div class="mdm-form-label">{{ 'SpecificStartDate' | translate }}*</div>
                 <mat-radio-group class="dateGroup">
                     <mat-radio-button (change)="toggleCustomDate($event, 'start')" [checked]="!isCustom('start')"
@@ -39,7 +39,7 @@
                     </mat-form-field>
                 </mat-radio-group>
             </div>
-            <div class="mdm-form-group">
+            <div class="mdm-form-group date-group">
                 <div class="mdm-form-label">{{ 'SpecificEndDate' | translate }}*</div>
                 <mat-radio-group class="dateGroup">
                     <mat-radio-button (change)="toggleCustomDate($event, 'end')" [checked]="!isCustom('end')"
@@ -64,7 +64,7 @@
 <div class="mdm-section blue-accordion">
     <mat-accordion>
         <mat-expansion-panel [expanded]="true">
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header class="white-arrow">
                 <mat-panel-title><div class="header-title"><p>{{ 'GeneralObjective' | translate }}: {{ logFrameGoal }}</p></div></mat-panel-title>
             </mat-expansion-panel-header>
             <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
@@ -121,14 +121,17 @@
         <mat-accordion formArrayName="purposes" cdkDropList (cdkDropListDropped)="drop($event)">
             <mat-expansion-panel *ngFor="let purpose of purposes.controls; let i=index;" [formGroupName]="i" cdkDrag
                 [expanded]="i === 0 ? true: false">
-                <mat-expansion-panel-header>
+                <mat-expansion-panel-header class="white-arrow">
                     <mat-panel-title>
                         <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p>{{ 'SpecificObjective' | translate }} {{i +
                         1}}: {{purpose.value.description}}</p></div>
                     </mat-panel-title>
                     <mat-panel-description>
-                        <button mat-stroked-button class="mdm-button delete-button" (click)="onRemovePurpose(i)">
-                            <mat-icon>delete</mat-icon>{{ 'RemovePurpose' | translate }}
+                        <button mat-icon-button
+                            (click)="$event.stopPropagation(); onRemovePurpose(i)"
+                            [matTooltip]="'RemovePurpose' | translate" [matTooltipShowDelay]="200"
+                        >
+                            <mat-icon>delete</mat-icon>
                         </button>
                     </mat-panel-description>
                 </mat-expansion-panel-header>

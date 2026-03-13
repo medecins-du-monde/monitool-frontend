@@ -1,49 +1,68 @@
 @import "src/assets/theme/color_vars.scss";
 
-.mat-expansion-panel-header-description {
-  button {
-    margin-left: auto;
+:host {
+  .mat-expansion-panel-header-description {
+    button {
+      margin-left: auto;
+    }
   }
-}
 
-.mat-expansion-panel {
-  margin: 16px 0;
+  .mat-expansion-panel {
+    margin: 16px 0;
 
-  mat-icon {
-    line-height: 24px;
-    font-size: 20px;
+    mat-icon {
+      line-height: 24px;
+      font-size: 20px;
+    }
   }
-}
-.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
-  display: flex !important;
-  align-items: center;
-  flex-grow: 1 !important;
-  margin-right: 16px !important;
-  font-size: 16px !important;
-  font-weight: bold !important;
-  color: $variable_expansion_panel_color;
-}
-.mat-expansion-panel-header-description {
-  justify-content: end;
-  margin-right: 0 !important;
-}
-.mat-expansion-panel-header:not([aria-disabled=true]) {
-  cursor: pointer;
-  background-color: $variable_expansion_panel_background !important;
-}
+  .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+    display: flex !important;
+    align-items: center;
+    flex-grow: 1 !important;
+    margin-right: 16px !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    color: $variable_expansion_panel_color;
+  }
+  .mat-expansion-panel-header-description {
+    justify-content: end;
+    margin-right: 0 !important;
+  }
+  .mat-expansion-panel-header:not([aria-disabled=true]) {
+    cursor: pointer;
+    background-color: $variable_expansion_panel_background !important;
+  }
 
-app-collection-sites-selector{
-  flex: 1;
-  display: flex;
-}
+  app-collection-sites-selector{
+    flex: 1;
+    display: flex;
+  }
 
-.date-group {
-  align-items: center !important;
-}
+  .date-group {
+    // align-items: center !important;
+    ::ng-deep .mat-form-field-prefix {
+      margin-top: -.5rem !important;
+      top: .4rem !important;
+    }
+  }
 
-.required-option {
-  padding: 16px 24px;
-  background-color: rgba(#ffc6be, .6);
-  color: darkred;
-  border-radius: 4px;
+  .required-option {
+    padding: 16px 24px;
+    background-color: rgba(#ffc6be, .6);
+    color: darkred;
+    border-radius: 4px;
+  }
+
+  ::ng-deep .mat-hint .mat-icon {
+    margin: 0 !important;
+    line-height: 14px !important;
+  }
+
+  ::ng-deep .mat-expansion-panel-header.mat-expanded {
+    height: var(--mat-expansion-header-collapsed-state-height) !important;
+  }
+
+  ::ng-deep code {
+    line-height: 14px !important;
+  }
 }
