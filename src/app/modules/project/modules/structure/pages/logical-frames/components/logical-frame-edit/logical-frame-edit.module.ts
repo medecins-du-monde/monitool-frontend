@@ -20,6 +20,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 import { IndicatorListModule } from '../indicator-list/indicator-list.module';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -44,7 +45,8 @@ import { IndicatorListModule } from '../indicator-list/indicator-list.module';
     ExtraIndicatorModule,
     DragDropModule,
     LocalizedDatePipeModule,
-    IndicatorListModule
+    IndicatorListModule,
+    MatTooltipModule
   ],
   exports: [LogicalFrameEditComponent]
 })

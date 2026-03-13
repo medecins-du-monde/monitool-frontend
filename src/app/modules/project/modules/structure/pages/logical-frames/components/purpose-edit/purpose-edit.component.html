@@ -59,8 +59,11 @@
                     {{output.value.description}}</p></div>
                 </mat-panel-title>
                 <mat-panel-description>
-                    <button mat-stroked-button class="mdm-button delete-button" (click)="onRemoveOutput(i)">
-                        <mat-icon>delete</mat-icon>{{ 'RemoveOutput' | translate }}
+                    <button mat-icon-button
+                        (click)="$event.stopPropagation(); onRemoveOutput(i)"
+                        [matTooltip]="'RemoveOutput' | translate" [matTooltipShowDelay]="200"
+                    >
+                        <mat-icon>delete</mat-icon>
                     </button>
                 </mat-panel-description>
             </mat-expansion-panel-header>

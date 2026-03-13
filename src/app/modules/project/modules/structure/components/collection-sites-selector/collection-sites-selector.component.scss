@@ -1,4 +1,5 @@
 @import "./../../../../../../../assets/theme/size_vars.scss";
+
 mat-icon.option{
     height: 14px;
     width: 14px;
@@ -19,8 +20,15 @@ mat-icon.chip{
 }
 
 
+
+
 .chip-list {
-    ::ng-deep .mat-form-field-flex > .mat-form-field-infix { max-width: 100% !important;
+    ::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+        max-width: 100% !important;
+        padding: 3px !important;
+        border-top: 7px solid transparent !important;
+        border-bottom: 3px solid transparent !important;
+
         .mat-chip-list-wrapper{
             flex-wrap: wrap !important;
         }}

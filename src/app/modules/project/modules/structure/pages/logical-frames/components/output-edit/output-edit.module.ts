@@ -13,6 +13,7 @@ import { ExtraIndicatorModule } from '../../../../components/extra-indicator/ext
 import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IndicatorListModule } from '../indicator-list/indicator-list.module';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 @NgModule({
   declarations: [OutputEditComponent],
@@ -30,7 +31,8 @@ import { IndicatorListModule } from '../indicator-list/indicator-list.module';
     IndicatorModalModule,
     ExtraIndicatorModule,
     DragDropModule,
-    IndicatorListModule
+    IndicatorListModule,
+    MatTooltipModule
   ],
   exports: [OutputEditComponent]
 })

@@ -46,7 +46,7 @@
               </ng-container>
           </div>
           <button mat-stroked-button class="mdm-button" [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon>{{ 'AddPartition' | translate }}</button>
-          <div class="hint align-hint">
+          <div class="hint">
               <mat-hint>
                   <mat-icon>info</mat-icon>
                   <span [innerHTML]="'PartitionsHint' | translate: { name: elementForm.value.name ? elementForm.value.name : '...' }"></span>
