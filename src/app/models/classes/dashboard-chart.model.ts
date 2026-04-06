@@ -25,7 +25,14 @@ export class DashboardChart implements Deserializable {
         baseline?: number;
         target?: number;
         unit?: string;
-    }[]
+    }[];
+    comment?: {
+        content: string;
+        meta: {
+            lastEditUser: string;
+            lastEditDate: string;
+        };
+    }
 
     constructor(input?: any) {
         this.deserialize(input);

@@ -9,6 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { ProjectSaveModule } from '../../../structure/components/project-save/project-save.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommentModalModule } from './comment-modal/comment-modal.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -20,7 +23,10 @@ import { ProjectSaveModule } from '../../../structure/components/project-save/pr
     MatIconModule,
     MatButtonModule,
     MatTooltipModule,
-    ProjectSaveModule
+    ProjectSaveModule,
+    DragDropModule,
+    CommentModalModule,
+    MatExpansionModule
   ]
 })
 export class DashboardModule { }
