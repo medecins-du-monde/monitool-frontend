@@ -35,7 +35,7 @@ export class DashboardComponent {
   public userIsAdmin = false;
 
   private subscription = new Subscription();
-  private userId: string;
+  private userName: string;
 
   private _lastCachedTime: number = null;
   public get lastCachedTime() {
@@ -97,7 +97,7 @@ export class DashboardComponent {
         this.loadCharts(this.project.dashboard);
         const userSubscription = this.authService.currentUser.subscribe(
           (user: User) => {
-            this.userId = user['_id'];
+            this.userName = user['name'];
             user.role === 'admin' || user.role === 'owner'
               ? (this.userIsAdmin = true)
               : (this.userIsAdmin = false);
@@ -166,7 +166,7 @@ export class DashboardComponent {
             content: result,
             meta: {
               lastEditDate: new Date().toISOString(),
-              lastEditUser: this.userId
+              lastEditUser: this.userName
             }
           };
           this.projectService.setDashboard(this.project.dashboard);
@@ -184,7 +184,6 @@ export class DashboardComponent {
       loadedCharts.push(chart);
       if (chart.comment) {
         chart.comment.content = this.sanitizer.bypassSecurityTrustHtml(chart.comment.content) as any;
-        chart.comment.meta.lastEditUser = this.project.users.find(u => u.id === chart.comment.meta.lastEditUser)?.name || chart.comment.meta.lastEditUser.replace(/.*?:/g, '') || 'Unknown';
       }
       // Get labels
       chart['labels'] = this.getLabels(chart.meta.dimension, chart.meta.filter).map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
