@@ -1200,5 +1200,6 @@
   "ExportAllExcel": "Exporter tout en excel",
   "AddAnalysis": "Ajouter une analyse",
   "Analysis": "Analyse",
-  "EditAnalysis": "Modifier l'analyse"
+  "EditAnalysis": "Modifier l'analyse",
+  "LastEdit": "Dernière modification: {{date}} par {{user}}"
 }

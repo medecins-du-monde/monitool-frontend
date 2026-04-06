@@ -30,31 +30,31 @@
             <ng-container *ngIf="chart.comment">
                 <mat-accordion>
                     <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header style="min-height: fit-content;">
-                        <div class="panel-flex">
-                            <p>{{ "Analysis" | translate }}</p>
-                            <div *ngIf="userIsAdmin">
-                                <button mat-icon-button
-                                    (click)="$event.stopPropagation(); updateAnalysis(chart.id);"
-                                    [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
-                                >
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-icon-button
-                                    (click)="$event.stopPropagation(); removeAnalysis(chart.id)"
-                                    [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
-                                >
-                                    <mat-icon>delete</mat-icon>
-                                </button>
+                        <mat-expansion-panel-header style="min-height: fit-content;">
+                            <div class="panel-flex">
+                                <p>{{ "Analysis" | translate }}</p>
+                                <div *ngIf="userIsAdmin">
+                                    <button mat-icon-button
+                                        (click)="$event.stopPropagation(); updateAnalysis(chart.id);"
+                                        [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                                    >
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                        (click)="$event.stopPropagation(); removeAnalysis(chart.id)"
+                                        [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                                    >
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
                             </div>
+                        </mat-expansion-panel-header>
+                        <div class="panel-description">
+                            <div class="panel-description" [innerHtml]="chart.comment.content">
+                            </div>
+                            <p class="last-edit-text">{{ "LastEdit" | translate: { date: chart.comment.meta.lastEditDate | date, user: chart.comment.meta.lastEditUser } }}</p>
                         </div>
-                    </mat-expansion-panel-header>
-                    <div class="panel-description" [innerHtml]="chart.comment.content">
-                    </div>
-                    </mat-expansion-panel>
-                    <!-- <div *ngIf="indicators.length > 0 && filteredIndicators.length === 0" class="no-result">
-                        {{"no-indicator-match" | translate}}
-                    </div> -->
+                        </mat-expansion-panel>
                 </mat-accordion>
             </ng-container>
             <ng-container *ngIf="!chart.comment && userIsAdmin">

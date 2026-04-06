@@ -97,7 +97,6 @@ export class DashboardComponent {
         this.loadCharts(this.project.dashboard);
         const userSubscription = this.authService.currentUser.subscribe(
           (user: User) => {
-            console.log(user);
             this.userId = user['_id'];
             user.role === 'admin' || user.role === 'owner'
               ? (this.userIsAdmin = true)
@@ -170,7 +169,6 @@ export class DashboardComponent {
               lastEditUser: this.userId
             }
           };
-          console.log(project.comment);
           this.projectService.setDashboard(this.project.dashboard);
           this.loadCharts(this.project.dashboard);
         }
@@ -186,6 +184,7 @@ export class DashboardComponent {
       loadedCharts.push(chart);
       if (chart.comment) {
         chart.comment.content = this.sanitizer.bypassSecurityTrustHtml(chart.comment.content) as any;
+        chart.comment.meta.lastEditUser = this.project.users.find(u => u.id === chart.comment.meta.lastEditUser)?.name || chart.comment.meta.lastEditUser.replace(/.*?:/g, '') || 'Unknown';
       }
       // Get labels
       chart['labels'] = this.getLabels(chart.meta.dimension, chart.meta.filter).map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
@@ -210,7 +209,7 @@ export class DashboardComponent {
               dataset['fill'] = false;
             }
           });
-        }
+      }
     }
     this.loading = false;
     this.charts = loadedCharts;

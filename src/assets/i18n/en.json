@@ -1183,7 +1183,9 @@
   "ExportSingle": "Export single collection site excel",
   "ExportTemplate": "Export template",
   "ExportAllExcel": "Export all as Excel",
-  "AddAnalysis": "Añadir análisis",
-  "Analysis": "Análisis",
-  "EditAnalysis": "Editar análisis"
+  "AddAnalysis": "Add analysis",
+  "Analysis": "Analysis",
+  "EditAnalysis": "Edit analysis",
+  "LastEdit": "Last edition: {{date}} by {{user}}"
+  
 }
