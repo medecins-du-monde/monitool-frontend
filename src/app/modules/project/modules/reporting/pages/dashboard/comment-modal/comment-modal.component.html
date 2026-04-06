@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>{{ (action === 'add' ? "AddAnalysis" : "EditAnalysis") | translate }}</h1>
+<button class="dialog-close" mat-icon-button [mat-dialog-close]="undefined">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+  <quill-editor [(ngModel)]="comment" [modules]="textEditorModules"></quill-editor>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button class="mdm-button" [mat-dialog-close]="undefined">
+    {{ "Cancel" | translate }}
+  </button>
+  <button
+    mat-stroked-button
+    class="mdm-button save-button"
+    [mat-dialog-close]="comment"
+    [disabled]="comment === '' || (originalComment && originalComment === comment)"
+  >
+    {{ "Save" | translate }}
+  </button>
+</mat-dialog-actions>

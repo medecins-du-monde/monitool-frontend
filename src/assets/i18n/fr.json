@@ -597,7 +597,21 @@
     "New_users_access_response": "<ol><li><b>Première connexion de l'utilisateur :</b><ul><li>Le nouvel utilisateur doit se connecter au moins une fois à Monitool en utilisant son identifiant Microsoft (le même identifiant et mot de passe que pour l’accès à Outlook).</li></ul></li><li><b>Ajout par l'propriétaire :</b><ul><li>Après cette première connexion, le nom de l'utilisateur apparaîtra dans la liste des utilisateurs MdM.</li><li>L'propriétaire peut alors accéder à la section : <b>Structure > Utilisateur > Ajouter un utilisateur</b></li><li>Dans la zone \"Sélectionner un utilisateur MdM\", rechercher le nom de l'utilisateur et l'ajouter au projet souhaité.</li></ul></li></ol><br><i>Note: Sans cette première connexion à Monitool, l'utilisateur n'apparaîtra pas dans la liste des utilisateurs disponibles à sélectionner.</i>",
     "Import": "À quoi sert le bouton « Importer fichier Excel » ?",
     "Import_alt": "À quoi sert le bouton « Importer fichier Excel », disponible uniquement dans la page “Saisie des données” ?",
-    "Import_response": "À gagner du temps lors de la saisie des données ! Vous pouvez importer un fichier Excel pour remplir automatiquement les sources de données. Le fichier doit avoir été exporté depuis la liste des sources de données, dans la section Saisie ou la section Structure, et ne doit pas avoir été modifié, à l’exception des cellules de données. Cela permet d’éviter la double saisie et de minimiser les erreurs manuelles.<br><br>Attention : lorsque vous importez un fichier Excel, toutes les données déjà saisies en ligne pour la même période et le même site sont remplacées par celles contenues dans le fichier importé. Cela signifie que si certaines cellules sont vides dans votre fichier Excel, ces valeurs seront également effacées dans Monitool. Pour éviter toute perte de données, veillez toujours à commencer à partir d’un fichier Excel exporté depuis Monitool, contenant les données déjà saisies. Vous pourrez ensuite ajouter ou modifier uniquement les nouvelles informations dans ce fichier avant de le réimporter."
+    "Import_response": "À gagner du temps lors de la saisie des données ! Vous pouvez importer un fichier Excel pour remplir automatiquement les sources de données. Le fichier doit avoir été exporté depuis la liste des sources de données, dans la section Saisie ou la section Structure, et ne doit pas avoir été modifié, à l’exception des cellules de données. Cela permet d’éviter la double saisie et de minimiser les erreurs manuelles.<br><br>Attention : lorsque vous importez un fichier Excel, toutes les données déjà saisies en ligne pour la même période et le même site sont remplacées par celles contenues dans le fichier importé. Cela signifie que si certaines cellules sont vides dans votre fichier Excel, ces valeurs seront également effacées dans Monitool. Pour éviter toute perte de données, veillez toujours à commencer à partir d’un fichier Excel exporté depuis Monitool, contenant les données déjà saisies. Vous pourrez ensuite ajouter ou modifier uniquement les nouvelles informations dans ce fichier avant de le réimporter.",
+    "Dashboard": "Tableau de bord",
+    "Dashboard_description": "Ici, vous pouvez consulter une sélection de graphiques pour suivre l'évolution du projet.",
+    "Dashboard_add_chart": "➕ Ajouter un graphique",
+    "Dashboard_add_chart_description": "Les graphiques du Tableau de bord sont ajoutés uniquement depuis la page Rapport général via le bouton « Transférer ce graphique ».<br>➡️ Seul le propriétaire peut transférer un graphique.",
+    "Dashboard_refresh": "🔄 Actualiser les données",
+    "Dashboard_refresh_description": "Le bouton « Refresh data » met à jour tous les graphiques avec les dernières données saisies.<br>Visible par : propriétaire (et saisisseurs si autorisés).",
+    "Dashboard_reorder": "🧩 Organiser les graphiques",
+    "Dashboard_reorder_description": "Le propriétaire peut réorganiser les graphiques en glissant-déposant (drag & drop).<br>Les autres utilisateurs voient l’ordre défini par le propriétaire.",
+    "Dashboard_analysis": "📝 Analyse d’un graphique",
+    "Dashboard_analysis_description": "Sous chaque graphique, une zone d’analyse peut être ouverte pour ajouter un commentaire.<br><ul><li><b>Propriétaire :</b> peut modifier</li><li><b>Saisisseurs :</b> peut modifier</li><li><b>Standard :</b> lecture seule</li></ul>L’analyse reste liée au graphique même après réorganisation.",
+    "Dashboard_edit_delete": "📊 Modification ou suppression d’un graphique",
+    "Dashboard_edit_delete_description": "Les changements se font uniquement dans la page Rapport général.<br>➡️ Réservé au propriétaire.",
+    "Dashboard_empty": "📭 Tableau de bord vide",
+    "Dashboard_empty_description": "Si aucun graphique n’a été transféré :<br><ul><li>Le propriétaire peut en ajouter depuis Rapport général.</li><li>Les autres utilisateurs doivent contacter le propriétaire du Monitool.</li></ul>"
   },
   "Informations": {
       "Cache": {
@@ -893,7 +907,7 @@
         "Créer/Modifier/Supprimer la Structure et les Données de tous les projets",
         "Modifier la date de début de tous les projets"
       ],
-      "Project": [
+    "Project": [
         "Créer/Modifier/Supprimer les données de base",
         "Créer/Modifier/Supprimer les Lieux de collecte",
         "Créer/Modifier/Supprimer les Sources de données",
@@ -908,12 +922,18 @@
         "Cloner/Dupliquer un cadre logique (Structure et calcul des indicateurs)",
         "Supprimer/Restaurer un projet",
         "Créer/Modifier/Supprimer un commentaire dans le Rapport Général",
-        "Saisir les données (possibilité de selectioner la saisie par lieux de collecte et source de données)",
+        "Saisir les données (possibilité de sélectionner la saisie par lieux de collecte et source de données)",
         "Voir le rapport général",
-        "Générer et exporter des graphiques dans le Rapport  Général",
+        "Générer et exporter des graphiques dans le Rapport Général",
         "Exporter les données du rapport général sur Excel",
-        "Voir le commentaire dans le rapport général"
-      ]
+        "Voir les commentaires dans le rapport général",
+        "Voir le Tableau de bord",
+        "Voir les graphiques du Tableau de bord",
+        "Réorganiser les graphiques du Tableau de bord",
+        "Modifier les analyses des graphiques",
+        "Utiliser le bouton d'actualisation",
+        "Ajouter/Modifier/Supprimer des graphiques dans le Tableau de bord (Depuis le rapport général)"
+    ]
   },
   "Type": "Type",
   "ThematicEdition": "Édition {{type}}",
@@ -1177,5 +1197,8 @@
   "ExportMultiple": "Exporter excel de plusieurs sites de collecte",
   "ExportSingle": "Exporter excel d’un site de collecte unique",
   "ExportTemplate": "Exporter le formulaire",
-  "ExportAllExcel": "Exporter tout en excel"
+  "ExportAllExcel": "Exporter tout en excel",
+  "AddAnalysis": "Ajouter une analyse",
+  "Analysis": "Analyse",
+  "EditAnalysis": "Modifier l'analyse"
 }
