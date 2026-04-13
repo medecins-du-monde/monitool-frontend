@@ -24,4 +24,10 @@ export const HintUserData: any[] = [
     {untitled: 'TooltipRoleHint.Project.16', owner: true, input: true, read: true},
     {untitled: 'TooltipRoleHint.Project.17', owner: true, input: true, read: true},
     {untitled: 'TooltipRoleHint.Project.18', owner: true, input: true, read: true},
+    {untitled: 'TooltipRoleHint.Project.19', owner: true, input: true, read: true},
+    {untitled: 'TooltipRoleHint.Project.20', owner: true, input: true, read: true},
+    {untitled: 'TooltipRoleHint.Project.21', owner: true, input: false, read: false},
+    {untitled: 'TooltipRoleHint.Project.22', owner: true, input: false, read: false},
+    {untitled: 'TooltipRoleHint.Project.23', owner: true, input: true, read: true},
+    {untitled: 'TooltipRoleHint.Project.24', owner: true, input: false, read: false},
   ];

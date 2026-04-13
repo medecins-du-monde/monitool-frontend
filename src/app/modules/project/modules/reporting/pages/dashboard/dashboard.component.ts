@@ -11,6 +11,10 @@ import { ReportingService } from 'src/app/services/reporting.service';
 import { TimeSlotPeriodicity } from 'src/app/utils/time-slot-periodicity';
 import TimeSlot from 'timeslot-dag';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CommentModalComponent } from './comment-modal/comment-modal.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import InformationItem from 'src/app/models/interfaces/information-item';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +35,48 @@ export class DashboardComponent {
   public userIsAdmin = false;
 
   private subscription = new Subscription();
+  private userName: string;
+
+  private _lastCachedTime: number = null;
+  public get lastCachedTime() {
+    return this._lastCachedTime;
+  }
+  public set lastCachedTime(time: number) {
+    if (this._lastCachedTime === null || time < this._lastCachedTime || time === null) {
+      this._lastCachedTime = time;
+    }
+  }
+
+  private informations = [
+    {
+      res1: 'InformationPanel.Dashboard',
+      res2: 'InformationPanel.Dashboard_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_add_chart',
+      res2: 'InformationPanel.Dashboard_add_chart_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_refresh',
+      res2: 'InformationPanel.Dashboard_refresh_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_reorder',
+      res2: 'InformationPanel.Dashboard_reorder_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_analysis',
+      res2: 'InformationPanel.Dashboard_analysis_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_edit_delete',
+      res2: 'InformationPanel.Dashboard_edit_delete_description'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Dashboard_empty',
+      res2: 'InformationPanel.Dashboard_empty_description'
+    } as InformationItem,
+  ];
 
 
   constructor(
@@ -38,17 +84,20 @@ export class DashboardComponent {
     private projectService: ProjectService,
     private translateService: TranslateService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private sanitizer: DomSanitizer
   ) {
   }
 
   public ngOnInit() {
+    this.projectService.updateInformationPanel(this.informations);
     this.subscription.add(
       this.projectService.project.subscribe((project: Project) => {
         this.project = project;
         this.loadCharts(this.project.dashboard);
         const userSubscription = this.authService.currentUser.subscribe(
           (user: User) => {
+            this.userName = user['name'];
             user.role === 'admin' || user.role === 'owner'
               ? (this.userIsAdmin = true)
               : (this.userIsAdmin = false);
@@ -78,12 +127,64 @@ export class DashboardComponent {
     });
   }
 
-  private async loadCharts(projectCharts: DashboardChart[]) {
+  public reloadCache(): void {
+    this.lastCachedTime = null;
+    this.loadCharts(this.project.dashboard, true);
+  }
+  
+    // drag and drop function on a list than can span accross multiple rows
+  public drop(event: CdkDragDrop<any>): void {
+    const projectCharts = this.project.dashboard;
+    moveItemInArray(this.charts, event.previousIndex, event.currentIndex);
+    moveItemInArray(projectCharts, event.previousIndex, event.currentIndex);
+    this.projectService.setDashboard(projectCharts);
+  }
+  
+  public removeAnalysis(id: string) {
+    const project = this.project.dashboard.find(g => g.id === id);
+    project.comment = null;
+    this.projectService.setDashboard(this.project.dashboard);
+    this.loadCharts(this.project.dashboard);
+  }
+
+  /**
+   * Update a comment based on the action selected.
+   */
+  public updateAnalysis(id: string): void {
+    const project = this.project.dashboard.find(g => g.id === id);
+    const dialogSubscription = this.dialog
+      .open(CommentModalComponent, {
+        data: {
+          action: project.comment ? 'edit' : 'add',
+          comment: project.comment ? project.comment.content : null
+        }
+      })
+      .afterClosed()
+      .subscribe(result => {
+        if (result !== undefined) {
+          project.comment = {
+            content: result,
+            meta: {
+              lastEditDate: new Date().toISOString(),
+              lastEditUser: this.userName
+            }
+          };
+          this.projectService.setDashboard(this.project.dashboard);
+          this.loadCharts(this.project.dashboard);
+        }
+        dialogSubscription.unsubscribe();
+      });
+  }
+  
+
+  private async loadCharts(projectCharts: DashboardChart[], refreshCache = false) {
     const loadedCharts = [];
     for (const projectChart of projectCharts) {
       const chart = structuredClone(projectChart);
-      console.log(chart);
       loadedCharts.push(chart);
+      if (chart.comment) {
+        chart.comment.content = this.sanitizer.bypassSecurityTrustHtml(chart.comment.content) as any;
+      }
       // Get labels
       chart['labels'] = this.getLabels(chart.meta.dimension, chart.meta.filter).map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
       for (const dataset of chart.datasets) {
@@ -95,15 +196,19 @@ export class DashboardComponent {
             dataset.meta.filter,
             true,
             false,
-            false
+            refreshCache
           )
           .then(response => {
             if (response) {
+              if (response.cachedItems) {
+                response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+              }
+
               dataset['data'] = this.formatResponseToDataset(response.items, chart.meta.dimension);
               dataset['fill'] = false;
             }
           });
-        }
+      }
     }
     this.loading = false;
     this.charts = loadedCharts;

@@ -1,7 +1,11 @@
 <div class="grid">
-    <ng-container *ngIf="!loading">
-        <div class="chart-wrapper" *ngFor="let chart of charts">
+    <div *ngIf="!loading" cdkDropList (cdkDropListDropped)="drop($event)">
+        <div class="chart-wrapper" *ngFor="let chart of charts; let i = index" cdkDrag
+        >
             <div *ngIf="userIsAdmin">
+                <div class="handle" cdkDragHandle>
+                    <mat-icon>drag_indicator</mat-icon>
+                </div>
                 <button mat-icon-button
                     (click)="$event.stopPropagation(); onDeleteChart(chart.id);"
                     [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
@@ -9,13 +13,60 @@
                     <mat-icon>delete</mat-icon>
                 </button>
             </div>
+            <!-- <div *cdkDragPlaceholder></div> -->
             <app-chart
                 [data]="chart"
                 [type]="chart.type"
             >
             </app-chart>
+            <!-- <div>
+                <button mat-icon-button
+                    (click)="$event.stopPropagation(); updateAnalysis(chart.id);"
+                >
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <div *ngIf="chart.comment" [innerHtml]="chart.comment.content"></div>
+            </div> -->
+            <ng-container *ngIf="chart.comment">
+                <mat-accordion>
+                    <mat-expansion-panel hideToggle>
+                        <mat-expansion-panel-header style="min-height: fit-content;">
+                            <div class="panel-flex">
+                                <p>{{ "Analysis" | translate }}</p>
+                                <div *ngIf="userIsAdmin">
+                                    <button mat-icon-button
+                                        (click)="$event.stopPropagation(); updateAnalysis(chart.id);"
+                                        [matTooltip]="'Edit' | translate" [matTooltipShowDelay]="200"
+                                    >
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button mat-icon-button
+                                        (click)="$event.stopPropagation(); removeAnalysis(chart.id)"
+                                        [matTooltip]="'Delete' | translate" [matTooltipShowDelay]="200"
+                                    >
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-expansion-panel-header>
+                        <div class="panel-description">
+                            <div class="panel-description" [innerHtml]="chart.comment.content">
+                            </div>
+                            <p class="last-edit-text">{{ "LastEdit" | translate: { date: chart.comment.meta.lastEditDate | date, user: chart.comment.meta.lastEditUser } }}</p>
+                        </div>
+                        </mat-expansion-panel>
+                </mat-accordion>
+            </ng-container>
+            <ng-container *ngIf="!chart.comment && userIsAdmin">
+                <a class="add-analysis"
+                    (click)="updateAnalysis(chart.id)"
+                >
+                    {{ "AddAnalysis" | translate }}
+                    <mat-icon>add</mat-icon>
+                </a>
+             </ng-container>
         </div>
-    </ng-container>
+    </div>
 
     <div *ngIf="!loading && charts.length === 0" class="no-result">
         {{userIsAdmin ? ("NoCharts" | translate) : ("NoChartsNoAdmin" | translate)}}
@@ -27,5 +78,9 @@
 </div>
 
 <app-project-save style="z-index: 10;"
-  *ngIf="userIsAdmin"
+  [isAdmin]="userIsAdmin"
+  [reload]="false"
+  [cache]="true"
+  [lastCache]="lastCachedTime"
+  (refreshCache)="reloadCache()"
 ></app-project-save>
