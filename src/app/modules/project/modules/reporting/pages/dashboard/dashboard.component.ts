@@ -180,7 +180,7 @@ export class DashboardComponent {
   private async loadCharts(projectCharts: DashboardChart[], refreshCache = false) {
     const loadedCharts = [];
     for (const projectChart of projectCharts) {
-      const chart = structuredClone(projectChart);
+      const chart = JSON.parse(JSON.stringify(projectChart));
       loadedCharts.push(chart);
       if (chart.comment) {
         chart.comment.content = this.sanitizer.bypassSecurityTrustHtml(chart.comment.content) as any;
