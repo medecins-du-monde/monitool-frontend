@@ -188,26 +188,28 @@ export class DashboardComponent {
       // Get labels
       chart['labels'] = this.getLabels(chart.meta.dimension, chart.meta.filter).map(x => this.getSiteOrGroupName(x, chart.meta.dimension));
       for (const dataset of chart.datasets) {
-        await this.reportingService
-          .fetchData(
-            this.project,
-            dataset.meta.computation,
-            [chart.meta.dimension],
-            dataset.meta.filter,
-            true,
-            false,
-            refreshCache
-          )
-          .then(response => {
-            if (response) {
-              if (response.cachedItems) {
-                response.cachedItems.forEach(item => this.lastCachedTime = item.time);
-              }
+        if (dataset.meta) {
+          await this.reportingService
+            .fetchData(
+              this.project,
+              dataset.meta.computation,
+              [chart.meta.dimension],
+              dataset.meta.filter,
+              true,
+              false,
+              refreshCache
+            )
+            .then(response => {
+              if (response) {
+                if (response.cachedItems) {
+                  response.cachedItems.forEach(item => this.lastCachedTime = item.time);
+                }
 
-              dataset['data'] = this.formatResponseToDataset(response.items, chart.meta.dimension);
-              dataset['fill'] = false;
-            }
-          });
+                dataset['data'] = this.formatResponseToDataset(response.items, chart.meta.dimension);
+                dataset['fill'] = false;
+              }
+            });
+        }
       }
     }
     this.loading = false;
