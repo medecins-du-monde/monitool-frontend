@@ -513,6 +513,8 @@
         "Edit_data_response4": "If the input form contains empty cells, tthe calculation of the indicators from this data is possible but with a risk of error (example: if the denominator has not been entered, the calculation of the indicator cannot be done).<br> you wish to replace unentered values with the numeric value \"0\", you can return to the input form and click on the 'fill blank cells with 0' button. Once the data entry is completed and verified, you can click on “Save & Lock” to lock the entry.",
         "Edit_data_question5": "What happens if I leave some empty cells?",
         "Edit_data_response5": "Warning!<br>An empty cell is not equivalent to a cell that contains a zero. Values not entered will appear as such in the data sources of the General Report.",
+        "Edit_data_question6": "What kind of data we can input? Why is my entry not accepted?",
+        "Edit_data_response6": "If a cell turns red while entering data, it means the value entered is not valid.<br>Only whole numbers are allowed: do not use commas, periods, letters, or symbols. As long as an error is present, it is not possible to save the form or calculate the total. Please correct the entry to continue.",
         "Extra_indicators": "Extra indicators",
         "Extra_indicators_description": "Extra indicators are indicators that do not exist in the logical frames. <br>They allow you to follow specific datas like medical data or logistic...",
         "FAQ": "Frequently asked questions",
@@ -1186,6 +1188,6 @@
   "AddAnalysis": "Add analysis",
   "Analysis": "Analysis",
   "EditAnalysis": "Edit analysis",
-  "LastEdit": "Last edition: {{date}} by {{user}}"
-  
+  "LastEdit": "Last edition: {{date}} by {{user}}",
+  "InputBadCell": "Only whole numeric values are allowed in the cells. Any entry of decimals, letters, or symbols will block the saving of the form and the calculation of the total until the error is corrected."
 }

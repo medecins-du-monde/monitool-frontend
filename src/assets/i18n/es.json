@@ -526,6 +526,8 @@
         "Edit_data_response4": "Si el formulario de entrada contiene celdas vacías, el cálculo de los indicadores con esa información aún sera posible pero con un riesgo de error (ejemplo: si el denominador no ha sido rellenado, el cálculo del indicador no sera posible)<br>Si desea reemplazar los valores no ingresados ​​con valores numéricos “0”, puede volver al formulario y usar el botón “0”. Una vez que se complete y verifique la entrada de datos, haga clic en “Guardar y Bloquear” para limitar futuras modificaciones.</li></ul>",
         "Edit_data_question5": "¿Qué pasa si dejo algunas casillas vacía?",
         "Edit_data_response5": "¡Atención!<br>Una casilla vacía en blanco no es equivalente a una casilla con el valor \"0\". Los valores no ingresados ​​aparecerán como tal en las fuentes de datos en el Informe General.",
+        "Edit_data_question6": "¿Qué significa este mensaje de error al ingresar datos? ¿Por qué no se acepta mi entrada?",
+        "Edit_data_response6": "Si una celda se pone roja al ingresar datos, significa que el valor introducido no es válido.<br>Solo se permiten números enteros: no utilices comas, puntos, letras ni símbolos. Mientras haya un error, no será posible guardar el formulario ni calcular el total. Corrige la entrada para poder continuar.",
         "Extra_indicators": "Indicadores anexos",
         "Extra_indicators_description": "Los indicadores adjuntos son indicadores adicionales que no aparecen en ningún marco lógico. <br> Permiten seguir elementos específicos del proyecto (datos médicos, logística, ...).",
         "FAQ": "Preguntas frecuentes",
@@ -1202,5 +1204,6 @@
   "AddAnalysis": "Añadir análisis",
   "Analysis": "Análisis",
   "EditAnalysis": "Editar análisis",
-  "LastEdit": "Última edición: {{date}} por {{user}}"
+  "LastEdit": "Última edición: {{date}} por {{user}}",
+  "InputBadCell": "Solo se permiten valores numéricos enteros en las celdas. Cualquier entrada de decimales, letras o símbolos bloqueará el guardado del formulario y el cálculo del total hasta que se corrija el error."
 }

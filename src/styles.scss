@@ -1385,3 +1385,17 @@ code.title{
 mat-icon {
   min-width: fit-content;
 }
+
+
+.hot-tooltip {
+  position: fixed; 
+  display: none; 
+  background: rgba(#333, .7); 
+  color: white; 
+  padding: 6px 12px; 
+  border-radius: 4px; 
+  z-index: 9999; 
+  pointer-events: none;
+  font-size: $small_text;
+  max-width: 400px;
+}

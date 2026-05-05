@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable one-var */
-import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, TemplateRef, afterRender } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Form } from 'src/app/models/classes/form.model';
@@ -98,6 +98,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
     }
     return false;
   }
+  
+  private tooltipTimeout: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -121,6 +123,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       new: true,
       res1: 'InformationPanel.Import',
       res2: 'InformationPanel.Import_response'
+    } as InformationItem,
+    {
+      new: true,
+      res1: 'InformationPanel.Edit_data_question6',
+      res2: 'InformationPanel.Edit_data_response6',
     } as InformationItem,
     {
       res1: 'InformationPanel.input_status_question',
@@ -305,6 +312,8 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             // this.convertToNumber(val);
             // Update of the total cell of each row or column
             this.updateTotals(val);
+
+            console.log(this.tables);
           })
         );
 
@@ -551,7 +560,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
             this.validInputCell = true;
           }
         },
-        renderer(instance, td, row, col, prop, value, cellProperties) {
+        renderer: (instance, td, row, col, prop, value, cellProperties) => {
           if ((tableObj.numberCols > 1 && col === tableObj.numberCols - 1) ||
             (tableObj.numberRows > 1 && row === tableObj.numberRows - 1)) {
             td.style.fontWeight = 'bold';
@@ -568,6 +577,25 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
           } else if (!/^(\d+[-+*/^%])*\d+$/.test(value) && !cellProperties.readOnly && value !== null) {
             td.style.background = '#d9534f';
             td.innerHTML = value;
+            td.onmouseenter = (event: MouseEvent) => {
+              clearTimeout(this.tooltipTimeout);
+              this.tooltipTimeout = setTimeout(() => {
+                const tooltip = document.getElementById('hot-tooltip');
+                const cellRect = td.getBoundingClientRect();
+                console.log('show tooltip');
+                if (tooltip && value) {
+                  tooltip.innerText = this.translateService.instant('InputBadCell');
+                  tooltip.style.display = 'block';
+                  tooltip.style.top = (cellRect.top + 30) + 'px';
+                  tooltip.style.left = cellRect.left + 'px';
+                }
+              }, 500); // 500ms delay
+            };
+            td.onmouseleave = () => {
+              clearTimeout(this.tooltipTimeout);
+              const tooltip = document.getElementById('hot-tooltip');
+              if (tooltip) tooltip.style.display = 'none';
+            };
           } else if (typeof value === 'string') {
             td.style.color = 'black';
             td.style.background = '#eee';
