@@ -287,28 +287,19 @@ mat-hint {
 
 // === MDM CARDS ===
 .mdm-cards {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin: 10px -12px 0;
-  align-items: stretch;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin: 10px 0 0;
 
   @media screen and (max-width: $breakpoint-xs) {
     margin: 24px 0 0;
+    gap: 12px;
   }
 }
 
 .mdm-card {
-  min-width: 300px;
-  max-width: 400px;
-  flex: 1 0 21%;
-  margin: 0 1% 10px 1%;
-
-  // & > mat-card {
-  //   height: 100%;
-  // }
+  height: 100%;
 }
 
 .cards-draghandle {

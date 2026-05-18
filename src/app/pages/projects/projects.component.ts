@@ -79,13 +79,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   ];
 
   filtersForm: UntypedFormGroup;
-  projects: Project[];
-  allProjects: Project[];
   currentUser: User;
   canCreateProject = true;
   pageNumber = 0;
   totalItem = 0;
-  shownProjects: Project[];
+  shownProjects: Project[] = [];
   showWarning = true;
 
   private subscription: Subscription = new Subscription();
@@ -123,12 +121,11 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       statuses: [['Ongoing']]
     });
 
-    this.getProjects();
+    this.loadProjects();
     this.subscription.add(
       this.filtersForm.valueChanges.subscribe(() => {
-        this.loadFilteredProjects();
         this.pageNumber = 0;
-        this.setPagination();
+        this.loadProjects();
       })
     );
 
@@ -154,48 +151,37 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   public getProjects() {
-    this.projectService.list().then((res: Project[]) => {
-    this.allProjects = res;
-    this.loadFilteredProjects();
-    this.countries = [... new Set(res.map(x => x.countries).flat()
-      .sort((x: string, y: string) => x.toLocaleLowerCase().replace(/[\])}[{(]/g, '').localeCompare(y.toLocaleLowerCase().replace(/[\])}[{(]/g, ''))))];
-
-    if (this.projects) {
-        this.projects.sort((a, b) => {
-          // If owner of at least one of both project
-          if (a.users.find(user => this.isOwner(user))
-          || b.users.find(user => this.isOwner(user))
-          ) {
-            // If owner of both project
-            if (a.users.find(user => this.isOwner(user))
-            && b.users.find(user => this.isOwner(user))
-            ) {
-              // alphabetical order
-              return a.countries[0].localeCompare(b.countries[0]);
-            } else if (a.users.find(user => this.isOwner(user))) {
-              return -1;
-            } else {
-              return 1;
-            }
-          } else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)){
-            if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)) {
-              return a.countries[0].localeCompare(b.countries[0]);
-            } else {
-              return -1;
-            }
-          } else {
-            return 1;
-          }
-        });
-        this.setPagination();
-      }
-    });
+    this.loadProjects();
   }
 
-  setCountProjectStatus(res: Project[]) {
-    this.statuses.forEach((value, index) => {
-      this.statuses[index].count = res.filter(project => project.status === value.value).length;
+  private async loadProjects(): Promise<void> {
+    const { search, continents, countries, statuses } = this.filtersForm.value;
+    const { items, total, statusCounts } = await this.projectService.list({
+      skip: this.pageNumber * 12,
+      limit: 12,
+      continents,
+      countries,
+      statuses,
+      search
     });
+
+    items.sort((a: Project, b: Project) => {
+      if (a.users.find((user: User) => this.isOwner(user)) || b.users.find((user: User) => this.isOwner(user))) {
+        if (a.users.find((user: User) => this.isOwner(user)) && b.users.find((user: User) => this.isOwner(user))) {
+          return a.countries[0].localeCompare(b.countries[0]);
+        }
+        return a.users.find((user: User) => this.isOwner(user)) ? -1 : 1;
+      }
+      if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)) {
+        return localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)
+          ? a.countries[0].localeCompare(b.countries[0]) : -1;
+      }
+      return 1;
+    });
+
+    this.shownProjects = items;
+    this.totalItem = total;
+    this.statuses.forEach(s => { s.count = statusCounts[s.value] ?? 0; });
   }
 
   onCreate(): void {
@@ -238,78 +224,15 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.filtersForm.controls.search.setValue(e);
   }
 
-  loadFilteredProjects(): void {
-    let filteredProjects = this.filterByText(this.allProjects);
-    filteredProjects = this.filterByCountries(filteredProjects);
-    this.setCountProjectStatus(filteredProjects);
-    filteredProjects = this.filterByStatuses(filteredProjects);
-    this.projects = filteredProjects;
-  }
-
   paginationChange(e: any) {
     if (e.pageIndex !== this.pageNumber) {
       this.pageNumber = e.pageIndex;
-      this.setPagination();
-    }
-    else {
-      return [];
-    }
-  }
-
-  private filterByStatuses(projects: Project[]): Project[] {
-    let filteredProjects = [];
-    const statuses = this.filtersForm.value.statuses;
-    if (statuses.includes('Ongoing')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Ongoing'));
-    }
-    if (statuses.includes('Finished')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Finished'));
-    }
-    if (statuses.includes('Deleted')) {
-      filteredProjects = filteredProjects.concat(projects.filter(project => project.status === 'Deleted'));
-    }
-    return filteredProjects;
-  }
-
-  private filterByText(projects: Project[]): Project[] {
-    const search = this.filtersForm.value.search.toLowerCase();
-    const filteredCountryList = this.countryListService.getCountries(undefined, this.filtersForm.get('continents').value, search);
-    const filteredContinentList = this.countryListService.getContinents(search);
-    return projects.filter(project =>
-      project.name.toLowerCase().includes(search) ||
-      (project.region && project.region.toLowerCase().includes(search)) ||
-      project.themes.find(theme => theme.shortName[this.currentLang].toLowerCase().includes(search)) ||
-      (project.continents.length > 0 && filteredContinentList.find(continent => project.continents.includes(continent.key))) ||
-      filteredCountryList.find(country => project.countries.includes(country.key)) || project.countries.some(country => country.toLowerCase().includes(search))
-    );
-  }
-
-  private filterByCountries(projects: Project[]): Project[] {
-    if (this.filtersForm.value.countries.length <= 0 && this.filtersForm.value.continents.length <= 0) {
-      return projects;
-    }
-    // return projects.filter(project => project.country === this.filtersForm.value.country);
-    const countries = this.filtersForm.value.countries;
-    const continents = this.filtersForm.value.continents;
-    if (continents.length <= 0) {
-      return projects.filter(project => project.countries.some(country => countries.includes(country)));
-    }
-    else if (countries.length <= 0) {
-      return projects.filter(project => project.continents.some(continent => continents.includes(continent)));
-    } else {
-      return projects.filter(project =>
-        project.countries.some(country => countries.includes(country)) && project.continents.some(continent => continents.includes(continent))
-      );
+      this.loadProjects();
     }
   }
 
   private isOwner(user: User) {
     return user.role === 'owner' && user.id === this.currentUser.id;
-  }
-
-  private setPagination() {
-    this.totalItem = this.projects.length;
-    this.shownProjects = this.projects.slice(this.pageNumber * 12, this.pageNumber * 12 + 12);
   }
 
   onSearchCountry(value = '') {
