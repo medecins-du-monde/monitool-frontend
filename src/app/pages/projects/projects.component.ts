@@ -152,6 +152,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   public getProjects() {
+    this.pageNumber = 0;
     this.loadProjects();
   }
 
