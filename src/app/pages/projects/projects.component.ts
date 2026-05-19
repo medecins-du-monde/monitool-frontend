@@ -85,6 +85,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   totalItem = 0;
   shownProjects: Project[] = [];
   showWarning = true;
+  loading = false;
 
   private subscription: Subscription = new Subscription();
 
@@ -155,6 +156,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private async loadProjects(): Promise<void> {
+    this.loading = true;
     const { search, continents, countries, statuses } = this.filtersForm.value;
     const { items, total, statusCounts } = await this.projectService.list({
       skip: this.pageNumber * 12,
@@ -165,23 +167,24 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
       search
     });
 
-    items.sort((a: Project, b: Project) => {
-      if (a.users.find((user: User) => this.isOwner(user)) || b.users.find((user: User) => this.isOwner(user))) {
-        if (a.users.find((user: User) => this.isOwner(user)) && b.users.find((user: User) => this.isOwner(user))) {
-          return a.countries[0].localeCompare(b.countries[0]);
-        }
-        return a.users.find((user: User) => this.isOwner(user)) ? -1 : 1;
-      }
-      if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)) {
-        return localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)
-          ? a.countries[0].localeCompare(b.countries[0]) : -1;
-      }
-      return 1;
-    });
+    // items.sort((a: Project, b: Project) => {
+    //   if (a.users.find((user: User) => this.isOwner(user)) || b.users.find((user: User) => this.isOwner(user))) {
+    //     if (a.users.find((user: User) => this.isOwner(user)) && b.users.find((user: User) => this.isOwner(user))) {
+    //       return (a.countries[0] ?? '').localeCompare(b.countries[0] ?? '');
+    //     }
+    //     return a.users.find((user: User) => this.isOwner(user)) ? -1 : 1;
+    //   }
+    //   if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + a.id)) {
+    //     return localStorage.getItem('user::' + this.currentUser.id + 'favorite' + b.id)
+    //       ? (a.countries[0] ?? '').localeCompare(b.countries[0] ?? '') : -1;
+    //   }
+    //   return 1;
+    // });
 
     this.shownProjects = items;
     this.totalItem = total;
     this.statuses.forEach(s => { s.count = statusCounts[s.value] ?? 0; });
+    this.loading = false;
   }
 
   onCreate(): void {
