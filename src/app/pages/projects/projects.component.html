@@ -83,6 +83,7 @@
         <button class="dialog-close" mat-icon-button (click)="showWarning = false"><mat-icon>close</mat-icon></button>
         {{'country-2.0-warning' | translate}}
     </div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-top: 16px;"></mat-progress-bar>
     <div class="mdm-cards">
         <app-project *ngFor="let project of shownProjects" class="mdm-card" (getProjects)="getProjects()"
             [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"

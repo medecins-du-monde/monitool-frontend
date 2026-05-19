@@ -15,6 +15,7 @@ export class User implements Deserializable {
     dataSources: Form[];
     projectId?: string;
     active: boolean;
+    favoriteProjects: string[] = [];
 
     get login(): string {
         return this.id.split(':')[1];
@@ -40,6 +41,7 @@ export class User implements Deserializable {
       this.name = ( input && input.name ) ? input.name : null;
       this.type = ( input && input.type ) ? input.type : null;
       this.rev = ( input && input['_rev']) ? input._rev : null;
+      this.favoriteProjects = (input && input.favoriteProjects) ? input.favoriteProjects : [];
       return this;
     }
 

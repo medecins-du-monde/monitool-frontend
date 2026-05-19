@@ -1,7 +1,7 @@
 <mat-card class="project">
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-icon">
-            <mat-icon class="{{projectOwner ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
+            <mat-icon class="{{projectOwner || !currentUser.rev ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
         </div>
         <mat-card-title>
             {{ cardTitle }}

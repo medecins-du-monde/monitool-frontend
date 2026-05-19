@@ -18,6 +18,7 @@ import { InformationsPanelModule } from 'src/app/components/informations-panel/i
 import { MatLegacyPaginatorIntl as MatPaginatorIntl, MatLegacyPaginatorModule as MatPaginatorModule } from '@angular/material/legacy-paginator';
 import { PaginatorI18n } from 'src/app/utils/paginator-I18n';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
 
 @NgModule({
     declarations: [ProjectsComponent],
@@ -39,7 +40,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         ProjectModule,
         InformationsPanelModule,
         MatPaginatorModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatProgressBarModule
     ],
     providers: [
       {
