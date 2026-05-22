@@ -213,7 +213,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       ).then((val: any) => {
         if (val) {
-          jszip.file(`${form.name.replace(/\//g, '-')}.pdf`, new Blob([val], {type: 'application/pdf'}), {createFolders: false});
+          jszip.file(`${this.truncateString(form.name, 25)}.pdf`, new Blob([val], {type: 'application/pdf'}), {createFolders: false});
         }
       });
     }
@@ -244,7 +244,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       ).then((val: any) => {
         if (val) {
-          jszip.file(`${form.name.replace(/\//g, '-')}.xlsx`, new Blob([val], {type: 'application/xlsx'}), {createFolders: false});
+          jszip.file(`${this.truncateString(form.name, 25)}.xlsx`, new Blob([val], {type: 'application/xlsx'}), {createFolders: false});
         }
       });
     }
@@ -300,6 +300,16 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+
+
+  private truncateString(str: string, num: number): string {
+    if (str.length > num) {
+      return str.replace(/\//g, "-").slice(0, num) + "...";
+    } else {
+      return str.replace(/\//g, "-");
+    }
   }
 
   ngOnDestroy(): void {
