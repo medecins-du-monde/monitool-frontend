@@ -32,7 +32,8 @@
     </div>
     <mat-tab-group>
         <mat-tab [label]="language | translate" *ngFor="let language of languages">
-            <div class="tab-container">
+            <ng-template matTabContent>
+                <div class="tab-container">
                     <div class="mdm-form-group" formGroupName="name">
                         <div class="mdm-form-label">{{ 'Name' | translate }}* ({{ language | translate }})</div>
                         <mat-form-field appearance="outline" class="mdm-form-field">
@@ -46,7 +47,8 @@
                             <textarea style="resize: none;" matInput [formControlName]="language" rows=5 placeholder="{{ getLanguageDictionary(language) ? getLanguageDictionary(language).IndicatorEditionPlaceholder.Description : null }}"></textarea>
                         </mat-form-field> -->
                     </div>
-            </div>
+                </div>
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
     <ng-container formGroupName="computation">
