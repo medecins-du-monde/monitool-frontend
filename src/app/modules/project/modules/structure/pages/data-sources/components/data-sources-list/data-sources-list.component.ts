@@ -213,7 +213,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       ).then((val: any) => {
         if (val) {
-          jszip.file(`${form.name.replace(/\//g, '-')}.pdf`, new Blob([val], {type: 'application/pdf'}), {createFolders: false});
+          jszip.file(`${this.truncateString(form.name, 30)}.pdf`, new Blob([val], {type: 'application/pdf'}), {createFolders: false});
         }
       });
     }
@@ -222,7 +222,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ')} - ${this.project.name}) All Data Sources PDF.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.truncateString(this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ') + ' - ' + this.project.name, 30)}) All Data Sources PDF.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();
@@ -244,7 +244,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       ).then((val: any) => {
         if (val) {
-          jszip.file(`${form.name.replace(/\//g, '-')}.xlsx`, new Blob([val], {type: 'application/xlsx'}), {createFolders: false});
+          jszip.file(`${this.truncateString(form.name, 30)}.xlsx`, new Blob([val], {type: 'application/xlsx'}), {createFolders: false});
         }
       });
     }
@@ -253,7 +253,7 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
       // see FileSaver.js
       const url = window.URL.createObjectURL(content);
       dlAnchorElem.setAttribute('href', url);
-      dlAnchorElem.setAttribute('download', `(${this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ')} - ${this.project.name}) All Data Sources Excel.zip`);
+      dlAnchorElem.setAttribute('download', `(${this.truncateString(this.project.countries.map(c => this.countryList.translateCountry(c)).join(', ') + ' - ' + this.project.name, 30)}) All Data Sources Excel.zip`);
       dlAnchorElem.click();
       this.downloadingAll = false;
       this.changeDetector.markForCheck();
@@ -300,6 +300,16 @@ export class DataSourcesListComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+
+
+  private truncateString(str: string, num: number): string {
+    if (str.length > num) {
+      return str.replace(/\//g, "-").slice(0, num) + "...";
+    } else {
+      return str.replace(/\//g, "-");
+    }
   }
 
   ngOnDestroy(): void {

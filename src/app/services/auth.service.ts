@@ -48,6 +48,19 @@ export class AuthService {
     return this.apiService.post('/authentication/login-partner', {username : email, password}, {responseType: 'text'});
   }
 
+  public async toggleFavorite(projectId: string): Promise<void> {
+    const user = this.user.getValue();
+    const favs = user.favoriteProjects ?? [];
+    const updated = favs.includes(projectId)
+      ? favs.filter(id => id !== projectId)
+      : [...favs, projectId];
+
+    user.favoriteProjects = updated;
+    this.user.next(user);
+
+    await this.apiService.put('/resources/myself', { favoriteProjects: updated });
+  }
+
   public async logOut(){
     let response = false;
     await this.apiService.post('/authentication/logout', {}, {responseType: 'text'})
