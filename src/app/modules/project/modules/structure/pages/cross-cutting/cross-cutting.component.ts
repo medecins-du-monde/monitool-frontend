@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Project } from 'src/app/models/classes/project.model';
@@ -59,8 +60,13 @@ export class CrossCuttingComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private dialog: MatDialog,
     private fb: UntypedFormBuilder,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) { }
+
+  safeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
 
   ngOnInit(): void {
     // this.setForm();

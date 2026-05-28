@@ -8,7 +8,7 @@
         <label
             [innerHTML]="
                 data.indicator.value.description ?
-                data.indicator.value.description[currentLang] :
+                safeHtml(data.indicator.value.description[currentLang]) :
                 ( 'IndicatorMissingDescription' | translate )"
         ></label>
     </div>
