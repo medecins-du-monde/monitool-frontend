@@ -10,6 +10,7 @@ import { ReportingTableModule } from 'src/app/components/report/reporting-table/
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 import { DownloadExcelPageComponent } from './download-excel-page/download-excel-page.component';
 import { AlertAutoDateChangeModule } from './alert-auto-date-change/alert-auto-date-change';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AlertAutoDateChangeModule } from './alert-auto-date-change/alert-auto-d
         ObjectGroupingModule,
         FilterModule,
         BreadcrumbModule,
-        AlertAutoDateChangeModule
+        AlertAutoDateChangeModule,
+        MatProgressBarModule
     ]
 })
 export class GeneralModule { }
