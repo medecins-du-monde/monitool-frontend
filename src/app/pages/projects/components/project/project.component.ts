@@ -157,22 +157,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
   projectCardAvatar(): string {
     if (this.projectOwner) {
       return 'person';
-    }
-    else if (localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
+    } else if (this.currentUser.favoriteProjects?.includes(this.project.id)) {
       return 'star';
     } else {
       return 'star_border';
     }
   }
 
-  toggleFavourite(): void {
-    if (!this.projectOwner) {
+  async toggleFavourite(): Promise<void> {
+    if (!this.projectOwner && this.currentUser.rev) {
+      await this.authService.toggleFavorite(this.project.id);
       this.getProjects.emit();
-      if (!localStorage.getItem('user::' + this.currentUser.id + 'favorite' + this.project.id)) {
-        localStorage.setItem('user::' + this.currentUser.id + 'favorite' + this.project.id, 'true');
-      } else {
-        localStorage.removeItem('user::' + this.currentUser.id + 'favorite' + this.project.id);
-      }
     }
   }
 

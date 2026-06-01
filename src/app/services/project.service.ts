@@ -159,14 +159,31 @@ export class ProjectService implements OnDestroy {
     this.informations.next(list);
   }
 
-  public async list(): Promise<Project[]> {
+  public async list(opts: {
+    skip?: number;
+    limit?: number;
+    continents?: string[];
+    countries?: string[];
+    statuses?: string[];
+    search?: string;
+  } = {}): Promise<{ items: Project[], total: number, statusCounts: Record<string, number> }> {
     const themes = await this.themeService.list();
-    const response: any = await this.apiService.get('/resources/project/?mode=short');
-    return response.map(x => {
+    const params = new URLSearchParams();
+    params.set('mode', 'short');
+    if (opts.skip    != null)              params.set('skip',   String(opts.skip));
+    if (opts.limit   != null)              params.set('limit',  String(opts.limit));
+    if (opts.search)                       params.set('search', opts.search);
+    (opts.continents || []).forEach(c =>   params.append('continents', c));
+    (opts.countries  || []).forEach(c =>   params.append('countries',  c));
+    (opts.statuses   || []).forEach(s =>   params.append('statuses',   s));
+
+    const response: any = await this.apiService.get(`/resources/project/?${params.toString()}`);
+    const items = response.items.map((x: any) => {
       const project = new Project(x);
-      project.themes = themes.filter(t => (x.themes.indexOf(t.id) >= 0) && !t.disabled);
+      project.themes = themes.filter((t: any) => (x.themes.indexOf(t.id) >= 0) && !t.disabled);
       return project;
     });
+    return { items, total: response.total, statusCounts: response.statusCounts };
   }
 
   public create(project: Project): void {

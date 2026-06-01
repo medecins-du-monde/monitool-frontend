@@ -513,6 +513,8 @@
         "Edit_data_response4": "If the input form contains empty cells, tthe calculation of the indicators from this data is possible but with a risk of error (example: if the denominator has not been entered, the calculation of the indicator cannot be done).<br> you wish to replace unentered values with the numeric value \"0\", you can return to the input form and click on the 'fill blank cells with 0' button. Once the data entry is completed and verified, you can click on “Save & Lock” to lock the entry.",
         "Edit_data_question5": "What happens if I leave some empty cells?",
         "Edit_data_response5": "Warning!<br>An empty cell is not equivalent to a cell that contains a zero. Values not entered will appear as such in the data sources of the General Report.",
+        "Edit_data_question6": "What kind of data we can input? Why is my entry not accepted?",
+        "Edit_data_response6": "If a cell turns red while entering data, it means the value entered is not valid.<br>Only whole numbers are allowed: do not use commas, periods, letters, or symbols. As long as an error is present, it is not possible to save the form or calculate the total. Please correct the entry to continue.",
         "Extra_indicators": "Extra indicators",
         "Extra_indicators_description": "Extra indicators are indicators that do not exist in the logical frames. <br>They allow you to follow specific datas like medical data or logistic...",
         "FAQ": "Frequently asked questions",
@@ -588,9 +590,9 @@
         },
         "New_users_access": "How to grant access to a new user on Monitool?",
         "New_users_access_response": "<ol><li><b>First user login:</b><ul><li>The new user must log in to Monitool at least once using their Microsoft ID (the same username and password as for Outlook).</li></ul></li><li><b>Owner's addition:</b></li><ul><li>After this first login, the user's name will appear in the MdM user list.</li><li>The owner can then go to: <b>Structure > User > Add a user</b></li><li>In the \"Select an MdM user\" field, search for the user's name and add them to the desired project.</li></ul></ol><br><i>Note: Without this first login to Monitool, the user will not appear in the list of available users to be selected.</i>",
-        "Import": "What is the purpose of the “Import Excel file” button?",
-        "Import_alt": "What is the purpose of the “Import Excel file” button, which is only available on the “Data entry” page?",
-        "Import_response": "To save time when entering data! You can import an Excel file to automatically fill in the data sources. The file must have been exported from the data sources list, either in the “Input” or “Structure” section, and must not have been modified, except for the data cells. This helps avoid double data entry and minimize manual errors.<br><br>Attention: When you import an Excel file, all data already entered online for the same period and the same site will be replaced by the information contained in the imported file. This means that if some cells are empty in your Excel file, those values will also be deleted in Monitool. To avoid any loss of data, always make sure to start from an Excel file exported from Monitool, which already contains the existing data. You can then add or update only the new information in that file before reimporting it.",
+        "Import": "Import excel data – What is it for?",
+        "Import_alt": "Import excel data – What is it for? Which is only available on the “Data entry” page",
+        "Import_response": "The \"Import excel data\" button saves time when entering data. You can import an Excel file to automatically fill in the data in the Input tab, organized by data sources.<br>The Excel file must be exported from the data sources in the Input or Structure sections, and its structure (table format) must not be modified, except for the cells intended for data entry. This helps avoid duplicate entries and reduce manual errors.<br><br><b>IMPORTANT:</b><br>When you import an Excel file, all data already entered online for the same period and the same site will be replaced by the values contained in your file. If some cells in the file are empty, the corresponding values will also be deleted in monitool.<br><br><b>To avoid any data loss:</b><ol><li>Always start with an Excel file exported from monitool, which already contains existing data.</li><li>Then complete or update only the necessary data before importing it again.</li></ol>For the complete step-by-step tutorial, please consult the <a href=\"https://mdm1.sharepoint.com/sites/Documentation-Monitool/SitePages/Data-Entry.aspx\" target=\"_blank\">Documentation</a>, choose your desired language.",
         "Dashboard": "Dashboard",
         "Dashboard_description": "Here you can see selected graphs to follow the evolution of the project.",
         "Dashboard_add_chart": "How to add a chart?",
@@ -1186,6 +1188,6 @@
   "AddAnalysis": "Add analysis",
   "Analysis": "Analysis",
   "EditAnalysis": "Edit analysis",
-  "LastEdit": "Last edition: {{date}} by {{user}}"
-  
+  "LastEdit": "Last edition: {{date}} by {{user}}",
+  "InputBadCell": "Only whole numeric values are allowed in the cells. Any entry of decimals, letters, or symbols will block the saving of the form and the calculation of the total until the error is corrected."
 }
