@@ -1,5 +1,15 @@
 {{ pageText | translate}}
 
+<mat-progress-bar
+  *ngIf="status === 'generating' || status === 'checking'"
+  [mode]="progress.total > 0 ? 'determinate' : 'indeterminate'"
+  [value]="progress.percent">
+</mat-progress-bar>
+
+<p *ngIf="progress.total > 0 && (status === 'generating' || status === 'checking')">
+  {{ progress.percent }}%
+</p>
+
 <p *ngIf="status === 'done' || localDownloadReady">
   {{'export-aoutomatic-download' | translate}}
   <button (click)="this.download()">
