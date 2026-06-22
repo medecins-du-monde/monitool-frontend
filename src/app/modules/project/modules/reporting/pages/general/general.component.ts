@@ -572,10 +572,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   }
 
   addChart(chart: DashboardChart): void {
-    const charts = this.project.dashboard;
-    charts.push(chart);
-    this.projectService.setDashboard(charts);
-    this.router.navigate([`/projects/${this.projectService.projectId.getValue()}/reporting/dashboard`]);
+    this.router.navigate([`/projects/${this.projectService.projectId.getValue()}/reporting/dashboard`]).then(() => {
+      this.projectService.addToDashboard(chart);
+    });
   }
 
   updateBreadcrumbs(project: Project): void {

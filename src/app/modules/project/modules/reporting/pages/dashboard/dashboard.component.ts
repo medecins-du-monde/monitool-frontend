@@ -106,6 +106,11 @@ export class DashboardComponent {
         userSubscription.unsubscribe();
       })
     );
+    this.subscription.add(
+      this.projectService.dashboardChartAdded$.subscribe(() => {
+        this.loadCharts(this.project.dashboard);
+      })
+    );
   }
 
   public onDeleteChart(id: string) {
