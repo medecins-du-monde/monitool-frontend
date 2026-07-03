@@ -34,6 +34,7 @@ import { ChartService } from 'src/app/services/chart.service';
 import { AddedIndicators } from 'src/app/models/interfaces/report/added-indicators.model';
 import { Filter } from 'src/app/components/report/filter/filter.component';
 import DatesHelper from 'src/app/utils/dates-helper';
+import ProjectRoleHelper from 'src/app/utils/project-role-helper';
 import { InfoRow } from 'src/app/models/interfaces/report/rows/info-row.model';
 import { SectionTitle } from 'src/app/models/interfaces/report/rows/section-title.model';
 import { GroupTitle } from 'src/app/models/interfaces/report/rows/group-title.model';
@@ -376,9 +377,7 @@ export class ReportingTableComponent
             this.updateTableContent();
             const userSubscription = this.authService.currentUser.subscribe(
               (user: User) => {
-                user.role === 'admin' || user.role === 'owner'
-                  ? (this.userIsAdmin = true)
-                  : (this.userIsAdmin = false);
+                this.userIsAdmin = ProjectRoleHelper.isProjectAdmin(user, project);
                 this.userIsAdminChange.emit(this.userIsAdmin);
                 this.changeDetectorRef.detectChanges();
               }

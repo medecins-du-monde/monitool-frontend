@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { v4 as uuid } from 'uuid';
 import { Project } from '../models/classes/project.model';
 import { Subscription } from 'rxjs';
+import ProjectRoleHelper from '../utils/project-role-helper';
 
 export type Comment = {
   id?: string;
@@ -71,9 +72,10 @@ export class CommentService implements OnDestroy {
   }
 
   public stashComment(comment: Comment): void {
-    // Only admin accounts can touch comments.
-    const isAdmin = this.authService.user.getValue()?.role === 'admin';
-    if (!isAdmin) { return; }
+    // Only admins and the current project's owner can touch comments.
+    const user = this.authService.user.getValue();
+    const project = this.projectService.project.getValue();
+    if (!ProjectRoleHelper.isProjectAdmin(user, project)) { return; }
 
     if (!this.cachedComments) {
       this.cachedComments = this.projectService.project

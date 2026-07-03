@@ -8,6 +8,7 @@ import { User } from 'src/app/models/classes/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { SidenavService } from 'src/app/services/sidenav.service';
 import { Subscription } from 'rxjs';
+import ProjectRoleHelper from 'src/app/utils/project-role-helper';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 
@@ -61,13 +62,8 @@ export class ProjectComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.sidenavService.generateSidenav(this.user, this.project);
           if (this.user && this.showWarning) {
             this.showWarning = false;
-            const projectOwner = this.project.users.find(user => 
-              (this.user.type === 'internal' ?
-                (user.id && this.user.id === user.id) :
-                (user.username && this.user.username === user.username)
-              ) && user.role === 'owner'
-            );
-            if (projectOwner && (!this.project.continents || this.project.continents.length === 0)) {
+            const isProjectOwner = ProjectRoleHelper.isProjectAdmin(this.user, this.project);
+            if (isProjectOwner && (!this.project.continents || this.project.continents.length === 0)) {
               this.dialog.open(ConfirmModalComponent, {data: {messageId: 'country-2.0-warning-project', noActions: true}});
             }
           }
