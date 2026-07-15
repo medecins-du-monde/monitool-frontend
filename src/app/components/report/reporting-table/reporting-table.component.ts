@@ -72,6 +72,14 @@ type RowCommentInfo = {
   disaggregatedBy?: { [key in string]: string };
 };
 
+interface CellViewModel {
+  value: any;
+  inRange: boolean;
+  displayValue: string;
+  isItalic: boolean;
+  tooltipMessage: string | null;
+}
+
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
@@ -1298,6 +1306,41 @@ export class ReportingTableComponent
     return false;
   }
 
+  private cellViewModelCache = new WeakMap<InfoRow, Map<string, { key: string; model: CellViewModel }>>();
+
+  // Memoized per (row, column): isInRange()/styleValue() are expensive (isInRange does a
+  // linear scan over logicalFrames/forms via getGroup()), and the template reads this for
+  // the same cell multiple times per render (background color, tooltip, text color, text).
+  getCellViewModel(element: InfoRow, column: string): CellViewModel {
+    const value = element?.values?.[column];
+    // dimensionIds/isCrossCuttingReport affect isInRange's date-window logic,
+    // so they must be part of the cache key even when value looks unchanged.
+    const key = `${value}|${element.unit}|${this.dimensionIds.value}|${this.isCrossCuttingReport}`;
+
+    let columnCache = this.cellViewModelCache.get(element);
+    if (!columnCache) {
+      columnCache = new Map();
+      this.cellViewModelCache.set(element, columnCache);
+    }
+
+    const cached = columnCache.get(column);
+    if (cached && cached.key === key) {
+      return cached.model;
+    }
+
+    const inRange = this.isInRange(element, column);
+    const model: CellViewModel = {
+      value,
+      inRange,
+      displayValue: inRange ? this.styleValue(value, element.unit) : '',
+      isItalic: this.isItalic(value),
+      tooltipMessage: inRange ? this.getTooltipMessage(value) : null,
+    };
+
+    columnCache.set(column, { key, model });
+    return model;
+  }
+
   isInRange(data, date): boolean {
     const group = this.getGroup(data);
     const currentDate = new Date(date);
@@ -1347,11 +1390,11 @@ export class ReportingTableComponent
     }
 
     if (value === 'Not a finite number' || value === 'division-by-zero') {
-      return '!';
+      return 'N/A';
     }
 
     if (value === null || value === 'missing-data') {
-      return '?';
+      return 'N/A';
     }
 
     if (value === 'AGGREGATION_FORBIDDEN') {
@@ -1378,11 +1421,11 @@ export class ReportingTableComponent
     }
 
     if (value === 'Not a finite number' || value === 'division-by-zero') {
-      return 'DivisionByZero';
+      return 'NAValue';//'DivisionByZero';
     }
 
     if (value === null || isNaN(Number(value))) {
-      return 'CannotBeComputed';
+      return 'NAValue';//'CannotBeComputed';
     }
 
     if (typeof value === 'string' && !isNaN(Number(value))) {
