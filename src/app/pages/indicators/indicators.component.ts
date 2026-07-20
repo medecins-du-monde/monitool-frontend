@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Indicator } from 'src/app/models/classes/indicator.model';
 import { Theme } from 'src/app/models/classes/theme.model';
 import { IndicatorService } from 'src/app/services/indicator.service';
@@ -46,6 +47,10 @@ export class IndicatorsComponent implements OnInit {
 
   private subscription = new Subscription();
 
+  safeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
   constructor(
     private translateService: TranslateService,
     private indicatorService: IndicatorService,
@@ -54,6 +59,7 @@ export class IndicatorsComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
+    private sanitizer: DomSanitizer,
   ) {
     this.filtersForm = this.fb.group({
       search: '',

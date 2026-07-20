@@ -21,6 +21,10 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
     return this.downloadService.status.getValue();
   }
 
+  get progress() {
+    return this.downloadService.progress.getValue();
+  }
+
   private subscription: Subscription = new Subscription();
 
   constructor(

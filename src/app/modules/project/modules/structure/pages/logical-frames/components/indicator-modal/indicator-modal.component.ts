@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatLegacyOption as MatOption } from '@angular/material/legacy-core';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Parser } from 'expr-eval';
 import * as _ from 'lodash';
@@ -68,8 +69,13 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<IndicatorModalComponent>,
     private translateService: TranslateService,
+    private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: { indicator: UntypedFormGroup, forms: Form[], isCC?: boolean }
   ) { }
+
+  safeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
 
   ngOnInit(): void {
     console.log(this.data);

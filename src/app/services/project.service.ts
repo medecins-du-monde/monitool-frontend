@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, OnDestroy, Output } from '@angular/core';
 import { ApiService } from './api.service';
 import { Project } from '../models/classes/project.model';
 import { ThemeService } from './theme.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { Revision } from '../models/classes/revision.model';
 import { filter } from 'rxjs/operators';
 import BreadcrumbItem from '../models/interfaces/breadcrumb-item.model';
@@ -56,6 +56,8 @@ export class ProjectService implements OnDestroy {
   projectUserRoleCreateProject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   newProject = false;
+
+  dashboardChartAdded$ = new Subject<void>();
 
   @Output() saveClickedEvent = new EventEmitter();
 
@@ -295,6 +297,13 @@ export class ProjectService implements OnDestroy {
 
   public setDashboard(charts: DashboardChart[]): void {
     this.currentProject.dashboard = charts;
+  }
+
+  public addToDashboard(chart: DashboardChart): void {
+    const charts = this.project.getValue().dashboard;
+    charts.push(chart);
+    this.setDashboard(charts);
+    this.dashboardChartAdded$.next();
   }
 
   public triggerSave() {

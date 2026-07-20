@@ -107,7 +107,7 @@
                 <div class="separator"></div>
                 <div class="panel-flex-description">
                     <p><b>{{'Description' | translate}}:</b></p>
-                    <div [innerHTML]="indicator.description[currentLang]"></div>
+                    <div [innerHTML]="safeHtml(indicator.description[currentLang])"></div>
                 </div>
                 <div class="panel-flex-description">
                     <p><b>{{"proposedCalc" | translate}}:</b></p>

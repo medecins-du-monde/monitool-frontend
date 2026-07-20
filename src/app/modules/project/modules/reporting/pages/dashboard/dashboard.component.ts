@@ -15,6 +15,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import ProjectRoleHelper from 'src/app/utils/project-role-helper';
 
 @Component({
   selector: 'app-dashboard',
@@ -98,12 +99,15 @@ export class DashboardComponent {
         const userSubscription = this.authService.currentUser.subscribe(
           (user: User) => {
             this.userName = user['name'];
-            user.role === 'admin' || user.role === 'owner'
-              ? (this.userIsAdmin = true)
-              : (this.userIsAdmin = false);
+            this.userIsAdmin = ProjectRoleHelper.isProjectAdmin(user, project);
           }
         );
         userSubscription.unsubscribe();
+      })
+    );
+    this.subscription.add(
+      this.projectService.dashboardChartAdded$.subscribe(() => {
+        this.loadCharts(this.project.dashboard);
       })
     );
   }
