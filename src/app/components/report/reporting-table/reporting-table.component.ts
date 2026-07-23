@@ -802,10 +802,10 @@ export class ReportingTableComponent
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
-  refreshValues(): void {
+  refreshValues(rows: any[] = this.content): void {
     if (this.tableContent && this.filter && this.dimensionIds) {
-      if (isArray(this.content)) {
-        this.content.map(row => {
+      if (isArray(rows)) {
+        rows.map(row => {
           if (this.isInfoRow(0, row)) {
             if (this.dimensions.length > 0) {
               if (this.openedSections[row.sectionId]) {
@@ -1565,8 +1565,20 @@ export class ReportingTableComponent
 
   public reloadTableAndCache(): void {
     this.content.forEach(row => row.refreshCache = true);
-    this.refreshValues();
+    this.refreshValuesInBatches();
     this.lastCachedTime = null;
+  }
+
+  // Reloading the whole table at once fires one HTTP request per row with no
+  // concurrency cap; stagger it into small batches so a large report doesn't
+  // dispatch hundreds of concurrent refreshCache requests in the same tick.
+  private async refreshValuesInBatches(batchSize = 8, delayMs = 250): Promise<void> {
+    for (let i = 0; i < this.content.length; i += batchSize) {
+      this.refreshValues(this.content.slice(i, i + batchSize));
+      if (i + batchSize < this.content.length) {
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+      }
+    }
   }
 
   getLastCache(): number {
