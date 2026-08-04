@@ -1329,16 +1329,31 @@ export class ReportingTableComponent
     }
 
     const inRange = this.isInRange(element, column);
+    const isCalculated = this.isCalculatedIndicator(element);
     const model: CellViewModel = {
       value,
       inRange,
-      displayValue: inRange ? this.styleValue(value, element.unit) : '',
+      displayValue: inRange ? this.styleValue(value, element.unit, isCalculated) : '',
       isItalic: this.isItalic(value),
-      tooltipMessage: inRange ? this.getTooltipMessage(value) : null,
+      tooltipMessage: inRange ? this.getTooltipMessage(value, isCalculated) : null,
     };
 
     columnCache.set(column, { key, model });
     return model;
+  }
+
+  // Raw data-source variables use the identity formula COPY_FORMULA, "disaggregate by
+  // computation parameter" rows use a bare parameter name (also an identity passthrough,
+  // see reporting-menu.component.ts computationOption()), and FIXED indicators use a plain
+  // numeric formula — none of these ever run real arithmetic. Only formulas with an actual
+  // operator (PERCENTAGE/PERMILLE/custom FORMULA) can produce 'Not a finite number' or
+  // 'division-by-zero' (see backend/api/lib/main-reporting.js _mergeRec).
+  isCalculatedIndicator(element: InfoRow): boolean {
+    const formula = element?.computation?.formula;
+    if (!formula || typeof formula !== 'string' || !isNaN(Number(formula))) {
+      return false;
+    }
+    return /[+\-*/]/.test(formula);
   }
 
   isInRange(data, date): boolean {
@@ -1384,17 +1399,17 @@ export class ReportingTableComponent
     return true;
   }
 
-  styleValue(value, unit) {
+  styleValue(value, unit, isCalculated = false) {
     if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number' || value === 'division-by-zero') {
+    if (isCalculated && (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero')) {
       return 'N/A';
     }
 
-    if (value === null || value === 'missing-data') {
-      return 'N/A';
+    if (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero') {
+      return '?';
     }
 
     if (value === 'AGGREGATION_FORBIDDEN') {
@@ -1410,7 +1425,7 @@ export class ReportingTableComponent
     return newValue;
   }
 
-  getTooltipMessage(value) {
+  getTooltipMessage(value, isCalculated = false) {
 
     if (value === 'AGGREGATION_FORBIDDEN') {
       return 'CannotBeComputedRule';
@@ -1420,12 +1435,12 @@ export class ReportingTableComponent
       return '';
     }
 
-    if (value === 'Not a finite number' || value === 'division-by-zero') {
+    if (isCalculated && (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero')) {
       return 'NAValue';//'DivisionByZero';
     }
 
     if (value === null || isNaN(Number(value))) {
-      return 'NAValue';//'CannotBeComputed';
+      return 'CannotBeComputed';//'CannotBeComputed';
     }
 
     if (typeof value === 'string' && !isNaN(Number(value))) {
