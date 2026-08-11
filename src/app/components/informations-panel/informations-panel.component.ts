@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import { AppVersionService } from 'src/app/services/app-version.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,7 +26,8 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
               private domSanitizer: DomSanitizer,
               private translateService: TranslateService,
               private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private appVersionService: AppVersionService) { }
 
   ngOnInit(): void {
     this.displayed = this.userService.displayInfoPanel.value;
@@ -63,9 +65,22 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
     return this.domSanitizer.bypassSecurityTrustHtml(this.translateService.instant(translatekey));
   }
 
-  refreshCache(): void {
-    localStorage.removeItem('appVersion');
-    location.reload();
+  async refreshCache(): Promise<void> {
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(reg => reg.unregister()));
+    }
+
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(key => caches.delete(key)));
+    }
+
+    // Store the fresh version before reloading so AppVersionService doesn't
+    // immediately re-prompt with the "new version available" dialog.
+    await this.appVersionService.syncStoredVersion();
+
+    window.location.reload();
   }
 
   /**

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { interval, Subscription } from 'rxjs';
+import { firstValueFrom, interval, Subscription } from 'rxjs';
 import { RefreshModalComponent } from '../components/refresh-modal/refresh-modal.component';
 import { SwUpdate } from '@angular/service-worker';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,22 +38,31 @@ export class AppVersionService {
     }
 
     // Second system for cache
-    this.http.get('/assets/version.txt').pipe(take(1)).subscribe(data => {
-      const version = `${data}`;
+    this.fetchLatestVersion().subscribe(version => {
       if (!localStorage['appVersion'] || version !== localStorage['appVersion']) {
         this.showDialog(version);
       }
     });
     this.subscription.add(
       interval(60000).subscribe(() => {
-        this.http.get('/assets/version.txt').pipe(take(1)).subscribe(data => {
-          const version = `${data}`;
+        this.fetchLatestVersion().subscribe(version => {
           if (!localStorage['appVersion'] || version !== localStorage['appVersion']) {
             this.showDialog(version);
           }
         });
       })
     );
+  }
+
+  // 'ngsw-bypass' skips the Angular service worker (see ngsw-worker.js's onFetch) and
+  // 'Cache-Control: no-cache' skips the browser HTTP cache, so this always hits the network —
+  // otherwise /assets/version.txt gets served from the SW's own cached 'assets' group,
+  // silently defeating this check.
+  private fetchLatestVersion() {
+    return this.http.get('/assets/version.txt', {
+      params: { 'ngsw-bypass': 'true' },
+      headers: { 'Cache-Control': 'no-cache' },
+    }).pipe(map(data => `${data}`), take(1));
   }
 
   showDialog(version?: string): void{
@@ -63,17 +72,37 @@ export class AppVersionService {
     this.dialogRef = this.dialog.open(RefreshModalComponent, {
       width: '600px',
     });
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(async result => {
       if (result) {
         if (version) {
           localStorage['appVersion'] = version;
         }
-        window.location.replace(window.location.href);
+        if (this.swUpdate.isEnabled) {
+          try {
+            await this.swUpdate.activateUpdate();
+          } catch {
+            // no pending SW update to activate (e.g. version.txt-only trigger) — reload anyway
+          }
+        }
         window.location.reload();
       } else {
         this.ignoreCache = true;
       }
       this.dialogRef = undefined;
     });
+  }
+
+  /**
+   * Stores the latest known version in localStorage without prompting the user,
+   * so a caller-initiated reload (e.g. a manual "refresh cache" action) doesn't
+   * immediately re-trigger the "new version available" dialog on the next load.
+   */
+  async syncStoredVersion(): Promise<void> {
+    try {
+      const version = await firstValueFrom(this.fetchLatestVersion());
+      localStorage['appVersion'] = version;
+    } catch {
+      localStorage.removeItem('appVersion');
+    }
   }
 }
