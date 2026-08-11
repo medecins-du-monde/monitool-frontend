@@ -1,9 +1,33 @@
-<button class="dialog-close" mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
-<h2 mat-dialog-title>{{ projectAction.title | translate }}</h2>
+<button class="dialog-close" mat-icon-button mat-dialog-close *ngIf="state === 'confirm'"><mat-icon>close</mat-icon></button>
 
-<p>{{ projectAction.infos | translate }}</p>
+<ng-container [ngSwitch]="state">
+    <ng-container *ngSwitchCase="'confirm'">
+        <h2 mat-dialog-title>{{ projectAction.title | translate }}</h2>
+        <p>{{ projectAction.infos | translate }}</p>
+        <mat-dialog-actions align="end">
+            <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'Cancel' | translate }}</button>
+            <button mat-flat-button color="primary" (click)="onSubmit()" class="mdm-button">{{ 'Confirm' | translate }}</button>
+        </mat-dialog-actions>
+    </ng-container>
 
-<mat-dialog-actions align="end">
-    <button mat-stroked-button mat-dialog-close class="mdm-button">{{ 'Cancel' | translate }}</button>
-    <button mat-flat-button color="primary" (click)="onSubmit()" class="mdm-button">{{ 'Confirm' | translate }}</button>
-</mat-dialog-actions>
+    <ng-container *ngSwitchCase="'loading'">
+        <div class="modal-loader-container">
+            <div class="loader"></div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'success'">
+        <h2 mat-dialog-title>{{ projectAction.successMessage | translate }}</h2>
+        <mat-dialog-actions align="end">
+            <button mat-stroked-button (click)="onConfirmResult(false)" class="mdm-button">{{ 'Confirm' | translate }}</button>
+            <button mat-flat-button color="primary" (click)="onConfirmResult(true)" class="mdm-button">{{ 'Open' | translate }}</button>
+        </mat-dialog-actions>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'error'">
+        <h2 mat-dialog-title>{{ projectAction.errorMessage | translate }}</h2>
+        <mat-dialog-actions align="end">
+            <button mat-flat-button color="primary" (click)="onDismissError()" class="mdm-button">{{ 'Confirm' | translate }}</button>
+        </mat-dialog-actions>
+    </ng-container>
+</ng-container>

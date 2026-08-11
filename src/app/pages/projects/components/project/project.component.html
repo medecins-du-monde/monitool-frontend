@@ -1,4 +1,4 @@
-<mat-card class="project">
+<mat-card class="project" [class.highlighted]="highlighted">
     <mat-card-header class="card-header">
         <div mat-card-avatar class="project-icon">
             <mat-icon class="{{projectOwner || !currentUser.rev ? 'icon-default' : 'icon-button'}}" (click)="toggleFavourite()">{{projectCardAvatar()}}</mat-icon>
@@ -7,6 +7,11 @@
             {{ cardTitle }}
         </mat-card-title>
         <mat-chip-list class="project-status">
+            <mat-chip
+                *ngIf="project.clonedAt"
+                class="cloned-badge"
+                [matTooltip]="(project.clonedWithData ? 'ClonedTooltipWithData' : 'ClonedTooltip') | translate: { date: (project.clonedAt | localizedDate), user: project.clonedByName }"
+            >{{ 'Cloned' | translate }}</mat-chip>
             <mat-chip [ngStyle]="{'background-color': (project.status == 'Ongoing') ? 'green' : (project.status == 'Finished') ? '#929223' : 'red'}" selected>{{ project.status | translate }}</mat-chip>
         </mat-chip-list>
     </mat-card-header>

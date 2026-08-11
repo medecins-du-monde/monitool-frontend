@@ -36,6 +36,10 @@ export class Project implements Deserializable {
     parsed?: boolean;
     comments: Comment[] = [];
     dashboard: DashboardChart[] = [];
+    clonedAt?: Date;
+    clonedBy?: string;
+    clonedByName?: string;
+    clonedWithData?: boolean;
 
     get status(): string{
         if ( this.active ) {
@@ -99,6 +103,10 @@ export class Project implements Deserializable {
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
         this.dashboard = (input && input.dashboard) ? input.dashboard.map(d => new DashboardChart(d)) :  [];
+        this.clonedAt = (input && input.clonedAt) ? new Date(input.clonedAt) : null;
+        this.clonedBy = input ? input.clonedBy : null;
+        this.clonedByName = input ? input.clonedByName : null;
+        this.clonedWithData = input ? input.clonedWithData : null;
         return this;
     }
 
@@ -111,6 +119,9 @@ export class Project implements Deserializable {
     }
 
     serialize() {
+        // clonedAt/clonedBy/clonedByName/clonedWithData are intentionally left out: any save
+        // should clear the "cloned" badge, and the backend fully replaces the document from
+        // this payload, so simply not sending them back drops them server-side.
         const serialized = {
             active: this.active,
             continents: this.continents,

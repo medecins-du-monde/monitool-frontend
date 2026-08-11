@@ -245,14 +245,16 @@ export class ProjectService implements OnDestroy {
     await this.apiService.put(`/resources/project/${id}`, project);
   }
 
-  public async clone(id: string): Promise<void> {
+  public async clone(id: string): Promise<Project> {
     const project = new Project();
-    await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=false`);
+    const response: any = await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=false`);
+    return new Project(response);
   }
 
-  public async cloneWithData(id: string): Promise<void> {
+  public async cloneWithData(id: string): Promise<Project> {
     const project = new Project();
-    await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
+    const response: any = await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
+    return new Project(response);
   }
 
   public async listRevisions(id: string, limit: number): Promise<Revision[]> {

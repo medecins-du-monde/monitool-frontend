@@ -21,10 +21,10 @@ import { CountryListService } from 'src/app/services/country-list.service';
 export class ProjectComponent implements OnInit, OnDestroy {
 
   @Input() project: Project;
+  @Input() highlighted: boolean;
   @Output() delete = new EventEmitter();
   @Output() restore = new EventEmitter();
-  @Output() clone = new EventEmitter();
-  @Output() cloneWithData = new EventEmitter();
+  @Output() cloned = new EventEmitter<Project>();
   @Output() getProjects: EventEmitter<any> = new EventEmitter();
 
   currentUser: User;
@@ -65,8 +65,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
     // this.projectService.updateProjectId(this.project.id);
     // this.router.navigate(['/projects', this.project.id]);
 
+    this.openProject(this.project.id);
+  }
+
+  private openProject(id: string): void {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([this.project.id], { relativeTo: this.route })
+      this.router.createUrlTree([id], { relativeTo: this.route })
     );
 
     window.open(url, '_blank');
@@ -88,23 +92,31 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   onClone(): void {
-    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfo'} } );
-
-    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.clone.emit(this.project);
-        dialogSubscription.unsubscribe();
-      }
-    });
+    this.performClone(false);
   }
 
   onCloneWithData(): void {
-    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfoData'} } );
+    this.performClone(true);
+  }
 
-    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.cloneWithData.emit(this.project);
-        dialogSubscription.unsubscribe();
+  private performClone(withData: boolean): void {
+    const dialogRef = this.dialog.open(ActionProjectModalComponent, {
+      data: {
+        title: 'CloneProject',
+        infos: withData ? 'CloneProjectInfoData' : 'CloneProjectInfo',
+        action: () => withData ? this.projectService.cloneWithData(this.project.id) : this.projectService.clone(this.project.id),
+        successMessage: 'CloneSuccess',
+        errorMessage: 'CloneError'
+      }
+    });
+
+    const dialogSubscription = dialogRef.afterClosed().subscribe((res: { result: Project; open: boolean }) => {
+      dialogSubscription.unsubscribe();
+      if (res && res.result) {
+        this.cloned.emit(res.result);
+        if (res.open) {
+          this.openProject(res.result.id);
+        }
       }
     });
   }

@@ -10,12 +10,36 @@ import ProjectAction from 'src/app/models/interfaces/project-action.model';
 })
 export class ActionProjectModalComponent {
 
+  state: 'confirm' | 'loading' | 'success' | 'error' = 'confirm';
+  result: any;
+  error: any;
+
   constructor(
     public dialogRef: MatDialogRef<ActionProjectModalModule>,
     @Inject(MAT_DIALOG_DATA) public projectAction: ProjectAction
   ) { }
 
-  onSubmit(){
-    this.dialogRef.close(true);
+  async onSubmit(){
+    if (!this.projectAction.action) {
+      this.dialogRef.close(true);
+      return;
+    }
+
+    this.state = 'loading';
+    try {
+      this.result = await this.projectAction.action();
+      this.state = 'success';
+    } catch (error) {
+      this.error = error;
+      this.state = 'error';
+    }
+  }
+
+  onConfirmResult(open: boolean): void {
+    this.dialogRef.close({ result: this.result, open });
+  }
+
+  onDismissError(): void {
+    this.dialogRef.close(false);
   }
 }
