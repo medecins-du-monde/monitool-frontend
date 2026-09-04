@@ -222,6 +222,54 @@
 .cloned-badge.mat-chip {
   background-color: $radio_button_color !important;
   color: $mat_chip_color !important;
+  cursor: default;
+}
+
+// Hover details for the cloned badge. Rendered in the CDK overlay container, so it is never
+// clipped by the card.
+.clone-panel {
+  background-color: white;
+  border: 1px solid #c8c9cc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 20px;
+  max-width: 320px;
+
+  .clone-panel-row {
+    display: flex;
+    gap: 6px;
+  }
+
+  .clone-panel-label {
+    color: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+  }
+
+  .clone-panel-value {
+    overflow-wrap: anywhere;
+  }
+
+  .clone-panel-link {
+    color: $radio_button_color;
+    text-decoration: underline;
+    cursor: pointer;
+
+    // Keep the row on one line: a long project name is truncated here and shown in full on the
+    // link's own tooltip. min-width:0 is what lets a flex item shrink below its content width.
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .clone-panel-note {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
+    margin-top: 4px;
+  }
 }
 
 .project.mat-card.highlighted {

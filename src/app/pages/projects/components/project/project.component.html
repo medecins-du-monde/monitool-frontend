@@ -7,11 +7,48 @@
             {{ cardTitle }}
         </mat-card-title>
         <mat-chip-list class="project-status">
-            <mat-chip
-                *ngIf="project.clonedAt"
-                class="cloned-badge"
-                [matTooltip]="(project.clonedWithData ? 'ClonedTooltipWithData' : 'ClonedTooltip') | translate: { date: (project.clonedAt | localizedDate), user: project.clonedByName }"
-            >{{ 'Cloned' | translate }}</mat-chip>
+            <!-- The badge and its overlay live in the same *ngIf view so the panel can reference the chip as its origin. -->
+            <ng-container *ngIf="project.clonedAt">
+                <mat-chip
+                    class="cloned-badge"
+                    cdkOverlayOrigin
+                    #cloneOrigin="cdkOverlayOrigin"
+                    (mouseenter)="openClonePanel()"
+                    (mouseleave)="scheduleCloseClonePanel()"
+                >{{ 'Cloned' | translate }}</mat-chip>
+
+                <ng-template
+                    cdkConnectedOverlay
+                    [cdkConnectedOverlayOrigin]="cloneOrigin"
+                    [cdkConnectedOverlayOpen]="clonePanelOpen"
+                    [cdkConnectedOverlayPositions]="clonePanelPositions"
+                    (overlayOutsideClick)="closeClonePanel()"
+                >
+                    <div class="clone-panel" (mouseenter)="openClonePanel()" (mouseleave)="scheduleCloseClonePanel()">
+                        <div class="clone-panel-row">
+                            <span class="clone-panel-label">{{ 'ClonedOn' | translate }}</span>
+                            <span class="clone-panel-value">{{ project.clonedAt | localizedDate }}</span>
+                        </div>
+                        <div class="clone-panel-row">
+                            <span class="clone-panel-label">{{ 'ClonedBy' | translate }}</span>
+                            <span class="clone-panel-value">{{ project.clonedByName }}</span>
+                        </div>
+                        <div class="clone-panel-row" *ngIf="project.clonedFromName">
+                            <span class="clone-panel-label">{{ 'ClonedFrom' | translate }}</span>
+                            <a
+                                class="clone-panel-value clone-panel-link"
+                                [routerLink]="['/projects', project.clonedFrom]"
+                                target="_blank"
+                                rel="noopener"
+                                [matTooltip]="project.clonedFromName"
+                            >{{ project.clonedFromName }}</a>
+                        </div>
+                        <div class="clone-panel-row clone-panel-note">
+                            {{ (project.clonedWithData ? 'ClonedWithData' : 'ClonedWithoutData') | translate }}
+                        </div>
+                    </div>
+                </ng-template>
+            </ng-container>
             <mat-chip [ngStyle]="{'background-color': (project.status == 'Ongoing') ? 'green' : (project.status == 'Finished') ? '#929223' : 'red'}" selected>{{ project.status | translate }}</mat-chip>
         </mat-chip-list>
     </mat-card-header>

@@ -40,6 +40,10 @@ export class Project implements Deserializable {
     clonedBy?: string;
     clonedByName?: string;
     clonedWithData?: boolean;
+    clonedFrom?: string;
+    // Server-computed on list responses only (resolved from clonedFrom at query time, never
+    // stored) — must stay out of serialize().
+    clonedFromName?: string;
 
     get status(): string{
         if ( this.active ) {
@@ -107,6 +111,8 @@ export class Project implements Deserializable {
         this.clonedBy = input ? input.clonedBy : null;
         this.clonedByName = input ? input.clonedByName : null;
         this.clonedWithData = input ? input.clonedWithData : null;
+        this.clonedFrom = input ? input.clonedFrom : null;
+        this.clonedFromName = input ? input.clonedFromName : null;
         return this;
     }
 
@@ -119,9 +125,10 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-        // clonedAt/clonedBy/clonedByName/clonedWithData are intentionally left out: any save
-        // should clear the "cloned" badge, and the backend fully replaces the document from
-        // this payload, so simply not sending them back drops them server-side.
+        // The cloned* fields are intentionally left out: they are server-owned. The backend sets
+        // them when cloning and re-applies them from the stored document on every save, so the
+        // client never needs to round-trip them — and clonedFromName is computed per request and
+        // must never be written back at all.
         const serialized = {
             active: this.active,
             continents: this.continents,

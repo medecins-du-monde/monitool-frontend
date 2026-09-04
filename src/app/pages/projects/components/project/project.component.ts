@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -33,6 +34,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
   loading = false;
   cardTitle: string;
 
+  clonePanelOpen = false;
+
+  // Tried in order, first one that fits wins. The badge sits at the right edge of the card, so
+  // the end-aligned variants are what keep the panel on screen for the rightmost column; the
+  // above-the-badge variants do the same for the last row.
+  readonly clonePanelPositions: ConnectedPosition[] = [
+    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 8 },
+    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 8 },
+    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -8 },
+    { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom', offsetY: -8 }
+  ];
+
+  private clonePanelCloseTimer: ReturnType<typeof setTimeout> = null;
+
   private subscription: Subscription = new Subscription();
 
   get currentLang(): string {
@@ -58,6 +73,30 @@ export class ProjectComponent implements OnInit, OnDestroy {
       })
     );
     this.cardTitle = this.project.countries.map(country => this.countryList.translateCountry(country)).join(', ');
+  }
+
+  openClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelOpen = true;
+  }
+
+  // Closing is delayed so the pointer can travel off the badge and into the panel — which it has
+  // to do, since the "From" line holds a link the user needs to be able to click.
+  scheduleCloseClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelCloseTimer = setTimeout(() => this.closeClonePanel(), 200);
+  }
+
+  closeClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelOpen = false;
+  }
+
+  private cancelCloseClonePanel(): void {
+    if (this.clonePanelCloseTimer !== null) {
+      clearTimeout(this.clonePanelCloseTimer);
+      this.clonePanelCloseTimer = null;
+    }
   }
 
   onOpen(): void {
@@ -184,6 +223,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.cancelCloseClonePanel();
     this.subscription.unsubscribe();
   }
 
