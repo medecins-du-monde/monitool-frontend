@@ -86,7 +86,8 @@
     <mat-progress-bar *ngIf="loading" mode="indeterminate" style="margin-top: 16px;"></mat-progress-bar>
     <div class="mdm-cards">
         <app-project *ngFor="let project of shownProjects" class="mdm-card" (getProjects)="getProjects()"
-            [project]="project" (delete)="onDelete($event)" (restore)="onRestore($event)" (clone)="onClone($event)" (cloneWithData)="onCloneWithData($event)"
+            [project]="project" [highlighted]="project.id === recentlyClonedProjectId"
+            (delete)="onDelete($event)" (restore)="onRestore($event)" (cloned)="onProjectCloned($event)"
         ></app-project>
     </div>
     <mat-paginator

@@ -85,6 +85,7 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
   totalItem = 0;
   shownProjects: Project[] = [];
   showWarning = true;
+  recentlyClonedProjectId: string = null;
   loading = false;
 
   private subscription: Subscription = new Subscription();
@@ -212,16 +213,9 @@ export class ProjectsComponent implements OnInit, OnDestroy, AfterViewChecked {
     });
   }
 
-  onClone(project: Project): void {
-    this.projectService.clone(project.id).then(() => {
-      this.getProjects();
-    });
-  }
-
-  onCloneWithData(project: Project): void {
-    this.projectService.cloneWithData(project.id).then(() => {
-      this.getProjects();
-    });
+  onProjectCloned(project: Project): void {
+    this.recentlyClonedProjectId = project.id;
+    this.getProjects();
   }
 
   onSearch(e: any): void {

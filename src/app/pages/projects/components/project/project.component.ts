@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ConnectedPosition } from '@angular/cdk/overlay';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,10 +22,10 @@ import { CountryListService } from 'src/app/services/country-list.service';
 export class ProjectComponent implements OnInit, OnDestroy {
 
   @Input() project: Project;
+  @Input() highlighted: boolean;
   @Output() delete = new EventEmitter();
   @Output() restore = new EventEmitter();
-  @Output() clone = new EventEmitter();
-  @Output() cloneWithData = new EventEmitter();
+  @Output() cloned = new EventEmitter<Project>();
   @Output() getProjects: EventEmitter<any> = new EventEmitter();
 
   currentUser: User;
@@ -32,6 +33,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
   lastEntry: string;
   loading = false;
   cardTitle: string;
+
+  clonePanelOpen = false;
+
+  // Tried in order, first one that fits wins. The badge sits at the right edge of the card, so
+  // the end-aligned variants are what keep the panel on screen for the rightmost column; the
+  // above-the-badge variants do the same for the last row.
+  readonly clonePanelPositions: ConnectedPosition[] = [
+    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 8 },
+    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top', offsetY: 8 },
+    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -8 },
+    { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom', offsetY: -8 }
+  ];
+
+  private clonePanelCloseTimer: ReturnType<typeof setTimeout> = null;
 
   private subscription: Subscription = new Subscription();
 
@@ -60,13 +75,41 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this.cardTitle = this.project.countries.map(country => this.countryList.translateCountry(country)).join(', ');
   }
 
+  openClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelOpen = true;
+  }
+
+  // Closing is delayed so the pointer can travel off the badge and into the panel — which it has
+  // to do, since the "From" line holds a link the user needs to be able to click.
+  scheduleCloseClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelCloseTimer = setTimeout(() => this.closeClonePanel(), 200);
+  }
+
+  closeClonePanel(): void {
+    this.cancelCloseClonePanel();
+    this.clonePanelOpen = false;
+  }
+
+  private cancelCloseClonePanel(): void {
+    if (this.clonePanelCloseTimer !== null) {
+      clearTimeout(this.clonePanelCloseTimer);
+      this.clonePanelCloseTimer = null;
+    }
+  }
+
   onOpen(): void {
     // // Get the project id to redirect MDM Account properly if needed
     // this.projectService.updateProjectId(this.project.id);
     // this.router.navigate(['/projects', this.project.id]);
 
+    this.openProject(this.project.id);
+  }
+
+  private openProject(id: string): void {
     const url = this.router.serializeUrl(
-      this.router.createUrlTree([this.project.id], { relativeTo: this.route })
+      this.router.createUrlTree([id], { relativeTo: this.route })
     );
 
     window.open(url, '_blank');
@@ -88,23 +131,31 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   onClone(): void {
-    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfo'} } );
-
-    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.clone.emit(this.project);
-        dialogSubscription.unsubscribe();
-      }
-    });
+    this.performClone(false);
   }
 
   onCloneWithData(): void {
-    const dialogRef = this.dialog.open(ActionProjectModalComponent, { data: {title: 'CloneProject', infos: 'CloneProjectInfoData'} } );
+    this.performClone(true);
+  }
 
-    const dialogSubscription = dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.cloneWithData.emit(this.project);
-        dialogSubscription.unsubscribe();
+  private performClone(withData: boolean): void {
+    const dialogRef = this.dialog.open(ActionProjectModalComponent, {
+      data: {
+        title: 'CloneProject',
+        infos: withData ? 'CloneProjectInfoData' : 'CloneProjectInfo',
+        action: () => withData ? this.projectService.cloneWithData(this.project.id) : this.projectService.clone(this.project.id),
+        successMessage: 'CloneSuccess',
+        errorMessage: 'CloneError'
+      }
+    });
+
+    const dialogSubscription = dialogRef.afterClosed().subscribe((res: { result: Project; open: boolean }) => {
+      dialogSubscription.unsubscribe();
+      if (res && res.result) {
+        this.cloned.emit(res.result);
+        if (res.open) {
+          this.openProject(res.result.id);
+        }
       }
     });
   }
@@ -172,6 +223,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.cancelCloseClonePanel();
     this.subscription.unsubscribe();
   }
 

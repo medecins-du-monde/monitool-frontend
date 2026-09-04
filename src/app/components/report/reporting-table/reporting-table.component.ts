@@ -72,6 +72,14 @@ type RowCommentInfo = {
   disaggregatedBy?: { [key in string]: string };
 };
 
+interface CellViewModel {
+  value: any;
+  inRange: boolean;
+  displayValue: string;
+  isItalic: boolean;
+  tooltipMessage: string | null;
+}
+
 @Component({
   selector: 'app-reporting-table',
   templateUrl: './reporting-table.component.html',
@@ -794,10 +802,10 @@ export class ReportingTableComponent
   }
 
   // Fetch all data in function of project, content, filter, dimension and update table and chart
-  refreshValues(): void {
+  refreshValues(rows: any[] = this.content): void {
     if (this.tableContent && this.filter && this.dimensionIds) {
-      if (isArray(this.content)) {
-        this.content.map(row => {
+      if (isArray(rows)) {
+        rows.map(row => {
           if (this.isInfoRow(0, row)) {
             if (this.dimensions.length > 0) {
               if (this.openedSections[row.sectionId]) {
@@ -1298,6 +1306,56 @@ export class ReportingTableComponent
     return false;
   }
 
+  private cellViewModelCache = new WeakMap<InfoRow, Map<string, { key: string; model: CellViewModel }>>();
+
+  // Memoized per (row, column): isInRange()/styleValue() are expensive (isInRange does a
+  // linear scan over logicalFrames/forms via getGroup()), and the template reads this for
+  // the same cell multiple times per render (background color, tooltip, text color, text).
+  getCellViewModel(element: InfoRow, column: string): CellViewModel {
+    const value = element?.values?.[column];
+    // dimensionIds/isCrossCuttingReport affect isInRange's date-window logic,
+    // so they must be part of the cache key even when value looks unchanged.
+    const key = `${value}|${element.unit}|${this.dimensionIds.value}|${this.isCrossCuttingReport}`;
+
+    let columnCache = this.cellViewModelCache.get(element);
+    if (!columnCache) {
+      columnCache = new Map();
+      this.cellViewModelCache.set(element, columnCache);
+    }
+
+    const cached = columnCache.get(column);
+    if (cached && cached.key === key) {
+      return cached.model;
+    }
+
+    const inRange = this.isInRange(element, column);
+    const isCalculated = this.isCalculatedIndicator(element);
+    const model: CellViewModel = {
+      value,
+      inRange,
+      displayValue: inRange ? this.styleValue(value, element.unit, isCalculated) : '',
+      isItalic: this.isItalic(value),
+      tooltipMessage: inRange ? this.getTooltipMessage(value, isCalculated) : null,
+    };
+
+    columnCache.set(column, { key, model });
+    return model;
+  }
+
+  // Raw data-source variables use the identity formula COPY_FORMULA, "disaggregate by
+  // computation parameter" rows use a bare parameter name (also an identity passthrough,
+  // see reporting-menu.component.ts computationOption()), and FIXED indicators use a plain
+  // numeric formula — none of these ever run real arithmetic. Only formulas with an actual
+  // operator (PERCENTAGE/PERMILLE/custom FORMULA) can produce 'Not a finite number' or
+  // 'division-by-zero' (see backend/api/lib/main-reporting.js _mergeRec).
+  isCalculatedIndicator(element: InfoRow): boolean {
+    const formula = element?.computation?.formula;
+    if (!formula || typeof formula !== 'string' || !isNaN(Number(formula))) {
+      return false;
+    }
+    return /[+\-*/]/.test(formula);
+  }
+
   isInRange(data, date): boolean {
     const group = this.getGroup(data);
     const currentDate = new Date(date);
@@ -1341,16 +1399,16 @@ export class ReportingTableComponent
     return true;
   }
 
-  styleValue(value, unit) {
+  styleValue(value, unit, isCalculated = false) {
     if (value === undefined) {
       return '';
     }
 
-    if (value === 'Not a finite number' || value === 'division-by-zero') {
-      return '!';
+    if (isCalculated && (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero')) {
+      return 'N/A';
     }
 
-    if (value === null || value === 'missing-data') {
+    if (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero') {
       return '?';
     }
 
@@ -1367,7 +1425,7 @@ export class ReportingTableComponent
     return newValue;
   }
 
-  getTooltipMessage(value) {
+  getTooltipMessage(value, isCalculated = false) {
 
     if (value === 'AGGREGATION_FORBIDDEN') {
       return 'CannotBeComputedRule';
@@ -1377,12 +1435,12 @@ export class ReportingTableComponent
       return '';
     }
 
-    if (value === 'Not a finite number' || value === 'division-by-zero') {
-      return 'DivisionByZero';
+    if (isCalculated && (value === null || value === 'missing-data' || value === 'Not a finite number' || value === 'division-by-zero')) {
+      return 'NAValue';//'DivisionByZero';
     }
 
     if (value === null || isNaN(Number(value))) {
-      return 'CannotBeComputed';
+      return 'CannotBeComputed';//'CannotBeComputed';
     }
 
     if (typeof value === 'string' && !isNaN(Number(value))) {
@@ -1522,8 +1580,20 @@ export class ReportingTableComponent
 
   public reloadTableAndCache(): void {
     this.content.forEach(row => row.refreshCache = true);
-    this.refreshValues();
+    this.refreshValuesInBatches();
     this.lastCachedTime = null;
+  }
+
+  // Reloading the whole table at once fires one HTTP request per row with no
+  // concurrency cap; stagger it into small batches so a large report doesn't
+  // dispatch hundreds of concurrent refreshCache requests in the same tick.
+  private async refreshValuesInBatches(batchSize = 8, delayMs = 250): Promise<void> {
+    for (let i = 0; i < this.content.length; i += batchSize) {
+      this.refreshValues(this.content.slice(i, i + batchSize));
+      if (i + batchSize < this.content.length) {
+        await new Promise(resolve => setTimeout(resolve, delayMs));
+      }
+    }
   }
 
   getLastCache(): number {
