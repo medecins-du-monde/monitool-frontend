@@ -225,8 +225,6 @@
   cursor: default;
 }
 
-// Hover details for the cloned badge. Rendered in the CDK overlay container, so it is never
-// clipped by the card.
 .clone-panel {
   background-color: white;
   border: 1px solid #c8c9cc;
