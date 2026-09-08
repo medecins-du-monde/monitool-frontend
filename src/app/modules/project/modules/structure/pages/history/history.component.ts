@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { ConfirmModalComponent } from 'src/app/components/confirm-modal/confirm-modal.component';
 import { ProjectService } from 'src/app/services/project.service';
 import { Project } from 'src/app/models/classes/project.model';
 import { Revision } from 'src/app/models/classes/revision.model';
@@ -9,7 +11,6 @@ import { isEqual } from 'lodash';
 import { Form } from 'src/app/models/classes/form.model';
 import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
-import { TranslateService } from '@ngx-translate/core';
 import { ProjectIndicator } from 'src/app/models/classes/project-indicator.model';
 import { Subscription } from 'rxjs';
 import { Entity } from 'src/app/models/classes/entity.model';
@@ -61,8 +62,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
   revisions: Revision[];
 
   expandedElement: null;
-  isSameVersion: boolean;
-  showSaveConfirm: boolean;
   saveConfirmElement: number;
 
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -70,13 +69,21 @@ export class HistoryComponent implements OnInit, OnDestroy {
   private projectId: string;
   private project: Project;
   private limit: number;
+  private loadedRev: string;
+  private loadToken = 0;
+
+  // sameVersion() is called from the template for every row on every change detection
+  // cycle. Computing it there means cloning and patching the whole project each time,
+  // so the result is computed once per revisions/project change and cached here.
+  private sameVersionFlags: boolean[] = [];
 
   public showLoadMore: boolean;
+  public isLoading = false;
 
   private subscription: Subscription = new Subscription();
 
   constructor(private projectService: ProjectService,
-              private translateService: TranslateService,
+              private dialog: MatDialog,
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -115,37 +122,82 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.projectService.openedProject.subscribe((project: Project) => {
-        this.showLoadMore = true;
         this.projectId = project.id;
         this.project = project;
+
+        // A revert pushes a patched project into the same BehaviorSubject we listen to.
+        // Its rev is unchanged (the backend strips _rev before diffing), so we can tell it
+        // apart from a save and keep the revisions the user already loaded.
+        if (project.rev === this.loadedRev && this.revisions) {
+          this.computeSameVersionFlags();
+          this.changeDetector.markForCheck();
+          return;
+        }
+
+        this.loadedRev = project.rev;
+        this.showLoadMore = true;
         this.limit = 10;
         if (project.id && project.rev) {
-          this.projectService.listRevisions(project.id, this.limit).then((revisions: Revision[]) => {
-            const language = this.translateService.currentLang ? this.translateService.currentLang : this.translateService.defaultLang;
-            revisions.forEach(revision => {
-              const timeArr = [];
-              const newDate = new Date(revision.time);
-              timeArr.push(
-                newDate.getUTCDate(), this.months[newDate.getMonth()],
-                newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]
-              );
-              revision.displayedTime = timeArr;
-            });
-            this.revisions = revisions;
-            this.showLoadMore = revisions.length < 10 ? false : true;
-            this.changeDetector.markForCheck();
-          });
+          this.loadRevisions(this.limit);
         }
       })
     );
     this.projectService.updateInformationPanel(this.informations);
   }
 
+  private async loadRevisions(limit: number): Promise<void> {
+    // A load started later always wins: an in-flight request must not clobber the list
+    // with stale rows if the project is saved or switched while it is still pending.
+    const token = ++this.loadToken;
+    this.isLoading = true;
+    try {
+      const revisions = await this.projectService.listRevisions(this.projectId, limit);
+      if (token !== this.loadToken) {
+        return;
+      }
+      // Only commit the limit once the request succeeded, so a failure can be retried
+      // on the same page instead of silently skipping ahead.
+      this.limit = limit;
+      this.decorateRevisions(revisions);
+      this.revisions = revisions;
+      this.showLoadMore = revisions.length >= this.limit;
+      this.computeSameVersionFlags();
+    } catch (e) {
+      if (token === this.loadToken) {
+        console.error('Failed to load revisions', e);
+      }
+    } finally {
+      if (token === this.loadToken) {
+        this.isLoading = false;
+        this.changeDetector.markForCheck();
+      }
+    }
+  }
+
+  private decorateRevisions(revisions: Revision[]): void {
+    revisions.forEach(revision => {
+      const newDate = new Date(revision.time);
+      revision.displayedTime = [
+        newDate.getUTCDate(), this.months[newDate.getMonth()],
+        newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]
+      ];
+    });
+  }
+
   mouseOver(element){
     this.expandedElement = element;
   }
 
-  sameVersion(i){
+  // Read by the template — kept O(1), see sameVersionFlags.
+  sameVersion(i: number): boolean {
+    return this.sameVersionFlags[i] === true;
+  }
+
+  private computeSameVersionFlags(): void {
+    this.sameVersionFlags = (this.revisions || []).map((_, i) => this.computeSameVersion(i));
+  }
+
+  private computeSameVersion(i: number): boolean {
     const patchedProject = this.patchProject(i + 1);
     let equal = false;
     try {
@@ -154,8 +206,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     catch {
       equal = isEqual(patchedProject, this.project);
     }
-    this.isSameVersion = equal;
-    return (equal);
+    return equal;
   }
 
   mouseLeave(){
@@ -163,18 +214,10 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
   onLoadMore() {
-    this.limit += 10;
-    this.projectService.listRevisions(this.projectId, this.limit).then((revisions: Revision[]) => {
-      revisions.forEach(revision => {
-        const timeArr = [];
-        const newDate = new Date(revision.time);
-        timeArr.push(newDate.getUTCDate(), this.months[newDate.getMonth()],
-        newDate.getFullYear() + ' ' + newDate.toTimeString().split(' ')[0]);
-        revision.displayedTime = timeArr;
-      });
-      this.revisions = revisions;
-      this.showLoadMore = revisions.length < 10 ? false : true;
-    });
+    if (this.isLoading) {
+      return;
+    }
+    this.loadRevisions(this.limit + 10);
   }
 
   patchProject(revisionIndex) {
@@ -202,11 +245,16 @@ export class HistoryComponent implements OnInit, OnDestroy {
     return revisedProject;
   }
 
-  expand(element) {
-    return this.saveConfirmElement === element ? true : false;
-  }
+  async onRevertClick(revisionIndex): Promise<void> {
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: { messageId: 'RevertConfirmation', warning: true }
+    });
+    // Closing with the X button or the backdrop resolves to undefined, not { confirm: false }.
+    const res = await dialogRef.afterClosed().toPromise();
+    if (!res?.confirm) {
+      return;
+    }
 
-  onRevertClick(revisionIndex) {
     this.saveConfirmElement = revisionIndex;
     const patchedRevision = this.patchProject(revisionIndex + 1);
 
@@ -255,7 +303,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
       return new LogicalFrame(logFrame);
     });
 
-    console.log(patchedRevision);
     this.projectService.project.next(patchedRevision);
   }
 

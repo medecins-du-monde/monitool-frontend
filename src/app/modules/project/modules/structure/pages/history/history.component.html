@@ -30,7 +30,11 @@
               >
                 <span *ngIf="sameVersion(i); else revert_button" >{{ 'EquivalentVersion' | translate }}</span>
                 <ng-template #revert_button>
-                    <button mat-stroked-button *ngIf="!sameVersion(i)" (click)="onRevertClick(i)" class="mdm-button small-button">{{ 'RevertToVersion' | translate }}</button>
+                    <button mat-stroked-button *ngIf="!sameVersion(i)" (click)="onRevertClick(i)"
+                        [disabled]="isLoading"
+                        class="mdm-button small-button delete-button revert-button" color="warn">
+                        <mat-icon>restore</mat-icon>{{ 'RevertToVersion' | translate }}
+                    </button>
                 </ng-template>
             </div>
             <div class="static-row" *ngIf="i === saveConfirmElement">{{ 'SaveConfirm' | translate }}</div>
@@ -39,7 +43,12 @@
 
     <ng-container matColumnDef="expandedRevisions">
         <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length" class="expand-row">
-            <button mat-stroked-button class="mdm-button small-button" (click)="onLoadMore()" *ngIf="showLoadMore">{{ 'LoadMoreRevisions' | translate }}</button>
+            <button mat-button class="load-more-button" (click)="onLoadMore()"
+                [disabled]="isLoading" *ngIf="showLoadMore">
+                <span class="load-more-spinner" *ngIf="isLoading"></span>
+                <mat-icon *ngIf="!isLoading">expand_more</mat-icon>
+                {{ 'LoadMoreRevisions' | translate }}
+            </button>
         </td>
     </ng-container>
 
@@ -49,6 +58,7 @@
       [class.example-expanded-row]="expandedElement === element"
       (mouseover)='mouseOver(element)'>
     </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"
+      [class.example-detail-row-expanded]="expandedElement === row"></tr>
     <tr mat-footer-row *matFooterRowDef="['expandedRevisions']" [ngClass]="{'hidden-row': !showLoadMore }"></tr>
 </table>
