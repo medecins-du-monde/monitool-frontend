@@ -1,4 +1,5 @@
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/size_vars.scss";
 
 .mat-column-date {
   width: 200px !important;
@@ -27,7 +28,19 @@ tr.example-detail-row {
   height: 0;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
+// Eased so a revision lights up rather than snapping as the pointer sweeps the table.
+tr.example-element-row,
+tr.example-detail-row {
+  transition: background-color 150ms ease-in-out;
+}
+
+// The hovered row and the detail row that opens beneath it share one background, so the
+// revert button reads as belonging to the revision above it rather than floating free.
+// (The previous :not(.example-expanded-row) dropped the highlight at exactly the moment
+// the row expanded, which left the button with nothing tying it to a revision.)
+tr.example-element-row:hover,
+tr.example-element-row.example-expanded-row,
+tr.example-detail-row.example-detail-row-expanded {
   background: $table_hover_background;
 }
 
@@ -37,13 +50,74 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .example-element-row td {
   border-bottom-width: 1px;
+  transition: border-bottom-color 150ms ease-in-out;
+}
+
+// Drop the rule between a revision and its own detail row so the two read as one block.
+tr.example-element-row.example-expanded-row td {
+  border-bottom-color: transparent;
 }
 
 .example-element-detail {
   overflow: hidden;
   display: flex;
-  padding: 5px;
+  align-items: center;
+  padding: 6px 12px;
   justify-content: center;
+}
+
+// .delete-button (global) supplies the red fill; these add the interaction states it
+// lacks, so the critical action visibly responds to hover and press.
+.revert-button:not([disabled]) {
+  transition: background-color 120ms ease-in-out, box-shadow 120ms ease-in-out;
+  margin-bottom: 12px;
+
+  &:hover {
+    background-color: $delete_border;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    background-color: $delete_border;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+// Low emphasis on purpose: this is benign pagination and must not compete with the
+// revert button above it.
+.load-more-button {
+  color: $grey;
+  font-size: $small_text;
+
+  .mat-icon,
+  .load-more-spinner {
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+  }
+}
+
+// Plain CSS spinner rather than <mat-spinner>: Material's legacy spinner builds the
+// keyframes for a custom diameter at runtime and did not animate here.
+.load-more-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid $table_border;
+  border-top-color: $grey;
+  border-radius: 50%;
+  animation: load-more-spin 700ms linear infinite;
+}
+
+@keyframes load-more-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .mat-column-expandedDetail {
