@@ -8,6 +8,7 @@ import { Project } from 'src/app/models/classes/project.model';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 import { DataSourceComponent } from './data-source.component';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 describe('DataSourceComponent', () => {
   let component: DataSourceComponent;
@@ -21,7 +22,8 @@ describe('DataSourceComponent', () => {
         MatDialogModule,
         HttpClientTestingModule,
         LocalizedDatePipeModule,
-        MatMenuModule
+        MatMenuModule,
+        MatTooltipModule
       ]
     }).compileComponents();
   }));

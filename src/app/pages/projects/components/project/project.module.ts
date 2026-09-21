@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { ProjectComponent } from './project.component';
 import { MatLegacyCardModule as MatCardModule } from '@angular/material/legacy-card';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
@@ -27,7 +28,8 @@ import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@ang
     RouterModule,
     LocalizedDatePipeModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    OverlayModule
   ],
   exports: [ProjectComponent]
 })

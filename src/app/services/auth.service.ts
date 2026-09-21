@@ -66,6 +66,7 @@ export class AuthService {
     await this.apiService.post('/authentication/logout', {}, {responseType: 'text'})
       .then(() => {
         response = true;
+        document.cookie = "monitool:hideDelayWarning=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       })
       .catch(err => {
         console.log('An Error occured');

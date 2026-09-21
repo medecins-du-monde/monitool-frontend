@@ -121,7 +121,14 @@ export class IndicatorModalComponent implements OnInit, OnDestroy {
 
       // Filling the partitionElement list with PartitionElement objects.
       this.symbols.forEach(symbol => {
-        const listPartitionDataSource = newDataSource.filter(parameter => parameter.symbol === symbol)[0].filter.partitions;
+        const dataItem = newDataSource.filter(parameter => parameter.symbol === symbol)[0];
+        if (!dataItem || !dataItem.filter) {
+          // The formula references a variable that no longer exists in the data sources
+          // (deleted after the formula was saved). Nothing to build for this symbol —
+          // the template already hides disaggregations when `control.filter` is falsy.
+          return;
+        }
+        const listPartitionDataSource = dataItem.filter.partitions;
         listPartitionDataSource.forEach(partition => {
           const filterForm = this.data.indicator.controls.computation.get('parameters').get(`${symbol}`).get('filter') as UntypedFormGroup;
           // If there is no value, we put an empty json.

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { delay } from 'lodash';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,7 +12,6 @@ export class ConfirmModalComponent implements OnInit {
 
   public warning: boolean;
   public noActions: boolean;
-  public checkbox = false;
 
   constructor(
     private userService: UserService,
@@ -25,8 +25,8 @@ export class ConfirmModalComponent implements OnInit {
   }
 
   confirm(){
-    if (this.checkbox) {
-      document.cookie = "monitool:hideDelayWarning=true";
+    if (this.data.messageId === 'DelayWarning') {
+      document.cookie = "monitool:hideDelayWarning=true; path=/";
     }
     this.dialogRef.close({ confirm: true });
   }

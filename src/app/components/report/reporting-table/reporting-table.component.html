@@ -117,19 +117,19 @@
         *matCellDef="let element"
         [ngStyle]="{
           backgroundColor:
-            element.values[column] !== undefined && isInRange(element, column)
+            getCellViewModel(element, column).value !== undefined && getCellViewModel(element, column).inRange
               ? (element | calcColor : column)
               : 'rgb(238, 238, 238)',
           fontWeight: column === '_total' ? 'bold' : '',
-          'font-style': isItalic((element?.values)[column]) ? 'italic' : ''
+          'font-style': getCellViewModel(element, column).isItalic ? 'italic' : ''
         }"
         (contextmenu)="
           onRightClick($event, matTrigger, spanTrigger, element, column)
         "
-        [matTooltip]=" ((isInRange(element, column) ?
-              (getTooltipMessage((element?.values)[column]) | translate) :
+        [matTooltip]=" ((getCellViewModel(element, column).inRange ?
+              (getCellViewModel(element, column).tooltipMessage | translate) :
               null
-            ) | getTooltip : showComments : element.comments[column] : (element?.values)[column])
+            ) | getTooltip : showComments : element.comments[column] : getCellViewModel(element, column).value)
         "
       >
         <div
@@ -138,10 +138,11 @@
           [class.comment-cell]="
             this.showComments && element.comments && element.comments[column]
           "
+          [style.color]="getCellViewModel(element, column).inRange && getCellViewModel(element, column).displayValue === 'N/A' ? 'rgba(0, 0, 0, 0.4)' : 'black'"
         >
           {{
-            isInRange(element, column)
-              ? styleValue((element?.values)[column], element.unit)
+            getCellViewModel(element, column).inRange
+              ? getCellViewModel(element, column).displayValue
               : ""
           }}
         </div>

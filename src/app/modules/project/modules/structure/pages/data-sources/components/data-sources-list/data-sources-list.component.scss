@@ -4,3 +4,8 @@
     justify-content: end;
     gap: 8px;
 }
+
+// Let long data source names truncate instead of widening the grid column
+.mdm-card {
+    min-width: 0;
+}

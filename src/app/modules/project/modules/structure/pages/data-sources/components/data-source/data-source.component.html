@@ -1,7 +1,12 @@
 <mat-card class="with-header">
     <ng-content></ng-content>
     <mat-card-header class="card-header" [class.hidden]="form.disabled">
-        {{ form.name }}
+        <span #formName class="card-header-name"
+            #nameTooltip="matTooltip"
+            [matTooltip]="form.name"
+            matTooltipShowDelay="200"
+            (mouseenter)="nameTooltip.disabled = formName.offsetWidth >= formName.scrollWidth"
+        >{{ form.name }}</span>
         <mat-chip *ngIf="form.disabled">
             <mat-icon>visibility_off</mat-icon>
             {{'hidden' | translate}}

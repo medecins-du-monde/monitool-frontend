@@ -36,6 +36,14 @@ export class Project implements Deserializable {
     parsed?: boolean;
     comments: Comment[] = [];
     dashboard: DashboardChart[] = [];
+    clonedAt?: Date;
+    clonedBy?: string;
+    clonedByName?: string;
+    clonedWithData?: boolean;
+    clonedFrom?: string;
+    // Server-computed on list responses only (resolved from clonedFrom at query time, never
+    // stored) — must stay out of serialize().
+    clonedFromName?: string;
 
     get status(): string{
         if ( this.active ) {
@@ -99,6 +107,12 @@ export class Project implements Deserializable {
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
         this.dashboard = (input && input.dashboard) ? input.dashboard.map(d => new DashboardChart(d)) :  [];
+        this.clonedAt = (input && input.clonedAt) ? new Date(input.clonedAt) : null;
+        this.clonedBy = input ? input.clonedBy : null;
+        this.clonedByName = input ? input.clonedByName : null;
+        this.clonedWithData = input ? input.clonedWithData : null;
+        this.clonedFrom = input ? input.clonedFrom : null;
+        this.clonedFromName = input ? input.clonedFromName : null;
         return this;
     }
 
@@ -111,6 +125,10 @@ export class Project implements Deserializable {
     }
 
     serialize() {
+        // The cloned* fields are intentionally left out: they are server-owned. The backend sets
+        // them when cloning and re-applies them from the stored document on every save, so the
+        // client never needs to round-trip them — and clonedFromName is computed per request and
+        // must never be written back at all.
         const serialized = {
             active: this.active,
             continents: this.continents,

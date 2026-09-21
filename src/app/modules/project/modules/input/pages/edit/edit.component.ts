@@ -130,6 +130,11 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
       res2: 'InformationPanel.Edit_data_response6',
     } as InformationItem,
     {
+      new: true,
+      res1: 'InformationPanel.General_reporting_question6',
+      res2: 'InformationPanel.General_reporting_response6'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.input_status_question',
       res2: 'inputStatus'
     } as InformationItem,
