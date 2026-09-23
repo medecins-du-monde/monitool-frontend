@@ -1,4 +1,5 @@
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/panel_header.scss";
 
 :host {
   .mdm-section {
@@ -15,6 +16,8 @@
     color: $specific_obj_panel_color;
   }
 
+  @include panel-header-layout;
+
 
   .blue-accordion, .purpose, .specific-accordion{
 
@@ -26,12 +29,9 @@
       height: 50px;
       white-space:normal;
       align-items: center;
-      width: 80%;
       mat-icon {
         align-self: center;
         margin-right: 10px;
-        margin-top: 30px;
-        height: 100%;
       }
     }
   } 

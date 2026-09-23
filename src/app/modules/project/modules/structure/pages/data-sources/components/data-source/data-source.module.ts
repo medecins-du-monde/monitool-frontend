@@ -11,6 +11,7 @@ import { DataSourceComponent } from './data-source.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { TooltipIfTruncatedModule } from 'src/app/directives/tooltip-if-truncated/tooltip-if-truncated.module';
 
 @NgModule({
   declarations: [DataSourceComponent],
@@ -25,7 +26,8 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
     MatIconModule,
     LocalizedDatePipeModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TooltipIfTruncatedModule
   ],
   exports: [DataSourceComponent]
 })

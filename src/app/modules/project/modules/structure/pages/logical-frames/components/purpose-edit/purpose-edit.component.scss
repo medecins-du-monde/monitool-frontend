@@ -1,4 +1,5 @@
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/panel_header.scss";
 
 .mat-expansion-panel-header-description {
   mat-icon {
@@ -22,12 +23,9 @@
   height: 50px;
   white-space:normal;
   align-items: center;
-  width: 80%;
   mat-icon {
     align-self: center;
     margin-right: 10px;
-    margin-top: 30px;
-    height: 100%;
   }
 
   .header-title {
@@ -70,3 +68,4 @@
 .output {
   width: 100%;
 }
+@include panel-header-layout;

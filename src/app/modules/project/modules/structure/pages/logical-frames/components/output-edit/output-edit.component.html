@@ -55,7 +55,7 @@
             [expanded]="i === 0 ? true : false">
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p>{{ 'Activity' | translate }} {{i + 1}}:
+                    <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p [matTooltip]="activity.value.description" matTooltipShowDelay="200" appTooltipIfTruncated>{{ 'Activity' | translate }} {{i + 1}}:
                     {{activity.value.description}}</p></div>
                 </mat-panel-title>
                 <mat-panel-description>

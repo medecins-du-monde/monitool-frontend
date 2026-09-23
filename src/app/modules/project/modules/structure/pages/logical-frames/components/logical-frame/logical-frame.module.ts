@@ -9,6 +9,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LogicalFrameComponent } from './logical-frame.component';
 import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 import { MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-chips';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { TooltipIfTruncatedModule } from 'src/app/directives/tooltip-if-truncated/tooltip-if-truncated.module';
 
 @NgModule({
   declarations: [LogicalFrameComponent],
@@ -21,7 +23,9 @@ import { MatLegacyChipsModule as MatChipsModule} from '@angular/material/legacy-
     RouterModule,
     MatIconModule,
     LocalizedDatePipeModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTooltipModule,
+    TooltipIfTruncatedModule
   ],
   exports: [LogicalFrameComponent]
 })

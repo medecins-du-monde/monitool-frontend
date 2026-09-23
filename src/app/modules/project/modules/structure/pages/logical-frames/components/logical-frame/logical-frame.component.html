@@ -1,7 +1,7 @@
 <mat-card class="with-header">
     <ng-content></ng-content>
     <mat-card-header class="card-header" [class.hidden]="logicalFrame.disabled">
-        {{ logicalFrame.name }}
+        <span class="card-header-name" [matTooltip]="logicalFrame.name" matTooltipShowDelay="200" appTooltipIfTruncated>{{ logicalFrame.name }}</span>
         <mat-chip *ngIf="logicalFrame.disabled">
             <mat-icon>visibility_off</mat-icon>
             {{'hidden' | translate}}

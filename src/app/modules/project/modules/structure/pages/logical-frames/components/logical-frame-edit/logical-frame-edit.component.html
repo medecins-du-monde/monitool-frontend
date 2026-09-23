@@ -1,7 +1,7 @@
 <mat-accordion class="blue-accordion">
     <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header class="white-arrow">
-            <mat-panel-title><div class="header-title"><p>{{ 'GeneralInformations' | translate }} : {{ logFrameName }}</p></div></mat-panel-title>
+            <mat-panel-title><div class="header-title"><p [matTooltip]="logFrameName" matTooltipShowDelay="200" appTooltipIfTruncated>{{ 'GeneralInformations' | translate }} : {{ logFrameName }}</p></div></mat-panel-title>
         </mat-expansion-panel-header>
         <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
             <div class="mdm-form-group">
@@ -65,7 +65,7 @@
     <mat-accordion>
         <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header class="white-arrow">
-                <mat-panel-title><div class="header-title"><p>{{ 'GeneralObjective' | translate }}: {{ logFrameGoal }}</p></div></mat-panel-title>
+                <mat-panel-title><div class="header-title"><p [matTooltip]="logFrameGoal" matTooltipShowDelay="200" appTooltipIfTruncated>{{ 'GeneralObjective' | translate }}: {{ logFrameGoal }}</p></div></mat-panel-title>
             </mat-expansion-panel-header>
             <div [formGroup]="logicalFrameForm" class="mdm-form-expansion">
                 <div class="mdm-form-group">
@@ -123,7 +123,7 @@
                 [expanded]="i === 0 ? true: false">
                 <mat-expansion-panel-header class="white-arrow">
                     <mat-panel-title>
-                        <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p>{{ 'SpecificObjective' | translate }} {{i +
+                        <mat-icon cdkDragHandle>drag_indicator</mat-icon><div class="header-title"><p [matTooltip]="purpose.value.description" matTooltipShowDelay="200" appTooltipIfTruncated>{{ 'SpecificObjective' | translate }} {{i +
                         1}}: {{purpose.value.description}}</p></div>
                     </mat-panel-title>
                     <mat-panel-description>

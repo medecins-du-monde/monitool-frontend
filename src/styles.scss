@@ -318,6 +318,19 @@ mat-hint {
   background-color: $card_header_background;
   padding: 16px 5px;
 
+  .card-header-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & + mat-chip {
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+  }
+
   &.hidden {
     background: repeating-linear-gradient(
     45deg,
@@ -1105,6 +1118,9 @@ code.title{
   
   .mat-content {
     overflow: visible;
+    // Without this, a nowrap title can't shrink and pushes the header's buttons
+    // out of view (overflow: visible above opts .mat-content out of shrinking).
+    min-width: 0;
   }
 }
 
@@ -1118,7 +1134,10 @@ code.title{
   overflow: hidden;
   align-items: center;
   white-space: nowrap;
-  width: 80%;
+  // No fixed width: the title takes the space its panel's buttons don't need, and
+  // min-width lets it shrink below its longest word instead of pushing them out.
+  flex: 1 1 auto;
+  min-width: 0;
   mat-icon {
     align-self: center;
     margin-right: 10px;
@@ -1139,6 +1158,9 @@ code.title{
 
 .mat-tooltip {
   font-size: $small_text;
+  // Material caps the tooltip at 250px and ellipsises the overflow; let long
+  // unbroken names wrap onto several lines instead of being cut.
+  overflow-wrap: anywhere;
 }
 
 // Style of the message for information forms

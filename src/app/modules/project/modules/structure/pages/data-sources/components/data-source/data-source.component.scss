@@ -2,19 +2,6 @@
     flex-direction: row;
 }
 
-.card-header-name {
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    & + mat-chip {
-        flex-shrink: 0;
-        margin-left: 8px;
-    }
-}
-
 p {
     max-width: 580px;
 }
