@@ -47,7 +47,7 @@ describe('DownloadService', () => {
     const apiUrl = '/api/export/project:1/month_week_mon/fr/false' + query;
     const generate = spyOn(service, 'generate');
     const page = new DownloadExcelPageComponent(
-      {updateInformationPanel: () => {}} as any,
+      {updateInformationPanel: jasmine.createSpy('updateInformationPanel')} as any,
       service,
       {} as any,
       {url: '/project/project:1/reporting/general/download?export=' + encodeURIComponent(apiUrl)} as any
