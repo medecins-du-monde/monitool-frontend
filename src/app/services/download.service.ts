@@ -20,6 +20,10 @@ export class DownloadService implements OnDestroy {
   status = new BehaviorSubject<string>('waiting');
   progress = new BehaviorSubject<DownloadProgress>({ current: 0, total: 0, percent: 0 });
 
+  private checkTimer: ReturnType<typeof setTimeout> | null = null;
+  private generationStarted = 0;
+  private retries = 0;
+
   private subscription: Subscription = new Subscription();
   private progressTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -28,70 +32,85 @@ export class DownloadService implements OnDestroy {
       private projectService: ProjectService,
       private indicatorService: IndicatorService,
       private translateService: TranslateService
-    ) {
-    this.subscription.add(
-      this.url.subscribe(url => {
-        console.log(url);
-      })
-    );
+    ) {}
+
+  generate(retry = false): void {
+    if (!this.url.getValue()) return;
+    if (!retry) this.retries = 0;
+    this.generationStarted = Date.now();
+    if (this.checkTimer !== null) clearTimeout(this.checkTimer);
+    this.progress.next({ current: 0, total: 0, percent: 0 });
+    this.status.next('generating');
+    this.startProgressPolling();
+    this.subscription.add(this.httpClient.get<{message: string}>(this.url.getValue()).subscribe({
+      next: body => body.message === 'done' ? this.complete() : this.check(),
+      error: error => {
+        if (error.status === 409) this.retryGeneration();
+        else if ([0, 502, 504].includes(error.status)) this.check();
+        else this.fail();
+      }
+    }));
   }
 
-  generate(): void {
-    console.log('generate?')
-    if (this.url.getValue() !== ''){
-      this.progress.next({ current: 0, total: 0, percent: 0 });
-      this.status.next('generating');
-      this.startProgressPolling();
-
-      this.subscription.add(
-        this.httpClient.get(this.url.getValue(), {observe: 'response'}).subscribe(resp => {
-          this.check();
-        }, err => {
-          console.log(err);
-          this.check();
-        })
-      );
-    }
+  /** Keep the complete criteria on every status and file request. */
+  private endpoint(action: string): string {
+    const [base, query] = this.url.getValue().split('?');
+    return base.replace(/\/$/, '') + '/' + action + (query ? '?' + query : '');
   }
 
   check(): void {
     this.stopProgressPolling();
     this.status.next('checking');
-    if (this.url.getValue() !== ''){
-      this.subscription.add(
-        this.httpClient.get(this.url.getValue().split('?')[0] + '/check',  {observe: 'response'}).subscribe(resp => {
-          const body = { ...resp.body };
+    this.subscription.add(this.httpClient.get<{message: string}>(this.endpoint('check')).subscribe({
+      next: body => {
+        if (body.message === 'done') this.complete();
+        else if (Date.now() - this.generationStarted < 15 * 60 * 1000) {
+          this.checkTimer = setTimeout(() => this.check(), 2000);
+        } else this.fail();
+      },
+      error: () => this.fail()
+    }));
+  }
 
-          if (body['message'] === 'done'){
-            this.progress.next({ current: 1, total: 1, percent: 100 });
-            this.status.next('done');
-            setTimeout(() => {
-              this.download();
-            }, 1000);
-          }
-          else{
-            setTimeout(() => {
-              this.check();
-            }, 15000);
-          }
-        })
-      );
-    }
+  private complete(): void {
+    this.stopProgressPolling();
+    this.progress.next({ current: 1, total: 1, percent: 100 });
+    this.status.next('done');
+    this.download();
+  }
+
+  private fail(): void {
+    this.stopProgressPolling();
+    if (this.checkTimer !== null) clearTimeout(this.checkTimer);
+    this.status.next('error');
+  }
+
+  private retryGeneration(): void {
+    if (this.retries++ < 1) this.generate(true);
+    else this.fail();
   }
 
   async download(): Promise<void> {
-    if (this.url.getValue() !== '') {
-      const fileUrl = this.url.getValue().split('?')[0];
-      this.httpClient.get(fileUrl + '/file', { responseType: 'blob', observe: 'response' }).subscribe(async resp => {
-        const url = window.URL.createObjectURL(resp.body);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = await this.getFileName(fileUrl);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove();
-      });
-    }
+    if (!this.url.getValue()) return;
+    const fileUrl = this.url.getValue().split('?')[0];
+    this.subscription.add(this.httpClient.get(this.endpoint('file'), { responseType: 'blob' }).subscribe({
+      next: async blob => {
+        try {
+          const filename = await this.getFileName(fileUrl);
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          a.remove();
+        } catch { this.fail(); }
+      },
+      error: error => {
+        if ([404, 409].includes(error.status)) this.retryGeneration();
+        else this.fail();
+      }
+    }));
   }
 
   private startProgressPolling(): void {
@@ -106,7 +125,7 @@ export class DownloadService implements OnDestroy {
   private pollProgressOnce(): void {
     const baseUrl = this.url.getValue().split('?')[0];
     if (!baseUrl || this.status.getValue() !== 'generating') return;
-    this.httpClient.get<DownloadProgress>(baseUrl + '/progress').subscribe({
+    this.httpClient.get<DownloadProgress>(this.endpoint('progress')).subscribe({
       next: data => {
         this.progress.next(data);
         if (this.status.getValue() === 'generating') this.scheduleProgressPoll();
@@ -145,6 +164,7 @@ export class DownloadService implements OnDestroy {
 
   ngOnDestroy(): void {
     this.stopProgressPolling();
+    if (this.checkTimer !== null) clearTimeout(this.checkTimer);
     this.subscription.unsubscribe();
   }
 }

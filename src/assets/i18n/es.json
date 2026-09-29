@@ -546,6 +546,8 @@
         "General_Naming_convention_question": "¿Cómo elegir nombres adecuados para sitios de recolección, fuentes de datos, datos e indicadores?",
         "General_Naming_convention_response": "Utilice nombres cortos para nombrar los diferentes componentes de su proyecto.<br>Al evitar los acrónimos, mejora la legibilidad de sus gráficos y tablas y permite una mejor comprensión de su proyecto por parte de todos los interesados.",
         "General_reporting": "Informe general",
+        "Export_cache_question": "¿Cómo se guardan en caché las exportaciones Excel?",
+        "Export_cache_response": "Las exportaciones Excel se guardan temporalmente para agilizar las descargas repetidas. Si el tipo de exportación y los filtros son iguales, se reutiliza el archivo mientras siga siendo válido. Cuando se necesita espacio, se elimina el archivo cuya última descarga sea más antigua. Los cambios en los datos o la configuración del proyecto, o la caducidad del archivo, requieren una nueva exportación.",
         "General_reporting_description": "Esta página le permite explorar sus datos jerárquicamente a partir de una visión general de su proyecto.",
         "General_reporting_home": "Informe general inicio",
         "General_reporting_question1": "¿Cómo mostrar un gráfico?",

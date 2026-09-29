@@ -1,3 +1,4 @@
+import DatesHelper from 'src/app/utils/dates-helper';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
@@ -31,6 +32,7 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   @Input() project: Project;
   @Input() filter: {
     dimension?: string,
+    entities?: string[],
     continents?: string[],
     countries?: string[],
     _start?: Date,
@@ -144,7 +146,7 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
   }
   
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filter && changes.filter.currentValue.dimension && changes.filter.currentValue.dimension !== changes.filter.previousValue.dimension) {
+    if (changes.filter && changes.filter.currentValue.dimension && changes.filter.currentValue.dimension !== changes.filter.previousValue?.dimension) {
       this.dimensionForm.patchValue({dimensionId: changes.filter.currentValue.dimension})
     }
   }
@@ -206,6 +208,11 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (!this.crossCuttingIndicator) {
+          this.openProjectExport(false);
+          dialogSubscription.unsubscribe();
+          return;
+        }
         const url =
           'api_export_' +
           (this.crossCuttingIndicator ? this.crossCuttingIndicator.indicator.id : this.currentProjectId) +
@@ -235,6 +242,11 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
 
     const dialogSubscription = dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (!this.crossCuttingIndicator) {
+          this.openProjectExport(true);
+          dialogSubscription.unsubscribe();
+          return;
+        }
         const url =
           'api_export_' +
           (this.crossCuttingIndicator ? this.crossCuttingIndicator.indicator.id : this.currentProjectId) +
@@ -249,6 +261,20 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
         dialogSubscription.unsubscribe();
       }
     });
+  }
+
+  private projectExportFilters() {
+    return {
+      _start: this.filter?._start ? DatesHelper.dateToString(this.filter._start) : undefined,
+      _end: this.filter?._end ? DatesHelper.dateToString(this.filter._end) : undefined,
+      entity: this.filter?.entities
+    };
+  }
+
+  private openProjectExport(minimized: boolean): void {
+    const apiUrl = `/api/export/${this.currentProjectId}/${this.currentPeriodicity}/${this.currentLang}/${minimized}` +
+      '?filters=' + encodeURIComponent(JSON.stringify(this.projectExportFilters()));
+    window.open(this.router.url.split('?')[0] + '/download?export=' + encodeURIComponent(apiUrl), '_blank');
   }
 
   /** Downloads the current view of the table */
@@ -267,7 +293,9 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
         const tableID = this.reportingService.saveCurrentTableView(
           this.crossCuttingIndicator ?
           this.crossCuttingIndicator.indicator.id :
-          this.project.id
+          this.project.id,
+          this.crossCuttingIndicator ? {} : this.projectExportFilters(),
+          this.currentPeriodicity
         );
         window.open(this.router.url + '/download/' + 'export_current_view/' + tableID, '_blank');
         dialogSubscription.unsubscribe();

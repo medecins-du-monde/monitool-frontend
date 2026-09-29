@@ -533,6 +533,8 @@
         "General_Naming_convention_question": "How to pick relevant names for collection sites, data sources, vairables and indicators?",
         "General_Naming_convention_response": "Use short names.<br>By avoiding acronyms, you better your graph and table's lisibility and allow a better comprehension of the project for everyone else.",
         "General_reporting": "General reporting",
+        "Export_cache_question": "How are Excel exports cached?",
+        "Export_cache_response": "Excel exports are saved temporarily so repeated downloads are faster. The same export type and filters reuse the saved file while it is valid. When space is needed, the file downloaded least recently is removed. Changes to project data or configuration, or expiration, require a new export.",
         "General_reporting_description": "This page allows you to explore your data hierarchically starting from a general vision of your project.",
         "General_reporting_home": "General reporting home",
         "General_reporting_question1": "How to display a graph?",
