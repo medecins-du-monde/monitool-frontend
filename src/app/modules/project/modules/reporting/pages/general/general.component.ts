@@ -40,6 +40,10 @@ type RowWithCommentInfo = {
 export class GeneralComponent implements OnInit, OnDestroy {
   informations = [
     {
+      res1: 'InformationPanel.Export_cache_question',
+      res2: 'InformationPanel.Export_cache_response'
+    } as InformationItem,
+    {
       res1: 'InformationPanel.General_reporting',
       res2: 'InformationPanel.General_reporting_description'
     } as InformationItem,

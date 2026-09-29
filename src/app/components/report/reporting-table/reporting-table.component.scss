@@ -308,6 +308,14 @@ tr.mat-header-row {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .partial-value {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentColor;
+    text-underline-offset: 3px;
+  }
 }
 
 .lastUpdate {
