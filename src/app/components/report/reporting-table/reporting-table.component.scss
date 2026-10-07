@@ -1,5 +1,6 @@
 @import "src/assets/theme/size_vars.scss";
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/partial_value";
 
 .big-table {
   max-height: 76vh !important;
@@ -310,11 +311,7 @@ tr.mat-header-row {
   justify-content: center;
 
   .partial-value {
-    text-decoration-line: underline;
-    text-decoration-style: dotted;
-    text-decoration-thickness: 1px;
-    text-decoration-color: currentColor;
-    text-underline-offset: 3px;
+    @include partial-value-underline;
   }
 }
 

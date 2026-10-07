@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import "./assets/theme/partial_value";
 @import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
 @import '~quill/dist/quill.snow.css';
@@ -743,6 +744,10 @@ hot-table {
   z-index: 2;
   background-color: #fff;
   padding: 0px !important;
+  .partial-value {
+    font-style: italic;
+    @include partial-value-underline;
+  }
   table{
     border-style: solid;
     border-width: 1px;

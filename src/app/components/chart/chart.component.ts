@@ -202,7 +202,14 @@ export class ChartComponent implements OnDestroy, AfterViewInit {
               } else {
                 formattedValue = Number(value.replace('null', '').replace(',', '.').replace(/\s/g, '')).toLocaleString('de-DE');
               }
-              innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + formattedValue + '</td></tr>';
+              // Read the original point: Chart.js formats partial numeric strings as numbers.
+              // Tooltip rows can omit datasets, so use the point's dataset/index metadata.
+              const tooltipPoint = tooltipModel.dataPoints?.[i];
+              const point = this.data.datasets[tooltipPoint?.datasetIndex]?.data?.[tooltipPoint?.index];
+              const rawValue = point !== null && typeof point === 'object' ? point.y : point;
+              const isPartial = typeof rawValue === 'string' && rawValue.trim() !== '' && Number.isFinite(Number(rawValue));
+              const valueHtml = isPartial ? '<span class="partial-value">' + formattedValue + '</span>' : formattedValue;
+              innerHtml += '<tr><td style="display: flex;">' + span + name + '</td><td class="dashed">' + valueHtml + '</td></tr>';
 
           });
           innerHtml += '</tbody>';

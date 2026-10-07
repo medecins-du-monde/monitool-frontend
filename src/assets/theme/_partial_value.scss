@@ -1,0 +1,7 @@
+@mixin partial-value-underline {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+  text-underline-offset: 3px;
+}
