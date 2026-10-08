@@ -893,6 +893,33 @@ mat-hint {
 
 // === FORMS ===
 
+// Material's outline is three boxes (start/gap/end) with one side's border removed each,
+// so their straight top edges are painted separately from the rounded corners. At fractional
+// positions (custom paddings, Windows fonts/scaling) that 1px top edge fades out or vanishes
+// while the corners stay. Without a floating label there is no notch to cut, so draw the
+// outline as a single box whose four sides render together.
+.mat-form-field-appearance-outline:not(.mat-form-field-has-label) {
+  .mat-form-field-outline {
+    border: 1px solid currentColor;
+    border-radius: 5px;
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      border: none;
+    }
+  }
+
+  .mat-form-field-outline-thick {
+    border-width: 2px;
+  }
+}
+
+// The theme's default idle outline (12% black) is too faint to survive anti-aliasing.
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-outline:not(.mat-form-field-outline-thick) {
+  color: rgba(0, 0, 0, .24);
+}
+
 .mdm-form {
   padding: 16px 10px;
   background-color: $form_background;
@@ -919,7 +946,7 @@ mat-hint {
   &:not(.searchbar) {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
-        border-radius: 4px;
+        border-radius: 5px;
         background: $form_background;
       }
     }
@@ -928,7 +955,7 @@ mat-hint {
   &.searchbar {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
-        border-radius: 4px;
+        border-radius: 5px;
         background: $searchbar_background;
       }
     }
