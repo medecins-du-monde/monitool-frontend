@@ -8,13 +8,14 @@ import { ProjectService } from './services/project.service';
 import { Subscription } from 'rxjs';
 import { LegacyTooltipComponent as TooltipComponent } from '@angular/material/legacy-tooltip';
 import { AppVersionService } from './services/app-version.service';
+import { sanitizeTooltipHtml } from './utils/html-sanitizer';
 
 Object.defineProperty(TooltipComponent.prototype, 'message', {
   set(v: any) {
       const el = document.querySelectorAll('.mat-tooltip');
 
       if (el) {
-          el[el.length - 1].innerHTML = v;
+          el[el.length - 1].innerHTML = v == null ? '' : sanitizeTooltipHtml(String(v));
       }
   },
 });
