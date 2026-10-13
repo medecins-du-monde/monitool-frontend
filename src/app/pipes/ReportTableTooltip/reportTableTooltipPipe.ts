@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { escapeHtml } from '../../utils/html-sanitizer';
 
 
 /*
@@ -29,7 +30,7 @@ export class ReportTableTooltipPipe implements PipeTransform {
       if (originalTooltip) {
         tooltipContent += `
           <div style='opacity: .75; font-style: italic; font-size: small; line-height: 1.1em'>
-            ${originalTooltip}
+            ${escapeHtml(originalTooltip)}
           </div>`;
       }
       if (comment) {
@@ -38,7 +39,7 @@ export class ReportTableTooltipPipe implements PipeTransform {
 
         tooltipContent += `${
           tooltipContent ? '<div style="width: 100%; background: white; height: 1px; opacity: .4; margin: 3px 0"></div>' : ''
-        }<div style='font-size: small; line-height: 1.1em;'>${comment.value}</div>`;
+        }<div style='font-size: small; line-height: 1.1em;'>${escapeHtml(comment.value)}</div>`;
 
         if (valueChanged) {
           tooltipContent +=
@@ -50,7 +51,7 @@ export class ReportTableTooltipPipe implements PipeTransform {
       }
     } else {
       if (originalTooltip) {
-        tooltipContent += `<div style='font-size: small; line-height: 1.1em'>${originalTooltip}</div>`;
+        tooltipContent += `<div style='font-size: small; line-height: 1.1em'>${escapeHtml(originalTooltip)}</div>`;
       }
     }
 
