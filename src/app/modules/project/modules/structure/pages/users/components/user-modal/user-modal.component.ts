@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -7,12 +7,23 @@ import { HintUserData } from 'src/app/mocked/hint-user-project-element.mocked';
 import { Entity } from 'src/app/models/classes/entity.model';
 import { Form } from 'src/app/models/classes/form.model';
 import { Group } from 'src/app/models/classes/group.model';
+import { LogicalFrame } from 'src/app/models/classes/logical-frame.model';
 import { Project } from 'src/app/models/classes/project.model';
 import { User } from 'src/app/models/classes/user.model';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 import { rolesList } from '../../constants/role';
 import { typesList } from '../../constants/type';
+
+// A restricted read-only user must see at least one logical frame or data source.
+export function readRestrictionValidator(group: AbstractControl): ValidationErrors | null {
+  const { role, restricted, logicalFrames, dataSources } = group.value;
+  if (role !== 'read' || !restricted) {
+    return null;
+  }
+  const hasSelection = (items: any[]) => (items || []).some(item => item.id !== 'all');
+  return hasSelection(logicalFrames) || hasSelection(dataSources) ? null : { restrictionRequired: true };
+}
 
 @Component({
   selector: 'app-user-modal',
@@ -29,6 +40,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
   roles: any[];
   project: Project;
   dataSources: Form[];
+  logicalFrames: LogicalFrame[];
   entities: Entity[];
   groups: Group[];
 
@@ -70,6 +82,7 @@ export class UserModalComponent implements OnInit, OnDestroy {
         this.entities = project.entities;
         this.groups = project.groups;
         this.dataSources = project.forms;
+        this.logicalFrames = project.logicalFrames;
 
         this.resetChanges();
 
@@ -127,6 +140,8 @@ export class UserModalComponent implements OnInit, OnDestroy {
     }
     formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
     formValue.dataSources = formValue.dataSources.filter(d => this.dataSources.includes(d));
+    formValue.logicalFrames = formValue.logicalFrames.filter(lf => this.logicalFrames.includes(lf));
+    formValue.restricted = formValue.role === 'read' && formValue.restricted;
     const user = new User(formValue);
     this.dialogRef.close({ data: user });
   }
@@ -138,10 +153,12 @@ export class UserModalComponent implements OnInit, OnDestroy {
       type: [(this.data ? this.data.type : this.types[0].value), Validators.required],
       entities: [((this.data && this.data.entities) ? this.data.entities : [])],
       dataSources: [((this.data && this.data.dataSources) ? this.data.dataSources : [])],
+      restricted: [this.data ? this.data.restricted : false],
+      logicalFrames: [((this.data && this.data.logicalFrames) ? this.data.logicalFrames : [])],
       name: [this.data ? this.data.name : null],
       username: [this.data ? this.data.username : null],
       password: ['']
-    });
+    }, { validators: readRestrictionValidator });
   }
 
   onSiteRemoved(site: Entity): void {
@@ -154,11 +171,20 @@ export class UserModalComponent implements OnInit, OnDestroy {
     this.userForm.controls.dataSources.setValue(dataSources.filter(d => d.id !== dataSource.id));
   }
 
+  onRoleChange(): void {
+    this.userForm.patchValue({ dataSources: [], entities: [], logicalFrames: [], restricted: false });
+  }
+
+  onRestrictedChange(): void {
+    this.userForm.patchValue({ dataSources: [], logicalFrames: [] });
+  }
+
   canSubmitForm(): boolean {
     const cleanedForm = {
       ...this.userForm.value,
       dataSources: this.userForm.value.dataSources.filter(el => el.id !== 'all'),
       entities: this.userForm.value.entities.filter(el => el.id !== 'all'),
+      logicalFrames: this.userForm.value.logicalFrames.filter(el => el.id !== 'all'),
     };
     return JSON.stringify(cleanedForm) !== JSON.stringify(this.originalForm) && this.userForm.valid;
   }

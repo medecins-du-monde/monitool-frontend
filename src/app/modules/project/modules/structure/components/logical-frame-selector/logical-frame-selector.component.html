@@ -1,0 +1,33 @@
+<mat-form-field [formGroup]="userForm" appearance="outline" class="mdm-form-field">
+    <mat-select
+      formControlName="logicalFrames"
+      placeholder="{{ 'LogicalFrameworks' | translate }}"
+      multiple
+      disableOptionCentering
+      panelClass="myPanelClass"
+    >
+        <mat-select-trigger>
+            <mat-chip-list>
+                <mat-chip *ngFor="let logicalFrame of selectedLogicalFrames" [removable]="true"
+                    (removed)="onLogicalFrameRemoved(logicalFrame)">
+                    <mat-icon class="chip" *ngIf="checkIfAllOption(logicalFrame)">arrow_circle_down</mat-icon>
+                    {{ logicalFrame.name }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+        </mat-select-trigger>
+        <mat-option (click)="toggleAllSelection()" [value]="allOption"><mat-icon class="option">arrow_circle_down</mat-icon>{{ 'All' | translate }}</mat-option>
+        <mat-option *ngFor="let logicalFrame of logicalFrames" (click)="toggleNormalOption(logicalFrame)" [value]="logicalFrame">
+            <div style="display: flex; justify-content: space-between; gap: 20px; align-items: center;">
+                {{ logicalFrame.name }}
+                <mat-chip *ngIf="logicalFrame.disabled" [removable]="true" style="margin: -10px 0">
+                    <mat-icon class="option" style="transform: none !important; margin-top: 2px;">visibility_off</mat-icon>
+                    {{'hidden' | translate}}
+                </mat-chip>
+            </div>
+        </mat-option>
+    </mat-select>
+    <mat-hint>
+        <mat-icon>info</mat-icon>{{ hint | translate }}
+    </mat-hint>
+</mat-form-field>
