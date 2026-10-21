@@ -1,6 +1,6 @@
 @import "src/assets/theme/size_vars.scss";
 
-app-collection-sites-selector, app-data-source-selector{
+app-collection-sites-selector, app-data-source-selector, app-logical-frame-selector{
   flex: 1;
   display: flex;
   width: 100%;
@@ -19,6 +19,22 @@ app-user-rights-table {
 mat-hint {
   mat-icon {
     margin: 0;
+  }
+}
+
+.restrict-access {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+
+  mat-hint {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    opacity: .7;
   }
 }
 

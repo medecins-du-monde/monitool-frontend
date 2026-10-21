@@ -103,6 +103,9 @@ export class Project implements Deserializable {
             if (u.dataSources){
                 user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
             }
+            if (u.logicalFrames){
+                user.logicalFrames = this.logicalFrames.filter(lf => u.logicalFrames.indexOf(lf.id) >= 0);
+            }
             return user;
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
