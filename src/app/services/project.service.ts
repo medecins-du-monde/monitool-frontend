@@ -10,6 +10,13 @@ import InformationItem from '../models/interfaces/information-item';
 import { Comment } from './comment.service';
 import { DashboardChart } from '../models/classes/dashboard-chart.model';
 
+export interface CloneReview {
+  original: { _id: string, name: string, active: boolean } | null;
+  sameNameAsOriginal: boolean;
+  originalModifiedSince: string | null;
+  similarProjects: { _id: string, name: string, countries: string[], start: string, end: string }[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -255,6 +262,21 @@ export class ProjectService implements OnDestroy {
     const project = new Project();
     const response: any = await this.apiService.put(`/resources/project/${project.id}?from=${id}&with_data=true`);
     return new Project(response);
+  }
+
+  public async getCloneReview(id: string): Promise<CloneReview> {
+    return await this.apiService.get(`/resources/project/${id}/clone-review`) as unknown as CloneReview;
+  }
+
+  public async removeCloneTag(id: string, confirmations: Record<string, boolean>): Promise<Project> {
+    const response: any = await this.apiService.post(`/resources/project/${id}/remove-clone-tag`, { confirmations });
+    const themes = await this.themeService.list();
+    const savedProject = new Project(response);
+    savedProject.themes = themes.filter(t => response.themes.indexOf(t.id) >= 0);
+    this.project.next(savedProject.copy());
+    this.savedProject.next(savedProject.copy());
+    this.currentProject = savedProject.copy();
+    return savedProject;
   }
 
   public async listRevisions(id: string, limit: number): Promise<Revision[]> {

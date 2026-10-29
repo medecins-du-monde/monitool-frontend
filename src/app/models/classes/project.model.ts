@@ -12,6 +12,12 @@ import DatesHelper from 'src/app/utils/dates-helper';
 import { Comment } from 'src/app/services/comment.service';
 import { DashboardChart } from './dashboard-chart.model';
 
+export interface CloneFinalization {
+    at: Date;
+    by: string;
+    byName: string;
+}
+
 export class Project implements Deserializable {
     id: string;
     rev: string;
@@ -44,6 +50,12 @@ export class Project implements Deserializable {
     // Server-computed on list responses only (resolved from clonedFrom at query time, never
     // stored) — must stay out of serialize().
     clonedFromName?: string;
+    // Set by the server when the owner removes the Clone tag; the cloned* fields are kept for traceability.
+    cloneFinalization?: CloneFinalization;
+
+    get isCloneTagged(): boolean {
+        return !!this.clonedAt && !this.cloneFinalization;
+    }
 
     get status(): string{
         if ( this.active ) {
@@ -103,6 +115,9 @@ export class Project implements Deserializable {
             if (u.dataSources){
                 user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
             }
+            if (u.logicalFrames){
+                user.logicalFrames = this.logicalFrames.filter(lf => u.logicalFrames.indexOf(lf.id) >= 0);
+            }
             return user;
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
@@ -113,6 +128,9 @@ export class Project implements Deserializable {
         this.clonedWithData = input ? input.clonedWithData : null;
         this.clonedFrom = input ? input.clonedFrom : null;
         this.clonedFromName = input ? input.clonedFromName : null;
+        this.cloneFinalization = (input && input.cloneFinalization)
+            ? { at: new Date(input.cloneFinalization.at), by: input.cloneFinalization.by, byName: input.cloneFinalization.byName }
+            : null;
         return this;
     }
 
@@ -125,7 +143,7 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-        // The cloned* fields are intentionally left out: they are server-owned. The backend sets
+        // The cloned* and cloneFinalization fields are intentionally left out: they are server-owned. The backend sets
         // them when cloning and re-applies them from the stored document on every save, so the
         // client never needs to round-trip them — and clonedFromName is computed per request and
         // must never be written back at all.

@@ -12,6 +12,8 @@ import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 import { DataSourceSelectorModule } from '../../../../components/data-source-selector/data-source-selector.module';
+import { LogicalFrameSelectorModule } from '../../../../components/logical-frame-selector/logical-frame-selector.module';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { UserRightsTableModule } from 'src/app/components/user-rights-table/user-rights-table.module';
 
@@ -22,6 +24,8 @@ import { UserRightsTableModule } from 'src/app/components/user-rights-table/user
     CommonModule,
     CollectionSitesSelectorModule,
     DataSourceSelectorModule,
+    LogicalFrameSelectorModule,
+    MatCheckboxModule,
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,

@@ -26,6 +26,9 @@ import { skip } from 'rxjs/operators';
 import { AlertAutoDateChangeComponent } from './alert-auto-date-change/alert-auto-date-change.component';
 import { DashboardChart } from 'src/app/models/classes/dashboard-chart.model';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/classes/user.model';
+import ProjectRoleHelper, { ReadRestriction } from 'src/app/utils/project-role-helper';
 
 type RowWithCommentInfo = {
   commentInfo: Comment;
@@ -92,7 +95,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     } as InformationItem,
     {
       res1: 'InformationPanel.General_reporting_question8',
-      res2: 'InformationPanel.General_reporting_response8'
+      res2: 'InformationPanel.General_reporting_response8',
+      new: true
     } as InformationItem
   ];
 
@@ -109,7 +113,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private commentService: CommentService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   project: Project;
@@ -139,6 +144,9 @@ export class GeneralComponent implements OnInit, OnDestroy {
   showComments = true;
   showHidden = false;
   userIsAdmin = false;
+  // Restricted read-only users only see their logical frames / data sources.
+  readRestriction: ReadRestriction | null = null;
+  private currentUser: User;
 
   updatedFilterDate?: Date;
   updatedDimension?: string;
@@ -171,6 +179,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       this.projectService.openedProject.subscribe((project: Project) => {
         this.project = project;
         this.entities = this.project.entities;
+        this.readRestriction = ProjectRoleHelper.getReadRestriction(this.currentUser, this.project);
         this.indicatorService
           .listForProject(this.project.themes.map(x => x.id))
           .then((crosscutting: Indicator[]) => {
@@ -189,6 +198,14 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.chartService.currentType.subscribe(type => {
         this.chartType = type;
+      })
+    );
+
+    this.subscription.add(
+      this.authService.currentUser.subscribe((user: User) => {
+        this.currentUser = user;
+        this.readRestriction = ProjectRoleHelper.getReadRestriction(this.currentUser, this.project);
+        this.buildIndicators();
       })
     );
 
@@ -231,6 +248,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
 
         // We don't add it if disabled
         if (logicalFrame.disabled && !this.showHidden) continue;
+        if (this.readRestriction && !this.readRestriction.logicalFrameIds.has(logicalFrame.id)) continue;
 
         rows.push({
           title: `${this.translateService.instant('LogicalFramework')}: ${
@@ -334,7 +352,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.project.crossCutting) {
+    if (this.project.crossCutting && !this.readRestriction) {
       path = 'crossCutting';
       this.buildCrossCuttingIndicators();
 
@@ -400,7 +418,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.project.extraIndicators) {
+    if (this.project.extraIndicators && !this.readRestriction) {
       path = '';
       rows.push({
         title: `${this.translateService.instant('ExtraIndicators')}`,
@@ -420,6 +438,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
     if (this.project.forms) {
       for (const form of this.project.forms) {
         if (form.disabled && !this.showHidden) continue;
+        if (this.readRestriction && !this.readRestriction.dataSourceIds.has(form.id)) continue;
         
         path = `form:${form.id}`;
         rows.push({

@@ -134,6 +134,14 @@ export class LogicalFramesListComponent implements OnInit, OnDestroy {
 
   onDelete(logicalFrame: LogicalFrame): void {
     this.project.logicalFrames = this.project.logicalFrames.filter(x => x.id !== logicalFrame.id);
+
+    // Delete the logical frame from restricted read-only users
+    this.project.users.forEach(user => {
+      if (user.logicalFrames) {
+        user.logicalFrames = user.logicalFrames.filter(lf => lf.id !== logicalFrame.id);
+      }
+    });
+
     this.projectService.project.next(this.project);
   }
 
