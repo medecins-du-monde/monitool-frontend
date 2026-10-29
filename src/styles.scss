@@ -1441,7 +1441,7 @@ code.title{
   max-width: 400px;
 }
 
-.italic-dotted {
+.partial-value {
   font-style: italic;
-  text-decoration: underline dotted;
+  @include partial-value-underline;
 }

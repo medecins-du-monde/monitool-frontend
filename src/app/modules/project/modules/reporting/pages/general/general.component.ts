@@ -95,7 +95,8 @@ export class GeneralComponent implements OnInit, OnDestroy {
     } as InformationItem,
     {
       res1: 'InformationPanel.General_reporting_question8',
-      res2: 'InformationPanel.General_reporting_response8'
+      res2: 'InformationPanel.General_reporting_response8',
+      new: true
     } as InformationItem
   ];
 
