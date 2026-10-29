@@ -9,6 +9,8 @@ import { ConfirmModalModule } from 'src/app/components/confirm-modal/confirm-mod
 import { HistoryRoutingModule } from './history-routing.module';
 import { HistoryComponent } from './history.component';
 import { RevisionSummaryModule } from './revision-summary/revision-summary.module';
+import { RouterModule } from '@angular/router';
+import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-date-pipe.module';
 
 @NgModule({
     declarations: [HistoryComponent],
@@ -21,7 +23,9 @@ import { RevisionSummaryModule } from './revision-summary/revision-summary.modul
         MatDialogModule,
         MatIconModule,
         ConfirmModalModule,
-        RevisionSummaryModule
+        RevisionSummaryModule,
+        RouterModule,
+        LocalizedDatePipeModule
     ]
 })
 export class HistoryModule { }
