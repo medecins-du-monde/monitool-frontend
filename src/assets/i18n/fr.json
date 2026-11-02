@@ -261,6 +261,11 @@
       },
       "dashboard_add": "Un graphique a été ajouté au tableau de bord",
       "dashboard_remove": "Un graphique a été supprimé du tableau de bord",
+      "links_add": "Ajout du lien utile <code>{{item.title}}</code>",
+      "links_remove": "Suppression du lien utile <code>{{item.title}}</code>",
+      "links_move": "Réorganisation des liens utiles",
+      "links_title_replace": "Renommage du lien utile <code>{{before}}</code> en <code>{{after}}</code>",
+      "links_url_replace": "Modification de l'URL du lien utile <code>{{link.title}}</code> de <code>{{before}}</code> à <code>{{after}}</code>",
 
       "themes_add": "Ajoute un Combat Politique au projet",
       "themes_move": "Reordonne les Combats Politiques du projet",
@@ -648,7 +653,9 @@
     "Dashboard_edit_delete": "Comment modifier ou supprimer un graphique?",
     "Dashboard_edit_delete_description": "Les changements se font uniquement dans la page Rapport général.<br>➡️ Réservé au propriétaire.",
     "Dashboard_empty": "Pourquoi le tableau de bord est vide?",
-    "Dashboard_empty_description": "Si aucun graphique n’a été transféré :<br><ul><li>Le propriétaire peut en ajouter depuis Rapport général.</li><li>Les autres utilisateurs doivent contacter le propriétaire du Monitool.</li></ul>"
+    "Dashboard_empty_description": "Si aucun graphique n’a été transféré :<br><ul><li>Le propriétaire peut en ajouter depuis Rapport général.</li><li>Les autres utilisateurs doivent contacter le propriétaire du Monitool.</li></ul>",
+    "Basics_links_question": "Comment ajouter des liens utiles ?",
+    "Basics_links_response": "Dans la section <b>Liens utiles</b>, cliquez sur <b>Ajouter un lien</b> et renseignez un titre et une URL commençant par http:// ou https://. Utilisez l’icône croix pour supprimer un lien, puis cliquez sur <b>Enregistrer</b>. Les liens sont visibles par tous les utilisateurs du projet dans la section <b>Liens utiles</b> du menu de gauche, sous Rapport."
   },
   "Informations": {
       "Cache": {
@@ -977,7 +984,9 @@
         "Réorganiser les graphiques du Tableau de bord",
         "Modifier les analyses des graphiques",
         "Utiliser le bouton d'actualisation",
-        "Ajouter/Modifier/Supprimer des graphiques dans le Tableau de bord (Depuis le rapport général)"
+        "Ajouter/Modifier/Supprimer des graphiques dans le Tableau de bord (Depuis le rapport général)",
+        "Consulter et ouvrir les liens utiles",
+        "Ajouter/Modifier/Supprimer les liens utiles"
     ]
   },
   "Type": "Type",
@@ -1236,6 +1245,14 @@
   "Dashboard": "Tableau de bord",
   "NoCharts": "Ce tableau de bord est vide. Si vous souhaitez ajouter un graphique, il suffit de créer votre graphique dans la page \"Rapport général\" puis de le transférer.",
   "NoChartsNoAdmin": "Ce tableau de bord est vide. Contactez le propriétaire du projet pour ajouter un graphique.",
+  "UsefulLinks": "Liens utiles",
+  "NoUsefulLinks": "Aucun lien utile n'a été ajouté à ce projet.",
+  "AddLink": "Ajouter un lien",
+  "LinkTitle": "Titre",
+  "LinkUrl": "URL (https://...)",
+  "LinkTitleRequired": "Veuillez saisir un titre.",
+  "LinkUrlRequired": "Veuillez saisir une URL.",
+  "InvalidUrl": "Veuillez saisir une URL valide.",
   "ExportExcel": "Exporter excel",
   "ExportSingleTemplate": "Exporter le formulaire d’un site de collecte unique",
   "ExportMultipleTemplate": "Exporter le formulaire de plusieurs sites de collecte",

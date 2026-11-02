@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { Project } from 'src/app/models/classes/project.model';
@@ -16,6 +16,8 @@ import InformationItem from 'src/app/models/interfaces/information-item';
 import BreadcrumbItem from 'src/app/models/interfaces/breadcrumb-item.model';
 import { CountryListService } from 'src/app/services/country-list.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProjectLink } from 'src/app/models/classes/project-link.model';
+import { urlValidator } from 'src/app/utils/url-validator';
 
 @Component({
   selector: 'app-basics',
@@ -65,6 +67,11 @@ export class BasicsComponent implements OnInit, OnDestroy {
     {
       res1: 'InformationPanel.Basics_question1',
       res2: 'InformationPanel.Basics_response1'
+    } as InformationItem,
+    {
+      res1: 'InformationPanel.Basics_links_question',
+      res2: 'InformationPanel.Basics_links_response',
+      new: true
     } as InformationItem
   ];
 
@@ -76,6 +83,10 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
   get selectedThemes() {
     return this.basicsForm ? this.themes.filter(x => this.basicsForm.controls.themes.value.includes(x.id)) : [];
+  }
+
+  get linksArray(): UntypedFormArray {
+    return this.basicsForm.get('links') as UntypedFormArray;
   }
 
   public filteredCountryList: any[];
@@ -115,7 +126,8 @@ export class BasicsComponent implements OnInit, OnDestroy {
           themes: [project.themes.map(x => x.id)],
           start: [project.start, Validators.required],
           end: [project.end, Validators.required],
-          visibility: [project.visibility, Validators.required]
+          visibility: [project.visibility, Validators.required],
+          links: this.fb.array(project.links.map(link => this.buildLinkGroup(link)))
         }, { validators: [DatesHelper.orderedDates('start', 'end')] });
         this.onSearch('');
         this.subscription.add(
@@ -168,6 +180,7 @@ export class BasicsComponent implements OnInit, OnDestroy {
 
             const selectedThemes = value.themes;
             value.themes = this.themes.filter(x => selectedThemes.includes(x.id));
+            value.links = value.links.map(link => new ProjectLink(link));
             this.projectService.valid = this.basicsForm.valid;
             this.projectService.project.next(Object.assign(project, value));
           })
@@ -246,6 +259,33 @@ export class BasicsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  trackByIndex(index: number): number {
+    return index;
+  }
+
+  onAddLink(): void {
+    this.linksArray.push(this.buildLinkGroup(new ProjectLink()));
+  }
+
+  onDeleteLink(index: number): void {
+    this.linksArray.removeAt(index);
+  }
+
+  // The form is rebuilt on every project change, which resets the touched state of its controls:
+  // links that already have content are marked as touched so that their errors stay visible while typing.
+  private buildLinkGroup(link: ProjectLink): UntypedFormGroup {
+    const group = this.fb.group({
+      id: [link.id],
+      title: [link.title, Validators.required],
+      url: [link.url, [Validators.required, urlValidator()]]
+    });
+    if (link.title || link.url) {
+      group.markAllAsTouched();
+    }
+    return group;
+  }
+
 
   onThemeRemoved(theme: Theme) {
     const themes = this.basicsForm.controls.themes.value;

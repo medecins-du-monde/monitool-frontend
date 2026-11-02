@@ -96,6 +96,9 @@ export class RevisionSummaryComponent implements OnInit, OnDestroy {
           } else {
             this.output.push(this.setCommentHistory(data, operation, after));
           }
+        } else if (key === 'HistoryRevision.links_add' && Array.isArray(data.item)) {
+          // Projects created before useful links existed get the whole list at once: list each link instead
+          data.item.forEach(item => this.output.push({...data, item}));
         } else { this.output.push(data); }
       }
 

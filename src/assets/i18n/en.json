@@ -382,7 +382,12 @@
         "crossCuttingIndicator": "at a cross cutting indicator"
       },
       "dashboard_add": "A chart was added to the dashboard",
-      "dashboard_remove": "A chart was removed from the dashboard"
+      "dashboard_remove": "A chart was removed from the dashboard",
+      "links_add": "Add useful link <code>{{item.title}}</code>",
+      "links_remove": "Delete useful link <code>{{item.title}}</code>",
+      "links_move": "Reorder useful links",
+      "links_title_replace": "Rename useful link <code>{{before}}</code> to <code>{{after}}</code>",
+      "links_url_replace": "Change URL of useful link <code>{{link.title}}</code> from <code>{{before}}</code> to <code>{{after}}</code>"
     },
   "Home": "Home",
   "HomeSections": {
@@ -641,7 +646,9 @@
         "Dashboard_edit_delete": "How to modify or delete a chart?",
         "Dashboard_edit_delete_description": "Changes must be made from the General Report page.<br>Only the owner can modify or remove charts.",
         "Dashboard_empty": "Why is my dashboard empty?",
-        "Dashboard_empty_description": "If no chart appears:<br><ul><li>The owner must transfer charts from the General Report page. </li><li>Other users should contact the project owner. </li></ul>"
+        "Dashboard_empty_description": "If no chart appears:<br><ul><li>The owner must transfer charts from the General Report page. </li><li>Other users should contact the project owner. </li></ul>",
+        "Basics_links_question": "How do I add useful links?",
+        "Basics_links_response": "In the <b>Useful Links</b> section, click <b>Add a link</b> and fill in a title and a URL starting with http:// or https://. Use the cross icon to delete a link, then click <b>Save</b>. Links are shown to every project user in the <b>Useful Links</b> section of the left menu, below Reporting."
     },
     "Informations": {
         "Cache": {
@@ -999,8 +1006,9 @@
         "Reorganize charts in the Dashboard",
         "Edit the analysis for the charts",
         "Use Refresh button",
-        "Add/Modify/Delete charts (from General Report)"
-
+        "Add/Modify/Delete charts (from General Report)",
+        "View and open useful links",
+        "Add/Modify/Delete useful links"
     ]
   },
   "Type": "Type",
@@ -1221,6 +1229,14 @@
   "Dashboard": "Dashboard",
   "NoCharts": "This dashboard is empty. If you want to add a graphic, simply create your graphic on the \"General Report\" page and then transfer it.",
   "NoChartsNoAdmin": "This dashboard is empty. Contact the project owner to add a graphic.",
+  "UsefulLinks": "Useful Links",
+  "NoUsefulLinks": "No useful link has been added to this project.",
+  "AddLink": "Add a link",
+  "LinkTitle": "Title",
+  "LinkUrl": "URL (https://...)",
+  "LinkTitleRequired": "Please enter a title.",
+  "LinkUrlRequired": "Please enter a URL.",
+  "InvalidUrl": "Please enter a valid URL.",
   "ExportExcel": "Export excel",
   "ExportSingleTemplate": "Export single collection site template",
   "ExportMultipleTemplate": "Export multiple collection site template",
