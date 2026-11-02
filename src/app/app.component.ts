@@ -71,6 +71,10 @@ export class AppComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/bulb.svg')
     );
     this.matIconRegistry.addSvgIcon(
+      'link',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/link.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
       'check',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../assets/svg/check.svg')
     );

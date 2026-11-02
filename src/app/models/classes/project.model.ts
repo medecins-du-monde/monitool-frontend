@@ -11,6 +11,7 @@ import { User } from './user.model';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { Comment } from 'src/app/services/comment.service';
 import { DashboardChart } from './dashboard-chart.model';
+import { ProjectLink } from './project-link.model';
 
 export interface CloneFinalization {
     at: Date;
@@ -42,6 +43,7 @@ export class Project implements Deserializable {
     parsed?: boolean;
     comments: Comment[] = [];
     dashboard: DashboardChart[] = [];
+    links: ProjectLink[] = [];
     clonedAt?: Date;
     clonedBy?: string;
     clonedByName?: string;
@@ -122,6 +124,7 @@ export class Project implements Deserializable {
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
         this.dashboard = (input && input.dashboard) ? input.dashboard.map(d => new DashboardChart(d)) :  [];
+        this.links = (input && input.links) ? input.links.map(l => new ProjectLink(l)) : [];
         this.clonedAt = (input && input.clonedAt) ? new Date(input.clonedAt) : null;
         this.clonedBy = input ? input.clonedBy : null;
         this.clonedByName = input ? input.clonedByName : null;
@@ -168,6 +171,7 @@ export class Project implements Deserializable {
             _id: this.id,
             comments: this.comments,
             dashboard: this.dashboard.map(x => x.serialize()),
+            links: this.links.map(x => x.serialize()),
         };
         Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
         return serialized;

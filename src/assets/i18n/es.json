@@ -266,6 +266,11 @@
       },
       "dashboard_add": "Se ha añadido un gráfico al tablero",
       "dashboard_remove": "Se ha eliminado un gráfico del tablero",
+      "links_add": "Añadir el enlace útil <code>{{item.title}}</code>",
+      "links_remove": "Eliminar el enlace útil <code>{{item.title}}</code>",
+      "links_move": "Reordenar los enlaces útiles",
+      "links_title_replace": "Renombrar el enlace útil <code>{{before}}</code> a <code>{{after}}</code>",
+      "links_url_replace": "Cambiar la URL del enlace útil <code>{{link.title}}</code> de <code>{{before}}</code> a <code>{{after}}</code>",
 
       "themes_add": "Añade un Combate Político al proyecto",
       "themes_move": "Reordena los Combates Políticos del proyecto",
@@ -654,7 +659,9 @@
         "Dashboard_edit_delete": "¿Cómo modificar o eliminar un gráfico?",
         "Dashboard_edit_delete_description": "Los cambios deben realizarse en la página Informe General.<br>Solo el propietario puede modificar o eliminar gráficos.",
         "Dashboard_empty": "¿Por qué está vacío el tablero?",
-        "Dashboard_empty_description": "Si no aparece ningún gráfico:<br><ul><li>El propietario debe transferir gráficos desde la página Informe General.</li><li>Los demás usuarios deben contactar al propietario del Monitool.</li></ul>"
+        "Dashboard_empty_description": "Si no aparece ningún gráfico:<br><ul><li>El propietario debe transferir gráficos desde la página Informe General.</li><li>Los demás usuarios deben contactar al propietario del Monitool.</li></ul>",
+        "Basics_links_question": "¿Cómo añadir enlaces útiles?",
+        "Basics_links_response": "En la sección <b>Enlaces útiles</b>, haga clic en <b>Añadir un enlace</b> e introduzca un título y una URL que empiece por http:// o https://. Use el icono de cruz para eliminar un enlace y haga clic en <b>Guardar</b>. Los enlaces son visibles para todos los usuarios del proyecto en la sección <b>Enlaces útiles</b> del menú de la izquierda, debajo de Informe."
     },
     "Informations": {
         "Cache": {
@@ -982,7 +989,9 @@
         "Reorganizar los gráficos del Tablero",
         "Editar los análisis de los gráficos",
         "Usar el botón de refrescar",
-        "Añadir/Modificar/Eliminar gráficos en el Tablero (Desde el informe general)"
+        "Añadir/Modificar/Eliminar gráficos en el Tablero (Desde el informe general)",
+        "Ver y abrir los enlaces útiles",
+        "Añadir/Modificar/Eliminar los enlaces útiles"
       ]
   },
   "Type": "Tipo",
@@ -1237,6 +1246,14 @@
   "Dashboard": "Tablero",
   "NoCharts": "Este tablero está vacío. Si deseas agregar un gráfico, simplemente crea tu gráfico en la página \"Informe General\" y luego transfiérelo.",
   "NoChartsNoAdmin": "Este tablero está vacío. Contacta al propietario del proyecto para agregar un gráfico.",
+  "UsefulLinks": "Enlaces útiles",
+  "NoUsefulLinks": "No se ha añadido ningún enlace útil a este proyecto.",
+  "AddLink": "Añadir un enlace",
+  "LinkTitle": "Título",
+  "LinkUrl": "URL (https://...)",
+  "LinkTitleRequired": "Introduzca un título.",
+  "LinkUrlRequired": "Introduzca una URL.",
+  "InvalidUrl": "Introduzca una URL válida.",
   "ExportExcel": "Exportar excel",
   "ExportSingleTemplate": "Exportar formulario para un único lugar de colecta",
   "ExportMultipleTemplate": "Exportar formulario para varios lugares de colecta",
