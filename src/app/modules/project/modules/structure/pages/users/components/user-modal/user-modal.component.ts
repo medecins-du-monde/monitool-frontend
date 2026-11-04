@@ -98,7 +98,9 @@ export class UserModalComponent implements OnInit, OnDestroy {
         if (val.type && val.type === 'partner') {
           this.userForm.controls.name.setValidators([Validators.required]);
           this.userForm.controls.username.setValidators([Validators.required]);
-          if (val.password.length >= (this.data ? 1 : 0) && val.password.length < 6) {
+          // The backend keeps a blank password by matching the stored partner on its username.
+          const hasStoredPassword = this.data && this.data.type === 'partner' && val.username === this.data.username;
+          if (val.password.length >= (hasStoredPassword ? 1 : 0) && val.password.length < 6) {
             this.userForm.controls.password.setErrors({incorrect: true});
           }
         } else if (val.type === 'internal') {
@@ -127,6 +129,11 @@ export class UserModalComponent implements OnInit, OnDestroy {
     }
     formValue.entities = formValue.entities.filter(e => this.entities.includes(e));
     formValue.dataSources = formValue.dataSources.filter(d => this.dataSources.includes(d));
+    if (formValue.type === 'internal') {
+      // The form still holds the previous account's name when another account was selected.
+      const account = this.users.find(u => u.id === formValue.id);
+      formValue.name = account ? account.name : formValue.name;
+    }
     const user = new User(formValue);
     this.dialogRef.close({ data: user });
   }

@@ -107,15 +107,9 @@ export class UsersComponent implements OnInit {
     this.projectService.project.next(this.project);
   }
 
-  onEdit(user: User) {
-    let oldUserIndex = null;
-    if (user.type === 'internal'){
-      oldUserIndex = this.project.users.findIndex(u => u.id === user.id);
-    }
-    else {
-      oldUserIndex = this.project.users.findIndex(u => u.username === user.username);
-    }
-    this.project.users[oldUserIndex] = user;
+  // Replaces by position: the edit may have changed the account id, username or type.
+  onEdit(index: number, user: User) {
+    this.project.users[index] = user;
     this.projectService.project.next(this.project);
   }
   openDialog() {
