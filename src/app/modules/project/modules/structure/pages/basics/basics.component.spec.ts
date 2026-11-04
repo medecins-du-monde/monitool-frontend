@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
@@ -39,7 +39,8 @@ describe('BasicsComponent', () => {
       themes: new FormControl(),
       start: new FormControl(),
       end: new FormControl(),
-      visibility: new FormControl()
+      visibility: new FormControl(),
+      links: new FormArray([])
     });
     fixture.detectChanges();
   });

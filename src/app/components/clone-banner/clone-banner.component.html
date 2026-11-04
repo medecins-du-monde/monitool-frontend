@@ -1,0 +1,22 @@
+<div class="clone-banner" *ngIf="project?.isCloneTagged">
+    <mat-chip-list>
+        <mat-chip class="cloned-badge" disableRipple>{{ 'Cloned' | translate }}</mat-chip>
+    </mat-chip-list>
+    <div class="clone-banner-text">
+        <p>
+            {{ 'ClonedOn' | translate }} {{ project.clonedAt | localizedDate }}
+            · {{ 'ClonedBy' | translate }} {{ project.clonedByName }}
+            <ng-container *ngIf="project.clonedFromName">
+                · {{ 'ClonedFrom' | translate }}
+                <a class="clone-banner-link" [routerLink]="['/projects', project.clonedFrom]">{{ project.clonedFromName }}</a>
+            </ng-container>
+            · {{ (project.clonedWithData ? 'ClonedWithData' : 'ClonedWithoutData') | translate }}
+        </p>
+        <p class="clone-banner-note">{{ 'CloneBannerInputNote' | translate }}</p>
+    </div>
+    <span *ngIf="isOwner" [matTooltip]="hasPendingChanges ? ('CloneSaveBeforeRemoving' | translate) : null">
+        <button mat-stroked-button class="mdm-button" (click)="onRemoveCloneTag()" [disabled]="hasPendingChanges">
+            {{ 'RemoveCloneTag' | translate }}
+        </button>
+    </span>
+</div>

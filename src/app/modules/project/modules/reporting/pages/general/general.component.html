@@ -1,5 +1,6 @@
     <app-object-grouping
       [project]="project"
+      [restricted]="!!readRestriction"
       [filter]="{dimension: updatedDimension, _start: filter.value._start, _end: filter.value._end, entities: filter.value.entities}"
       (dimensionEvent)="receiveDimension($event)"
     ></app-object-grouping>

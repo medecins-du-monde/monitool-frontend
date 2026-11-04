@@ -2,6 +2,7 @@
 import { Deserializable } from '../interfaces/deserializable.model';
 import { Entity } from './entity.model';
 import { Form } from './form.model';
+import { LogicalFrame } from './logical-frame.model';
 
 export class User implements Deserializable {
     id: string;
@@ -13,6 +14,9 @@ export class User implements Deserializable {
     password: string;
     entities: Entity[];
     dataSources: Form[];
+    logicalFrames: LogicalFrame[];
+    // Read-only users limited to some logical frames and/or data sources (general report display only).
+    restricted = false;
     projectId?: string;
     active: boolean;
     favoriteProjects: string[] = [];
@@ -42,6 +46,9 @@ export class User implements Deserializable {
       this.type = ( input && input.type ) ? input.type : null;
       this.rev = ( input && input['_rev']) ? input._rev : null;
       this.favoriteProjects = (input && input.favoriteProjects) ? input.favoriteProjects : [];
+      // Explicit flag from the edit form, otherwise restricted when the stored lists are present.
+      this.restricted = !!(input && input.role === 'read'
+        && (input.restricted !== undefined ? input.restricted : (input.logicalFrames || input.dataSources)));
       return this;
     }
 
@@ -88,6 +95,12 @@ export class User implements Deserializable {
                     dataSources: this.dataSources.map(x => x.id)
                 });
             }
+        }
+        else if (this.role === 'read' && this.restricted){
+            Object.assign(user, {
+                logicalFrames: (this.logicalFrames || []).map(x => x.id),
+                dataSources: (this.dataSources || []).map(x => x.id)
+            });
         }
         return user;
     }

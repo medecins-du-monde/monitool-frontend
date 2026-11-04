@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreadcrumbModule } from 'src/app/components/breadcrumb/breadcrumb.module';
 import { InformationsPanelModule } from 'src/app/components/informations-panel/informations-panel.module';
+import { CloneBannerModule } from 'src/app/components/clone-banner/clone-banner.module';
 
 @NgModule({
   declarations: [ProjectComponent],
@@ -17,7 +18,8 @@ import { InformationsPanelModule } from 'src/app/components/informations-panel/i
     SidenavModule,
     MatSidenavModule,
     BreadcrumbModule,
-    InformationsPanelModule
+    InformationsPanelModule,
+    CloneBannerModule
   ]
 })
 export class ProjectModule { }

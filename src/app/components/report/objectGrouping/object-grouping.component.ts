@@ -39,6 +39,8 @@ export class ObjectGroupingComponent implements OnInit, OnChanges, OnDestroy {
     _end?: Date
   };
   @Input() canDownload = false;
+  // Full project exports are generated server-side with every section: hidden for restricted read-only users.
+  @Input() restricted = false;
   @Output() dimensionEvent: EventEmitter<string> = new EventEmitter<string>();
 
   groupOptions: { value: string; viewValue: string; }[];

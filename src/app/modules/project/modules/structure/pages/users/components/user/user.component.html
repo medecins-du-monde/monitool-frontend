@@ -13,10 +13,17 @@
             <div class="card-info-value">
                 <mat-chip-list>
                     <mat-chip [class]="'chip-' + user.role">{{ role | translate }}</mat-chip>
+                    <mat-chip *ngIf="user.role === 'read' && user.restricted">{{ 'Restricted' | translate }}</mat-chip>
                 </mat-chip-list>
             </div>
         </div>
-        <div class="card-info" *ngIf="user.role === 'input'">
+        <div class="card-info" *ngIf="user.role === 'read' && user.restricted && user.logicalFrames?.length">
+            <div class="card-info-title">{{ 'LogicalFrameworks' | translate }}</div>
+            <div class="card-info-value">
+                <div *ngFor="let logicalFrame of user.logicalFrames">{{ logicalFrame.name }}</div>
+            </div>
+        </div>
+        <div class="card-info" *ngIf="user.role === 'input' || (user.role === 'read' && user.restricted && dataSources?.length)">
             <div class="card-info-title">{{ 'DataSources' | translate }}</div>
             <div class="card-info-value">
                 <div *ngFor="let dataSource of dataSources">{{ dataSource.name }}</div>
