@@ -14,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
 import {MatListModule} from '@angular/material/list';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MultiSiteImportModalModule } from '../../components/multi-site-import-modal/multi-site-import-modal.module';
 
 
 
@@ -32,7 +34,9 @@ import {MatListModule} from '@angular/material/list';
     ReactiveFormsModule,
     MatTooltipModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    MultiSiteImportModalModule
   ]
 })
 export class InputsModule { }

@@ -1,0 +1,190 @@
+<div mat-dialog-title>
+  <h1>{{ 'import.multi.title' | translate }}</h1>
+  <p class="period">{{ 'CoveredPeriod' | translate }}: {{ data.periodLabel }}</p>
+</div>
+
+<button *ngIf="step !== 'saving'" class="dialog-close" mat-icon-button (click)="close()">
+  <mat-icon>close</mat-icon>
+</button>
+
+<mat-dialog-content class="dialog-body">
+  <!-- File and sites -->
+  <ng-container *ngIf="step === 'select' || step === 'validating'">
+    <div class="message info">
+      <mat-icon>info</mat-icon>
+      {{ 'import.multi.info' | translate }}
+    </div>
+
+    <div class="file-input">
+      <button type="button" mat-stroked-button (click)="fileInput.click()" class="mdm-button" [disabled]="step === 'validating'">
+        {{ 'import.choose-file' | translate }}
+      </button>
+      <input hidden (change)="onFileChange($event)" #fileInput type="file" accept=".xlsx, .xls">
+      <span class="file-name">{{ fileName }}</span>
+    </div>
+
+    <div *ngIf="fileError" class="message error">
+      <mat-icon>error_outline</mat-icon>
+      {{ fileError }}
+    </div>
+
+    <table *ngIf="sheets.length > 0" class="sites-table">
+      <thead>
+        <tr>
+          <th class="select-cell">
+            <mat-checkbox color="primary" [checked]="allSelected" [indeterminate]="selectedRows.length > 0 && !allSelected"
+              (change)="toggleAll($event.checked)" [disabled]="step === 'validating'"></mat-checkbox>
+          </th>
+          <th>{{ 'import.multi.site' | translate }}</th>
+          <th>{{ 'import.multi.sheet' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let row of siteRows">
+        <tr class="site-row" [class.disabled]="isRowDisabled(row)">
+          <td class="select-cell">
+            <mat-checkbox color="primary" [(ngModel)]="row.selected" (ngModelChange)="onRowToggle(row)" [disabled]="isRowDisabled(row) || step === 'validating'"></mat-checkbox>
+          </td>
+          <td>
+            {{ row.name }}
+            <span *ngIf="row.locked" class="badge"><mat-icon inline>lock</mat-icon> {{ 'import.multi.locked' | translate }}</span>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" class="mdm-form-field sheet-field">
+              <mat-select [(ngModel)]="row.sheet" (selectionChange)="onSheetChange(row)"
+                [placeholder]="'import.select-sheet' | translate" [disabled]="isRowDisabled(row) || step === 'validating'">
+                <mat-option *ngFor="let name of sheetNames" [value]="name" [disabled]="isSheetTaken(name, row)">{{ name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr *ngIf="hasNameWarning(row) || (row.selected && row.errors)" class="messages-row">
+          <td colspan="3">
+            <div *ngIf="hasNameWarning(row)" class="message warning">
+              <mat-icon>warning</mat-icon>
+              {{ 'import.multi.name-warning' | translate }}
+            </div>
+            <app-import-errors *ngIf="row.selected && row.errors" [group]="row.errors"></app-import-errors>
+          </td>
+        </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div *ngIf="step === 'validating'" class="message info">
+      <mat-icon>hourglass_empty</mat-icon>
+      {{ 'import.multi.validating' | translate }}
+    </div>
+  </ng-container>
+
+  <!-- Comparison and decisions -->
+  <ng-container *ngIf="step === 'preview' || step === 'saving'">
+    <div class="legend">
+      <span class="legend-item same">= {{ 'import.multi.cell.same' | translate }}</span>
+      <span class="legend-item different">≠ {{ 'import.multi.legend-different' | translate }}</span>
+      <span class="legend-item added">+ {{ 'import.multi.legend-added' | translate }}</span>
+    </div>
+
+    <div class="shortcuts">
+      <button mat-stroked-button class="mdm-button" (click)="setAll('replace')" [disabled]="step === 'saving'">{{ 'import.multi.replace-all' | translate }}</button>
+      <button mat-stroked-button class="mdm-button" (click)="setAll('keep')" [disabled]="step === 'saving'">{{ 'import.multi.keep-all' | translate }}</button>
+    </div>
+
+    <div *ngIf="hasBlankSites" class="message warning">
+      <mat-icon>warning</mat-icon>
+      {{ 'import.multi.blank-info' | translate }}
+    </div>
+
+    <div *ngFor="let result of results" class="site-result">
+      <div class="site-header">
+        <button mat-icon-button (click)="toggleSite(result)" [attr.aria-expanded]="openedSite === result">
+          <mat-icon>{{ openedSite === result ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+        <div class="site-title">
+          <strong>{{ result.name }}</strong>
+          <span *ngIf="result.preview.blocked" class="badge"><mat-icon inline>lock</mat-icon> {{ 'import.multi.locked' | translate }}</span>
+          <div class="counts">{{ 'import.multi.counts' | translate:result.counts }}</div>
+        </div>
+
+        <mat-radio-group *ngIf="result.needsDecision" [(ngModel)]="result.decision" class="decision" [disabled]="step === 'saving'">
+          <mat-radio-button value="keep">{{ 'import.multi.keep' | translate }}</mat-radio-button>
+          <mat-radio-button *ngIf="!result.preview.blank" value="replace">{{ 'import.multi.replace' | translate }}</mat-radio-button>
+          <mat-radio-button *ngIf="result.preview.blank" value="clear" class="clear">{{ 'import.multi.clear' | translate }}</mat-radio-button>
+        </mat-radio-group>
+        <span *ngIf="!result.needsDecision" class="no-decision">
+          {{ (hasChanges(result) ? 'import.multi.new-site' : 'import.multi.no-change') | translate }}
+        </span>
+      </div>
+
+      <div *ngIf="result.preview.blank && result.needsDecision" class="message warning blank-warning">
+        <mat-icon>warning</mat-icon>
+        {{ 'import.multi.blank-warning' | translate }}
+      </div>
+
+      <div *ngIf="openedSite === result" class="tables" [class.kept]="result.decision === 'keep'" [class.writing]="writes(result)">
+        <div *ngFor="let table of result.tables; trackBy: trackByIndex" class="variable">
+          <h3>{{ table.name }}</h3>
+          <div class="table-scroll">
+            <table class="preview-table">
+              <thead *ngIf="table.headerRows.length > 0">
+                <tr *ngFor="let headerRow of table.headerRows">
+                  <th *ngIf="table.rowLabelColumns > 0" [attr.colspan]="table.rowLabelColumns"></th>
+                  <th *ngFor="let header of headerRow" [attr.colspan]="header.span">{{ header.label }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of table.rows">
+                  <th *ngFor="let label of row.labels">{{ label }}</th>
+                  <td *ngFor="let cell of row.cells" [ngClass]="cellClass(cell)" [title]="cellMeaning(cell, result)">
+                    <ng-container [ngSwitch]="cell.state">
+                      <ng-container *ngSwitchCase="'empty'"></ng-container>
+                      <ng-container *ngSwitchCase="'same'">{{ cellSymbol(cell) }} {{ cell.existing }}</ng-container>
+                      <ng-container *ngSwitchDefault>
+                        {{ cellSymbol(cell) }}
+                        <span class="existing">{{ cell.existing === null ? '–' : cell.existing }}</span>
+                        →
+                        <span class="incoming">{{ cell.incoming === null ? '–' : cell.incoming }}</span>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="step === 'saving'" class="message info">
+      <mat-icon>hourglass_empty</mat-icon>
+      {{ 'import.multi.saving' | translate }}
+    </div>
+  </ng-container>
+
+  <!-- Outcome -->
+  <div *ngIf="step === 'done'" class="message confirm">
+    <mat-icon>check_circle</mat-icon>
+    {{ 'import.multi.success' | translate:{ sites: written } }}
+  </div>
+
+  <app-import-errors *ngIf="generalError" [group]="generalError"></app-import-errors>
+
+  <div *ngIf="commitError" class="message error">
+    <mat-icon>error_outline</mat-icon>
+    {{ commitError }}
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <ng-container *ngIf="step === 'done'; else actions">
+    <button mat-stroked-button (click)="close()" class="mdm-button save-button">{{ 'import.multi.close' | translate }}</button>
+  </ng-container>
+  <ng-template #actions>
+    <button mat-stroked-button (click)="close()" class="mdm-button" [disabled]="step === 'saving'">{{ 'Cancel' | translate }}</button>
+    <button *ngIf="canRevalidate && step === 'preview'" mat-stroked-button (click)="validate()" class="mdm-button">{{ 'import.multi.revalidate' | translate }}</button>
+    <button *ngIf="step === 'select' || step === 'validating'" mat-stroked-button (click)="validate()" class="mdm-button save-button"
+      [disabled]="!canValidate || step === 'validating'">{{ 'import.multi.validate' | translate }}</button>
+    <button *ngIf="step === 'preview' || step === 'saving'" mat-stroked-button (click)="confirmAndCommit()" class="mdm-button save-button"
+      [disabled]="!canContinue || step === 'saving' || canRevalidate">{{ 'Confirm' | translate }}</button>
+  </ng-template>
+</mat-dialog-actions>

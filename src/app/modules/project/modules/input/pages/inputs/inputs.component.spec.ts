@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { InputsComponent } from './inputs.component';
 import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 
 describe('InputsComponent', () => {
   let component: InputsComponent;
@@ -17,7 +18,8 @@ describe('InputsComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         TranslateModule.forRoot(),
-        MatMenuModule
+        MatMenuModule,
+        MatDialogModule
       ]
     }).compileComponents();
   }));

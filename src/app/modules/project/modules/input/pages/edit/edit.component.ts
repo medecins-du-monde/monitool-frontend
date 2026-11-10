@@ -985,7 +985,7 @@ export class EditComponent implements OnInit, OnDestroy, ComponentCanDeactivate 
 
   openImport() {
     const url = `/resources/project/${this.project?.id}/data-source/${this.formId}/${this.siteId}/${this.timeSlotDate}`;
-    const dialogRef = this.dialog.open(ImportModalComponent, { data: { path: url } });
+    const dialogRef = this.dialog.open(ImportModalComponent, { data: { path: url, siteName: this.site.name } });
     dialogRef.afterClosed().subscribe(res => {
       if (res.data) {
         this.inputForm.patchValue({values: res.data});

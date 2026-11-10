@@ -8,6 +8,7 @@ import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/lega
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ImportModalComponent } from './import-modal.component';
+import { ImportErrorsModule } from '../import-errors/import-errors.module';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 
 
@@ -21,6 +22,7 @@ import { MatLegacySelectModule as MatSelectModule } from '@angular/material/lega
         MatInputModule,
         MatButtonModule,
         FormsModule,
+        ImportErrorsModule,
         MatIconModule,
         MatSelectModule
     ]

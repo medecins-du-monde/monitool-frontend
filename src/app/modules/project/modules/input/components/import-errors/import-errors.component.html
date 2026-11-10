@@ -1,0 +1,13 @@
+<div class="message error">
+  <mat-icon>error_outline</mat-icon>
+  <div class="content">
+    <strong *ngIf="group.site" class="site">{{ group.site }}</strong>
+    <div *ngFor="let message of group.messages">{{ message }}</div>
+    <div *ngFor="let table of group.tables" class="table">
+      <div class="table-name">{{ table.name }}</div>
+      <ul>
+        <li *ngFor="let message of table.messages">{{ message }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

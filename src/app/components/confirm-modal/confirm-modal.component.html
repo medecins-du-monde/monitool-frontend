@@ -6,10 +6,10 @@
     <div class="message warning" *ngIf="warning">
         <mat-icon>warning</mat-icon>
         <div>
-            <span>{{this.data.messageId | translate}}</span>
+            <span>{{this.data.messageId | translate:this.data.messageParams}}</span>
         </div>
     </div>
-    <p *ngIf="!warning">{{this.data.messageId | translate}}</p>
+    <p *ngIf="!warning">{{this.data.messageId | translate:this.data.messageParams}}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="!noActions">
     <button mat-stroked-button (click)="cancel()" class="mdm-button">{{ 'Cancel' | translate }}</button>

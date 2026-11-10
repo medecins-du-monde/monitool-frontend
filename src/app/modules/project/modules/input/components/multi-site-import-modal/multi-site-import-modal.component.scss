@@ -1,0 +1,200 @@
+@import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
+
+$same_background: #d3f0d3;
+$same_color: #1b5e20;
+$different_background: #ffc6be;
+$different_color: #8b0000;
+
+.period {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-input {
+  margin-bottom: 8px;
+
+  .mdm-button {
+    color: $info_blue_color;
+  }
+
+  .file-name {
+    margin-left: 16px;
+  }
+}
+
+.sites-table {
+  width: 100%;
+  border-collapse: collapse;
+  // Errors under a selector must not change the width of the columns.
+  table-layout: fixed;
+
+  th {
+    text-align: left;
+  }
+
+  th, td {
+    padding: 4px 8px;
+    border-bottom: 1px solid lightgray;
+  }
+
+  th:nth-child(2) {
+    width: 30%;
+  }
+
+  .select-cell {
+    width: 32px;
+  }
+
+  tr.disabled {
+    color: gray;
+  }
+
+  .sheet-field {
+    // Inline, it would leave a gap below itself.
+    display: block;
+    width: 100%;
+
+    // Fields keep room for a hint below them, which is not used here: it would move the selector off the middle of its row.
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    ::ng-deep .mat-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+
+  // A site and its messages read as one block.
+  .site-row:has(+ .messages-row) td {
+    border-bottom: none;
+  }
+
+  .messages-row td {
+    padding: 0 0 8px;
+  }
+
+  .message + app-import-errors {
+    margin-top: 8px;
+  }
+
+  app-import-errors {
+    display: block;
+  }
+}
+
+.badge {
+  margin-left: 8px;
+  font-size: 12px;
+  color: dimgray;
+  white-space: nowrap;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.legend-item {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.shortcuts {
+  display: flex;
+  gap: 8px;
+}
+
+.site-result {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-title {
+  flex: 1;
+}
+
+.counts,
+.no-decision {
+  font-size: 12px;
+  color: dimgray;
+}
+
+.decision {
+  display: flex;
+  gap: 16px;
+}
+
+.blank-warning {
+  margin-top: 8px;
+}
+
+.tables {
+  margin-top: 8px;
+}
+
+.variable h3 {
+  margin: 12px 0 4px;
+  font-size: 14px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.preview-table {
+  border-collapse: collapse;
+
+  th, td {
+    border: 1px solid #cccccc;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+
+  th {
+    background-color: #eeeeee;
+    font-weight: normal;
+    text-align: left;
+  }
+}
+
+.same {
+  background-color: $same_background;
+  color: $same_color;
+}
+
+.different {
+  background-color: $different_background;
+  color: $different_color;
+}
+
+.added {
+  background-color: $info_blue_background;
+  color: $info_blue_color;
+}
+
+// Under Keep, nothing from the file will be applied.
+.tables.kept .incoming {
+  text-decoration: line-through;
+}
+
+// With a decision to write, previous values go away.
+.tables.writing .different .existing {
+  text-decoration: line-through;
+}
