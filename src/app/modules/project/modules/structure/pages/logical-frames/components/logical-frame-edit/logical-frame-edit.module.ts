@@ -21,6 +21,7 @@ import { LocalizedDatePipeModule } from 'src/app/pipes/LocalizedDate/localized-d
 import { CollectionSitesSelectorModule } from '../../../../components/collection-sites-selector/collection-sites-selector.module';
 import { IndicatorListModule } from '../indicator-list/indicator-list.module';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { TooltipIfTruncatedModule } from 'src/app/directives/tooltip-if-truncated/tooltip-if-truncated.module';
 
 @NgModule({
   declarations: [LogicalFrameEditComponent],
@@ -46,7 +47,8 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
     DragDropModule,
     LocalizedDatePipeModule,
     IndicatorListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TooltipIfTruncatedModule
   ],
   exports: [LogicalFrameEditComponent]
 })

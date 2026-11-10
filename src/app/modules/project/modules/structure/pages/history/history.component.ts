@@ -145,6 +145,10 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.projectService.updateInformationPanel(this.informations);
   }
 
+  get cloneProject(): Project {
+    return this.project?.clonedAt ? this.project : null;
+  }
+
   private async loadRevisions(limit: number): Promise<void> {
     // A load started later always wins: an in-flight request must not clobber the list
     // with stale rows if the project is saved or switched while it is still pending.

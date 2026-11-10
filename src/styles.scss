@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @import "./assets/theme/size_vars.scss";
 @import "./assets/theme/font_vars.scss";
+@import "./assets/theme/partial_value";
 @import '~handsontable/dist/handsontable.full.css';
 @import "./assets/theme/color_vars.scss";
 @import '~quill/dist/quill.snow.css';
@@ -317,6 +318,19 @@ mat-hint {
   // justify-content: space-between;
   background-color: $card_header_background;
   padding: 16px 5px;
+
+  .card-header-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & + mat-chip {
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+  }
 
   &.hidden {
     background: repeating-linear-gradient(
@@ -730,6 +744,10 @@ hot-table {
   z-index: 2;
   background-color: #fff;
   padding: 0px !important;
+  .partial-value {
+    font-style: italic;
+    @include partial-value-underline;
+  }
   table{
     border-style: solid;
     border-width: 1px;
@@ -875,6 +893,33 @@ mat-hint {
 
 // === FORMS ===
 
+// Material's outline is three boxes (start/gap/end) with one side's border removed each,
+// so their straight top edges are painted separately from the rounded corners. At fractional
+// positions (custom paddings, Windows fonts/scaling) that 1px top edge fades out or vanishes
+// while the corners stay. Without a floating label there is no notch to cut, so draw the
+// outline as a single box whose four sides render together.
+.mat-form-field-appearance-outline:not(.mat-form-field-has-label) {
+  .mat-form-field-outline {
+    border: 1px solid currentColor;
+    border-radius: 5px;
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      border: none;
+    }
+  }
+
+  .mat-form-field-outline-thick {
+    border-width: 2px;
+  }
+}
+
+// The theme's default idle outline (12% black) is too faint to survive anti-aliasing.
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled) .mat-form-field-outline:not(.mat-form-field-outline-thick) {
+  color: rgba(0, 0, 0, .24);
+}
+
 .mdm-form {
   padding: 16px 10px;
   background-color: $form_background;
@@ -901,7 +946,7 @@ mat-hint {
   &:not(.searchbar) {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
-        border-radius: 4px;
+        border-radius: 5px;
         background: $form_background;
       }
     }
@@ -910,7 +955,7 @@ mat-hint {
   &.searchbar {
     &.mat-form-field:not(.mat-focused) {
       .mat-form-field-outline {
-        border-radius: 4px;
+        border-radius: 5px;
         background: $searchbar_background;
       }
     }
@@ -1105,6 +1150,9 @@ code.title{
   
   .mat-content {
     overflow: visible;
+    // Without this, a nowrap title can't shrink and pushes the header's buttons
+    // out of view (overflow: visible above opts .mat-content out of shrinking).
+    min-width: 0;
   }
 }
 
@@ -1118,7 +1166,10 @@ code.title{
   overflow: hidden;
   align-items: center;
   white-space: nowrap;
-  width: 80%;
+  // No fixed width: the title takes the space its panel's buttons don't need, and
+  // min-width lets it shrink below its longest word instead of pushing them out.
+  flex: 1 1 auto;
+  min-width: 0;
   mat-icon {
     align-self: center;
     margin-right: 10px;
@@ -1139,6 +1190,9 @@ code.title{
 
 .mat-tooltip {
   font-size: $small_text;
+  // Material caps the tooltip at 250px and ellipsises the overflow; let long
+  // unbroken names wrap onto several lines instead of being cut.
+  overflow-wrap: anywhere;
 }
 
 // Style of the message for information forms
@@ -1385,4 +1439,9 @@ code.title{
   pointer-events: none;
   font-size: $small_text;
   max-width: 400px;
+}
+
+.partial-value {
+  font-style: italic;
+  @include partial-value-underline;
 }

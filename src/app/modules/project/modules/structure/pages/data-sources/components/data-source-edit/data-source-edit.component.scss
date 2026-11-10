@@ -1,12 +1,7 @@
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/panel_header.scss";
 
 :host {
-  .mat-expansion-panel-header-description {
-    button {
-      margin-left: auto;
-    }
-  }
-
   .mat-expansion-panel {
     margin: 16px 0;
 
@@ -18,15 +13,18 @@
   .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
     display: flex !important;
     align-items: center;
-    flex-grow: 1 !important;
     margin-right: 16px !important;
     font-size: 16px !important;
     font-weight: bold !important;
     color: $variable_expansion_panel_color;
   }
-  .mat-expansion-panel-header-description {
-    justify-content: end;
-    margin-right: 0 !important;
+  .mat-expansion-panel-header-title {
+    .panel-title-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .mat-expansion-panel-header:not([aria-disabled=true]) {
     cursor: pointer;
@@ -65,4 +63,7 @@
   ::ng-deep code {
     line-height: 14px !important;
   }
+
+  // last, so its margin override wins over the one set above on title + description
+  @include panel-header-layout;
 }

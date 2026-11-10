@@ -73,6 +73,9 @@ export class UserComponent implements OnInit, OnDestroy {
       this.entities = this.filterEntities();
       this.dataSources = this.getDataSourcesSelected();
     }
+    else if (this.user.role === 'read' && this.user.restricted){
+      this.dataSources = this.getDataSourcesSelected();
+    }
   }
 
   private getGroupsSelected(){
@@ -108,7 +111,7 @@ export class UserComponent implements OnInit, OnDestroy {
       return [];
     }
 
-    if (this.user.dataSources.length === this.project.entities.length){
+    if (this.user.dataSources.length > 0 && this.user.dataSources.length === this.project.forms.length){
       return [this.allOption];
     }
     return this.user.dataSources;

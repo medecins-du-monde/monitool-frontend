@@ -12,6 +12,7 @@ export class DataSourceSelectorComponent implements OnInit {
   public allOption: Form = new Form({id: 'all', name: 'All'});
 
   @Input() userForm: UntypedFormGroup;
+  @Input() hint = 'Tooltip.UserEdition.DataSources';
   @Input() dataSources: Form[];
 
   // used to generate the list of chips

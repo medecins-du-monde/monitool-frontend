@@ -145,7 +145,7 @@ export class ReportingService {
    /** Downloads current reporting table view */
    async downloadSavedTableView(id: string): Promise<void> {
     // retrieve html from localStorage
-    const {html, itemId} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
+    const {html, itemId, filters, periodicity, language} = JSON.parse(sessionStorage.getItem(`currView:${id}`));
     if (!html) { throw new Error(); }
 
     // new div
@@ -273,6 +273,11 @@ export class ReportingService {
     const file = await this.apiService.post(
       '/export/currentView',
       {
+        projectId: itemId.startsWith('project:') ? itemId : undefined,
+        indicatorId: itemId.startsWith('indicator:') ? itemId : undefined,
+        language: language || this.translateService.currentLang || this.translateService.defaultLang,
+        filters: filters || {},
+        periodicity,
         data: json,
         paddings: paddingValues,
         headers
@@ -314,7 +319,7 @@ export class ReportingService {
    *
    * @returns id to retrieve the table in localStorage
    */
-  saveCurrentTableView(itemId: string): string {
+  saveCurrentTableView(itemId: string, filters = {}, periodicity?: string): string {
     // generate random id
     const id = Math.random()
       .toString(36)
@@ -336,6 +341,9 @@ export class ReportingService {
       JSON.stringify({
         html,
         itemId,
+        filters,
+        periodicity,
+        language: this.translateService.currentLang || this.translateService.defaultLang,
       })
     );
     return id;

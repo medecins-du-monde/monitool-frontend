@@ -140,11 +140,15 @@
           "
           [style.color]="getCellViewModel(element, column).inRange && getCellViewModel(element, column).displayValue === 'N/A' ? 'rgba(0, 0, 0, 0.4)' : 'black'"
         >
-          {{
-            getCellViewModel(element, column).inRange
-              ? getCellViewModel(element, column).displayValue
-              : ""
-          }}
+          <span
+            [class.partial-value]="getCellViewModel(element, column).inRange && getCellViewModel(element, column).isItalic"
+          >
+            {{
+              getCellViewModel(element, column).inRange
+                ? getCellViewModel(element, column).displayValue
+                : ""
+            }}
+          </span>
         </div>
       </td>
     </ng-container>

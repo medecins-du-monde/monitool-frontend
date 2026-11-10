@@ -19,6 +19,12 @@
   line-height: normal;
 }
 
+// Hints embed data source / variable names: wrap long names instead of overflowing
+mat-hint span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .hint mat-icon {
   font-size: inherit;
 }

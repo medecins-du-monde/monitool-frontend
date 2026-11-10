@@ -1,0 +1,38 @@
+// Layout shared by the expansion panel headers of the structure edit pages.
+//
+// Material gives the header title `flex-grow: 1; flex-basis: 0` and the description
+// `flex-grow: 2`, so the title only gets a third of the header while the buttons take
+// the rest. These rules give the leftover space to the title instead, keep the buttons
+// at their natural width, and stop a long name from squashing the drag handle.
+// The title's own `min-width: 0` lives in styles.scss, next to `.mat-content`'s.
+@mixin panel-header-layout {
+  .mat-expansion-panel-header {
+    padding: 0 12px;
+  }
+
+  .mat-expansion-panel-header-title {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    // drag handle
+    > mat-icon {
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      flex: 1;
+      min-width: 0;
+
+      p {
+        overflow-wrap: anywhere;
+      }
+    }
+  }
+
+  .mat-expansion-panel-header-description {
+    flex: 0 0 auto;
+    // !important, to beat the margin the components set on title + description together
+    margin-right: 0 !important;
+    justify-content: flex-end;
+  }
+}

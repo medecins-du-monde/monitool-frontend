@@ -14,6 +14,7 @@ import { IndicatorModalModule } from '../indicator-modal/indicator-modal.module'
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IndicatorListModule } from '../indicator-list/indicator-list.module';
 import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { TooltipIfTruncatedModule } from 'src/app/directives/tooltip-if-truncated/tooltip-if-truncated.module';
 
 @NgModule({
   declarations: [OutputEditComponent],
@@ -32,7 +33,8 @@ import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/le
     ExtraIndicatorModule,
     DragDropModule,
     IndicatorListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TooltipIfTruncatedModule
   ],
   exports: [OutputEditComponent]
 })

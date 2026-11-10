@@ -3,6 +3,7 @@
     <app-sidenav [sidenav]="sidenav" [structurePage]="true"></app-sidenav>
     <div class="drawer-page {{!bigPage ? 'with-margin' : null}} info-panel-space">
         <app-breadcrumb></app-breadcrumb>
+        <app-clone-banner></app-clone-banner>
         <router-outlet></router-outlet>
     </div>
     <app-informations-panel *ngIf="router.url.indexOf('download') === -1"></app-informations-panel>

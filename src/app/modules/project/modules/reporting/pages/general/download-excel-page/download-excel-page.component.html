@@ -1,4 +1,4 @@
-{{ pageText | translate}}
+{{ (status === 'error' ? 'export-error' : pageText) | translate}}
 
 <mat-progress-bar
   *ngIf="status === 'generating' || status === 'checking'"

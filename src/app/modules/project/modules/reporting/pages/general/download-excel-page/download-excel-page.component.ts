@@ -37,7 +37,12 @@ export class DownloadExcelPageComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.projectService.updateInformationPanel(this.informations);
 
-    if (this.router.url.indexOf('api_export_project') >= 0) {
+    const exportUrl = new URLSearchParams(this.router.url.split('?')[1] || '').get('export');
+    if (exportUrl && exportUrl.startsWith('/api/export/project:')) {
+      this.pageText = 'export-generating-file';
+      this.downloadService.url.next(exportUrl);
+      this.downloadService.generate();
+    } else if (this.router.url.indexOf('api_export_project') >= 0) {
       const downloadRoute = this.router.url.slice(this.router.url.indexOf('api_export_project'), this.router.url.length);
       this.downloadService.url.next('/' + downloadRoute.replace(/[_]/g, '/'));
 

@@ -1,5 +1,6 @@
 @import "src/assets/theme/size_vars.scss";
 @import "src/assets/theme/color_vars.scss";
+@import "src/assets/theme/partial_value";
 
 .big-table {
   max-height: 76vh !important;
@@ -308,6 +309,10 @@ tr.mat-header-row {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .partial-value {
+    @include partial-value-underline;
+  }
 }
 
 .lastUpdate {
