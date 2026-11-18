@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BasicsRoutingModule } from './basics-routing.module';
 import { BasicsComponent } from './basics.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 @NgModule({
     declarations: [BasicsComponent],
@@ -28,7 +29,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDatepickerModule,
         MatNativeDateModule,
         BasicsRoutingModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatButtonModule
     ]
 })
 export class BasicsModule { }

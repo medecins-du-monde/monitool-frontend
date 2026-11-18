@@ -1,0 +1,44 @@
+@import "src/assets/theme/size_vars.scss";
+@import "src/assets/theme/color_vars.scss";
+
+.clone-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: $info_blue_background;
+  color: $info_blue_color;
+  font-size: $small_text;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+
+  p {
+    margin: 0;
+  }
+
+  .clone-banner-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .clone-banner-note {
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .clone-banner-link {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .mdm-button {
+    color: $info_blue_color;
+    white-space: nowrap;
+  }
+}
+
+.cloned-badge.mat-chip {
+  background-color: $radio_button_color !important;
+  color: $mat_chip_color !important;
+  cursor: default;
+}

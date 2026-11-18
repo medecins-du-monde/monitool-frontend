@@ -5,14 +5,27 @@
         <mat-icon *ngIf="group.name === 'Structure' || enableAllSidenavLink" class="collapse-icon" [ngClass]="{'collapsed': activeGroup === group.title}">expand_more</mat-icon>
     </div>
     <div class="sidenav-items" *ngIf="activeGroup === group.title">
-        <a class="sidenav-item"
-            *ngFor="let item of group.items"
-            [ngClass]="{'disabledLink' : item.name !== 'Home' && item.name !== 'Basics' && !enableAllSidenavLink}"
-            [routerLink]="item.routerLink" routerLinkActive="active-link"
-            [matTooltip]="item.name | translate"
-            >
-            <mat-icon [svgIcon]="item.icon" class="sidenav-icon"></mat-icon>
-            <div class="sidenav-name"> {{ item.name | translate }} </div>
-        </a>
+        <ng-container *ngFor="let item of group.items">
+            <a class="sidenav-item" *ngIf="item.href; else internalLink"
+                [href]="item.href" target="_blank" rel="noopener noreferrer"
+                [matTooltip]="item.href" [matTooltipPosition]="tooltipPosition"
+                >
+                <mat-icon [svgIcon]="item.icon" class="sidenav-icon"></mat-icon>
+                <div class="sidenav-name"> {{ item.name }} </div>
+            </a>
+            <ng-template #internalLink>
+                <a class="sidenav-item"
+                    [ngClass]="{'disabledLink' : item.name !== 'Home' && item.name !== 'Basics' && !enableAllSidenavLink}"
+                    [routerLink]="item.routerLink" routerLinkActive="active-link"
+                    [matTooltip]="item.name | translate" [matTooltipPosition]="tooltipPosition"
+                    >
+                    <mat-icon [svgIcon]="item.icon" class="sidenav-icon"></mat-icon>
+                    <div class="sidenav-name"> {{ item.name | translate }} </div>
+                </a>
+            </ng-template>
+        </ng-container>
+        <div class="sidenav-empty" *ngIf="group.items.length === 0 && group.emptyMessage">
+            {{ group.emptyMessage | translate }}
+        </div>
     </div>
 </div>

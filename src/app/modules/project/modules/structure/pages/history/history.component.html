@@ -1,6 +1,20 @@
 <div class="info-section blue">{{ 'ProjectHistoryInfo' | translate }}</div>
 
 <div class="mdm-title">{{ 'History' | translate }}</div>
+<div class="info-section clone-origin" *ngIf="cloneProject as clone">
+    <p>
+        {{ 'ClonedOn' | translate }} {{ clone.clonedAt | localizedDate:'medium' }}
+        · {{ 'ClonedBy' | translate }} {{ clone.clonedByName }}
+        <ng-container *ngIf="clone.clonedFromName">
+            · {{ 'ClonedFrom' | translate }}
+            <a [routerLink]="['/projects', clone.clonedFrom]">{{ clone.clonedFromName }}</a>
+        </ng-container>
+        · {{ (clone.clonedWithData ? 'ClonedWithData' : 'ClonedWithoutData') | translate }}
+    </p>
+    <p *ngIf="clone.cloneFinalization">
+        {{ 'CloneTagRemovedOn' | translate: { date: (clone.cloneFinalization.at | localizedDate:'medium'), user: clone.cloneFinalization.byName } }}
+    </p>
+</div>
 <table mat-table multiTemplateDataRows fixedLayout="true" class="mdm-table history-table"
     [dataSource]="revisions" (mouseleave)='mouseLeave()'>
     <!-- Task Column -->

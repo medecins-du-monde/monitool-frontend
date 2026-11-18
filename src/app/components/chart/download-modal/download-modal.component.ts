@@ -20,6 +20,45 @@ const whiteBackgroundPlugin = {
   }
 };
 
+/**
+ * Canvas text cannot be underlined, so draw the dotted underline of partial values under their data labels
+ * (same marker as the partial values in the reporting table and tooltips).
+ * Relies on the datalabels plugin internals, hence the guards.
+ */
+const partialValueUnderlinePlugin = {
+  id: 'partialValueUnderline',
+  afterDraw: (chart: any) => {
+    const labels = chart.$datalabels?._labels;
+    if (!labels) {
+      return;
+    }
+    const {ctx} = chart;
+    labels.forEach((label: any) => {
+      const model = label.model && label.model();
+      const rect = label.$layout?._box?._rect;
+      if (!model || !rect || !label.$layout._visible || !model.color) {
+        return;
+      }
+      const point = chart.data.datasets[label.$layout._set]?.data?.[label._index];
+      const rawValue = point !== null && typeof point === 'object' ? point?.y : point;
+      const isPartial = typeof rawValue === 'string' && rawValue.trim() !== '' && Number.isFinite(Number(rawValue));
+      if (!isPartial) {
+        return;
+      }
+      const y = Math.round(rect.y + rect.h - model.padding.bottom) + 1.5;
+      ctx.save();
+      ctx.strokeStyle = model.color;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([1, 2]);
+      ctx.beginPath();
+      ctx.moveTo(rect.x + model.padding.left, y);
+      ctx.lineTo(rect.x + rect.w - model.padding.right, y);
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+};
+
 const dataLabelsConfig = {
   backgroundColor: 'white',
   borderRadius: 100,
@@ -122,7 +161,7 @@ export class DownloadModalComponent {
       type: this.data.chart.config.type,
       data: this.data.chart.config.data,
       options,
-      plugins: [...this.data.chart.config.plugins, whiteBackgroundPlugin, ChartDataLabels]
+      plugins: [...this.data.chart.config.plugins, whiteBackgroundPlugin, ChartDataLabels, partialValueUnderlinePlugin]
     });
 
     setTimeout(() => {

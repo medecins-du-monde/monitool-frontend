@@ -11,6 +11,13 @@ import { User } from './user.model';
 import DatesHelper from 'src/app/utils/dates-helper';
 import { Comment } from 'src/app/services/comment.service';
 import { DashboardChart } from './dashboard-chart.model';
+import { ProjectLink } from './project-link.model';
+
+export interface CloneFinalization {
+    at: Date;
+    by: string;
+    byName: string;
+}
 
 export class Project implements Deserializable {
     id: string;
@@ -36,6 +43,7 @@ export class Project implements Deserializable {
     parsed?: boolean;
     comments: Comment[] = [];
     dashboard: DashboardChart[] = [];
+    links: ProjectLink[] = [];
     clonedAt?: Date;
     clonedBy?: string;
     clonedByName?: string;
@@ -44,6 +52,12 @@ export class Project implements Deserializable {
     // Server-computed on list responses only (resolved from clonedFrom at query time, never
     // stored) — must stay out of serialize().
     clonedFromName?: string;
+    // Set by the server when the owner removes the Clone tag; the cloned* fields are kept for traceability.
+    cloneFinalization?: CloneFinalization;
+
+    get isCloneTagged(): boolean {
+        return !!this.clonedAt && !this.cloneFinalization;
+    }
 
     get status(): string{
         if ( this.active ) {
@@ -103,16 +117,23 @@ export class Project implements Deserializable {
             if (u.dataSources){
                 user.dataSources = this.forms.filter(f => u.dataSources.indexOf(f.id) >= 0);
             }
+            if (u.logicalFrames){
+                user.logicalFrames = this.logicalFrames.filter(lf => u.logicalFrames.indexOf(lf.id) >= 0);
+            }
             return user;
         }) : [];
         this.comments = (input && input.comments) ? input.comments :  [];
         this.dashboard = (input && input.dashboard) ? input.dashboard.map(d => new DashboardChart(d)) :  [];
+        this.links = (input && input.links) ? input.links.map(l => new ProjectLink(l)) : [];
         this.clonedAt = (input && input.clonedAt) ? new Date(input.clonedAt) : null;
         this.clonedBy = input ? input.clonedBy : null;
         this.clonedByName = input ? input.clonedByName : null;
         this.clonedWithData = input ? input.clonedWithData : null;
         this.clonedFrom = input ? input.clonedFrom : null;
         this.clonedFromName = input ? input.clonedFromName : null;
+        this.cloneFinalization = (input && input.cloneFinalization)
+            ? { at: new Date(input.cloneFinalization.at), by: input.cloneFinalization.by, byName: input.cloneFinalization.byName }
+            : null;
         return this;
     }
 
@@ -125,7 +146,7 @@ export class Project implements Deserializable {
     }
 
     serialize() {
-        // The cloned* fields are intentionally left out: they are server-owned. The backend sets
+        // The cloned* and cloneFinalization fields are intentionally left out: they are server-owned. The backend sets
         // them when cloning and re-applies them from the stored document on every save, so the
         // client never needs to round-trip them — and clonedFromName is computed per request and
         // must never be written back at all.
@@ -150,6 +171,7 @@ export class Project implements Deserializable {
             _id: this.id,
             comments: this.comments,
             dashboard: this.dashboard.map(x => x.serialize()),
+            links: this.links.map(x => x.serialize()),
         };
         Object.assign(serialized, this.rev ? {_rev: this.rev } : null );
         return serialized;

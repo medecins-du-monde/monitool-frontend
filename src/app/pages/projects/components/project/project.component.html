@@ -8,7 +8,7 @@
         </mat-card-title>
         <mat-chip-list class="project-status">
             <!-- The badge and its overlay live in the same *ngIf view so the panel can reference the chip as its origin. -->
-            <ng-container *ngIf="project.clonedAt">
+            <ng-container *ngIf="project.clonedAt && !project.cloneFinalization">
                 <mat-chip
                     class="cloned-badge"
                     cdkOverlayOrigin

@@ -134,4 +134,26 @@
             </mat-hint>
         </mat-form-field>
     </div>
+    <div class="mdm-form-group links-group" formArrayName="links">
+        <div class="mdm-form-label">{{ 'UsefulLinks' | translate }}</div>
+        <div class="links-list">
+            <div class="link-row" *ngFor="let link of linksArray.controls; let i = index; trackBy: trackByIndex" [formGroupName]="i">
+                <mat-form-field appearance="outline" class="mdm-form-field link-title">
+                    <input matInput formControlName="title" placeholder="{{ 'LinkTitle' | translate }}*">
+                    <mat-error *ngIf="link.get('title').hasError('required')">{{ 'LinkTitleRequired' | translate }}</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="mdm-form-field link-url">
+                    <input matInput type="url" formControlName="url" placeholder="{{ 'LinkUrl' | translate }}*">
+                    <mat-error *ngIf="link.get('url').hasError('required')">{{ 'LinkUrlRequired' | translate }}</mat-error>
+                    <mat-error *ngIf="link.get('url').hasError('invalidUrl')">{{ 'InvalidUrl' | translate }}</mat-error>
+                </mat-form-field>
+                <button mat-icon-button type="button" class="link-delete" (click)="onDeleteLink(i)" [attr.aria-label]="'Delete' | translate">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <button mat-stroked-button type="button" class="mdm-button" (click)="onAddLink()">
+                <mat-icon>add</mat-icon>{{ 'AddLink' | translate }}
+            </button>
+        </div>
+    </div>
 </div>

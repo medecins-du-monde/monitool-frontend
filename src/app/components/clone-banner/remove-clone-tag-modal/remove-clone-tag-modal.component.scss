@@ -1,0 +1,48 @@
+@import "src/assets/theme/size_vars.scss";
+
+.dialog-body {
+  max-width: 720px;
+}
+
+.modal-loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.similar-projects {
+  margin: 4px 0 0;
+  padding-left: 18px;
+
+  .similar-meta {
+    font-size: $small_text;
+    margin-left: 4px;
+  }
+}
+
+.checklist-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  ::ng-deep .mat-checkbox-layout {
+    white-space: normal;
+  }
+}

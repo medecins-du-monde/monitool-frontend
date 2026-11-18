@@ -1,0 +1,71 @@
+<button class="dialog-close" mat-icon-button (click)="onCancel()">
+    <mat-icon>close</mat-icon>
+</button>
+<h2 mat-dialog-title>{{ 'RemoveCloneTag' | translate }}</h2>
+
+<mat-dialog-content class="dialog-body">
+    <div class="modal-loader-container" *ngIf="state === 'loading' || state === 'saving'">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <ng-container *ngIf="state === 'review'">
+        <p>{{ 'RemoveCloneTagInfo' | translate }}</p>
+
+        <div class="warnings">
+            <div class="message warning" *ngIf="review.sameNameAsOriginal">
+                <mat-icon>warning</mat-icon>
+                <div>
+                    {{ 'CloneSameNameWarning' | translate }}
+                    <a [routerLink]="['/projects', project.id, 'structure', 'basics']" (click)="onCancel()">{{ 'CloneRenameLink' | translate }}</a>
+                </div>
+            </div>
+            <div class="message warning" *ngIf="review.originalModifiedSince">
+                <mat-icon>warning</mat-icon>
+                <div>{{ 'CloneOriginalModifiedWarning' | translate: { date: (review.originalModifiedSince | localizedDate) } }}</div>
+            </div>
+            <div class="message info" *ngIf="review.similarProjects.length">
+                <mat-icon>info</mat-icon>
+                <div>
+                    <div>{{ 'CloneSimilarProjectsWarning' | translate }}</div>
+                    <ul class="similar-projects">
+                        <li *ngFor="let similar of review.similarProjects">
+                            <a [routerLink]="['/projects', similar._id]" (click)="onCancel()">{{ similar.name }}</a>
+                            <span class="similar-meta">
+                                {{ similar.countries?.join(', ') }} · {{ similar.start | localizedDate }} – {{ similar.end | localizedDate }}
+                                <ng-container *ngIf="similar._id === review.original?._id"> · {{ 'CloneOriginalProject' | translate }}</ng-container>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="checklist-title">{{ 'CloneChecklistTitle' | translate }}</p>
+        <div class="checklist">
+            <mat-checkbox *ngFor="let key of confirmationKeys" [(ngModel)]="confirmations[key]" color="primary">
+                {{ 'CloneChecklist.' + key | translate }}
+            </mat-checkbox>
+        </div>
+    </ng-container>
+
+    <div class="message confirm" *ngIf="state === 'success'">
+        <mat-icon>check_circle</mat-icon>
+        <div>{{ 'RemoveCloneTagSuccess' | translate }}</div>
+    </div>
+    <div class="message error" *ngIf="state === 'error'">
+        <mat-icon>error</mat-icon>
+        <div>{{ 'RemoveCloneTagError' | translate }}</div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <ng-container *ngIf="state === 'review'">
+        <button mat-stroked-button class="mdm-button cancel-button" (click)="onCancel()">{{ 'Cancel' | translate }}</button>
+        <button mat-stroked-button class="mdm-button save-button confirm-button" (click)="onConfirm()" [disabled]="!allConfirmed">
+            {{ 'ConfirmRemoveCloneTag' | translate }}
+        </button>
+    </ng-container>
+    <button *ngIf="state === 'success' || state === 'error'" mat-stroked-button class="mdm-button" (click)="onClose()">
+        {{ 'Close' | translate }}
+    </button>
+</mat-dialog-actions>

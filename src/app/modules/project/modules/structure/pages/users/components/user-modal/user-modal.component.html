@@ -74,7 +74,7 @@
               placeholder="{{ 'Role' | translate }}"
               disableOptionCentering
               panelClass="myPanelClass"
-              (selectionChange)="userForm.patchValue({dataSources: [], entities: []})"
+              (selectionChange)="onRoleChange()"
             >
                 <mat-option *ngFor="let role of roles" [value]="role.value">{{ role.name | translate }}</mat-option>
             </mat-select>
@@ -114,6 +114,33 @@
                 [hint]="'Tooltip.UserEdition.CollectionSites'">
             </app-collection-sites-selector>
         </div>
+    </div>
+    <div *ngIf="userForm.value.role === roles[2].value">
+        <div class="mdm-form-group">
+            <div class="mdm-form-label"></div>
+            <div class="restrict-access">
+                <mat-checkbox formControlName="restricted" (change)="onRestrictedChange()">{{ 'RestrictAccess' | translate }}</mat-checkbox>
+                <mat-hint><mat-icon>info</mat-icon>{{ 'Tooltip.UserEdition.RestrictAccess' | translate }}</mat-hint>
+            </div>
+        </div>
+        <ng-container *ngIf="userForm.value.restricted">
+            <div class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'LogicalFrameworks' | translate }}</div>
+                <app-logical-frame-selector
+                    [userForm]="userForm"
+                    [logicalFrames]="logicalFrames"
+                ></app-logical-frame-selector>
+            </div>
+            <div class="mdm-form-group">
+                <div class="mdm-form-label">{{ 'DataSources' | translate }}</div>
+                <app-data-source-selector
+                    [userForm]="userForm"
+                    [dataSources]="dataSources"
+                    [hint]="'Tooltip.UserEdition.ReadDataSources'"
+                ></app-data-source-selector>
+            </div>
+            <mat-error *ngIf="userForm.hasError('restrictionRequired')">{{ 'RestrictAccessRequired' | translate }}</mat-error>
+        </ng-container>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

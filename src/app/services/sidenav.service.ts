@@ -3,6 +3,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Sidenav } from 'src/app/models/interfaces/sidenav.model';
 import { Project } from '../models/classes/project.model';
 import { User } from '../models/classes/user.model';
+import { URL_PATTERN } from '../utils/url-validator';
 import { ProjectService } from 'src/app/services/project.service';
 import { Observable } from 'rxjs';
 
@@ -66,6 +67,15 @@ export class SidenavService implements OnDestroy {
         }
         */
       ]
+    };
+
+    const usefulLinks = {
+      title: 'UsefulLinks',
+      collapsible: true,
+      emptyMessage: 'NoUsefulLinks',
+      items: project.links
+        .filter(link => URL_PATTERN.test(link.url))
+        .map(link => ({ name: link.title, href: link.url, icon: 'link' }))
     };
 
     const input = {
@@ -257,7 +267,8 @@ export class SidenavService implements OnDestroy {
             }
           })
         );
-        this.sidenav.next(sidenavGenerated);
+        // Useful links are visible to every user who can open the project, below the reporting
+        this.sidenav.next(sidenavGenerated ? { groups: [...sidenavGenerated.groups, usefulLinks] } : sidenavGenerated);
       })
     );
   }
