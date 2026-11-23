@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import InformationItem from 'src/app/models/interfaces/information-item';
+import { AppVersionService } from 'src/app/services/app-version.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,7 +26,8 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
               private domSanitizer: DomSanitizer,
               private translateService: TranslateService,
               private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private appVersionService: AppVersionService) { }
 
   ngOnInit(): void {
     this.displayed = this.userService.displayInfoPanel.value;
@@ -65,7 +67,7 @@ export class InformationsPanelComponent implements OnInit, OnDestroy {
 
   refreshCache(): void {
     localStorage.removeItem('appVersion');
-    location.reload();
+    this.appVersionService.hardRefresh();
   }
 
   /**

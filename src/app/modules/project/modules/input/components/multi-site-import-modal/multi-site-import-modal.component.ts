@@ -33,6 +33,8 @@ export interface MultiSiteImportData {
   period: string;
   periodLabel: string;
   isOwner: boolean;
+  /** Import into the one site given, from its calendar cell: there is nothing to select. */
+  single?: boolean;
   /** Sites the user may see for this period. */
   sites: { id: string; name: string; locked: boolean }[];
 }
@@ -93,6 +95,14 @@ export class MultiSiteImportModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: MultiSiteImportData
   ) {
     this.siteRows = data.sites.map(site => ({ ...site, selected: false, sheet: null }));
+    this.selectSingleSite();
+  }
+
+  /** In single-site mode, the site is always selected, unless it can't be imported into. */
+  private selectSingleSite(): void {
+    if (this.data.single) {
+      this.siteRows.forEach(row => { row.selected = !this.isRowDisabled(row); });
+    }
   }
 
   public get sheetNames(): string[] {
@@ -153,7 +163,7 @@ export class MultiSiteImportModalComponent {
 
   public onSheetChange(row: SiteRow): void {
     if (!this.isRowDisabled(row)) {
-      row.selected = !!row.sheet;
+      row.selected = this.data.single || !!row.sheet;
     }
     row.errors = undefined;
     this.generalError = undefined;
@@ -185,6 +195,12 @@ export class MultiSiteImportModalComponent {
       row.sheet = matches[row.id] || null;
       row.selected = !!row.sheet;
     });
+
+    if (this.data.single) {
+      // A file with one sheet is meant for this site, whatever its name: the name warning says if it differs.
+      this.siteRows.filter(row => !row.sheet && this.sheets.length === 1).forEach(row => { row.sheet = this.sheets[0].name; });
+      this.selectSingleSite();
+    }
   }
 
   /** Check all selected sheets. Nothing is written. */

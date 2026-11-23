@@ -188,10 +188,13 @@ export function matchSheets(sites: { id: string; name: string }[], sheetNames: s
 }
 
 /** Tell if a sheet's name looks like it belongs to a site: nothing else in the file identifies its site. */
+/** The single-site template names its sheet after no site in particular (backend template.js). */
+const TEMPLATE_SHEET_NAME = 'collection site';
+
 export function sheetMatchesSite(sheetName: string, siteName: string): boolean {
   const expected = exportedSheetName(siteName).toLowerCase();
   const sheet = sheetName.toLowerCase();
-  return sheet === expected || sheet === expected.slice(0, MAX_SHEET_NAME);
+  return sheet === expected || sheet === expected.slice(0, MAX_SHEET_NAME) || sheet === TEMPLATE_SHEET_NAME;
 }
 
 export interface ImportError {

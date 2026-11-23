@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-  <h1>{{ 'import.multi.title' | translate }}</h1>
+  <h1>{{ (data.single ? 'import.import-data' : 'import.multi.title') | translate }}</h1>
   <p class="period">{{ 'CoveredPeriod' | translate }}: {{ data.periodLabel }}</p>
 </div>
 
@@ -12,7 +12,7 @@
   <ng-container *ngIf="step === 'select' || step === 'validating'">
     <div class="message info">
       <mat-icon>info</mat-icon>
-      {{ 'import.multi.info' | translate }}
+      {{ (data.single ? 'import.multi.info-single' : 'import.multi.info') | translate }}
     </div>
 
     <div class="file-input">
@@ -31,18 +31,18 @@
     <table *ngIf="sheets.length > 0" class="sites-table">
       <thead>
         <tr>
-          <th class="select-cell">
+          <th *ngIf="!data.single" class="select-cell">
             <mat-checkbox color="primary" [checked]="allSelected" [indeterminate]="selectedRows.length > 0 && !allSelected"
               (change)="toggleAll($event.checked)" [disabled]="step === 'validating'"></mat-checkbox>
           </th>
-          <th>{{ 'import.multi.site' | translate }}</th>
+          <th class="site-col">{{ 'import.multi.site' | translate }}</th>
           <th>{{ 'import.multi.sheet' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <ng-container *ngFor="let row of siteRows">
         <tr class="site-row" [class.disabled]="isRowDisabled(row)">
-          <td class="select-cell">
+          <td *ngIf="!data.single" class="select-cell">
             <mat-checkbox color="primary" [(ngModel)]="row.selected" (ngModelChange)="onRowToggle(row)" [disabled]="isRowDisabled(row) || step === 'validating'"></mat-checkbox>
           </td>
           <td>
@@ -59,7 +59,7 @@
           </td>
         </tr>
         <tr *ngIf="hasNameWarning(row) || (row.selected && row.errors)" class="messages-row">
-          <td colspan="3">
+          <td [attr.colspan]="data.single ? 2 : 3">
             <div *ngIf="hasNameWarning(row)" class="message warning">
               <mat-icon>warning</mat-icon>
               {{ 'import.multi.name-warning' | translate }}

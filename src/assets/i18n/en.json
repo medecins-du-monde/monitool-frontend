@@ -1230,6 +1230,7 @@
       "action": "Import multiple collection sites",
       "title": "Import multiple collection sites",
       "info": "Choose an Excel file exported from this page, then select the collection sites to import and the sheet for each one. Nothing is saved until you confirm.",
+      "info-single": "Choose an Excel file and the sheet to import. Nothing is saved until you confirm.",
       "site": "Collection site",
       "sheet": "Sheet",
       "locked": "Locked",

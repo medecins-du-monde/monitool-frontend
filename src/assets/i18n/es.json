@@ -1247,6 +1247,7 @@
       "action": "Importar varios lugares de colecta",
       "title": "Importar varios lugares de colecta",
       "info": "Elija un archivo Excel exportado desde esta página y seleccione los lugares de colecta que desea importar y la hoja de cada uno. No se guarda nada hasta que confirme.",
+      "info-single": "Elija un archivo Excel y la hoja que desea importar. No se guarda nada hasta que confirme.",
       "site": "Lugar de colecta",
       "sheet": "Hoja",
       "locked": "Bloqueado",

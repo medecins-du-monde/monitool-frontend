@@ -1246,6 +1246,7 @@
       "action": "Importer plusieurs lieux de collecte",
       "title": "Importer plusieurs lieux de collecte",
       "info": "Choisissez un fichier Excel exporté depuis cette page, puis sélectionnez les lieux de collecte à importer et la feuille de chacun. Rien n'est enregistré avant votre confirmation.",
+      "info-single": "Choisissez un fichier Excel et la feuille à importer. Rien n'est enregistré avant votre confirmation.",
       "site": "Lieu de collecte",
       "sheet": "Feuille",
       "locked": "Verrouillé",

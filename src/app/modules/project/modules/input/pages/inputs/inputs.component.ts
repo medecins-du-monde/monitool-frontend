@@ -103,6 +103,11 @@ export class InputsComponent implements OnInit, OnDestroy {
     return this.isOwner || this.inputUserCanImport;
   }
 
+  /** Import into the site of a calendar cell. Input users never change a locked (completed) input. */
+  canImportSite(cell: { blocked?: boolean }): boolean {
+    return this.isOwner || (this.inputUserCanImport && !cell?.blocked);
+  }
+
 
   get currentDate(): string {
     return DatesHelper.dateToString(this.dateForm.value);
@@ -409,10 +414,12 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   /**
    * @param row The calendar row of the period. Free periodicity forms have no row yet for a new date.
+   * @param siteId Import this site only, from its cell.
    */
-  openMultiSiteImport(period: string, periodLabel: string, row?: any) {
+  openMultiSiteImport(period: string, periodLabel: string, row?: any, siteId?: string) {
     const inputId = `input:${this.project.id}:${this.formId}`;
     const sites = this.allowedEntities
+      .filter(site => !siteId || site.id === siteId)
       // -2: the period is out of the dates of this site.
       .filter(site => !row || (row[site.name] && row[site.name].value !== -2))
       .map(site => ({
@@ -432,6 +439,7 @@ export class InputsComponent implements OnInit, OnDestroy {
         period,
         periodLabel,
         isOwner: this.isOwner,
+        single: !!siteId,
         sites
       }
     });

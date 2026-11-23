@@ -28,17 +28,20 @@
                     </div>
                 </div>
                 <ng-template #elseBlock>
-                    <div *ngIf="element[column]?.value === -1">
+                    <div *ngIf="element[column]?.value === -1" [ngClass]="{'edition-cell': canImportSite(element[column])}">
                         <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
                             class="mdm-button small-button create-button">{{ 'Create' | translate }}</button>
+                        <div *ngIf="canImportSite(element[column])" class="expand create-expand-button" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element[column], row: element}">
+                            <mat-icon>expand_more</mat-icon>
+                        </div>
                     </div>
                     <div *ngIf="element[column]?.value === -2" style="height: 24px"></div>
-                    <div *ngIf="element[column]?.value >= 0" [ngClass]="{'edition-cell': isOwner}">
+                    <div *ngIf="element[column]?.value >= 0" [ngClass]="{'edition-cell': canImportSite(element[column])}">
                         <button mat-stroked-button (click)="openLinkInNewWindow(element[column].column, element[column].date)"
                             class="mdm-button small-button" [ngClass]="{'completed-button': element[column]?.blocked}">
                             {{ (element[column]?.blocked ? ('Completed' | translate) : ('Edit' | translate)) + ' (' + element[column]?.value.toFixed(0) + '%)' }}
                         </button>
-                        <div *ngIf="isOwner" class="expand" [ngClass]="{'completed-expand-button': element[column]?.blocked}" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element[column]}">
+                        <div *ngIf="canImportSite(element[column])" class="expand" [ngClass]="{'completed-expand-button': element[column]?.blocked}" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{element: element[column], row: element}">
                             <mat-icon>expand_more</mat-icon>
                         </div>
                     </div>
@@ -106,8 +109,17 @@
     {{ 'ErrorNoCollectionSiteAssociated' | translate }}
 </ng-template>
 <mat-menu #menu="matMenu" >
-    <ng-template matMenuContent let-element="element">
-        <button mat-menu-item 
+    <ng-template matMenuContent let-element="element" let-row="row">
+        <button mat-menu-item
+            (click)="openMultiSiteImport(element.date, row.Date.display, row, element.column)"
+            [matTooltip]="'UploadData' | translate"
+            matTooltipPosition="right"
+            matTooltipShowDelay="500"
+        >
+            <mat-icon>upload</mat-icon>
+            {{ 'UploadData' | translate }}
+        </button>
+        <button *ngIf="isOwner && element.value >= 0" mat-menu-item 
             (click)="excelDownload('single', {site: element.column, date: element.date})"
             [matTooltip]="'ExportSingle' | translate"
             matTooltipPosition="right"
@@ -117,7 +129,7 @@
             <mat-icon style="width: fit-content;">download</mat-icon>
             {{ 'ExportSingle' | translate }}
         </button>
-        <button mat-menu-item 
+        <button *ngIf="isOwner && element.value >= 0" mat-menu-item 
             (click)="toggleBlock(element)"
             [matTooltip]="(element.blocked ? 'LockedInput.unlock' : 'LockedInput.lock') | translate"
             matTooltipPosition="right"

@@ -141,6 +141,7 @@ describe('import-diff', () => {
   });
 
   it('warns on a sheet with the name of another site only', () => {
+    expect(sheetMatchesSite('Collection site', 'Paris')).toBe(true);
     expect(sheetMatchesSite('paris', 'Paris')).toBe(true);
     expect(sheetMatchesSite('Lyon', 'Paris')).toBe(false);
     expect(sheetMatchesSite('x'.repeat(31), 'x'.repeat(40))).toBe(true);

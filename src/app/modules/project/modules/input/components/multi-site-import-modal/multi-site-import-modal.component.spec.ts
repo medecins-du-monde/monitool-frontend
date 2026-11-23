@@ -491,6 +491,88 @@ describe('MultiSiteImportModalComponent', () => {
     expect(warning.querySelector('mat-icon').textContent).toBe('warning');
   });
 
+  describe('single-site mode, from a calendar cell', () => {
+    const single = (sheets: string[], locked = false, isOwner = true) => {
+      service.readWorkbook.and.resolveTo(sheets.map(name => ({ name, data: [[name]] })));
+      fixture = TestBed.createComponent(MultiSiteImportModalComponent);
+      component = fixture.componentInstance;
+      component.data.single = true;
+      component.data.isOwner = isOwner;
+      component.data.sites = [{ id: 'B', name: 'Site B', locked }];
+      // The constructor has run with the provided data: build the rows again as it does.
+      component.siteRows = component.data.sites.map(site => ({ ...site, selected: false, sheet: null }));
+      (component as any).selectSingleSite();
+      fixture.detectChanges();
+      return fixture.nativeElement as HTMLElement;
+    };
+
+    it('selects the site from the start, and shows no checkbox', async () => {
+      const element = single(['Site B']);
+      expect(component.siteRows[0].selected).toBeTrue();
+      await pickFile();
+      fixture.detectChanges();
+      expect(element.querySelectorAll('mat-checkbox').length).toBe(0);
+      expect(element.querySelector('.sites-table tbody tr.site-row').textContent).toContain('Site B');
+      expect(element.querySelector('h1').textContent).toBe('import.import-data');
+      expect(element.querySelector('.message.info').textContent).toContain('import.multi.info-single');
+    });
+
+    it('picks the only sheet of a file, whatever its name, and warns when it differs', async () => {
+      single(['Lyon']);
+      await pickFile();
+      expect(component.siteRows[0].sheet).toBe('Lyon');
+      expect(component.siteRows[0].selected).toBeTrue();
+      expect(component.hasNameWarning(component.siteRows[0])).toBeTrue();
+      expect(component.canValidate).toBeTrue();
+    });
+
+    it('does not warn for the single-site template', async () => {
+      single(['Collection site']);
+      await pickFile();
+      expect(component.siteRows[0].sheet).toBe('Collection site');
+      expect(component.hasNameWarning(component.siteRows[0])).toBeFalse();
+    });
+
+    it('matches by name among several sheets, and lets the user choose otherwise', async () => {
+      single(['Site A', 'Site B']);
+      await pickFile();
+      expect(component.siteRows[0].sheet).toBe('Site B');
+
+      single(['One', 'Two']);
+      await pickFile();
+      expect(component.siteRows[0].sheet).toBeNull();
+      expect(component.siteRows[0].selected).toBeTrue();
+      expect(component.canValidate).toBeFalse();
+      component.siteRows[0].sheet = 'Two';
+      component.onSheetChange(component.siteRows[0]);
+      expect(component.siteRows[0].selected).toBeTrue();
+      expect(component.canValidate).toBeTrue();
+    });
+
+    it('checks exactly that site', async () => {
+      single(['Site B']);
+      await pickFile();
+      previews.B = ok(null, { v: [1] });
+      confirmDialog(false);
+      await component.validate();
+      expect(service.previewSite).toHaveBeenCalledTimes(1);
+      expect(service.previewSite.calls.mostRecent().args[3]).toBe('B');
+    });
+
+    it('spans the messages over the two remaining columns', async () => {
+      const element = single(['Lyon']);
+      await pickFile();
+      fixture.detectChanges();
+      expect(element.querySelector('tr.messages-row td').getAttribute('colspan')).toBe('2');
+    });
+
+    it('never selects a site an input user may not change', () => {
+      single(['Site B'], true, false);
+      expect(component.siteRows[0].selected).toBeFalse();
+      expect(component.canValidate).toBeFalse();
+    });
+  });
+
   it('renders each step', async () => {
     fixture = TestBed.createComponent(MultiSiteImportModalComponent);
     component = fixture.componentInstance;
