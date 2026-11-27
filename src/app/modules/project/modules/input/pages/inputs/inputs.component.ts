@@ -20,6 +20,8 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from 'src/app/utils/format-datepicker-helper';
 import { DateService } from 'src/app/services/date.service';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MultiSiteImportModalComponent } from '../../components/multi-site-import-modal/multi-site-import-modal.component';
 
 
 
@@ -94,6 +96,17 @@ export class InputsComponent implements OnInit, OnDestroy {
 
   public isOwner = false;
   private isFocused = false;
+  private inputUserCanImport = false;
+
+  // Owners import any site. Input users only the sites of their own data sources.
+  get canImport(): boolean {
+    return this.isOwner || this.inputUserCanImport;
+  }
+
+  /** Import into the site of a calendar cell. Input users never change a locked (completed) input. */
+  canImportSite(cell: { blocked?: boolean }): boolean {
+    return this.isOwner || (this.inputUserCanImport && !cell?.blocked);
+  }
 
 
   get currentDate(): string {
@@ -113,6 +126,7 @@ export class InputsComponent implements OnInit, OnDestroy {
     private inputService: InputService,
     private adapter: DateAdapter<any>,
     private dateService: DateService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -221,6 +235,10 @@ export class InputsComponent implements OnInit, OnDestroy {
           this.allowedEntities =  [];
         }
       }
+
+      this.inputUserCanImport = projectUser?.role === 'input'
+        && this.allowedEntities.length > 0
+        && !!projectUser.dataSources?.find((dataSource: any) => (dataSource.id || dataSource) === this.formId);
 
       this.displayedColumns = ['Date'].concat(this.allowedEntities.map(x => x.name));
       this.footerColumns = ['footerDate'].concat(this.allowedEntities.map(x => x.id));
@@ -392,6 +410,45 @@ export class InputsComponent implements OnInit, OnDestroy {
       url += `/${details.date}`;
     }
     window.open(url, '_blank');
+  }
+
+  /**
+   * @param row The calendar row of the period. Free periodicity forms have no row yet for a new date.
+   * @param siteId Import this site only, from its cell.
+   */
+  openMultiSiteImport(period: string, periodLabel: string, row?: any, siteId?: string) {
+    const inputId = `input:${this.project.id}:${this.formId}`;
+    const sites = this.allowedEntities
+      .filter(site => !siteId || site.id === siteId)
+      // -2: the period is out of the dates of this site.
+      .filter(site => !row || (row[site.name] && row[site.name].value !== -2))
+      .map(site => ({
+        id: site.id,
+        name: site.name,
+        locked: !!(this.inputProgress && this.inputProgress[`${inputId}:${site.id}:${period}`]?.blocked)
+      }));
+
+    const dialogRef = this.dialog.open(MultiSiteImportModalComponent, {
+      disableClose: true,
+      width: '900px',
+      maxWidth: '95vw',
+      data: {
+        projectId: this.project.id,
+        formId: this.formId,
+        elements: this.form.elements,
+        period,
+        periodLabel,
+        isOwner: this.isOwner,
+        single: !!siteId,
+        sites
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (res?.changed) {
+        this.updateData();
+      }
+    });
   }
 
   openDownload(type: 'pdf' | 'xlsx', orientation?: 'portrait' | 'landscape', details?: {site: string, date: string}) {

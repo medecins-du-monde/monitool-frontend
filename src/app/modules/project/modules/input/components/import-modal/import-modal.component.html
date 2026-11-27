@@ -25,10 +25,7 @@
         <mat-option *ngFor="let sheet of sheets; index as i" [value]="i">{{ sheet }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div *ngFor="let error of errors" class="message error">
-      <mat-icon>error_outline</mat-icon>
-      {{ error }}
-    </div>
+    <app-import-errors *ngIf="errors" [group]="errors"></app-import-errors>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

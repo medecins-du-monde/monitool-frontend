@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { InformationsPanelComponent } from './informations-panel.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppVersionService } from 'src/app/services/app-version.service';
 
 describe('InformationsPanelComponent', () => {
   let component: InformationsPanelComponent;
@@ -15,7 +16,10 @@ describe('InformationsPanelComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        TranslateModule.forRoot()]
+        TranslateModule.forRoot()],
+      providers: [
+        { provide: AppVersionService, useValue: { hardRefresh: () => Promise.resolve() } }
+      ]
     }).compileComponents();
   }));
 
